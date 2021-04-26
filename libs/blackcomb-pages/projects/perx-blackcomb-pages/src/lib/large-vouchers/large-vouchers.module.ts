@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { LargeVouchersComponent } from './large-vouchers.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { VouchersModule, RewardsModule, UtilsModule} from '@perxtech/core';
-import { MatRippleModule, MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

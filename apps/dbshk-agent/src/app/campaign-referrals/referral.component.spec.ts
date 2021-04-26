@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ICampaignService } from '@perxtech/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of([])

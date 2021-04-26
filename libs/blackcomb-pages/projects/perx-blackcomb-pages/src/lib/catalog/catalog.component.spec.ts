@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatCardModule, MatIconModule, MatMenuModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RewardsService, UtilsModule, SettingsService } from '@perxtech/core';
 import { of } from 'rxjs';

@@ -208,7 +208,7 @@ export class LoyaltySummaryComponent implements OnInit {
   }
 
   public getPercentageToNext(
-    currentPoints: number,
+    currentPoints: number | undefined,
     nextPoints: number | undefined
   ): number {
     if (currentPoints && nextPoints) {

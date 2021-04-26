@@ -4,7 +4,7 @@ import { RewardComponent } from './reward.component';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;

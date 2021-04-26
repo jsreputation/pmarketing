@@ -3,14 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountComponent } from './account.component';
 import { AccountSummaryComponent } from '../../components/account-summary/account-summary.component';
 import { TextMaskModule } from 'angular2-text-mask';
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatSlideToggleModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileService, AuthenticationService } from '@perxtech/core';

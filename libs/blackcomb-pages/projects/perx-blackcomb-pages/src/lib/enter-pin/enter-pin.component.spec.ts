@@ -19,12 +19,8 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { MatToolbarModule } from '@angular/material';
-import {
-  ActivatedRoute,
-  convertToParamMap,
-  Router
-} from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 
 const mockTheme: ITheme = {
   name: 'theme',

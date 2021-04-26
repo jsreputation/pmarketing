@@ -8,13 +8,11 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
-import {
-  MatButtonModule,
-  MatFormFieldModule,
-  MatInputModule
-} from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [{
   path: '',

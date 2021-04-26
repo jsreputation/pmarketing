@@ -5,7 +5,7 @@ import { SurveyModule as PerxSurveyModule } from '@perxtech/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import { SurveyComponent } from './survey.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [SurveyComponent],

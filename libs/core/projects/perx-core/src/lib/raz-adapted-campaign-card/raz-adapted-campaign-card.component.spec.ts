@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RazAdaptedCampaignCardComponent } from './raz-adapted-campaign-card.component';
 import { ProgressBarModule } from '@perxtech/core';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 
 describe('RazAdaptedCampaignCardComponent', () => {
   let component: RazAdaptedCampaignCardComponent;

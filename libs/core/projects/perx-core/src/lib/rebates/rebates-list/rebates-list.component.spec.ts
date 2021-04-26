@@ -4,10 +4,8 @@ import {
   TestBed
 } from '@angular/core/testing';
 
-import {
-  MatCardModule,
-  MatRippleModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
 import { RebatesListComponent } from './rebates-list.component';
 import { of } from 'rxjs';
 import { ThemesService } from '../../utils/themes/themes.service';

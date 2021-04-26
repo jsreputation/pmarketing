@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QrScannerComponent } from './qrscanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import {MatToolbarModule, MatIconModule, MatDialogRef, MatDialogModule} from '@angular/material';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs';
 

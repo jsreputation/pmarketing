@@ -2,11 +2,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import {
-  MatDialog,
-  MatDialogModule,
-  // MatSnackBar
-} from '@angular/material';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NotificationService, PopupComponent, UtilsModule } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';

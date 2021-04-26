@@ -20,10 +20,8 @@ import {
   RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import {
-  MatDialog,
-  MatToolbar
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatToolbar } from '@angular/material/toolbar';
 import {
   catchError,
   map,
@@ -54,12 +52,12 @@ export interface IStarhubConfig {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild(MatToolbar, { static: false })
+  @ViewChild(MatToolbar)
   private toolBar: MatToolbar;
   public top: number = 0;
   public previousDelta: number = 0;
   public lastOffset: number = 0;
-  @ViewChild('contentScrolled', { static: false })
+  @ViewChild('contentScrolled')
   public contentScrolled: ElementRef;
   public loyalty: ILoyalty;
   public profile: IProfile;
@@ -137,9 +135,9 @@ export class HomeComponent implements OnInit {
     return dataLayerSH;
   }
 
-  public getBadge(tier: string | null): string {
+  public getBadge(tier: string | undefined): string {
     tier =
-      tier !== null ? this.noRenewalePipe.transform(tier.toLowerCase()) : null;
+      tier ? this.noRenewalePipe.transform(tier.toLowerCase()) : undefined;
 
     switch (tier) {
       case 'gold':

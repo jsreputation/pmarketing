@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AccountComponent } from './account.component';
-import {
-  MatCardModule,
-  MatListModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';

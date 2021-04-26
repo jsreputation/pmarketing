@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthenticationService, IProfile, ProfileService } from '@perxtech/core';
-import { MatSidenavContainer } from '@angular/material';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 import { Location } from '@angular/common';
 
 @Component({
@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(MatSidenavContainer, { static: false }) private navContainer: MatSidenavContainer;
+  @ViewChild(MatSidenavContainer) private navContainer: MatSidenavContainer;
   public routeData: any = null;
   public user: IProfile;
 

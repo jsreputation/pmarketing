@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { SurveyService } from '../survey.service';
-import { MatHorizontalStepper } from '@angular/material';
+import { MatHorizontalStepper } from '@angular/material/stepper';
 import { NotificationService } from '../../utils/notification/notification.service';
 
 @Component({

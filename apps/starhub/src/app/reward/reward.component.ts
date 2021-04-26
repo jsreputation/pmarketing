@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ConfigService,
+  ILoyaltyTierInfo,
   IReward,
   IVoucherService,
   NotificationService,
@@ -70,7 +71,7 @@ export class RewardComponent implements OnInit {
         }
 
         if (reward.loyalty && reward.loyalty.length) {
-          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek);
+          this.isButtonEnable = reward.loyalty.some((tier: ILoyaltyTierInfo) => tier.attained && !tier.sneakPeek);
         }
 
         if (

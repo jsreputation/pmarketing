@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 

@@ -2,7 +2,10 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { SignUpComponent } from './signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatCheckboxModule, MatInputModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';

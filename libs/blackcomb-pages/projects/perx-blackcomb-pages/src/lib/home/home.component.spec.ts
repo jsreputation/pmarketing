@@ -23,7 +23,8 @@ import {
   IQuestService
 } from '@perxtech/core';
 import { of } from 'rxjs';
-import { MatCardModule, MatDialogModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';

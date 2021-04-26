@@ -1,15 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  MatInputModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatCheckboxModule,
-  MatRadioModule,
-  MatSelectModule,
-  MatButtonModule,
-  MatDatepickerModule,
-  MatNativeDateModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 import { QuestionComponent } from './question.component';
 import { GroupComponent } from './group/group.component';

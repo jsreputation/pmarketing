@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ListComponent implements OnInit {
   public vouchers: Observable<Voucher[]>;
   public paramId: string;
-  @ViewChild('voucher', { static: false }) public vouch: VoucherComponent;
+  @ViewChild('voucher') public vouch: VoucherComponent;
   public filter: string[];
   public mapping: StatusLabelMapping = {
     issued: 'Approved',

@@ -12,7 +12,8 @@ import {
 } from '@perxtech/core';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
-import { MatButtonModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 @NgModule({

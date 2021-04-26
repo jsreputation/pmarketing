@@ -1,4 +1,4 @@
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StampsComponent } from './stamps.component';

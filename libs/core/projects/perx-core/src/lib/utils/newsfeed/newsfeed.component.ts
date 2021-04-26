@@ -4,7 +4,7 @@ import {
   OnInit
 } from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
 import { PopupComponent, NotificationService, ConfigService, IConfig, ThemesService, ITheme } from '@perxtech/core';
 import { Subscription } from 'rxjs';
-import { MatDialog, MatSidenav } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { PuzzlesComponent } from './puzzles/puzzles.component';
 import { RedemptionComponent } from './redemption/redemption.component';
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
   public failedAuthSubscriber: Subscription;
   private soundToggleSubscription: Subscription | undefined;
   private sourceType: string;
-  @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
+  @ViewChild('drawer') public drawer: MatSidenav;
 
   public onLeftActionClick: () => void = () => { };
   public onRightActionClick: () => void = () => { };

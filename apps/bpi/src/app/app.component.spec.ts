@@ -1,8 +1,8 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatDialogModule } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { NotificationService, ConfigService, AuthenticationService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';

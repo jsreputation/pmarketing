@@ -7,11 +7,9 @@ import {
 } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  MatDividerModule,
-  MatIconModule,
-  MatListModule
-} from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import {
   ConfigService,
   IVoucherService,

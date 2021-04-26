@@ -1,13 +1,7 @@
-import {
-  ComponentFactoryResolver,
-  ApplicationRef,
-  ComponentRef,
-  EmbeddedViewRef,
-  Injector,
-  Inject
-} from '@angular/core';
+import { ComponentFactoryResolver, ApplicationRef, ComponentRef, EmbeddedViewRef, Injector, Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
+@Injectable()
 export class DynamicCreateService {
   public opendComponent: ComponentRef<any>[] = [];
   constructor(

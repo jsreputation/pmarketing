@@ -1,6 +1,6 @@
 <mat-toolbar *ngIf="vouchers && vouchers.length !== 0">
-  <h1>{{gameOutcomeService.getOutcome().title}}</h1>
-  <h2>{{gameOutcomeService.getOutcome().subTitle}}</h2>
+  <h1>{{getOutcome().title}}</h1>
+  <h2>{{getOutcome().subTitle}}</h2>
 </mat-toolbar>
 <div class="main">
   <div *ngIf="vouchers && vouchers.length > 1" class="multiple-vouchers">
@@ -41,5 +41,5 @@
   </div>
 </div>
 <div *ngIf="vouchers && vouchers.length !== 0" class="actions">
-  <a mat-flat-button color="primary" (click)="navigateToRewards()">{{this.gameOutcomeService.getOutcome().button}}</a>
+  <a mat-flat-button color="primary" (click)="navigateToRewards()">{{getOutcome().button}}</a>
 </div>

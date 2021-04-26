@@ -11,14 +11,12 @@ import {
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import {
-  MatDialogModule,
-  MatIconModule,
-  MatSnackBarModule,
-  MatToolbarModule
-} from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 const authServiceStub: Partial<AuthenticationService> = {};
 const campaignServiceStub: Partial<ICampaignService> = {

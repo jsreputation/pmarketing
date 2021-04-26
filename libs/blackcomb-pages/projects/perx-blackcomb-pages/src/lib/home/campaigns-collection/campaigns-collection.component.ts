@@ -47,7 +47,7 @@ export class CampaignsCollectionComponent implements OnInit {
   @Input()
   public withRewardsCounter: boolean = false;
   @Input()
-  public gameType: string;
+  public gameType: GameType;
 
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
@@ -89,7 +89,7 @@ export class CampaignsCollectionComponent implements OnInit {
         }),
         withLatestFrom(this.campaigns$),
         map(
-          ([ rewardsArr, campaigns ]) => {
+          ([rewardsArr, campaigns]) => {
             const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
               ...acc, [curr.campaignId]: curr.count
             }), {});
@@ -108,12 +108,12 @@ export class CampaignsCollectionComponent implements OnInit {
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
             return this.quizService.getQuizFromCampaign(campaign.id).pipe(
-              catchError(( () => of([])))
+              catchError((() => of([])))
             );
           }
           if (this.gameType === GameType.survey) {
             return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
-              catchError(( () => of([])))
+              catchError((() => of([])))
             );
           }
           return this.gamesService.getGamesFromCampaign(campaign);
@@ -124,7 +124,7 @@ export class CampaignsCollectionComponent implements OnInit {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
           this.quizzes.forEach((quiz: IQuiz) => {
-            if (quiz.campaignId && ! this.isCampaignDisabled[quiz.campaignId]) {
+            if (quiz.campaignId && !this.isCampaignDisabled[quiz.campaignId]) {
               this.isCampaignDisabled[quiz.campaignId] =
                 this.isCampaignComplete(quiz.campaignId) ||
                 this.isQuizRewardsEmpty(quiz.campaignId);
@@ -153,7 +153,7 @@ export class CampaignsCollectionComponent implements OnInit {
     if (
       !this.isCampaignComplete(campaign.id) &&
       (this.isCampaignDisabled[campaign.id] === undefined ||
-      !this.isCampaignDisabled[campaign.id])
+        !this.isCampaignDisabled[campaign.id])
     ) {
       this.selected.emit(campaign);
     }
@@ -184,7 +184,7 @@ export class CampaignsCollectionComponent implements OnInit {
       const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
         campaign.id === campaignId
       );
-      return matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <= 0 : true;
+      return matchingCampaign && matchingCampaign.rewardsCount ? matchingCampaign.rewardsCount <= 0 : true;
     }
     return true;
   }

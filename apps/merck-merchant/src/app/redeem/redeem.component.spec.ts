@@ -8,10 +8,8 @@ import {
 
 import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
-import {
-  MatIconModule,
-  MatToolbarModule
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import {
   ErrorMessageService,

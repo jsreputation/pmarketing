@@ -12,7 +12,7 @@ import {
   NotificationService,
   TokenStorage
 } from '@perxtech/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Router } from '@angular/router';
 

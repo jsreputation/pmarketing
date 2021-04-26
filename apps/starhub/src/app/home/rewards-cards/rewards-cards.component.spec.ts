@@ -7,7 +7,8 @@ import {
 } from '@angular/core/testing';
 
 import { RewardsCardsComponent } from './rewards-cards.component';
-import { MatIconModule, MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { RewardsService, IReward, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';

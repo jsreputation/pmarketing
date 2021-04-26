@@ -16,7 +16,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { TransactionCompleteComponent } from './transaction-complete/transaction-complete.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import {MatCardModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { TransactionShowComponent } from './transaction-show/transaction-show.component';
 

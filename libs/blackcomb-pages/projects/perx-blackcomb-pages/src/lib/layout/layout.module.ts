@@ -4,7 +4,8 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { RewardsModule, VouchersModule, UtilsModule, ConfigModule } from '@perxtech/core';
 import { LayoutComponent } from './layout.component';
-import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 
 @NgModule({

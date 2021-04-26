@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +18,11 @@ import {
 } from '@perxtech/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatRippleModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from './utils/utils.module';
 import { HomeComponent } from './home/home.component';
@@ -30,6 +34,7 @@ import * as Hammer from 'hammerjs';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   public overrides: any = {
     swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down

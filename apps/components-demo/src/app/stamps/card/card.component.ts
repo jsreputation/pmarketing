@@ -3,10 +3,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  MatSlider,
-  MatCheckboxChange,
-} from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSlider } from '@angular/material/slider';
 
 import { combineLatest } from 'rxjs';
 import { startWith } from 'rxjs/operators';
@@ -70,8 +68,8 @@ export class CardComponent implements OnInit {
   }
 
   // helper function for rendering # slots using ngFor
-  public arrayFromNumber(n: number): any[] {
-    return Array(n);
+  public arrayFromNumber(n: number | null): any[] {
+    return n ? Array(n) : [];
   }
 
   public toggleShow(): void {

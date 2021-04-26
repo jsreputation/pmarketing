@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
-import { MatIconModule, MatListModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher, IReward } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';

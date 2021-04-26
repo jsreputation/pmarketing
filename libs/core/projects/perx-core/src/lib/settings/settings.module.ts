@@ -35,7 +35,7 @@ export function settingsServiceFactory(
 })
 
 export class SettingsModule {
-  public static forRoot(config: Config): ModuleWithProviders {
+  public static forRoot(config: Config): ModuleWithProviders<SettingsModule> {
     return {
       ngModule: SettingsModule,
       providers: [

@@ -11,7 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"

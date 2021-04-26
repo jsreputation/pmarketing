@@ -22,15 +22,6 @@ import {
   Observable,
   of
 } from 'rxjs';
-import {
-  MatDatepickerModule,
-  MatIconModule,
-  MatInputModule,
-  MatNativeDateModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSnackBar
-} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
@@ -39,6 +30,13 @@ import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 
 const configStub: Partial<Config> = {
   preAuth: false

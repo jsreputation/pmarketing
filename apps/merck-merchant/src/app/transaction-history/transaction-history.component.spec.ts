@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule, MatToolbarModule, MatTabsModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { LoyaltyModule } from '@perxtech/core';
 import { Location } from '@angular/common';
 

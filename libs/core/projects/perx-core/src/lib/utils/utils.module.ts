@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PopupComponent } from './popup/popup.component';
-import { MatButtonModule, MatDialogModule, MatCardModule, MatToolbarModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import {
   HttpClient,

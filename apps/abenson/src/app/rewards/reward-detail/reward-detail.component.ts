@@ -20,7 +20,7 @@ import {
   catchError,
   finalize,
 } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { RewardConfirmComponent } from '../reward-confirm/reward-confirm.component';
 
 export interface IRewardConfirmComponentParam {

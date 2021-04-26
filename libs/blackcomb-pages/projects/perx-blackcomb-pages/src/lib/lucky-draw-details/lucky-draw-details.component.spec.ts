@@ -14,7 +14,11 @@ import {
 } from '@perxtech/core';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details.component';
 import { of, Observable } from 'rxjs';
-import {MatSnackBar, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatListModule} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';

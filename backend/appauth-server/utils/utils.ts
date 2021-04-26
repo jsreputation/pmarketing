@@ -12,8 +12,8 @@ export function getQueryHost(req: Request): string {
     }
 
     if (Array.isArray(req.headers.origin)) {
-      const segments = req.headers.origin[0].split('/')
-        .filter(s => s !== '');
+      const segments = (req.headers.origin[0] as string).split('/')
+        .filter((s: string) => s !== '');
       return segments[1];
     }
   }

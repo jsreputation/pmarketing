@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedemptionComponent } from './redemption.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import {
   Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService
 } from '@perxtech/core';

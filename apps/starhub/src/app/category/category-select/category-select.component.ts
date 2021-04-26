@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { ICategory } from '../../category.model';
 import { categories } from '../../category.mock';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 export interface CategoryBottomSheetClosedCallBack {
   categorySelectedCallback(updatedValue: string): void;

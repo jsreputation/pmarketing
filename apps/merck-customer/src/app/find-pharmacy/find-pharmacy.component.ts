@@ -5,7 +5,8 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { MatDialog, MatTabChangeEvent } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import {
   Observable,
@@ -58,7 +59,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
   public filteredLocations: Observable<ILocation[]>;
   public headerFn: (location: ILocation) => Observable<string>;
   public viewLocationFn: () => Observable<string>;
-  @ViewChild('locationMap', { static: false }) public locationMap: LocationsMapComponent;
+  @ViewChild('locationMap') public locationMap: LocationsMapComponent;
 
   constructor(
     private locationsService: LocationsService,

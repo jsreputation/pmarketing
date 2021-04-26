@@ -14,7 +14,9 @@ import {
   SettingsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
-import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';

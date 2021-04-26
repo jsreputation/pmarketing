@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PrivacyPolicyComponent } from './privacy-policy.component';
-import {
-  MatIconModule,
-  MatToolbarModule
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Location } from '@angular/common';
 
 describe('PrivacyPolicyComponent', () => {

@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { MatToolbarModule, MatTabsModule, MatDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import {
@@ -141,7 +143,7 @@ describe('HomeComponent', () => {
 
   describe('getBadge', () => {
     it('should return assets/green-badge.png when null parameter has been passed', () => {
-      const badge = component.getBadge(null);
+      const badge = component.getBadge(undefined);
       expect(badge).toBe(component.uxcr ? 'assets/green-icon.svg' : 'assets/green-icon_old.svg');
     });
 

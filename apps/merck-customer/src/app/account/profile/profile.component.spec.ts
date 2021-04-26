@@ -1,11 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import {
-  MatIconModule,
-  MatToolbarModule,
-  MatListModule
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Location } from '@angular/common';
 import { ProfileService, LoyaltyService, IProfile, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';

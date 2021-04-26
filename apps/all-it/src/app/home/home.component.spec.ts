@@ -28,7 +28,8 @@ import {
   GamesCollectionComponent
 } from '@perxtech/blackcomb-pages';
 import { of } from 'rxjs';
-import { MatCardModule, MatDialogModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { profile } from './mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';

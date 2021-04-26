@@ -20,15 +20,6 @@ import {
 } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MatDatepickerModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatSnackBarModule
-} from '@angular/material';
-import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MAT_MOMENT_DATE_FORMATS,
   MatMomentDateModule,
@@ -39,13 +30,18 @@ import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE
 } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignUpComponent },
   { path: '*', redirectTo: '' }
 ];
-
-
 @NgModule({
   declarations: [SignUpComponent],
   exports: [SignUpComponent],
@@ -62,7 +58,6 @@ const routes: Routes = [
     UtilsModule,
     ConfigModule.forChild(),
     SettingsModule,
-
     MatSnackBarModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -74,8 +69,8 @@ const routes: Routes = [
     MatDatepickerModule
   ],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     {
       provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
       useValue: {

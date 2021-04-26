@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { MatCardModule, MatRippleModule, MatButtonModule, MatIconModule, MatGridListModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const modules = [
   MatButtonModule,

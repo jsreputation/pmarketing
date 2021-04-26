@@ -1,6 +1,8 @@
 import { SimpleChanges, Type } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { EnvConfig } from '../../shared/env-config';

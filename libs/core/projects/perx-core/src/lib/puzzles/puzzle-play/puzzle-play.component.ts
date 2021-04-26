@@ -71,7 +71,7 @@ export class PuzzlePlayComponent implements OnInit {
     return this.remainingPuzzleTiles.length > 0;
   }
 
-  @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
+  @ViewChild('puzzleBoard') public puzzleView: ElementRef;
 
   public ngOnInit(): void {
     if (!this.puzzlePiecesText) {

@@ -11,13 +11,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  MatButtonModule,
-  MatToolbarModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatRippleModule,
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';

@@ -8,7 +8,8 @@ import { LoyaltyModule } from '../loyalty.module';
 import { LoyaltyService } from '../loyalty.service';
 import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
-import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ILoyalty } from '../models/loyalty.model';
 
 describe('LoyaltySummaryComponent', () => {

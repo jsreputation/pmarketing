@@ -13,7 +13,11 @@ import {
 } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
 import { of, Observable, throwError } from 'rxjs';
-import {MatSnackBar, MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';

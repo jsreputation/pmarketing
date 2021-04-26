@@ -4,11 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
-import {
-  MatSelectModule,
-  MatFormFieldModule,
-  MatInputModule
-} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';

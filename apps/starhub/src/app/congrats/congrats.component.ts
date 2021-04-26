@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher } from '@perxtech/core';
+import { IGameOutcome, Voucher } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from './game-outcome/game-outcome.service';
 import { Router } from '@angular/router';
@@ -32,5 +32,9 @@ export class CongratsComponent implements OnInit {
   public navigateToRewards(): void {
     this.gameOutcomeService.clearVoucherList();
     this.router.navigateByUrl('/home/vouchers');
+  }
+
+  public getOutcome(): IGameOutcome {
+    return this.gameOutcomeService.getOutcome();
   }
 }

@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuizSurveyCampaignsComponent } from './quiz-survey-campaigns.component';
 import { CampaignServiceModule, ICampaignService } from '@perxtech/core';
-import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';

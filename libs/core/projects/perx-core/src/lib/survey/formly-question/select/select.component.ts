@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, QueryList, ViewChildren } from '@angular/core';
 import { FieldType } from '@ngx-formly/material/form-field';
-import { MatCheckbox } from '@angular/material';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'perx-core-survey-select',

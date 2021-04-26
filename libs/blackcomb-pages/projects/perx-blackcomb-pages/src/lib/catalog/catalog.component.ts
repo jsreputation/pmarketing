@@ -33,7 +33,7 @@ const REQ_PAGE_SIZE: number = 10;
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
-  @ViewChild('contentScroll', { static: false })
+  @ViewChild('contentScroll')
   public contentScroll: ElementRef;
   public rewards$: Observable<IReward[]>;
   public rewardsLoaded: boolean = false;

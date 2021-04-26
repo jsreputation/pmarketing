@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsComponent } from './rewards.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule, MatTabsModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 
 describe('RewardsComponent', () => {
   let component: RewardsComponent;

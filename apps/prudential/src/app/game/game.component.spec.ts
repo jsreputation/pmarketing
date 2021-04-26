@@ -15,7 +15,8 @@ import {
   ConfigService
 } from '@perxtech/core';
 import { APP_BASE_HREF } from '@angular/common';
-import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of } from 'rxjs';

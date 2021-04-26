@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent, NotificationService, AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';

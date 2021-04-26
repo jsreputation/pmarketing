@@ -1,9 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  MatRadioModule,
-  MatCheckboxModule,
-  MatSelectModule,
-} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 
 import { RedemptionBookingComponent } from './redemption-booking.component';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';

@@ -3,10 +3,8 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import {
-  MatIconModule,
-  MatCardModule,
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';

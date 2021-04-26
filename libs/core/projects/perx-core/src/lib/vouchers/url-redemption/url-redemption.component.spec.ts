@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { NotificationService, UtilsModule } from '@perxtech/core';
 import { UrlRedemptionComponent } from './url-redemption.component';
-import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('UrlRedemptionComponent', () => {
   let component: UrlRedemptionComponent;

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CodeRedemptionComponent } from './code-redemption.component';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
 import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';

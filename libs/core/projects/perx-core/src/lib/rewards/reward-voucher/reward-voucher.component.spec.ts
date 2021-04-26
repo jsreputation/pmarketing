@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';

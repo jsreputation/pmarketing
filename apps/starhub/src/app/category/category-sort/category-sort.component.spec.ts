@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { CategorySortComponent } from './category-sort.component';
-import { MatCardModule, MatIconModule, MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { MatBottomSheetModule, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { Type } from '@angular/core';
 import { SortingMode } from '../category.model';
 

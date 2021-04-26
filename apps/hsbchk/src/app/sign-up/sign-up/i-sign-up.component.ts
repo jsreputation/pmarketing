@@ -15,7 +15,7 @@ import {
 } from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 export abstract class ISignUpComponent implements OnDestroy {
   public signupForm: FormGroup;

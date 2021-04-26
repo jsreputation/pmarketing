@@ -20,7 +20,7 @@ import {
   Location
 } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import {
   LangChangeEvent,

@@ -4,10 +4,6 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  MatDialog,
-  MatSnackBar,
-} from '@angular/material';
-import {
   ActivatedRoute,
   Event,
   NavigationEnd,
@@ -56,6 +52,8 @@ import {
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',

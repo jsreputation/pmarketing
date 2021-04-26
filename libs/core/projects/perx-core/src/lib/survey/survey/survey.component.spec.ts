@@ -1,14 +1,14 @@
-import {
-  MatInputModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatCheckboxModule,
-  MatRadioModule,
-  MatButtonModule,
-  MatDatepickerModule,
-  MatSelectModule,
-  MatNativeDateModule, MatProgressBarModule, MatStepperModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';

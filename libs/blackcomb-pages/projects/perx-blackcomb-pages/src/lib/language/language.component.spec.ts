@@ -3,7 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageComponent } from './language.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatListModule, MatCardModule, MatSelectModule, MatOptionModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { of } from 'rxjs';
 
 describe('LanguageComponent', () => {

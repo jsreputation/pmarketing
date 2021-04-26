@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 
 import { LocationsComponent } from './locations.component';
-import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Voucher as IVoucher, UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perxtech/core';
 import { ActivatedRoute, Params } from '@angular/router';

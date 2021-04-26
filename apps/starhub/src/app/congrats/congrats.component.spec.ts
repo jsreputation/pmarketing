@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import {
-  MatToolbarModule,
-  MatCardModule,
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CongratsComponent } from './congrats.component';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -4,7 +4,7 @@ import { ReferralComponent } from './referral.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfigService, ICampaignService, LeaderboardCTAComponent } from '@perxtech/core';
 import { of } from 'rxjs';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 const campaignServiceStub: Partial<ICampaignService> = {

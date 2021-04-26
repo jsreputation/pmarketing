@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { QrscannerComponent } from './qrscanner.component';
 import { HeaderComponent } from '../header/header.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Location } from '@angular/common';

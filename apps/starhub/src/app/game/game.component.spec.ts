@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import {
-  MatIconModule,
-  MatToolbarModule,
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   GameModule,
   IGameService,

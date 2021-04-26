@@ -40,7 +40,7 @@ import {
 } from '@perxtech/core';
 
 import { SoundService } from '../sound/sound.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -59,7 +59,7 @@ export interface PopUpClosedCallBack {
 export class PuzzleComponent implements OnInit, OnDestroy {
   public campaignId: number | null | undefined = null;
   private cardId: number | null = null;
-  private card: IStampCard | null = null;
+  public card: IStampCard | null = null;
   public availablePieces: number = 0;
   public playedPieces: number = 0;
   public totalAvailablePieces: number = 0;
@@ -70,7 +70,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   private currentStampId: number = 0;
   public title: string = 'Stamp Card';
   public subTitle: string = 'Tap the stamps to earn your reward!';
-  private displayCampaignAs: string = 'puzzle';
+  public displayCampaignAs: string = 'puzzle';
   public sourceType: string;
   public preStampImg: string | undefined;
   public postStampImg: string | undefined;

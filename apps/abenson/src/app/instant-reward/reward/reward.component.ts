@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { iif, Observable } from 'rxjs';
 import { RewardsService, IReward, PopupComponent } from '@perxtech/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { tap, finalize, map } from 'rxjs/operators';
 
 @Component({

@@ -65,10 +65,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   public allowPicZoom$!: Observable<boolean>;
 
   private destroy$: Subject<void> = new Subject();
-  @ViewChild('overflowContainer', { static: false })
+  @ViewChild('overflowContainer')
   private overflowContainer: ElementRef | undefined;
-  @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef | undefined;
-  @ViewChild('coreComponent', { static: false })
+  @ViewChild('overFarrow') private overFarrow: ElementRef | undefined;
+  @ViewChild('coreComponent')
   private coreComponent: QuizCoreComponent;
   private answers: ITracker<IQAnswer> = {};
   private moveId: number | undefined;

@@ -51,7 +51,7 @@ export class RedemptionComponent implements OnInit {
   public isPinEntered: boolean = false;
   public isPinCorrect: boolean;
   public macaron: IMacaron | null;
-  @ViewChild('pinInput', { static: false })
+  @ViewChild('pinInput')
   private pinInputComponent: PinInputComponent;
 
   private appConfig: IConfig<IStarhubConfig>;

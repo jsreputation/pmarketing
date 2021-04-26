@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpinComponent } from './spin.component';
 import { GameModule } from '@perxtech/core';
-import { MatButtonToggleModule } from '@angular/material';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 describe('SpinComponent', () => {
   let component: SpinComponent;

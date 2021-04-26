@@ -1,4 +1,4 @@
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleCollectStampsComponent } from './puzzle-collect-stamps.component';

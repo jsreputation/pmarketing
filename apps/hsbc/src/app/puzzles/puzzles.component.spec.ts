@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PuzzlesComponent } from './puzzles.component';
-import { MatListModule } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
 import {
   CampaignModule,
   VouchersModule,
