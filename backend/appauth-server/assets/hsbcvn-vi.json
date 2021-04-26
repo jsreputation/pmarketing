@@ -157,7 +157,7 @@
     "REWARD_STATUS_REDEEMED": "Đã đổi",
     "REWARD_STATUS_REDEEMED_ON": "Đã quy đổi {{date}}",
     "REWARD_STATUS_EXPIRED": "Đã hết hạn",
-    "CTA_TXT": "Nhận Quà Tặng",
+    "CTA_TXT": "Quy Đổi",
     "POINT_EARNED": "{points} Điểm kiếm được",
     "POINT_SPENT": "{points} Điểm đã tiêu",
     "CASHBACK_EARNED": "{points} hoàn tiền kiếm được",
@@ -264,12 +264,12 @@
     "CTA": "Huỷ bỏ"
   },
   "VOUCHER": {
-    "REDEEM": "Nhận Quà Tặng",
+    "REDEEM": "Quy Đổi",
     "EXPIRY": "Hết hạn vào: {{date}}",
     "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!"
   },
   "REWARD": {
-    "GET_VOUCHER": "Nhận phiếu thưởng",
+    "GET_VOUCHER": "Nhận Quà Tặng",
     "DESCRIPTION": "Sự miêu tả",
     "TNC": "Các điều khoản và điều kiện",
     "EXPIRY": "Hết hạn",
