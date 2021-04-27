@@ -22,6 +22,7 @@ import {
   SettingsService,
   IFlags,
 } from '@perxtech/core';
+import { V4BadgeService } from 'libs/core/projects/perx-core/src/lib/badges/v4-badge.service';
 
 @Component({
   selector: 'perx-blackcomb-pages-account',
@@ -49,7 +50,8 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private themesService: ThemesService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private badgeService: V4BadgeService,
   ) {
     this.preAuth = config.preAuth || false;
   }
@@ -74,6 +76,7 @@ export class AccountComponent implements OnInit {
       this.translate
         .get([membershipTierName, 'HOME.MEMBER'])
         .pipe(map((res) => `${res[membershipTierName]}${res['HOME.MEMBER']}`));
+    this.getAchievedBadgeCount();
   }
 
   public logout(): void {
@@ -90,5 +93,9 @@ export class AccountComponent implements OnInit {
       a.target = '_blank';
       a.click();
     }
+  }
+
+  private getAchievedBadgeCount(): void {
+    this.acquiredBadges = this.badgeService.getAchievedBadgeCount();
   }
 }

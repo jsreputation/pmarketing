@@ -95,6 +95,13 @@ export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-
 export { QuestModule } from './lib/quest/quest.service.module';
 export { IQuest, IQuestTask, QuestState } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
+
+/**
+ * Badges
+ */
+export { BadgeModule } from './lib/badges/badge.service.module';
+export { IBadgeService } from './lib/badges/badge.service';
+
 /**
  * Stamps
  */
