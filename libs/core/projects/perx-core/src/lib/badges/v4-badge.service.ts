@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigService, IConfig } from '@perxtech/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 import { IBadgeService } from './badge.service';
 
 @Injectable({
@@ -18,11 +20,12 @@ export class V4BadgeService implements IBadgeService {
   }
 
   public getAchievedBadgeCount(): Observable<number> {
-    // return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/user_quests`)
-    //   .pipe(
-    //     map((badges) => badges.meta.count));
-    const randomnumber = Math.floor(Math.random() * (25 - 0 + 1)) + 0;
-    return of(randomnumber);
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/user_quests`)
+      .pipe(
+        map(() =>
+          Math.floor(Math.random() * (25 - 0 + 1)) + 0
+          // badges.meta.count
+        ));
   }
 }
 
