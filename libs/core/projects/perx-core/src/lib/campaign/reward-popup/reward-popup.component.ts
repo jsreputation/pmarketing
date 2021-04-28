@@ -23,7 +23,7 @@ export interface PopUpClosedCallBack {
   styleUrls: ['./reward-popup.component.scss']
 })
 export class RewardPopupComponent {
-
+  public title: string;
   public text: string;
   public imageUrl: string;
   public buttonTxt: string;
@@ -35,6 +35,9 @@ export class RewardPopupComponent {
   ) {
     if (data.disableOverlayClose) {
       dialogRef.disableClose = data.disableOverlayClose;
+    }
+    if (data.title) {
+      this.title = data.title;
     }
     if (data.text) {
       this.text = data.text;
