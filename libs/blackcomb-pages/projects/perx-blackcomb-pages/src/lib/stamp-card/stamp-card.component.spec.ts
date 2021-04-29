@@ -25,6 +25,7 @@ import {
 
 import { StampCardComponent } from './stamp-card.component';
 import { stamps } from '../mock/stamp.mock';
+import { MatDialog } from '@angular/material/dialog';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -64,7 +65,8 @@ describe('StampCardComponent', () => {
         { provide: StampService, useValue: stampServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
         { provide: NotificationService, useValue: notificationStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        MatDialog
       ]
     })
       .compileComponents();

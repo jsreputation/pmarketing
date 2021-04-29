@@ -4,6 +4,7 @@
 	</button>
 </div>
 <div class="content">
+	<div class="title" mat-dialog-title>{{title}}</div>
 	<perx-core-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()">
 	</perx-core-expire-timer>
 	<div *ngIf="imageUrl" class="img-wrapper">

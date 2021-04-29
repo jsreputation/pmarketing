@@ -2,7 +2,6 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import {
   StampService,
   IStampCard,
-  IPopupConfig,
   NotificationService,
   PuzzleCollectReward,
   IStamp,
@@ -13,15 +12,10 @@ import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators
 import { Subject, Observable, of, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
-
-export interface IRewardPopupConfig extends IPopupConfig {
-  afterClosedCallBackRedirect?: PopUpClosedCallBack;
-  url?: string;
-}
-
-export interface PopUpClosedCallBack {
-  closeAndRedirect(url: string): void;
-}
+import {
+  IRewardPopupConfig, RewardPopupComponent
+} from 'libs/core/projects/perx-core/src/lib/campaign/reward-popup/reward-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'perx-blackcomb-stamp-card',
@@ -56,7 +50,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private router: Router,
     private notificationService: NotificationService,
     private themesService: ThemesService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -73,8 +68,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
           this.idN = Number.parseInt(id, 10);
-          return forkJoin( this.stampService.getCurrentCard(this.idN),
-                            this.themesService.getThemeSetting());
+          return forkJoin([this.stampService.getCurrentCard(this.idN),
+          this.themesService.getThemeSetting()]);
         }),
         tap(([stampCard, theme]: [IStampCard, ITheme]) => {
           if (stampCard) {
@@ -88,9 +83,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
             this.buttonText = stampCard.buttonText ? of(stampCard.buttonText) : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
             this.buttonStyle['background-color'] = stampCard.displayProperties.buttonBgColour ? stampCard.displayProperties.buttonBgColour :
-                            theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
+              theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
             this.buttonStyle.color = stampCard.displayProperties.buttonTextColour ? stampCard.displayProperties.buttonTextColour :
-                            theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+              theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
             this.buttonStyle.visibility = 'visible';
           }
         }),
@@ -179,11 +174,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   imageUrl: 'assets/prize.png',
                   disableOverlayClose: true,
                   ctaButtonClass: 'ga_game_completion',
-                  url: `/voucher/${voucherId}`,
+                  url: `/voucher-detail/${voucherId}`,
                   afterClosedCallBackRedirect: this,
                   buttonTxt
                 };
-                this.notificationService.addPopup(data);
+                this.dialog.open(RewardPopupComponent, { data });
               });
             }
 
@@ -201,14 +196,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
               ]).subscribe(translations => {
                 const [title, text, buttonTxt] = translations;
                 // all redeemed but no voucher
-                const data: IPopupConfig = {
+                const data: IRewardPopupConfig = {
                   title,
                   text,
                   disableOverlayClose: true,
                   afterClosedCallBack: this,
                   buttonTxt
                 };
-                this.notificationService.addPopup(data);
+                this.dialog.open(RewardPopupComponent, { data });
               });
             }
           }
