@@ -223,6 +223,7 @@ export class V4LoyaltyService extends LoyaltyService {
       membershipIdentifier: loyalty.membership_number,
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
+      pointsToCurrencyRate: loyalty.points_to_currency_rate,
       currency: loyalty.points_currency,
       nextTierPoints: nextTier ? nextTier.points_requirement : 0,
       nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,

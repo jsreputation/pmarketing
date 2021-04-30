@@ -4,7 +4,7 @@ import { ITransactionProperties } from '../../transactions/models/transactions.m
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
   'reward' = 'Reward::Transaction',
-  'game' =  'GameTransaction'
+  'game' = 'GameTransaction'
 }
 
 export interface IExpiringPoints {
@@ -41,6 +41,7 @@ export interface ILoyalty {
   membershipIdentifier?: string;
   pointsBalance: number;
   currencyBalance?: number;
+  pointsToCurrencyRate?: number;
   currency?: string;
   nextTierPoints?: number;
   nextTierPointsDiff?: number;
