@@ -3,18 +3,19 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  Validators,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AuthenticationService,
-  NotificationService,
   ISignUpData,
+  NotificationService,
 } from '@perxtech/core';
 import { EMAIL_VALIDATION_REGEX } from '../../app.constants';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -56,7 +57,7 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private notificationService: NotificationService,
-    // private sharedDataService: SharedDataService,
+    private sharedDataService: SharedDataService,
     // private profileService: ProfileService,
   ) {
   }
@@ -101,6 +102,10 @@ export class SignUpComponent implements OnInit {
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(
       () => {
+        this.sharedDataService.addData({
+          phone: profile.phone,
+          password: profile.password
+        });
         this.router.navigate(['sms-validation'], {
           queryParams: { identifier: profile.phone }
         });
