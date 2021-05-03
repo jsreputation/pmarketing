@@ -99,7 +99,9 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value, phone: this.signUpForm.value.phone };
+
+    // converting to Number will strip leading 0s
+    const profile = { ...this.signUpForm.value, phone: Number(this.signUpForm.value.phone) };
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(
