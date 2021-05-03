@@ -8,7 +8,7 @@ import { ChangeMobileComponent } from './change-mobile.component';
 const routes: Routes = [{
   path: '',
   component: ChangeMobileComponent,
-  data: { minLen: 10 }
+  data: { minLen: 10, maxLen: 10 }
 }];
 
 @NgModule({

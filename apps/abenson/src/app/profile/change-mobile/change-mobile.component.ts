@@ -25,6 +25,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ChangeMobileComponent implements OnInit {
   public phoneForm: FormGroup;
   public passwordMinLen: number;
+  public passwordMaxLen: number;
 
   constructor(
     private fb: FormBuilder,
@@ -40,14 +41,17 @@ export class ChangeMobileComponent implements OnInit {
     });
     this.route.data.subscribe(
       (dataObj) => {
-        if (dataObj.minLen) {
+        if (dataObj.minLen && dataObj.maxLen) {
           this.passwordMinLen = dataObj.minLen;
-          if (this.passwordMinLen) {
-            this.phoneForm.controls.phone.setValidators(
-              [ Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(this.passwordMinLen)]
-            );
-            this.phoneForm.controls.phone.updateValueAndValidity();
-          }
+          this.passwordMaxLen = dataObj.maxLen;
+          this.phoneForm.controls.phone.setValidators([
+            Validators.required,
+            Validators.pattern('^[0-9]*$'),
+            Validators.minLength(this.passwordMinLen),
+            Validators.maxLength(this.passwordMaxLen)
+            ]
+          );
+          this.phoneForm.controls.phone.updateValueAndValidity();
         }
       }
     );
