@@ -495,18 +495,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       );
     if (this.appConfig && this.appConfig.app === 'abenson') {
-        this.subTitleFn = (loyalty: ILoyalty) =>
-          this.translate
+      const getBalance = (loyalty: ILoyalty) => loyalty.pointsBalance / (loyalty.pointsToCurrencyRate ? loyalty.pointsToCurrencyRate : 1);
+      this.subTitleFn = (loyalty: ILoyalty) =>
+        this.translate
           .get('HOME.CASH_EQUIVALENT')
           .pipe(
             map((res) =>
-                  res.replace( '{{amount}}', this.currencyPipe.transform(
-                  loyalty.currencyBalance, loyalty.currency,
-                  'symbol-narrow',
-                  '1.0-0',
-                  'en-PH'))
+              res.replace('{{amount}}', this.currencyPipe.transform(
+                getBalance(loyalty), loyalty.currency,
+                'symbol-narrow',
+                '1.0-0',
+                'en-PH'))
             ));
-      }
+    }
 
     this.summaryExpiringFn = (loyalty: ILoyalty) =>
       this.translate
