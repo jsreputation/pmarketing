@@ -1,8 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable, of } from 'rxjs';
-import { takeUntil, map, filter, catchError, mergeMap } from 'rxjs/operators';
-import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perxtech/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import {
+  AuthenticationService,
+  ILoyalty,
+  isEmptyArray,
+  LoyaltyService,
+  NotificationService,
+  ProfileService
+} from '@perxtech/core';
 import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
@@ -23,9 +47,7 @@ export class SmsValidationComponent implements OnInit {
     private profileService: ProfileService,
     private notification: NotificationService,
     private sharedDataService: SharedDataService
-  ) {
-    this.redirectToLogin = this.redirectToLogin.bind(this);
-  }
+  ) {}
 
   public get phoneDisplay(): string {
     return this.identifier && '*'.repeat(this.identifier.length - 4) + this.identifier.substr(this.identifier.length - 4);
@@ -62,7 +84,7 @@ export class SmsValidationComponent implements OnInit {
     this.authenticationService.verifyOTP(this.identifier, this.code)
       .pipe(
         mergeMap(() => this.sharedDataService.data),
-        mergeMap((data) => this.setCardNumber(data)))
+        tap((data) => this.setCardNumber(data)))
       .subscribe((result) => this.redirectToLogin(result),
         (err) => {
           this.notification.addSnack(err.error.message);
