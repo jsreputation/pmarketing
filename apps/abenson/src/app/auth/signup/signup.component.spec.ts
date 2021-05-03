@@ -1,16 +1,30 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 
 import { SignUpComponent } from './signup.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  ProfileService
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { SharedDataService } from '../../services/shared-data.service';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
@@ -43,7 +57,8 @@ describe('SignupComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        SharedDataService
       ]
     })
       .compileComponents();
