@@ -16,6 +16,7 @@ import {
   filter,
   map,
   mergeMap,
+  switchMap,
   takeUntil,
   tap
 } from 'rxjs/operators';
@@ -84,8 +85,10 @@ export class SmsValidationComponent implements OnInit {
     this.authenticationService.verifyOTP(this.identifier, this.code)
       .pipe(
         mergeMap(() => this.sharedDataService.data),
-        tap((data) => this.setCardNumber(data)))
-      .subscribe((result) => this.redirectToLogin(result),
+        tap((data) => this.setCardNumber(data)),
+        switchMap((data: any) => this.authenticationService.login(data.phone, data.password))
+      ).subscribe(
+        () => this.autoLoginToHome(),
         (err) => {
           this.notification.addSnack(err.error.message);
         });
@@ -96,13 +99,12 @@ export class SmsValidationComponent implements OnInit {
     });
   }
 
-  public redirectToLogin(result: boolean): void {
-    if (result) {
+  public autoLoginToHome(): void {
+    if (this.authenticationService.isAuthorized()) {
       this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/login']);
     }
-
   }
 
   private setCardNumber(data: any): Observable<any> {
