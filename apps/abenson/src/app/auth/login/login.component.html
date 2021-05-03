@@ -18,6 +18,9 @@
           <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
             Mobile Number is <strong>required</strong>
           </mat-error>
+          <mat-error *ngIf="mobileNumber?.hasError('maxlength')">
+            Mobile Number is too long
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" class="full-width__input">
           <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">

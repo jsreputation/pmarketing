@@ -3,10 +3,10 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  Validators,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
   public initForm(): void {
     this.loginForm = this.fb.group({
-      mobileNumber: ['', Validators.required],
+      mobileNumber: ['', [Validators.required, Validators.maxLength(10)]],
       pinCode: ['', Validators.required]
     });
   }
