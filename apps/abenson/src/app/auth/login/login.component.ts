@@ -67,7 +67,8 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = this.loginForm.value.mobileNumber as string;
+    // converting to Number will strip leading 0s
+    const username = Number(this.loginForm.value.mobileNumber).toString();
     const password: string = this.loginForm.value.pinCode;
     this.errorMessage = undefined;
 
