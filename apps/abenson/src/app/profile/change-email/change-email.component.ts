@@ -13,6 +13,7 @@ import {
   NotificationService
 } from '@perxtech/core';
 import { Location } from '@angular/common';
+import { EMAIL_VALIDATION_REGEX } from '../../app.constants';
 
 @Component({
   selector: 'app-change-email',
@@ -39,11 +40,10 @@ export class ChangeEmailComponent implements OnInit {
 
   public initForm(): void {
     this.emailChangeForm = this.fb.group({
-      email: ['', Validators.required]
+      email: ['', [Validators.required, Validators.pattern(EMAIL_VALIDATION_REGEX)]]
     });
     this.profileService.whoAmI()
       .subscribe((profile) => this.emailChangeForm.setValue({ email: profile.email }));
-
   }
 
   public onSubmit(): void {
@@ -54,10 +54,10 @@ export class ChangeEmailComponent implements OnInit {
           this.ntfcService.addPopup({ title: 'Success', text: 'Your email address was updated' });
         }, 50);
       },
-      (err) => {
-        if (err.error && err.error.message) {
-          this.ntfcService.addSnack(err.error.message);
-        }
-      });
+        (err) => {
+          if (err.error && err.error.message) {
+            this.ntfcService.addSnack(err.error.message);
+          }
+        });
   }
 }

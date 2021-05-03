@@ -14,6 +14,7 @@ import {
   NotificationService,
   ISignUpData,
 } from '@perxtech/core';
+import { EMAIL_VALIDATION_REGEX } from '../../app.constants';
 
 @Component({
   selector: 'app-signup',
@@ -79,7 +80,7 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', Validators.pattern(EMAIL_VALIDATION_REGEX)],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       acceptTerms: [false, Validators.requiredTrue]
