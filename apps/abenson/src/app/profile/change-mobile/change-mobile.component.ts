@@ -59,7 +59,8 @@ export class ChangeMobileComponent implements OnInit {
 
   public requestOtp(): void {
     if (this.phoneForm.valid) {
-      this.auth.requestVerificationToken(this.phoneForm.value.phone).subscribe(
+      // converting to Number will strip leading 0s
+      this.auth.requestVerificationToken(Number(this.phoneForm.value.phone).toString()).subscribe(
         () => {
           this.router.navigate([ '/otp', 'phone' ], { queryParams: this.phoneForm.value });
         },
