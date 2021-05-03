@@ -1,30 +1,36 @@
 import {
-  TestBed,
   async,
-  fakeAsync,
   ComponentFixture,
+  fakeAsync,
+  TestBed,
   tick,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarModule
+} from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
-  NotificationService,
   AuthenticationService,
-  ICampaignService,
-  ProfileService,
   ConfigService,
-  ThemesService,
-  RewardsService,
+  FeedReaderService,
+  ICampaignService,
   IGameService,
   InstantOutcomeService,
-  FeedReaderService,
+  IQuestService,
+  NotificationService,
+  ProfileService,
+  RewardsService,
   SettingsService,
-  TokenStorage,
-  IQuestService
+  ThemesService,
+  TokenStorage
 } from '@perxtech/core';
 import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
@@ -35,7 +41,11 @@ import { ChangeCityComponent } from './profile/change-city/change-city.component
 import { ChangeStreetAddressComponent } from './profile/change-street-address/change-street-address.component';
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
-import { CurrencyPipe, DatePipe, Location } from '@angular/common';
+import {
+  CurrencyPipe,
+  DatePipe,
+  Location
+} from '@angular/common';
 import { Type } from '@angular/core';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/signup.component';
@@ -45,6 +55,7 @@ import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { SharedDataService } from './services/shared-data.service';
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () =>
@@ -192,10 +203,11 @@ describe('AppComponent', () => {
     const locationTest = {} as Location;
     const matDialog = {} as MatDialog;
     const titleService = {} as Title;
+    const sharedDataService = {} as SharedDataService;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
-    app.onActivate(new SignUpComponent(form, auth, router, notifi));
+    app.onActivate(new SignUpComponent(form, auth, router, notifi, sharedDataService));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(
       new HomeComponent(
