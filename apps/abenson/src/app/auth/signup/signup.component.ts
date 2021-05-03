@@ -3,18 +3,21 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  Validators,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AuthenticationService,
-  NotificationService,
   ISignUpData,
+  NotificationService,
 } from '@perxtech/core';
-import { EMAIL_VALIDATION_REGEX } from '../../app.constants';
+import {
+  EMAIL_VALIDATION_REGEX,
+  NAME_VALIDATION_REGEX
+} from '../../app.constants';
 
 @Component({
   selector: 'app-signup',
@@ -78,8 +81,8 @@ export class SignUpComponent implements OnInit {
 
   public initForm(): void {
     this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.pattern(NAME_VALIDATION_REGEX)]],
+      lastName: ['', [Validators.required, Validators.pattern(NAME_VALIDATION_REGEX)]],
       email: ['', Validators.pattern(EMAIL_VALIDATION_REGEX)],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
