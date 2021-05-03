@@ -3,16 +3,16 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  Validators,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AuthenticationService,
-  NotificationService,
   ISignUpData,
+  NotificationService,
 } from '@perxtech/core';
 import { EMAIL_VALIDATION_REGEX } from '../../app.constants';
 
@@ -90,8 +90,7 @@ export class SignUpComponent implements OnInit {
 
   public onSubmit(): void {
     const password: string = this.signUpForm.value.password;
-    const termsConditions = this.signUpForm.value.acceptTerms as boolean;
-    if (!termsConditions) {
+    if (this.signUpForm.invalid) {
       return;
     }
 
