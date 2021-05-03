@@ -7,7 +7,9 @@ import {
   CampaignType,
   CampaignState,
   CampaignDisplayProperties,
-  IReferral
+  IReferral,
+  CampaignOutcomeType,
+  ICampaignOutcome
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
@@ -82,6 +84,24 @@ interface IV4CampaignsResponse {
   meta: {
     count: number;
   };
+}
+
+export interface IV4CampaignOutcomeResponse {
+  data: IV4CampaignOutcome[];
+}
+
+export interface IV4CampaignOutcome {
+  id: number;
+  modularizable_id: number;
+  modularizable_type: CampaignOutcomeType;
+  outcome: IV4CampaignOutcomeItem;
+  points_count?: number;
+}
+
+export interface IV4CampaignOutcomeItem {
+  id: number;
+  name: string;
+  type: CampaignOutcomeType;
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -281,5 +301,30 @@ export class V4CampaignService implements ICampaignService {
     return this.http.post(`${this.baseUrl}/v4/campaigns/referral`, referralBody).pipe(
       catchError(e => of(e))
     );
+  }
+
+  public getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]> {
+    return this.campaignsCache[id] = this.http
+      .get<IV4CampaignOutcomeResponse>(`${this.baseUrl}/v4/campaigns/${id}/outcomes`)
+      .pipe(
+        map(resp => resp.data),
+        map((campaignOutcomes: IV4CampaignOutcome[]) => campaignOutcomes.filter(o => o.modularizable_type === CampaignOutcomeType.reward
+          || o.modularizable_type === CampaignOutcomeType.points)),
+        map((campaignOutcomes: IV4CampaignOutcome[]) =>
+          campaignOutcomes.map(campaignOutcome =>
+            V4CampaignService.v4CampaignOutcomeToCampaignOutcome(campaignOutcome)
+          )
+        ),
+        catchError(e => of(e))
+      );
+  }
+
+  public static v4CampaignOutcomeToCampaignOutcome(campaignOutcome: IV4CampaignOutcome): ICampaignOutcome {
+    return {
+      id: campaignOutcome.modularizable_id,
+      type: campaignOutcome.modularizable_type,
+      name: campaignOutcome.outcome ? campaignOutcome.outcome.name : '',
+      pointsCount: campaignOutcome.points_count
+    };
   }
 }
