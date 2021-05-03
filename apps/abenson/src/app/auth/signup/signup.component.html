@@ -10,11 +10,17 @@
         <mat-error *ngIf="firstName?.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="firstName?.hasError('pattern')">
+          Enter a valid name.
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
         <input matInput placeholder="Last Name" formControlName="lastName">
         <mat-error *ngIf="lastName?.hasError('required')">
           Last Name is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="lastName?.hasError('pattern')">
+          Enter a valid name.
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
