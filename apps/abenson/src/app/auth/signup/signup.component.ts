@@ -91,8 +91,7 @@ export class SignUpComponent implements OnInit {
 
   public onSubmit(): void {
     const password: string = this.signUpForm.value.password;
-    const termsConditions = this.signUpForm.value.acceptTerms as boolean;
-    if (!termsConditions) {
+    if (this.signUpForm.invalid) {
       return;
     }
 
