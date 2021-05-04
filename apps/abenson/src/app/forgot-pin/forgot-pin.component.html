@@ -1,18 +1,11 @@
 <div class="container" [ngSwitch]="currentStep">
   <ng-container *ngSwitchCase="1">
     <h1 class="title">Help us retrieve your profile</h1>
-    <form
-      class="forgot-pin-form"
-      [formGroup]="forgotPinForm"
-      (ngSubmit)="onSubmit()"
-    >
+    <form class="forgot-pin-form" [formGroup]="forgotPinForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="standard" class="full-width__input">
         <mat-label>Enter Mobile Number</mat-label>
         <span matPrefix>+63<span class="prefix-spacer"></span></span>
-        <input
-          matInput
-          formControlName="mobileNumber"
-        >
+        <input matInput formControlName="mobileNumber">
         <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
           Mobile number is <strong>required</strong>
         </mat-error>
@@ -20,13 +13,7 @@
           <strong>Numbers</strong> only
         </mat-error>
       </mat-form-field>
-      <button
-        mat-flat-button
-        type="submit"
-        color="primary"
-        class="full-width"
-        [disabled]="!forgotPinForm.valid"
-      >
+      <button mat-flat-button type="submit" color="primary" class="full-width" [disabled]="!forgotPinForm.valid">
         Next
       </button>
     </form>
@@ -35,14 +22,22 @@
     <div class="page-container">
       <div class="content-container">
         <h2>{{'OTP_PAGE.TITLE' | translate}}</h2>
-        <span class="subheading"><ng-container>{{'FORGET_PW_PAGE.OTP_SEND_TO' | translate}}</ng-container> (******{{usersPhone}}) <ng-container>
-        </ng-container>
+        <span class="subheading">
+          <ng-container>{{'FORGET_PW_PAGE.OTP_SEND_TO' | translate}}</ng-container> (******{{usersPhone}})
+          <ng-container>
+          </ng-container>
         </span>
         <div class="pin-input-container">
           <perx-core-pin-input [length]="MAX_DIGITS_COUNT" (full)="handlePin($event)">
           </perx-core-pin-input>
         </div>
-        <button mat-stroked-button [disabled]="loading" (click)="resend()">{{ 'OTP_PAGE.ERROR_LINK' | translate }}</button>
+        <div class="countdown-message" *ngIf="!countdownComplete">
+          <perx-core-countdown-timer [seconds]='resendOTPCountDownSeconds' (done)='done()'
+            messageTemplate="Resend OTP in {seconds} seconds"></perx-core-countdown-timer>
+        </div>
+        <div *ngIf="!loading && countdownComplete" class="pslink" (click)="resend()">
+          {{ 'OTP_PAGE.ERROR_LINK' | translate }}
+        </div>
       </div>
     </div>
   </ng-container>
@@ -74,14 +69,9 @@
           </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button
-          color="primary"
-          [disabled]="loading"
-          class="full-width__button">
+        <button mat-raised-button color="primary" [disabled]="loading" class="full-width__button">
           <i *ngIf="loading" class="loading-spin">
-            <mat-progress-spinner
-              [diameter]="30"
-              mode="indeterminate">
+            <mat-progress-spinner [diameter]="30" mode="indeterminate">
             </mat-progress-spinner>
           </i>
           <span *ngIf="!loading">{{'FORGET_PW_PAGE.CTA_SAVE_TXT' | translate}}</span>

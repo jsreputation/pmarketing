@@ -205,6 +205,7 @@ export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
 export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 export { TimerComponent } from './lib/utils/timer/timer.component';
+export { CountDownComponent } from './lib/utils/count-down/count-down.component';
 export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';

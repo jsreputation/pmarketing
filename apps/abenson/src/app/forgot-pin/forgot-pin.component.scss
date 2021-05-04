@@ -23,7 +23,6 @@
     text-align: center;
   }
 
-
   .full-width,
   .full-width__input,
   .full-width__button {
@@ -34,7 +33,7 @@
     height: 4.4rem;
     letter-spacing: 0.075rem;
     margin-bottom: 0.8rem;
-    background: #0F69AF !important;
+    background: #0f69af !important;
     margin-top: 1.6rem;
   }
 
@@ -61,6 +60,17 @@
       width: 100%;
       margin: 3rem auto;
       float: none;
+    }
+
+    .pslink,
+    .countdown-message {
+      margin: 1.2rem 0 2.4rem;
+      font-size: 1.2rem;
+      line-height: 2.1rem;
+    }
+
+    .pslink {
+      color: #0f69af;
     }
   }
 

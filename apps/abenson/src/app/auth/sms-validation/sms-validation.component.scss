@@ -21,12 +21,16 @@
     line-height: 2.5rem;
   }
 
+  .countdown-message,
   .resend-link {
     font-size: 1.2rem;
     line-height: 2.1rem;
-    color: #0F69AF;
     margin-top: 1.2rem;
     margin-bottom: 3.2rem;
+  }
+
+  .resend-link {
+    color: #0f69af;
   }
 
   .full-width {

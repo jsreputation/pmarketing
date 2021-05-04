@@ -3,7 +3,11 @@
     <h1 class="title">Input OTP</h1>
     <div class="mb24">Enter the 5-digit One-Time Password (OTP) sent to your mobile number ({{phoneDisplay}})</div>
     <perx-core-pin-input [length]="5" (full)="update($event)"></perx-core-pin-input>
-    <div class="pslink" (click)="resendOtp()">Resend OTP</div>
+    <div *ngIf="countdownComplete" class="pslink" (click)="resendOtp()">Resend OTP</div>
+    <div *ngIf="!countdownComplete" class="countdown-message">
+      <perx-core-countdown-timer [seconds]='resendOTPCountDownSeconds' (done)='done()'
+      messageTemplate="Resend OTP in {seconds} seconds"></perx-core-countdown-timer>
+    </div>
     <button mat-flat-button type="submit" color="primary" class="full-width" [disabled]="!data || !data.otp"
       (click)="onSubmit()">Next</button>
   </div>

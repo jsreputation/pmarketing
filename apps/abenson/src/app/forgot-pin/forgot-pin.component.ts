@@ -21,34 +21,37 @@ import {
   equalityValidator
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-
 import { ForgotPasswordComponent as BCForgotPasswordComponent } from '@perxtech/blackcomb-pages';
 import { tap } from 'rxjs/operators';
+import { RESEND_OTP_COUNTDOWN_SECONDS } from '../app.constants';
 
 @Component({
   selector: 'app-forgot-pin',
   templateUrl: './forgot-pin.component.html',
   styleUrls: ['./forgot-pin.component.scss']
 })
-export class ForgotPinComponent extends BCForgotPasswordComponent implements OnInit  {
+
+export class ForgotPinComponent extends BCForgotPasswordComponent implements OnInit {
   public forgotPinForm: FormGroup;
   public MAX_DIGITS_COUNT: number = 5;
+  public resendOTPCountDownSeconds: number;
+  public countdownComplete: boolean = false;
 
   public get mobileNumber(): AbstractControl | null {
     return this.forgotPinForm.get('mobileNumber');
   }
 
   constructor(
-     authenticationService: AuthenticationService,
-     router: Router,
-     route: ActivatedRoute,
-     notificationService: NotificationService,
-     generalStaticDataService: GeneralStaticDataService,
-     configService: ConfigService,
-     translate: TranslateService,
-     loyaltyService: LoyaltyService,
-     themesService: ThemesService,
-     private fb: FormBuilder,
+    authenticationService: AuthenticationService,
+    router: Router,
+    route: ActivatedRoute,
+    notificationService: NotificationService,
+    generalStaticDataService: GeneralStaticDataService,
+    configService: ConfigService,
+    translate: TranslateService,
+    loyaltyService: LoyaltyService,
+    themesService: ThemesService,
+    private fb: FormBuilder,
   ) {
     super(authenticationService, router, route, notificationService,
       generalStaticDataService, configService, translate, loyaltyService, themesService);
@@ -56,6 +59,7 @@ export class ForgotPinComponent extends BCForgotPasswordComponent implements OnI
 
   public ngOnInit(): void {
     this.initForm();
+    this.resendOTPCountDownSeconds = RESEND_OTP_COUNTDOWN_SECONDS;
   }
 
   private initForm(): void {
@@ -72,7 +76,8 @@ export class ForgotPinComponent extends BCForgotPasswordComponent implements OnI
     this.newPasswordForm = this.fb.group({
       newPassword: new FormControl(null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)]),
       passwordConfirmation: new FormControl(null, [Validators.required, Validators.maxLength(4), Validators.minLength(4)])
-    }, { validators: [equalityValidator('newPassword', 'passwordConfirmation')]
+    }, {
+      validators: [equalityValidator('newPassword', 'passwordConfirmation')]
     });
 
   }
@@ -90,6 +95,14 @@ export class ForgotPinComponent extends BCForgotPasswordComponent implements OnI
         () => this.currentStep = 2,
         (err) => this.handleError(err)
       );
-    }
+  }
 
+  public done(): void {
+    this.countdownComplete = true;
+  }
+
+  public resend(): void {
+    this.countdownComplete = false;
+    super.resend();
+  }
 }

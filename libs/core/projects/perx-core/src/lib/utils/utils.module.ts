@@ -31,6 +31,7 @@ import { SortRewardsPipe } from './directives/sort-rewards-pipe';
 import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
 import { TimerComponent, ForceLengthPipe } from './timer/timer.component';
+import { CountDownComponent } from './count-down/count-down.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -70,6 +71,7 @@ const components = [
   NewsfeedComponent,
   FeedItemPopupComponent,
   TimerComponent,
+  CountDownComponent,
   LocationFilterPopupComponent,
   StatisticCardComponent,
   LeaderboardCTAComponent

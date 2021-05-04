@@ -29,17 +29,22 @@ import {
   ProfileService
 } from '@perxtech/core';
 import { SharedDataService } from '../../services/shared-data.service';
+import { RESEND_OTP_COUNTDOWN_SECONDS } from '../../app.constants';
 
 @Component({
   selector: 'app-sms-validation',
   templateUrl: './sms-validation.component.html',
   styleUrls: ['./sms-validation.component.scss']
 })
+
 export class SmsValidationComponent implements OnInit {
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
   public code: string;
   private appAccessTokenFetched: boolean = false;
+  public resendOTPCountDownSeconds: number;
+  public countdownComplete: boolean = false;
+
   constructor(
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
@@ -48,14 +53,14 @@ export class SmsValidationComponent implements OnInit {
     private profileService: ProfileService,
     private notification: NotificationService,
     private sharedDataService: SharedDataService
-  ) {}
+  ) { }
 
   public get phoneDisplay(): string {
     return this.identifier && '*'.repeat(this.identifier.length - 4) + this.identifier.substr(this.identifier.length - 4);
   }
 
   public ngOnInit(): void {
-
+    this.resendOTPCountDownSeconds = RESEND_OTP_COUNTDOWN_SECONDS;
     const token = this.authenticationService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -95,6 +100,7 @@ export class SmsValidationComponent implements OnInit {
   }
 
   public resendSms(): void {
+    this.countdownComplete = false;
     this.authenticationService.resendOTP(this.identifier).subscribe(() => {
     });
   }
@@ -129,6 +135,9 @@ export class SmsValidationComponent implements OnInit {
         return of(false);
       })
     );
+  }
 
+  public done(): void {
+    this.countdownComplete = true;
   }
 }

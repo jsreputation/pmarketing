@@ -9,6 +9,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, IChangePhoneData } from '@perxtech/core';
+import { RESEND_OTP_COUNTDOWN_SECONDS } from '../../app.constants';
 
 @Component({
   selector: 'app-verification-otp',
@@ -19,6 +20,8 @@ export class VerificationOtpComponent implements OnInit {
   public type: string;
   public data: IChangePhoneData | IChangePasswordData;
   public userPhone?: string;
+  public resendOTPCountDownSeconds: number;
+  public countdownComplete: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private auth: AuthenticationService,
@@ -31,7 +34,9 @@ export class VerificationOtpComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.resendOTPCountDownSeconds = RESEND_OTP_COUNTDOWN_SECONDS;
   }
+
   public get phoneDisplay(): string | undefined {
     return this.userPhone && '*'.repeat(this.userPhone.length - 4) + this.userPhone.substr(this.userPhone.length - 4);
   }
@@ -67,18 +72,18 @@ export class VerificationOtpComponent implements OnInit {
           this.ntfcService.addPopup({ title: 'Success', text: 'Your phone was updated' });
           this.router.navigate(['account']);
         },
-        (err) => {
-          this.ntfcService.addSnack(err.error.message);
-        });
+          (err) => {
+            this.ntfcService.addSnack(err.error.message);
+          });
         break;
       case 'password':
         this.auth.changePassword(this.data as IChangePasswordData).subscribe(() => {
           this.ntfcService.addPopup({ title: 'Success', text: 'Your password was updated' });
           this.router.navigate(['account']);
         },
-        (err) => {
-          this.ntfcService.addSnack(err.error.message);
-        });
+          (err) => {
+            this.ntfcService.addSnack(err.error.message);
+          });
         break;
     }
   }
@@ -86,6 +91,7 @@ export class VerificationOtpComponent implements OnInit {
   public resendOtp(): void {
     switch (this.type) {
       case 'phone':
+        this.countdownComplete = false;
         this.auth.requestVerificationToken(this.userPhone).toPromise();
         break;
       case 'password':
@@ -94,5 +100,9 @@ export class VerificationOtpComponent implements OnInit {
         }
         break;
     }
+  }
+
+  public done(): void {
+    this.countdownComplete = true;
   }
 }
