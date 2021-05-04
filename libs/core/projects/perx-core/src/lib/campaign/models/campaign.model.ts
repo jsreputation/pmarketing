@@ -96,3 +96,16 @@ export interface ICampaignItem {
   itemId: number;
   itemType: string;
 }
+
+export enum CampaignOutcomeType {
+  reward = 'Reward::Campaign',
+  points = 'StoredValue::Campaign',
+  custom = 'CustomOutcome'
+}
+
+export interface ICampaignOutcome {
+  id: number;
+  type: CampaignOutcomeType;
+  name: string;
+  pointsCount?: number;
+}

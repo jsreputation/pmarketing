@@ -7,7 +7,9 @@ import {
   QuestState,
   NotificationService,
   ICampaignService,
-  QuestProperties
+  QuestProperties,
+  ICampaignOutcome,
+  CampaignOutcomeType
 } from '@perxtech/core';
 import { switchMap, filter, map, takeUntil } from 'rxjs/operators';
 import { Observable, forkJoin, of, EMPTY, Subject } from 'rxjs';
@@ -24,6 +26,7 @@ export class QuestComponent implements OnInit, OnDestroy {
   public quest$: Observable<IQuest>;
   public campaign$: Observable<ICampaign>;
   public tasks$: Observable<IQuestTask[]>;
+  public campaignOutcome$: Observable<ICampaignOutcome[]>;
 
   public questCompleted: boolean = false;
   public taskProgress: number = 0;
@@ -33,6 +36,7 @@ export class QuestComponent implements OnInit, OnDestroy {
   public isEnrolled: boolean = false;
   public questState: string = '';
   public state: typeof QuestState = QuestState;
+  public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
   public questConfig: QuestProperties | undefined;
   private destroy$: Subject<void> = new Subject();
@@ -50,28 +54,29 @@ export class QuestComponent implements OnInit, OnDestroy {
           const campaignId: number = Number.parseInt(cid, 10);
           return forkJoin(
            this.campaignService.getCampaign(campaignId),
+           this.campaignService.getCampaignOutcomes(campaignId),
            this.questService.getQuestTasks(campaignId),
            this.questService.getQuestFromCampaign(campaignId)
           );
         }
       ),
-      switchMap(([campaign, tasks, quests]: [ICampaign, IQuestTask[], IQuest[]]) => {
+      switchMap(([campaign, outcomes, tasks, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
         this.taskTotalLen = tasks.length;
         if (quests && quests.length > 0) {
           this.questState = quests[0].state ? quests[0].state : '';
           return this.questService.getQuestProgress(quests[0].id).pipe(
-            map((quest) => [campaign, tasks, quest])
+            map((quest) => [campaign, outcomes, tasks, quest])
           );
         }
-        return of([campaign, tasks, EMPTY]);
+        return of([campaign, outcomes, tasks, EMPTY]);
       }),
       takeUntil(this.destroy$)
-      ).subscribe(([campaign, tasks, quest]: [ICampaign, IQuestTask[], IQuest]) => {
+      ).subscribe(([campaign, outcomes, tasks, quest]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest]) => {
         this.updateProgessBar(quest);
         this.questConfig = oc(campaign).displayProperties.questDetails();
         this.campaign$ = of(campaign);
         this.tasks$ = of(tasks);
-
+        this.campaignOutcome$ = of(outcomes);
     });
   }
 
