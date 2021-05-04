@@ -85,7 +85,7 @@ export class SignUpComponent implements OnInit {
       firstName: ['', [Validators.required, Validators.pattern(NAME_VALIDATION_REGEX)]],
       lastName: ['', [Validators.required, Validators.pattern(NAME_VALIDATION_REGEX)]],
       email: ['', Validators.pattern(EMAIL_VALIDATION_REGEX)],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.maxLength(10)]],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       acceptTerms: [false, Validators.requiredTrue]
       // cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
@@ -99,7 +99,9 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value, phone: this.signUpForm.value.phone };
+
+    // converting to Number will strip leading 0s
+    const profile = { ...this.signUpForm.value, phone: Number(this.signUpForm.value.phone) };
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(

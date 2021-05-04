@@ -38,6 +38,9 @@
         <mat-error *ngIf="phone?.hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="phone?.hasError('maxlength')">
+          Mobile Number is too long
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
         <input [type]="hide ? 'password' : 'text'" matInput placeholder="Create your 4-Digit Pin Code"

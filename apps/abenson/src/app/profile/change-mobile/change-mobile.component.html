@@ -11,6 +11,9 @@
       <mat-error *ngIf="phoneForm.get('phone')?.hasError('minlength')">
         <span>Phone number should be {{passwordMinLen}} digits long</span>
       </mat-error>
+      <mat-error *ngIf="phoneForm.get('phone')?.hasError('maxlength')">
+        <span>Phone number cannot be more than {{passwordMaxLen}} digits long</span>
+      </mat-error>
     </mat-form-field>
     <button class="full-width__input" mat-flat-button>Save</button>
   </form>

@@ -3,10 +3,10 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  Validators,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -61,13 +61,14 @@ export class LoginComponent implements OnInit {
 
   public initForm(): void {
     this.loginForm = this.fb.group({
-      mobileNumber: ['', Validators.required],
+      mobileNumber: ['', [Validators.required, Validators.maxLength(10)]],
       pinCode: ['', Validators.required]
     });
   }
 
   public onSubmit(): void {
-    const username = this.loginForm.value.mobileNumber as string;
+    // converting to Number will strip leading 0s
+    const username = Number(this.loginForm.value.mobileNumber).toString();
     const password: string = this.loginForm.value.pinCode;
     this.errorMessage = undefined;
 

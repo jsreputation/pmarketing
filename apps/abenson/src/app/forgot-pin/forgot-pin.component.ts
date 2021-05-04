@@ -5,20 +5,23 @@ import {
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
-  Validators,
-  FormControl
+  Validators
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 
 import {
   AuthenticationService,
   ConfigService,
+  equalityValidator,
   GeneralStaticDataService,
   LoyaltyService,
   NotificationService,
-  ThemesService,
-  equalityValidator
+  ThemesService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -78,7 +81,8 @@ export class ForgotPinComponent extends BCForgotPasswordComponent implements OnI
   }
 
   public onSubmit(): void {
-    this.identifier = this.forgotPinForm.value.mobileNumber as string;
+    // converting to Number will strip leading 0s
+    this.identifier = Number(this.forgotPinForm.value.mobileNumber).toString();
     this.usersPhone = this.identifier.slice(-2);
 
     this.loading = true;
