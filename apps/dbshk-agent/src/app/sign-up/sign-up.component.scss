@@ -26,7 +26,7 @@
     background: var(--button_background_color);
     margin-top: 3rem;
     &:disabled {
-      opacity: 45%;
+      opacity: 0.45;
     }
   }
 
