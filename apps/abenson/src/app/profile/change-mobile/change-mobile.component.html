@@ -1,8 +1,8 @@
 <div class="page">
   <form [formGroup]="phoneForm" (ngSubmit)="requestOtp()">
-    <mat-form-field appearance="fill" class="full-width__input">
-      <mat-label>Enter new number</mat-label>
-      <input matInput formControlName="phone">
+    <mat-form-field appearance="standard" class="full-width__input">
+      <span matPrefix>+63<span class="prefix-spacer"></span></span>
+      <input type="tel" matInput autocomplete="tel-national" placeholder="Enter new number" formControlName="phone">
       <mat-error *ngIf="
         phoneForm.get('phone')?.hasError('required') ||
         phoneForm.get('phone')?.hasError('pattern')">
