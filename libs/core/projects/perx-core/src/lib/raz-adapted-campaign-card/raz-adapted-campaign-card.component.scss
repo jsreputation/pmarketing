@@ -12,7 +12,7 @@ mat-card {
   }
 
   &.disabled {
-    filter: grayscale(50%) opacity(40%);
+    filter: grayscale(50%) opacity(0.4);
   }
 
   .remaining-rewards {
