@@ -53,7 +53,9 @@ export class CardComponent implements OnInit {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
-    const getBalance = (loyalty: ILoyalty) => loyalty.pointsBalance / (loyalty.pointsToCurrencyRate ? loyalty.pointsToCurrencyRate : 1);
+    // AB-599: returns rounded down result for points balance / currency rate
+    const getBalance = (loyalty: ILoyalty) =>
+      Math.floor(loyalty.pointsBalance / (loyalty.pointsToCurrencyRate ? loyalty.pointsToCurrencyRate : 1));
     this.subTitleFn = (loyalty: ILoyalty) => of(`Equivalent to ${this.currencyPipe.transform(getBalance(loyalty), loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`);
     this.summaryExpiringFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
   }

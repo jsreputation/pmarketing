@@ -495,7 +495,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       );
     if (this.appConfig && this.appConfig.app === 'abenson') {
-      const getBalance = (loyalty: ILoyalty) => loyalty.pointsBalance / (loyalty.pointsToCurrencyRate ? loyalty.pointsToCurrencyRate : 1);
+      // AB-599: returns rounded down result for points balance / currency rate
+      const getBalance = (loyalty: ILoyalty) =>
+        Math.floor(loyalty.pointsBalance / (loyalty.pointsToCurrencyRate ? loyalty.pointsToCurrencyRate : 1));
       this.subTitleFn = (loyalty: ILoyalty) =>
         this.translate
           .get('HOME.CASH_EQUIVALENT')
