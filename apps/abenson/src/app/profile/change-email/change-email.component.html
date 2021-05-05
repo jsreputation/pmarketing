@@ -12,7 +12,7 @@
         New email is <strong>invalid</strong>
       </mat-error>
     </mat-form-field>
-    <button mat-flat-button type="submit" class="save-button">
+    <button [disabled]="!emailChangeForm.valid" mat-flat-button type="submit" class="save-button">
       Save
     </button>
   </form>
