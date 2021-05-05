@@ -9,10 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Login to Dockerhub
         run: |
           echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER}} --password-stdin
+
       - name: Set environment variables
         run: |
           REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
@@ -26,6 +29,7 @@ jobs:
             echo "Error! Unrecognized tag"
             exit 1
           fi
+
       - name: Set env APIHOST
         run: |
           if [ ${TARGET_ENV} == 'staging' ]; then
@@ -42,6 +46,7 @@ jobs:
           fi
           echo APIHOST is ${APIHOST}
           echo "APIHOST=${APIHOST}" >> "${GITHUB_ENV}"
+
       - name: Set env PREAUTH
         run: |
           if [ $APP == 'prudential' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
@@ -52,6 +57,7 @@ jobs:
           fi
           echo PREAUTH is ${PREAUTH}
           echo "PREAUTH=${PREAUTH}" >> "${GITHUB_ENV}"
+
       - name: Set env BASE_HREF
         run: |
           if [ $APP == 'hsbc' ]
@@ -71,10 +77,13 @@ jobs:
           fi
           echo BASE_HREF is ${BASE_HREF}
           echo "BASE_HREF=${BASE_HREF}" >> "${GITHUB_ENV}"
+
       - name: Set IS_WHISTLER to false
         run: echo "IS_WHISTLER=false" >> "${GITHUB_ENV}"
+
       - name: Set PERX_APP_VERSION
         run: echo "PERX_APP_VERSION=${APP}@${SEM_VER}:${GITHUB_SHA}" >> "${GITHUB_ENV}"
+
       - name: Set env SOURCE_TYPE
         run: |
           if [ $APP == 'hsbc' ]
@@ -92,6 +101,7 @@ jobs:
           fi
           echo SOURCE_TYPE is ${SOURCE_TYPE}
           echo "SOURCE_TYPE=${SOURCE_TYPE}" >> "${GITHUB_ENV}"
+
       - name: Set env REDIRECT_AFTER_LOGIN
         run: |
           if [ $APP == 'all-it' ] || \
@@ -115,6 +125,7 @@ jobs:
           fi
           echo REDIRECT_AFTER_LOGIN is ${REDIRECT_AFTER_LOGIN}
           echo "REDIRECT_AFTER_LOGIN=${REDIRECT_AFTER_LOGIN}" >> "${GITHUB_ENV}"
+
       - name: Transform env APP
         run: |
           if [ $APP == 'hsbc-xmas' ]
@@ -126,6 +137,7 @@ jobs:
           fi
           echo Final APP is ${APP}
           echo "APP=${APP}" >> "${GITHUB_ENV}"
+
       - name: Set env APP_BASE
         run: |
           if [ $APP == 'bdo' ] || \
@@ -152,18 +164,21 @@ jobs:
           fi
           echo APP_BASE is ${APP_BASE}
           echo "APP_BASE=${APP_BASE}" >> "${GITHUB_ENV}"
+
       - name: Set env APP_ENV
         run: |
           APP_ENV=$TARGET_ENV
           echo APP_ENV is ${APP_ENV}
           echo "APP_ENV=${APP_ENV}" >> "${GITHUB_ENV}"
+
       - name: Install skaffold
         env:
-          SKAFFOLD_VERSION: 1.12.0
+          SKAFFOLD_VERSION: 1.17.2
         run: |
           curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64
           chmod +x skaffold
           sudo mv skaffold /usr/local/bin
+
       - name: Docker build
         run: skaffold build
 

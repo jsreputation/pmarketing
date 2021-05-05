@@ -5,12 +5,6 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel redundant jobs
-        uses: technote-space/auto-cancel-redundant-job@v1
-      - uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.AWS_BUILDER_KUBE_CONFIG }}
       - name: Check branch name
         run: |
           REGEX="[[:alpha:]]+-[[:digit:]]+"
@@ -18,9 +12,19 @@ jobs:
             echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
             exit 1
           fi
+
+      - name: Cancel redundant jobs
+        uses: technote-space/auto-cancel-redundant-job@v1
+
+      - name: Set kubecontext
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.AWS_BUILDER_KUBE_CONFIG }}
+
       - name: Download tekton cli and install parallel
         env:
-          TEKTON_CLI_VERSION: 0.11.0
+          TEKTON_CLI_VERSION: 0.18.0
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v${TEKTON_CLI_VERSION}/tkn_${TEKTON_CLI_VERSION}_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
@@ -31,6 +35,7 @@ jobs:
           # Workaround to ensure label name ended with alphanumeric char
           LABEL+=0
           echo "TEKTON_LABEL=${LABEL}" >> "${GITHUB_ENV}"
+
       - name: Remove existing tasks
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-lint -o=name)
@@ -39,6 +44,7 @@ jobs:
           else
             echo "No existing taskruns"
           fi
+
       - name: Create tekton task
         run: |
           TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
@@ -79,6 +85,7 @@ jobs:
           )
           echo "Task: ${TEKTON_TASK}"
           echo "TASKRUN_NAME=${TEKTON_TASK}" >> "${GITHUB_ENV}"
+
       - name: Check task result
         run: |
           start=$SECONDS
@@ -100,22 +107,18 @@ jobs:
             echo ">>>> Timeout hit <<<<"
             exit 1
           fi
+
       - name: Display dashboard link
         if: always()
         run: |
-          touch lint_error.log
-          TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-          if [ "${TASKRUN_STATUS}" = "Failed" ]; then
-            echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
-            echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
-            tkn -n build taskrun logs ${TASKRUN_NAME} -f >> lint_error.log
-          fi
-      - name: Upload lint log
-        if: always()
-        uses: actions/upload-artifact@v1
-        with:
-          name: Lint logs
-          path: lint_error.log
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            if [ "${TASKRUN_STATUS}" = "Failed" ]; then
+              echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+              echo "::error ::https://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}/"
+            fi
+          done
+
       - name: Taskruns cleanup
         if: always()
         run: |
