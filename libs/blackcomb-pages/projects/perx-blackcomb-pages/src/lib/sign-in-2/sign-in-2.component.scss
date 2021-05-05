@@ -34,9 +34,9 @@
 button {
   height: 44px;
 
-  // &:disabled {
-  // opacity: 45%;
-  // }
+  &:disabled {
+  opacity: 0.45;
+  }
 }
 
 .login-image {

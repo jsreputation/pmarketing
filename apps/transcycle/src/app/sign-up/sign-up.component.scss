@@ -87,7 +87,7 @@
     box-sizing: border-box;
     background: var(--button_background_color);
     &:disabled {
-      opacity: 45%;
+      opacity: 0.45;
     }
   }
 
