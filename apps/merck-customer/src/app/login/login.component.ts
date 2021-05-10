@@ -23,6 +23,8 @@ import {
   ProfileService,
   ConfigService,
   IConfig,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 
 import {
@@ -31,7 +33,6 @@ import {
   BarSelectedItem,
 } from '../page-properties';
 import { IMerckConfig } from '../model/IMerck.model';
-
 @Component({
   selector: 'mc-login',
   templateUrl: './login.component.html',
@@ -50,6 +51,8 @@ export class LoginComponent implements OnInit, PageAppearence {
   public preAuth: boolean;
 
   public showConditions: boolean;
+
+  public theme: ITheme;
 
   public get mobileNo(): AbstractControl | null {
     return this.loginForm.get('mobileNo');
@@ -72,7 +75,8 @@ export class LoginComponent implements OnInit, PageAppearence {
     private profileService: ProfileService,
     private configService: ConfigService,
     private translateService: TranslateService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private themesService: ThemesService
   ) {
     this.initForm();
     this.initTranslate();
@@ -102,6 +106,10 @@ export class LoginComponent implements OnInit, PageAppearence {
         }
       );
     }
+
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
   }
 
   public getPageProperties(): PageProperties {

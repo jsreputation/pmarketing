@@ -5,7 +5,12 @@
 		</mat-icon>
 	</button>
   <a *ngIf="pageProperties.pageTitle === ''"  routerLink="/home">
-    <img src="assets/header_logo.png">
+	<ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
+		<img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+	</ng-container>
+	<ng-template #defaultLogoTemplate>
+		<img class="logo" src="assets/header_logo.png">
+	</ng-template>
   </a>
 	<ng-container *ngIf="pageProperties.pageTitle !== ''" translate>{{pageProperties.pageTitle | translate}}</ng-container>
 	<button [disabled]="rightIconToShow === ''" mat-icon-button>
