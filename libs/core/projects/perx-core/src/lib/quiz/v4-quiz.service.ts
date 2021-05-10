@@ -19,7 +19,8 @@ import {
   ITimeConfig,
   QuizMode,
   QuizQuestionType,
-  TimerType
+  TimerType,
+  IQuizResultOutcome
 } from './models/quiz.model';
 import {
   IAnswerResult,
@@ -30,6 +31,12 @@ import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
+import { OutcomeType } from '../outcome/models/outcome.model';
+import {
+  IV4Voucher,
+  V4VouchersService
+} from '../vouchers/v4-vouchers.service';
+import { V4CampaignService, IV4PrizeSetOutcome, IV4PointsOutcome } from '../campaign/v4-campaign.service';
 
 const enum V4QuizMode {
   basic = 'basic',
@@ -147,7 +154,6 @@ interface V4GamesResponse {
     total_count: number;
   };
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -261,14 +267,28 @@ export class V4QuizService implements QuizService {
     );
   }
 
-  public postFinalQuizAnswer(moveId: number): Observable<any> {
+  public postFinalQuizAnswer(moveId: number): Observable<IQuizResultOutcome> {
     // idk what thing is returned yet, i will see and then maybe map it into IAnswerResult
     // dk what is returned bcz keep fail
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
       map((answerResponse: V4QuizAnswerResponse) => {
+        const rewards = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+          outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
+        const v4Points = answerResponse.data.outcomes.filter(outcome =>
+          outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+        const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+          outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+        const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
+        const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
+        const prizeSet = v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+        const isRewardAcquired: boolean = ((vouchers && vouchers.length > 0) || (points && points.length > 0) ||
+         (prizeSet && prizeSet.length > 0)) ? true : false;
         if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
-          return { rewardAcquired: true };
+          return { rewardAcquired: isRewardAcquired,
+            ...(vouchers && vouchers.length && {vouchers}),
+            ...(points && {points}),
+            ...(prizeSet && {prizeSet}) };
         }
         return { rewardAcquired: false };
       }),

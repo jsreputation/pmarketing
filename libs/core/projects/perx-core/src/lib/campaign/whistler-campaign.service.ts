@@ -24,7 +24,8 @@ import {
   CampaignType,
   CampaignState,
   IReferral,
-  ICampaignOutcome
+  ICampaignOutcome,
+  IPrizeSetItem
 } from './models/campaign.model';
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
@@ -168,6 +169,11 @@ export class WhistlerCampaignService implements ICampaignService {
 
   // @ts-ignore
   public getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getPrizeSet(transactionId: number): Observable<IPrizeSetItem[]> {
     throw new Error('Method not implemented.');
   }
 }

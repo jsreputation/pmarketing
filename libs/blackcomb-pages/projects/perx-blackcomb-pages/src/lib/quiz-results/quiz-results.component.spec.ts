@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { QuizModule, SecondsToStringPipe, TokenStorage, UtilsModule } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('QuizResultsComponent', () => {
   let component: QuizResultsComponent;
@@ -19,7 +20,8 @@ describe('QuizResultsComponent', () => {
         MatToolbarModule,
         RouterTestingModule,
         UtilsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatDialogModule,
       ],
       providers: [
         { provide: TokenStorage, useValue: {} },

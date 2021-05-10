@@ -80,10 +80,13 @@ export {
   QuestProperties,
   ICampaignItem,
   ICampaignOutcome,
-  CampaignOutcomeType
+  CampaignOutcomeType,
+  IPrizeSetOutcome,
+  IPrizeSetItem,
+  IPointsOutcome
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
-export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
+export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
 /**
  * Quests
  */
@@ -120,7 +123,6 @@ export {
   ISnake,
   defaultTree,
   IPlayOutcome,
-  IPointsOutcome,
   ISlice,
   IEngagementTransaction
 } from './lib/game/game.model';
@@ -249,7 +251,7 @@ export { filterDuplicateLocations } from './lib/location/filter-duplicate-locati
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion, IAnswer } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType, IQuestion, IAnswer, ISurveyResultOutcome } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';
@@ -266,7 +268,7 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  */
 export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizService, IAnswerResult, IQQuestion } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
+export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode, IQuizResultOutcome } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
@@ -319,7 +321,7 @@ export { ThemesService } from './lib/utils/themes/themes.service';
  * Outcome
  */
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
-export { IOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
+export { IOutcome, OutcomeType, PrizeSetOutcomeType, PrizeSetIssuedType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
  * Rank / Leaderboard

@@ -13,6 +13,8 @@ import {
   ICampaignService,
   ICampaign,
   ErrorMessageService,
+  RewardPopupComponent,
+  IRewardPopupConfig
 } from '@perxtech/core';
 import {
   map,
@@ -36,7 +38,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
-
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
@@ -91,6 +93,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public rewardsTxt: string;
   public startGameAnimation: boolean = false;
+  private prizeSetId: number;
+  private prizeSetReserved: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -100,7 +104,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private translate: TranslateService,
     private campaignService: ICampaignService,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -225,6 +230,9 @@ export class GameComponent implements OnInit, OnDestroy {
           if (gameTransaction.points) {
             this.points = gameTransaction.points[0];
           }
+          if (gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
+            this.prizeSetReserved = true;
+          }
           this.checkFailureOrSuccess();
         },
         (err: { errorState: string } | HttpErrorResponse) => {
@@ -265,6 +273,9 @@ export class GameComponent implements OnInit, OnDestroy {
         }
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
+        }
+        if (gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
+          this.prizeSetId = gameOutcome.prizeSet[0].id;
         }
         this.checkFailureOrSuccess();
       },
@@ -338,7 +349,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private checkFailureOrSuccess(): void {
-    if (this.rewardCount || this.points) {
+    if (this.rewardCount || this.points || this.prizeSetId || this.prizeSetReserved) {
       this.fillSuccess(this.rewardCount, this.points);
     } else {
       this.fillFailure();
@@ -354,6 +365,9 @@ export class GameComponent implements OnInit, OnDestroy {
         }
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
+        }
+        if (gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
+          this.prizeSetId = gameOutcome.prizeSet[0].id;
         }
         this.checkFailureOrSuccess();
       }),
@@ -395,6 +409,9 @@ export class GameComponent implements OnInit, OnDestroy {
             if (gameTransaction.points) {
               this.points = gameTransaction.points[0];
             }
+            if (gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
+              this.prizeSetId = gameTransaction.prizeSet[0].id;
+            }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
             if (vouchers && vouchers.length > 0) {
@@ -402,6 +419,9 @@ export class GameComponent implements OnInit, OnDestroy {
             }
             if (response.points) {
               this.points = response.points[0];
+            }
+            if (response.prizeSet && response.prizeSet.length > 0) {
+              this.prizeSetId = response.prizeSet[0].id;
             }
           }
         }),
@@ -428,10 +448,10 @@ export class GameComponent implements OnInit, OnDestroy {
   private isIEngagementTrascation(
     object: any
   ): object is IEngagementTransaction {
-    return 'voucherIds' in object;
+    return 'voucherIds' in object || 'points' in object || 'prizeSet' in object;
   }
   private isIPlayOutcome(object: any): object is IPlayOutcome {
-    return 'vouchers' in object;
+    return 'vouchers' in object || 'points' in object || 'prizeSet' in object;
   }
 
   private redirectUrlAndPopUp(): void {
@@ -453,9 +473,16 @@ export class GameComponent implements OnInit, OnDestroy {
         this.informationCollectionSetting === 'signup_required'
       ) {
         this.router.navigate(['/signup'], { state });
+      } else if (this.prizeSetId) {
+          const data: IRewardPopupConfig = this.popupData;
+          data.url = `/prize-set-outcomes/${this.prizeSetId}`;
+          data.afterClosedCallBackRedirect = this;
+          data.disableOverlayClose = true;
+          data.showCloseBtn = false;
+          this.dialog.open(RewardPopupComponent, {data});
       } else {
-        this.router.navigate(['/wallet']);
-        this.notificationService.addPopup(this.popupData);
+          this.router.navigate(['/wallet']);
+          this.notificationService.addPopup(this.popupData);
       }
     } else {
       this.notificationService.addPopup(this.popupData);
@@ -536,5 +563,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public dialogClosed(): void {
     this.router.navigate(['/home']);
+  }
+
+  public closeAndRedirect(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

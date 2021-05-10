@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory, TokenStorage } from '@perxtech/core';
+import {
+  IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory,
+  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig
+} from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
-
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'perx-blackcomb-pages-quiz-results',
   templateUrl: './quiz-results.component.html',
@@ -21,6 +24,7 @@ export class QuizResultsComponent implements OnInit {
   public title: string;
   public subTitle: string;
   public rewardsAcquired: boolean = false;
+  public prizeSetOutcome: IPrizeSetOutcome[];
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -28,7 +32,8 @@ export class QuizResultsComponent implements OnInit {
     private router: Router,
     private tokenStorage: TokenStorage,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -40,15 +45,16 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: { points: IPoints[], quiz?: IQuiz } | string) => {
+        map((res: { points: IPoints[], quiz?: IQuiz, prizeSet?: IPrizeSetOutcome[] } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz, rewardAcquired: boolean }) => {
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz, prizeSet?: IPrizeSetOutcome[], rewardAcquired: boolean }) => {
         this.results = res.points;
+        this.prizeSetOutcome = res.prizeSet ? res.prizeSet : [];
         this.rewardsAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
@@ -100,6 +106,7 @@ export class QuizResultsComponent implements OnInit {
         this.notificationService.addPopup(this.popup);
       });
       nextRoute = '/home';
+      this.router.navigate([nextRoute]);
     } else {
       const outcome = oc(this.quiz).results.outcome();
       this.translate.get([
@@ -115,14 +122,28 @@ export class QuizResultsComponent implements OnInit {
           imageUrl: oc(outcome).image('assets/quiz/reward.png'),
           ctaButtonClass: 'ga_game_completion'
         };
-        this.notificationService.addPopup(this.popup);
+        if (this.prizeSetOutcome && this.prizeSetOutcome.length > 0) {
+            const prizeSetId = this.prizeSetOutcome[0].id;
+            const data: IRewardPopupConfig = this.popup;
+            data.url = `/prize-set-outcomes/${prizeSetId}`;
+            data.afterClosedCallBackRedirect = this;
+            data.disableOverlayClose = true;
+            data.showCloseBtn = false;
+            this.dialog.open(RewardPopupComponent, {data});
+        } else {
+          this.notificationService.addPopup(this.popup);
+          nextRoute = '/wallet';
+          this.router.navigate([nextRoute]);
+        }
       });
-      nextRoute = '/wallet';
     }
-    this.router.navigate([nextRoute]);
   }
 
   private get correctAnswers(): number {
     return this.results.reduce((sum, q) => sum + (q.points && q.points > 0 ? 1 : 0), 0);
+  }
+
+  public closeAndRedirect(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

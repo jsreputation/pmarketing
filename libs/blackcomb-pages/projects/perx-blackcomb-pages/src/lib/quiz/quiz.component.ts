@@ -29,6 +29,7 @@ import {
   SwipeConfiguration,
   SwipeListType,
   TokenStorage,
+  IQuizResultOutcome
 } from '@perxtech/core';
 import {
   BehaviorSubject,
@@ -210,7 +211,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        (finishPayload: { rewardAcquired: boolean }) => this.redirectUrlAndPopUp(finishPayload),
+        (finishPayload: IQuizResultOutcome) => this.redirectUrlAndPopUp(finishPayload),
         (err) => {
           console.log(err);
           this.notificationService.addSnack(this.submitErrorTxt);
@@ -261,7 +262,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushAnswer(questionPointer: number): Observable<{ rewardAcquired: boolean }> {
+  private pushAnswer(questionPointer: number): Observable<IQuizResultOutcome | {}> {
     if (!this.moveId) {
       return throwError('Cannot push answer without move id');
     }
@@ -338,9 +339,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private redirectUrlAndPopUp(payload?: { rewardAcquired: boolean }): void {
+  private redirectUrlAndPopUp(payload?: IQuizResultOutcome): void {
     const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz,
-      rewardAcquired: (payload ? payload.rewardAcquired : false) });
+      rewardAcquired: (payload ? payload.rewardAcquired : false), prizeSet: payload?.prizeSet });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

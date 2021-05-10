@@ -10,14 +10,17 @@ import {
   SurveyService,
   IPopupConfig,
   IPrePlayStateData,
-  AuthenticationService
+  AuthenticationService,
+  RewardPopupComponent,
+  IRewardPopupConfig,
+  ISurveyResultOutcome
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { MatDialog } from '@angular/material/dialog';
 interface IAnswer {
   questionId: string;
   content: any;
@@ -40,6 +43,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
   public answers: IAnswer[];
+  private prizeSetId: number;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -116,6 +120,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private surveyService: SurveyService,
     private translate: TranslateService,
     private auth: AuthenticationService,
+    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -203,10 +208,13 @@ export class SurveyComponent implements OnInit, OnDestroy {
           })).subscribe(() => {
             // MEG-12: check API if reward acquired
             this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
-              res => {
+              (res: ISurveyResultOutcome) => {
                 this.popupData = res.rewardAcquired
                   ? this.successPopUp
                   : this.noRewardsPopUp;
+                if (res && res.prizeSet && res.prizeSet.length > 0) {
+                    this.prizeSetId = res.prizeSet[0].id;
+                }
                 this.redirectUrlAndPopUp();
               },
               () => {
@@ -243,9 +251,20 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.informationCollectionSetting === 'signup_required'
     ) {
       this.router.navigate(['/signup'], { state });
+    } else if (this.prizeSetId) {
+        const data: IRewardPopupConfig = this.popupData;
+        data.url = `/prize-set-outcomes/${this.prizeSetId}`;
+        data.afterClosedCallBackRedirect = this;
+        data.disableOverlayClose = true;
+        data.showCloseBtn = false;
+        this.dialog.open(RewardPopupComponent, {data});
     } else {
-      this.router.navigate(['/wallet']);
-      this.notificationService.addPopup(this.popupData);
+        this.router.navigate(['/wallet']);
+        this.notificationService.addPopup(this.popupData);
     }
+  }
+
+  public closeAndRedirect(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

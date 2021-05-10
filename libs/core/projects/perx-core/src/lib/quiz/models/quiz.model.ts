@@ -5,6 +5,9 @@ import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
 import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
 import { IQQuestion } from '../quiz.service';
+import { IVoucher } from '../../vouchers/models/voucher.model';
+import { IPrizeSetOutcome } from '../../campaign/models/campaign.model';
+import { IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IQAnswer {
   questionId: string;
@@ -97,3 +100,10 @@ export interface IErrors {
 }
 
 export type IPayload = IRatingPayload | ISelectPayload | IPictureSelectPayload | ILongTextPayload | ISwipePayload;
+
+export interface IQuizResultOutcome {
+  rewardAcquired: boolean;
+  vouchers?: IVoucher[];
+  points?: IPointsOutcome[];
+  prizeSet?: IPrizeSetOutcome[];
+}

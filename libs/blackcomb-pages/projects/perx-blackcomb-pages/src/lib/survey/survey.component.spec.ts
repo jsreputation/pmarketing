@@ -21,6 +21,7 @@ import {
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
 import { SurveyComponent } from './survey.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -70,7 +71,8 @@ describe('SurveyComponent', () => {
         MatToolbarModule,
         PerxSurveyModule,
         TranslateModule.forRoot(),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
       ],
       providers: [
         {

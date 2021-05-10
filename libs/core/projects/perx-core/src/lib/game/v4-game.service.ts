@@ -16,8 +16,7 @@ import {
   GameType as TYPE,
   IEngagementTransaction,
   IGame,
-  IPlayOutcome,
-  IPointsOutcome,
+  IPlayOutcome
 } from './game.model';
 import {
   catchError,
@@ -48,6 +47,7 @@ import {
   CampaignType,
   ICampaign
 } from '../campaign/models/campaign.model';
+import { V4CampaignService, IV4PrizeSetOutcome, IV4PointsOutcome } from '../campaign/v4-campaign.service';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -165,20 +165,13 @@ interface IV4RewardOutcome extends IV4Voucher {
   outcome_type: OutcomeType.reward;
 }
 
-interface IV4PointsOutcome {
-  id: number;
-  outcome_type: OutcomeType.points;
-  points: number;
-  properties: any;
-}
-
 interface IV4PlayGeneral {
   campaign_id: number;
   game_id: number;
   id: number;
   use_account_id: number;
   state: TransactionState;
-  outcomes: (IV4RewardOutcome | IV4PointsOutcome)[];
+  outcomes: (IV4RewardOutcome | IV4PointsOutcome | IV4PrizeSetOutcome)[];
 }
 
 interface IV4PlayResponse {
@@ -218,15 +211,6 @@ export class V4GameService implements IGameService {
       (config: IConfig<void>) => {
         this.hostName = config.apiHost as string;
       });
-  }
-
-  private static v4PointsToPoints(points: IV4PointsOutcome): IPointsOutcome {
-    return {
-      id: points.id,
-      outcomeType: points.outcome_type,
-      points: points.points,
-      properties: points.properties
-    };
   }
 
   private static v4GameToGame(game: Game, campaign?: ICampaign): IGame {
@@ -293,6 +277,8 @@ export class V4GameService implements IGameService {
           const rewards = res.data.outcomes.filter(outcome => outcome.id && outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
           const points = res.data.outcomes.filter(outcome =>
             outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+          const v4PrizeSets = res.data.outcomes.filter(outcome => outcome.id &&
+            outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
           return {
             id: res.data.id,
             voucherIds: rewards.map(
@@ -304,7 +290,8 @@ export class V4GameService implements IGameService {
               }
               return accRewardIds;
             }, [] as number[]),
-            points: points.map(p => V4GameService.v4PointsToPoints(p))
+            points: points.map(p => V4CampaignService.v4PointsToPoints(p)),
+            prizeSet: v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p))
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
@@ -337,11 +324,15 @@ export class V4GameService implements IGameService {
   private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
     const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
     const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+    const v4PrizeSets: IV4PrizeSetOutcome[] = res.data.outcomes.filter((out) =>
+                              out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
     const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
-    const points = v4Points.map(p => V4GameService.v4PointsToPoints(p));
+    const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
+    const prizeSet = v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
     return {
       ...(vouchers && vouchers.length && {vouchers}),
       ...(points && {points}),
+      ...(prizeSet && {prizeSet}),
       rawPayload: res
     };
   }

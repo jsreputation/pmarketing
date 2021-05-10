@@ -270,6 +270,11 @@ const routes: Routes = [
         path: 'leaderboard/:id',
         loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
         canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'prize-set-outcomes/:id',
+        loadChildren: () => import('../prize-set-outcome/prize-set-outcome.module').then(m => m.PrizeSetOutcomeModule),
+        canActivate: [ProtectedGuard]
       }
     ],
   },
