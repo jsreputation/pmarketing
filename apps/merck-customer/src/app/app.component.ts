@@ -9,6 +9,8 @@ import {
   IConfig,
   NotificationService,
   TokenStorage,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 import {
   BarSelectedItem,
@@ -46,6 +48,8 @@ export class AppComponent implements OnInit {
 
   private preAuth: boolean;
 
+  public theme: ITheme;
+
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: object,
@@ -55,7 +59,8 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     private translateService: TranslateService,
     private store: TokenStorage,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private themesService: ThemesService
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       if (message === 'LOGIN_SESSION_EXPIRED') {
@@ -97,6 +102,9 @@ export class AppComponent implements OnInit {
         }
       }
     );
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
     if (!this.preAuth) {
       return;
     }

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
+import { AuthenticationService, ProfileService, ConfigService, ThemesService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+
+
+const themesServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -57,7 +62,8 @@ describe('LoginComponent', () => {
           }
         },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: ProfileService, useValue: profileStub }
+        { provide: ProfileService, useValue: profileStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();
