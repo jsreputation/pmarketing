@@ -1,7 +1,7 @@
 
   <div class="card-list-container">
     <div class="outcome-container" *ngIf="outcomes">
-      <h2>Prize set includes ALL of the following:</h2>
+      <h1>You won the following:</h1>
       <div *ngFor="let outcome of outcomes" class="outcome-card">
       <ng-container *ngIf="outcome.issuedOutcomeType == 'Reward::Transaction'">
         <a [routerLink]="['/voucher-detail',outcome.issuedOutcomeId]" >
