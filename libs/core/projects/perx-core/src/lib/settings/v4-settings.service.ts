@@ -66,6 +66,7 @@ interface IV4Flags {
     system_sets_password: boolean;
     show_reward_favourite_button: boolean;
     show_leaderboard: boolean;
+    show_quest: boolean;
   };
 }
 
@@ -145,7 +146,8 @@ export class V4SettingsService extends SettingsService {
       showVoucherStatusLabels: data.json_value.show_voucher_status_labels,
       voucherDistributionType: data.json_value.voucher_distribution_type,
       systemSetsPassword: data.json_value.system_sets_password,
-      showLeaderboard: data.json_value.show_leaderboard
+      showLeaderboard: data.json_value.show_leaderboard,
+      showQuest: data.json_value.show_quest
     };
   }
 
