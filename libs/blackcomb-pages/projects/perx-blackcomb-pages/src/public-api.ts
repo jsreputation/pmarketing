@@ -110,3 +110,5 @@ export { PointsModule } from './lib/points/points.module';
 export { PointHistoryComponent } from './lib/points/point-history/point-history.component';
 export { PointConversionComponent } from './lib/points/point-transfer/point-conversion/point-conversion.component';
 export { PointConversionConfirmationComponent } from './lib/points/point-transfer/point-conversion-confirmation/point-conversion-confirmation.component';
+export { BadgeListComponent } from './lib/badges/badge-list/badge-list.component';
+export { BadgeDetailComponent } from './lib/badges/badge-detail/badge-detail.component';
