@@ -58,7 +58,7 @@
     </div>
 
     <!-- Quest campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage">
+    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
       <div class="title" *ngIf="(questCampaigns$ | async)?.length > 0" translate>HOME.QUEST_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
