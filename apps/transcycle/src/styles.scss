@@ -3,7 +3,7 @@
 @import "./custom-theme.scss";
 
 :root {
-  --font: Roboto;
+  --font: "Poppins", sans-serif;
   --logo: "";
   --title: "";
   --accent: #96289a;
@@ -18,7 +18,7 @@
 
 html {
   font-size: 62.5%;
-  font-family: var(--font);
+  font-family: var(--font, "Poppins", sans-serif);
   font-style: normal;
   background-color: #fafafa;
 }
