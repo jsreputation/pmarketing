@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService, ICustomProperties, NotificationService } from '@perxtech/core';
+import { ProfileService, ICustomProperties, NotificationService, ThemesService, ITheme } from '@perxtech/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,19 +13,24 @@ import { TranslateService } from '@ngx-translate/core';
 export class UserInfoComponent implements PageAppearence, OnInit {
   public conditionMessage: string;
   public surveyForm: FormGroup;
+  public theme: ITheme;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private profileService: ProfileService,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private themesService: ThemesService
   ) {
     this.initForm();
   }
 
   public ngOnInit(): void {
     this.translate.get('PROFILE.CONDITION_SAVED').subscribe((text) => this.conditionMessage = text);
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
   }
 
   private initForm(): void {

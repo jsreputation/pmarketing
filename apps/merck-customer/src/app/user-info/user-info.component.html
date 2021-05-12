@@ -1,5 +1,10 @@
 <div class="main-container">
-  <img src="assets/logo.png">
+	<ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
+		<img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+	</ng-container>
+	<ng-template #defaultLogoTemplate>
+		<img class="logo" src="assets/logo.png">
+	</ng-template>
 	<div class="logo-title">
 		<span translate>ACCOUNT_PAGE.LOGIN_SUBTITLE</span>
 	</div>

@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import { ProfileModule, ProfileService } from '@perxtech/core';
+import { ProfileModule, ProfileService, ThemesService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -14,6 +14,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+
+const themesServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
 
 describe('UserInfoComponent', () => {
   let component: UserInfoComponent;
@@ -38,7 +42,8 @@ describe('UserInfoComponent', () => {
         {
           provide: ProfileService,
           useValue: { setCustomProperties: () => of(null) }
-        }
+        },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
