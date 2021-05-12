@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   Validators,
@@ -12,6 +12,8 @@ import {
   AuthenticationService,
   NotificationService,
   IProfile,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 
 import {
@@ -25,11 +27,12 @@ import {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements PageAppearence {
+export class SignupComponent implements OnInit, PageAppearence {
 
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
+  public theme: ITheme;
 
   public get name(): AbstractControl | null {
     return this.signupForm.get('name');
@@ -64,11 +67,19 @@ export class SignupComponent implements PageAppearence {
     private router: Router,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private themesService: ThemesService
   ) {
     this.initForm();
     this.getAppToken();
   }
+
+  public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
+  }
+
   private getAppToken(): void {
     const token = this.authService.getAppAccessToken();
     if (token) {
