@@ -40,5 +40,7 @@ app-signup {
   .content-container {
     background-image: url("/assets/login_background.png");
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }
