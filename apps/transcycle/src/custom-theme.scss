@@ -1,12 +1,17 @@
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 @include mat-core();
 
-$custom-red: map-merge($mat-red, (500: #DB1E2B));
+$custom-red: map-merge(
+  $mat-red,
+  (
+    500: #db1e2b,
+  )
+);
 
 $primary: mat-palette($custom-red);
-$accent:  mat-palette($mat-pink, A200, A100, A400);
-$warn:    mat-palette($mat-red);
+$accent: mat-palette($mat-pink, A200, A100, A400);
+$warn: mat-palette($mat-red);
 
 $theme: mat-light-theme($primary, $accent, $warn);
 
@@ -20,4 +25,13 @@ $theme: mat-light-theme($primary, $accent, $warn);
   $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
   @include angular-material-theme($dark-theme);
+}
+
+// TRAN-27
+perx-blackcomb-pages-login,
+app-signup {
+  .content-container {
+    background-image: url("/assets/login_background.png");
+    background-repeat: no-repeat;
+  }
 }
