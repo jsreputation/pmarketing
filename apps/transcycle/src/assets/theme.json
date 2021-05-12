@@ -3,15 +3,15 @@
     "properties": {
       "--font": "Roboto",
       "--logo": "assets/header_logo.png",
-      "--title": "Commonwealth Bank",
-      "--accent": "#FFCC00",
+      "--title": "Transcycle - Loyalty & Rewards Programme",
+      "--accent": "#f13223",
       "--primary": "#FFFFFF",
       "--button_text_color": "#000000",
       "--button_background_color": "#FFCC00",
-      "--header_color": "#FFFFFF",
+      "--header_color": "#333399",
       "--background": "#F4F4F4",
       "--font_color": "#231f20",
-      "--login_background_colour": "#666666",
+      "--login_background_colour": "#333399",
       "--surface_colour": "#ffffff",
       "--popup_background_colour": "#ffffff"
     }
