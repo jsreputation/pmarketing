@@ -103,7 +103,7 @@ export class SignUpComponent implements OnInit {
       dob: ['', Validators.required],
       countryCode: ['', Validators.required],
       // mobile number
-      mobileNo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       engineNumber: ['', Validators.required],
@@ -133,7 +133,8 @@ export class SignUpComponent implements OnInit {
     const confirmPassword = this.signupForm.get('confirmPassword').value;
     const lastName = this.signupForm.value.lastName;
     const dob = this.signupForm.value.dob as Moment;
-    const mobileNumber = this.signupForm.value.mobileNo;
+    // converting to Number will strip leading 0s
+    const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const primaryIdentifier = countryCode + mobileNumber; // identifier for transcycle is also phone
 
