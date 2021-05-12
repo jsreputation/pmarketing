@@ -136,3 +136,12 @@ mat-tab-group {
   }
 }
 
+perx-blackcomb-pages-content { 
+  .logo {
+    max-width: 20rem;
+    max-height: 3rem;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+}
+
