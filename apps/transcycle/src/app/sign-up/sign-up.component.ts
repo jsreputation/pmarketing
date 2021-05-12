@@ -103,7 +103,7 @@ export class SignUpComponent implements OnInit {
       dob: ['', Validators.required],
       countryCode: ['', Validators.required],
       // mobile number
-      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[1-9][0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       engineNumber: ['', Validators.required],

@@ -70,6 +70,9 @@
             <mat-error *ngIf="signupForm.get('mobileNo')!.hasError('required')">
               <span translate>SIGN_UP_PAGE.MOBILE_REQUIRED_TXT</span>
             </mat-error>
+            <mat-error *ngIf="signupForm.get('mobileNo').hasError('pattern')">
+              <span translate>SIGN_UP_PAGE.MOBILE_INVALID_TXT</span>
+           </mat-error>
           </mat-form-field>
         </div>
       </div>
