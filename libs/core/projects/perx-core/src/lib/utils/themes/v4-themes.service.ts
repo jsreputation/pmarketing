@@ -71,20 +71,21 @@ export class V4ThemesService extends ThemesService {
   private static VThemeToTheme(setting: ThemeJsonApiItem<IThemeV4ApiProperties>): ITheme {
     // we want to follow material all in all font_color and surface, pop_up color
     // we hardcore these three values, their values is suppose to come from material theme setting
+    const settingValues = setting.json_value;
     return {
       name: setting.key + setting.id, // more unique than using title from properties
       properties: {
-        '--font': setting.json_value.font,
-        '--title': setting.json_value.title,
-        '--logo': setting.json_value.logo.file || setting.json_value.logo.value?.file,
-        '--landing_page_logo': setting.json_value.landing_page_logo.file || setting.json_value.landing_page_logo.value?.file,
-        '--accent': setting.json_value.accent_color,
-        '--primary': setting.json_value.primary_color,
-        '--button_text_color': setting.json_value.CTA_button_text_color,
-        '--button_background_color': setting.json_value.CTA_button_bg_color,
-        '--header_color': setting.json_value.header_color,
-        '--background': setting.json_value.app_bg_color,
-        '--login_background_colour': setting.json_value.login_page_bg_color,
+        '--font': settingValues.font,
+        '--title': settingValues.title,
+        '--logo': settingValues.logo.file ? settingValues.logo.file : (settingValues.logo.value?.file || ''),
+        '--landing_page_logo': settingValues?.landing_page_logo?.value?.file || '',
+        '--accent': settingValues.accent_color,
+        '--primary': settingValues.primary_color,
+        '--button_text_color': settingValues.CTA_button_text_color,
+        '--button_background_color': settingValues.CTA_button_bg_color,
+        '--header_color': settingValues.header_color,
+        '--background': settingValues.app_bg_color,
+        '--login_background_colour': settingValues.login_page_bg_color,
         '--font_color': '#231f20',
         '--surface_colour': '#ffffff',
         '--popup_background_colour': '#ffffff'

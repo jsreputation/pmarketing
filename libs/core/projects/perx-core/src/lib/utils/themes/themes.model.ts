@@ -23,7 +23,7 @@ interface ThemeImage {
 export interface IThemeV4ApiProperties {
   font: string;
   logo: ThemeImage;
-  landing_page_logo: ThemeImage;
+  landing_page_logo?: ThemeImage;
   title: string;
   font_color: string;
   accent_color: string;
