@@ -17,6 +17,7 @@ import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
+// TODO: Add Angular decorator.
 export abstract class ISignUpComponent implements OnDestroy {
   public signupForm: FormGroup;
   public errorMessage: string | null;
