@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BadgeListComponent, BadgeDetailComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { BadgeListComponent, BadgeDetailComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -15,8 +15,7 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
-    PerxBlackcombPagesModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class BadgesModule { }
