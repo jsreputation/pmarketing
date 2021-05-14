@@ -13,14 +13,18 @@
     "importHelpers": true,
     "strictNullChecks": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types",
-      "../../node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "typeRoots": ["node_modules/@types", "../../node_modules/@types"],
+    "lib": ["es2018", "dom"]
   },
-  "extends": "../../tsconfig.json"
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/perx-blackcomb-pages/tsconfig.lib.json"
+    }
+  ]
 }

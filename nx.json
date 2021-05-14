@@ -11,9 +11,10 @@
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
-    "tsconfig.json": "*",
     "tslint.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "tsconfig.base.json": "*",
+    ".eslintrc.json": "*"
   },
   "projects": {
     "blackcomb-pages": {
@@ -79,5 +80,8 @@
     "transcycle": {
       "tags": []
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }

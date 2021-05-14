@@ -63,7 +63,10 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/dbshk-agent/ngsw-config.json"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -99,17 +102,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/dbshk-agent/jest.config.json",
-            "tsConfig": "apps/dbshk-agent/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/dbshk-agent/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/dbshk-agent"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/dbshk-agent/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/dbshk-agent/src/**/*.d.ts",
+              "apps/dbshk-agent/src/main.ts",
+              "apps/dbshk-agent/src/polyfills.ts",
+              "apps/dbshk-agent/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -198,7 +206,10 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/philipssg/ngsw-config.json"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -234,17 +245,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/philipssg/jest.config.json",
-            "tsConfig": "apps/philipssg/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/philipssg/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/philipssg"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/philipssg/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/philipssg/src/**/*.d.ts",
+              "apps/philipssg/src/main.ts",
+              "apps/philipssg/src/polyfills.ts",
+              "apps/philipssg/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -274,7 +290,9 @@
               "apps/starhub/src/assets",
               "apps/starhub/src/robots.txt"
             ],
-            "styles": ["apps/starhub/src/styles.scss"],
+            "styles": [
+              "apps/starhub/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -324,7 +342,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -359,17 +380,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/starhub/jest.config.json",
-            "tsConfig": "apps/starhub/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/starhub/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/starhub"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/starhub/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/starhub/src/**/*.d.ts",
+              "apps/starhub/src/main.ts",
+              "apps/starhub/src/polyfills.ts",
+              "apps/starhub/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -400,7 +426,9 @@
               "apps/prudential/src/assets",
               "apps/prudential/src/robots.txt"
             ],
-            "styles": ["apps/prudential/src/styles.scss"],
+            "styles": [
+              "apps/prudential/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -430,7 +458,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -465,17 +496,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/prudential/jest.config.json",
-            "tsConfig": "apps/prudential/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/prudential/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/prudential"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/prudential/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/prudential/src/**/*.d.ts",
+              "apps/prudential/src/main.ts",
+              "apps/prudential/src/polyfills.ts",
+              "apps/prudential/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -505,7 +541,9 @@
               "apps/oracle-pay/src/assets",
               "apps/oracle-pay/src/robots.txt"
             ],
-            "styles": ["apps/oracle-pay/src/styles.scss"],
+            "styles": [
+              "apps/oracle-pay/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -534,7 +572,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -569,17 +610,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/oracle-pay/jest.config.json",
-            "tsConfig": "apps/oracle-pay/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/oracle-pay/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/oracle-pay"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/oracle-pay/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/oracle-pay/src/**/*.d.ts",
+              "apps/oracle-pay/src/main.ts",
+              "apps/oracle-pay/src/polyfills.ts",
+              "apps/oracle-pay/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -609,7 +655,9 @@
               "apps/merck-merchant/src/assets",
               "apps/merck-merchant/src/robots.txt"
             ],
-            "styles": ["apps/merck-merchant/src/styles.scss"],
+            "styles": [
+              "apps/merck-merchant/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -638,7 +686,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -673,17 +724,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/merck-merchant/jest.config.json",
-            "tsConfig": "apps/merck-merchant/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/merck-merchant/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/merck-merchant"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/merck-merchant/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/merck-merchant/src/**/*.d.ts",
+              "apps/merck-merchant/src/main.ts",
+              "apps/merck-merchant/src/polyfills.ts",
+              "apps/merck-merchant/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -718,7 +774,9 @@
               "apps/merck-customer/src/assets",
               "apps/merck-customer/src/robots.txt"
             ],
-            "styles": ["apps/merck-customer/src/styles.scss"],
+            "styles": [
+              "apps/merck-customer/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -759,7 +817,10 @@
               "i18nLocale": "zh",
               "i18nMissingTranslation": "error"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -797,17 +858,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/merck-customer/jest.config.json",
-            "tsConfig": "apps/merck-customer/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/merck-customer/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/merck-customer"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/merck-customer/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/merck-customer/src/**/*.d.ts",
+              "apps/merck-customer/src/main.ts",
+              "apps/merck-customer/src/polyfills.ts",
+              "apps/merck-customer/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -902,7 +968,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -941,17 +1010,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/hsbchk/jest.config.json",
-            "tsConfig": "apps/hsbchk/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbchk/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/hsbchk"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/hsbchk/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/hsbchk/src/**/*.d.ts",
+              "apps/hsbchk/src/main.ts",
+              "apps/hsbchk/src/polyfills.ts",
+              "apps/hsbchk/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -981,9 +1055,13 @@
               "apps/hsbc-rewards/src/assets",
               "apps/hsbc-rewards/src/robots.txt"
             ],
-            "styles": ["apps/hsbc-rewards/src/styles.scss"],
+            "styles": [
+              "apps/hsbc-rewards/src/styles.scss"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             },
             "scripts": []
           },
@@ -1013,7 +1091,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1048,17 +1129,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/hsbc-rewards/jest.config.json",
-            "tsConfig": "apps/hsbc-rewards/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbc-rewards/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/hsbc-rewards"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/hsbc-rewards/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/hsbc-rewards/src/**/*.d.ts",
+              "apps/hsbc-rewards/src/main.ts",
+              "apps/hsbc-rewards/src/polyfills.ts",
+              "apps/hsbc-rewards/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1088,7 +1174,9 @@
               "apps/hsbc/src/assets",
               "apps/hsbc/src/robots.txt"
             ],
-            "styles": ["apps/hsbc/src/styles.scss"],
+            "styles": [
+              "apps/hsbc/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -1117,7 +1205,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1152,17 +1243,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/hsbc/jest.config.json",
-            "tsConfig": "apps/hsbc/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbc/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/hsbc"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/hsbc/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/hsbc/src/**/*.d.ts",
+              "apps/hsbc/src/main.ts",
+              "apps/hsbc/src/polyfills.ts",
+              "apps/hsbc/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1192,7 +1288,9 @@
               "apps/hkbn/src/assets",
               "apps/hkbn/src/robots.txt"
             ],
-            "styles": ["apps/hkbn/src/styles.scss"],
+            "styles": [
+              "apps/hkbn/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -1221,7 +1319,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1256,17 +1357,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/hkbn/jest.config.json",
-            "tsConfig": "apps/hkbn/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hkbn/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/hkbn"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/hkbn/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/hkbn/src/**/*.d.ts",
+              "apps/hkbn/src/main.ts",
+              "apps/hkbn/src/polyfills.ts",
+              "apps/hkbn/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1296,7 +1402,9 @@
               "apps/components-demo/src/assets",
               "apps/components-demo/src/robots.txt"
             ],
-            "styles": ["apps/components-demo/src/styles.scss"],
+            "styles": [
+              "apps/components-demo/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -1325,7 +1433,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1361,17 +1472,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/components-demo/jest.config.json",
-            "tsConfig": "apps/components-demo/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/components-demo/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/components-demo"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/components-demo/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/components-demo/src/**/*.d.ts",
+              "apps/components-demo/src/main.ts",
+              "apps/components-demo/src/polyfills.ts",
+              "apps/components-demo/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1401,7 +1517,9 @@
               "apps/bpi/src/assets",
               "apps/bpi/src/robots.txt"
             ],
-            "styles": ["apps/bpi/src/styles.scss"],
+            "styles": [
+              "apps/bpi/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -1430,7 +1548,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1465,17 +1586,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/bpi/jest.config.json",
-            "tsConfig": "apps/bpi/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/bpi/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/bpi"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/bpi/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/bpi/src/**/*.d.ts",
+              "apps/bpi/src/main.ts",
+              "apps/bpi/src/polyfills.ts",
+              "apps/bpi/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1541,7 +1667,10 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/blackcomb/ngsw-config.json"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1577,17 +1706,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/blackcomb/jest.config.json",
-            "tsConfig": "apps/blackcomb/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/blackcomb/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/blackcomb"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/blackcomb/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/blackcomb/src/**/*.d.ts",
+              "apps/blackcomb/src/main.ts",
+              "apps/blackcomb/src/polyfills.ts",
+              "apps/blackcomb/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1653,7 +1787,10 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/transcycle/ngsw-config.json"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1689,17 +1826,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/transcycle/jest.config.json",
-            "tsConfig": "apps/transcycle/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/transcycle/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/transcycle"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/transcycle/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/transcycle/src/**/*.d.ts",
+              "apps/transcycle/src/main.ts",
+              "apps/transcycle/src/polyfills.ts",
+              "apps/transcycle/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1783,7 +1925,10 @@
               "serviceWorker": true,
               "ngswConfigPath": "apps/all-it/ngsw-config.json"
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1819,17 +1964,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/all-it/jest.config.json",
-            "tsConfig": "apps/all-it/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/all-it/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/all-it"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/all-it/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/all-it/src/**/*.d.ts",
+              "apps/all-it/src/main.ts",
+              "apps/all-it/src/polyfills.ts",
+              "apps/all-it/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1897,7 +2047,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1935,17 +2088,22 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/abenson/jest.config.json",
-            "tsConfig": "apps/abenson/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/abenson/src/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/abenson"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["apps/abenson/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/abenson/src/**/*.d.ts",
+              "apps/abenson/src/main.ts",
+              "apps/abenson/src/polyfills.ts",
+              "apps/abenson/src/**/*.spec.ts"
+            ]
           }
         }
       }
@@ -1960,16 +2118,17 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/whistler/jest.config.js",
-            "tsConfig": "libs/whistler/projects/whistler/tsconfig.spec.json",
             "passWithNoTests": true,
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/whistler"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["libs/whistler/projects/**/*.ts"]
+            "lintFilePatterns": []
           }
         }
       }
@@ -1984,17 +2143,20 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/core/jest.config.json",
-            "tsConfig": "libs/core/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/core/projects/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/core"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["libs/core/projects/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/core/**/*.spec.ts",
+              "libs/core/**/*.d.ts"
+            ]
           }
         }
       }
@@ -2009,17 +2171,20 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/blackcomb-pages/jest.config.json",
-            "tsConfig": "libs/blackcomb-pages/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/blackcomb-pages/projects/setup-jest.ts",
             "codeCoverage": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/blackcomb-pages"
+          ]
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "files": ["libs/blackcomb-pages/projects/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/blackcomb-pages/**/*.spec.ts",
+              "libs/blackcomb-pages/**/*.d.ts"
+            ]
           }
         }
       }
@@ -2048,9 +2213,14 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "assets": ["backend/appauth-server/assets"]
+              "assets": [
+                "backend/appauth-server/assets"
+              ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@nrwl/node:execute",

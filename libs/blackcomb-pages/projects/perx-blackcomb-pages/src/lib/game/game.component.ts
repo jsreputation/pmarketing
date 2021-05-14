@@ -84,7 +84,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public outOfTriesPopup: IPopupConfig = {
     title: 'GAME_PAGE.OUT_OF_TRIES_TITLE',
     text: 'GAME_PAGE.OUT_OF_TRIES_TEXT',
-    buttonTxt: this.isEmbedded ? null : 'GAME_PAGE.OUT_OF_TRIES_CTA',
+    buttonTxt: 'GAME_PAGE.OUT_OF_TRIES_CTA',
     afterClosedCallBack: this,
     disableOverlayClose: true,
   };
@@ -518,7 +518,8 @@ export class GameComponent implements OnInit, OnDestroy {
         .get(this.outOfTriesPopup.text)
         .subscribe((text) => (this.outOfTriesPopup.text = text));
     }
-    if (this.outOfTriesPopup.buttonTxt) {
+
+    if (this.isEmbedded && this.outOfTriesPopup.buttonTxt) {
       this.translate
         .get(this.outOfTriesPopup.buttonTxt)
         .subscribe((text) => (this.outOfTriesPopup.buttonTxt = text));

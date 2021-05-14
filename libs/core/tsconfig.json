@@ -21,5 +21,15 @@
     "typeRoots": ["../../node_modules/@types"],
     "lib": ["es2018", "dom"]
   },
-  "extends": "../../tsconfig.json"
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/perx-core/tsconfig.lib.json"
+    }
+  ]
 }

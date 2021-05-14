@@ -3,6 +3,13 @@
   "rules": {},
   "overrides": [
     {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["libs/core/tsconfig.*?.json"]
+      },
+      "rules": {}
+    },
+    {
       "files": ["**/*.ts?(x)"],
       "excludedFiles": [
         "**/*.service.spec.ts",
