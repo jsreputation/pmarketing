@@ -24,6 +24,7 @@ export interface IFlags {
   voucherDistributionType?: VoucherDistributionTypes;
   systemSetsPassword?: boolean;
   showLeaderboard?: boolean;
+  showQuest?: boolean;
 }
 
 export interface IRssFeeds {

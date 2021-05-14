@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationService, ConfigService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService, ConfigService, TokenStorage, ThemesService } from '@perxtech/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -14,6 +14,10 @@ import { TranslateModule } from '@ngx-translate/core';
 const tokenStorageStub = {
   getAppInfoProperty: () => null,
   setAppInfoProperty: () => { }
+};
+
+const themesServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
 };
 
 describe('AppComponent', () => {
@@ -57,7 +61,8 @@ describe('AppComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     }).compileComponents();
   }));

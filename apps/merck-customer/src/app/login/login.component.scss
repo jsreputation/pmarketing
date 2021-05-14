@@ -12,10 +12,13 @@
   align-items: center;
   overflow: scroll;
 
-  img {
+  .logo {
     margin-top: 7.2rem;
     margin-bottom: 0.8rem;
     flex-shrink: 0;
+    max-width: 20rem;
+    max-height: 8rem;
+    object-fit: contain;
   }
 
   .translate-switch {

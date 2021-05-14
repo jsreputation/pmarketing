@@ -12,11 +12,14 @@
   align-items: center;
   overflow: scroll;
 
-  img {
+  .logo {
     float: none;
     margin: 5.2rem auto;
     margin-bottom: 0.8rem;
     display: block;
+    max-width: 20rem;
+    max-height: 8rem;
+    object-fit: contain;
   }
 
   .logo-title {
