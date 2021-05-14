@@ -1620,8 +1620,8 @@
               "apps/transcycle/src/robots.txt"
             ],
             "styles": [
-              "apps/transcycle/src/styles.scss",
-              "apps/transcycle/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              "apps/transcycle/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/transcycle/src/styles.scss"
             ],
             "scripts": []
           },
