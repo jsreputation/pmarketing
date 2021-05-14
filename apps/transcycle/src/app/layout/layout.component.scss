@@ -12,9 +12,6 @@
 
   .backArrow {
     @include toolBarArrow();
-    // make color dynamic according to contrasting background
-    mix-blend-mode: difference;
-    filter: contrast(0) grayscale(1) invert(0.6);
   }
 }
 
