@@ -17,9 +17,13 @@ interface IV4PointHistory {
   points_balance: number;
   points_balance_converted_to_currency: number;
   points_date: string;
-  properties: {};
+  properties: {
+    descr?: string | undefined;
+    sku?: string | undefined;
+    qty?: string | undefined;
+    untprc?: string | undefined;
+  };
 }
-
 interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
@@ -128,7 +132,7 @@ const historyRaw: IV4PointHistory = {
   points_balance: 33,
   points_balance_converted_to_currency: 21,
   points_date: '1.1.1',
-  properties: 3
+  properties: { qty: '3' }
 };
 
 const loyaltyRaw: IV4Loyalty = {
