@@ -13,14 +13,17 @@ export interface ThemeJsonApiItem<T> {
   json_value: T;
 }
 
+interface ThemeImage {
+  file?: string;
+  section?: string;
+  filename?: string;
+  value?: { file: string, section: string, filename: string };
+}
+
 export interface IThemeV4ApiProperties {
   font: string;
-  logo: {
-    file?: string,
-    section?: string,
-    filename?: string,
-    value?: { file: string, section: string, filename: string }
-  };
+  logo: ThemeImage;
+  landing_page_logo: ThemeImage;
   title: string;
   font_color: string;
   accent_color: string;
@@ -36,6 +39,7 @@ export interface IThemeV4ApiProperties {
 interface IThemeProperties {
   '--font'?: string;
   '--logo'?: string;
+  '--landing_page_logo'?: string;
   '--title'?: string;
   '--accent'?: string;
   '--primary'?: string;

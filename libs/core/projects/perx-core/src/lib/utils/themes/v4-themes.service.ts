@@ -1,20 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
-import {
-  map,
-  catchError, shareReplay
-} from 'rxjs/operators';
-import {
-  Observable,
-  of,
-} from 'rxjs';
-
+import { map, catchError, shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { ThemesService } from './themes.service';
-import {ITheme, IThemeV4ApiProperties, ThemeJsonApiItem, ThemeJsonApiItemPayLoad} from './themes.model';
+import { ITheme, IThemeV4ApiProperties, ThemeJsonApiItem, ThemeJsonApiItemPayLoad } from './themes.model';
 import { LIGHT } from './themes.model';
-
 import { IConfig } from '../../config/models/config.model';
-import { oc } from 'ts-optchain';
 import { ConfigService } from '../../config/config.service';
 import { TokenStorage } from '../storage/token-storage.service';
 
@@ -80,12 +71,13 @@ export class V4ThemesService extends ThemesService {
   private static VThemeToTheme(setting: ThemeJsonApiItem<IThemeV4ApiProperties>): ITheme {
     // we want to follow material all in all font_color and surface, pop_up color
     // we hardcore these three values, their values is suppose to come from material theme setting
-    return  {
+    return {
       name: setting.key + setting.id, // more unique than using title from properties
       properties: {
         '--font': setting.json_value.font,
         '--title': setting.json_value.title,
-        '--logo': setting.json_value.logo.file || oc(setting).json_value.logo.value.file(''),
+        '--logo': setting.json_value.logo.file || setting.json_value.logo.value?.file,
+        '--landing_page_logo': setting.json_value.landing_page_logo.file || setting.json_value.landing_page_logo.value?.file,
         '--accent': setting.json_value.accent_color,
         '--primary': setting.json_value.primary_color,
         '--button_text_color': setting.json_value.CTA_button_text_color,
