@@ -259,14 +259,14 @@ export class NearmeComponent implements OnInit, OnDestroy {
       const radius = rad ? rad : Math.floor(google.maps.geometry.spherical.computeDistanceBetween(center, ne));
       // Calculate radius (in meters).
       this.searchRadiusCircle = new google.maps.Circle({
-        strokeColor: "#FF0000", // red
+        strokeColor: '#FF0000', // red
         strokeOpacity: 0.5,
         strokeWeight: 1,
-        fillColor: "#9d9d9d", // grey
+        fillColor: '#9d9d9d', // grey
         fillOpacity: 0.1,
         map: this.map,
-        center: center,
-        radius: radius
+        center,
+        radius
       });
     }
   }
