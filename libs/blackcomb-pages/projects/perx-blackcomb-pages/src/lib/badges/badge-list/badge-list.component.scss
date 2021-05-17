@@ -2,4 +2,19 @@
   font-size: 1.2rem;
   padding: 1.6rem;
   line-height: 2.1rem;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .badge {
+      flex: 1 0 calc(25% - 10px);
+      margin: 5px;
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
 }

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BadgeListComponent, BadgeDetailComponent } from '@perxtech/blackcomb-pages';
+import { BadgeDetailComponent, BadgeLandingComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
-  component: BadgeListComponent
+  component: BadgeLandingComponent
 },
 {
   path: 'details/:id',
