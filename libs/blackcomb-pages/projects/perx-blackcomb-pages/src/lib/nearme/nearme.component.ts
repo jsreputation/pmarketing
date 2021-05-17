@@ -60,7 +60,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
   public categories: ICategories[] = [];
-  public rad: number = 100000000;
+  public rad: number = 10000; // in meters
   public firstLoad: boolean = true;
   public lastLat: number;
   public lastLng: number;
