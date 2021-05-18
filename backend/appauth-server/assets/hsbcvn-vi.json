@@ -173,7 +173,13 @@
     "UNKNOWN_ERROR_TXT": "Đã xảy ra lỗi không xác định, vui lòng thử lại sau",
     "FAIL_REDEMPTION_TXT": "Lấy làm tiếc! Đổi phiếu thưởng không thành công.",
     "BACK_TO_WALLET": "Quay lại ví",
-    "CTA_TXT": "Quay lại"
+    "CTA_TXT": "Quay lại",
+    "URL_INSTRUCTION_TITLE": "Redemption instructions",
+    "URL_TITLE": "Redemption URL",
+    "URL_CTA_TXT": "REDEMPTION LINK",
+    "BACK_TO_REWARD": "RETURN TO REWARD DETAILS",
+    "COPY_TO_CLIPBOARD": "Đã sao chép vào khay nhớ tạm của bạn!",
+    "CLIPBOARD_ERROR_TXT": "Không thể truy cập khay nhớ tạm của bạn"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Vui lòng nhập mã này trong quá trình thanh toán",
@@ -266,7 +272,9 @@
   "VOUCHER": {
     "REDEEM": "Quy Đổi",
     "EXPIRY": "Hết hạn vào: {{date}}",
-    "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!"
+    "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!",
+    "URL_REDEEM": "REDEMPTION LINK",
+    "INSTRUCTIONS": "READ INSTRUCTIONS"
   },
   "REWARD": {
     "GET_VOUCHER": "Nhận Quà Tặng",

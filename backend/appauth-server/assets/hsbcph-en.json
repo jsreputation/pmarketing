@@ -176,7 +176,13 @@
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later",
     "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
     "BACK_TO_WALLET": "Back to wallet",
-    "CTA_TXT": "Go Back"
+    "CTA_TXT": "Go Back",
+    "URL_INSTRUCTION_TITLE": "Redemption instructions",
+    "URL_TITLE": "Redemption URL",
+    "URL_CTA_TXT": "REDEMPTION LINK",
+    "BACK_TO_REWARD": "RETURN TO REWARD DETAILS",
+    "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
+    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",
@@ -327,7 +333,9 @@
   "VOUCHER": {
     "REDEEM": "Redeem",
     "EXPIRY": "",
-    "NO_VOUCHERS": "No vouchers here yet!"
+    "NO_VOUCHERS": "No vouchers here yet!",
+    "URL_REDEEM": "REDEMPTION LINK",
+    "INSTRUCTIONS": "READ INSTRUCTIONS"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Reward",
