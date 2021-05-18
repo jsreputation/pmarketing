@@ -44,7 +44,7 @@ const transactionServiceStub: Partial<TransactionsService> = {
   getTransactions: () => of()
 };
 
-describe('ProgressCampaignComponent', () => {
+describe('RazProgressCampaignComponent', () => {
   let component: RazProgressCampaignComponent;
   let fixture: ComponentFixture<RazProgressCampaignComponent>;
 
