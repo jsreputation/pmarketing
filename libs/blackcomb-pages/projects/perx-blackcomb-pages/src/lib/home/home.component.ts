@@ -1,19 +1,6 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  combineLatest,
-  EMPTY,
-  forkJoin,
-  iif,
-  Observable,
-  of,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject, } from 'rxjs';
 import {
   catchError,
   filter,
@@ -46,6 +33,7 @@ import {
   InstantOutcomeService,
   IPrice,
   IProfile,
+  IQuestService,
   IReward,
   IRssFeeds,
   IRssFeedsData,
@@ -57,16 +45,12 @@ import {
   RssFeedsPages,
   SettingsService,
   ThemesService,
-  TokenStorage,
-  IQuestService
+  TokenStorage
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import {
-  CurrencyPipe,
-  DatePipe
-} from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -139,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         tap((config: IConfig<void>) => {
           if (config.homeAsProgressPage) {
-            this.router.navigate(['/progress-campaigns']);
+            this.router.navigate(['/legacy-progress-campaigns']);
           } else {
             this.authService.isAuthorized().subscribe((isAuth: boolean) => {
               if (isAuth && !this.configService.readAppStarted()) {
