@@ -1,14 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  filter,
-  map,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import {
   CampaignType,
   ConfigService,
@@ -17,30 +8,20 @@ import {
   IConfig,
   IFlags,
   IReward,
+  IStamp,
+  IStampCard,
+  IVoucherService,
   LoyaltyService,
   ProgressBarFields,
+  ProgressInfoPipe,
   SettingsService,
   StampService,
-  IVoucherService,
-  Voucher,
   TransactionsService,
   TransactionState,
-  IStampCard,
-  IStamp,
+  Voucher,
 } from '@perxtech/core';
-import {
-  ActivatedRoute,
-  NavigationExtras,
-  ParamMap,
-  Router
-} from '@angular/router';
-import {
-  combineLatest,
-  Observable,
-  of,
-  throwError
-} from 'rxjs';
-import { ProgressInfoPipe } from '@perxtech/core';
+import { ActivatedRoute, NavigationExtras, ParamMap, Router } from '@angular/router';
+import { combineLatest, Observable, of, throwError } from 'rxjs';
 import { oc } from 'ts-optchain';
 
 export enum CampaignRewardMode {
@@ -56,11 +37,11 @@ const DEFAULT_PAGE_SIZE = 25;
 
 
 @Component({
-  selector: 'perx-blackcomb-pages-progress-campaign',
-  templateUrl: './progress-campaign.component.html',
-  styleUrls: ['./progress-campaign.component.scss']
+  selector: 'raz-blackcomb-pages-progress-campaign',
+  templateUrl: './raz-progress-campaign.component.html',
+  styleUrls: ['./raz-progress-campaign.component.scss']
 })
-export class ProgressCampaignComponent implements OnInit {
+export class RazProgressCampaignComponent implements OnInit {
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
   public campaign$: Observable<ICampaign>;

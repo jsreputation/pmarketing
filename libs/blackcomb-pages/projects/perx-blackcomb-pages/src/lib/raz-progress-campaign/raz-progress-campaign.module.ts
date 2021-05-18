@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressBarModule, ProgressInfoPipe, RewardsModule, TransactionsServiceModule, UtilsModule } from '@perxtech/core';
-import { ProgressCampaignComponent } from './progress-campaign.component';
+import {
+  ProgressBarModule,
+  ProgressInfoPipe,
+  RewardsModule,
+  TransactionsServiceModule,
+  UtilsModule
+} from '@perxtech/core';
+import { RazProgressCampaignComponent } from './raz-progress-campaign.component';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    ProgressCampaignComponent
+    RazProgressCampaignComponent
   ],
   exports: [
-    ProgressCampaignComponent
+    RazProgressCampaignComponent
   ],
   providers: [
     ProgressInfoPipe
@@ -23,4 +29,4 @@ import { MatCardModule } from '@angular/material/card';
     RewardsModule.forChild()
   ]
 })
-export class ProgressCampaignModule { }
+export class RazProgressCampaignModule { }

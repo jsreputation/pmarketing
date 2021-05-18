@@ -1,15 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProgressCampaignHomeComponent } from './progress-campaign-home.component';
+import { RazProgressCampaignHomeComponent } from './progress-campaign-home.component';
 import { PageComponentsModule } from '../page-components/page-components.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   CampaignServiceModule,
   ConfigService,
   ICampaignService,
-  IGameService, LoyaltyService,
+  IGameService,
+  LoyaltyService,
   QuizService,
-  SettingsService, StampService,
+  SettingsService,
+  StampService,
   SurveyService,
   TransactionsService
 } from '@perxtech/core';
@@ -37,9 +39,9 @@ const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
 };
 
-describe('ProgressCampaignHomeComponent', () => {
-  let component: ProgressCampaignHomeComponent;
-  let fixture: ComponentFixture<ProgressCampaignHomeComponent>;
+describe('RazProgressCampaignHomeComponent', () => {
+  let component: RazProgressCampaignHomeComponent;
+  let fixture: ComponentFixture<RazProgressCampaignHomeComponent>;
   const stampServiceStub: Partial<StampService> = {
     getCards: () => of()
   };
@@ -52,7 +54,7 @@ describe('ProgressCampaignHomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressCampaignHomeComponent ],
+      declarations: [ RazProgressCampaignHomeComponent ],
       imports: [
         PageComponentsModule,
         RouterTestingModule,
@@ -77,7 +79,7 @@ describe('ProgressCampaignHomeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProgressCampaignHomeComponent);
+    fixture = TestBed.createComponent(RazProgressCampaignHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

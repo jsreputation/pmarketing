@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ProgressCampaignComponent } from './progress-campaign.component';
+import { RazProgressCampaignComponent } from './raz-progress-campaign.component';
 import {
   ConfigService,
   ICampaignService,
@@ -14,10 +14,7 @@ import {
   TransactionsService,
   UtilsModule
 } from '@perxtech/core';
-import {
-  ActivatedRoute,
-  convertToParamMap
-} from '@angular/router';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateService } from '@ngx-translate/core';
@@ -48,12 +45,12 @@ const transactionServiceStub: Partial<TransactionsService> = {
 };
 
 describe('ProgressCampaignComponent', () => {
-  let component: ProgressCampaignComponent;
-  let fixture: ComponentFixture<ProgressCampaignComponent>;
+  let component: RazProgressCampaignComponent;
+  let fixture: ComponentFixture<RazProgressCampaignComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressCampaignComponent ],
+      declarations: [ RazProgressCampaignComponent ],
       imports: [
 		    RouterTestingModule,
         RewardsModule,
@@ -82,7 +79,7 @@ describe('ProgressCampaignComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProgressCampaignComponent);
+    fixture = TestBed.createComponent(RazProgressCampaignComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -14,11 +14,11 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'perx-blackcomb-pages-campaign-card-home',
-  templateUrl: './progress-campaign-home.component.html',
-  styleUrls: [ './progress-campaign-home.component.scss' ]
+  selector: 'raz-blackcomb-pages-campaign-card-home',
+  templateUrl: './raz-progress-campaign-home.component.html',
+  styleUrls: [ './raz-progress-campaign-home.component.scss' ]
 })
-export class ProgressCampaignHomeComponent implements OnInit {
+export class RazProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
   public showPageTitle: boolean = false;
@@ -77,7 +77,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
 
   public goToCampaignPage(campaign: ICampaign): void {
     // todo: unit test - expected to be progress campaigns only here
-    this.router.navigate([`progress-campaign/${campaign.id}`]);
+    this.router.navigate([`legacy-progress-campaign/${campaign.id}`]);
   }
 
 }

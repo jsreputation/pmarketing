@@ -82,10 +82,10 @@ export { TransactionShowComponent } from './lib/rebates/transaction-show/transac
 export { NearmeComponent } from './lib/nearme/nearme.component';
 export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
-export { ProgressCampaignHomeModule } from './lib/progress-campaign-home/progress-campaign-home.module';
-export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/progress-campaign-home.component';
-export { ProgressCampaignModule } from './lib/progress-campaign/progress-campaign.module';
-export { ProgressCampaignComponent } from './lib/progress-campaign/progress-campaign.component';
+export { RazProgressCampaignHomeModule } from './lib/raz-progress-campaign-home/raz-progress-campaign-home.module';
+export { RazProgressCampaignHomeComponent } from './lib/raz-progress-campaign-home/raz-progress-campaign-home.component';
+export { RazProgressCampaignModule } from './lib/raz-progress-campaign/raz-progress-campaign.module';
+export { RazProgressCampaignComponent } from './lib/raz-progress-campaign/raz-progress-campaign.component';
 export { PageComponentsModule } from './lib/page-components/page-components.module';
 export { RewardVoucherDetailModule } from './lib/reward-voucher-detail/reward-voucher-detail.module';
 export { RewardVoucherDetailComponent } from './lib/reward-voucher-detail/reward-voucher-detail.component';
