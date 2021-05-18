@@ -9,7 +9,8 @@ import {
 } from '@angular/forms';
 import {
   ActivatedRoute,
-  Router
+  Router,
+  Params
 } from '@angular/router';
 import {
   AuthenticationService,
@@ -53,6 +54,7 @@ export class SignUpComponent implements OnInit {
   public loadingSubmit: boolean;
   public confirmPasswordHide: boolean = true;
   public passwordHide: boolean = true;
+  public isPreregisteredMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -79,7 +81,14 @@ export class SignUpComponent implements OnInit {
       takeUntil(this.destroy$)
     );
 
-    this.initForm();
+    this.route.queryParams
+      .subscribe((params: Params) => {
+        if (params.registration && params.registration === 'invitation') {
+          this.isPreregisteredMode = true;
+        }
+        this.initForm();
+      });
+
     this.getAppToken();
   }
 
@@ -97,6 +106,7 @@ export class SignUpComponent implements OnInit {
   }
 
   private initForm(): void {
+    if (this.isPreregisteredMode) {
     this.signupForm = this.fb.group({
       // firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -108,6 +118,16 @@ export class SignUpComponent implements OnInit {
       confirmPassword: ['', Validators.required],
       engineNumber: ['', Validators.required],
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  } else {
+    this.signupForm = this.fb.group({
+      lastName: ['', Validators.required],
+      countryCode: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  }
+
   }
 
   public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
@@ -128,30 +148,42 @@ export class SignUpComponent implements OnInit {
       this.errorMessage = 'Unknown error occurred.';
       return;
     }
-
+    let engineNumber;
+    let dob;
+    let signUpData: ISignUpData;
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
     const lastName = this.signupForm.value.lastName;
-    const dob = this.signupForm.value.dob as Moment;
+
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const primaryIdentifier = countryCode + mobileNumber; // identifier for transcycle is also phone
 
-    const engineNumber = this.signupForm.value.engineNumber;
+    if (this.isPreregisteredMode) {
+       dob = this.signupForm.value.dob as Moment;
+       engineNumber = this.signupForm.value.engineNumber;
 
-    const signUpData: ISignUpData = {
-      lastName,
-      birthDay: dob.format(), // convert moment to ISO
-      identifier: primaryIdentifier, // identifier for transcycle is also phone
-      phone: primaryIdentifier,
-      password: passwordString,
-      passwordConfirmation: confirmPassword,
-      customProperties : {
-        engine_number: engineNumber
-      }
-    };
-
+       signUpData = {
+          lastName,
+          birthDay: dob.format(), // convert moment to ISO
+          identifier: primaryIdentifier, // identifier for transcycle is also phone
+          phone: primaryIdentifier,
+          password: passwordString,
+          passwordConfirmation: confirmPassword,
+          customProperties : {
+          engine_number: engineNumber
+        }
+      };
+    } else {
+       signUpData = {
+          lastName,
+          identifier: primaryIdentifier, // identifier for transcycle is also phone
+          phone: primaryIdentifier,
+          password: passwordString,
+          passwordConfirmation: confirmPassword
+      };
+    }
 
     this.authService.signup(signUpData)
       .subscribe(
