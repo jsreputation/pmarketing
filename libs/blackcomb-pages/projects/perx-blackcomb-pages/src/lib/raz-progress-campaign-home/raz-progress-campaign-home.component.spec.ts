@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RazProgressCampaignHomeComponent } from './progress-campaign-home.component';
+import { RazProgressCampaignHomeComponent } from './raz-progress-campaign-home.component';
 import { PageComponentsModule } from '../page-components/page-components.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
