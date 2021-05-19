@@ -1,4 +1,4 @@
-import { CampaignState, CampaignType, ICampaign } from '@perxtech/core';
+import { CampaignOutcomeType, CampaignState, CampaignType, ICampaign, ICampaignOutcome } from '@perxtech/core';
 import { rewards } from './rewards.mock';
 
 export const campaigns: ICampaign[] = [
@@ -59,5 +59,19 @@ export const campaigns: ICampaign[] = [
       }
     },
     enrolled: true
+  }
+];
+
+export const campaignOutcomes: ICampaignOutcome[] = [
+  {
+    id: 1,
+    type: CampaignOutcomeType.reward,
+    name: 'progress reward item 1'
+  },
+  {
+    id: 2,
+    type: CampaignOutcomeType.points,
+    name: 'progress points item 1',
+    pointsCount: 220
   }
 ];
