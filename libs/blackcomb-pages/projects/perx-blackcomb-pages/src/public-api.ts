@@ -82,6 +82,8 @@ export { TransactionShowComponent } from './lib/rebates/transaction-show/transac
 export { NearmeComponent } from './lib/nearme/nearme.component';
 export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
+export { ProgressCampaignModule } from './lib/progress-campaign/progress-campaign.module';
+export { ProgressCampaignComponent } from './lib/progress-campaign/progress-campaign.component';
 export { RazProgressCampaignHomeModule } from './lib/raz-progress-campaign-home/raz-progress-campaign-home.module';
 export { RazProgressCampaignHomeComponent } from './lib/raz-progress-campaign-home/raz-progress-campaign-home.component';
 export { RazProgressCampaignModule } from './lib/raz-progress-campaign/raz-progress-campaign.module';
