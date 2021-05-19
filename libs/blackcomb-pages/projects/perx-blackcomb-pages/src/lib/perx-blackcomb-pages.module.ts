@@ -27,19 +27,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
 import {
+  CampaignServiceModule,
+  LocationModule,
+  LoyaltyModule,
+  ProfileModule,
+  ProgressBarModule,
+  PuzzlesModule,
+  QuizModule,
+  RankModule,
+  RewardsModule,
+  SecondsToStringPipe,
+  SurveyModule,
   UtilsModule,
   VouchersModule,
-  PuzzlesModule,
-  LoyaltyModule,
-  RewardsModule,
-  SurveyModule,
-  ProfileModule,
-  QuizModule,
-  SecondsToStringPipe,
-  RankModule,
-  LocationModule,
-  CampaignServiceModule,
-  ProgressBarModule,
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -83,9 +83,9 @@ import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { NearmeComponent } from './nearme/nearme.component';
 import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
-import { ProgressCampaignHomeModule } from './progress-campaign-home/progress-campaign-home.module';
+import { RazProgressCampaignHomeModule } from './raz-progress-campaign-home/raz-progress-campaign-home.module';
 import { PageComponentsModule } from './page-components/page-components.module';
-import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
+import { RazProgressCampaignModule } from './raz-progress-campaign/raz-progress-campaign.module';
 import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-voucher-detail.module';
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
@@ -178,9 +178,9 @@ const comps: any[] = [
     MatSelectInfiniteScrollModule,
     MatAutocompleteModule,
     CampaignServiceModule.forRoot(),
-    ProgressCampaignHomeModule,
+    RazProgressCampaignHomeModule,
     PageComponentsModule,
-    ProgressCampaignModule,
+    RazProgressCampaignModule,
     RewardVoucherDetailModule,
     ProgressBarModule,
     RazAdaptedCampaignsCollectionModule,

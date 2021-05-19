@@ -1,18 +1,1 @@
-<div class="page">
-  <div class="campaigns">
-    <div *ngIf="showPageTitle" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
-<!--    <div class="banner-img" *ngIf="bannerImg"><img [src]="bannerImg" usemap="#bannermap"></div>-->
-<!--    not yet have see more-->
-<!--    <map name="bannermap">-->
-<!--      <area shape="rect" coords="85,91,270,134" alt="find-more" [routerLink]="[ '/find-out-more' ]">-->
-<!--    </map>-->
-    <!--    todo: update the collection to support infinite scrolling without the see more button   -->
-    <perx-blackcomb-pages-raz-adapted-campaigns-collection
-      [stampCampaigns]="stampCampaigns$"
-      [loyaltyCampaigns]="loyaltyCampaigns$"
-      [referralCampaigns]="referralCampaigns$"
-      [showProgressLabels]="false"
-      (selected)="goToCampaignPage($event)">
-    </perx-blackcomb-pages-raz-adapted-campaigns-collection>
-  </div>
-</div>
+<p>progress-campaign-home works!</p>

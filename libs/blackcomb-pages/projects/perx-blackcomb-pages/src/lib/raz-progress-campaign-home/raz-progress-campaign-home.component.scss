@@ -1,0 +1,36 @@
+.page {
+  background-color: var(--background);
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.games, .campaigns {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.4rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin: 2.4rem 1.5rem 1.6rem;
+  line-height: 2.3rem;
+  color: var(--font_color);
+  font-weight: 500;
+}
+
+.banner-img {
+  max-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  img {
+    flex-shrink: 0;
+    min-width: 100%;
+    height: 15rem;
+  }
+}

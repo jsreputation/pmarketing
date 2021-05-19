@@ -70,19 +70,19 @@ const routes: Routes = [
         canActivate: [ProtectedGuard],
       },
       {
-        path: 'progress-campaign/:id',
+        path: 'legacy-progress-campaign/:id',
         loadChildren: () =>
-          import('../progress-campaign/progress-campaign.module').then(
-            (mod) => mod.ProgressCampaignModule
+          import('../legacy-progress-campaign/legacy-progress-campaign.module').then(
+            (mod) => mod.LegacyProgressCampaignModule
           ),
         canActivate: [ProtectedGuard],
       },
       {
-        path: 'progress-campaigns',
+        path: 'legacy-progress-campaigns',
         loadChildren: () =>
           import(
-            '../progress-campaign-home/progress-campaign-home.module'
-          ).then((mod) => mod.ProgressCampaignHomeModule),
+            '../legacy-progress-campaign-home/legacy-progress-campaign-home.module'
+          ).then((mod) => mod.LegacyProgressCampaignHomeModule),
         canActivate: [ProtectedGuard],
       },
       {

@@ -1,29 +1,117 @@
-.page {
-  height: 100%;
-  background-color: var(--background);
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow-y: auto;
-
-  .banner {
-    background: var(--surface_colour);
-    border-radius: 0;
-    //0 3px 3px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.14)
-    box-shadow: none;
-    padding-bottom: 3rem;
-
-    .progress-info {
-      margin-left: 1rem;
-      font-size: 1.7rem;
-    }
-
-    .progress-bar-campaign {
-      margin-top: 0.5rem;
-    }
+.quest-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
-
-  .rewards {
-    padding: 0.7rem 1.5rem 2.4rem;
-  }
+.quest-content-container {
+    font-size: 12px;
+    flex-grow: 1;
+    overflow-y: scroll;
+    .quest-content {
+        padding: 2rem;
+    }
+    img, svg {
+        width: 100%;
+        height: 22rem;
+        object-fit: cover;
+    }
+    svg {
+        background: #E8E8E8;
+    }
+    .title {
+        font-size: 16px;
+    }
+    .description {
+        font-weight: normal;
+        line-height: 20px;
+        margin: 2rem 0;
+    }
+    .expiry-date {
+        color: rgba(0, 0, 0, 0.38);
+        font-weight: bold;
+        margin-top: 1.2rem;
+    }
+    .progress-bar-container {
+        p {
+            color: rgba(0, 0, 0, 0.38);
+        }
+    }
+    ::ng-deep {
+        .mat-list-item-content {
+            padding: 0 !important;
+            border-bottom: 1px solid rgba(33, 33, 33, 0.03);
+        }
+        .mat-progress-bar {
+            border-radius: .4rem;
+            height: .6rem !important;
+            .mat-progress-bar-fill::after {
+                background-color: #2664ED;
+            }
+        }
+        .mat-progress-bar-buffer {
+            background-color: #E1E1E1;
+        }
+    }
+    mat-list-item {  
+        font-size: 12px;
+        font-weight: bold;
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    }
+    .task-card {
+        display: flex;
+        .task-img-section {
+            margin: auto;
+        }
+        .task-img-container {
+            position: relative;
+            .success-icon {
+                position: absolute;
+                bottom: .4rem;
+                right: -.4rem;
+                width: 1.8rem;
+                height: 1.8rem;
+            }
+        }
+        img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            margin-right: 1.6rem;
+            align-self: center;
+        }
+        .task-subtitle {
+            color: rgba(0, 0, 0, 0.38); 
+            margin-bottom: 0;
+        }
+        .task-content {
+            width: 100%;
+            border-bottom: 1px solid rgba(33, 33, 33, 0.03);
+            padding-top: .8rem;
+            padding-bottom: 2rem;
+            p {
+                font-weight: bold;
+            }
+        }
+    }
+    .reward-container {
+        margin: 2.5rem 0;
+        p {
+            color: rgba(0, 0, 0, 0.38);
+            margin-bottom: 0;
+        }
+        a {
+            font-weight: bold;
+        }
+    }
+}
+.bottom-toolbar {
+    background: white !important;
+    button {
+        width: 100%;
+        background: #2664ED !important;
+    }
 }
