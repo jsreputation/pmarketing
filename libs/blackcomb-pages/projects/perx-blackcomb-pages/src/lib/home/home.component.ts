@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
   public questCampaigns$: Observable<ICampaign[]>;
+  public progressCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -408,6 +409,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.appConfig.showQuizOnHomePage) {
       this.quizCampaigns$ = this.campaignService
         .getCampaigns({ gameType: GameType.quiz })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+    }
+
+    if (this.appConfig.showProgressBarCampaignsOnHomePage) {
+      this.progressCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.progress })
         .pipe(
           switchMap((campaigns: ICampaign[]) =>
             of(campaigns).pipe(catchError((err) => of(err)))
