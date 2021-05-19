@@ -1,4 +1,13 @@
-import { CampaignOutcomeType, CampaignState, CampaignType, ICampaign, ICampaignOutcome } from '@perxtech/core';
+import {
+  CampaignOutcomeType,
+  CampaignState,
+  CampaignType,
+  ICampaign,
+  ICampaignOutcome,
+  IQuest,
+  IQuestTask,
+  QuestState
+} from '@perxtech/core';
 import { rewards } from './rewards.mock';
 
 export const campaigns: ICampaign[] = [
@@ -73,5 +82,34 @@ export const campaignOutcomes: ICampaignOutcome[] = [
     type: CampaignOutcomeType.points,
     name: 'progress points item 1',
     pointsCount: 220
+  }
+];
+
+// quest + progress are similar
+export const campaignQuests: IQuest[] = [
+  {
+    id: 1,
+    campaignId: 4,
+    userAccountId: 1, // supposed to be current user
+    state: QuestState.inProgress,
+  },
+];
+
+export const campaignTasks: IQuestTask[] = [
+  {
+    id: 1,
+    campaignId: 4,
+    state: QuestState.completed,
+    title: 'task 1',
+    description: 'did this thingy already',
+    imageUrl: 'https://picsum.photos/200/200?random=4'
+  },
+  {
+    id: 2,
+    campaignId: 4,
+    state: QuestState.inProgress,
+    title: 'task 2',
+    description: 'do this thingy',
+    imageUrl: 'https://picsum.photos/200/200?random=5'
   }
 ];
