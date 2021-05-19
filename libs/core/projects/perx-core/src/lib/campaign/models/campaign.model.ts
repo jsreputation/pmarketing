@@ -1,5 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
-import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whistler';
+import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -34,7 +34,8 @@ export enum CampaignType {
   game = 'game',
   survey = 'survey',
   invite = 'invite',
-  quest = 'quest'
+  quest = 'quest',
+  progress = 'progress'
 }
 
 export enum CampaignState {
