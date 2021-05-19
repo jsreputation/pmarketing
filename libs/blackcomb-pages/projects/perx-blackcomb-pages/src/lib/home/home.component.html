@@ -30,7 +30,7 @@
   </div>
   <div class="campaign-list">
     <!-- progress bar campaigns-->
-    <div class="campaigns">
+    <div class="campaigns" *ngIf="appConfig.showProgressBarCampaignsOnHomePage">
       <div *ngIf="showCampaigns" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
