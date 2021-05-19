@@ -5,6 +5,10 @@ export interface IBadge {
     active: boolean;
     title: string;
     description?: string;
-    activeImage: Asset;
-    inactiveImage: Asset;
+    image: Asset;
+}
+
+export enum BadgeState {
+    earned,
+    unearned
 }
