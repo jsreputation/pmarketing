@@ -1,14 +1,14 @@
-.quest-container {
+.progress-campaign-container {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
   }
-.quest-content-container {
+.progress-campaign-content-container {
     font-size: 12px;
     flex-grow: 1;
     overflow-y: scroll;
-    .quest-content {
+    .progress-campaign-content {
         padding: 2rem;
     }
     img, svg {
@@ -53,7 +53,7 @@
             background-color: #E1E1E1;
         }
     }
-    mat-list-item {  
+    mat-list-item {
         font-size: 12px;
         font-weight: bold;
         a {
@@ -84,7 +84,7 @@
             align-self: center;
         }
         .task-subtitle {
-            color: rgba(0, 0, 0, 0.38); 
+            color: rgba(0, 0, 0, 0.38);
             margin-bottom: 0;
         }
         .task-content {
