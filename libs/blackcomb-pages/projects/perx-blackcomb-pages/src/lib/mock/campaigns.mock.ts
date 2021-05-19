@@ -1,4 +1,5 @@
-import { ICampaign, CampaignType, CampaignState } from '@perxtech/core';
+import { CampaignState, CampaignType, ICampaign } from '@perxtech/core';
+import { rewards } from './rewards.mock';
 
 export const campaigns: ICampaign[] = [
   // {
@@ -34,5 +35,29 @@ export const campaigns: ICampaign[] = [
     state: CampaignState.active,
     endsAt: new Date('2017-10-17T03:24:00'),
     thumbnailUrl: 'assets/pinata/opened-img.png'
+  },
+  {
+    id: 4,
+    name: 'BC step thru',
+    description: 'keep moving forward',
+    tnc: 'this are the TnC\'s that you are to abide by',
+    type: CampaignType.progress,
+    state: CampaignState.active,
+    endsAt: new Date('2022-11-17T03:24:00'),
+    beginsAt: new Date(),
+    rewards: rewards,
+    rewardsCount: 3,
+    thumbnailUrl: 'https://picsum.photos/300/200?random=1',
+    campaignBannerUrl: 'https://picsum.photos/300/200?random=2',
+    displayProperties: {
+      questDetails: {
+        title: 'How far can you go?',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        imageUrl: 'https://picsum.photos/300/200?random=3',
+        successImageUrl: 'https://picsum.photos/300/200?random=2'
+      }
+    },
+    enrolled: true
   }
 ];
