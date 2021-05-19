@@ -88,6 +88,11 @@
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!"
   },
+  "BADGES": {
+    "ALL_TAB": "All",
+    "EARNED_TAB": "Earned",
+    "UNEARNED_TAB": "Unearned"
+  },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
   "MOBILE_NUMBER_OR_EMAIL": "Mobile Number or email address",

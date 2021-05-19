@@ -481,6 +481,11 @@
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!"
   },
+  "BADGES": {
+    "ALL_TAB": "All",
+    "EARNED_TAB": "Earned",
+    "UNEARNED_TAB": "Unearned"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",

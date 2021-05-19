@@ -45,6 +45,7 @@ import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet
 import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
 import { LeaderboardsComponent } from '../leaderboard/leaderboards.component';
+import { BadgeLandingComponent } from '../badges/badge-landing/badge-landing.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -146,7 +147,8 @@ export class LayoutComponent implements OnInit {
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
       ref instanceof RewardsPageComponent ||
-      ref instanceof NearmeComponent;
+      ref instanceof NearmeComponent ||
+      ref instanceof BadgeLandingComponent;
     this.cd.detectChanges();
   }
 
