@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { QuestModule as BCPQuestModule, UtilsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [ProgressCampaignComponent],
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     TranslateModule.forChild(),
     UtilsModule,
+    MatProgressSpinnerModule,
     MatProgressBarModule,
     MatCardModule,
     MatToolbarModule,
