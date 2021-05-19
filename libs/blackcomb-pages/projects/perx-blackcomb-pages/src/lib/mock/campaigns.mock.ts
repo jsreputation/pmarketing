@@ -95,6 +95,7 @@ export const campaignQuests: IQuest[] = [
   },
 ];
 
+// quest task + progress levels are also similar
 export const campaignTasks: IQuestTask[] = [
   {
     id: 1,
