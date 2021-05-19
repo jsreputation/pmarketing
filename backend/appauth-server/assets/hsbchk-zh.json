@@ -261,7 +261,10 @@
     "SEE_MORE": "查看更多",
     "SEE_LESS": "關閉查看",
     "REWARDS_LEFT": "獎勵剩餘",
-    "READ_MORE": "查看更多"
+    "READ_MORE": "查看更多",
+    "QUEST_CAMPAIGNS": "Quests",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",

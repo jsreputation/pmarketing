@@ -283,12 +283,11 @@
     "POINT_TO": "Points to {nextTierName}",
     "GAME_TRIES_LEFT": "tries left",
     "ALL": "All",
-    "HUNG_FOOK_TONG": "Hung Fook Tong",
-    "BIG_BIG_SHOP": "big big shop",
-    "HOME+": "Home+",
-    "HKBN": "HKBN",
     "CLOSE": "Close",
-    "REWARDS": "Rewards"
+    "REWARDS": "Rewards",
+    "QUEST_CAMPAIGNS": "Quests",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

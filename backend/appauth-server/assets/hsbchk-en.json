@@ -259,7 +259,10 @@
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
     "REWARDS_LEFT": " Rewards Left",
-    "READ_MORE": "Read More"
+    "READ_MORE": "Read More",
+    "QUEST_CAMPAIGNS": "Quests",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

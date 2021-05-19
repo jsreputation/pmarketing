@@ -262,7 +262,9 @@
     "HOME+": "",
     "HKBN": "",
     "CLOSE": "Đóng",
-    "REWARDS": "Phần thưởng"
+    "REWARDS": "Phần thưởng",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "QR": {
     "QR_TO_MERCHANT": "Xuất trình mã QR này cho người bán",
