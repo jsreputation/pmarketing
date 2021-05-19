@@ -70,7 +70,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard],
       },
       {
-        path: 'progress-campaign/:id',
+        path: 'progress/:id',
         loadChildren: () =>
           import('../progress-campaign/progress-campaign.module').then(
             (mod) => mod.ProgressCampaignModule
