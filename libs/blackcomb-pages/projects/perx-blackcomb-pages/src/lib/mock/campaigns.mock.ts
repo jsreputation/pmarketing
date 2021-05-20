@@ -86,6 +86,19 @@ export const campaignOutcomes: ICampaignOutcome[] = [
     name: 'progress points item 2',
     pointsCount: 220,
     levelId: 21 // used for progress campaigns
+  },
+  {
+    id: 3,
+    type: CampaignOutcomeType.points,
+    name: 'progress points item 3',
+    pointsCount: 1110,
+    levelId: 34 // used for progress campaigns
+  },
+  {
+    id: 4,
+    type: CampaignOutcomeType.reward,
+    name: 'progress reward item 3',
+    levelId: 34 // used for progress campaigns
   }
 ];
 
