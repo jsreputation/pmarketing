@@ -2,12 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ICampaignService, LoyaltyService, RewardsService } from '@perxtech/core';
+import { ICampaignService, LoyaltyService, RewardsService, IPrizeSetOutcomeService } from '@perxtech/core';
 import { PrizeSetOutcomeComponent } from './prize-set-outcome.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
 const loyaltyServiceStub: Partial<LoyaltyService> = {};
 const rewardServiceStub: Partial<RewardsService> = {};
+const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
+
 
 describe('PrizeSetOutcomeComponent', () => {
   let component: PrizeSetOutcomeComponent;
@@ -16,13 +19,17 @@ describe('PrizeSetOutcomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PrizeSetOutcomeComponent],
-      imports: [ MatToolbarModule,
+      imports: [
+        MatToolbarModule,
         MatCardModule,
-        RouterTestingModule],
+        RouterTestingModule,
+        MatProgressSpinnerModule
+      ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: RewardsService, useValue: rewardServiceStub }
+        { provide: RewardsService, useValue: rewardServiceStub },
+        { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService }
       ]
     })
     .compileComponents();

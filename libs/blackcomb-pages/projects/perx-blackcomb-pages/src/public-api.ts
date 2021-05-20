@@ -101,3 +101,4 @@ export { QuestModule } from './lib/quest/quest.module';
 export { LargeVouchersComponent } from './lib/large-vouchers/large-vouchers.component';
 export { LargeVouchersModule } from './lib/large-vouchers/large-vouchers.module';
 export { PrizeSetOutcomeComponent } from './lib/prize-set-outcome/prize-set-outcome.component';
+export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';

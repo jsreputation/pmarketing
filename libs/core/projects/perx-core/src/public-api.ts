@@ -79,11 +79,9 @@ export {
   ITaggedItem,
   QuestProperties,
   ICampaignItem,
+  IPointsOutcome,
   ICampaignOutcome,
   CampaignOutcomeType,
-  IPrizeSetOutcome,
-  IPrizeSetItem,
-  IPointsOutcome
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -103,6 +101,7 @@ export {
   IStamp,
   StampCardState,
   StampState,
+  StampOutcomeType
 } from './lib/stamp/models/stamp.model';
 export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
@@ -321,7 +320,7 @@ export { ThemesService } from './lib/utils/themes/themes.service';
  * Outcome
  */
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
-export { IOutcome, OutcomeType, PrizeSetOutcomeType, PrizeSetIssuedType } from './lib/outcome/models/outcome.model';
+export { IOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
  * Rank / Leaderboard
@@ -368,3 +367,15 @@ export { CampaignRewardMode } from './lib/rewards/rewards-large-list/rewards-lar
  */
 export { RazAdaptedCampaignCardModule } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.module';
 export { RazAdaptedCampaignCardComponent } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.component';
+/**
+ * Prize set outcome
+ */
+export {
+  IPrizeSetOutcome,
+  IPrizeSetItem,
+  PrizeSetOutcomeType,
+  PrizeSetIssuedType,
+  PrizeSetState
+} from './lib/prize-set-outcome/models/prize-set-outcome.model';
+export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
+export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.service.module';

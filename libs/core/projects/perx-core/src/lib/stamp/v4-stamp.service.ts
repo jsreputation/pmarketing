@@ -21,6 +21,8 @@ import {
   StampCardState,
   StampState,
   ICampaignOutcome,
+  IStampOutcome,
+  StampOutcomeType
 } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
@@ -49,8 +51,17 @@ export interface IV4Stamp {
   updated_at: string;
   campaign_id: number;
   vouchers?: IVoucher[];
+  outcomes?: IV4StampOutcome[];
 }
 
+export interface IV4StampOutcome {
+  id: number;
+  actual_outcome_type: StampOutcomeType;
+  actual_outcome_id: number;
+  campaign_prize_type: StampOutcomeType;
+  campaign_prize_id: number;
+  state: string;
+}
 interface IV4GetStampTransactionsResponse {
   data: IV4Stamp[];
   meta: {
@@ -188,6 +199,8 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {
+    const outcomes = stamp.outcomes && stamp.outcomes.map(v => V4StampService.v4StampOutcomeToStampOutcome(v));
+
     return {
       id: stamp.id,
       userAccountId: stamp.user_account_id,
@@ -197,6 +210,7 @@ export class V4StampService implements StampService {
       updatedAt: stamp.updated_at,
       campaignId: stamp.campaign_id,
       vouchers: stamp.vouchers,
+      ...(outcomes && outcomes.length && {outcomes}),
     };
   }
 
@@ -408,5 +422,14 @@ export class V4StampService implements StampService {
           )
         ),
       );
+  }
+
+  public static v4StampOutcomeToStampOutcome(outcome: IV4StampOutcome): IStampOutcome {
+    return {
+      id: outcome.actual_outcome_id,
+      outcomeType: outcome.campaign_prize_type,
+      state: outcome.state,
+      prizeSetId: outcome.campaign_prize_id
+    };
   }
 }

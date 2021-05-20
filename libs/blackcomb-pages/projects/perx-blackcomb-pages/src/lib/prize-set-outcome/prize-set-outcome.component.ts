@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   ActivatedRoute,
   ParamMap
@@ -9,21 +9,25 @@ import {
   switchMap,
   tap,
   catchError,
-  startWith
+  startWith,
+  takeUntil
 } from 'rxjs/operators';
 import {
-  ICampaignService,
   LoyaltyService,
   IReward,
   IPrizeSetItem,
   RewardsService,
   ILoyalty,
-  PrizeSetOutcomeType
+  PrizeSetOutcomeType,
+  PrizeSetState,
+  IPrizeSetOutcomeService
 } from '@perxtech/core';
 import {
   forkJoin,
   of,
   combineLatest,
+  EMPTY,
+  Subject
 } from 'rxjs';
 
 @Component({
@@ -31,15 +35,18 @@ import {
   templateUrl: './prize-set-outcome.component.html',
   styleUrls: ['./prize-set-outcome.component.scss']
 })
-export class PrizeSetOutcomeComponent implements OnInit {
+export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
 
   public prizeSetId: number;
   public outcomes: IPrizeSetItem[] = [];
+  public isLoading: boolean = false;
+  public outcomeMsg: string;
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private activeRoute: ActivatedRoute,
-              private campaignService: ICampaignService,
               private loyaltyService: LoyaltyService,
-              private rewardsService: RewardsService) { }
+              private rewardsService: RewardsService,
+              private prizeSetOutcomeService: IPrizeSetOutcomeService) { }
 
     public ngOnInit(): void {
       let rewardOutcomes: IPrizeSetItem[] = [];
@@ -50,31 +57,49 @@ export class PrizeSetOutcomeComponent implements OnInit {
           filter((params: ParamMap) => params.has('id')),
           map((params: ParamMap) => params.get('id')),
           switchMap((id: string) => {
+            this.isLoading = true;
             this.prizeSetId = Number.parseInt(id, 10);
-            return this.campaignService.getPrizeSet(this.prizeSetId);
+            return this.prizeSetOutcomeService.getPrizeSetState(this.prizeSetId);
+          }),
+          switchMap((status: string) => {
+            if (status === PrizeSetState.failed) {
+              this.outcomeMsg = 'Sorry, outcome issuance failed';
+              this.isLoading = false;
+            } else if (status === PrizeSetState.inProgress || status === PrizeSetState.queued) {
+              this.outcomeMsg = 'Outcome is still processing and will be issued shortly';
+              this.isLoading = false;
+            }
+            return status === 'completed' ? this.prizeSetOutcomeService.getPrizeSet(this.prizeSetId) : EMPTY;
           }),
           tap((outcomes) => {
             allOutcomes = outcomes;
-            rewardOutcomes = outcomes.filter((outcome) => outcome.actualOutcomeType === PrizeSetOutcomeType.reward);
-            pointOutcomes = outcomes.filter((outcome) => outcome.actualOutcomeType === PrizeSetOutcomeType.points);
+            rewardOutcomes = outcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
+            pointOutcomes = outcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
           }),
           switchMap(() =>
             forkJoin([
-                combineLatest(...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.actualOutcomeId)
+                combineLatest(...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
                 .pipe(catchError(() => of(void 0))))).pipe(startWith([])),
-                combineLatest(...pointOutcomes.map((outcome) => this.loyaltyService.getLoyalty(outcome.actualOutcomeId)
+                combineLatest(...pointOutcomes.map((outcome) => this.loyaltyService.getLoyalty(outcome.campaignPrizeId)
                 .pipe(catchError(() => of(void 0))))).pipe(startWith([]))]
-            ))
+            )),
+            takeUntil(this.destroy$)
           ).subscribe(([rewards, loyalties]: ([IReward[], ILoyalty[]])) => {
+            this.isLoading = false;
             allOutcomes.map((outcome) => {
-              if (outcome.actualOutcomeType === 'Reward::Campaign') {
-                outcome.rewardDetails = rewards && rewards.find(r => r?.id === outcome.actualOutcomeId);
-              } else if (outcome.actualOutcomeType === 'StoredValue::Campaign') {
-                outcome.loyaltyDetails = loyalties && loyalties.find(l => l?.id === outcome.actualOutcomeId);
+              if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
+                outcome.rewardDetails = rewards && rewards.find(r => r?.id === outcome.campaignPrizeId);
+              } else if (outcome.campaignPrizeType === PrizeSetOutcomeType.points) {
+                outcome.loyaltyDetails = loyalties && loyalties.find(l => l?.id === outcome.campaignPrizeId);
               }
             });
             this.outcomes = allOutcomes;
           });
+    }
+
+    public ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
     }
 
 }

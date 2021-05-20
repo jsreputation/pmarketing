@@ -5,7 +5,7 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState, ThemesService, ITheme
+  StampState, ThemesService, ITheme, StampOutcomeType
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
@@ -160,8 +160,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 }));
             }
 
-            if (stamp.vouchers && stamp.vouchers.length > 0) {
-              const voucherId = stamp.vouchers[0].id;
+            if ((stamp.vouchers && stamp.vouchers.length > 0) || ( stamp.outcomes && stamp.outcomes.length > 0)) {
+             // const voucherId = stamp.vouchers && stamp.vouchers[0].id;
+              const rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.reward);
+              const prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.prizeSet);
+              // const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.points);
               forkJoin([
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
@@ -174,10 +177,17 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   imageUrl: 'assets/prize.png',
                   disableOverlayClose: true,
                   ctaButtonClass: 'ga_game_completion',
-                  url: `/voucher-detail/${voucherId}`,
+                  // url: `/voucher-detail/${voucherId}`,
                   afterClosedCallBackRedirect: this,
                   buttonTxt
                 };
+                if (rewardOutcomes && rewardOutcomes.length > 0 && rewardOutcomes[0].id) {
+                  data.url = `/voucher-detail/${rewardOutcomes[0].id}`;
+                } else if (prizeSetOutcomes && prizeSetOutcomes.length > 0 && prizeSetOutcomes[0].id) {
+                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].id}`;
+                } else {
+                  data.url = '/wallet';
+                }
                 this.dialog.open(RewardPopupComponent, { data });
               });
             }

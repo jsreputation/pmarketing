@@ -69,6 +69,7 @@ import {
   LoyaltyModule,
   LanguageInterceptor,
   QuestModule as PerxQuestModule,
+  PrizeSetOutcomeModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -174,7 +175,8 @@ export const setLanguage = (
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ForgotPasswordModule,
-    PerxQuestModule.forRoot()
+    PerxQuestModule.forRoot(),
+    PrizeSetOutcomeModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [

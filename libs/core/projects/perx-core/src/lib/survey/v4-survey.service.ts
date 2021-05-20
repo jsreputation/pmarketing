@@ -16,7 +16,8 @@ import {
   IV4Voucher,
   V4VouchersService
 } from '../vouchers/v4-vouchers.service';
-import { V4CampaignService, IV4PrizeSetOutcome, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 interface V4NextMoveResponse {
   data: {
@@ -263,7 +264,7 @@ export class V4SurveyService implements SurveyService {
             outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
         const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
         const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
-        const prizeSet = v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+        const prizeSet = v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
         if (answerResponse.data.outcomes &&
           answerResponse.data.outcomes[0] &&
           (answerResponse.data.outcomes[0].outcome_type === OutcomeType.reward

@@ -6,7 +6,7 @@ import { ISelectPayload } from '../question/select/select.component';
 import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
 import { IQQuestion } from '../quiz.service';
 import { IVoucher } from '../../vouchers/models/voucher.model';
-import { IPrizeSetOutcome } from '../../campaign/models/campaign.model';
+import { IPrizeSetOutcome } from '../../prize-set-outcome/models/prize-set-outcome.model';
 import { IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IQAnswer {

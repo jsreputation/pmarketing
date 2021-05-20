@@ -1,6 +1,7 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
-import { IPrizeSetOutcome, IPointsOutcome } from '../campaign/models/campaign.model';
+import { IPointsOutcome } from '../campaign/models/campaign.model';
+import { IPrizeSetOutcome } from '../prize-set-outcome/models/prize-set-outcome.model';
 
 export enum GameType {
   unknown = -1,

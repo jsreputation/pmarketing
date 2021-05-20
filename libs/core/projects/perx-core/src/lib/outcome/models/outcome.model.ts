@@ -24,15 +24,6 @@ export enum OutcomeType {
   reward = 'reward',
   points = 'points',
   custom = 'custom',
-  prizeSet = 'prize_set'
+  prizeSet = 'PrizeSet'
 }
 
-export enum PrizeSetOutcomeType {
-  reward = 'Reward::Campaign',
-  points = 'StoredValue::Campaign'
-}
-
-export enum PrizeSetIssuedType {
-  voucher = 'Reward::Transaction',
-  points = 'StoredValue::Transaction'
-}

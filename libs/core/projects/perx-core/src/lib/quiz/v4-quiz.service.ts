@@ -36,7 +36,8 @@ import {
   IV4Voucher,
   V4VouchersService
 } from '../vouchers/v4-vouchers.service';
-import { V4CampaignService, IV4PrizeSetOutcome, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 const enum V4QuizMode {
   basic = 'basic',
@@ -281,7 +282,7 @@ export class V4QuizService implements QuizService {
           outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
         const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
         const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
-        const prizeSet = v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+        const prizeSet = v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
         const isRewardAcquired: boolean = ((vouchers && vouchers.length > 0) || (points && points.length > 0) ||
          (prizeSet && prizeSet.length > 0)) ? true : false;
         if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {

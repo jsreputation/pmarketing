@@ -9,7 +9,7 @@ import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { IVoucher } from '../../vouchers/models/voucher.model';
-import { IPrizeSetOutcome } from '../../campaign/models/campaign.model';
+import { IPrizeSetOutcome } from '../../prize-set-outcome/models/prize-set-outcome.model';
 import { IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IAnswer {

@@ -1,6 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whistler';
-import { ILoyalty } from '../../loyalty/models/loyalty.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 
 export interface CampaignDisplayProperties {
@@ -110,21 +109,6 @@ export interface ICampaignOutcome {
   type: CampaignOutcomeType;
   name: string;
   pointsCount?: number;
-}
-export interface IPrizeSetItem {
-  id: number;
-  actualOutcomeId: number;
-  actualOutcomeType: string;
-  issuedOutcomeId: number;
-  issuedOutcomeType: string;
-  pointsCount?: number;
-  rewardDetails?: IReward;
-  loyaltyDetails?: ILoyalty;
-}
-
-export interface IPrizeSetOutcome {
-  id: number;
-  outcomeType: OutcomeType.prizeSet;
 }
 export interface IPointsOutcome {
   id: number;

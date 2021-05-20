@@ -8,11 +8,9 @@ import {
   CampaignState,
   CampaignDisplayProperties,
   IReferral,
+  IPointsOutcome,
   CampaignOutcomeType,
   ICampaignOutcome,
-  IPrizeSetItem,
-  IPrizeSetOutcome,
-  IPointsOutcome
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
@@ -106,23 +104,6 @@ export interface IV4CampaignOutcomeItem {
   id: number;
   name: string;
   type: CampaignOutcomeType;
-}
-
-export interface IV4PrizeSet {
-  id: number;
-  actual_outcome_id: number;
-  actual_outcome_type: string;
-  issued_outcome_id: number;
-  issued_outcome_type: string;
-  points_count?: number;
-}
-interface IV4GetPrizeSetResponse {
-  data: IV4PrizeSet[];
-}
-
-export interface IV4PrizeSetOutcome {
-  id: number;
-  outcome_type: OutcomeType.prizeSet;
 }
 export interface IV4PointsOutcome {
   id: number;
@@ -331,7 +312,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]> {
-    return this.campaignsCache[id] = this.http
+    return this.http
       .get<IV4CampaignOutcomeResponse>(`${this.baseUrl}/v4/campaigns/${id}/outcomes`)
       .pipe(
         map(resp => resp.data),
@@ -352,32 +333,6 @@ export class V4CampaignService implements ICampaignService {
       type: campaignOutcome.modularizable_type,
       name: campaignOutcome.outcome ? campaignOutcome.outcome.name : '',
       pointsCount: campaignOutcome.points_count
-    };
-  }
-
-  public getPrizeSet(transactionId: number): Observable<IPrizeSetItem[]> {
-    return this.http.get<IV4GetPrizeSetResponse>(`${this.baseUrl}/v4/prize_set_transactions/${transactionId}/outcomes`)
-      .pipe(
-        map((res: IV4GetPrizeSetResponse) => res.data),
-        map((outcomes: IV4PrizeSet[]) => outcomes.map(outcome => V4CampaignService.v4PrizeSetItemToPrizeSetItem(outcome)))
-      );
-  }
-
-  public static v4PrizeSetItemToPrizeSetItem(prizeSet: IV4PrizeSet): IPrizeSetItem {
-    return {
-      id: prizeSet.id,
-      actualOutcomeId: prizeSet.actual_outcome_id,
-      actualOutcomeType: prizeSet.actual_outcome_type,
-      issuedOutcomeId: prizeSet.issued_outcome_id,
-      issuedOutcomeType: prizeSet.issued_outcome_type,
-      pointsCount: prizeSet.points_count
-    };
-  }
-
-  public static v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet: IV4PrizeSetOutcome): IPrizeSetOutcome {
-    return {
-      id: prizeSet.id,
-      outcomeType: prizeSet.outcome_type
     };
   }
 

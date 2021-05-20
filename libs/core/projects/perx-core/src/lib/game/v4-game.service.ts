@@ -47,7 +47,8 @@ import {
   CampaignType,
   ICampaign
 } from '../campaign/models/campaign.model';
-import { V4CampaignService, IV4PrizeSetOutcome, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -291,7 +292,7 @@ export class V4GameService implements IGameService {
               return accRewardIds;
             }, [] as number[]),
             points: points.map(p => V4CampaignService.v4PointsToPoints(p)),
-            prizeSet: v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p))
+            prizeSet: v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p))
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
@@ -328,7 +329,7 @@ export class V4GameService implements IGameService {
                               out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
     const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
     const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
-    const prizeSet = v4PrizeSets.map(p => V4CampaignService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+    const prizeSet = v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
     return {
       ...(vouchers && vouchers.length && {vouchers}),
       ...(points && {points}),

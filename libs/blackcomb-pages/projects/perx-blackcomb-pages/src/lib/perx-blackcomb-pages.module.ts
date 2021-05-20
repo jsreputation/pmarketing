@@ -91,7 +91,7 @@ import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-col
 import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
 import { QuestModule } from './quest/quest.module';
 import { LargeVouchersModule } from './large-vouchers/large-vouchers.module';
-import { PrizeSetOutcomeComponent } from './prize-set-outcome/prize-set-outcome.component';
+import { PrizeSetOutcomeModule } from './prize-set-outcome/prize-set-outcome.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -108,7 +108,6 @@ const comps: any[] = [
   RewardsPageComponent,
   FavoriteRewardsComponent,
   FilterDialogComponent,
-  PrizeSetOutcomeComponent
 ];
 
 @NgModule({
@@ -188,6 +187,7 @@ const comps: any[] = [
     RazAdaptedCampaignsCollectionModule,
     QuestModule,
     LargeVouchersModule,
+    PrizeSetOutcomeModule,
   ],
   entryComponents: [FilterDialogComponent],
   exports: [...comps],
