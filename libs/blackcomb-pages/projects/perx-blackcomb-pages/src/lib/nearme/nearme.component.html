@@ -9,7 +9,7 @@
   </div>
   <div #gmap class="map"></div>
   <div class="loc-card-container">
-      <div *ngIf="current && currentPrice" class="loc-card mat-elevation-z8">
+      <div *ngIf="current" class="loc-card mat-elevation-z8">
         <div class="card-content">
           <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
           <div class="merchant include-heart">
@@ -25,7 +25,12 @@
               <span class="macaron">Upcoming</span>
             </div>
           </div>
-          <span><p class="price">{{currentPrice.points}}<p> <p class="points"> points </p><p>or </p><p class="price">${{currentPrice.price}}</p><p> | Valid till {{current.validTo | date : 'shortDate'}}</p></span>
+          <span>
+            <p class="price">{{currentPrice?.points ? currentPrice?.points : 0}}<p>
+            <p class="points"> points </p>
+            <p>or </p>
+            <p class="price">${{currentPrice?.price ? currentPrice?.price : '0.00'}}</p>
+            <p> | Valid till {{current.validTo | date : 'shortDate'}}</p></span>
         </div>
         </div>
   </div>

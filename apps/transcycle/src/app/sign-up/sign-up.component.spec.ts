@@ -80,7 +80,8 @@ const themeServiceStub: Partial<ThemesService> = {
 };
 
 const activatedRouteStub: Partial<ActivatedRoute> = {
-  data: of()
+  data: of(),
+  queryParams: of({})
 };
 
 describe('SignUpComponent', () => {

@@ -1,35 +1,24 @@
 /// <reference types="@types/googlemaps" />
 
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  EventEmitter,
-  Output
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import {
-  RewardsService,
-  IReward,
+  GeoLocationService,
+  IFlags,
   IPrice,
+  IReward,
+  ITabConfigExtended,
   IVoucherLocation,
   IVoucherService,
-  GeoLocationService,
-  ITabConfigExtended,
-  SettingsService,
-  IFlags
+  RewardsService,
+  SettingsService
 } from '@perxtech/core';
 
-import {
-  Subject,
-  from,
-  iif
-} from 'rxjs';
-import { take, mergeMap, filter, tap, finalize } from 'rxjs/operators';
+import { from, iif, Subject } from 'rxjs';
+import { filter, finalize, mergeMap, take, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import Circle = google.maps.Circle;
 
 export interface IData {
   categories: ICategories[];
@@ -60,11 +49,12 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
   public categories: ICategories[] = [];
-  public rad: number = 100000000;
+  public rad: number = 10000; // in meters
   public firstLoad: boolean = true;
   public lastLat: number;
   public lastLng: number;
   public lastRad: number;
+  private searchRadiusCircle: Circle | null;
   public favDisabled: boolean  = false;
   @Output()
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -254,7 +244,31 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.firstLoad = false;
         this.updateBoundingBox();
       }
+      this.updateSearchCircle(rad);
     });
+  }
+
+  private updateSearchCircle(rad: number): void {
+    this.searchRadiusCircle?.setMap(null);
+    this.searchRadiusCircle = null;
+
+    const bounds = this.map.getBounds();
+    if (bounds) {
+      const center = bounds.getCenter();
+      const ne = bounds.getNorthEast();
+      const radius = rad ? rad : Math.floor(google.maps.geometry.spherical.computeDistanceBetween(center, ne));
+      // Calculate radius (in meters).
+      this.searchRadiusCircle = new google.maps.Circle({
+        strokeColor: '#FF0000', // red
+        strokeOpacity: 0.5,
+        strokeWeight: 1,
+        fillColor: '#9d9d9d', // grey
+        fillOpacity: 0.1,
+        map: this.map,
+        center,
+        radius
+      });
+    }
   }
 
   public updateBoundingBox(): void {
