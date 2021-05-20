@@ -14,6 +14,10 @@ button {
     max-width: 30vw;
     height: auto;
     align-self: flex-start; //MEG-31: https://stackoverflow.com/a/61196907/1179865
+    &.disabled {
+      opacity: 0.5;
+      filter: grayscale(1);
+    }
   }
 }
 

@@ -8,6 +8,7 @@ export interface IBadgeDetailPopupConfig {
   buttonTxt?: string | null;
   afterClosedCallBack?: BadgeDetailPopUpClosedCallBack;
   disableOverlayClose?: boolean;
+  active: boolean;
 }
 
 export interface BadgeDetailPopUpClosedCallBack {
@@ -24,6 +25,7 @@ export class BadgeDetailPopupComponent {
   public description: string | null = null;
   public imageUrl: string | null = null;
   public buttonTxt: string | null = 'close';
+  public active: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<BadgeDetailPopupComponent>,
@@ -43,6 +45,10 @@ export class BadgeDetailPopupComponent {
     }
     if (data.description) {
       this.description = data.description;
+    }
+
+    if (data.active) {
+      this.active = data.active;
     }
   }
 

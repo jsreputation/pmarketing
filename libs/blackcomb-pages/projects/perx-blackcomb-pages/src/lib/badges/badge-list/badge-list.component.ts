@@ -21,7 +21,8 @@ export class BadgeListComponent {
           title: badge.title,
           imageUrl: badge.image.value.image_url,
           description: badge.description,
-          buttonTxt: viewWallet
+          buttonTxt: viewWallet,
+          active: badge.active
         },
         minWidth: '35.5rem'
       });
