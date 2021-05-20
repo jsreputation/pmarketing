@@ -123,11 +123,13 @@
 
   .mat-tab-group-wrapper {
     min-height: 60rem;
+
+    ::ng-deep .mat-tab-body-wrapper {
+      margin-top: 2rem;
+    }
   }
 
   .task-card-container {
-    margin: 2rem 0;
-
     .task-card {
       display: flex;
 
@@ -236,6 +238,15 @@
     }
   }
 
+  .participate-container {
+    margin: 2rem;
+
+    .tnc {
+      font-size: 12px;
+      line-height: 20px;
+      margin-bottom: 4rem;
+    }
+  }
 }
 .bottom-toolbar {
     background: white !important;

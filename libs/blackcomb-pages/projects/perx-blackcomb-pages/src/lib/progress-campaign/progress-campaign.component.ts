@@ -10,7 +10,7 @@ import {
   IQuest,
   IQuestService,
   NotificationService,
-  QuestProperties,
+  ProgressProperties,
   QuestState
 } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
   public state: typeof QuestState = QuestState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
-  public questConfig: QuestProperties | undefined;
+  public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
 
   constructor(protected questService: IQuestService,
@@ -82,7 +82,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
       ).subscribe(([campaign, outcomes, levels, progress]: [ICampaign, ICampaignOutcome[], IProgressLevel[], IProgressCampaign]) => {
         this.updateProgessBar(progress);
-        this.questConfig = campaign.displayProperties?.questDetails;
+        this.progressConfig = campaign.displayProperties?.progressDetails;
         this.campaign$ = of(campaign);
         this.levels$ = of(levels);
         this.progressCampaign = progress;

@@ -78,6 +78,7 @@ export {
   ProgressBarFields,
   ITaggedItem,
   QuestProperties,
+  ProgressProperties,
   ICampaignItem,
   ICampaignOutcome,
   CampaignOutcomeType,

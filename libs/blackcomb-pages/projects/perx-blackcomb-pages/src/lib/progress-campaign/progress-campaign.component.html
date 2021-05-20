@@ -1,6 +1,6 @@
 <div class="progress-campaign-container" *ngIf="campaign$ | async as campaign">
     <div class="progress-campaign-content-container">
-      <img [src]="questConfig?.imageUrl" *ngIf="questConfig?.imageUrl; else defaultImgTemplate" [alt]="questConfig?.title">
+      <img [src]="progressConfig?.imageUrl" *ngIf="progressConfig?.imageUrl; else defaultImgTemplate" [alt]="progressConfig?.title">
       <ng-template #defaultImgTemplate>
           <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 0H375V200H0V0Z" fill="#E8E8E8" />
@@ -36,9 +36,9 @@
         <div class="progress-campaign-content">
 
             <div class="header">
-                <p class="title">{{questConfig?.title}}</p>
-                <p class="subtitle">{{questConfig?.description}}</p>
-                <p class="description">{{questConfig?.body}}</p>
+                <p class="title">{{progressConfig?.title}}</p>
+                <p class="subtitle">{{progressConfig?.description}}</p>
+                <p class="description">{{progressConfig?.body}}</p>
             </div>
           <div class="mat-tab-group-wrapper">
             <mat-tab-group mat-stretch-tabs>
@@ -47,7 +47,7 @@
                   <div class="task-card" *ngFor="let level of levels">
                     <div class="task-img-section">
                       <div class="task-img-container">
-                        <img class="success-icon" [src]="questConfig?.successImageUrl"
+                        <img class="success-icon" [src]="progressConfig?.successImageUrl"
                              *ngIf="(level.state === 'completed')">
                         <img [src]="level.imageUrl" [alt]="level.title">
                       </div>
@@ -90,8 +90,11 @@
                 </div>
               </mat-tab>
               <mat-tab [label]="'How To Participate'">
-                <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
-                <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
+                <div class="participate-container">
+                  <div class="tnc">{{progressConfig?.howToParticipateBody}}</div>
+                  <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
+                  <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </div>

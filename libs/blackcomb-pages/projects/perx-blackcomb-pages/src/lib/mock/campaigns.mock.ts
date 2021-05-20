@@ -62,12 +62,13 @@ export const campaigns: ICampaign[] = [
     thumbnailUrl: 'https://picsum.photos/300/200?random=1',
     campaignBannerUrl: 'https://picsum.photos/300/200?random=2',
     displayProperties: {
-      questDetails: {
+      progressDetails: {
         title: 'How far can you go?',
         description: 'Estimated time to complete - more than enough',
         body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         imageUrl: 'https://picsum.photos/300/200?random=3',
-        successImageUrl: 'assets/done_current.png'
+        successImageUrl: 'assets/done_current.png',
+        howToParticipateBody: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.'
       }
     },
     enrolled: true
@@ -87,12 +88,13 @@ export const campaigns: ICampaign[] = [
     thumbnailUrl: 'https://picsum.photos/300/200?random=1',
     campaignBannerUrl: 'https://picsum.photos/300/200?random=2',
     displayProperties: {
-      questDetails: {
+      progressDetails: {
         title: 'How far can you go?',
         description: 'Estimated time to complete - more than enough',
         body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         imageUrl: 'https://picsum.photos/300/200?random=3',
-        successImageUrl: 'assets/done_current.png'
+        successImageUrl: 'assets/done_current.png',
+        howToParticipateBody: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.'
       }
     },
     enrolled: true

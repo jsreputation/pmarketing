@@ -9,6 +9,7 @@ export interface CampaignDisplayProperties {
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
   questDetails?: QuestProperties;
+  progressDetails?: ProgressProperties;
 }
 
 export interface CampaignLandingPage {
@@ -26,6 +27,15 @@ export interface QuestProperties {
   body?: string;
   imageUrl?: string;
   successImageUrl?: string;
+}
+
+export interface ProgressProperties extends QuestProperties {
+  // title?: string;
+  // description?: string;
+  // body?: string;
+  // imageUrl?: string;
+  // successImageUrl?: string;
+  howToParticipateBody?: string;
 }
 
 export enum CampaignType {
