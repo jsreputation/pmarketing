@@ -57,7 +57,31 @@ export const campaigns: ICampaign[] = [
     endsAt: new Date('2022-11-17T03:24:00'),
     beginsAt: new Date(),
     rewards: rewards,
-    rewardsCount: 3,
+    rewardsCount: 4,
+    thumbnailUrl: 'https://picsum.photos/300/200?random=1',
+    campaignBannerUrl: 'https://picsum.photos/300/200?random=2',
+    displayProperties: {
+      questDetails: {
+        title: 'How far can you go?',
+        description: 'Estimated time to complete - more than enough',
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        imageUrl: 'https://picsum.photos/300/200?random=3',
+        successImageUrl: 'assets/done_current.png'
+      }
+    },
+    enrolled: true
+  },
+  {
+    id: 5,
+    name: 'BC step thru - completed',
+    description: 'keep moving forward',
+    tnc: 'this are the TnC\'s that you are to abide by',
+    type: CampaignType.progress,
+    state: CampaignState.active,
+    endsAt: new Date('2022-11-17T03:24:00'),
+    beginsAt: new Date(),
+    rewards: rewards,
+    rewardsCount: 4,
     thumbnailUrl: 'https://picsum.photos/300/200?random=1',
     campaignBannerUrl: 'https://picsum.photos/300/200?random=2',
     displayProperties: {
@@ -99,6 +123,32 @@ export const campaignOutcomes: ICampaignOutcome[] = [
     type: CampaignOutcomeType.reward,
     name: 'progress reward item 3',
     levelId: 34 // used for progress campaigns
+  },
+  {
+    id: 5,
+    type: CampaignOutcomeType.reward,
+    name: 'progress reward item 1',
+    levelId: 44 // used for progress campaigns
+  },
+  {
+    id: 6,
+    type: CampaignOutcomeType.points,
+    name: 'progress points item 2',
+    pointsCount: 220,
+    levelId: 45 // used for progress campaigns
+  },
+  {
+    id: 7,
+    type: CampaignOutcomeType.points,
+    name: 'progress points item 3',
+    pointsCount: 1110,
+    levelId: 46 // used for progress campaigns
+  },
+  {
+    id: 8,
+    type: CampaignOutcomeType.reward,
+    name: 'progress reward item 3',
+    levelId: 46 // used for progress campaigns
   }
 ];
 
@@ -121,6 +171,14 @@ export const progressCampaigns: IProgressCampaign[] = [
     completedProgress: 67,
     unitBaseName: 'CP' // todo: probably belongs in campaign.displayproperties instead
   },
+  {
+    id: 2,
+    campaignId: 5,
+    userAccountId: 1, // supposed to be current user
+    state: QuestState.completed,
+    completedProgress: 100,
+    unitBaseName: 'CP' // todo: probably belongs in campaign.displayproperties instead
+  }
 ];
 
 // quest task + progress levels are also similar
@@ -172,6 +230,36 @@ export const campaignLevels: IProgressLevel[] = [
     description: 'do the above thingy first',
     imageUrl: 'https://picsum.photos/200/200?random=6',
     completedProgress: 0,
+    levelTarget: 120
+  },
+  {
+    id: 44,
+    campaignId: 5,
+    state: QuestState.completed,
+    title: 'task 1',
+    description: 'did this thingy already',
+    imageUrl: 'https://picsum.photos/200/200?random=4',
+    completedProgress: 100,
+    levelTarget: 100
+  },
+  {
+    id: 45,
+    campaignId: 5,
+    state: QuestState.completed,
+    title: 'task 2',
+    description: 'do this thingy',
+    imageUrl: 'https://picsum.photos/200/200?random=5',
+    completedProgress: 50,
+    levelTarget: 50
+  },
+  {
+    id: 46,
+    campaignId: 5,
+    state: QuestState.completed,
+    title: 'task 3',
+    description: 'do the above thingy first',
+    imageUrl: 'https://picsum.photos/200/200?random=6',
+    completedProgress: 120,
     levelTarget: 120
   }
 ];
