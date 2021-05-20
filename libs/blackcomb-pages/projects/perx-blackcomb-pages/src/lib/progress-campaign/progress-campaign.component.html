@@ -9,7 +9,7 @@
                 fill="#DADADA" />
           </svg>
       </ng-template>
-      <div class="overall-progress-bar-container" *ngIf="campaign.enrolled || isEnrolled">
+      <div class="overall-progress-bar-container">
         <div class="overall-progress-bar-container-content">
           <p>Overall Progress:</p>
           <div class="spinner-wrapper">
@@ -100,16 +100,9 @@
           </div>
         </div>
     </div>
-    <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">
-        <button color="primary" (click)="startQuest(campaign.id)" mat-flat-button>
-            {{ 'QUEST_CAMPAIGN.CTA_NEXT_TXT' | translate }}
-        </button>
-    </mat-toolbar>
-    <ng-template #viewWalletTemplate>
-        <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="questState === state.completed">
-            <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
-                {{ 'QUEST_CAMPAIGN.VIEW_WALLET' | translate }}
-            </button>
-        </mat-toolbar>
-    </ng-template>
+      <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="questState === state.completed">
+          <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
+              {{ 'QUEST_CAMPAIGN.VIEW_WALLET' | translate }}
+          </button>
+      </mat-toolbar>
 </div>

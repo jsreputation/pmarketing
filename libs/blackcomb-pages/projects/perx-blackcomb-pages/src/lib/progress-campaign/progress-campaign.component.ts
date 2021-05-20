@@ -4,12 +4,8 @@ import {
   CampaignType,
   ICampaign,
   ICampaignOutcome,
-  ICampaignService,
   IProgressCampaign,
   IProgressLevel,
-  IQuest,
-  IQuestService,
-  NotificationService,
   ProgressProperties,
   QuestState
 } from '@perxtech/core';
@@ -37,10 +33,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
 
   public questCompleted: boolean = false;
   public campaignProgress: number = 0;
-  public taskCompletedLen: number = 0;
   public taskTotalLen: number = 0;
   public completedTaskIds: (number|undefined)[] = [];
-  public isEnrolled: boolean = false;
   public questState: string = '';
   public state: typeof QuestState = QuestState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
@@ -48,11 +42,10 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(protected questService: IQuestService,
-              protected route: ActivatedRoute,
-              private router: Router,
-              private notificationService: NotificationService,
-              private campaignService: ICampaignService) { }
+  constructor(protected route: ActivatedRoute,
+              private router: Router) {}
+              // private notificationService: NotificationService,
+              // private campaignService: ICampaignService) { }
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -97,30 +90,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public startQuest(campaignId: number): void {
-    this.questService.postEnrollQuest(campaignId).pipe(
-      switchMap((isEnrolled: boolean) => {
-        if (isEnrolled) {
-          this.isEnrolled = true;
-          this.campaignService.clearCampaignCache();
-          return this.questService.getQuestFromCampaign(campaignId);
-        }
-        return of(EMPTY);
-    }),
-    switchMap((quests: IQuest[]) => {
-      if (quests && quests.length > 0) {
-        this.questState = quests[0].state ? quests[0].state : this.questState;
-        return this.questService.getQuestProgress(quests[0].id);
-      }
-      return of(EMPTY);
-    }))
-    .subscribe((quest: IQuest) => {
-      this.updateProgessBar(quest);
-    }, error => {
-      this.notificationService.addSnack(error.error.message);
-    });
   }
 
   private updateProgessBar(progressCampaign: IProgressCampaign): void {
