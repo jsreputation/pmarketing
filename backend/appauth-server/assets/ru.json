@@ -141,6 +141,7 @@
   "BADGES": {
     "ALL_TAB": "All",
     "EARNED_TAB": "Earned",
-    "UNEARNED_TAB": "Unearned"
+    "UNEARNED_TAB": "Unearned",
+    "VIEW_WALLET": "View Wallet"
   }
 }

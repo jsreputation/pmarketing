@@ -1,0 +1,7 @@
+<div *ngIf="imageUrl" class="img-wrapper">
+	<img [src]="imageUrl" />
+</div>
+<h2 *ngIf="title" mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>{{description}}</mat-dialog-content>
+<button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed(buttonTxt)"
+	tabindex="-1">{{buttonTxt}}</button>

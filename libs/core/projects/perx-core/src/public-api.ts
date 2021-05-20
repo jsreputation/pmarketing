@@ -102,6 +102,11 @@ export { IQuestService } from './lib/quest/quest.service';
 export { BadgeModule } from './lib/badges/badge.service.module';
 export { IBadgeService } from './lib/badges/badge.service';
 export { IBadge, BadgeState } from './lib/badges/models/badge.model';
+export {
+  BadgeDetailPopupComponent,
+  IBadgeDetailPopupConfig,
+  BadgeDetailPopUpClosedCallBack
+} from './lib/utils/badge-detail-popup/badge-detail-popup.component';
 
 /**
  * Stamps

@@ -386,7 +386,8 @@
   "BADGES": {
     "ALL_TAB": "All",
     "EARNED_TAB": "Earned",
-    "UNEARNED_TAB": "Unearned"
+    "UNEARNED_TAB": "Unearned",
+    "VIEW_WALLET": "View Wallet"
   },
   "CONTENT_PAGE": "找不到內容",
   "Gold": "黃金",
