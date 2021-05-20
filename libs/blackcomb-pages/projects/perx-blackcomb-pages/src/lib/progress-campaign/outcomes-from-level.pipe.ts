@@ -6,7 +6,7 @@ import { ICampaignOutcome, IProgressLevel } from '@perxtech/core';
   pure: false
 })
 export class OutcomesFromLevelPipe implements PipeTransform {
-  transform(items: ICampaignOutcome[], filter: IProgressLevel): any {
+  public transform(items: ICampaignOutcome[], filter: IProgressLevel): any {
     if (!items || !filter) {
       return items;
     }

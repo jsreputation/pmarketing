@@ -61,10 +61,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
       switchMap((cid: string) => {
           const campaignId: number = Number.parseInt(cid, 10);
           return forkJoin(
-            of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress && campaign.id === campaignId)[0]), // this.campaignService.getCampaign(campaignId),
-            of(mockCampaignOutcomes), // this.campaignService.getCampaignOutcomes(campaignId),
-            of(mockCampaignLevels.filter(level => level.campaignId === campaignId)), // this.questService.getQuestLevel(campaignId),
-            of(mockProgressCampaigns.filter(progress => progress.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
+            // this.campaignService.getCampaign(campaignId),
+            of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress && campaign.id === campaignId)[0]),
+            // this.campaignService.getCampaignOutcomes(campaignId),
+            of(mockCampaignOutcomes),
+            // this.questService.getQuestLevel(campaignId),
+            of(mockCampaignLevels.filter(level => level.campaignId === campaignId)),
+            // this.questService.getQuestFromCampaign(campaignId)
+            of(mockProgressCampaigns.filter(progress => progress.campaignId === campaignId))
           );
         }
       ),
@@ -120,14 +124,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
   }
 
   private updateProgessBar(progressCampaign: IProgressCampaign): void {
-    if (progressCampaign?.completedProgress){
+    if (progressCampaign?.completedProgress) {
       this.campaignProgress = progressCampaign.completedProgress;
     }
   }
 
-  public outcomeClicked(outcome: ICampaignOutcome) {
+  public outcomeClicked(outcome: ICampaignOutcome): void {
     if (outcome.type === CampaignOutcomeType.reward) {
-      this.router.navigate(['/reward-detail',outcome.id]);
+      this.router.navigate([ '/reward-detail', outcome.id ]);
     }
   }
 }
