@@ -83,7 +83,7 @@ export const campaignOutcomes: ICampaignOutcome[] = [
   {
     id: 2,
     type: CampaignOutcomeType.points,
-    name: 'progress points item 1',
+    name: 'progress points item 2',
     pointsCount: 220,
     levelId: 21 // used for progress campaigns
   }
@@ -142,7 +142,7 @@ export const campaignLevels: IProgressLevel[] = [
     levelTarget: 100
   },
   {
-    id: 2,
+    id: 21,
     campaignId: 4,
     state: QuestState.inProgress,
     title: 'task 2',
@@ -152,7 +152,7 @@ export const campaignLevels: IProgressLevel[] = [
     levelTarget: 50
   },
   {
-    id: 3,
+    id: 34,
     campaignId: 4,
     state: QuestState.inactive,
     title: 'task 3',

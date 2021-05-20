@@ -11,9 +11,10 @@ import { QuestModule as BCPQuestModule, UtilsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OutcomesFromLevelPipe } from './outcomes-from-level.pipe';
 
 @NgModule({
-  declarations: [ProgressCampaignComponent],
+  declarations: [ProgressCampaignComponent, OutcomesFromLevelPipe ],
   exports: [ProgressCampaignComponent],
   imports: [
     CommonModule,
