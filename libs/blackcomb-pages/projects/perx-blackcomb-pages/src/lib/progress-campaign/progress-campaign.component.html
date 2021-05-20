@@ -45,8 +45,9 @@
                 <div class="task-img-section">
                   <div class="task-img-container">
                     <img class="success-icon" [src]="questConfig?.successImageUrl"
-                         *ngIf="(completedTaskIds.includes(level.id))">
-                    <img [src]="level.imageUrl" [alt]="level.title">
+                         *ngIf="(level.state === 'completed')">
+                    <img [src]="level.imageUrl" [alt]="level.title"
+                         *ngIf="(level.state !== 'completed')">
                   </div>
                   <div class="active-macaron-container"
                        *ngIf="level.state === 'in_progress'">
