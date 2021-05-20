@@ -40,53 +40,61 @@
                 <p class="subtitle">{{questConfig?.description}}</p>
                 <p class="description">{{questConfig?.body}}</p>
             </div>
-            <div class="task-card-container" *ngIf="levels$ | async as levels">
-              <div class="task-card" *ngFor="let level of levels">
-                <div class="task-img-section">
-                  <div class="task-img-container">
-                    <img class="success-icon" [src]="questConfig?.successImageUrl"
-                         *ngIf="(level.state === 'completed')">
-                    <img [src]="level.imageUrl" [alt]="level.title">
-                  </div>
-                  <div class="active-macaron-container"
-                       *ngIf="level.state === 'in_progress'">
-                    <span class="macaron">Active</span>
-                  </div>
-                </div>
-                <div class="task-content">
+          <div class="mat-tab-group-wrapper">
+            <mat-tab-group mat-stretch-tabs>
+              <mat-tab [label]="'Levels'">
+                <div class="task-card-container" *ngIf="levels$ | async as levels">
+                  <div class="task-card" *ngFor="let level of levels">
+                    <div class="task-img-section">
+                      <div class="task-img-container">
+                        <img class="success-icon" [src]="questConfig?.successImageUrl"
+                             *ngIf="(level.state === 'completed')">
+                        <img [src]="level.imageUrl" [alt]="level.title">
+                      </div>
+                      <div class="active-macaron-container"
+                           *ngIf="level.state === 'in_progress'">
+                        <span class="macaron">Active</span>
+                      </div>
+                    </div>
+                    <div class="task-content">
                   <span class="task-subtitle">
                       {{level.completedProgress}} / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
                   </span>
-                  <mat-progress-bar mode="determinate"
-                                    [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
-                  <div class="prize-wrapper" *ngIf="campaignOutcome$ | async as outcomes">
+                      <mat-progress-bar mode="determinate"
+                                        [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
+                      <div class="prize-wrapper" *ngIf="campaignOutcome$ | async as outcomes">
                     <span class="subtitle" *ngIf="(outcomes | outcomesFromLevelPipe:level).length > 0">
                       Complete level and you stand to win: *
                     </span>
-                    <mat-nav-list>
-                      <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level"
-                                     (click)="outcomeClicked(outcome)"
-                                     [disabled]="outcome.type !== 'Reward::Campaign'">
-                        <div class="outcome-container">
-                          <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
-                          <div [ngSwitch]="outcome.type">
-                            <ng-container *ngSwitchCase="outcomeType.reward">
-                              {{outcome.name}}
-                            </ng-container>
-                            <ng-container *ngSwitchCase="outcomeType.points">
-                              {{outcome.pointsCount}} points
-                            </ng-container>
-                          </div>
-                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
-                        </div>
-                      </mat-list-item>
-                    </mat-nav-list>
+                        <mat-nav-list>
+                          <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level"
+                                         (click)="outcomeClicked(outcome)"
+                                         [disabled]="outcome.type !== 'Reward::Campaign'">
+                            <div class="outcome-container">
+                              <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
+                              <div [ngSwitch]="outcome.type">
+                                <ng-container *ngSwitchCase="outcomeType.reward">
+                                  {{outcome.name}}
+                                </ng-container>
+                                <ng-container *ngSwitchCase="outcomeType.points">
+                                  {{outcome.pointsCount}} points
+                                </ng-container>
+                              </div>
+                              <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
+                            </div>
+                          </mat-list-item>
+                        </mat-nav-list>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
-            <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
+              </mat-tab>
+              <mat-tab [label]="'How To Participate'">
+                <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
+                <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
         </div>
     </div>
     <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">

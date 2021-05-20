@@ -12,6 +12,7 @@ import { ProgressCampaignComponent } from './progress-campaign.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OutcomesFromLevelPipe } from './outcomes-from-level.pipe';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [ProgressCampaignComponent, OutcomesFromLevelPipe ],
@@ -28,7 +29,8 @@ import { OutcomesFromLevelPipe } from './outcomes-from-level.pipe';
     MatIconModule,
     RouterModule,
     MatListModule,
-    BCPQuestModule.forChild()
+    BCPQuestModule.forChild(),
+    MatTabsModule
   ],
   providers: []
 })

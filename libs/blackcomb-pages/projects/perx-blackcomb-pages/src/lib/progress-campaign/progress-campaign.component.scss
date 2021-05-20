@@ -121,109 +121,121 @@
         }
     }
 
-  .task-card {
-    display: flex;
+  .mat-tab-group-wrapper {
+    min-height: 60rem;
+  }
 
-    .task-img-section {
-      margin: 0.5rem 1.8rem auto auto;
+  .task-card-container {
+    margin: 2rem 0;
 
-      .task-img-container {
-        position: relative;
+    .task-card {
+      display: flex;
 
-        img {
-          width: 4rem;
-          height: 4rem;
-          border-radius: 50%;
-          align-self: center;
+      .task-img-section {
+        margin: 0.5rem 1.8rem auto auto;
+
+        .task-img-container {
+          position: relative;
+
+          img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            align-self: center;
+          }
+
+          .success-icon {
+            position: absolute;
+            bottom: .4rem;
+            right: -.4rem;
+            width: 1.8rem;
+            height: 1.8rem;
+          }
         }
 
-        .success-icon {
-          position: absolute;
-          bottom: .4rem;
-          right: -.4rem;
-          width: 1.8rem;
-          height: 1.8rem;
+        .active-macaron-container {
+          display: flex;
+          justify-content: center;
+
+          .macaron {
+            text-align: center;
+            border-radius: 5rem;
+            padding: 0.4rem 0.5rem;
+            font-size: 8px;
+            background-color: #2664ED; // material default blue
+            color: white;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            font-stretch: condensed;
+          }
         }
       }
 
-      .active-macaron-container {
+      .task-content {
+        width: 100%;
+        padding-top: .8rem;
+        padding-bottom: 2rem;
         display: flex;
+        flex-direction: column;
         justify-content: center;
 
-        .macaron {
-          text-align: center;
-          border-radius: 5rem;
-          padding: 0.4rem 0.5rem;
-          font-size: 8px;
-          background-color: #2664ED; // material default blue
-          color: white;
-          letter-spacing: 0.6px;
-          text-transform: uppercase;
-          font-stretch: condensed;
+        span {
+          font-weight: bold;
+        }
+
+        .task-subtitle {
+          color: rgba(0, 0, 0, 0.38);
+          margin-bottom: 5px;
+          line-height: 16px;
+        }
+
+        .prize-wrapper {
+          margin-top: 2.5rem;
+
+          // don't need to grey out disabled mat list item as it won't navigate
+          // and there's no reward associated to show
+          ::ng-deep mat-list-item.mat-list-item-disabled {
+            background-color: unset;
+          }
+
+          .outcome-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            mat-icon {
+              flex: 0;
+
+              &.reward-icon {
+                padding-right: 1rem;
+                color: #2664ED;
+              }
+            }
+
+            div {
+              flex: 1;
+              text-align: left;
+              align-self: center;
+            }
+          }
         }
       }
     }
 
-    .task-content {
-      width: 100%;
-      padding-top: .8rem;
-      padding-bottom: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .reward-container {
+      margin: 2.5rem 0;
 
-      span {
-        font-weight: bold;
-      }
-
-      .task-subtitle {
+      p {
         color: rgba(0, 0, 0, 0.38);
-        margin-bottom: 5px;
-        line-height: 16px;
+        margin-bottom: 0;
       }
 
-      .prize-wrapper {
-        margin-top: 2.5rem;
-
-        // don't need to grey out disabled mat list item as it won't navigate
-        // and there's no reward associated to show
-        ::ng-deep mat-list-item.mat-list-item-disabled {
-          background-color: unset;
-        }
-
-        .outcome-container {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-
-          mat-icon {
-            flex: 0;
-
-            &.reward-icon {
-              padding-right: 1rem;
-              color: #2664ED;
-            }
-          }
-
-          div {
-            flex: 1;
-            text-align: left;
-            align-self: center;
-          }
-        }
+      a {
+        font-weight: bold;
       }
     }
   }
-    .reward-container {
-        margin: 2.5rem 0;
-        p {
-            color: rgba(0, 0, 0, 0.38);
-            margin-bottom: 0;
-        }
-        a {
-            font-weight: bold;
-        }
-    }
+
 }
 .bottom-toolbar {
     background: white !important;
