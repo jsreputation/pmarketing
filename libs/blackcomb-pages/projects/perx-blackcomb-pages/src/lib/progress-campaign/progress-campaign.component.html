@@ -66,7 +66,7 @@
                                      (click)="outcomeClicked(outcome)"
                                      [disabled]="outcome.type !== 'Reward::Campaign'">
                         <div class="outcome-container">
-                          <mat-icon matListIcon>redeem</mat-icon>
+                          <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
                           <div [ngSwitch]="outcome.type">
                             <ng-container *ngSwitchCase="outcomeType.reward">
                               {{outcome.name}}
