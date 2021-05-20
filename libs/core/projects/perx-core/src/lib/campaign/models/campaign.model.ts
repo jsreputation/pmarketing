@@ -122,6 +122,7 @@ export interface IProgressCampaign extends IQuest {
   // completedAt?: Date;
   // completedTasks?: IQuestTask[];
   completedProgress?: number
+  unitBaseName?: string;
 }
 
 export interface IProgressLevel extends IQuestTask {
@@ -134,4 +135,5 @@ export interface IProgressLevel extends IQuestTask {
   // description?: string;
   // imageUrl?: string;
   completedProgress?: number;
+  levelTarget?: number;
 }

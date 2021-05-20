@@ -25,10 +25,10 @@
                 mode="determinate"
                 [strokeWidth]="4"
                 [diameter]="48"
-                [value]="taskProgress"></mat-progress-spinner>
+                [value]="campaignProgress"></mat-progress-spinner>
             </div>
             <div class="spinner-progress-percentage">
-              {{taskProgress}}%
+              {{campaignProgress}}%
             </div>
           </div>
         </div>
@@ -49,13 +49,10 @@
                         </div>
                     </div>
                     <div class="task-content">
-                        <p>
-                            {{level.title}}
-                        </p>
-                        <p class="task-subtitle">
-                            {{level.description}}
-                        </p>
-                      <mat-progress-bar mode="determinate" [value]="50"></mat-progress-bar>
+                        <span class="task-subtitle">
+                            {{level.completedProgress}} / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                        </span>
+                      <mat-progress-bar mode="determinate" [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
                     </div>
                 </div>
             </div>

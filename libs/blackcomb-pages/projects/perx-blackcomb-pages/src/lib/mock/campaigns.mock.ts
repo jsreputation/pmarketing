@@ -105,7 +105,8 @@ export const progressCampaigns: IProgressCampaign[] = [
     campaignId: 4,
     userAccountId: 1, // supposed to be current user
     state: QuestState.inProgress,
-    completedProgress: 67
+    completedProgress: 67,
+    unitBaseName: 'CP' // todo: probably belongs in campaign.displayproperties instead
   },
 ];
 
@@ -137,7 +138,8 @@ export const campaignLevels: IProgressLevel[] = [
     title: 'task 1',
     description: 'did this thingy already',
     imageUrl: 'https://picsum.photos/200/200?random=4',
-    completedProgress: 100
+    completedProgress: 100,
+    levelTarget: 100
   },
   {
     id: 2,
@@ -146,6 +148,7 @@ export const campaignLevels: IProgressLevel[] = [
     title: 'task 2',
     description: 'do this thingy',
     imageUrl: 'https://picsum.photos/200/200?random=5',
-    completedProgress: 34
+    completedProgress: 34,
+    levelTarget: 50
   }
 ];

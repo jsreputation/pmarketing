@@ -5,9 +5,10 @@ import {
   ICampaign,
   ICampaignOutcome,
   ICampaignService,
+  IProgressCampaign,
+  IProgressLevel,
   IQuest,
   IQuestService,
-  IQuestTask,
   NotificationService,
   QuestProperties,
   QuestState
@@ -30,11 +31,12 @@ import {
 export class ProgressCampaignComponent implements OnInit, OnDestroy {
 
   public campaign$: Observable<ICampaign>;
-  public levels$: Observable<IQuestTask[]>;
+  public levels$: Observable<IProgressLevel[]>;
   public campaignOutcome$: Observable<ICampaignOutcome[]>;
+  public progressCampaign: IProgressCampaign;
 
   public questCompleted: boolean = false;
-  public taskProgress: number = 0;
+  public campaignProgress: number = 0;
   public taskCompletedLen: number = 0;
   public taskTotalLen: number = 0;
   public completedTaskIds: (number|undefined)[] = [];
@@ -61,14 +63,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
             of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress)[0]), // this.campaignService.getCampaign(campaignId),
             of(mockCampaignOutcomes), // this.campaignService.getCampaignOutcomes(campaignId),
             of(mockCampaignLevels.filter(level => level.campaignId === campaignId)), // this.questService.getQuestLevel(campaignId),
-            of(mockProgressCampaigns.filter(quests => quests.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
+            of(mockProgressCampaigns.filter(progress => progress.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
           );
         }
       ),
-      switchMap(([campaign, outcomes, levels, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
+      switchMap(([campaign, outcomes, levels, progress]: [ICampaign, ICampaignOutcome[], IProgressLevel[], IProgressCampaign[]]) => {
         this.taskTotalLen = levels.length;
-        if (quests && quests.length > 0) {
-          this.questState = quests[0].state ? quests[0].state : '';
+        if (progress && progress.length > 0) {
+          this.questState = progress[0].state ? progress[0].state : '';
           // return this.questService.getQuestProgress(quests[0].id).pipe(
           //   map((quest) => [campaign, outcomes, level, quest])
           // );
@@ -77,11 +79,12 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
         return of([campaign, outcomes, levels, EMPTY]);
       }),
       takeUntil(this.destroy$)
-      ).subscribe(([campaign, outcomes, levels, quest]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest]) => {
-        this.updateProgessBar(quest);
+      ).subscribe(([campaign, outcomes, levels, progress]: [ICampaign, ICampaignOutcome[], IProgressLevel[], IProgressCampaign]) => {
+        this.updateProgessBar(progress);
         this.questConfig = campaign.displayProperties?.questDetails;
         this.campaign$ = of(campaign);
         this.levels$ = of(levels);
+        this.progressCampaign = progress;
         this.campaignOutcome$ = of(outcomes);
     });
   }
@@ -115,11 +118,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateProgessBar(quest: IQuest): void {
-    if (quest && quest.completedTasks && quest.completedTasks.length > 0) {
-      this.taskCompletedLen = quest.completedTasks.length;
-      this.taskProgress = (this.taskCompletedLen / this.taskTotalLen) * 100;
-      this.completedTaskIds = quest.completedTasks.map(t => t.id);
+  private updateProgessBar(progressCampaign: IProgressCampaign): void {
+    if (progressCampaign?.completedProgress){
+      this.campaignProgress = progressCampaign.completedProgress;
     }
   }
 
