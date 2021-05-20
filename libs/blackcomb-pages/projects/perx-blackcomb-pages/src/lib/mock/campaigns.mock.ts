@@ -157,7 +157,7 @@ export const campaignLevels: IProgressLevel[] = [
     state: QuestState.inactive,
     title: 'task 3',
     description: 'do the above thingy first',
-    imageUrl: 'https://picsum.photos/200/200?random=5',
+    imageUrl: 'https://picsum.photos/200/200?random=6',
     completedProgress: 0,
     levelTarget: 120
   }
