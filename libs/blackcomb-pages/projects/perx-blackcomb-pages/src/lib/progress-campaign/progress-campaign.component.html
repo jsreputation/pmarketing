@@ -54,26 +54,31 @@
                   </div>
                 </div>
                 <div class="task-content">
-                        <span class="task-subtitle">
-                            {{level.completedProgress}}
-                          / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
-                        </span>
+                  <span class="task-subtitle">
+                      {{level.completedProgress}} / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                  </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
                   <div class="prize-wrapper">
                     <span class="subtitle">Complete level and you stand to win: *</span>
-                    <mat-list *ngIf="campaignOutcome$ | async as outcomes">
-                      <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level">
-                        <ng-container [ngSwitch]="outcome.type">
-                          <ng-container *ngSwitchCase="outcomeType.reward">
-                            <a [routerLink]="['/reward-detail',outcome.id]">{{outcome.name}} </a>
-                          </ng-container>
-                          <ng-container *ngSwitchCase="outcomeType.points">
-                            {{outcome.pointsCount}} points
-                          </ng-container>
-                        </ng-container>
+                    <mat-nav-list *ngIf="campaignOutcome$ | async as outcomes">
+                      <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level"
+                                     (click)="outcomeClicked(outcome)"
+                                     [disabled]="outcome.type !== 'Reward::Campaign'">
+                        <div class="outcome-container">
+                          <mat-icon matListIcon>redeem</mat-icon>
+                          <div [ngSwitch]="outcome.type">
+                            <ng-container *ngSwitchCase="outcomeType.reward">
+                              {{outcome.name}}
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.points">
+                              {{outcome.pointsCount}} points
+                            </ng-container>
+                          </div>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
+                        </div>
                       </mat-list-item>
-                    </mat-list>
+                    </mat-nav-list>
                   </div>
                 </div>
               </div>

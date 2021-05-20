@@ -165,12 +165,6 @@
       }
     }
 
-    .task-subtitle {
-      color: rgba(0, 0, 0, 0.38);
-      margin-bottom: 5px;
-      line-height: 16px;
-    }
-
     .task-content {
       width: 100%;
       border-bottom: 1px solid rgba(33, 33, 33, 0.03);
@@ -182,6 +176,38 @@
 
       span {
         font-weight: bold;
+      }
+
+      .task-subtitle {
+        color: rgba(0, 0, 0, 0.38);
+        margin-bottom: 5px;
+        line-height: 16px;
+      }
+
+      .prize-wrapper {
+        margin-top: 2.5rem;
+
+        // don't need to grey out disabled mat list item as it won't navigate
+        // and there's no reward associated to show
+        ::ng-deep mat-list-item.mat-list-item-disabled {
+          background-color: unset;
+        }
+
+        .outcome-container {
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+
+          mat-icon {
+            flex: 0;
+          }
+
+          div {
+            flex: 1;
+            text-align: left;
+            align-self: center;
+          }
+        }
       }
     }
   }
