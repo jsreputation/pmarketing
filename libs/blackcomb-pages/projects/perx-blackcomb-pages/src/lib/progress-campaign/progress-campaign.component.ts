@@ -16,10 +16,10 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {
+  campaignLevels as mockCampaignLevels,
   campaignOutcomes as mockCampaignOutcomes,
-  campaignQuests as mockCampaignQuests,
   campaigns as mockCampaigns,
-  campaignTasks as mockCampaignTasks
+  progressCampaigns as mockProgressCampaigns
 } from '../mock/campaigns.mock';
 
 @Component({
@@ -29,9 +29,8 @@ import {
 })
 export class ProgressCampaignComponent implements OnInit, OnDestroy {
 
-  public quest$: Observable<IQuest>;
   public campaign$: Observable<ICampaign>;
-  public tasks$: Observable<IQuestTask[]>;
+  public levels$: Observable<IQuestTask[]>;
   public campaignOutcome$: Observable<ICampaignOutcome[]>;
 
   public questCompleted: boolean = false;
@@ -61,28 +60,28 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
           return forkJoin(
             of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress)[0]), // this.campaignService.getCampaign(campaignId),
             of(mockCampaignOutcomes), // this.campaignService.getCampaignOutcomes(campaignId),
-            of(mockCampaignTasks.filter(tasks => tasks.campaignId === campaignId)), // this.questService.getQuestTasks(campaignId),
-            of(mockCampaignQuests.filter(quests => quests.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
+            of(mockCampaignLevels.filter(level => level.campaignId === campaignId)), // this.questService.getQuestLevel(campaignId),
+            of(mockProgressCampaigns.filter(quests => quests.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
           );
         }
       ),
-      switchMap(([campaign, outcomes, tasks, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
-        this.taskTotalLen = tasks.length;
+      switchMap(([campaign, outcomes, levels, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
+        this.taskTotalLen = levels.length;
         if (quests && quests.length > 0) {
           this.questState = quests[0].state ? quests[0].state : '';
           // return this.questService.getQuestProgress(quests[0].id).pipe(
-          //   map((quest) => [campaign, outcomes, tasks, quest])
+          //   map((quest) => [campaign, outcomes, level, quest])
           // );
-          return of([campaign, outcomes, tasks, mockCampaignQuests[0]]);
+          return of([campaign, outcomes, levels, mockProgressCampaigns[0]]);
         }
-        return of([campaign, outcomes, tasks, EMPTY]);
+        return of([campaign, outcomes, levels, EMPTY]);
       }),
       takeUntil(this.destroy$)
-      ).subscribe(([campaign, outcomes, tasks, quest]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest]) => {
+      ).subscribe(([campaign, outcomes, levels, quest]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest]) => {
         this.updateProgessBar(quest);
         this.questConfig = campaign.displayProperties?.questDetails;
         this.campaign$ = of(campaign);
-        this.tasks$ = of(tasks);
+        this.levels$ = of(levels);
         this.campaignOutcome$ = of(outcomes);
     });
   }

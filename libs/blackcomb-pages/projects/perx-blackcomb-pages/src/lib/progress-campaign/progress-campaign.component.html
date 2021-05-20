@@ -40,21 +40,22 @@
                 <p class="expiry-date">{{questConfig?.description}}</p>
                 <p class="description">{{questConfig?.body}}</p>
             </div>
-            <div class="task-card-container" *ngIf="tasks$ | async as tasks">
-                <div class="task-card" *ngFor="let task of tasks">
+            <div class="task-card-container" *ngIf="levels$ | async as levels">
+                <div class="task-card" *ngFor="let level of levels">
                     <div class="task-img-section">
                         <div class="task-img-container">
-                            <img class="success-icon" [src]="questConfig?.successImageUrl" *ngIf="(completedTaskIds.includes(task.id))">
-                            <img [src]="task.imageUrl" [alt]="task.title">
+                            <img class="success-icon" [src]="questConfig?.successImageUrl" *ngIf="(completedTaskIds.includes(level.id))">
+                            <img [src]="level.imageUrl" [alt]="level.title">
                         </div>
                     </div>
                     <div class="task-content">
                         <p>
-                            {{task.title}}
+                            {{level.title}}
                         </p>
                         <p class="task-subtitle">
-                            {{task.description}}
+                            {{level.description}}
                         </p>
+                      <mat-progress-bar mode="determinate" [value]="50"></mat-progress-bar>
                     </div>
                 </div>
             </div>
