@@ -61,7 +61,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
       switchMap((cid: string) => {
           const campaignId: number = Number.parseInt(cid, 10);
           return forkJoin(
-            of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress)[0]), // this.campaignService.getCampaign(campaignId),
+            of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress && campaign.id === campaignId)[0]), // this.campaignService.getCampaign(campaignId),
             of(mockCampaignOutcomes), // this.campaignService.getCampaignOutcomes(campaignId),
             of(mockCampaignLevels.filter(level => level.campaignId === campaignId)), // this.questService.getQuestLevel(campaignId),
             of(mockProgressCampaigns.filter(progress => progress.campaignId === campaignId)) // this.questService.getQuestFromCampaign(campaignId)
@@ -75,7 +75,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
           // return this.questService.getQuestProgress(quests[0].id).pipe(
           //   map((quest) => [campaign, outcomes, level, quest])
           // );
-          return of([campaign, outcomes, levels, mockProgressCampaigns[0]]);
+          return of([campaign, outcomes, levels, progress[0]]);
         }
         return of([campaign, outcomes, levels, EMPTY]);
       }),
