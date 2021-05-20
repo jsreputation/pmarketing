@@ -60,9 +60,11 @@
                   </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
-                  <div class="prize-wrapper">
-                    <span class="subtitle">Complete level and you stand to win: *</span>
-                    <mat-nav-list *ngIf="campaignOutcome$ | async as outcomes">
+                  <div class="prize-wrapper" *ngIf="campaignOutcome$ | async as outcomes">
+                    <span class="subtitle" *ngIf="(outcomes | outcomesFromLevelPipe:level).length > 0">
+                      Complete level and you stand to win: *
+                    </span>
+                    <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level"
                                      (click)="outcomeClicked(outcome)"
                                      [disabled]="outcome.type !== 'Reward::Campaign'">
