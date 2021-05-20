@@ -126,27 +126,43 @@
     display: flex;
 
     .task-img-section {
-      margin: auto;
-    }
+      margin: auto 1.8rem auto auto;
 
-    .task-img-container {
-      position: relative;
+      .task-img-container {
+        position: relative;
 
-      .success-icon {
-        position: absolute;
-        bottom: .4rem;
-        right: -.4rem;
-        width: 1.8rem;
-        height: 1.8rem;
+        img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          align-self: center;
+        }
+
+        .success-icon {
+          position: absolute;
+          bottom: .4rem;
+          right: -.4rem;
+          width: 1.8rem;
+          height: 1.8rem;
+        }
       }
-    }
 
-    img {
-      width: 4rem;
-      height: 4rem;
-      border-radius: 50%;
-      margin-right: 1.6rem;
-      align-self: center;
+      .active-macaron-container {
+        display: flex;
+        justify-content: center;
+
+        .macaron {
+          text-align: center;
+          border-radius: 5rem;
+          padding: 0.4rem 0.5rem;
+          font-size: 8px;
+          background-color: #2664ED; // material default blue
+          color: white;
+          letter-spacing: 0.6px;
+          text-transform: uppercase;
+          font-stretch: condensed;
+        }
+      }
     }
 
     .task-subtitle {

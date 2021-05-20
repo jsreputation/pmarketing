@@ -150,5 +150,15 @@ export const campaignLevels: IProgressLevel[] = [
     imageUrl: 'https://picsum.photos/200/200?random=5',
     completedProgress: 34,
     levelTarget: 50
+  },
+  {
+    id: 3,
+    campaignId: 4,
+    state: QuestState.inactive,
+    title: 'task 3',
+    description: 'do the above thingy first',
+    imageUrl: 'https://picsum.photos/200/200?random=5',
+    completedProgress: 0,
+    levelTarget: 120
   }
 ];

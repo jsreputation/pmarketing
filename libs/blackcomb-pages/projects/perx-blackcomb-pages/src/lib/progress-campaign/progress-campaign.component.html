@@ -41,20 +41,27 @@
                 <p class="description">{{questConfig?.body}}</p>
             </div>
             <div class="task-card-container" *ngIf="levels$ | async as levels">
-                <div class="task-card" *ngFor="let level of levels">
-                    <div class="task-img-section">
-                        <div class="task-img-container">
-                            <img class="success-icon" [src]="questConfig?.successImageUrl" *ngIf="(completedTaskIds.includes(level.id))">
-                            <img [src]="level.imageUrl" [alt]="level.title">
-                        </div>
-                    </div>
-                    <div class="task-content">
-                        <span class="task-subtitle">
-                            {{level.completedProgress}} / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
-                        </span>
-                      <mat-progress-bar mode="determinate" [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
-                    </div>
+              <div class="task-card" *ngFor="let level of levels">
+                <div class="task-img-section">
+                  <div class="task-img-container">
+                    <img class="success-icon" [src]="questConfig?.successImageUrl"
+                         *ngIf="(completedTaskIds.includes(level.id))">
+                    <img [src]="level.imageUrl" [alt]="level.title">
+                  </div>
+                  <div class="active-macaron-container"
+                       *ngIf="level.state === 'in_progress'">
+                    <span class="macaron">Active</span>
+                  </div>
                 </div>
+                <div class="task-content">
+                        <span class="task-subtitle">
+                            {{level.completedProgress}}
+                          / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                        </span>
+                  <mat-progress-bar mode="determinate"
+                                    [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
+                </div>
+              </div>
             </div>
             <div class="reward-container">
                 <p>{{ questState === state.completed ?  ('QUEST_CAMPAIGN.EARNED_PRIZES' | translate) : ('QUEST_CAMPAIGN.PRIZES' | translate) }} </p>
