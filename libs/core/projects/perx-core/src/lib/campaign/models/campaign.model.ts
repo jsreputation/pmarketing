@@ -131,7 +131,7 @@ export interface IProgressCampaign extends IQuest {
   // state?: string;
   // completedAt?: Date;
   // completedTasks?: IQuestTask[];
-  completedProgress?: number
+  completedProgress?: number;
   unitBaseName?: string;
 }
 
