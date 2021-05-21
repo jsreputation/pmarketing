@@ -10,7 +10,7 @@
     "TRANSACTION_HISTORY": "Transaction History"
   },
   "LOGIN_PAGE": {
-    "LOGIN_SUBTITLE": "M Gear Discount Program",
+    "LOGIN_SUBTITLE": "M-Gear Program",
     "LOGIN": "Sign in",
     "REGISTER_BTN": "Register",
     "NOT_MEMBER": "Not a member",
@@ -54,7 +54,7 @@
   "SIGN_UP_PAGE": {
     "LOGIN": "Sign in",
     "NEW_REGISTER": "Thank you for registering",
-    "DLP": "Diabetes Loyality Program",
+    "DLP": "M-Gear Program",
     "SIGN_UP": "Sign up",
     "HAVE_ACCOUNT": "Have an account",
     "NAME": "Name",
