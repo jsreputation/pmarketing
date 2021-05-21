@@ -1,12 +1,13 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
+import { OnInit, Component } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Observable, of, forkJoin } from 'rxjs';
 import {
   IMerchantAdminService,
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  ConfigService
 } from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
@@ -27,11 +28,9 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
   public salesTxt: string;
   public redemptionTxt: string;
-
   private pageNumberPurchase: number = 1;
   private pageSizePurchase: number = 10;
   private complitePaginationPurchase: boolean = false;
-
   private pageNumberReward: number = 1;
   private pageSizeReward: number = 10;
   private complitePaginationReward: boolean = false;
@@ -41,10 +40,23 @@ export class TransactionHistoryComponent implements OnInit {
     private location: Location,
     private datePipe: DatePipe,
     private merchantAdminService: IMerchantAdminService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    protected configService: ConfigService,
   ) { }
 
   public ngOnInit(): void {
+    // MER-262: ensures config is ready before initing component
+    this.configService
+      .readAppConfig<void>()
+      .subscribe(
+        () => this.initComponent(),
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  private initComponent(): void {
     this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
     this.initTranslate();
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
@@ -53,16 +65,12 @@ export class TransactionHistoryComponent implements OnInit {
       of(`${tr.productName}`);
     this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       of(`${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`);
-
-
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${tr.rewardName}`);
     this.redemptionsSubTitleFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${this.datePipe.transform(tr.issuedDate, 'dd/MM/yyyy')}`);
-
     this.redemptionsPriceLabelFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${tr.customerName}`);
-
     this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase).subscribe(
       (transactions: IMerchantPurchaseTransactionHistory[]) => this.purchaseTransactions = of(transactions),
       (err) => console.log(err)
@@ -92,10 +100,10 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationPurchase) {
       return;
     }
-    forkJoin(
+    forkJoin([
       this.purchaseTransactions,
       this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase, this.currentSelectedLanguage)
-    ).subscribe((val) => {
+    ]).subscribe((val) => {
       if (val[1].length < this.pageSizePurchase) {
         this.complitePaginationPurchase = true;
       }
@@ -108,10 +116,10 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationReward) {
       return;
     }
-    forkJoin(
+    forkJoin([
       this.rewardTransactions,
       this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward, this.currentSelectedLanguage)
-    ).subscribe((val) => {
+    ]).subscribe((val) => {
       if (val[1].length < this.pageSizeReward) {
         this.complitePaginationReward = true;
       }
