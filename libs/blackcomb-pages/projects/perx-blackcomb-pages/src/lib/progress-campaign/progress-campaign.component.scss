@@ -130,6 +130,19 @@
   }
 
   .task-card-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .level-connector-line {
+      position: absolute;
+      // can't do decimal widths to avoid rendering engine issues from different browsers
+      width: 1px;
+      background-color: rgba(158, 158, 158, 0.7);
+      left: 20px; // shift right half of the level icon
+      top: 20px; // shift down half of the level icon
+      z-index: -1;
+    }
     .task-card {
       display: flex;
 

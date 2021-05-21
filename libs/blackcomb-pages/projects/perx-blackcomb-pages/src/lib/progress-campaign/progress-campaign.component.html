@@ -44,6 +44,7 @@
             <mat-tab-group mat-stretch-tabs>
               <mat-tab [label]="'Levels'">
                 <div class="task-card-container" *ngIf="levels$ | async as levels">
+                  <div #levelConnectorDiv class="level-connector-line" [attr.data-spanlevels]="levels.length"></div>
                   <div class="task-card" *ngFor="let level of levels">
                     <div class="task-img-section">
                       <div class="task-img-container">

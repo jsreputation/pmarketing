@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
   CampaignType,
@@ -24,7 +24,7 @@ import {
   templateUrl: './progress-campaign.component.html',
   styleUrls: ['./progress-campaign.component.scss']
 })
-export class ProgressCampaignComponent implements OnInit, OnDestroy {
+export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public campaign$: Observable<ICampaign>;
   public levels$: Observable<IProgressLevel[]>;
@@ -41,11 +41,38 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
 
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
+  @ViewChild('levelConnectorDiv') private levelConnectorDiv: ElementRef;
 
   constructor(protected route: ActivatedRoute,
               private router: Router) {}
               // private notificationService: NotificationService,
               // private campaignService: ICampaignService) { }
+
+  public ngAfterViewInit(): void {
+    // update level connector height
+    this.levels$.subscribe(
+      (levels: IProgressLevel[]) => {
+        const numLevels = levels.length;
+        const taskCards = [...this.levelConnectorDiv.nativeElement.parentElement.children]
+          .filter((child) => child.classList.contains('task-card'));
+        if (taskCards.length > 1 && numLevels > 1) {
+          // we want the height up to the 2nd last element
+          // - 1 for 0 index conversion. i.e. taskCard.length = 3, the 2nd last index is 1;
+          const numElementsForHeight = taskCards.slice(0, taskCards.length - 2).length;
+
+          if (taskCards.length === numLevels) {
+            let cumulativeHeights = 0;
+            // get the heights for numElementsForHeights inclusive i.e. both 0 and 1 - from length = 2
+            for (let i = 0; i <= numElementsForHeight; i++ ) {
+              cumulativeHeights += taskCards[i].offsetHeight;
+            }
+            this.levelConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
+          }
+        }
+        // else there is only 1 level, don't make a line
+      }
+    );
+  }
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -84,6 +111,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy {
         this.levels$ = of(levels);
         this.progressCampaign = progress;
         this.campaignOutcome$ = of(outcomes);
+
     });
   }
 
