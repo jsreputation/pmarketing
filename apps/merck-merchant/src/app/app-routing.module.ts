@@ -15,12 +15,13 @@ import { OrderComponent } from './order/order.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RegisterComponent } from './register/register.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'qrscanner/:path', component: QrscannerComponent },
       { path: 'order', component: OrderComponent },
@@ -32,7 +33,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'merchant_admin/validate_reset_password_token', component: ResetPasswordComponent },
-  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
+  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent },
+  { path: 'error', component: ErrorComponent }
 ];
 
 @NgModule({

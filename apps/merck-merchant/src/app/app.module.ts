@@ -59,18 +59,28 @@ import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { tap, switchMap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ErrorComponent } from './error/error.component';
 
-export const setLanguage = (
-  translateService: TranslateService,
-  configService: ConfigService,
-  authService: AuthenticationService,
-  themesService: ThemesService) =>
-  () => new Promise((resolve) => {
+export const appInit =
+  (
+    translateService: TranslateService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    themesService: ThemesService
+  ) => () => new Promise((resolve) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      authService.saveUserAccessToken(token);
+    } else {
+      console.error('Could not retrieve user token');
+    }
+
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
+    resolve();
   });
 
 @NgModule({
@@ -90,7 +100,8 @@ export const setLanguage = (
     RegisterComponent,
     TransactionHistoryComponent,
     TransactionPipe,
-    TransactionHistoryPipe
+    TransactionHistoryPipe,
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -132,7 +143,7 @@ export const setLanguage = (
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     {
-      provide: APP_INITIALIZER, useFactory: setLanguage,
+      provide: APP_INITIALIZER, useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     }
   ],

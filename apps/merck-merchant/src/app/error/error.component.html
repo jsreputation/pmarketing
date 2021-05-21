@@ -1,0 +1,8 @@
+<div class="main">
+  <ng-container *ngIf="errorType == 'unauthorized'; else genericErrorMsg">
+    <p>Missing user token in the request</p>
+  </ng-container>
+  <ng-template #genericErrorMsg>
+    <p>We're sorry, the service is currently unavailable. Please try again later.</p>
+  </ng-template>
+</div>
