@@ -3,9 +3,7 @@ import {
   Routes,
   RouterModule,
 } from '@angular/router';
-
 import { ProtectedGuard } from 'ngx-auth';
-
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -15,7 +13,6 @@ import { OrderComponent } from './order/order.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RegisterComponent } from './register/register.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
-import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   {
@@ -33,8 +30,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
   { path: 'merchant_admin/validate_reset_password_token', component: ResetPasswordComponent },
-  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent },
-  { path: 'error', component: ErrorComponent }
+  { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 
 @NgModule({

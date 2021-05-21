@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
 
     this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
       if (!isAuth) {
-        this.router.navigateByUrl('/error', { state: { errorType: 'unauthorized' } });
+        this.router.navigateByUrl('/login');
       }
     });
   }

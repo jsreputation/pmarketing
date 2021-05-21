@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -59,7 +58,6 @@ import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { tap, switchMap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ErrorComponent } from './error/error.component';
 
 export const appInit =
   (
@@ -100,8 +98,7 @@ export const appInit =
     RegisterComponent,
     TransactionHistoryComponent,
     TransactionPipe,
-    TransactionHistoryPipe,
-    ErrorComponent
+    TransactionHistoryPipe
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
