@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {
+  AuthenticationService,
   ConfigService,
   TokenStorage
 } from '@perxtech/core';
@@ -20,6 +21,8 @@ describe('AppComponent', () => {
     readAppConfig: () => of()
   };
 
+  const authServiceStub: Partial<AuthenticationService> = {};
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -35,7 +38,8 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: AuthenticationService, useValue: authServiceStub }
       ]
     }).compileComponents();
   }));
