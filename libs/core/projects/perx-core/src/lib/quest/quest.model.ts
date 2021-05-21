@@ -19,5 +19,6 @@ export interface IQuestTask {
 
 export enum QuestState {
   inProgress = 'in_progress',
-  completed = 'completed'
+  completed = 'completed',
+  inactive = 'inactive'
 }

@@ -258,6 +258,9 @@ const appConfigFile = `{
   "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
     : false
   },
+  "showProgressBarCampaignsOnHomePage" : ${process.env.SHOW_PROGRESSBAR_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_PROGRESSBAR_CAMPAIGNS_ON_HOMEPAGE
+    : false
+  },
   "showGameTriesOnCampaignCard": ${
     process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD ? process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD : false
   },

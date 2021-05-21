@@ -278,7 +278,8 @@
     "CLOSE": "完成",
     "REWARDS": "獎勵",
     "QUEST_CAMPAIGNS": "Quests",
-    "SURVEYS": "Surveys"
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",

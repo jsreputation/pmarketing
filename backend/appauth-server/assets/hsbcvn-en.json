@@ -284,7 +284,9 @@
     "HOME+": "Home+",
     "HKBN": "HKBN",
     "CLOSE": "Close",
-    "REWARDS": "Rewards"
+    "REWARDS": "Rewards",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

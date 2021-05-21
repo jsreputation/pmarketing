@@ -70,6 +70,22 @@ const routes: Routes = [
         canActivate: [ProtectedGuard],
       },
       {
+        path: 'progress/:id',
+        loadChildren: () =>
+          import('../progress-campaign/progress-campaign.module').then(
+            (mod) => mod.ProgressCampaignModule
+          ),
+        canActivate: [ProtectedGuard],
+      },
+      {
+        path: 'progress-campaigns',
+        loadChildren: () =>
+          import(
+            '../progress-campaign-home/progress-campaign-home.module'
+            ).then((mod) => mod.ProgressCampaignHomeModule),
+        canActivate: [ProtectedGuard],
+      },
+      {
         path: 'legacy-progress-campaign/:id',
         loadChildren: () =>
           import('../legacy-progress-campaign/legacy-progress-campaign.module').then(

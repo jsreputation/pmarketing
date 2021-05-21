@@ -1,5 +1,6 @@
 import { IReward } from '../../rewards/models/reward.model';
-import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whistler';
+import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
+import { IQuest, IQuestTask } from '../../quest/quest.model';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -8,6 +9,7 @@ export interface CampaignDisplayProperties {
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
   questDetails?: QuestProperties;
+  progressDetails?: ProgressProperties;
 }
 
 export interface CampaignLandingPage {
@@ -27,6 +29,15 @@ export interface QuestProperties {
   successImageUrl?: string;
 }
 
+export interface ProgressProperties extends QuestProperties {
+  // title?: string;
+  // description?: string;
+  // body?: string;
+  // imageUrl?: string;
+  // successImageUrl?: string;
+  howToParticipateBody?: string;
+}
+
 export enum CampaignType {
   // eslint-disable-next-line
   give_reward = 'give_reward', // instant_outcome
@@ -34,7 +45,8 @@ export enum CampaignType {
   game = 'game',
   survey = 'survey',
   invite = 'invite',
-  quest = 'quest'
+  quest = 'quest',
+  progress = 'progress'
 }
 
 export enum CampaignState {
@@ -108,4 +120,30 @@ export interface ICampaignOutcome {
   type: CampaignOutcomeType;
   name: string;
   pointsCount?: number;
+  levelId?: number;
+}
+
+export interface IProgressCampaign extends IQuest {
+  // Quest reference
+  // id: number;
+  // campaignId: number;
+  // userAccountId: number;
+  // state?: string;
+  // completedAt?: Date;
+  // completedTasks?: IQuestTask[];
+  completedProgress?: number;
+  unitBaseName?: string;
+}
+
+export interface IProgressLevel extends IQuestTask {
+  // Quest reference
+  // id: number;
+  // campaignId?: number;
+  // ordering?: number;
+  // state?: string;
+  // title?: string;
+  // description?: string;
+  // imageUrl?: string;
+  completedProgress?: number;
+  levelTarget?: number;
 }
