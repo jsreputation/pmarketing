@@ -50,7 +50,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
 
   public ngAfterViewInit(): void {
     // update level connector height
-    this.levels$.subscribe(
+    this.levels$?.subscribe(
       (levels: IProgressLevel[]) => {
         const numLevels = levels.length;
         const taskCards = [...this.levelConnectorDiv.nativeElement.parentElement.children]
