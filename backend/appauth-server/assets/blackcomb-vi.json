@@ -281,7 +281,8 @@
     "CLOSE": "Close",
     "REWARDS": "Rewards",
     "QUEST_CAMPAIGNS": "Quests",
-    "SURVEYS": "Surveys"
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

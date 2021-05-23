@@ -126,10 +126,20 @@
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
-    "ACCOUNT_EXPIRE": "Account Expiry",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "READ_MORE": "Read More",
+    "YOU_HAVE": "You have points",
+    "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
+    "POINT_EXPIRE": "{points} points will expire on {date}",
+    "ACCOUNT_EXPIRE": "Account Expiry",
+    "POINT_TO": "Points to {nextTierName}",
     "GAME_TRIES_LEFT": "tries left",
-    "READ_MORE": "Read More"
+    "ALL": "All",
+    "CLOSE": "Close",
+    "REWARDS": "Rewards",
+    "QUEST_CAMPAIGNS": "Quests",
+    "SURVEYS": "Surveys",
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
