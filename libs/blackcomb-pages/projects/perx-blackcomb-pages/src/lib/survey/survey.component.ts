@@ -13,7 +13,9 @@ import {
   AuthenticationService,
   RewardPopupComponent,
   IRewardPopupConfig,
-  ISurveyResultOutcome
+  ISurveyResultOutcome,
+  ConfigService,
+  IConfig
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
@@ -44,6 +46,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private popupData: IPopupConfig;
   public answers: IAnswer[];
   private prizeSetId: number;
+  public showPrizeSetOutcome: boolean = false;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -120,11 +123,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private surveyService: SurveyService,
     private translate: TranslateService,
     private auth: AuthenticationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
     this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
@@ -251,7 +260,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.informationCollectionSetting === 'signup_required'
     ) {
       this.router.navigate(['/signup'], { state });
-    } else if (this.prizeSetId) {
+    } else if (this.showPrizeSetOutcome && this.prizeSetId) {
         const data: IRewardPopupConfig = this.popupData;
         data.url = `/prize-set-outcomes/${this.prizeSetId}`;
         data.afterClosedCallBackRedirect = this;

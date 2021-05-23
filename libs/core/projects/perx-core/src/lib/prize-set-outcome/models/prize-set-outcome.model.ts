@@ -9,6 +9,8 @@ export interface IPrizeSetItem {
     campaignPrizeId: number;
     campaignPrizeType: string;
     pointsCount?: number;
+    state?: string;
+    details?: string;
     rewardDetails?: IReward;
     loyaltyDetails?: ILoyalty;
 }

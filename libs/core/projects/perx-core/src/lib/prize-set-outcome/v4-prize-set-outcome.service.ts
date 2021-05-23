@@ -18,6 +18,8 @@ export interface IV4PrizeSet {
   campaign_prize_id: number;
   campaign_prize_type: string;
   points_count?: number;
+  state?: string;
+  details?: string;
 }
 interface IV4GetPrizeSetResponse {
   data: IV4PrizeSet[];
@@ -73,7 +75,9 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
       actualOutcomeType: prizeSet.actual_outcome_type,
       campaignPrizeId: prizeSet.campaign_prize_id,
       campaignPrizeType: prizeSet.campaign_prize_type,
-      pointsCount: prizeSet.points_count
+      pointsCount: prizeSet.points_count,
+      state: prizeSet.state,
+      details: prizeSet.details
     };
   }
 

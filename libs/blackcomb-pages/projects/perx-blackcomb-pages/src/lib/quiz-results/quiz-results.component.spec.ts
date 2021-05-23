@@ -2,14 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QuizModule, SecondsToStringPipe, TokenStorage, UtilsModule } from '@perxtech/core';
+import { QuizModule, SecondsToStringPipe, TokenStorage, UtilsModule, ConfigService } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { of } from 'rxjs';
 
 describe('QuizResultsComponent', () => {
   let component: QuizResultsComponent;
   let fixture: ComponentFixture<QuizResultsComponent>;
+
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,6 +28,7 @@ describe('QuizResultsComponent', () => {
       ],
       providers: [
         { provide: TokenStorage, useValue: {} },
+        { provide: ConfigService, useValue: configServiceStub },
         SecondsToStringPipe
       ]
     })

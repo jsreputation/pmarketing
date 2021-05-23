@@ -5,7 +5,7 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState, ThemesService, ITheme, StampOutcomeType
+  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
@@ -36,6 +36,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public newStampsLabelFn: () => Observable<string>;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
+  public showPrizeSetOutcome: boolean = false;
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -52,6 +53,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private translate: TranslateService,
     private dialog: MatDialog,
+    private configService: ConfigService
   ) {
   }
 
@@ -60,6 +62,12 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
 
     this.initTranslate();
     this.route.paramMap
@@ -160,11 +168,19 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 }));
             }
 
-            if ((stamp.vouchers && stamp.vouchers.length > 0) || ( stamp.outcomes && stamp.outcomes.length > 0)) {
-             // const voucherId = stamp.vouchers && stamp.vouchers[0].id;
-              const rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.reward);
-              const prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.prizeSet);
-              // const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === StampOutcomeType.points);
+            if ((this.showPrizeSetOutcome && stamp.outcomes && stamp.outcomes.length > 0) ||
+                        (!this.showPrizeSetOutcome && stamp.vouchers && stamp.vouchers.length > 0)) {
+              let rewardOutcomes;
+              let prizeSetOutcomes;
+              let voucherId;
+              if (this.showPrizeSetOutcome) {
+                  rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === CampaignOutcomeType.reward);
+                  prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === CampaignOutcomeType.prizeSet);
+                  /* const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType ===
+                                                                                    CampaignOutcomeType.points);*/
+              } else {
+                voucherId = stamp.vouchers && stamp.vouchers[0].id;
+              }
               forkJoin([
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
@@ -181,10 +197,13 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   afterClosedCallBackRedirect: this,
                   buttonTxt
                 };
-                if (rewardOutcomes && rewardOutcomes.length > 0 && rewardOutcomes[0].id) {
-                  data.url = `/voucher-detail/${rewardOutcomes[0].id}`;
-                } else if (prizeSetOutcomes && prizeSetOutcomes.length > 0 && prizeSetOutcomes[0].id) {
+
+                if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0 && prizeSetOutcomes[0].id) {
                   data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].id}`;
+                } else if (this.showPrizeSetOutcome && rewardOutcomes && rewardOutcomes.length > 0 && rewardOutcomes[0].id) {
+                  data.url = `/voucher-detail/${rewardOutcomes[0].id}`;
+                } else if (voucherId) {
+                  data.url = `/voucher-detail/${voucherId}`;
                 } else {
                   data.url = '/wallet';
                 }

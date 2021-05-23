@@ -263,6 +263,9 @@ const appConfigFile = `{
   },
   "showPasswordToggleOnSignUpPage": ${
     process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE ? process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE : false
+  },
+  "showPrizeSetOutcome": ${
+    process.env.SHOW_PRIZE_SET_OUTCOME ? process.env.SHOW_PRIZE_SET_OUTCOME : false
   }
 }
 `;

@@ -16,7 +16,8 @@ import {
   ISurvey,
   SurveyModule as PerxSurveyModule,
   SurveyQuestionType,
-  SurveyService
+  SurveyService,
+  ConfigService
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
@@ -56,6 +57,8 @@ describe('SurveyComponent', () => {
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
+
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -98,6 +101,7 @@ describe('SurveyComponent', () => {
             navigate: () => { }
           }
         },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();

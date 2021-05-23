@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import {
   IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory,
-  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig
+  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig, ConfigService, IConfig
 } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -25,6 +25,7 @@ export class QuizResultsComponent implements OnInit {
   public subTitle: string;
   public rewardsAcquired: boolean = false;
   public prizeSetOutcome: IPrizeSetOutcome[];
+  public showPrizeSetOutcome: boolean = false;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -33,10 +34,17 @@ export class QuizResultsComponent implements OnInit {
     private tokenStorage: TokenStorage,
     private notificationService: NotificationService,
     private translate: TranslateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
 
     this.translate.get('QUIZ_TEMPLATE.QUESTION_TIME_TAKEN').subscribe((text) => {
       this.timeConsumed = of(text);
@@ -122,7 +130,7 @@ export class QuizResultsComponent implements OnInit {
           imageUrl: oc(outcome).image('assets/quiz/reward.png'),
           ctaButtonClass: 'ga_game_completion'
         };
-        if (this.prizeSetOutcome && this.prizeSetOutcome.length > 0) {
+        if (this.showPrizeSetOutcome && this.prizeSetOutcome && this.prizeSetOutcome.length > 0) {
             const prizeSetId = this.prizeSetOutcome[0].id;
             const data: IRewardPopupConfig = this.popup;
             data.url = `/prize-set-outcomes/${prizeSetId}`;

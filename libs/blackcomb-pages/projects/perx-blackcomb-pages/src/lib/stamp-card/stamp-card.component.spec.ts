@@ -20,7 +20,8 @@ import {
   NotificationService,
   PuzzlesModule,
   StampCardState,
-  StampService, ThemesService
+  StampService, ThemesService,
+  ConfigService
 } from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
@@ -51,6 +52,8 @@ describe('StampCardComponent', () => {
     addPopup: () => { }
   };
 
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardComponent],
@@ -66,6 +69,7 @@ describe('StampCardComponent', () => {
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
         { provide: NotificationService, useValue: notificationStub },
         { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         MatDialog
       ]
     })

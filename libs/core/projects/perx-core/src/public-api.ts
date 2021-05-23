@@ -101,7 +101,6 @@ export {
   IStamp,
   StampCardState,
   StampState,
-  StampOutcomeType
 } from './lib/stamp/models/stamp.model';
 export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**

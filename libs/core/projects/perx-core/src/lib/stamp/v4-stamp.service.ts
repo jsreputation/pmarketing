@@ -22,7 +22,6 @@ import {
   StampState,
   ICampaignOutcome,
   IStampOutcome,
-  StampOutcomeType
 } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
@@ -30,7 +29,7 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import { CampaignType, ICampaign, CampaignOutcomeType } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 
@@ -56,9 +55,9 @@ export interface IV4Stamp {
 
 export interface IV4StampOutcome {
   id: number;
-  actual_outcome_type: StampOutcomeType;
+  actual_outcome_type: CampaignOutcomeType;
   actual_outcome_id: number;
-  campaign_prize_type: StampOutcomeType;
+  campaign_prize_type: CampaignOutcomeType;
   campaign_prize_id: number;
   state: string;
 }
@@ -429,7 +428,7 @@ export class V4StampService implements StampService {
       id: outcome.actual_outcome_id,
       outcomeType: outcome.campaign_prize_type,
       state: outcome.state,
-      prizeSetId: outcome.campaign_prize_id
+      prizeId: outcome.campaign_prize_id
     };
   }
 }

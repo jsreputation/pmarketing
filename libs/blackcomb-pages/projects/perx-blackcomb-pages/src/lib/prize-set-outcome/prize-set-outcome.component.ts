@@ -72,9 +72,9 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
             return status === 'completed' ? this.prizeSetOutcomeService.getPrizeSet(this.prizeSetId) : EMPTY;
           }),
           tap((outcomes) => {
-            allOutcomes = outcomes;
-            rewardOutcomes = outcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
-            pointOutcomes = outcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
+            allOutcomes = outcomes.filter((outcome) => outcome.state !== 'failed');
+            rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
+            pointOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
           }),
           switchMap(() =>
             forkJoin([

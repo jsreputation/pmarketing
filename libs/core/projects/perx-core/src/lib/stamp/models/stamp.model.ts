@@ -1,6 +1,7 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
 import { IWProperties } from '@perxtech/whistler';
+import { CampaignOutcomeType } from '../../campaign/models/campaign.model';
 export interface ICampaignOutcome {
   id: number;
   campaignId: number;
@@ -45,9 +46,9 @@ export interface IStamp {
 
 export interface IStampOutcome {
   id: number;
-  outcomeType: StampOutcomeType;
+  outcomeType: CampaignOutcomeType;
   state: string;
-  prizeSetId: number;
+  prizeId: number;
 }
 
 export interface ICampaignConfig {
@@ -114,9 +115,3 @@ export interface IStampCard {
   stamps?: IStamp[];
 }
 
-export enum StampOutcomeType {
-  reward = 'Reward::Campaign',
-  points = 'StoredValue::Campaign',
-  custom = 'custom',
-  prizeSet = 'PrizeSet'
-}

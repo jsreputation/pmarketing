@@ -14,7 +14,9 @@ import {
   ICampaign,
   ErrorMessageService,
   RewardPopupComponent,
-  IRewardPopupConfig
+  IRewardPopupConfig,
+  IConfig,
+  ConfigService
 } from '@perxtech/core';
 import {
   map,
@@ -95,6 +97,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public startGameAnimation: boolean = false;
   private prizeSetId: number;
   private prizeSetReserved: boolean = false;
+  public showPrizeSetOutcome: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -105,11 +108,18 @@ export class GameComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private campaignService: ICampaignService,
     private errorMessageService: ErrorMessageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
 
     this.isAnonymousUser = this.auth.getAnonymous();
     this.route.queryParams.subscribe((params: Params) => {
@@ -274,7 +284,7 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
         }
-        if (gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
+        if (this.showPrizeSetOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
           this.prizeSetId = gameOutcome.prizeSet[0].id;
         }
         this.checkFailureOrSuccess();
@@ -349,7 +359,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private checkFailureOrSuccess(): void {
-    if (this.rewardCount || this.points || this.prizeSetId || this.prizeSetReserved) {
+    if (this.rewardCount || this.points || (this.showPrizeSetOutcome && (this.prizeSetId || this.prizeSetReserved))) {
       this.fillSuccess(this.rewardCount, this.points);
     } else {
       this.fillFailure();
@@ -366,7 +376,7 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
         }
-        if (gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
+        if (this.showPrizeSetOutcome && gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
           this.prizeSetId = gameOutcome.prizeSet[0].id;
         }
         this.checkFailureOrSuccess();
@@ -409,7 +419,7 @@ export class GameComponent implements OnInit, OnDestroy {
             if (gameTransaction.points) {
               this.points = gameTransaction.points[0];
             }
-            if (gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
+            if (this.showPrizeSetOutcome && gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
               this.prizeSetId = gameTransaction.prizeSet[0].id;
             }
           } else if (this.isIPlayOutcome(response)) {
@@ -420,7 +430,7 @@ export class GameComponent implements OnInit, OnDestroy {
             if (response.points) {
               this.points = response.points[0];
             }
-            if (response.prizeSet && response.prizeSet.length > 0) {
+            if (this.showPrizeSetOutcome && response.prizeSet && response.prizeSet.length > 0) {
               this.prizeSetId = response.prizeSet[0].id;
             }
           }
@@ -473,7 +483,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.informationCollectionSetting === 'signup_required'
       ) {
         this.router.navigate(['/signup'], { state });
-      } else if (this.prizeSetId) {
+      } else if (this.showPrizeSetOutcome && this.prizeSetId) {
           const data: IRewardPopupConfig = this.popupData;
           data.url = `/prize-set-outcomes/${this.prizeSetId}`;
           data.afterClosedCallBackRedirect = this;

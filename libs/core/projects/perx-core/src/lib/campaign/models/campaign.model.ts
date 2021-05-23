@@ -101,7 +101,8 @@ export interface ICampaignItem {
 export enum CampaignOutcomeType {
   reward = 'Reward::Campaign',
   points = 'StoredValue::Campaign',
-  custom = 'CustomOutcome'
+  custom = 'CustomOutcome',
+  prizeSet = 'PrizeSet'
 }
 
 export interface ICampaignOutcome {
