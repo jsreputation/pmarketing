@@ -6,7 +6,9 @@ import { Observable, timer } from 'rxjs';
 import { map, switchMap, last, takeUntil, takeWhile } from 'rxjs/operators';
 import {
   IPrizeSetItem,
-  IPrizeSetOutcome
+  IPrizeSetOutcome,
+  PrizeSetIssuedType,
+  PrizeSetOutcomeType
 } from './models/prize-set-outcome.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { IPrizeSetOutcomeService } from './prize-set-outcome.service';
@@ -14,9 +16,9 @@ import { IPrizeSetOutcomeService } from './prize-set-outcome.service';
 export interface IV4PrizeSet {
   id: number;
   actual_outcome_id: number;
-  actual_outcome_type: string;
+  actual_outcome_type: PrizeSetIssuedType;
   campaign_prize_id: number;
-  campaign_prize_type: string;
+  campaign_prize_type: PrizeSetOutcomeType;
   points_count?: number;
   state?: string;
   details?: string;

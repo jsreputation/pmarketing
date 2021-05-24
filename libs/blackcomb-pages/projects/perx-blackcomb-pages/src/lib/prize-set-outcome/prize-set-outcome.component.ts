@@ -20,7 +20,7 @@ import {
   ILoyalty,
   PrizeSetOutcomeType,
   PrizeSetState,
-  IPrizeSetOutcomeService
+  IPrizeSetOutcomeService,
 } from '@perxtech/core';
 import {
   forkJoin,
@@ -41,6 +41,7 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
   public outcomes: IPrizeSetItem[] = [];
   public isLoading: boolean = false;
   public outcomeMsg: string;
+  public outcomeType: typeof PrizeSetOutcomeType = PrizeSetOutcomeType;
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private activeRoute: ActivatedRoute,

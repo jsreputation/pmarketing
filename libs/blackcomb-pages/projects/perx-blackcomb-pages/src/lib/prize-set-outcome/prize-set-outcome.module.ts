@@ -18,7 +18,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    BCPPrizeSetOutcomeModule.forChild()
+    BCPPrizeSetOutcomeModule
   ],
   providers: []
 })

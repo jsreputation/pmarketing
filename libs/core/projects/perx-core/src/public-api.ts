@@ -380,4 +380,4 @@ export {
   PrizeSetState
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
-export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.service.module';
+export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';

@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { V4PrizeSetOutcomeService } from './v4-prize-set-outcome.service';
@@ -13,24 +13,14 @@ export function prizeSetOutcomeServiceFactory(http: HttpClient, configService: C
   declarations: [],
   imports: [
     CommonModule
-  ]
+  ],
+  providers: [
+    {
+      provide: IPrizeSetOutcomeService,
+      useFactory: prizeSetOutcomeServiceFactory,
+      deps: [HttpClient, ConfigService]
+    }
+  ],
 })
 export class PrizeSetOutcomeModule {
-  public static forRoot(): ModuleWithProviders<PrizeSetOutcomeModule> {
-    return {
-      ngModule: PrizeSetOutcomeModule,
-      providers: [
-        {
-          provide: IPrizeSetOutcomeService,
-          useFactory: prizeSetOutcomeServiceFactory,
-          deps: [HttpClient, ConfigService]
-        }
-      ]
-    };
-  }
-  public static forChild(): ModuleWithProviders<PrizeSetOutcomeModule> {
-    return {
-      ngModule: PrizeSetOutcomeModule
-    };
-  }
 }

@@ -5,7 +5,7 @@
         <ng-container *ngIf="outcomes && outcomes.length > 0; else noOutcomeBlock">
           <h1>Congrats, you won the following:</h1>
           <div *ngFor="let outcome of outcomes" class="outcome-card">
-          <ng-container *ngIf="outcome.actualOutcomeType == 'Reward::Transaction'">
+          <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.reward">
             <a [routerLink]="['/voucher-detail',outcome.actualOutcomeId]" >
               <mat-card matRipple class="mat-elevation-z4">
                 <div class="thumbnail-image">
@@ -28,7 +28,7 @@
               </mat-card>
             </a>
           </ng-container>
-          <ng-container *ngIf="outcome.actualOutcomeType == 'StoredValue::Transaction'">
+          <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.points">
               <mat-card class="mat-elevation-z4">
                   <mat-card-content>
                       <div>

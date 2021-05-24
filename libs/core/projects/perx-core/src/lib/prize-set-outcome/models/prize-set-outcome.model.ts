@@ -5,9 +5,9 @@ import { OutcomeType } from '../../outcome/models/outcome.model';
 export interface IPrizeSetItem {
     id: number;
     actualOutcomeId: number;
-    actualOutcomeType: string;
+    actualOutcomeType: PrizeSetIssuedType;
     campaignPrizeId: number;
-    campaignPrizeType: string;
+    campaignPrizeType: PrizeSetOutcomeType;
     pointsCount?: number;
     state?: string;
     details?: string;
