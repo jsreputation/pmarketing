@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
       { path: 'user-info', component: UserInfoComponent },
       { path: 'home', component: HomeComponent },
       { path: 'reward-detail/:rewardId', component: RewardDetailComponent },
@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'enter-pin/:type', component: EnterPinComponent},
+  { path: 'enter-pin/:type', component: EnterPinComponent },
   {
     path: 'c/:key',
     loadChildren: () => import('./content/content.module').then(mod => mod.ContentModule)

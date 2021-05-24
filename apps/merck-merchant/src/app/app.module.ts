@@ -78,7 +78,6 @@ export const appInit =
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
-    resolve();
   });
 
 @NgModule({
