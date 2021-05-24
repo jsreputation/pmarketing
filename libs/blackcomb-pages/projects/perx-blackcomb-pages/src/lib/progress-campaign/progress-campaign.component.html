@@ -39,7 +39,7 @@
               <p class="subtitle">{{progressConfig?.description}}</p>
               <p class="description">{{progressConfig?.body}}</p>
           </div>
-          <div class="current-level-container task-card-container" *ngIf="activeLevel">
+          <div class="current-level-container task-card-container" *ngIf="activeLevel!">
             <p>Currently Active Level:</p>
             <div class="task-card">
               <div class="task-img-section">
@@ -58,7 +58,7 @@
                 <mat-progress-bar mode="determinate"
                                   [value]="activeLevel.completedProgress/activeLevel.levelTarget * 100"></mat-progress-bar>
               </div>
-            </div>
+            </div>˚
           </div>
           <div class="mat-tab-group-wrapper">
             <mat-tab-group mat-stretch-tabs>
