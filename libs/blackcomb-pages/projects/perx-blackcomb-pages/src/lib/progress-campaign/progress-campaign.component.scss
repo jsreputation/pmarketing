@@ -129,6 +129,20 @@
     }
   }
 
+  .current-level-container {
+    margin: 1rem 0;
+
+    p {
+      font-stretch: condensed;
+      letter-spacing: 1.7px;
+      font-size: 10px;
+      line-height: 16px;
+      color: rgba(0, 0, 0, 0.6);
+      margin: 0;
+      text-transform: uppercase;
+    }
+  }
+
   .task-card-container {
     display: flex;
     flex-direction: column;
