@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -60,15 +59,23 @@ import { TransactionHistoryPipe } from './transaction-history/transaction-histor
 import { tap, switchMap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-export const setLanguage = (
-  translateService: TranslateService,
-  configService: ConfigService,
-  authService: AuthenticationService,
-  themesService: ThemesService) =>
-  () => new Promise((resolve) => {
+export const appInit =
+  (
+    translateService: TranslateService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    themesService: ThemesService
+  ) => () => new Promise((resolve) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      authService.saveUserAccessToken(token);
+    } else {
+      console.error('Could not retrieve user token');
+    }
+
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
@@ -132,7 +139,7 @@ export const setLanguage = (
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     {
-      provide: APP_INITIALIZER, useFactory: setLanguage,
+      provide: APP_INITIALIZER, useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     }
   ],

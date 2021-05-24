@@ -10,7 +10,8 @@ import {
   NotificationService,
   TokenStorage,
   ThemesService,
-  ITheme
+  ITheme,
+  AuthenticationService
 } from '@perxtech/core';
 import {
   BarSelectedItem,
@@ -45,9 +46,7 @@ export class AppComponent implements OnInit {
     bottomSelectedItem: BarSelectedItem.HOME,
     pageTitle: ''
   };
-
   private preAuth: boolean;
-
   public theme: ITheme;
 
   constructor(
@@ -60,7 +59,8 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private store: TokenStorage,
     private translate: TranslateService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
+    private authenticationService: AuthenticationService,
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       if (message === 'LOGIN_SESSION_EXPIRED') {
@@ -87,7 +87,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-
     const lang = this.store.getAppInfoProperty('merck-customer') || this.translateService.currentLang || this.translateService.defaultLang;
     this.translateService.use(lang);
     this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
@@ -113,20 +112,27 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
+
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (!isAuth) {
+        this.router.navigateByUrl('/login');
+      }
+    });
+
   }
 
   public onActivate(ref: any): void {
     const activeComponent = ref as PageAppearence;
 
-    if ( typeof activeComponent.getPageProperties === 'function') {
+    if (typeof activeComponent.getPageProperties === 'function') {
       this.pageProperties = activeComponent.getPageProperties();
     } else {
-        this.pageProperties = {
-          header: true,
-          backButtonEnabled: true,
-          bottomSelectedItem: BarSelectedItem.NONE,
-          pageTitle: ''
-        };
+      this.pageProperties = {
+        header: true,
+        backButtonEnabled: true,
+        bottomSelectedItem: BarSelectedItem.NONE,
+        pageTitle: ''
+      };
     }
     this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
   }
