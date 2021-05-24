@@ -44,19 +44,19 @@
             <div class="task-card">
               <div class="task-img-section">
                 <div class="task-img-container">
-                  <img [src]="activeLevel.imageUrl" [alt]="activeLevel.title">
+                  <img [src]="activeLevel?.imageUrl" [alt]="activeLevel?.title">
                 </div>
                 <div class="active-macaron-container"
-                     *ngIf="activeLevel.state === 'in_progress'">
+                     *ngIf="activeLevel?.state === 'in_progress'">
                   <span class="macaron">Active</span>
                 </div>
               </div>
               <div class="task-content">
                   <span class="task-subtitle">
-                      {{activeLevel.completedProgress}} / {{activeLevel.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                      {{activeLevel?.completedProgress}} / {{activeLevel?.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
                   </span>
                 <mat-progress-bar mode="determinate"
-                                  [value]="activeLevel.completedProgress/activeLevel.levelTarget * 100"></mat-progress-bar>
+                                  [value]="activeLevel?.completedProgress/activeLevel?.levelTarget * 100"></mat-progress-bar>
               </div>
             </div>˚
           </div>
