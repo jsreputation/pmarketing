@@ -7,6 +7,7 @@ import { PrizeSetOutcomeComponent } from './prize-set-outcome.component';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [PrizeSetOutcomeComponent],
@@ -18,7 +19,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
-    BCPPrizeSetOutcomeModule
+    BCPPrizeSetOutcomeModule,
+    TranslateModule.forChild()
   ],
   providers: []
 })

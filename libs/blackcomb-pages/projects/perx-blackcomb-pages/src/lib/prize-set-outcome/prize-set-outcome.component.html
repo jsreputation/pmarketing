@@ -3,7 +3,8 @@
     <div class="outcome-container" >
       <ng-container *ngIf="!isLoading; else loadingBlock">
         <ng-container *ngIf="outcomes && outcomes.length > 0; else noOutcomeBlock">
-          <h1>Congrats, you won the following:</h1>
+          <h1>{{'PRIZE_SET.HEADING' | translate}}</h1>
+          <h2>{{'PRIZE_SET.SUB_HEADING' | translate}}</h2>
           <div *ngFor="let outcome of outcomes" class="outcome-card">
           <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.reward">
             <a [routerLink]="outcome.actualOutcomeId ? ['/voucher-detail',outcome.actualOutcomeId] : ['/reward-detail',outcome.campaignPrizeId]" >

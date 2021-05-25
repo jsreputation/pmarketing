@@ -426,6 +426,11 @@
     "NOT_AVAILABLE_CTA": "Close",
     "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   },
+  "PRIZE_SET": {
+    "HEADING": "Congrats! You won this prize set.",
+    "SUB_HEADING": "includes ALL of the following:",
+    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE SET"
+  },
   "Gold": "黃金",
   "Silver": "銀卡",
   "Green": "綠色",

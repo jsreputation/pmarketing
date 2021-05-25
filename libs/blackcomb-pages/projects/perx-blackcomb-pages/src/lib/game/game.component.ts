@@ -99,6 +99,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private prizeSetOutcome: IPrizeSetOutcome;
   private prizeSetReserved: boolean = false;
   public showPrizeSetOutcome: boolean = false;
+  private prizeSetBtnTxt: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -486,6 +487,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.router.navigate(['/signup'], { state });
       } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
           const data: IRewardPopupConfig = this.popupData;
+          data.buttonTxt = this.prizeSetBtnTxt,
           data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
           data.afterClosedCallBackRedirect = this;
           data.disableOverlayClose = true;
@@ -565,6 +567,10 @@ export class GameComponent implements OnInit, OnDestroy {
     this.translate
       .get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS')
       .subscribe((text) => (this.rewardsTxt = text));
+
+    this.translate
+      .get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
+      .subscribe((text) => (this.prizeSetBtnTxt = text));
 
     if (this.isEmbedded) {
       this.successPopUp.buttonTxt = null;
