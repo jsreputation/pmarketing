@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductService, IProduct } from '../services/product.service';
-import { IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage } from '@perxtech/core';
-import { from, throwError, Observable, forkJoin } from 'rxjs';
+import { IProduct, ProductService } from '../services/product.service';
+import {
+  IMerchantAdminService,
+  IMerchantAdminTransaction,
+  IMerchantProfile,
+  NotificationService,
+  TokenStorage
+} from '@perxtech/core';
+import { forkJoin, from, Observable, throwError } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -107,10 +113,11 @@ export class OrderComponent implements OnInit {
           );
         })
       )
-      .subscribe((transactions: IMerchantAdminTransaction[]) => {
-        const ids = transactions.map(transaction => transaction.id);
-        const idsToString = ids.join(', ');
-        const message = this.language === 'zh' ? `交易 ID ${idsToString} 完成` : `Transaction ID: ${idsToString} completed`;
+      // .subscribe((transactions: IMerchantAdminTransaction[]) => {
+      .subscribe(() => {
+        // const ids = transactions.map(transaction => transaction.id);
+        // const idsToString = ids.join(', ');
+        const message = this.language === 'zh' ? '交易完成' : 'Transaction completed';
         this.notificationService.addSnack(message);
         this.router.navigate(['/home']);
       });
