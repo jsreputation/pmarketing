@@ -3,9 +3,7 @@ import {
   Routes,
   RouterModule,
 } from '@angular/router';
-
 import { ProtectedGuard } from 'ngx-auth';
-
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -20,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'qrscanner/:path', component: QrscannerComponent },
       { path: 'order', component: OrderComponent },

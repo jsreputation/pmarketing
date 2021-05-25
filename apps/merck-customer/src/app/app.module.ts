@@ -74,18 +74,25 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { tap, switchMap } from 'rxjs/operators';
 import { LanguageComponent } from './account/language/language.component';
 
-export const setLanguage = (
-  translateService: TranslateService,
-  configService: ConfigService,
-  authService: AuthenticationService,
-  themesService: ThemesService) =>
-  () => new Promise((resolve) => {
-    configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
-    ).toPromise().then(() => resolve());
-  });
+export const appInit =
+  (
+    translateService: TranslateService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    themesService: ThemesService) => () => new Promise((resolve) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      if (token) {
+        authService.saveUserAccessToken(token);
+      } else {
+        console.error('Could not retrieve user token');
+      }
+
+      configService.readAppConfig().pipe(
+        tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+        switchMap(() => themesService.getThemeSetting())
+      ).toPromise().then(() => resolve());
+    });
 
 @NgModule({
   declarations: [
@@ -157,10 +164,9 @@ export const setLanguage = (
     })
   ],
   providers: [
-    // { provide: LOCALE_ID, useValue: 'zh' },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     {
-      provide: APP_INITIALIZER, useFactory: setLanguage,
+      provide: APP_INITIALIZER, useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     }
   ],

@@ -28,6 +28,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
 
   public campaign$: Observable<ICampaign>;
   public levels$: Observable<IProgressLevel[]>;
+  public activeLevel: IProgressLevel | undefined;
   public campaignOutcome$: Observable<ICampaignOutcome[]>;
   public progressCampaign: IProgressCampaign;
 
@@ -109,6 +110,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
         this.progressConfig = campaign.displayProperties?.progressDetails;
         this.campaign$ = of(campaign);
         this.levels$ = of(levels);
+        this.activeLevel = levels.find(level => level.state === QuestState.inProgress);
         this.progressCampaign = progress;
         this.campaignOutcome$ = of(outcomes);
 
