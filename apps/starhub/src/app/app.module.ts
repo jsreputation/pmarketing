@@ -12,12 +12,7 @@ import {
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
-import {
-  APP_INITIALIZER,
-  ErrorHandler,
-  Injectable,
-  NgModule
-} from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -79,15 +74,11 @@ import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
-import { tap } from 'rxjs/operators';
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService
-} from '@ngx-translate/core';
+import { catchError, tap } from 'rxjs/operators';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { GhostsModule } from './ghosts/ghosts.module';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -130,6 +121,11 @@ export const appInit =
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      catchError( () => {
+        // handle no lang and carry on
+        console.error('No lang files found');
+        return of({});
+      }),
       tap(() => {
         const uxcrParam = urlParams.get('uxcr');
         if (uxcrParam) {
