@@ -131,9 +131,9 @@ export class QuizResultsComponent implements OnInit {
           ctaButtonClass: 'ga_game_completion'
         };
         if (this.showPrizeSetOutcome && this.prizeSetOutcome && this.prizeSetOutcome.length > 0) {
-            const prizeSetId = this.prizeSetOutcome[0].id;
+            const prizeSetOutcome = this.prizeSetOutcome[0];
             const data: IRewardPopupConfig = this.popup;
-            data.url = `/prize-set-outcomes/${prizeSetId}`;
+            data.url = `/prize-set-outcomes/${prizeSetOutcome.prizeSetId}?transactionId=${prizeSetOutcome.transactionId}`;
             data.afterClosedCallBackRedirect = this;
             data.disableOverlayClose = true;
             data.showCloseBtn = false;

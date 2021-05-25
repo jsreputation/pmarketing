@@ -15,7 +15,8 @@ import {
   IRewardPopupConfig,
   ISurveyResultOutcome,
   ConfigService,
-  IConfig
+  IConfig,
+  IPrizeSetOutcome
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
@@ -45,7 +46,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
   public answers: IAnswer[];
-  private prizeSetId: number;
+  private prizeSetOutcome: IPrizeSetOutcome;
   public showPrizeSetOutcome: boolean = false;
 
   public successPopUp: IPopupConfig = {
@@ -222,7 +223,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
                   ? this.successPopUp
                   : this.noRewardsPopUp;
                 if (res && res.prizeSet && res.prizeSet.length > 0) {
-                    this.prizeSetId = res.prizeSet[0].id;
+                    this.prizeSetOutcome = res.prizeSet[0];
                 }
                 this.redirectUrlAndPopUp();
               },
@@ -260,9 +261,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.informationCollectionSetting === 'signup_required'
     ) {
       this.router.navigate(['/signup'], { state });
-    } else if (this.showPrizeSetOutcome && this.prizeSetId) {
+    } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
         const data: IRewardPopupConfig = this.popupData;
-        data.url = `/prize-set-outcomes/${this.prizeSetId}`;
+        data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
         data.afterClosedCallBackRedirect = this;
         data.disableOverlayClose = true;
         data.showCloseBtn = false;

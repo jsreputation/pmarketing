@@ -16,7 +16,8 @@ import {
   RewardPopupComponent,
   IRewardPopupConfig,
   IConfig,
-  ConfigService
+  ConfigService,
+  IPrizeSetOutcome
 } from '@perxtech/core';
 import {
   map,
@@ -95,7 +96,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public rewardsTxt: string;
   public startGameAnimation: boolean = false;
-  private prizeSetId: number;
+  private prizeSetOutcome: IPrizeSetOutcome;
   private prizeSetReserved: boolean = false;
   public showPrizeSetOutcome: boolean = false;
 
@@ -285,7 +286,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.points = gameOutcome.points[0];
         }
         if (this.showPrizeSetOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
-          this.prizeSetId = gameOutcome.prizeSet[0].id;
+          this.prizeSetOutcome = gameOutcome.prizeSet[0];
         }
         this.checkFailureOrSuccess();
       },
@@ -359,7 +360,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private checkFailureOrSuccess(): void {
-    if (this.rewardCount || this.points || (this.showPrizeSetOutcome && (this.prizeSetId || this.prizeSetReserved))) {
+    if (this.rewardCount || this.points || (this.showPrizeSetOutcome && (this.prizeSetOutcome || this.prizeSetReserved))) {
       this.fillSuccess(this.rewardCount, this.points);
     } else {
       this.fillFailure();
@@ -377,7 +378,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.points = gameOutcome.points[0];
         }
         if (this.showPrizeSetOutcome && gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
-          this.prizeSetId = gameOutcome.prizeSet[0].id;
+          this.prizeSetOutcome = gameOutcome.prizeSet[0];
         }
         this.checkFailureOrSuccess();
       }),
@@ -420,7 +421,7 @@ export class GameComponent implements OnInit, OnDestroy {
               this.points = gameTransaction.points[0];
             }
             if (this.showPrizeSetOutcome && gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
-              this.prizeSetId = gameTransaction.prizeSet[0].id;
+              this.prizeSetOutcome = gameTransaction.prizeSet[0];
             }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
@@ -431,7 +432,7 @@ export class GameComponent implements OnInit, OnDestroy {
               this.points = response.points[0];
             }
             if (this.showPrizeSetOutcome && response.prizeSet && response.prizeSet.length > 0) {
-              this.prizeSetId = response.prizeSet[0].id;
+              this.prizeSetOutcome = response.prizeSet[0];
             }
           }
         }),
@@ -483,9 +484,9 @@ export class GameComponent implements OnInit, OnDestroy {
         this.informationCollectionSetting === 'signup_required'
       ) {
         this.router.navigate(['/signup'], { state });
-      } else if (this.showPrizeSetOutcome && this.prizeSetId) {
+      } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
           const data: IRewardPopupConfig = this.popupData;
-          data.url = `/prize-set-outcomes/${this.prizeSetId}`;
+          data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
           data.afterClosedCallBackRedirect = this;
           data.disableOverlayClose = true;
           data.showCloseBtn = false;

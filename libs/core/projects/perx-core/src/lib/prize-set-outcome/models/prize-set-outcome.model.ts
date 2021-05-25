@@ -3,11 +3,10 @@ import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 
 export interface IPrizeSetItem {
-    id: number;
-    actualOutcomeId: number;
-    actualOutcomeType: PrizeSetIssuedType;
     campaignPrizeId: number;
     campaignPrizeType: PrizeSetOutcomeType;
+    actualOutcomeId?: number;
+    actualOutcomeType?: PrizeSetIssuedType;
     pointsCount?: number;
     state?: string;
     details?: string;
@@ -16,7 +15,8 @@ export interface IPrizeSetItem {
 }
 
 export interface IPrizeSetOutcome {
-    id: number;
+    transactionId: number;
+    prizeSetId: number;
     outcomeType: OutcomeType.prizeSet;
     state: string;
 }

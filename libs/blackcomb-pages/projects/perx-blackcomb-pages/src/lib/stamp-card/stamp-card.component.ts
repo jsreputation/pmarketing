@@ -16,6 +16,7 @@ import {
   IRewardPopupConfig, RewardPopupComponent
 } from 'libs/core/projects/perx-core/src/lib/campaign/reward-popup/reward-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { IStampOutcome } from 'libs/core/projects/perx-core/src/lib/stamp/models/stamp.model';
 
 @Component({
   selector: 'perx-blackcomb-stamp-card',
@@ -171,12 +172,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
             if ((this.showPrizeSetOutcome && stamp.outcomes && stamp.outcomes.length > 0) ||
                         (!this.showPrizeSetOutcome && stamp.vouchers && stamp.vouchers.length > 0)) {
               let rewardOutcomes;
-              let prizeSetOutcomes;
+              let prizeSetOutcomes: IStampOutcome[];
               let voucherId;
-              if (this.showPrizeSetOutcome) {
-                  rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === CampaignOutcomeType.reward);
-                  prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType === CampaignOutcomeType.prizeSet);
-                  /* const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.id && outcome.outcomeType ===
+              if (this.showPrizeSetOutcome && stamp.outcomes) {
+                  rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
+                                                                        CampaignOutcomeType.reward);
+                  prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
+                                                                        CampaignOutcomeType.prizeSet);
+                  /* const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
                                                                                     CampaignOutcomeType.points);*/
               } else {
                 voucherId = stamp.vouchers && stamp.vouchers[0].id;
@@ -198,9 +201,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   buttonTxt
                 };
 
-                if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0 && prizeSetOutcomes[0].id) {
-                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].id}`;
-                } else if (this.showPrizeSetOutcome && rewardOutcomes && rewardOutcomes.length > 0 && rewardOutcomes[0].id) {
+                if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
+                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeSetId}?transactionId=${prizeSetOutcomes[0].transactionId}`;
+                } else if (this.showPrizeSetOutcome && rewardOutcomes && rewardOutcomes.length > 0) {
                   data.url = `/voucher-detail/${rewardOutcomes[0].id}`;
                 } else if (voucherId) {
                   data.url = `/voucher-detail/${voucherId}`;

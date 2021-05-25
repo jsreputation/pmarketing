@@ -45,10 +45,10 @@ export interface IStamp {
 }
 
 export interface IStampOutcome {
-  id: number;
+  transactionId: number;
   outcomeType: CampaignOutcomeType;
   state: string;
-  prizeId: number;
+  prizeSetId: number;
 }
 
 export interface ICampaignConfig {

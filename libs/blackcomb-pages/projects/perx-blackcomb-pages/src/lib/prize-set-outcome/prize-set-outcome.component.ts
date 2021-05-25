@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   ActivatedRoute,
-  ParamMap
+  Params
 } from '@angular/router';
 import {
-  filter,
-  map,
   switchMap,
   tap,
   catchError,
@@ -37,7 +35,7 @@ import {
 })
 export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
 
-  public prizeSetId: number;
+  public transactionId: number;
   public outcomes: IPrizeSetItem[] = [];
   public isLoading: boolean = false;
   public outcomeMsg: string;
@@ -53,14 +51,12 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
       let rewardOutcomes: IPrizeSetItem[] = [];
       let pointOutcomes: IPrizeSetItem[] = [];
       let allOutcomes: IPrizeSetItem[] = [];
-      this.activeRoute.paramMap
+      this.activeRoute.queryParams
         .pipe(
-          filter((params: ParamMap) => params.has('id')),
-          map((params: ParamMap) => params.get('id')),
-          switchMap((id: string) => {
+          switchMap((params: Params) => {
             this.isLoading = true;
-            this.prizeSetId = Number.parseInt(id, 10);
-            return this.prizeSetOutcomeService.getPrizeSetState(this.prizeSetId);
+            this.transactionId = Number.parseInt(params.transactionId, 10);
+            return this.prizeSetOutcomeService.getPrizeSetState(this.transactionId);
           }),
           switchMap((status: string) => {
             if (status === PrizeSetState.failed) {
@@ -70,10 +66,10 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
               this.outcomeMsg = 'Outcome is still processing and will be issued shortly';
               this.isLoading = false;
             }
-            return status === 'completed' ? this.prizeSetOutcomeService.getPrizeSet(this.prizeSetId) : EMPTY;
+            return status === 'completed' ? this.prizeSetOutcomeService.getPrizeSetIssuedOutcomes(this.transactionId) : EMPTY;
           }),
           tap((outcomes) => {
-            allOutcomes = outcomes.filter((outcome) => outcome.state !== 'failed');
+            allOutcomes = outcomes;
             rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
             pointOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
           }),

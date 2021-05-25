@@ -6,7 +6,7 @@ import { V4PrizeSetOutcomeService } from './v4-prize-set-outcome.service';
 import { ConfigService } from '../../lib/config/config.service';
 
 const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
-  getPrizeSet: () => of(),
+  getPrizeSetIssuedOutcomes: () => of(),
   getPrizeSetState: () => of(),
 };
 const configServiceStub: Partial<ConfigService> = {

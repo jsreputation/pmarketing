@@ -13,21 +13,22 @@ import {
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { IPrizeSetOutcomeService } from './prize-set-outcome.service';
 
-export interface IV4PrizeSet {
-  id: number;
-  actual_outcome_id: number;
-  actual_outcome_type: PrizeSetIssuedType;
+export interface IV4PrizeSetItem {
   campaign_prize_id: number;
   campaign_prize_type: PrizeSetOutcomeType;
+  actual_outcome_id?: number;
+  actual_outcome_type?: PrizeSetIssuedType;
   points_count?: number;
   state?: string;
   details?: string;
 }
 interface IV4GetPrizeSetResponse {
-  data: IV4PrizeSet[];
+  data: IV4PrizeSetItem[];
 }
+
 export interface IV4PrizeSetOutcome {
   id: number;
+  prize_set_id: number;
   outcome_type: OutcomeType.prizeSet;
   state: string;
 }
@@ -49,11 +50,11 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
   }
 
 
-  public getPrizeSet(transactionId: number): Observable<IPrizeSetItem[]> {
+  public getPrizeSetIssuedOutcomes(transactionId: number): Observable<IPrizeSetItem[]> {
     return this.http.get<IV4GetPrizeSetResponse>(`${this.baseUrl}/v4/prize_set_transactions/${transactionId}/outcomes`)
       .pipe(
         map((res: IV4GetPrizeSetResponse) => res.data),
-        map((outcomes: IV4PrizeSet[]) => outcomes.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome)))
+        map((outcomes: IV4PrizeSetItem[]) => outcomes.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome)))
       );
   }
 
@@ -70,9 +71,16 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
     );
   }
 
-  public static v4PrizeSetItemToPrizeSetItem(prizeSet: IV4PrizeSet): IPrizeSetItem {
+  public getPrizeSetOutcomes(prizeSetId: number): Observable<IPrizeSetItem[]> {
+    return this.http.get<IV4GetPrizeSetResponse>(`${this.baseUrl}/v4/prize_sets/${prizeSetId}`)
+      .pipe(
+        map((res: IV4GetPrizeSetResponse) => res.data),
+        map((outcomes: IV4PrizeSetItem[]) => outcomes.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome)))
+      );
+  }
+
+  public static v4PrizeSetItemToPrizeSetItem(prizeSet: IV4PrizeSetItem): IPrizeSetItem {
     return {
-      id: prizeSet.id,
       actualOutcomeId: prizeSet.actual_outcome_id,
       actualOutcomeType: prizeSet.actual_outcome_type,
       campaignPrizeId: prizeSet.campaign_prize_id,
@@ -85,7 +93,8 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
 
   public static v4PrizeSetOutcomeToPrizeSetOutcome(prizeSetOutcome: IV4PrizeSetOutcome): IPrizeSetOutcome {
     return {
-      id: prizeSetOutcome.id,
+      transactionId: prizeSetOutcome.id,
+      prizeSetId: prizeSetOutcome.prize_set_id,
       outcomeType: prizeSetOutcome.outcome_type,
       state: prizeSetOutcome.state
     };
