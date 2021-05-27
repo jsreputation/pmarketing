@@ -106,8 +106,6 @@ describe('PuzzleListComponent', () => {
   });
 
   it('init without title fn', () => {
-    delete component.titleFn;
-    delete component.puzzleTextFn;
     component.ngOnInit();
     let title;
     let puzzle;
