@@ -170,7 +170,7 @@ export class WhistlerRewardsService implements RewardsService {
           }) : null;
 
           const tierRCosts = res.tierRewardCostsIC && res.tierRewardCostsIC.length > 0 ? res.tierRewardCostsIC.filter(cost =>
-            oc(r).relationships.tier_reward_costs.data ?
+            oc(r).relationships.tier_reward_costs.data() ?
               (oc(r).relationships.tier_reward_costs.data([]) as IWRelationshipsDataType[]).some(
                 rewardCost => rewardCost.id === cost.attributes.entity_id.toString() && rewardCost.type === 'tier_reward_costs'
               ) : false
