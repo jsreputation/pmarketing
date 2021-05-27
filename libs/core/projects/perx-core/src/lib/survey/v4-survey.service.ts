@@ -196,14 +196,8 @@ export class V4SurveyService implements SurveyService {
         const outcomes = this.buildOutcomes(dp, lang);
         return {
           id: surveyCampaign.id,
-          /* eslint-disable */
-          title: (oc(dp).header.value.title ?
-            oc(dp).header.value.title[lang]() :
-            oc(dp).header.value.title[lang]()) as { text: string },
-          subTitle: (oc(dp).header.value.description() ?
-            oc(dp).header.value.description[lang]() :
-            oc(dp).header.value.description[lang]()) as { text: string },
-          /* eslint-enable */
+          title: dp?.header?.value?.title?.length ? dp.header.value.title[lang] as { text: string } : undefined,
+          subTitle: dp?.header?.value?.description?.length ? dp.header.value.description[lang] as { text: string } : undefined,
           results: { ...outcomes },
           fields,
           backgroundImgUrl: patchUrl(oc(dp).background_image.value.image_url('')),
