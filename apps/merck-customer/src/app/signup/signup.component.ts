@@ -139,9 +139,9 @@ export class SignupComponent implements OnInit, PageAppearence {
       const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 
       const signUpData = {
-        // firstName: '',
-        // lastName: '',
-        // middleName: '',
+        firstName: '',
+        lastName: '',
+        middleName: '',
         phone: cleanedMobileNo,
         password: passwordString,
         passwordConfirmation: confirmPassword
