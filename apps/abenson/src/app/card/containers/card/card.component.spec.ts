@@ -6,7 +6,7 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Observable, of } from 'rxjs';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
   IProfile,
@@ -60,7 +60,7 @@ describe('CardComponent', () => {
         SharedModule,
         LoyaltyModule,
         NoopAnimationsModule,
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         InfiniteScrollModule
       ],
       providers: [

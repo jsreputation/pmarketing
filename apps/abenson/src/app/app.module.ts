@@ -57,7 +57,7 @@ import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
 import { QRCodeComponent } from './qr-code/qr-code.component';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { PopupComponent } from './popup/popup.component';
 import { registerLocaleData } from '@angular/common';
 import {
@@ -158,7 +158,7 @@ export const setLanguage = (
     CampaignModule,
     CampaignServiceModule.forRoot(),
     RewardsModule.forRoot(),
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

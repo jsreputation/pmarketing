@@ -4,7 +4,7 @@
     "src"
   ],
   "transformIgnorePatterns": [
-    "node_modules/(?!ngx-barcode)"
+    "node_modules/(?!ngx-barcode6)"
   ],
   "transform": {
     "^.+\\.(ts|js|html)$": "ts-jest"

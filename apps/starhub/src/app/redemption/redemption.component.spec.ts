@@ -39,7 +39,7 @@ import {
 import { Location } from '@angular/common';
 import { rewards } from '../rewards.mock';
 import { AnalyticsService } from '../analytics.service';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { QRCodeModule } from 'angularx-qrcode';
 
 const rewardsServiceStub: Partial<RewardsService> = {
@@ -120,7 +120,7 @@ describe('RedemptionComponent', () => {
         VouchersModule,
         UtilsModule,
         QRCodeModule,
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         MatListModule
       ],
       providers: [

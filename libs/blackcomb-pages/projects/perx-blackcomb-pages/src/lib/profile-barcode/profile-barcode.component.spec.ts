@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileBarcodeComponent } from './profile-barcode.component';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { ProfileService, ThemesService, ConfigService } from '@perxtech/core';
@@ -25,7 +25,7 @@ describe('ProfileBarcodeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         TranslateModule.forRoot()
       ],
       declarations: [ProfileBarcodeComponent],
