@@ -6,7 +6,7 @@
     "umdModuleIds": {
       "ngx-ellipsis": "ngxEllipsis",
       "angularx-qrcode": "angularxQrcode",
-      "ngx-barcode": "ngxBarcode",
+      "ngx-barcode6": "ngxBarcode6",
       "ts-optchain": "tsOptchain",
       "ngx-auth": "ngxAuth",
       "ngx-multi-line-ellipsis": "ngxMultiLineEllipsis",

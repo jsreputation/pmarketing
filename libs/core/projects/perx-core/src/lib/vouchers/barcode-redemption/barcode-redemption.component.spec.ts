@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 
 import { of } from 'rxjs';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 
 import { BarcodeRedemptionComponent } from './barcode-redemption.component';
 
@@ -25,7 +25,7 @@ describe('BarcodeRedemptionComponent', () => {
         BarcodeRedemptionComponent,
       ],
       imports: [
-        NgxBarcodeModule,
+        NgxBarcode6Module,
       ],
       providers: [
         {

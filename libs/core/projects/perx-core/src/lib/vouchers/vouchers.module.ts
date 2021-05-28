@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { QRCodeModule } from 'angularx-qrcode';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 
 import { VouchersComponent } from './vouchers/vouchers.component';
 import { VoucherComponent } from './voucher/voucher.component';
@@ -63,7 +63,7 @@ const components = [
   imports: [
     CommonModule,
     QRCodeModule,
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     ReactiveFormsModule,
     MaterialModule,
     UtilsModule,

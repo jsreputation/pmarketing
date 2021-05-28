@@ -2,10 +2,10 @@
   class="main-container"
   *ngIf="voucher$ | async as voucher"
 >
-  <ngx-barcode
+  <ngx-barcode6
     [bc-value]="voucher.code"
     [bc-display-value]="true"
-  ></ngx-barcode>
+  ></ngx-barcode6>
   <div class="title" [innerHtml]="voucher?.reward?.redemptionText || 'Present this barcode to the cashier to complete your redemption'"></div>
   <div class="voucher-name">
     {{voucher.reward.name}}

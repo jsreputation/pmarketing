@@ -1,7 +1,7 @@
 {
   "preset": "jest-preset-angular",
   "roots": ["src"],
-  "transformIgnorePatterns": ["node_modules/(?!ngx-barcode)"],
+  "transformIgnorePatterns": ["node_modules/(?!ngx-barcode6)"],
   "transform": {
     "^.+\\.(ts|js|html)$": "ts-jest"
   },

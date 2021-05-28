@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { CardRoutingModule } from './card-routing.module';
@@ -18,7 +18,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     CardRoutingModule,
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     SharedModule,
     InfiniteScrollModule,
   ],
