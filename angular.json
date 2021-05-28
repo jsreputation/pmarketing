@@ -2126,9 +2126,12 @@
           ]
         },
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "lintFilePatterns": []
+            "linter": "eslint",
+            "files": [
+              "libs/whistler/projects/**/*.ts"
+            ]
           }
         }
       }

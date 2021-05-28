@@ -7,7 +7,7 @@ export interface IWAttbsObjStamp {
   title: string;
   description: string;
   image_url: string;
-  properties: object;
+  // properties: object;
   display_properties: {
     slots: number[];
     title: string;

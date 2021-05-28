@@ -20,5 +20,5 @@ export interface IWIAMUserAttributes {
   attached_policies?: {
     AdministratorAccess: number
   };
-  attached_actions?: {};
+  // attached_actions?: {};
 }
