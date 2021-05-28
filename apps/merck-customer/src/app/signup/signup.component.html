@@ -12,13 +12,13 @@
 		<div translate class="main-heading">SIGN_UP_PAGE.SIGN_UP</div>
 		<div class="subtitle"><ng-container>{{'SIGN_UP_PAGE.HAVE_ACCOUNT' | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">SIGN_UP_PAGE.LOGIN</span></div>
 		<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>SIGN_UP_PAGE.NAME</mat-label>
-				<input matInput placeholder="{{'SIGN_UP_PAGE.NAME' | translate}}" placeholder="Name" formControlName="name" required>
-				<mat-error *ngIf="name && name.hasError('required')">
-					<span translate>SIGN_UP_PAGE.NAME_IS </span>
-				</mat-error>
-			</mat-form-field>
+<!--			<mat-form-field color="primary" class="full-width__input">-->
+<!--				<mat-label translate>SIGN_UP_PAGE.NAME</mat-label>-->
+<!--				<input matInput placeholder="{{'SIGN_UP_PAGE.NAME' | translate}}" placeholder="Name" formControlName="name" required>-->
+<!--				<mat-error *ngIf="name && name.hasError('required')">-->
+<!--					<span translate>SIGN_UP_PAGE.NAME_IS </span>-->
+<!--				</mat-error>-->
+<!--			</mat-form-field>-->
 			<mat-form-field class="full-width__input">
 				<mat-select formControlName="countryCode">
 					<mat-option default value="852"><ng-container>{{'SIGN_UP_PAGE.COUNTRY_HONGKONG' | translate}}</ng-container>(+852)</mat-option>
