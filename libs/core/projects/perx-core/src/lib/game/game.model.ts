@@ -1,6 +1,7 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 import { OutcomeType } from '../outcome/models/outcome.model';
+import { IOperatingHours } from '../campaign/models/campaign.model';
 
 export enum GameType {
   unknown = -1,
@@ -50,6 +51,8 @@ export interface IGame {
   };
   imgUrl?: string;
   displayProperties?: IWCampaignDisplayProperties;
+  operatingHours?: IOperatingHours;
+  isOperating?: boolean;
 }
 
 export function defaultTree(): ITree {
