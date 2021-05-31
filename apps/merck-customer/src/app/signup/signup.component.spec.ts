@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SignupComponent } from './signup.component';
@@ -99,17 +99,17 @@ describe('SignupComponent', () => {
       component.signupForm.controls.accept_marketing.setValue(true);
       component.signupForm.controls.mobileNo.setValue(1234);
       component.signupForm.controls.countryCode.setValue(852);
-      component.signupForm.controls.name.setValue('testUser');
+      // component.signupForm.controls.name.setValue('testUser');
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
       (AuthenticationService as Type<AuthenticationService>);
       const authenticationSpy = spyOn(authenticationService, 'signup').and.returnValue(
         of({
           id: 1,
           state: '',
-          firstName: 'testUser',
+          firstName: '',
           lastName: '',
           middleName: '',
-          phone: '1234',
+          phone: '8521234',
           email: '',
           birthDate: undefined,
           gender: '',

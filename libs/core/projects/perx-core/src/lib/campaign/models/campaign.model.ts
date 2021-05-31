@@ -87,6 +87,8 @@ export interface ICampaign {
   customFields?: any;
   enrolled?: boolean;
   termsAndConditions?: string;
+  operatingHours?: IOperatingHours;
+  isOperating?: boolean;
 }
 
 export enum CommChannel {
@@ -146,4 +148,12 @@ export interface IProgressLevel extends IQuestTask {
   // imageUrl?: string;
   completedProgress?: number;
   levelTarget?: number;
+}
+
+export interface IOperatingHours {
+  id: number;
+  // is UTC DateTime from BE, but we'll only use the time portion
+  closesAt: Date;
+  opensAt: Date;
+  days: number[]; // expects 0 - 6, Sunday - Saturday
 }

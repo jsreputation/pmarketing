@@ -1,53 +1,19 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse
-} from '@angular/common/http';
-import {
-  combineLatest,
-  EMPTY,
-  Observable,
-  of,
-  Subject,
-  throwError
-} from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { combineLatest, EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { IGameService } from './igame.service';
-import {
-  GameType as TYPE,
-  IEngagementTransaction,
-  IGame,
-  IPlayOutcome,
-  IPointsOutcome,
-} from './game.model';
-import {
-  catchError,
-  expand,
-  map,
-  reduce,
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { GameType as TYPE, IEngagementTransaction, IGame, IPlayOutcome, IPointsOutcome, } from './game.model';
+import { catchError, expand, map, reduce, switchMap, tap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
-import {
-  IV4Voucher,
-  V4VouchersService
-} from '../vouchers/v4-vouchers.service';
+import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
-import {
-  ScratchV4ToV4Mapper,
-  ShakeV4ToV4Mapper,
-  SpinV4ToV4Mapper,
-  TapV4ToV4Mapper
-} from './v4-game.mapper';
+import { ScratchV4ToV4Mapper, ShakeV4ToV4Mapper, SpinV4ToV4Mapper, TapV4ToV4Mapper } from './v4-game.mapper';
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignService } from '../campaign/icampaign.service';
-import {
-  CampaignType,
-  ICampaign
-} from '../campaign/models/campaign.model';
+import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -244,7 +210,9 @@ export class V4GameService implements IGameService {
     return {
       ...gameMapper.v4MapToMap(game),
       campaignName: campaign ? campaign.name : '',
-      campaignDescription: campaign ? campaign.description : ''
+      campaignDescription: campaign ? campaign.description : '',
+      isOperating: campaign?.isOperating,
+      operatingHours: campaign?.operatingHours
     };
   }
 
