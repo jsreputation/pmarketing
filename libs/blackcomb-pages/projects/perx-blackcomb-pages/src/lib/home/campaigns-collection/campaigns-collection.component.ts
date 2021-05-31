@@ -190,19 +190,20 @@ export class CampaignsCollectionComponent implements OnInit {
     const openTime: Date = new Date(operatingHours.opensAt);
     const closeTime: Date = new Date(operatingHours.closesAt);
 
-    let daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+    const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
 
     for (const dayIndex in operatingHours.days) {
-      daysMapArr[operatingHours.days[dayIndex]] = true;
+      if (dayIndex) { // guard-for-in
+        daysMapArr[operatingHours.days[dayIndex]] = true;
+      }
     }
-
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string =
       `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
     return `${days}, ${hours}`;
   }
 
-  private dayOfWeekAsString(dayIndex): string {
+  private dayOfWeekAsString(dayIndex: number): string {
     return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
   }
 
@@ -218,9 +219,9 @@ export class CampaignsCollectionComponent implements OnInit {
         } else if (dayRange.length === 0) { // first item in current range.
           dayRange = `${this.dayOfWeekAsString(i)}`;
         }
-      } else if (dayRange.length > 0 && !daysMapArr[i]){ // first part of range already identified
-        if (this.dayOfWeekAsString(i-1) !== dayRange){
-          dayRange = `${dayRange} - ${this.dayOfWeekAsString(i-1)}`;
+      } else if (dayRange.length > 0 && ! daysMapArr[i]) { // first part of range already identified
+        if (this.dayOfWeekAsString(i - 1) !== dayRange) {
+          dayRange = `${dayRange} - ${this.dayOfWeekAsString(i - 1)}`;
         }
         if (multiDayRange.length === 0) {
           multiDayRange = dayRange;
