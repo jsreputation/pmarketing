@@ -72,6 +72,10 @@ mat-card {
 .games-card {
   margin: 0.8rem 1.6rem;
   //background-color: #fff;
+
+  &.disabled {
+    filter: grayscale(50%) opacity(0.4);
+  }
 }
 
 .flex-for-button {

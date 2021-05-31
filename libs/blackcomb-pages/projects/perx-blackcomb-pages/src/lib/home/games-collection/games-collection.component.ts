@@ -1,17 +1,8 @@
 import { listAnimation } from './games-collection.animation';
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  ConfigService,
-  IConfig,
-  IGame,
-  ITheme,
-  ThemesService
-} from '@perxtech/core';
+import { ConfigService, IConfig, IGame, ITheme, ThemesService } from '@perxtech/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-games-collection',
@@ -26,10 +17,12 @@ export class GamesCollectionComponent implements OnInit {
   public showAllGames: boolean = false;
   public buttonStyle: { [key: string]: string } = {};
   public appConfig: IConfig<void>;
+  public isCampaignDisabled: boolean[] = [];
 
   constructor(
     private themesService: ThemesService,
     private configService: ConfigService,
+    private router: Router,
   ) {}
 
   public ngOnInit(): void {
@@ -43,5 +36,21 @@ export class GamesCollectionComponent implements OnInit {
         this.appConfig = config;
       }
     );
+
+    this.games$.subscribe((games: IGame[]) => {
+      for (const game of games) {
+        this.isCampaignDisabled[game.id] = !this.isGameOperating(game);
+      }
+    });
+  }
+
+  public isGameOperating(game: IGame): boolean {
+    return game?.isOperating || false;
+  }
+
+  public selectGame(game: IGame) {
+    if(!this.isCampaignDisabled[game.id]) {
+      this.router.navigate([ `/game/${game.campaignId}` ]);
+    }
   }
 }
