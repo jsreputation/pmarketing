@@ -425,10 +425,10 @@ export class V4StampService implements StampService {
 
   public static v4StampOutcomeToStampOutcome(outcome: IV4StampOutcome): IStampOutcome {
     return {
-      transactionId: outcome.actual_outcome_id,
+      actualOutcomeId: outcome.actual_outcome_id,
       outcomeType: outcome.campaign_prize_type,
       state: outcome.state,
-      prizeSetId: outcome.campaign_prize_id
+      prizeId: outcome.campaign_prize_id
     };
   }
 }

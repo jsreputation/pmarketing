@@ -120,7 +120,8 @@ export class QuizResultsComponent implements OnInit {
       this.translate.get([
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
-        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA',
+        'PRIZE_SET.OUTCOME_SUCCESS_TITLE'
       ]).subscribe((res: any) => {
         const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
@@ -137,6 +138,7 @@ export class QuizResultsComponent implements OnInit {
             data.afterClosedCallBackRedirect = this;
             data.disableOverlayClose = true;
             data.showCloseBtn = false;
+            data.buttonTxt = res['PRIZE_SET.OUTCOME_SUCCESS_TITLE'];
             this.dialog.open(RewardPopupComponent, {data});
         } else {
           this.notificationService.addPopup(this.popup);

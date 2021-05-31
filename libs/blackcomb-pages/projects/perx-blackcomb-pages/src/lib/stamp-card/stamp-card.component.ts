@@ -169,27 +169,29 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 }));
             }
 
-            if ((this.showPrizeSetOutcome && stamp.outcomes && stamp.outcomes.length > 0) ||
-                        (!this.showPrizeSetOutcome && stamp.vouchers && stamp.vouchers.length > 0)) {
-              let rewardOutcomes;
+            const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
+                                                || outcome.state !== 'failed');
+
+            if ((stamp.vouchers && stamp.vouchers.length > 0) ||
+                        (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
+
               let prizeSetOutcomes: IStampOutcome[];
               let voucherId;
-              if (this.showPrizeSetOutcome && stamp.outcomes) {
-                  rewardOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
-                                                                        CampaignOutcomeType.reward);
-                  prizeSetOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
+              if (this.showPrizeSetOutcome && stampOutcomes) {
+                prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
                                                                         CampaignOutcomeType.prizeSet);
-                  /* const pointOutcomes = stamp.outcomes?.filter(outcome => outcome.transactionId && outcome.outcomeType ===
-                                                                                    CampaignOutcomeType.points);*/
-              } else {
-                voucherId = stamp.vouchers && stamp.vouchers[0].id;
               }
+              if (stamp.vouchers && stamp.vouchers.length > 0) {
+                voucherId = stamp.vouchers[0].id;
+              }
+
               forkJoin([
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
-                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT')
+                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
+                this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
               ]).subscribe(translations => {
-                const [title, text, buttonTxt] = translations;
+                const [title, text, buttonTxt, prizeSetBtnTxt] = translations;
                 const data: IRewardPopupConfig = {
                   title,
                   text,
@@ -198,13 +200,13 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   ctaButtonClass: 'ga_game_completion',
                   // url: `/voucher-detail/${voucherId}`,
                   afterClosedCallBackRedirect: this,
+                  showCloseBtn: false,
                   buttonTxt
                 };
 
                 if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
-                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeSetId}?transactionId=${prizeSetOutcomes[0].transactionId}`;
-                } else if (this.showPrizeSetOutcome && rewardOutcomes && rewardOutcomes.length > 0) {
-                  data.url = `/voucher-detail/${rewardOutcomes[0].id}`;
+                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeId}?transactionId=${prizeSetOutcomes[0].actualOutcomeId}`;
+                  data.buttonTxt = prizeSetBtnTxt;
                 } else if (voucherId) {
                   data.url = `/voucher-detail/${voucherId}`;
                 } else {

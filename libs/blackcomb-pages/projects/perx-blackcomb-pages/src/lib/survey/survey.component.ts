@@ -48,6 +48,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   private prizeSetOutcome: IPrizeSetOutcome;
   public showPrizeSetOutcome: boolean = false;
+  private prizeSetBtnTxt: string;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -115,6 +116,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
         .get(this.notAvailablePopUp.buttonTxt)
         .subscribe(text => (this.notAvailablePopUp.buttonTxt = text));
     }
+    this.translate
+      .get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
+      .subscribe((text) => (this.prizeSetBtnTxt = text));
+
   }
 
   constructor(
@@ -267,6 +272,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         data.afterClosedCallBackRedirect = this;
         data.disableOverlayClose = true;
         data.showCloseBtn = false;
+        data.buttonTxt = this.prizeSetBtnTxt;
         this.dialog.open(RewardPopupComponent, {data});
     } else {
         this.router.navigate(['/wallet']);
