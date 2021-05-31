@@ -88,6 +88,7 @@ export interface ICampaign {
   enrolled?: boolean;
   termsAndConditions?: string;
   operatingHours?: IOperatingHours;
+  isOperating?: boolean;
 }
 
 export enum CommChannel {

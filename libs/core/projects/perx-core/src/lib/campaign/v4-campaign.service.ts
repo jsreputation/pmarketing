@@ -81,6 +81,7 @@ export interface IV4Campaign {
   referral_code: string;
   terms_and_conditions?: string;
   operating_hour?: IV4OperatingHours;
+  operating_now?: boolean;
 }
 
 type CountObject = {
@@ -245,6 +246,7 @@ export class V4CampaignService implements ICampaignService {
       thumbnailUrl,
       campaignBannerUrl,
       operatingHours,
+      isOperating: campaign.operating_now,
       displayProperties,
       customFields
     };
