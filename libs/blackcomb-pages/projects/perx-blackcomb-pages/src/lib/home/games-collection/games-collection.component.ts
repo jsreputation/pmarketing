@@ -37,11 +37,13 @@ export class GamesCollectionComponent implements OnInit {
       }
     );
 
-    this.games$.subscribe((games: IGame[]) => {
-      for (const game of games) {
-        this.isCampaignDisabled[game.id] = !this.isGameOperating(game);
-      }
-    });
+    if (this.games$) {
+      this.games$.subscribe((games: IGame[]) => {
+        for (const game of games) {
+          this.isCampaignDisabled[game.id] = ! this.isGameOperating(game);
+        }
+      });
+    }
   }
 
   public isGameOperating(game: IGame): boolean {
