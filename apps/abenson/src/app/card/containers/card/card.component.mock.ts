@@ -1,4 +1,4 @@
-import { OnInit, Directive } from '@angular/core';
+import { OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -7,8 +7,6 @@ import {
   ILoyalty
 } from '@perxtech/core';
 
-
-@Directive()
 export class CardComponentMock implements OnInit {
   public transactions$: Observable<ILoyaltyTransaction[]>;
   public priceLabelFn: (tr: ILoyaltyTransaction) => string;
