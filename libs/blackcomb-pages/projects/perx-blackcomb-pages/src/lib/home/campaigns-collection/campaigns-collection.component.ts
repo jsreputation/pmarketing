@@ -200,7 +200,7 @@ export class CampaignsCollectionComponent implements OnInit {
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string =
       `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
-    return `${days}, ${hours}`;
+    return `Campaign available during: ${days}, ${hours}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
