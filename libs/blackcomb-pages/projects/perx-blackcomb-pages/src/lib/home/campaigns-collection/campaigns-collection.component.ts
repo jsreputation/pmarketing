@@ -1,37 +1,19 @@
 import { listAnimation } from '../games-collection/games-collection.animation';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  iif,
-  Observable,
-  of,
-  zip,
-} from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, combineLatest, iif, Observable, of, zip, } from 'rxjs';
 import {
   GameType,
   ICampaign,
   ICampaignService,
   IGame,
   IGameService,
+  IOperatingHours,
   IQuiz,
   QuizService,
   SurveyService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  catchError,
-  map,
-  switchMap,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { catchError, map, switchMap, tap, withLatestFrom, } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaigns-collection',
@@ -187,5 +169,55 @@ export class CampaignsCollectionComponent implements OnInit {
       return matchingCampaign && matchingCampaign.rewardsCount ? matchingCampaign.rewardsCount <= 0 : true;
     }
     return true;
+  }
+
+  public getOperatingHours(operatingHours: IOperatingHours): string {
+    // Date obj that we only need the time from
+
+    const openTime: Date = new Date(operatingHours.opensAt);
+    const closeTime: Date = new Date(operatingHours.closesAt);
+
+    let daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+
+    for (const dayIndex in operatingHours.days) {
+      daysMapArr[operatingHours.days[dayIndex]] = true;
+    }
+
+    const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
+    const hours: string =
+      `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
+    return `${days}, ${hours}`;
+  }
+
+  private dayOfWeekAsString(dayIndex): string {
+    return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
+  }
+
+  // works but can't wrap sat and sun
+  private dayArrToIntuitiveStringDayRange(daysMapArr: boolean[]): string {
+    let dayRange = '', multiDayRange = '';
+    let findingRange = false;
+
+    for (let i = 0; i <= daysMapArr.length; i++) {
+      if (daysMapArr[i]) {
+        if (dayRange.length > 0 && !findingRange) {
+          findingRange = true;
+        } else if (dayRange.length === 0) { // first item in current range.
+          dayRange = `${this.dayOfWeekAsString(i)}`;
+        }
+      } else if (dayRange.length > 0 && !daysMapArr[i]){ // first part of range already identified
+        if (this.dayOfWeekAsString(i-1) !== dayRange){
+          dayRange = `${dayRange} - ${this.dayOfWeekAsString(i-1)}`;
+        }
+        if (multiDayRange.length === 0) {
+          multiDayRange = dayRange;
+        } else {
+          multiDayRange = `${multiDayRange}, ${dayRange}`;
+        }
+        dayRange = ''; // reset for more ranges;
+        findingRange = false;
+      }
+    }
+    return multiDayRange;
   }
 }
