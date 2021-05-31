@@ -84,7 +84,13 @@ export class CampaignsCollectionComponent implements OnInit {
       this.campaignsWithRewards$,
       this.campaigns$
     ).pipe(
-      tap((campaigns) => this.campaigns = campaigns),
+      tap((campaigns) => {
+        this.campaigns = campaigns;
+        campaigns.forEach(campaign => {
+          // check if campaign is operating
+          this.isCampaignDisabled[campaign.id] = ! this.isCampaignOperating(campaign.id);
+        });
+      }),
       // for each campaign, fetch associated games to figure out completion
       switchMap((campaigns) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
@@ -155,6 +161,13 @@ export class CampaignsCollectionComponent implements OnInit {
       ).length > 0;
     }
     return false;
+  }
+
+  public isCampaignOperating(campaignId: number): boolean {
+    const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
+      campaign.id === campaignId
+    );
+    return matchingCampaign?.isOperating || false;
   }
 
   public isQuizRewardsEmpty(campaignId: number): boolean {
