@@ -2,9 +2,9 @@
   <mat-card
     *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"
-    [routerLink]="[ '/game', game.campaignId ]"
+    (click)="selectGame(game)"
     matRipple
-    class="games-card">
+    [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[game.id] ? 'games-card disabled' : 'games-card'">
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{game.imgUrl || game.backgroundImg}}" alt="Game image">
     </div>
@@ -21,6 +21,9 @@
       </div>
 <!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
       <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
+      <p class="reward-subtitle ellipsis-1-line" *ngIf="game.operatingHours">
+        {{getOperatingHours(game.operatingHours)}}
+      </p>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
