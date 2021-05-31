@@ -1,27 +1,9 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import {
-  catchError,
-  map,
-  mergeMap,
-  switchMap,
-  tap
-} from 'rxjs/operators';
-import {
-  iif,
-  Observable,
-  of,
-  throwError
-} from 'rxjs';
-import {
-  HttpBackend,
-  HttpClient,
-  HttpErrorResponse
-} from '@angular/common/http';
-import {
-  AuthenticationService,
-  RequiresOtpError,
-} from './authentication.service';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { iif, Observable, of, throwError } from 'rxjs';
+import { HttpBackend, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationService, RequiresOtpError, } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
   IChangePasswordData,
@@ -29,15 +11,9 @@ import {
   IResetPasswordData,
   ISignUpData,
 } from '../authentication/models/authentication.model';
-import {
-  IWAppAccessTokenResponse,
-  IWLoginResponse
-} from '@perxtech/whistler';
+import { IWAppAccessTokenResponse, IWLoginResponse } from '@perxtech/whistler';
 import { ProfileService } from '../../profile/profile.service';
-import {
-  IV4ProfileResponse,
-  V4ProfileService,
-} from '../../profile/v4-profile.service';
+import { IV4ProfileResponse, V4ProfileService, } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
@@ -48,7 +24,7 @@ import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface IV4SignUpData {
   first_name?: string;
-  last_name: string;
+  last_name?: string;
   middle_name?: string;
   phone: string;
   identifier?: string;
@@ -330,7 +306,7 @@ export class V4AuthenticationService
       };
     }
     const result: IV4SignUpData = {
-      last_name: data.lastName || '',
+      last_name: data.lastName,
       first_name: data.firstName,
       middle_name: data.middleName,
       password: data.password,
