@@ -50,8 +50,8 @@ export class GamesCollectionComponent implements OnInit {
     return game?.isOperating || false;
   }
 
-  public selectGame(game: IGame) {
-    if(!this.isCampaignDisabled[game.id]) {
+  public selectGame(game: IGame): void {
+    if (!this.isCampaignDisabled[game.id]) {
       this.router.navigate([ `/game/${game.campaignId}` ]);
     }
   }
