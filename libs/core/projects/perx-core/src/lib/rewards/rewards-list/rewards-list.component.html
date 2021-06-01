@@ -43,6 +43,9 @@
                   </div>
                 </div>
               </div>
+              <div class="description ellipsis-1-line" *ngIf="reward.operatingHours && showOperatingHours">
+                {{getOperatingHours(reward.operatingHours)}}
+              </div>
             </div>
           </div>
         </mat-card>

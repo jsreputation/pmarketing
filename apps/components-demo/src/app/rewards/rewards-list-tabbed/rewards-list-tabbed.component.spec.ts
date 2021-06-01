@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
-import { RewardsModule as PerxRewardsModule, RewardsService } from '@perxtech/core';
+import { RewardsModule as PerxRewardsModule, RewardsService, SettingsService } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
@@ -23,6 +23,9 @@ describe('RewardsListTabbedComponent', () => {
       loyalty: []
     }))
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,7 +39,8 @@ describe('RewardsListTabbedComponent', () => {
         {
           provide: RewardsService,
           useValue: rewardsServiceStub
-        }
+        },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

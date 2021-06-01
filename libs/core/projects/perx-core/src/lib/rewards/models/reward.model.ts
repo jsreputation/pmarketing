@@ -1,4 +1,5 @@
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
+import { IOperatingHours } from '../../campaign/models/campaign.model';
 
 export interface IReward {
   id: number;
@@ -33,6 +34,8 @@ export interface IReward {
     cardLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
   };
+  operatingHours?: IOperatingHours;
+  isOperating?: boolean;
 }
 
 export interface IRewardState {

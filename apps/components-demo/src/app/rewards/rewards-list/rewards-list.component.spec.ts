@@ -1,16 +1,8 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-import {
-  RewardsModule,
-  RewardsService,
-  ThemesService,
-} from '@perxtech/core';
+import { RewardsModule, RewardsService, SettingsService, ThemesService, } from '@perxtech/core';
 
 import { RewardsListComponent } from './rewards-list.component';
 
@@ -20,6 +12,9 @@ describe('RewardsListComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
   };
 
   beforeEach(async(() => {
@@ -38,6 +33,7 @@ describe('RewardsListComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

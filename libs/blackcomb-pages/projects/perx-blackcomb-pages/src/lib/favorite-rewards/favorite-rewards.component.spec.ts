@@ -1,7 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FavoriteRewardsComponent } from './favorite-rewards.component';
-import { RewardsListComponent, TokenStorage, UtilsModule, ThemesService, RewardsService } from '@perxtech/core';
+import {
+  RewardsListComponent,
+  RewardsService,
+  SettingsService,
+  ThemesService,
+  TokenStorage,
+  UtilsModule
+} from '@perxtech/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -23,6 +30,10 @@ describe('FavoriteRewardsComponent', () => {
     getAllFavoriteRewards: () => of([])
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -40,7 +51,9 @@ describe('FavoriteRewardsComponent', () => {
           provide: TokenStorage, useValue: tokenStorageStub
         },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
+
       ]
     })
       .compileComponents();

@@ -34,7 +34,7 @@ interface IV4Image {
   url: string;
 }
 
-interface IV4OperatingHours {
+export interface IV4OperatingHours {
   id: number;
   // is UTC DateTime from BE, but we'll only use the time portion
   closes_at: Date;
