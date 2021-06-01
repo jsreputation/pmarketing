@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { formatNumber } from '@angular/common';
-import { Observable, EMPTY } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -15,6 +15,7 @@ import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.co
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { CampaignType } from '../campaign/models/campaign.model';
+import { IV4OperatingHours } from '../campaign/v4-campaign.service';
 
 export interface IV4Tag {
   id: number;
@@ -86,6 +87,8 @@ export interface IV4Reward {
   custom_fields?: IV4CustomField;
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
+  operating_hour?: IV4OperatingHours;
+  operating_now?: boolean;
 }
 
 interface IV4Price {
@@ -202,6 +205,17 @@ export class V4RewardsService extends RewardsService {
           v4Invent.reward_limit_per_user_per_period_balance ?
           v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
     } : undefined;
+
+    let operatingHours;
+    if (reward.operating_hour) {
+      operatingHours = {
+        id: reward.operating_hour.id,
+        closesAt: reward.operating_hour.closes_at,
+        opensAt: reward.operating_hour.opens_at,
+        days: reward.operating_hour.days
+      };
+    }
+
     return {
       id: reward.id,
       name: reward.name,
@@ -240,7 +254,9 @@ export class V4RewardsService extends RewardsService {
         faqLink: reward.custom_fields.faq_link,
         tncLink: reward.custom_fields.tnc_link,
         cardLink: reward.custom_fields.card_link
-      } : undefined
+      } : undefined,
+      operatingHours,
+      isOperating: reward.operating_now,
     };
   }
 
