@@ -24,7 +24,7 @@
                     <p class="title">{{outcome?.rewardDetails?.name}}</p>
                     <p class="subtitle">{{outcome?.rewardDetails?.merchantName}}</p>
                   </div>
-                  <div *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
+                  <div *ngIf="true || isActualOutcomeMode && outcome.state !== 'issued'">
                     <div class="state-container">
                       <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
                       <div class="marker">

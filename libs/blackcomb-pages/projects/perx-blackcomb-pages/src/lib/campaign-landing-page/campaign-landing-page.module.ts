@@ -3,8 +3,11 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { CampaignServiceModule, UtilsModule } from '@perxtech/core';
+import { CampaignServiceModule, UtilsModule, PrizeSetOutcomeModule } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,10 @@ import { CampaignLandingPageComponent } from './campaign-landing-page.component'
     UtilsModule,
     MatToolbarModule,
     MatButtonModule,
+    MatListModule,
+    MatIconModule,
+    PrizeSetOutcomeModule,
+    TranslateModule.forChild()
   ],
 })
 export class CampaignLandingPageModule { }

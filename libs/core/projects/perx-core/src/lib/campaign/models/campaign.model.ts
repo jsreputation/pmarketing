@@ -123,6 +123,7 @@ export interface ICampaignOutcome {
   name: string;
   pointsCount?: number;
   levelId?: number;
+  prizeSetItems?: string[];
 }
 
 export interface IProgressCampaign extends IQuest {
