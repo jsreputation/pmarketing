@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShakeComponent } from './shake.component';
-import { GameModule, IGameService, IGame, ITheme, ThemesService } from '@perxtech/core';
+import { GameModule, IGame, IGameService, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
@@ -40,6 +40,9 @@ describe('ShakeComponent', () => {
     get: () => of(),
     getGamesFromCampaign: () => of()
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,7 +52,8 @@ describe('ShakeComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

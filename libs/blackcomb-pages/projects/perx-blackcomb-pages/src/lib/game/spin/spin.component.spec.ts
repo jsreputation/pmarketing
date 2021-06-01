@@ -1,19 +1,8 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 
-import {
-  GameModule,
-  GameType,
-  ThemesService,
-  ITheme
-} from '@perxtech/core';
+import { GameModule, GameType, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
-import {
-  SpinComponent,
-} from './spin.component';
+import { SpinComponent, } from './spin.component';
 import { of } from 'rxjs';
 
 const dummyIGame = {
@@ -54,6 +43,9 @@ describe('SpinComponent', () => {
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -64,7 +56,8 @@ describe('SpinComponent', () => {
         GameModule,
       ],
       providers: [
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     }).compileComponents();
   }));

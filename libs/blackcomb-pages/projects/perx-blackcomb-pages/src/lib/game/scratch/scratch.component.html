@@ -2,6 +2,7 @@
   <div class="game-header">
     <h1 [ngStyle]="headerStyle">{{game.texts.title}}</h1>
     <h3 [ngStyle]="subheaderStyle">{{game.texts.subTitle}}</h3>
+    <h4 [ngStyle]="subheaderStyle" *ngIf="showOperatingHours && game.operatingHours">{{getOperatingHours(game.operatingHours)}}</h4>
   </div>
   <div class="game-wrapper">
       <perx-core-scratch-card
@@ -14,9 +15,10 @@
   </div>
   <div class="game-footer">
       <button class="js-play ga_start_game"
-        mat-flat-button
-        [ngStyle]="buttonStyle"
-        (click)="onClick()">
+              mat-flat-button
+              (click)="onClick()"
+              [disabled]="showOperatingHours && game.isOperating"
+              [ngStyle]="buttonStyle">
         {{ game.texts.button }}
       </button>
   </div>
