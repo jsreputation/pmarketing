@@ -198,7 +198,7 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {
-    const outcomes = stamp.outcomes && stamp.outcomes.map(v => V4StampService.v4StampOutcomeToStampOutcome(v));
+    const outcomes = stamp.outcomes && stamp.outcomes.map(outcome => V4StampService.v4StampOutcomeToStampOutcome(outcome));
 
     return {
       id: stamp.id,

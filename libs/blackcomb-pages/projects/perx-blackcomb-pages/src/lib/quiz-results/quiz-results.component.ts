@@ -24,7 +24,7 @@ export class QuizResultsComponent implements OnInit {
   public title: string;
   public subTitle: string;
   public rewardsAcquired: boolean = false;
-  public prizeSetOutcome: IPrizeSetOutcome[];
+  public prizeSetOutcomes: IPrizeSetOutcome[];
   public showPrizeSetOutcome: boolean = false;
 
   constructor(
@@ -53,16 +53,16 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: { points: IPoints[], quiz?: IQuiz, prizeSet?: IPrizeSetOutcome[] } | string) => {
+        map((res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[] } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz, prizeSet?: IPrizeSetOutcome[], rewardAcquired: boolean }) => {
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], rewardAcquired: boolean }) => {
         this.results = res.points;
-        this.prizeSetOutcome = res.prizeSet ? res.prizeSet : [];
+        this.prizeSetOutcomes = res.prizeSets ? res.prizeSets : [];
         this.rewardsAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
@@ -131,8 +131,8 @@ export class QuizResultsComponent implements OnInit {
           imageUrl: oc(outcome).image('assets/quiz/reward.png'),
           ctaButtonClass: 'ga_game_completion'
         };
-        if (this.showPrizeSetOutcome && this.prizeSetOutcome && this.prizeSetOutcome.length > 0) {
-            const prizeSetOutcome = this.prizeSetOutcome[0];
+        if (this.showPrizeSetOutcome && this.prizeSetOutcomes && this.prizeSetOutcomes.length > 0) {
+            const prizeSetOutcome = this.prizeSetOutcomes[0];
             const data: IRewardPopupConfig = this.popup;
             data.url = `/prize-set-outcomes/${prizeSetOutcome.prizeSetId}?transactionId=${prizeSetOutcome.transactionId}`;
             data.afterClosedCallBackRedirect = this;

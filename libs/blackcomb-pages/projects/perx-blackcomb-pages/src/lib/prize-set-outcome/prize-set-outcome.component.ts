@@ -55,11 +55,11 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
       let transactionId: number;
       combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
         switchMap((params) => {
-          const id = params.find(p => p.id)?.id;
+          const id = params.find(param => param.id)?.id;
           if (id) {
             prizeSetId = Number.parseInt(id, 10);
           }
-          const queryParam = params.find(p => p.transactionId)?.transactionId;
+          const queryParam = params.find(param => param.transactionId)?.transactionId;
           if (queryParam) {
               transactionId = Number.parseInt(queryParam, 10);
               this.isActualOutcomeMode = true;
@@ -70,7 +70,7 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
         ).subscribe(([outcomes, issuedOutcomes]: ([IPrizeSetItem[], IPrizeSetItem[]])) => {
             outcomes.map((campaignPrizeSet) => {
-              const issuedItem = issuedOutcomes?.find(p => p?.campaignPrizeId === campaignPrizeSet.campaignPrizeId);
+              const issuedItem = issuedOutcomes?.find(prizeSet => prizeSet?.campaignPrizeId === campaignPrizeSet.campaignPrizeId);
               if (issuedItem) {
                 campaignPrizeSet = Object.assign(campaignPrizeSet, issuedItem);
               }
@@ -92,16 +92,16 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
           pointOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
           return forkJoin([
             combineLatest([...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
-            .pipe(catchError(() => of(void 0))))]).pipe(startWith([])),
+            .pipe(catchError(() => of([]))))]).pipe(startWith([])),
             combineLatest([...pointOutcomes.map((outcome) => this.loyaltyService.getLoyalty(outcome.campaignPrizeId)
-            .pipe(catchError(() => of(void 0))))]).pipe(startWith([]))]);
+            .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
         }),
         switchMap(([rewards, loyalties]: ([IReward[], ILoyalty[]])) => {
           allOutcomes?.map((outcome) => {
               if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
-                outcome.rewardDetails = rewards && rewards.find(r => r?.id === outcome.campaignPrizeId);
+                outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
               } else if (outcome.campaignPrizeType === PrizeSetOutcomeType.points) {
-                outcome.loyaltyDetails = loyalties && loyalties.find(l => l?.id === outcome.campaignPrizeId);
+                outcome.loyaltyDetails = loyalties && loyalties.find(loyalty => loyalty?.id === outcome.campaignPrizeId);
               }
             });
           this.outcomes = allOutcomes;

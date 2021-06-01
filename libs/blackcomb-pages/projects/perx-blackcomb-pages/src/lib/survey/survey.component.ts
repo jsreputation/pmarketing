@@ -227,8 +227,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
                 this.popupData = res.rewardAcquired
                   ? this.successPopUp
                   : this.noRewardsPopUp;
-                if (res && res.prizeSet && res.prizeSet.length > 0) {
-                    this.prizeSetOutcome = res.prizeSet[0];
+                if (res && res.prizeSets && res.prizeSets.length > 0) {
+                    this.prizeSetOutcome = res.prizeSets[0];
                 }
                 this.redirectUrlAndPopUp();
               },

@@ -242,7 +242,7 @@ export class GameComponent implements OnInit, OnDestroy {
           if (gameTransaction.points) {
             this.points = gameTransaction.points[0];
           }
-          if (gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
+          if (gameTransaction.prizeSets && gameTransaction.prizeSets.length > 0) {
             this.prizeSetReserved = true;
           }
           this.checkFailureOrSuccess();
@@ -286,8 +286,8 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
         }
-        if (this.showPrizeSetOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
-          this.prizeSetOutcome = gameOutcome.prizeSet[0];
+        if (this.showPrizeSetOutcome && gameOutcome.prizeSets && gameOutcome.prizeSets.length > 0) {
+          this.prizeSetOutcome = gameOutcome.prizeSets[0];
         }
         this.checkFailureOrSuccess();
       },
@@ -378,8 +378,8 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
         }
-        if (this.showPrizeSetOutcome && gameOutcome && gameOutcome.prizeSet && gameOutcome.prizeSet.length > 0) {
-          this.prizeSetOutcome = gameOutcome.prizeSet[0];
+        if (this.showPrizeSetOutcome && gameOutcome && gameOutcome.prizeSets && gameOutcome.prizeSets.length > 0) {
+          this.prizeSetOutcome = gameOutcome.prizeSets[0];
         }
         this.checkFailureOrSuccess();
       }),
@@ -421,8 +421,8 @@ export class GameComponent implements OnInit, OnDestroy {
             if (gameTransaction.points) {
               this.points = gameTransaction.points[0];
             }
-            if (this.showPrizeSetOutcome && gameTransaction.prizeSet && gameTransaction.prizeSet.length > 0) {
-              this.prizeSetOutcome = gameTransaction.prizeSet[0];
+            if (this.showPrizeSetOutcome && gameTransaction.prizeSets && gameTransaction.prizeSets.length > 0) {
+              this.prizeSetOutcome = gameTransaction.prizeSets[0];
             }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
@@ -432,8 +432,8 @@ export class GameComponent implements OnInit, OnDestroy {
             if (response.points) {
               this.points = response.points[0];
             }
-            if (this.showPrizeSetOutcome && response.prizeSet && response.prizeSet.length > 0) {
-              this.prizeSetOutcome = response.prizeSet[0];
+            if (this.showPrizeSetOutcome && response.prizeSets && response.prizeSets.length > 0) {
+              this.prizeSetOutcome = response.prizeSets[0];
             }
           }
         }),

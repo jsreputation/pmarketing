@@ -5,18 +5,15 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig
+  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig,
+  IRewardPopupConfig, RewardPopupComponent, IStampOutcome,
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
 import { Subject, Observable, of, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
-import {
-  IRewardPopupConfig, RewardPopupComponent
-} from 'libs/core/projects/perx-core/src/lib/campaign/reward-popup/reward-popup.component';
 import { MatDialog } from '@angular/material/dialog';
-import { IStampOutcome } from 'libs/core/projects/perx-core/src/lib/stamp/models/stamp.model';
 
 @Component({
   selector: 'perx-blackcomb-stamp-card',

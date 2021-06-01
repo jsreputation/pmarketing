@@ -102,5 +102,5 @@ export interface ISurveyResultOutcome {
   rewardAcquired: boolean;
   vouchers?: IVoucher[];
   points?: IPointsOutcome[];
-  prizeSet?: IPrizeSetOutcome[];
+  prizeSets?: IPrizeSetOutcome[];
 }

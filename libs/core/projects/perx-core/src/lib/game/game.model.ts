@@ -21,7 +21,7 @@ export interface IEngagementTransaction {
   voucherIds?: number[];
   rewardIds?: number[];
   points?: IPointsOutcome[];
-  prizeSet?: IPrizeSetOutcome[];
+  prizeSets?: IPrizeSetOutcome[];
 }
 export interface IGameOutcome {
   title: string;
@@ -161,7 +161,7 @@ export interface IScratch {
 export interface IPlayOutcome {
   vouchers?: IVoucher[];
   points?: IPointsOutcome[];
-  prizeSet?: IPrizeSetOutcome[];
+  prizeSets?: IPrizeSetOutcome[];
   rawPayload: any;
 }
 

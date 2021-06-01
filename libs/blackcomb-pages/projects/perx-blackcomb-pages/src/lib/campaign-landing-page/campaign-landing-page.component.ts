@@ -111,7 +111,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       switchMap((prizeSetItems) => {
           allOutcomes.map((outcome) => {
             if (outcome.type === CampaignOutcomeType.prizeSet) {
-               const items = prizeSetItems && prizeSetItems.filter(p => p?.prizeSetId === outcome.id);
+               const items = prizeSetItems && prizeSetItems.filter(prizeSetItem => prizeSetItem?.prizeSetId === outcome.id);
                items?.map((item) => {
                 if (item.campaignPrizeType === PrizeSetOutcomeType.reward && item?.rewardDetails?.name) {
                   if (outcome.prizeSetItems) {
@@ -140,16 +140,16 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     return this.prizeSetOutcomeService.getPrizeSetDetails(prizeSetId).pipe(
       switchMap((prizeSet) => {
         allOutcomes = prizeSet && prizeSet.outcomes;
-        prizeSet.outcomes.forEach(p => p.prizeSetId = prizeSet.id);
+        prizeSet.outcomes.forEach(outcome => outcome.prizeSetId = prizeSet.id);
         rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
         return forkJoin([
           combineLatest([...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
-          .pipe(catchError(() => of(void 0))))]).pipe(startWith([]))]);
+          .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
       }),
       switchMap(([rewards]: ([IReward[]])) => {
           allOutcomes.map((outcome) => {
             if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
-              outcome.rewardDetails = rewards && rewards.find(r => r?.id === outcome.campaignPrizeId);
+              outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
             }
           });
           return of(allOutcomes);

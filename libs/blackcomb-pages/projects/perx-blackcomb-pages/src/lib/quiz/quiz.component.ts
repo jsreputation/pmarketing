@@ -341,7 +341,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private redirectUrlAndPopUp(payload?: IQuizResultOutcome): void {
     const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz,
-      rewardAcquired: (payload ? payload.rewardAcquired : false), prizeSet: payload?.prizeSet });
+      rewardAcquired: (payload ? payload.rewardAcquired : false), prizeSets: payload?.prizeSets });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

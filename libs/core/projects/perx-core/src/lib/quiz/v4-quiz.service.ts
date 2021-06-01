@@ -274,22 +274,22 @@ export class V4QuizService implements QuizService {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
       map((answerResponse: V4QuizAnswerResponse) => {
-        const rewards = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+        const v4Vouchers = answerResponse.data.outcomes.filter(outcome => outcome.id &&
           outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
         const v4Points = answerResponse.data.outcomes.filter(outcome =>
           outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
         const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
           outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
-        const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
-        const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
-        const prizeSet = v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+        const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
+        const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
+        const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
         const isRewardAcquired: boolean = ((vouchers && vouchers.length > 0) || (points && points.length > 0) ||
-         (prizeSet && prizeSet.length > 0)) ? true : false;
+         (prizeSets && prizeSets.length > 0)) ? true : false;
         if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
           return { rewardAcquired: isRewardAcquired,
             ...(vouchers && vouchers.length && {vouchers}),
             ...(points && {points}),
-            ...(prizeSet && {prizeSet}) };
+            ...(prizeSets && {prizeSets}) };
         }
         return { rewardAcquired: false };
       }),

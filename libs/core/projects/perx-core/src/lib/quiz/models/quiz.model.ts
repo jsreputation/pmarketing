@@ -105,5 +105,5 @@ export interface IQuizResultOutcome {
   rewardAcquired: boolean;
   vouchers?: IVoucher[];
   points?: IPointsOutcome[];
-  prizeSet?: IPrizeSetOutcome[];
+  prizeSets?: IPrizeSetOutcome[];
 }

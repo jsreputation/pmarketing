@@ -260,8 +260,8 @@ export class V4GameService implements IGameService {
               }
               return accRewardIds;
             }, [] as number[]),
-            points: points.map(p => V4CampaignService.v4PointsToPoints(p)),
-            prizeSet: v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p))
+            points: points.map(point => V4CampaignService.v4PointsToPoints(point)),
+            prizeSet: v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet))
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
@@ -292,17 +292,17 @@ export class V4GameService implements IGameService {
   }
 
   private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
-    const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
+    const v4Vouchers: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
     const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
     const v4PrizeSets: IV4PrizeSetOutcome[] = res.data.outcomes.filter((out) =>
                               out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
-    const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
-    const points = v4Points.map(p => V4CampaignService.v4PointsToPoints(p));
-    const prizeSet = v4PrizeSets.map(p => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(p));
+    const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
+    const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
+    const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
     return {
       ...(vouchers && vouchers.length && {vouchers}),
       ...(points && {points}),
-      ...(prizeSet && {prizeSet}),
+      ...(prizeSets && {prizeSets}),
       rawPayload: res
     };
   }
