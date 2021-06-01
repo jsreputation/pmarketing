@@ -16,10 +16,12 @@
     </perx-core-shake-tree>
   </div>
   <div class="game-footer">
-    <button class="js-play ga_start_game"
+    <button
+      class="js-play ga_start_game"
       mat-flat-button
-      [ngStyle]="buttonStyle"
-      (click)="onClick()">
+      (click)="onClick()"
+      [disabled]="game.isOperating"
+      [ngStyle]="buttonStyle">
       {{ game.texts.button }}
     </button>
   </div>

@@ -20,13 +20,14 @@
         </perx-core-spin-the-wheel>
 
         <div class="game-footer">
-            <button
-              class="js-play ga_start_game"
-              mat-flat-button
-              [ngStyle]="buttonStyle"
-              (click)="startLoad()">
-              {{ game.texts.button }}
-            </button>
+          <button
+            class="js-play ga_start_game"
+            mat-flat-button
+            (click)="startLoad()"
+            [disabled]="game.isOperating"
+            [ngStyle]="buttonStyle">
+            {{ game.texts.button }}
+          </button>
         </div>
       </div>
     </div>
