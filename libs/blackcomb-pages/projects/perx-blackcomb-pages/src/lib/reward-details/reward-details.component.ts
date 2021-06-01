@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import {
   ConfigService,
   ErrorMessageService,
@@ -21,26 +16,9 @@ import {
   SettingsService,
   Voucher
 } from '@perxtech/core';
-import {
-  ActivatedRoute,
-  Params,
-  Router
-} from '@angular/router';
-import {
-  filter,
-  finalize,
-  map,
-  shareReplay,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
-import {
-  iif,
-  Observable,
-  of,
-  Subject
-} from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { filter, finalize, map, shareReplay, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { iif, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -65,7 +43,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public waitForSubmission: boolean = false;
   public favDisabled: boolean = false;
   public macaron?: IMacaron | null = null;
-
+  public isOperating?: boolean;
   public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
@@ -125,6 +103,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public ngAfterViewInit(): void {
     this.reward$.subscribe((reward: IReward) => {
       this.macaron = this.macaronService.getMacaron(reward);
+      this.isOperating = reward?.isOperating;
     });
   }
 
