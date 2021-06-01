@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IGame, SnakeGameComponent, ThemesService, ITheme } from '@perxtech/core';
+import { IGame, ITheme, SettingsService, SnakeGameComponent, ThemesService } from '@perxtech/core';
 import { SnakeComponent } from './snake.component';
 import { of } from 'rxjs';
 
@@ -36,6 +36,9 @@ describe('SnakeComponent', () => {
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,7 +47,8 @@ describe('SnakeComponent', () => {
         SnakeGameComponent
       ],
       providers: [
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IGame, IOperatingHours, ISnake, ITheme, ThemesService } from '@perxtech/core';
+import { IFlags, IGame, IOperatingHours, ISnake, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-snake',
@@ -15,8 +15,10 @@ export class SnakeComponent implements OnInit {
   public headerStyle: { [key: string]: string } = {};
   public subheaderStyle: { [key: string]: string } = {};
   public buttonStyle: { [key: string]: string } = {};
+  public showOperatingHours: boolean = false;
 
-  constructor(private themesService: ThemesService) {}
+  constructor(private themesService: ThemesService,
+              private settingsService: SettingsService) {}
 
   public ngOnInit(): void {
     this.buttonStyle.visibility = 'hidden';
@@ -29,6 +31,12 @@ export class SnakeComponent implements OnInit {
     });
     this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
     this.subheaderStyle.color = this.game.texts.subheaderColour ? this.game.texts.subheaderColour : '';
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      }
+    );
   }
 
   public get config(): ISnake {

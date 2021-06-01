@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
 
-import { IGame, IOperatingHours, IScratch, ITheme, ThemesService } from '@perxtech/core';
+import { IFlags, IGame, IOperatingHours, IScratch, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-scratch',
@@ -18,8 +18,10 @@ export class ScratchComponent implements OnInit {
   public headerStyle: { [key: string]: string } = {};
   public subheaderStyle: { [key: string]: string } = {};
   public buttonStyle: { [key: string]: string } = {};
+  public showOperatingHours: boolean = false;
 
-  constructor(private themesService: ThemesService) {}
+  constructor(private themesService: ThemesService,
+              private settingsService: SettingsService) {}
 
   public ngOnInit(): void {
     this.loaded.emit();
@@ -33,6 +35,12 @@ export class ScratchComponent implements OnInit {
     });
     this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
     this.subheaderStyle.color = this.game.texts.subheaderColour ? this.game.texts.subheaderColour : '';
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      }
+    );
   }
 
   public isEnabled: boolean = false;

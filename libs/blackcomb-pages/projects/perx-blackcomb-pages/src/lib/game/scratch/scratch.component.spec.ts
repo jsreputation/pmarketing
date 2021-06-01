@@ -1,17 +1,7 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import {
-  GameModule,
-  IGameService,
-  IGame,
-  ThemesService,
-  ITheme
-} from '@perxtech/core';
+import { GameModule, IGame, IGameService, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 import { of } from 'rxjs';
 
@@ -53,6 +43,9 @@ describe('ScratchComponent', () => {
     get: () => of(),
     getGamesFromCampaign: () => of()
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -60,7 +53,8 @@ describe('ScratchComponent', () => {
       imports: [GameModule],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
