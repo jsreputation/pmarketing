@@ -1,28 +1,26 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
+import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import {
-  of,
-  throwError
-} from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import {
-  GameModule,
-  IGameService,
-  GameType,
-  IGame,
   AuthenticationService,
-  NotificationService,
-  ConfigService,
-  ThemesService,
-  ITheme,
-  ICampaignService,
-  ICampaign,
-  CampaignType,
   CampaignState,
-  ErrorMessageService
+  CampaignType,
+  ConfigService,
+  ErrorMessageService,
+  GameModule,
+  GameType,
+  ICampaign,
+  ICampaignService,
+  IGame,
+  IGameService,
+  ITheme,
+  NotificationService,
+  SettingsService,
+  ThemesService
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -170,6 +168,9 @@ describe('GameComponent', () => {
     queryParams: of({ params: { flags: 'nonav, chromeless' } }),
     params: of({ id: 1 })
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -200,7 +201,8 @@ describe('GameComponent', () => {
           provide: ErrorMessageService, useValue: {
             getErrorMessageByErrorCode: () => of('')
           }
-        }
+        },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
