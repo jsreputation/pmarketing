@@ -2,9 +2,9 @@
   <mat-card
     *ngFor="let game of ((showAllGames || (games.length <= defaultNbGames))
   ? games : (games | slice:0:defaultNbGames))"
-    (click)="selectGame(game)"
+    [routerLink]="[ '/game', game.campaignId ]"
     matRipple
-    [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[game.id] ? 'games-card disabled' : 'games-card'">
+    class="games-card">
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{game.imgUrl || game.backgroundImg}}" alt="Game image">
     </div>
