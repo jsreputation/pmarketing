@@ -1,19 +1,10 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  ConfigService,
-  ITheme,
-  StripHtmlPipe,
-  ThemesService
-} from '@perxtech/core';
+import { ConfigService, ITheme, SettingsService, StripHtmlPipe, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('GamesCollectionComponent', () => {
@@ -36,6 +27,10 @@ describe('GamesCollectionComponent', () => {
     readAppConfig: () => of()
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GamesCollectionComponent, StripHtmlPipe ],
@@ -52,7 +47,8 @@ describe('GamesCollectionComponent', () => {
         {
           provide: ConfigService,
           useValue: configServiceStub
-        }
+        },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

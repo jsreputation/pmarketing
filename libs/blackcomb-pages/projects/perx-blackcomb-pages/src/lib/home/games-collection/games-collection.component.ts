@@ -1,8 +1,18 @@
 import { listAnimation } from './games-collection.animation';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConfigService, IConfig, IGame, IOperatingHours, ITheme, ThemesService } from '@perxtech/core';
+import {
+  ConfigService,
+  IConfig,
+  IFlags,
+  IGame,
+  IOperatingHours,
+  ITheme,
+  SettingsService,
+  ThemesService
+} from '@perxtech/core';
 import { Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-games-collection',
@@ -18,11 +28,13 @@ export class GamesCollectionComponent implements OnInit {
   public buttonStyle: { [key: string]: string } = {};
   public appConfig: IConfig<void>;
   public isCampaignDisabled: boolean[] = [];
+  public showOperatingHours: boolean = false;
 
   constructor(
     private themesService: ThemesService,
     private configService: ConfigService,
     private router: Router,
+    private settingsService: SettingsService
   ) {}
 
   public ngOnInit(): void {
@@ -31,11 +43,14 @@ export class GamesCollectionComponent implements OnInit {
       this.buttonStyle.color = theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
     });
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => {
         this.appConfig = config;
-      }
-    );
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
+    ).subscribe((flags: IFlags) => {
+      this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+    });
 
     if (this.games$) {
       this.games$.subscribe((games: IGame[]) => {

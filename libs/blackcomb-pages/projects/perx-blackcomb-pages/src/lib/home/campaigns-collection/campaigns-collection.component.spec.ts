@@ -1,15 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignsCollectionComponent } from './campaigns-collection.component';
-import {MatCardModule} from '@angular/material/card';
-import {RouterTestingModule} from '@angular/router/testing';
-import {TranslateModule} from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import {
   ICampaignService,
   IGameService,
   QuizService,
   SafeHtmlPipe,
+  SettingsService,
   StripHtmlPipe,
   SurveyService
 } from '@perxtech/core';
@@ -34,6 +35,10 @@ describe('CampaignsCollectionComponent', () => {
     getSurveyFromCampaign: () => of()
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -51,6 +56,7 @@ describe('CampaignsCollectionComponent', () => {
         { provide: QuizService, useValue: quizServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
