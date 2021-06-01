@@ -3,22 +3,28 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
-  ICampaign,
-  CampaignType,
-  CampaignState,
   CampaignDisplayProperties,
-  IReferral,
   IPointsOutcome,
   CampaignOutcomeType,
+  CampaignState,
+  CampaignType,
+  ICampaign,
   ICampaignOutcome,
+  IReferral
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
-import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
+import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { oc } from 'ts-optchain';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, GameProperties } from '../game/v4-game.service';
+import {
+  GameProperties,
+  PinataDisplayProperties,
+  ScratchDisplayProperties,
+  SpinDisplayProperties,
+  TreeDisplayProperties
+} from '../game/v4-game.service';
 import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
@@ -28,6 +34,14 @@ import { QuestDisplayProperties } from '../quest/v4-quest.service';
 interface IV4Image {
   type: string;
   url: string;
+}
+
+interface IV4OperatingHours {
+  id: number;
+  // is UTC DateTime from BE, but we'll only use the time portion
+  closes_at: Date;
+  opens_at: Date;
+  days: number[]; // expects 0 - 6, Sunday - Saturday
 }
 
 /* eslint-disable @typescript-eslint/indent */
@@ -68,6 +82,8 @@ export interface IV4Campaign {
   campaign_config?: CampaignConfig;
   referral_code: string;
   terms_and_conditions?: string;
+  operating_hour?: IV4OperatingHours;
+  operating_now?: boolean;
 }
 
 type CountObject = {
@@ -126,6 +142,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign, lang: string = 'en'): ICampaign {
+
     const customFields = campaign.custom_fields;
     const thumbnail = campaign.images.find(image =>
       ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type)
@@ -209,6 +226,17 @@ export class V4CampaignService implements ICampaignService {
         refersAttained = campaign.campaign_config.referees_attained;
       }
     }
+
+    let operatingHours;
+    if (campaign.operating_hour) {
+      operatingHours = {
+        id: campaign.operating_hour.id,
+        closesAt: campaign.operating_hour.closes_at,
+        opensAt: campaign.operating_hour.opens_at,
+        days: campaign.operating_hour.days
+      };
+    }
+
     return {
       id: campaign.id,
       name: campaign.name,
@@ -225,6 +253,8 @@ export class V4CampaignService implements ICampaignService {
       rewards,
       thumbnailUrl,
       campaignBannerUrl,
+      operatingHours,
+      isOperating: campaign.operating_now,
       displayProperties,
       customFields
     };

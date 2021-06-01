@@ -1,26 +1,11 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Validators,
-  FormBuilder,
-  FormGroup,
-  AbstractControl,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 
-import {
-  AuthenticationService,
-  NotificationService,
-  IProfile,
-  ThemesService,
-  ITheme
-} from '@perxtech/core';
+import { AuthenticationService, IProfile, ITheme, NotificationService, ThemesService } from '@perxtech/core';
 
-import {
-  PageAppearence,
-  PageProperties,
-  BarSelectedItem,
-} from '../page-properties';
+import { BarSelectedItem, PageAppearence, PageProperties, } from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
@@ -94,7 +79,7 @@ export class SignupComponent implements OnInit, PageAppearence {
   }
   private initForm(): void {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
+      // name: ['', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
@@ -148,14 +133,14 @@ export class SignupComponent implements OnInit, PageAppearence {
       // const mobileNumber = this.selectedCountry + this.signupForm.get('mobileNo').value as string;
 
       const mobileNumber = this.signupForm.value.mobileNo.toString();
-      const name = this.signupForm.value.name as string;
+      // const name = this.signupForm.value.name as string;
       const countryCode = this.signupForm.value.countryCode as string;
       const codeAndMobile = countryCode + mobileNumber;
       const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
 
       const signUpData = {
         firstName: '',
-        lastName: name,
+        lastName: '',
         middleName: '',
         phone: cleanedMobileNo,
         password: passwordString,

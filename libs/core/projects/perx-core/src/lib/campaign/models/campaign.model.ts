@@ -88,6 +88,8 @@ export interface ICampaign {
   customFields?: any;
   enrolled?: boolean;
   termsAndConditions?: string;
+  operatingHours?: IOperatingHours;
+  isOperating?: boolean;
 }
 
 export enum CommChannel {
@@ -155,4 +157,12 @@ export interface IPointsOutcome {
   outcomeType: OutcomeType.points;
   points: number;
   properties: any;
+}
+
+export interface IOperatingHours {
+  id: number;
+  // is UTC DateTime from BE, but we'll only use the time portion
+  closesAt: Date;
+  opensAt: Date;
+  days: number[]; // expects 0 - 6, Sunday - Saturday
 }

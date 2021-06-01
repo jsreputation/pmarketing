@@ -111,3 +111,12 @@ mat-tab-group {
     }
   }
 }
+
+// TRAN-33
+perx-blackcomb-pages-login,
+app-signup {
+  .mobile-number input {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+}
