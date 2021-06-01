@@ -8,7 +8,8 @@ import {
   IPrizeSetItem,
   IPrizeSetOutcome,
   PrizeSetIssuedType,
-  PrizeSetOutcomeType
+  PrizeSetOutcomeType,
+  IPrizeSet
 } from './models/prize-set-outcome.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { IPrizeSetOutcomeService } from './prize-set-outcome.service';
@@ -22,8 +23,18 @@ export interface IV4PrizeSetItem {
   state?: string;
   details?: string;
 }
-interface IV4GetPrizeSetResponse {
+interface IV4GetPrizeSetItemsResponse {
   data: IV4PrizeSetItem[];
+}
+
+interface IV4GetPrizeSetDetailsResponse {
+  data: IV4PrizeSet;
+}
+
+export interface IV4PrizeSet {
+  id: number;
+  name: string;
+  items: IV4PrizeSetItem[];
 }
 
 export interface IV4PrizeSetOutcome {
@@ -51,31 +62,31 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
 
 
   public getPrizeSetIssuedOutcomes(transactionId: number): Observable<IPrizeSetItem[]> {
-    return this.http.get<IV4GetPrizeSetResponse>(`${this.baseUrl}/v4/prize_set_transactions/${transactionId}/outcomes`)
+    return this.http.get<IV4GetPrizeSetItemsResponse>(`${this.baseUrl}/v4/prize_set_transactions/${transactionId}/outcomes`)
       .pipe(
-        map((res: IV4GetPrizeSetResponse) => res.data),
+        map((res: IV4GetPrizeSetItemsResponse) => res.data),
         map((outcomes: IV4PrizeSetItem[]) => outcomes.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome)))
       );
   }
 
   public getPrizeSetState(transactionId: number): Observable<string> {
 
-    return timer(0, 1000).pipe(
+    return timer(0, 5000).pipe(
       switchMap((_) => this.http.get<IV4PrizeSetOutcomeResponse>(`${this.baseUrl}/v4/prize_set_transactions/${transactionId}`)),
-      map((res) => res.data),
+      map((res: IV4PrizeSetOutcomeResponse) => res.data),
       map((outcome: IV4PrizeSetOutcome) => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(outcome)),
       takeWhile((transaction: IPrizeSetOutcome) => transaction.state !== 'completed' && transaction.state !== 'failed', true),
-      takeUntil(timer(10000)),
+      takeUntil(timer(10500)),
       last(),
       map((transaction: IPrizeSetOutcome) => transaction.state)
     );
   }
 
-  public getPrizeSetOutcomes(prizeSetId: number): Observable<IPrizeSetItem[]> {
-    return this.http.get<IV4GetPrizeSetResponse>(`${this.baseUrl}/v4/prize_sets/${prizeSetId}`)
+  public getPrizeSetDetails(prizeSetId: number): Observable<IPrizeSet> {
+    return this.http.get<IV4GetPrizeSetDetailsResponse>(`${this.baseUrl}/v4/prize_sets/${prizeSetId}`)
       .pipe(
-        map((res: IV4GetPrizeSetResponse) => res.data),
-        map((outcomes: IV4PrizeSetItem[]) => outcomes.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome)))
+        map((res: IV4GetPrizeSetDetailsResponse) => res.data),
+        map((prizeSet: IV4PrizeSet) => V4PrizeSetOutcomeService.v4PrizeSetDetailsToPrizeSetDetails(prizeSet))
       );
   }
 
@@ -99,4 +110,13 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
       state: prizeSetOutcome.state
     };
   }
+
+  public static v4PrizeSetDetailsToPrizeSetDetails(prizeSetDetails: IV4PrizeSet): IPrizeSet {
+    return {
+      id: prizeSetDetails.id,
+      name: prizeSetDetails.name,
+      outcomes : prizeSetDetails?.items?.map(outcome => V4PrizeSetOutcomeService.v4PrizeSetItemToPrizeSetItem(outcome))
+    };
+  }
+
 }

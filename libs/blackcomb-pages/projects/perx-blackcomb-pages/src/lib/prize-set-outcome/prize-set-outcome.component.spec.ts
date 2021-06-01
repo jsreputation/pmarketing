@@ -2,10 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ICampaignService, LoyaltyService, RewardsService, IPrizeSetOutcomeService } from '@perxtech/core';
+import { ICampaignService, LoyaltyService, RewardsService, IPrizeSetOutcomeService, UtilsModule } from '@perxtech/core';
 import { PrizeSetOutcomeComponent } from './prize-set-outcome.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatListModule } from '@angular/material/list';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
 const loyaltyServiceStub: Partial<LoyaltyService> = {};
@@ -24,8 +25,10 @@ describe('PrizeSetOutcomeComponent', () => {
         MatToolbarModule,
         MatCardModule,
         RouterTestingModule,
-        MatProgressSpinnerModule,
-        TranslateModule.forChild()
+        MatProgressBarModule,
+        MatListModule,
+        UtilsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },

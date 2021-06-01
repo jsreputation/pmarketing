@@ -2,6 +2,12 @@ import { ILoyalty } from '../../loyalty/models/loyalty.model';
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 
+
+export interface IPrizeSet {
+    id: number;
+    name: string;
+    outcomes: IPrizeSetItem[];
+}
 export interface IPrizeSetItem {
     campaignPrizeId: number;
     campaignPrizeType: PrizeSetOutcomeType;
@@ -12,6 +18,7 @@ export interface IPrizeSetItem {
     details?: string;
     rewardDetails?: IReward;
     loyaltyDetails?: ILoyalty;
+    prizeSetId?: number;
 }
 
 export interface IPrizeSetOutcome {

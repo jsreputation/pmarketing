@@ -161,7 +161,8 @@ export {
   IPurchaseTransactionHistory,
   TransactionDetailType,
   IJoinMethod,
-  IGameTransactionHistory
+  IGameTransactionHistory,
+  IStampTransactionHistory
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
@@ -377,7 +378,8 @@ export {
   IPrizeSetItem,
   PrizeSetOutcomeType,
   PrizeSetIssuedType,
-  PrizeSetState
+  PrizeSetState,
+  IPrizeSet
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';

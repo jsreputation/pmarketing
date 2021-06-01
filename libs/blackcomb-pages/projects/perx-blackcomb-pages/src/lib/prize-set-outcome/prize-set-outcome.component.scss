@@ -11,8 +11,8 @@
     padding: 1.5rem;
 }
 
-.outcome-card {
-    margin-bottom: 1.5rem;
+.outcome-cards {
+    margin: 1.5rem 0;
 }
 
 .thumbnail-image {
@@ -26,57 +26,83 @@
       object-fit: cover;
     }
     svg {
-        background: #E8E8E8;
+        background: #4E4E4E;
     }
 }
 
-h1 {
+.title {
     font-size: 1.6rem;
     line-height: 2.4rem;
     font-weight: 500;
+    margin: 0 0 .8rem 0;
 }
 
-h2 {
+.subtitle {
     font-size: 1.2rem;
     font-weight: 500;
+    margin: 0 0 .8rem 0;
     color: rgba(0, 0, 0, 0.6);
+}
+
+.contact-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0;
+    color: rgba(0, 0, 0, 0.38);
 }
 
 a {
     text-decoration: none;
 }
 
+mat-card {
+    overflow: hidden;
+    padding: 0;
+}
+
+mat-card-content {
+    padding: 16px;
+    &.pending {
+        background: #E8E8E8;
+    }
+}
+
 .bottom-toolbar {
     background: white !important;
     button {
         width: 100%;
-        background: #2664ED !important;
     }
 }
 
-.loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    align-items: center;
+.outcome-card.ghost {
+    height: 15rem;
+    margin-bottom: 1.5rem;
 }
 
-.no-outcomes {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-content: center;
-    padding-top: 1rem;
+.ghost-card-container {
+    margin-top: 4rem;
+}
 
-    h3, .img-container {
-        display: flex;
-        justify-content: center;
-    }
-    .img-container img {
-        margin: 0 auto;
-        width: 50%;
-        max-height: 40vh;
+.thumbnail-image.ghost {
+    background: #4E4E4E;
+}
+
+.marker {
+    display: inline-block;
+    vertical-align: baseline;
+    padding: .2rem .5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.6);
+    background: #FAAD14;
+}
+
+.state-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    h2 {
+        margin: 0;
     }
 }
