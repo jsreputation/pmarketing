@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { IGame, ISnake, ThemesService, ITheme } from '@perxtech/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IGame, IOperatingHours, ISnake, ITheme, ThemesService } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-snake',
@@ -44,4 +44,54 @@ export class SnakeComponent implements OnInit {
     this.buttonStyle.visibility = 'hidden';
   }
 
+  public getOperatingHours(operatingHours: IOperatingHours): string {
+    // Date obj that we only need the time from
+
+    const openTime: Date = new Date(operatingHours.opensAt);
+    const closeTime: Date = new Date(operatingHours.closesAt);
+
+    const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+
+    for (const dayIndex in operatingHours.days) {
+      if (dayIndex) { // guard-for-in
+        daysMapArr[operatingHours.days[dayIndex]] = true;
+      }
+    }
+    const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
+    const hours: string =
+      `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
+    return `Play this game during: ${days}, ${hours}`;
+  }
+
+  private dayOfWeekAsString(dayIndex: number): string {
+    return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
+  }
+
+  // works but can't wrap sat and sun
+  private dayArrToIntuitiveStringDayRange(daysMapArr: boolean[]): string {
+    let dayRange = '', multiDayRange = '';
+    let findingRange = false;
+
+    for (let i = 0; i <= daysMapArr.length; i++) {
+      if (daysMapArr[i]) {
+        if (dayRange.length > 0 && !findingRange) {
+          findingRange = true;
+        } else if (dayRange.length === 0) { // first item in current range.
+          dayRange = `${this.dayOfWeekAsString(i)}`;
+        }
+      } else if (dayRange.length > 0 && ! daysMapArr[i]) { // first part of range already identified
+        if (this.dayOfWeekAsString(i - 1) !== dayRange) {
+          dayRange = `${dayRange} - ${this.dayOfWeekAsString(i - 1)}`;
+        }
+        if (multiDayRange.length === 0) {
+          multiDayRange = dayRange;
+        } else {
+          multiDayRange = `${multiDayRange}, ${dayRange}`;
+        }
+        dayRange = ''; // reset for more ranges;
+        findingRange = false;
+      }
+    }
+    return multiDayRange;
+  }
 }
