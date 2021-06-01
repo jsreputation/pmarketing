@@ -63,6 +63,7 @@ mat-card {
 
 mat-card-content {
     padding: 16px;
+    margin-bottom: 0;
     &.pending {
         background: #E8E8E8;
     }
@@ -101,7 +102,7 @@ mat-card-content {
 .state-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin: 1.5rem 0 1rem 0;
     h2 {
         margin: 0;
     }

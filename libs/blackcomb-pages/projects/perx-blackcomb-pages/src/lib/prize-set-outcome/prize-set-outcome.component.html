@@ -24,16 +24,14 @@
                     <p class="title">{{outcome?.rewardDetails?.name}}</p>
                     <p class="subtitle">{{outcome?.rewardDetails?.merchantName}}</p>
                   </div>
-                  <div *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
-                    <div class="state-container">
-                      <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
-                      <div class="marker">
-                        {{ 'PRIZE_SET.PENDING_STATE' | translate }}
-                      </div>
+                  <div class="state-container" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
+                    <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
+                    <div class="marker">
+                      {{ 'PRIZE_SET.PENDING_STATE' | translate }}
                     </div>
-                    <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
                   </div>
-                </mat-card-content>         
+                </mat-card-content>     
+                <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'"></mat-progress-bar>    
               </mat-card>
             </a>
           </ng-container>
@@ -44,16 +42,14 @@
                         <p class="title">{{outcome?.pointsCount}} {{'PRIZE_SET.LOYALTY_POINTS' | translate}}</p>
                         <p class="subtitle">{{outcome?.loyaltyDetails?.name}}</p>
                       </div>
-                      <div *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
-                        <div class="state-container">
-                          <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
-                          <div class="marker">
-                            {{'PRIZE_SET.PENDING_STATE' | translate}}
-                          </div>
+                      <div class="state-container" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
+                        <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
+                        <div class="marker">
+                          {{'PRIZE_SET.PENDING_STATE' | translate}}
                         </div>
-                        <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
                       </div>
                   </mat-card-content>
+                  <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'"></mat-progress-bar>
               </mat-card>
             </ng-container>
           </div>
