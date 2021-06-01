@@ -68,7 +68,7 @@ import {
   IConfig,
   LoyaltyModule,
   LanguageInterceptor,
-  QuestModule as PerxQuestModule
+  QuestModule as PerxQuestModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
