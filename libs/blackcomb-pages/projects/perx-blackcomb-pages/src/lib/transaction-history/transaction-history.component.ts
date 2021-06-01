@@ -9,6 +9,9 @@ import {
   IRewardTransactionHistory,
   SettingsService,
   IFlags,
+  TransactionDetailType,
+  IGameTransactionHistory,
+  IStampTransactionHistory
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
 import { map } from 'rxjs/operators';
@@ -87,8 +90,15 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
+          const transactionType = oc(tr).transactionDetails.type();
           if (properties) {
             text = properties.productName ? properties.productName : '';
+          } else if (transactionType === TransactionDetailType.game) {
+            const campaignData = (oc(tr).transactionDetails.data() as IGameTransactionHistory);
+            text = campaignData.gameName ? campaignData.gameName : '';
+          } else if (transactionType === TransactionDetailType.stamp) {
+            const campaignData = (oc(tr).transactionDetails.data() as IStampTransactionHistory);
+            text = campaignData.stampCampaignName ? campaignData.stampCampaignName : '';
           }
           return of(text);
         };
