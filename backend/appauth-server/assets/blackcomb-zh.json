@@ -213,7 +213,9 @@
     "PRIVACY_POLICY": "私隱政策",
     "LOGOUT": "登出",
     "FAVORITE_REWARD": "最喜欢的奖励",
-    "CONTACT_US": "聯繫我們"
+    "CONTACT_US": "聯繫我們",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "個人資料",

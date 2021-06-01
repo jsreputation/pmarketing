@@ -177,7 +177,9 @@
     "REFER_FRIEND": "Refer a friend",
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
-    "LOGOUT": "Log Out"
+    "LOGOUT": "Log Out",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "Profile",

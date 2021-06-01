@@ -217,7 +217,9 @@
     "CONTACT_US": "Contact Us",
     "FAQs": "FAQs",
     "LOGOUT": "Log Out",
-    "FAVORITE_REWARD": "Favorite Rewards"
+    "FAVORITE_REWARD": "Favorite Rewards",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",

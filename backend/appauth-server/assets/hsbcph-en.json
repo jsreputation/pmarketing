@@ -221,7 +221,9 @@
     "LOGOUT": "Log Out",
     "FAVORITE_REWARD": "Favorite Rewards",
     "CONTACT_US": "Contact Us",
-    "FAQS": "FAQs"
+    "FAQS": "FAQs",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "Profile",

@@ -195,7 +195,9 @@
     "PRIVACY_POLICY": "Chính sách bảo mật",
     "CONTACT_US": "Liên hệ chúng tôi",
     "FAQs": "FAQs",
-    "LOGOUT": "Đăng xuất"
+    "LOGOUT": "Đăng xuất",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "STATUS_LABELS": {
     "ISSUED": "Tán thành",

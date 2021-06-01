@@ -227,7 +227,9 @@
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
     "FAVORITE_REWARD": "Favorite Rewards",
-    "DISCLAIMER": "Disclaimer"
+    "DISCLAIMER": "Disclaimer",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "Profile",

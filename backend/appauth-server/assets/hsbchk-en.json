@@ -214,7 +214,9 @@
     "TNC": "Terms and Conditions",
     "DISCLAIMER": "Disclaimer",
     "PRIVACY_POLICY": "Privacy Policy",
-    "LOGOUT": "Log Out"
+    "LOGOUT": "Log Out",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "Profile",

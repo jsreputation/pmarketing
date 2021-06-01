@@ -216,7 +216,9 @@
     "TNC": "條款與細則",
     "DISCLAIMER": "Disclaimer",
     "PRIVACY_POLICY": "私隱政策",
-    "LOGOUT": "登出"
+    "LOGOUT": "登出",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "個人資料",

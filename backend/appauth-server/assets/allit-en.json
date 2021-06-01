@@ -323,7 +323,9 @@
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
-    "CONTACT_US": "Contact Us"
+    "CONTACT_US": "Contact Us",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",

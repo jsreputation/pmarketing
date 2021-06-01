@@ -190,7 +190,9 @@
     "REFER_FRIEND": "",
     "TNC": "",
     "PRIVACY_POLICY": "",
-    "LOGOUT": ""
+    "LOGOUT": "",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "",
