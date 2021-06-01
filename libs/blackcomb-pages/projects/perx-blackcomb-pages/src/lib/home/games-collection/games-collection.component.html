@@ -21,7 +21,7 @@
       </div>
 <!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
       <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
-      <p class="reward-subtitle ellipsis-1-line" *ngIf="game.operatingHours">
+      <p class="reward-subtitle ellipsis-1-line" *ngIf="game.operatingHours && showOperatingHours">
         {{getOperatingHours(game.operatingHours)}}
       </p>
     </mat-card-content>

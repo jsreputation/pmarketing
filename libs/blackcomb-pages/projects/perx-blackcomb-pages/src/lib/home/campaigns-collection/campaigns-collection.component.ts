@@ -5,11 +5,13 @@ import {
   GameType,
   ICampaign,
   ICampaignService,
+  IFlags,
   IGame,
   IGameService,
   IOperatingHours,
   IQuiz,
   QuizService,
+  SettingsService,
   SurveyService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -43,13 +45,15 @@ export class CampaignsCollectionComponent implements OnInit {
   public gamesLoaded: boolean = false;
   public isCampaignDisabled: boolean[] = [];
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
+  public showOperatingHours: boolean = false;
 
   constructor(
     private translate: TranslateService,
     private gamesService: IGameService,
     private campaignService: ICampaignService,
     private quizService: QuizService,
-    private surveyService: SurveyService
+    private surveyService: SurveyService,
+    private settingsService: SettingsService
   ) { }
 
 
@@ -79,17 +83,25 @@ export class CampaignsCollectionComponent implements OnInit {
           }
         ));
     }
-    iif(
-      () => this.withRewardsCounter,
-      this.campaignsWithRewards$,
-      this.campaigns$
-    ).pipe(
+    this.settingsService.getRemoteFlagsSettings()
+      .pipe(
+        tap((flags: IFlags) => {
+          this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+          console.log(`${this.showOperatingHours} <- flag`);
+        }),
+      switchMap(() => iif(
+        () => this.withRewardsCounter,
+        this.campaignsWithRewards$,
+        this.campaigns$
+      )),
       tap((campaigns) => {
         this.campaigns = campaigns;
-        campaigns.forEach(campaign => {
-          // check if campaign is operating
-          this.isCampaignDisabled[campaign.id] = ! this.isCampaignOperating(campaign.id);
-        });
+        if (this.showOperatingHours) {
+          campaigns.forEach(campaign => {
+            // check if campaign is operating
+            this.isCampaignDisabled[campaign.id] = ! this.isCampaignOperating(campaign.id);
+          });
+        }
       }),
       // for each campaign, fetch associated games to figure out completion
       switchMap((campaigns) => combineLatest([
