@@ -89,37 +89,29 @@ export class CampaignsCollectionComponent implements OnInit {
           this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
           console.log(`${this.showOperatingHours} <- flag`);
         }),
-      switchMap(() => iif(
-        () => this.withRewardsCounter,
-        this.campaignsWithRewards$,
-        this.campaigns$
-      )),
-      tap((campaigns) => {
-        this.campaigns = campaigns;
-        if (this.showOperatingHours) {
-          campaigns.forEach(campaign => {
-            // check if campaign is operating
-            this.isCampaignDisabled[campaign.id] = ! this.isCampaignOperating(campaign.id);
-          });
-        }
-      }),
-      // for each campaign, fetch associated games to figure out completion
-      switchMap((campaigns) => combineLatest([
-        ...campaigns.map((campaign: ICampaign) => {
-          if (this.gameType === GameType.quiz) {
-            return this.quizService.getQuizFromCampaign(campaign.id).pipe(
-              catchError((() => of([])))
-            );
-          }
-          if (this.gameType === GameType.survey) {
-            return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
-              catchError((() => of([])))
-            );
-          }
-          return this.gamesService.getGamesFromCampaign(campaign);
-        })
-      ]))
-    ).subscribe(
+        switchMap(() => iif(
+          () => this.withRewardsCounter,
+          this.campaignsWithRewards$,
+          this.campaigns$
+        )),
+        tap((campaigns) => this.campaigns = campaigns),
+        // for each campaign, fetch associated games to figure out completion
+        switchMap((campaigns) => combineLatest([
+          ...campaigns.map((campaign: ICampaign) => {
+            if (this.gameType === GameType.quiz) {
+              return this.quizService.getQuizFromCampaign(campaign.id).pipe(
+                catchError((() => of([])))
+              );
+            }
+            if (this.gameType === GameType.survey) {
+              return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
+                catchError((() => of([])))
+              );
+            }
+            return this.gamesService.getGamesFromCampaign(campaign);
+          })
+        ]))
+      ).subscribe(
       (res: (IQuiz | IGame[])[]) => {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
@@ -173,13 +165,6 @@ export class CampaignsCollectionComponent implements OnInit {
       ).length > 0;
     }
     return false;
-  }
-
-  public isCampaignOperating(campaignId: number): boolean {
-    const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
-      campaign.id === campaignId
-    );
-    return matchingCampaign?.isOperating || false;
   }
 
   public isQuizRewardsEmpty(campaignId: number): boolean {
