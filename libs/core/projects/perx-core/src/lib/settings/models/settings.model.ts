@@ -25,6 +25,7 @@ export interface IFlags {
   systemSetsPassword?: boolean;
   showLeaderboard?: boolean;
   showQuest?: boolean;
+  showHappyHourOperatingHours?: boolean;
 }
 
 export interface IRssFeeds {

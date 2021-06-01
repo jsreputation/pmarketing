@@ -1,23 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpBackend,
-  HttpClient,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 
-import {
-  iif,
-  Observable,
-  of,
-  throwError,
-} from 'rxjs';
-import {
-  map,
-  share,
-  switchMap,
-  tap,
-  catchError
-} from 'rxjs/operators';
+import { iif, Observable, of, throwError, } from 'rxjs';
+import { catchError, map, share, switchMap, tap } from 'rxjs/operators';
 
 import { IWSetting } from '@perxtech/whistler';
 
@@ -27,11 +12,11 @@ import { AuthenticationService } from '../auth/authentication/authentication.ser
 import { ICustomProperties } from '../profile/profile.model';
 import { SettingsService } from './settings.service';
 import {
+  GatekeeperApis,
+  IFlags,
   IMicrositeSettings,
   IRssFeeds,
   PagesObject,
-  IFlags,
-  GatekeeperApis,
   VoucherDistributionTypes
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
@@ -67,6 +52,7 @@ interface IV4Flags {
     show_reward_favourite_button: boolean;
     show_leaderboard: boolean;
     show_quest: boolean;
+    show_happy_hour_operating_hours: boolean;
   };
 }
 
@@ -147,7 +133,8 @@ export class V4SettingsService extends SettingsService {
       voucherDistributionType: data.json_value.voucher_distribution_type,
       systemSetsPassword: data.json_value.system_sets_password,
       showLeaderboard: data.json_value.show_leaderboard,
-      showQuest: data.json_value.show_quest
+      showQuest: data.json_value.show_quest,
+      showHappyHourOperatingHours: data.json_value.show_happy_hour_operating_hours
     };
   }
 
