@@ -28,6 +28,9 @@
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
       </div>
+      <div class="reward-operating-hours" *ngIf="reward.operatingHours">
+        {{getOperatingHours(reward.operatingHours)}}
+      </div>
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
         <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
           <div *ngIf="i > 0" class="or-label">or</div>
