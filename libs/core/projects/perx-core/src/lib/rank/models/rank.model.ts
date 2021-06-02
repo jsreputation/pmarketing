@@ -11,6 +11,7 @@ export type LeaderBoard = {
     header: {
       values: {
         title: string;
+        description: string;
       }
     },
     baseName: string;
