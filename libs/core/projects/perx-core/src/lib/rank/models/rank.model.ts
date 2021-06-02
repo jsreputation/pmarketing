@@ -1,7 +1,7 @@
 import { IReward } from '../../rewards/models/reward.model';
 
 export type LeaderBoard = {
-  displayProperties: {
+  displayProperties?: {
     aboutText: string;
     aboutImage: {
       value: {
