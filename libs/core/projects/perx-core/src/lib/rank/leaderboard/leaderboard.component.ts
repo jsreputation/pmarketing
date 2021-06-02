@@ -25,7 +25,7 @@ export class LeaderboardComponent implements OnInit {
 
     if (this.leaderboard && this.leaderboard?.displayProperties?.baseName) {
       // use metric key to display relavant translation
-      this.metric = this.leaderboard.displayProperties.baseName
+      this.metric = this.leaderboard.displayProperties.baseName;
     } else {
       this.translate.get('LEADER_BOARD.DEFAULT_METRIC_TITLE').subscribe(metric => this.metric = metric);
     }
