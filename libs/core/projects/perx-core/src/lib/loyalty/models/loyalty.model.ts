@@ -4,7 +4,8 @@ import { ITransactionProperties } from '../../transactions/models/transactions.m
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
   'reward' = 'Reward::Transaction',
-  'game' = 'GameTransaction'
+  'game' = 'GameTransaction',
+  'stamp' = 'StampTransaction'
 }
 
 export interface IExpiringPoints {
@@ -97,6 +98,12 @@ export interface IGameTransactionHistory {
   properties?: ITransactionProperties;
 }
 
+export interface IStampTransactionHistory {
+  id: number;
+  stampCampaignName: string;
+  properties?: ITransactionProperties;
+}
+
 export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
@@ -106,7 +113,7 @@ export interface ILoyaltyTransactionHistory {
   properties?: ICustomProperties;
   transactionDetails?: {
     type?: TransactionDetailType,
-    data?: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory
+    data?: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | IStampTransactionHistory
   };
 }
 

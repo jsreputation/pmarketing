@@ -24,7 +24,8 @@ import {
   ILoyaltyTransactionHistory,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  IStampTransactionHistory,
 } from './models/loyalty.model';
 
 import {
@@ -158,6 +159,11 @@ interface IV4GameTransactionHistory {
   campaign: IV4Campaign;
 }
 
+interface IV4StampTransactionHistory {
+  id: number;
+  campaign: IV4Campaign;
+}
+
 interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
@@ -168,7 +174,7 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
-    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory | IV4GameTransactionHistory;
+    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory | IV4GameTransactionHistory | IV4StampTransactionHistory;
   };
 }
 
@@ -275,7 +281,7 @@ export class V4LoyaltyService extends LoyaltyService {
     transactionHistory: IV4LoyaltyTransactionPropertiesHistory
   ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | undefined;
+    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | IStampTransactionHistory | undefined;
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
@@ -317,6 +323,13 @@ export class V4LoyaltyService extends LoyaltyService {
             gameName: gameDetails.campaign.name
           };
          break;
+        case TransactionDetailType.stamp:
+          const stampDetails = transactionDetails as IV4StampTransactionHistory;
+          data = {
+             id: transactionDetails.id,
+             stampCampaignName: stampDetails.campaign.name
+           };
+          break;
       }
     // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
