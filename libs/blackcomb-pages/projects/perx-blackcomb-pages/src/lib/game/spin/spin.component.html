@@ -24,7 +24,7 @@
             class="js-play ga_start_game"
             mat-flat-button
             (click)="startLoad()"
-            [disabled]="showOperatingHours && game.isOperating"
+            [disabled]="showOperatingHours && !game.isOperating"
             [ngStyle]="buttonStyle">
             {{ game.texts.button }}
           </button>
