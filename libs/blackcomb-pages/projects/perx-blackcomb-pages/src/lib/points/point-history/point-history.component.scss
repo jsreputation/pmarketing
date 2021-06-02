@@ -1,4 +1,6 @@
 .point-history {
+    height: 100%;
+    overflow: auto;
     .transaction {
         display: flex;
         flex-direction: row;
@@ -12,6 +14,7 @@
         .detail {
             text-align: right;
             width: 40%;
+            color: var(--disabled_text_color);
 
             .positive-value {
                 color: var(--primary);

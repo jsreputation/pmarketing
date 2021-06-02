@@ -1,5 +1,6 @@
-<div class="point-history">
-    <mat-card *ngFor="let transaction of transactions | async">
+<div class="point-history" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()" [scrollWindow]="false">
+    <mat-card *ngFor="let transaction of transactions">
         <mat-card-content class="transaction">
             <div class="program">
                 <div>
