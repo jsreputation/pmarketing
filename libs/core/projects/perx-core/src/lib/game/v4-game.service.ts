@@ -261,7 +261,7 @@ export class V4GameService implements IGameService {
               return accRewardIds;
             }, [] as number[]),
             points: points.map(point => V4CampaignService.v4PointsToPoints(point)),
-            prizeSet: v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet))
+            prizeSets: v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet))
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
