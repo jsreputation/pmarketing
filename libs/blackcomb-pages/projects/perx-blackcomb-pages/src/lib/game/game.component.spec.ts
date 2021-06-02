@@ -30,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const game: IGame = {
   id: 1,
@@ -187,6 +188,7 @@ describe('GameComponent', () => {
         NoopAnimationsModule,
         GameModule,
         TranslateModule.forRoot(),
+        MatDialogModule
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },

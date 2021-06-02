@@ -4,6 +4,7 @@ import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
   CampaignDisplayProperties,
+  IPointsOutcome,
   CampaignOutcomeType,
   CampaignState,
   CampaignType,
@@ -11,6 +12,7 @@ import {
   ICampaignOutcome,
   IReferral
 } from './models/campaign.model';
+import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { oc } from 'ts-optchain';
@@ -118,6 +120,12 @@ export interface IV4CampaignOutcomeItem {
   id: number;
   name: string;
   type: CampaignOutcomeType;
+}
+export interface IV4PointsOutcome {
+  id: number;
+  outcome_type: OutcomeType.points;
+  points: number;
+  properties: any;
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -334,12 +342,12 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]> {
-    return this.campaignsCache[id] = this.http
+    return this.http
       .get<IV4CampaignOutcomeResponse>(`${this.baseUrl}/v4/campaigns/${id}/outcomes`)
       .pipe(
         map(resp => resp.data),
         map((campaignOutcomes: IV4CampaignOutcome[]) => campaignOutcomes.filter(o => o.modularizable_type === CampaignOutcomeType.reward
-          || o.modularizable_type === CampaignOutcomeType.points)),
+          || o.modularizable_type === CampaignOutcomeType.points || o.modularizable_type === CampaignOutcomeType.prizeSet)),
         map((campaignOutcomes: IV4CampaignOutcome[]) =>
           campaignOutcomes.map(campaignOutcome =>
             V4CampaignService.v4CampaignOutcomeToCampaignOutcome(campaignOutcome)
@@ -355,6 +363,15 @@ export class V4CampaignService implements ICampaignService {
       type: campaignOutcome.modularizable_type,
       name: campaignOutcome.outcome ? campaignOutcome.outcome.name : '',
       pointsCount: campaignOutcome.points_count
+    };
+  }
+
+  public static v4PointsToPoints(points: IV4PointsOutcome): IPointsOutcome {
+    return {
+      id: points.id,
+      outcomeType: points.outcome_type,
+      points: points.points,
+      properties: points.properties
     };
   }
 }

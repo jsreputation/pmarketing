@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IAnswer, ISurvey } from './models/survey.model';
+import { IAnswer, ISurvey, ISurveyResultOutcome } from './models/survey.model';
 import { IJsonApiItemPayload, IWSurveyEngagementAttributes } from '@perxtech/whistler';
 
 export abstract class SurveyService {
@@ -10,5 +10,5 @@ export abstract class SurveyService {
     answers: IAnswer[]
   }>;
   public abstract getMoveId(gameId?: number): Observable<number>;
-  public abstract postFinalSurveyAnswer(moveId: number): Observable<any>;
+  public abstract postFinalSurveyAnswer(moveId: number): Observable<ISurveyResultOutcome>;
 }

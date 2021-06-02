@@ -7,6 +7,7 @@ export interface IRewardPopupConfig extends IPopupConfig {
   timerCallbacks?: TimerCallBack;
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
   url?: string;
+  showCloseBtn?: boolean;
 }
 export interface TimerCallBack {
   timerExpired(): void;
@@ -28,6 +29,7 @@ export class RewardPopupComponent {
   public imageUrl: string;
   public buttonTxt: string;
   public validTo: Date;
+  public showCloseBtn: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<RewardPopupComponent>,
@@ -50,6 +52,9 @@ export class RewardPopupComponent {
     }
     if (data.validTo) {
       this.validTo = data.validTo;
+    }
+    if (data.showCloseBtn !== undefined) {
+      this.showCloseBtn = data.showCloseBtn;
     }
   }
 

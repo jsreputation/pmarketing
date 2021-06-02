@@ -5,16 +5,14 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState, ThemesService, ITheme
+  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig,
+  IRewardPopupConfig, RewardPopupComponent, IStampOutcome,
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
 import { Subject, Observable, of, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
-import {
-  IRewardPopupConfig, RewardPopupComponent
-} from 'libs/core/projects/perx-core/src/lib/campaign/reward-popup/reward-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -36,6 +34,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public newStampsLabelFn: () => Observable<string>;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
+  public showPrizeSetOutcome: boolean = false;
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -52,6 +51,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private translate: TranslateService,
     private dialog: MatDialog,
+    private configService: ConfigService
   ) {
   }
 
@@ -60,6 +60,12 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
 
     this.initTranslate();
     this.route.paramMap
@@ -160,24 +166,49 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 }));
             }
 
-            if (stamp.vouchers && stamp.vouchers.length > 0) {
-              const voucherId = stamp.vouchers[0].id;
+            const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
+                                                || outcome.state !== 'failed');
+
+            if ((stamp.vouchers && stamp.vouchers.length > 0) ||
+                        (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
+
+              let prizeSetOutcomes: IStampOutcome[];
+              let voucherId;
+              if (this.showPrizeSetOutcome && stampOutcomes) {
+                prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
+                                                                        CampaignOutcomeType.prizeSet);
+              }
+              if (stamp.vouchers && stamp.vouchers.length > 0) {
+                voucherId = stamp.vouchers[0].id;
+              }
+
               forkJoin([
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
-                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT')
+                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
+                this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
               ]).subscribe(translations => {
-                const [title, text, buttonTxt] = translations;
+                const [title, text, buttonTxt, prizeSetBtnTxt] = translations;
                 const data: IRewardPopupConfig = {
                   title,
                   text,
                   imageUrl: 'assets/prize.png',
                   disableOverlayClose: true,
                   ctaButtonClass: 'ga_game_completion',
-                  url: `/voucher-detail/${voucherId}`,
+                  // url: `/voucher-detail/${voucherId}`,
                   afterClosedCallBackRedirect: this,
+                  showCloseBtn: false,
                   buttonTxt
                 };
+
+                if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
+                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeId}?transactionId=${prizeSetOutcomes[0].actualOutcomeId}`;
+                  data.buttonTxt = prizeSetBtnTxt;
+                } else if (voucherId) {
+                  data.url = `/voucher-detail/${voucherId}`;
+                } else {
+                  data.url = '/wallet';
+                }
                 this.dialog.open(RewardPopupComponent, { data });
               });
             }

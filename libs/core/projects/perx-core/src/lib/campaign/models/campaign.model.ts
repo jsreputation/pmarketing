@@ -1,4 +1,5 @@
 import { IReward } from '../../rewards/models/reward.model';
+import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
 import { IQuest, IQuestTask } from '../../quest/quest.model';
 
@@ -114,7 +115,8 @@ export interface ICampaignItem {
 export enum CampaignOutcomeType {
   reward = 'Reward::Campaign',
   points = 'StoredValue::Campaign',
-  custom = 'CustomOutcome'
+  custom = 'CustomOutcome',
+  prizeSet = 'PrizeSet'
 }
 
 export interface ICampaignOutcome {
@@ -123,6 +125,7 @@ export interface ICampaignOutcome {
   name: string;
   pointsCount?: number;
   levelId?: number;
+  prizeSetItems?: string[];
 }
 
 export interface IProgressCampaign extends IQuest {
@@ -148,6 +151,12 @@ export interface IProgressLevel extends IQuestTask {
   // imageUrl?: string;
   completedProgress?: number;
   levelTarget?: number;
+}
+export interface IPointsOutcome {
+  id: number;
+  outcomeType: OutcomeType.points;
+  points: number;
+  properties: any;
 }
 
 export interface IOperatingHours {

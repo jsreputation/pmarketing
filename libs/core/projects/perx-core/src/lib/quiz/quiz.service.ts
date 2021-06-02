@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { IPayload, IQAnswer, IQuiz } from './models/quiz.model';
+import { IQuizResultOutcome } from './models/quiz.model';
 
 export interface IAnswerResult {
   hasOutcomes: boolean;
@@ -30,5 +31,5 @@ export abstract class QuizService {
   public abstract getQuizFromCampaign(id: number, lang?: string): Observable<IQuiz>;
   public abstract getMove(gameId: number): Observable<{ moveId: number }>;
   public abstract postQuizAnswer(answers: IQAnswer, moveId: number): Observable<IAnswerResult>;
-  public abstract postFinalQuizAnswer(moveId: number): Observable<any>;
+  public abstract postFinalQuizAnswer(moveId: number): Observable<IQuizResultOutcome>;
 }

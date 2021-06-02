@@ -8,6 +8,9 @@ import { IPictureSelectPayload } from '../question/picture-select/picture-select
 import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { IVoucher } from '../../vouchers/models/voucher.model';
+import { IPrizeSetOutcome } from '../../prize-set-outcome/models/prize-set-outcome.model';
+import { IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IAnswer {
   questionId: string;
@@ -94,3 +97,10 @@ export type IPayload =
   IPasswordPayload |
   IPhonePayload |
   IPictureSelectPayload;
+
+export interface ISurveyResultOutcome {
+  rewardAcquired: boolean;
+  vouchers?: IVoucher[];
+  points?: IPointsOutcome[];
+  prizeSets?: IPrizeSetOutcome[];
+}

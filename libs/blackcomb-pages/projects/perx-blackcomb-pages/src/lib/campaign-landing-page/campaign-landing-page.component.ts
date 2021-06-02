@@ -16,14 +16,23 @@ import {
   IConfig,
   ITheme,
   ThemesService,
+  CampaignOutcomeType,
+  ICampaignOutcome,
+  IPrizeSetItem,
+  IPrizeSetOutcomeService,
+  PrizeSetOutcomeType,
+  RewardsService,
+  IReward
 } from '@perxtech/core';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin, Observable, of, combineLatest, } from 'rxjs';
 import {
   filter,
   flatMap,
   map,
   switchMap,
-  tap
+  tap,
+  catchError,
+  startWith,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -38,13 +47,17 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
   public buttonStyle: { [key: string]: string } = {};
+  public campaignOutcomes: ICampaignOutcome[];
+  public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private campaignService: ICampaignService,
     private configService: ConfigService,
     private themesService: ThemesService,
-    private router: Router
+    private router: Router,
+    private prizeSetOutcomeService: IPrizeSetOutcomeService,
+    private rewardsService: RewardsService
   ) {}
 
   public ngOnInit(): void {
@@ -68,13 +81,79 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         switchMap(() => this.activatedRoute.params),
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
-        switchMap((id) => this.campaignService.getCampaign(id))
-      )
-      .subscribe((campaign) => {
+        switchMap((campaignId) =>
+           forkJoin(
+            [this.campaignService.getCampaign(campaignId), this.getCampaignOutcome(campaignId)])
+        )
+      ).subscribe(([campaign, outcomes]: [ICampaign, ICampaignOutcome[]]) => {
         this.campaign = campaign;
         this.config = oc(campaign).displayProperties.landingPage();
         this.backgroundUrl = oc(this.config).backgroundUrl('');
+        this.campaignOutcomes = outcomes;
       });
+  }
+
+  public getCampaignOutcome(campaignId: number): Observable<ICampaignOutcome[]> {
+    let prizeSetOutcomes: ICampaignOutcome[] = [];
+    let allOutcomes: ICampaignOutcome[] = [];
+    return this.campaignService.getCampaignOutcomes(campaignId).pipe(
+     switchMap((outcomes: ICampaignOutcome[]) => {
+        this.campaignOutcomes = outcomes;
+        allOutcomes = outcomes;
+        prizeSetOutcomes = outcomes && outcomes.filter((outcome) => outcome.type === CampaignOutcomeType.prizeSet);
+        return  prizeSetOutcomes && prizeSetOutcomes.length > 0 ?
+                forkJoin([...prizeSetOutcomes.map((outcome) => this.getPrizeSetOutcome(outcome.id))]) : of([]);
+      }),
+      map(
+        (prizeSets: IPrizeSetItem[][]) =>
+          [].concat(...(prizeSets as [])) as IPrizeSetItem[]
+      ),
+      switchMap((prizeSetItems) => {
+          allOutcomes.map((outcome) => {
+            if (outcome.type === CampaignOutcomeType.prizeSet) {
+               const items = prizeSetItems && prizeSetItems.filter(prizeSetItem => prizeSetItem?.prizeSetId === outcome.id);
+               items?.map((item) => {
+                if (item.campaignPrizeType === PrizeSetOutcomeType.reward && item?.rewardDetails?.name) {
+                  if (outcome.prizeSetItems) {
+                    outcome.prizeSetItems?.push(item?.rewardDetails?.name);
+                  } else {
+                    outcome.prizeSetItems = [item?.rewardDetails?.name];
+                  }
+                 }  else if (item.campaignPrizeType === PrizeSetOutcomeType.points && item?.pointsCount) {
+                    const title = `${item.pointsCount} loyalty points`;
+                    if (outcome.prizeSetItems) {
+                      outcome.prizeSetItems?.push(title);
+                    } else {
+                      outcome.prizeSetItems = [title];
+                    }
+                 }
+                });
+            }
+          });
+          return of(allOutcomes);
+      }));
+  }
+
+  public getPrizeSetOutcome(prizeSetId: number): Observable<IPrizeSetItem[]> {
+    let rewardOutcomes: IPrizeSetItem[] = [];
+    let allOutcomes: IPrizeSetItem[] = [];
+    return this.prizeSetOutcomeService.getPrizeSetDetails(prizeSetId).pipe(
+      switchMap((prizeSet) => {
+        allOutcomes = prizeSet && prizeSet.outcomes;
+        prizeSet.outcomes.forEach(outcome => outcome.prizeSetId = prizeSet.id);
+        rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
+        return forkJoin([
+          combineLatest([...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
+          .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
+      }),
+      switchMap(([rewards]: ([IReward[]])) => {
+          allOutcomes.map((outcome) => {
+            if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
+              outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
+            }
+          });
+          return of(allOutcomes);
+      }));
   }
 
   public ngOnDestroy(): void {

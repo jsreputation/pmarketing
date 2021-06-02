@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { IAnswer, ISurvey, ISurveyOutcome, SurveyQuestionType } from './models/survey.model';
+import { IAnswer, ISurvey, ISurveyOutcome, SurveyQuestionType, ISurveyResultOutcome } from './models/survey.model';
 import { SurveyService } from './survey.service';
 import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,13 @@ import { oc } from 'ts-optchain';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { patchUrl } from '../utils/patch-url.function';
 import { Asset } from '../game/v4-game.service';
+import { OutcomeType } from '../outcome/models/outcome.model';
+import {
+  IV4Voucher,
+  V4VouchersService
+} from '../vouchers/v4-vouchers.service';
+import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 interface V4NextMoveResponse {
   data: {
@@ -97,7 +104,6 @@ interface IV4SurveyResult {
   outcome: ISurveyOutcome | undefined;
   noOutcome: ISurveyOutcome | undefined;
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -246,14 +252,29 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postFinalSurveyAnswer(moveId: number): Observable<any> {
+  public postFinalSurveyAnswer(moveId: number): Observable<ISurveyResultOutcome> {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
       map((answerResponse: any) => {
+        const v4Vouchers = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+            outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
+        const v4Points = answerResponse.data.outcomes.filter(outcome =>
+            outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+        const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+            outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+        const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
+        const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
+        const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
         if (answerResponse.data.outcomes &&
           answerResponse.data.outcomes[0] &&
-          answerResponse.data.outcomes[0].outcome_type === 'reward') {
-          return { rewardAcquired: true };
+          (answerResponse.data.outcomes[0].outcome_type === OutcomeType.reward
+            || answerResponse.data.outcomes[0].outcome_type === OutcomeType.points
+            || answerResponse.data.outcomes[0].outcome_type === OutcomeType.prizeSet)) {
+          return { rewardAcquired: true,
+                ...(vouchers && vouchers.length && {vouchers}),
+                ...(points && {points}),
+                ...(prizeSets && {prizeSets})
+           };
         }
         return { rewardAcquired: false };
       }),

@@ -55,3 +55,52 @@
 .bottom-nav-container {
   @include quizBottomBar();
 }
+
+.prize-container {
+  
+  p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 0 2rem;
+    margin-bottom: 0;
+  }
+  .mat-list-item-content {
+    padding: 0!important;
+  }
+}
+
+.outcome-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .icon {
+    flex: 0;
+
+    .reward-icon {
+      padding-right: 1rem;
+      padding-left:0;
+      color: #2664ED;
+    }
+  }
+
+  .outcome-details {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .included-items {
+    font-weight: 400;
+    font-style: italic;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+

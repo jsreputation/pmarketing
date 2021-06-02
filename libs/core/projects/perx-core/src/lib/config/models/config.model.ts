@@ -80,4 +80,7 @@ export interface IConfig<T> {
 
   /* Referral*/
   showReferralDetails?: boolean;
+
+  /*Prize set Outcome*/
+  showPrizeSetOutcome?: boolean;
 }

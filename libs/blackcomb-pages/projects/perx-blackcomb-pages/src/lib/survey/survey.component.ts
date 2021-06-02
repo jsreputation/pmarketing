@@ -10,14 +10,20 @@ import {
   SurveyService,
   IPopupConfig,
   IPrePlayStateData,
-  AuthenticationService
+  AuthenticationService,
+  RewardPopupComponent,
+  IRewardPopupConfig,
+  ISurveyResultOutcome,
+  ConfigService,
+  IConfig,
+  IPrizeSetOutcome
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { MatDialog } from '@angular/material/dialog';
 interface IAnswer {
   questionId: string;
   content: any;
@@ -40,6 +46,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
   public answers: IAnswer[];
+  private prizeSetOutcome: IPrizeSetOutcome;
+  public showPrizeSetOutcome: boolean = false;
+  private prizeSetBtnTxt: string;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -107,6 +116,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
         .get(this.notAvailablePopUp.buttonTxt)
         .subscribe(text => (this.notAvailablePopUp.buttonTxt = text));
     }
+    this.translate
+      .get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
+      .subscribe((text) => (this.prizeSetBtnTxt = text));
+
   }
 
   constructor(
@@ -116,10 +129,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private surveyService: SurveyService,
     private translate: TranslateService,
     private auth: AuthenticationService,
+    private dialog: MatDialog,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
     this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
@@ -203,10 +223,13 @@ export class SurveyComponent implements OnInit, OnDestroy {
           })).subscribe(() => {
             // MEG-12: check API if reward acquired
             this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
-              res => {
+              (res: ISurveyResultOutcome) => {
                 this.popupData = res.rewardAcquired
                   ? this.successPopUp
                   : this.noRewardsPopUp;
+                if (res && res.prizeSets && res.prizeSets.length > 0) {
+                    this.prizeSetOutcome = res.prizeSets[0];
+                }
                 this.redirectUrlAndPopUp();
               },
               () => {
@@ -243,9 +266,21 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.informationCollectionSetting === 'signup_required'
     ) {
       this.router.navigate(['/signup'], { state });
+    } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
+        const data: IRewardPopupConfig = this.popupData;
+        data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
+        data.afterClosedCallBackRedirect = this;
+        data.disableOverlayClose = true;
+        data.showCloseBtn = false;
+        data.buttonTxt = this.prizeSetBtnTxt;
+        this.dialog.open(RewardPopupComponent, {data});
     } else {
-      this.router.navigate(['/wallet']);
-      this.notificationService.addPopup(this.popupData);
+        this.router.navigate(['/wallet']);
+        this.notificationService.addPopup(this.popupData);
     }
+  }
+
+  public closeAndRedirect(url: string): void {
+    this.router.navigateByUrl(url);
   }
 }

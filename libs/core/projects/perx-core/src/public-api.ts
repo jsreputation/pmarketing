@@ -80,6 +80,7 @@ export {
   QuestProperties,
   ProgressProperties,
   ICampaignItem,
+  IPointsOutcome,
   ICampaignOutcome,
   CampaignOutcomeType,
   IProgressCampaign,
@@ -87,7 +88,7 @@ export {
   IOperatingHours
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
-export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
+export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
 /**
  * Quests
  */
@@ -104,6 +105,7 @@ export {
   IStamp,
   StampCardState,
   StampState,
+  IStampOutcome
 } from './lib/stamp/models/stamp.model';
 export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-cards-list.component';
 /**
@@ -124,7 +126,6 @@ export {
   ISnake,
   defaultTree,
   IPlayOutcome,
-  IPointsOutcome,
   ISlice,
   IEngagementTransaction
 } from './lib/game/game.model';
@@ -254,7 +255,7 @@ export { filterDuplicateLocations } from './lib/location/filter-duplicate-locati
  */
 export { SurveyModule } from './lib/survey/survey.module';
 export { SurveyService } from './lib/survey/survey.service';
-export { ISurvey, SurveyQuestionType, IQuestion, IAnswer } from './lib/survey/models/survey.model';
+export { ISurvey, SurveyQuestionType, IQuestion, IAnswer, ISurveyResultOutcome } from './lib/survey/models/survey.model';
 export { SurveyComponent } from './lib/survey/survey/survey.component';
 export { QuestionComponent } from './lib/survey/question/question.component';
 export { SelectComponent } from './lib/survey/question/select/select.component';
@@ -271,7 +272,7 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  */
 export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizService, IAnswerResult, IQQuestion } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
+export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode, IQuizResultOutcome } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
@@ -371,3 +372,16 @@ export { CampaignRewardMode } from './lib/rewards/rewards-large-list/rewards-lar
  */
 export { RazAdaptedCampaignCardModule } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.module';
 export { RazAdaptedCampaignCardComponent } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.component';
+/**
+ * Prize set outcome
+ */
+export {
+  IPrizeSetOutcome,
+  IPrizeSetItem,
+  PrizeSetOutcomeType,
+  PrizeSetIssuedType,
+  PrizeSetState,
+  IPrizeSet
+} from './lib/prize-set-outcome/models/prize-set-outcome.model';
+export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
+export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';

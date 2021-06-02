@@ -21,6 +21,7 @@ import {
   StampCardState,
   StampState,
   ICampaignOutcome,
+  IStampOutcome,
 } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
@@ -28,7 +29,7 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import { CampaignType, ICampaign, CampaignOutcomeType } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 
@@ -49,8 +50,17 @@ export interface IV4Stamp {
   updated_at: string;
   campaign_id: number;
   vouchers?: IVoucher[];
+  outcomes?: IV4StampOutcome[];
 }
 
+export interface IV4StampOutcome {
+  id: number;
+  actual_outcome_type: CampaignOutcomeType;
+  actual_outcome_id: number;
+  campaign_prize_type: CampaignOutcomeType;
+  campaign_prize_id: number;
+  state: string;
+}
 interface IV4GetStampTransactionsResponse {
   data: IV4Stamp[];
   meta: {
@@ -188,6 +198,8 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {
+    const outcomes = stamp.outcomes && stamp.outcomes.map(outcome => V4StampService.v4StampOutcomeToStampOutcome(outcome));
+
     return {
       id: stamp.id,
       userAccountId: stamp.user_account_id,
@@ -197,6 +209,7 @@ export class V4StampService implements StampService {
       updatedAt: stamp.updated_at,
       campaignId: stamp.campaign_id,
       vouchers: stamp.vouchers,
+      ...(outcomes && outcomes.length && {outcomes}),
     };
   }
 
@@ -408,5 +421,14 @@ export class V4StampService implements StampService {
           )
         ),
       );
+  }
+
+  public static v4StampOutcomeToStampOutcome(outcome: IV4StampOutcome): IStampOutcome {
+    return {
+      actualOutcomeId: outcome.actual_outcome_id,
+      outcomeType: outcome.campaign_prize_type,
+      state: outcome.state,
+      prizeId: outcome.campaign_prize_id
+    };
   }
 }

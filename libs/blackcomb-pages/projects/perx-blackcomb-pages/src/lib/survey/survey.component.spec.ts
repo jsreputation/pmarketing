@@ -16,11 +16,13 @@ import {
   ISurvey,
   SurveyModule as PerxSurveyModule,
   SurveyQuestionType,
-  SurveyService
+  SurveyService,
+  ConfigService
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
 import { SurveyComponent } from './survey.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -56,6 +58,8 @@ describe('SurveyComponent', () => {
     getAnonymous: () => true,
   };
 
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SurveyComponent],
@@ -70,7 +74,8 @@ describe('SurveyComponent', () => {
         MatToolbarModule,
         PerxSurveyModule,
         TranslateModule.forRoot(),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatDialogModule
       ],
       providers: [
         {
@@ -96,6 +101,7 @@ describe('SurveyComponent', () => {
             navigate: () => { }
           }
         },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();

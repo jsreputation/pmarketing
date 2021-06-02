@@ -4,10 +4,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
   ICampaignService, ThemesService,
-  UtilsModule
+  UtilsModule,
+  RewardsService,
+  IPrizeSetOutcomeService
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CampaignLandingPageComponent', () => {
   let component: CampaignLandingPageComponent;
@@ -25,6 +30,8 @@ describe('CampaignLandingPageComponent', () => {
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
+  const rewardServiceStub: Partial<RewardsService> = {};
+  const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,12 +39,17 @@ describe('CampaignLandingPageComponent', () => {
       imports: [
         UtilsModule,
         MatToolbarModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatListModule,
+        MatIconModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
+        { provide: RewardsService, useValue: rewardServiceStub }
       ]
     })
       .compileComponents();
