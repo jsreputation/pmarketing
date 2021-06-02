@@ -25,12 +25,13 @@
           </ng-container>
         </mat-nav-list>
       </div>
-      <div *ngIf="remoteFlags?.showMultipleLoyalty" class="section">
+      <!-- <div *ngIf="remoteFlags?.showMultipleLoyalty" class="section"> -->
+      <div class="section">
         <mat-nav-list>
-          <mat-list-item routerLink="/transfer-points">
+          <mat-list-item routerLink="/points/transfer">
             {{'ACCOUNT_PAGE.TRANSFER_POINTS' | translate}}
           </mat-list-item>
-          <mat-list-item routerLink="/transfer-history">
+          <mat-list-item routerLink="/points/history">
             {{'ACCOUNT_PAGE.POINTS_TRANSFER_HISTORY' | translate}}
           </mat-list-item>
         </mat-nav-list>
