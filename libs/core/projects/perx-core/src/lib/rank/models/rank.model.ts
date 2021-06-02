@@ -12,7 +12,8 @@ export type LeaderBoard = {
       values: {
         title: string;
       }
-    }
+    },
+    baseName: string;
   };
   id: number;
   metric: string;
