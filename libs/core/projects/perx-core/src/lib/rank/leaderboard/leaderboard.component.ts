@@ -23,9 +23,9 @@ export class LeaderboardComponent implements OnInit {
       this.nickNameTxtFn = () => of('NICKNAME');
     }
 
-    if (this.leaderboard && this.leaderboard.metric) {
+    if (this.leaderboard && this.leaderboard?.displayProperties?.baseName) {
       // use metric key to display relavant translation
-      this.translate.get(`LEADER_BOARD.${this.leaderboard.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
+      this.metric = this.leaderboard.displayProperties.baseName;
     } else {
       this.translate.get('LEADER_BOARD.DEFAULT_METRIC_TITLE').subscribe(metric => this.metric = metric);
     }

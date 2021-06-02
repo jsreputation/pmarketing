@@ -1,7 +1,7 @@
 import { IReward } from '../../rewards/models/reward.model';
 
 export type LeaderBoard = {
-  displayProperties: {
+  displayProperties?: {
     aboutText: string;
     aboutImage: {
       value: {
@@ -11,8 +11,10 @@ export type LeaderBoard = {
     header: {
       values: {
         title: string;
+        description: string;
       }
-    }
+    },
+    baseName: string;
   };
   id: number;
   metric: string;

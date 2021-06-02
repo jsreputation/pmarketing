@@ -3,10 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
-import {
-  LeaderBoard,
-  UserRanking
-} from './models/rank.model';
+import { LeaderBoard, UserRanking } from './models/rank.model';
 
 const camelToPascalCase = (str: string) => str.replace(/\B_[a-z]/g, m => (
   m.charAt(1).toUpperCase()
@@ -94,9 +91,9 @@ export class V4RankService {
   private extractImages(leaderboard: LeaderBoard): LeaderBoard {
     const images = leaderboard.images;
     let aboutBanner = '';
-    if (leaderboard.displayProperties.aboutImage &&
-      leaderboard.displayProperties.aboutImage.value) {
-      aboutBanner = leaderboard.displayProperties.aboutImage.value.imageUrl;
+    if (leaderboard.displayProperties?.aboutImage &&
+      leaderboard.displayProperties?.aboutImage.value) {
+      aboutBanner = leaderboard.displayProperties?.aboutImage.value.imageUrl;
       leaderboard.aboutBanner = aboutBanner ? aboutBanner : '';
     }
     if (images && images.length) {
