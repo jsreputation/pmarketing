@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ILoyaltyTransactionHistory, LoyaltyService } from '@perxtech/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'points-history',
@@ -7,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PointHistoryComponent implements OnInit {
 
-  constructor() { }
+  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  constructor(private loyaltyService: LoyaltyService) { }
 
-  public ngOnInit(): void { }
+  public ngOnInit(): void {
+    this.transactions = this.loyaltyService.getTransactionHistory();
+  }
 
 }

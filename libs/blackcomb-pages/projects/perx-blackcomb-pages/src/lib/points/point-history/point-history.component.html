@@ -1,33 +1,17 @@
 <div class="point-history">
-    <mat-card>
+    <mat-card *ngFor="let transaction of transactions | async">
         <mat-card-content class="transaction">
             <div class="program">
                 <div>
-                    <h3>Perx Purple</h3>
+                    <h3>{{transaction.name}}</h3>
                     <div class="muted">
-                        16 September 2021, 21:23
+                        {{transaction.transactedAt | date:'d MMMM yyyy, H:mm'}}
                     </div>
                 </div>
             </div>
             <div class="detail">
-                <h2 class="positive-value"> 750</h2>
-                <div class="muted">points recieved</div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-content class="transaction">
-            <div class="program">
-                <div>
-                    <h3>Perx Purple</h3>
-                    <div class="muted">
-                        16 September 2021, 21:23
-                    </div>
-                </div>
-            </div>
-            <div class="detail">
-                <h2 class=""> 750</h2>
-                <div class="muted">points recieved</div>
+                <h2 [ngClass]="{'positive-value': transaction.pointsAmount > 0}">{{transaction.pointsAmount}}</h2>
+                <div class="muted">{{transaction.identifier}}</div>
             </div>
         </mat-card-content>
     </mat-card>
