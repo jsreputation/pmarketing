@@ -26,7 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { QRCodeModule } from 'angularx-qrcode';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {
@@ -190,7 +190,7 @@ export const appInit =
     StampModule,
     MerchantsModule.forRoot(),
     QRCodeModule,
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     InfiniteScrollModule,
     LoyaltyModule.forRoot(),
     GhostsModule,

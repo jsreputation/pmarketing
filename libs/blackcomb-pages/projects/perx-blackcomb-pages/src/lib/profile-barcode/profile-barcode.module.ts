@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { UtilsModule } from '@perxtech/core';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { ProfileBarcodeComponent } from './profile-barcode.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { ProfileBarcodeComponent } from './profile-barcode.component';
     UtilsModule,
     MatButtonModule,
     TranslateModule,
-    NgxBarcodeModule
+    NgxBarcode6Module
   ]
 })
 export class ProfileBarcodeModule { }

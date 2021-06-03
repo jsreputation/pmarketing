@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Type } from '@angular/core';
 
 import { QRCodeComponent } from './qr-code.component';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { VouchersModule, IVoucherService, NotificationService, VoucherState } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,7 +21,7 @@ describe('QrCodeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [QRCodeComponent],
       imports: [
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         VouchersModule,
         RouterTestingModule.withRoutes([{
           path: 'wallet',

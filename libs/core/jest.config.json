@@ -5,7 +5,7 @@
     "projects"
   ],
   "transformIgnorePatterns": [
-    "node_modules/(?!ngx-barcode)"
+    "node_modules/(?!ngx-barcode6)"
   ],
   "transform": {
     "^.+\\.(ts|js|html)$": "ts-jest"
@@ -19,10 +19,12 @@
     "ts-jest": {
       "tsConfig": "<rootDir>/tsconfig.spec.json",
       "stringifyContentPathRegex": "\\.html$",
-      "astTransformers": [
-        "jest-preset-angular/build/InlineFilesTransformer",
-        "jest-preset-angular/build/StripStylesTransformer"
-      ]
+      "astTransformers": {
+        "before": [
+          "jest-preset-angular/build/InlineFilesTransformer",
+          "jest-preset-angular/build/StripStylesTransformer"
+        ]
+      }
     }
   }
 }

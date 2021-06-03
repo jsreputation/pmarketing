@@ -1,6 +1,4 @@
-import {
-  OnInit
-} from '@angular/core';
+import { OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -8,7 +6,6 @@ import {
   ILoyaltyTransaction,
   ILoyalty
 } from '@perxtech/core';
-
 
 export class CardComponentMock implements OnInit {
   public transactions$: Observable<ILoyaltyTransaction[]>;

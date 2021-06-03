@@ -46,7 +46,7 @@ import { RewardComponent } from './reward/reward.component';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
-import { NgxBarcodeModule } from 'ngx-barcode';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { RedeemModule } from './redeem/redeem.module';
 import { QRModule } from './qr/qr.module';
@@ -134,7 +134,7 @@ const comps: any[] = [
     FormsModule,
     ReactiveFormsModule,
     QRCodeModule,
-    NgxBarcodeModule,
+    NgxBarcode6Module,
     MatFormFieldModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -194,4 +194,4 @@ const comps: any[] = [
   declarations: [...comps],
   providers: [SecondsToStringPipe],
 })
-export class PerxBlackcombPagesModule {}
+export class PerxBlackcombPagesModule { }

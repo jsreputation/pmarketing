@@ -1,6 +1,5 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
 const path = require('path');
-const { version } = require('./package.json');
 const fs = require('fs');
 const async = require('async');
 const colors = require('colors');
