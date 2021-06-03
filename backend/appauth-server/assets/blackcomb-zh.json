@@ -443,6 +443,14 @@
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
     "LOYALTY_POINTS": "loyalty points"
   },
+  "POINTS_TRANSFER": {
+    "FROM": "From",
+    "TO": "To",
+    "POINTS_TO_TRANSFER": "Points to transfer",
+    "TRANSFER_NOTICE": "Transferred points will adhere to recipient program's points expiration cycle.",
+    "TRANSFER_POINTS_CTA": "Transfer Points",
+    "CANCEL": "Cancel"
+  },
   "Gold": "黃金",
   "Silver": "銀卡",
   "Green": "綠色",
