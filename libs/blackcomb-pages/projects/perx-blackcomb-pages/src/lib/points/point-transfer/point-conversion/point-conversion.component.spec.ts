@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PointTransferComponent } from './point-transfer.component';
+import { PointConversionComponent } from './point-conversion.component';
 
-describe('PointTransferComponent', () => {
-  let component: PointTransferComponent;
-  let fixture: ComponentFixture<PointTransferComponent>;
+describe('PointConversionComponent', () => {
+  let component: PointConversionComponent;
+  let fixture: ComponentFixture<PointConversionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PointTransferComponent ]
+      declarations: [ PointConversionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PointTransferComponent);
+    fixture = TestBed.createComponent(PointConversionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
