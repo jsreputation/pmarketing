@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
-  ActivatedRoute
+  ActivatedRoute, Router
 } from '@angular/router';
 import { Location } from '@angular/common';
 import {
@@ -43,12 +43,14 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
   public repeatGhostCount: number = 3;
   public prizeSet: IPrizeSet;
   private destroy$: Subject<void> = new Subject<void>();
+  public prizeSetStatus: string;
 
   constructor(private activeRoute: ActivatedRoute,
               private location: Location,
               private loyaltyService: LoyaltyService,
               private rewardsService: RewardsService,
-              private prizeSetOutcomeService: IPrizeSetOutcomeService) { }
+              private prizeSetOutcomeService: IPrizeSetOutcomeService,
+              private router: Router) { }
 
     public ngOnInit(): void {
       let prizeSetId: number;
@@ -69,7 +71,7 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
         ).subscribe(([outcomes, issuedOutcomes]: ([IPrizeSetItem[], IPrizeSetItem[]])) => {
-            outcomes.map((campaignPrizeSet) => {
+            outcomes?.map((campaignPrizeSet) => {
               const issuedItem = issuedOutcomes?.find(prizeSet => prizeSet?.campaignPrizeId === campaignPrizeSet.campaignPrizeId);
               if (issuedItem) {
                 campaignPrizeSet = Object.assign(campaignPrizeSet, issuedItem);
@@ -111,10 +113,20 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
 
     public getPrizeSetState(transactionId: number): Observable<IPrizeSetItem[]> {
       return this.prizeSetOutcomeService.getPrizeSetState(transactionId).pipe(
-        switchMap((status: string) =>
-            status === PrizeSetState.completed ? this.prizeSetOutcomeService.getPrizeSetIssuedOutcomes(transactionId) : of([])
+        switchMap((status: string) => {
+            this.prizeSetStatus = status;
+            return status === PrizeSetState.completed ? this.prizeSetOutcomeService.getPrizeSetIssuedOutcomes(transactionId) : of([]);
+          }
         )
       );
+    }
+
+    public goToRewardDetails(outcome: IPrizeSetItem): void {
+      if (this.isActualOutcomeMode && outcome.actualOutcomeId) {
+        this.router.navigate(['/voucher-detail', outcome.actualOutcomeId]);
+      } else if (!this.isActualOutcomeMode && outcome.campaignPrizeId) {
+        this.router.navigate(['/reward-detail', outcome.campaignPrizeId]);
+      }
     }
 
     public back(): void {

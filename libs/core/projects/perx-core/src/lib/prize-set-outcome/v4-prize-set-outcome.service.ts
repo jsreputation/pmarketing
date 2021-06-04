@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { Observable, timer } from 'rxjs';
-import { map, switchMap, last, takeUntil, takeWhile } from 'rxjs/operators';
+import { Observable, timer, of } from 'rxjs';
+import { map, switchMap, last, takeUntil, takeWhile, catchError } from 'rxjs/operators';
 import {
   IPrizeSetItem,
   IPrizeSetOutcome,
@@ -78,7 +78,8 @@ export class V4PrizeSetOutcomeService implements IPrizeSetOutcomeService {
       takeWhile((transaction: IPrizeSetOutcome) => transaction.state !== 'completed' && transaction.state !== 'failed', true),
       takeUntil(timer(10500)),
       last(),
-      map((transaction: IPrizeSetOutcome) => transaction.state)
+      map((transaction: IPrizeSetOutcome) => transaction.state),
+      catchError(_ => of('failed'))
     );
   }
 
