@@ -433,7 +433,10 @@
     "POINTS_TO_TRANSFER": "Points to transfer",
     "TRANSFER_NOTICE": "Transferred points will adhere to recipient program's points expiration cycle.",
     "TRANSFER_POINTS_CTA": "Transfer Points",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "EXCHANGE_RATE": "Exchange rate:",
+    "EXPIRY_NOTICE": "Points transferred to {programName} will expire on {date}",
+    "CONVERSION_NOTICE": "Upon transfer, these points will convert to"
   },
   "Gold": "Gold",
   "Silver": "Silver",

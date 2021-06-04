@@ -23,6 +23,14 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="exchange-rate">
+                <div>
+                    {{'POINTS_TRANSFER.EXCHANGE_RATE' | translate}}
+                </div>
+                <div>
+                    1 point = 0.75 point
+                </div>
+            </div>
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.POINTS_TO_TRANSFER' | translate}}</mat-label>
@@ -31,6 +39,13 @@
             </div>
             <div class="notice">
                 {{'POINTS_TRANSFER.TRANSFER_NOTICE' | translate}}
+            </div>
+            <div class="notice">
+                {{'POINTS_TRANSFER.CONVERSION_NOTICE' | translate}}
+                <div class="conversion">
+                    750 points in Perx Purple
+                </div>
+                {{'POINTS_TRANSFER.EXPIRY_NOTICE' | translate}}
             </div>
         </mat-card-content>
     </mat-card>
