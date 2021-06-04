@@ -25,10 +25,7 @@ export class MiniRankComponent implements OnInit {
       this.rantTextFn = () => this.translate.get('LEADER_BOARD.POSITION');
     }
 
-    if (this.metric) {
-      // use metric key to display relavant translation
-      this.translate.get(`LEADER_BOARD.${this.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
-    } else {
+    if (!this.metric) {
       this.translate.get('LEADER_BOARD.DEFAULT_METRIC_TITLE').subscribe(metric => this.metric = metric);
     }
   }
