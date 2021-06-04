@@ -28,7 +28,7 @@ export class PromosComponent implements OnInit {
       },
       {
         label: 'Promotions',
-        items: this.reader.getFromUrl('https://blog.abenson.com/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/promotions/promotions-staging/feed/', true)
       }
     ];
   }
