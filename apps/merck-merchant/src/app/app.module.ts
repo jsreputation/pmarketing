@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -15,22 +15,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   AuthenticationModule,
-  RewardsModule,
-  LoyaltyModule,
-  VouchersModule,
-  MerchantsModule,
+  AuthenticationService,
   ConfigModule,
+  ConfigService,
+  IConfig,
+  LanguageInterceptor,
+  LoyaltyModule,
+  MerchantAdminModule,
+  MerchantsModule,
   ProfileModule,
   ProfileServiceModule,
-  MerchantAdminModule,
-  LanguageInterceptor,
-  ConfigService,
-  TokenStorage,
-  AuthenticationService,
+  RewardsModule,
   ThemesService,
-  IConfig
+  TokenStorage,
+  VouchersModule
 } from '@perxtech/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
@@ -44,19 +44,15 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import {
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-  HttpClient
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
-import { tap, switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const appInit =
@@ -76,6 +72,7 @@ export const appInit =
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
