@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     private translateService: TranslateService,
     private store: TokenStorage,
-    private translate: TranslateService,
     private themesService: ThemesService,
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
