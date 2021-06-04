@@ -5,6 +5,9 @@
     .mat-form-field,
     button {
         width: 100%;
+        &:disabled {
+            opacity: 0.45;
+        }
     }
 
     .exchange-rate {

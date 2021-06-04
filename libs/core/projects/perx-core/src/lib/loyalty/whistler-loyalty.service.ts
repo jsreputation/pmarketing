@@ -21,6 +21,7 @@ import {
 } from '@perxtech/whistler';
 
 import {
+  IExchangerate,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
@@ -134,6 +135,12 @@ export class WhistlerLoyaltyService extends LoyaltyService {
 
   // @ts-ignore
   public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ILoyaltyTransactionHistory[]> {
+    throw new Error('Not implemented.');
+  }
+
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/tslint/config
+  public getLoyaltyExchangerates(sourceLoyaltyId: number, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<IExchangerate[]> {
     throw new Error('Not implemented.');
   }
 }

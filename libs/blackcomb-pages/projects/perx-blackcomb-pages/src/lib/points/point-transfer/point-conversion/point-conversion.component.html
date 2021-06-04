@@ -4,31 +4,29 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.FROM' | translate}}</mat-label>
-                    <mat-select>
-                        <mat-option value="asdf">asdf</mat-option>
-                        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
-                      </mat-option> -->
+                    <mat-select (selectionChange)="onSourceChanged($event)">
+                        <mat-option *ngFor="let loyaltyProgram of loyaltyProgramList" [value]="loyaltyProgram.value">
+                            {{loyaltyProgram.text}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.TO' | translate}}</mat-label>
-                    <mat-select>
-                        <mat-option value="asdf">asdf</mat-option>
-                        <!-- <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
-                      </mat-option> -->
+                    <mat-select (selectionChange)="onDestinationChanged($event)">
+                        <mat-option *ngFor="let loyaltyProgram of loyaltyProgramList" [value]="loyaltyProgram.value">
+                            {{loyaltyProgram.text}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="exchange-rate">
+            <div *ngIf="exchangerateMessage" class="exchange-rate">
                 <div>
                     {{'POINTS_TRANSFER.EXCHANGE_RATE' | translate}}
                 </div>
                 <div>
-                    1 point = 0.75 point
+                    {{exchangerateMessage}}
                 </div>
             </div>
             <div>
@@ -51,7 +49,7 @@
     </mat-card>
     <div class="bottom-sheet">
         <div>
-            <button mat-raised-button color="primary">
+            <button [disabled]="!currentExchangeRate" mat-raised-button color="primary">
                 {{'POINTS_TRANSFER.TRANSFER_POINTS_CTA' | translate}}
             </button>
         </div>

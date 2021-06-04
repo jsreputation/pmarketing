@@ -26,6 +26,7 @@ import {
   IRewardTransactionHistory,
   TransactionDetailType,
   IStampTransactionHistory,
+  IExchangerate,
 } from './models/loyalty.model';
 
 import {
@@ -99,8 +100,21 @@ interface IV4Loyalty {
   tier_points?: number;
 }
 
+interface IV4ExchangeRate {
+  id: number;
+  destination_amount: number;
+  destination_stored_value_campaign_id: number;
+  source_amount: number;
+  source_stored_value_campaign_id: number;
+}
+
 interface IV4GetLoyaltiesResponse {
   data: IV4Loyalty[];
+  meta?: IV4Meta;
+}
+
+interface IV4GetExchangeRatesResponse {
+  data: IV4ExchangeRate[];
   meta?: IV4Meta;
 }
 
@@ -200,7 +214,7 @@ export class V4LoyaltyService extends LoyaltyService {
       });
   }
 
-  public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
+  private static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
     const copiedLoyalty: IV4Loyalty = { ...loyalty };
     let nextTier;
     let highestTierData;
@@ -241,10 +255,10 @@ export class V4LoyaltyService extends LoyaltyService {
           expireDate: aging.expiring_on_date,
           points: aging.points_expiring
         })) : loyalty.points_expiry ?
-          [ {
+          [{
             expireDate: loyalty.points_expiry.expiring_on_date,
             points: loyalty.points_expiry.points_expiring
-          } ] : undefined,
+          }] : undefined,
       membershipExpiry: loyalty.membership_expiry,
       tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
         id: tier.id,
@@ -261,7 +275,17 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
+  private static v4ExchangeRateToExchangerate(exchangeRate: IV4ExchangeRate): IExchangerate {
+    return {
+      id: exchangeRate.id,
+      destinationAmount: exchangeRate.destination_amount,
+      destinationCampaignId: exchangeRate.destination_stored_value_campaign_id,
+      sourceAmount: exchangeRate.source_amount,
+      sourceCampaignId: exchangeRate.source_stored_value_campaign_id
+    };
+  }
+
+  private static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
     const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
@@ -277,7 +301,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(
+  private static v4TransactionHistoryToTransactionHistory(
     transactionHistory: IV4LoyaltyTransactionPropertiesHistory
   ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
@@ -317,21 +341,21 @@ export class V4LoyaltyService extends LoyaltyService {
           data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
         case TransactionDetailType.game:
-         const gameDetails = transactionDetails as IV4GameTransactionHistory;
-         data = {
+          const gameDetails = transactionDetails as IV4GameTransactionHistory;
+          data = {
             id: transactionDetails.id,
             gameName: gameDetails.campaign.name
           };
-         break;
+          break;
         case TransactionDetailType.stamp:
           const stampDetails = transactionDetails as IV4StampTransactionHistory;
           data = {
-             id: transactionDetails.id,
-             stampCampaignName: stampDetails.campaign.name
-           };
+            id: transactionDetails.id,
+            stampCampaignName: stampDetails.campaign.name
+          };
           break;
       }
-    // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
+      // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
       // all-it transaction currently have no data in transaction_details assume it is a purchase.
       const thProps = transactionHistory.properties;
@@ -383,6 +407,24 @@ export class V4LoyaltyService extends LoyaltyService {
       map((res: IV4GetLoyaltiesResponse) => res.data),
       map((loyalties: IV4Loyalty[]) => loyalties.map(
         (loyalty: IV4Loyalty) => V4LoyaltyService.v4LoyaltyToLoyalty(loyalty)
+      ))
+    );
+  }
+
+  public getLoyaltyExchangerates(
+    sourceLoyaltyId: number, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<IExchangerate[]> {
+    return this.http.get<IV4GetExchangeRatesResponse>(
+      `${this.apiHost}/v4/loyalty/${sourceLoyaltyId}/exchange_rates`,
+      {
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }
+    ).pipe(
+      map((res: IV4GetExchangeRatesResponse) => res.data),
+      map((loyalties: IV4ExchangeRate[]) => loyalties.map(
+        (loyalty: IV4ExchangeRate) => V4LoyaltyService.v4ExchangeRateToExchangerate(loyalty)
       ))
     );
   }

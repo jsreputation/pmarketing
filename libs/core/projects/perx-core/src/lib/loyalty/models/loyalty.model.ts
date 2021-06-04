@@ -57,6 +57,14 @@ export interface ILoyalty {
   tierPoints?: number;
 }
 
+export interface IExchangerate {
+  id: number;
+  destinationAmount: number;
+  destinationCampaignId: number;
+  sourceAmount: number;
+  sourceCampaignId: number;
+}
+
 export interface ILoyaltyTransaction {
   id: number;
   name?: string;

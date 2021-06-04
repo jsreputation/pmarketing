@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import {
+  IExchangerate,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory
@@ -21,4 +22,6 @@ export abstract class LoyaltyService {
     sortBy?: string,
     orderBy?: string
   ): Observable<ILoyaltyTransactionHistory[]>;
+
+  public abstract getLoyaltyExchangerates(sourceLoyaltyId: number, page?: number, pageSize?: number): Observable<IExchangerate[]>;
 }
