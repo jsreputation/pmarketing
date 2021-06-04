@@ -1,34 +1,11 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID
-} from '@angular/core';
-import {
-  ConfigService,
-  IConfig,
-  NotificationService,
-  TokenStorage,
-  ThemesService,
-  ITheme,
-  AuthenticationService
-} from '@perxtech/core';
-import {
-  BarSelectedItem,
-  PageAppearence,
-  PageProperties
-} from './page-properties';
-import {
-  isPlatformBrowser,
-  Location
-} from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ConfigService, IConfig, ITheme, NotificationService, ThemesService, TokenStorage, } from '@perxtech/core';
+import { BarSelectedItem, PageAppearence, PageProperties } from './page-properties';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
-import {
-  LangChangeEvent,
-  TranslateService
-} from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-root',
@@ -58,31 +35,29 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     private translateService: TranslateService,
     private store: TokenStorage,
-    private translate: TranslateService,
     private themesService: ThemesService,
-    private authenticationService: AuthenticationService,
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       if (message === 'LOGIN_SESSION_EXPIRED') {
-        this.router.navigate(['/login']);
-        this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(
-          txt =>
-            this.snackBar.openFromComponent(CustomSnackbarComponent, {
-              data: {
-                txt,
-                icon: 'clear',
-              },
-              duration: 4000,
-            })
-        );
+        this.router.navigate([ '/login' ]);
+        this.translateService.get('LOGIN_SESSION_EXPIRED').subscribe(txt => {
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: {
+              message: txt,
+              icon: 'clear',
+            },
+            duration: 4000,
+          });
+        });
+      } else {
+        this.snackBar.openFromComponent(CustomSnackbarComponent, {
+          data: {
+            message,
+            icon: 'clear',
+          },
+          duration: 4000,
+        });
       }
-      this.snackBar.openFromComponent(CustomSnackbarComponent, {
-        data: {
-          message,
-          icon: 'clear',
-        },
-        duration: 4000,
-      });
     });
   }
 
@@ -112,12 +87,6 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-
-    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (!isAuth) {
-        this.router.navigateByUrl('/login');
-      }
-    });
 
   }
 
