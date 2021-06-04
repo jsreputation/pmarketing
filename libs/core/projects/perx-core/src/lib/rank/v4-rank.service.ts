@@ -91,8 +91,7 @@ export class V4RankService {
   private extractImages(leaderboard: LeaderBoard): LeaderBoard {
     const images = leaderboard.images;
     let aboutBanner = '';
-    if (leaderboard.displayProperties?.aboutImage &&
-      leaderboard.displayProperties?.aboutImage.value) {
+    if (leaderboard?.displayProperties?.aboutImage?.value) {
       aboutBanner = leaderboard.displayProperties?.aboutImage.value.imageUrl;
       leaderboard.aboutBanner = aboutBanner ? aboutBanner : '';
     }
