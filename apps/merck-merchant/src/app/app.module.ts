@@ -66,8 +66,6 @@ export const appInit =
     const token = urlParams.get('token');
     if (token) {
       authService.saveUserAccessToken(token);
-    } else {
-      console.error('Could not retrieve user token');
     }
 
     configService.readAppConfig().pipe(
