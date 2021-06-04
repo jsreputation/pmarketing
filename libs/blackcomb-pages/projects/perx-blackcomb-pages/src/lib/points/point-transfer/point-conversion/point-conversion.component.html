@@ -21,12 +21,12 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div *ngIf="exchangerateMessage" class="exchange-rate">
+            <div *ngIf="exchangeRateMessage" class="exchange-rate">
                 <div>
                     {{'POINTS_TRANSFER.EXCHANGE_RATE' | translate}}
                 </div>
                 <div>
-                    {{exchangerateMessage}}
+                    {{exchangeRateMessage}}
                 </div>
             </div>
             <div>
@@ -35,21 +35,21 @@
                     <input matInput value="" type="number">
                 </mat-form-field>
             </div>
-            <div class="notice">
+            <div *ngIf="!exchangeCalculationMessage" class="notice">
                 {{'POINTS_TRANSFER.TRANSFER_NOTICE' | translate}}
             </div>
-            <div class="notice">
+            <div *ngIf="exchangeCalculationMessage" class="notice">
                 {{'POINTS_TRANSFER.CONVERSION_NOTICE' | translate}}
                 <div class="conversion">
-                    750 points in Perx Purple
+                    {{exchangeCalculationMessage}}
                 </div>
-                {{'POINTS_TRANSFER.EXPIRY_NOTICE' | translate}}
+                {{expiryMessage}}
             </div>
         </mat-card-content>
     </mat-card>
     <div class="bottom-sheet">
         <div>
-            <button [disabled]="!currentExchangeRate" mat-raised-button color="primary">
+            <button [disabled]="!exchangeCalculationMessage" mat-raised-button color="primary">
                 {{'POINTS_TRANSFER.TRANSFER_POINTS_CTA' | translate}}
             </button>
         </div>

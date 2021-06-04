@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
+import { TranslateService } from '@ngx-translate/core';
 import { IExchangerate, ILoyalty, LoyaltyService } from '@perxtech/core';
 
 interface ISelectOption {
@@ -15,10 +16,13 @@ interface ISelectOption {
 export class PointConversionComponent implements OnInit {
   public loyaltyProgramList: ISelectOption[];
   public currentExchangeRate: IExchangerate | undefined;
-  public exchangerateMessage: string | undefined;
+  public exchangeRateMessage: string | undefined;
+  public confirmationMessage: string | undefined;
+  public exchangeCalculationMessage: string | undefined;
+  public expiryMessage: string | undefined;
   private exchangeRates: IExchangerate[];
 
-  constructor(private loyaltyService: LoyaltyService) { }
+  constructor(private loyaltyService: LoyaltyService, private translateService: TranslateService) { }
 
   public ngOnInit(): void {
     this.getAllLoyaltyPrograms();
@@ -26,10 +30,8 @@ export class PointConversionComponent implements OnInit {
 
   private getAllLoyaltyPrograms(): void {
     this.loyaltyService.getLoyalties().subscribe((loyaltyPrograms: ILoyalty[]) => {
-      // this.loyaltyPrograms = loyaltyPrograms;
       this.buildLoyaltyProgramNameArray(loyaltyPrograms);
     });
-
   }
 
   private buildLoyaltyProgramNameArray(loyaltyPrograms: ILoyalty[]): void {
@@ -44,16 +46,13 @@ export class PointConversionComponent implements OnInit {
     });
   }
 
-  // private buildConfirmationMessage(): void {
-
-  // }
-
   public onSourceChanged(event: MatOptionSelectionChange): void {
     this.getExchangeRates(event.source.value);
   }
 
   public onDestinationChanged(event: MatOptionSelectionChange): void {
     this.setCurrentExchangeRate(event.source.value);
+    this.buildExpiryMessage();
   }
 
   private setCurrentExchangeRate(destinationCampaignId: number): void {
@@ -63,16 +62,36 @@ export class PointConversionComponent implements OnInit {
       this.currentExchangeRate = this.exchangeRates.find(rate => rate.destinationCampaignId === destinationCampaignId);
       // it is possible that some programs may not have rates defined
       if (this.currentExchangeRate) {
-        this.buildExchangeRateMessage();
+        this.buildConfirmationMessage();
       } else {
         // reset exchange rate message
-        this.exchangerateMessage = undefined;
+        this.exchangeRateMessage = undefined;
       }
     }
   }
 
   private buildExchangeRateMessage(): void {
-    this.exchangerateMessage = `${this.currentExchangeRate?.sourceAmount} point = ${this.currentExchangeRate?.destinationAmount} point`;
+    this.translateService.get(['POINTS_TRANSFER.POINT', 'POINTS_TRANSFER.POINTS']).subscribe((point: string[]) => {
+      const pointText = point['POINTS_TRANSFER.POINT'];
+      const pointsText = point['POINTS_TRANSFER.POINTS'];
+      if (this.currentExchangeRate?.sourceAmount && this.currentExchangeRate?.destinationAmount) {
+        this.exchangeRateMessage =
+          `${this.currentExchangeRate?.sourceAmount} ${this.currentExchangeRate.sourceAmount > 1 ? pointsText : pointText} => ${this.currentExchangeRate?.destinationAmount} ${this.currentExchangeRate?.destinationAmount > 1 ? pointsText : pointText}`;
+      }
+    });
+  }
+
+  private buildConfirmationMessage(): void {
+    this.translateService.get('POINTS_TRANSFER.CONVERSION_CALCULATION').subscribe((message: string) => {
+      this.exchangeCalculationMessage = message.replace('{programName}', 'asdf').replace('{points}', '1234');
+    });
+    this.buildExchangeRateMessage();
+  }
+
+  private buildExpiryMessage(): void {
+    this.translateService.get('POINTS_TRANSFER.EXPIRY_NOTICE').subscribe((message: string) => {
+      this.expiryMessage = message.replace('{programName}', 'asdf').replace('{date}', 'asdfasdff');
+    });
   }
 
 }

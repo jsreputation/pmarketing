@@ -459,7 +459,10 @@
     "CANCEL": "Cancel",
     "EXCHANGE_RATE": "Exchange rate:",
     "EXPIRY_NOTICE": "Points transferred to {programName} will expire on {date}",
-    "CONVERSION_NOTICE": "Upon transfer, these points will convert to"
+    "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
+    "CONVERSION_CALCULATION": "{points} points in {programName}",
+    "POINT": "point",
+    "POINTS": "points"
   },
   "Gold": "Gold",
   "Silver": "Silver",
