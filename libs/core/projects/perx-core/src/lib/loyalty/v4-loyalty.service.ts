@@ -214,7 +214,7 @@ export class V4LoyaltyService extends LoyaltyService {
       });
   }
 
-  private static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
+  public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
     const copiedLoyalty: IV4Loyalty = { ...loyalty };
     let nextTier;
     let highestTierData;
@@ -285,7 +285,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  private static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
+  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
     const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
@@ -301,7 +301,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  private static v4TransactionHistoryToTransactionHistory(
+  public static v4TransactionHistoryToTransactionHistory(
     transactionHistory: IV4LoyaltyTransactionPropertiesHistory
   ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
