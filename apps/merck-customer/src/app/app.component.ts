@@ -39,25 +39,25 @@ export class AppComponent implements OnInit {
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       if (message === 'LOGIN_SESSION_EXPIRED') {
-        this.router.navigate(['/login']);
-        this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(
-          txt =>
-            this.snackBar.openFromComponent(CustomSnackbarComponent, {
-              data: {
-                txt,
-                icon: 'clear',
-              },
-              duration: 4000,
-            })
-        );
+        this.router.navigate([ '/login' ]);
+        this.translateService.get('LOGIN_SESSION_EXPIRED').subscribe(txt => {
+          this.snackBar.openFromComponent(CustomSnackbarComponent, {
+            data: {
+              message: txt,
+              icon: 'clear',
+            },
+            duration: 4000,
+          });
+        });
+      } else {
+        this.snackBar.openFromComponent(CustomSnackbarComponent, {
+          data: {
+            message,
+            icon: 'clear',
+          },
+          duration: 4000,
+        });
       }
-      this.snackBar.openFromComponent(CustomSnackbarComponent, {
-        data: {
-          message,
-          icon: 'clear',
-        },
-        duration: 4000,
-      });
     });
   }
 
