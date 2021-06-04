@@ -1,18 +1,6 @@
-import {
-  LangChangeEvent,
-  TranslateService
-} from '@ngx-translate/core';
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  AuthenticationService,
-  ConfigService,
-  IConfig,
-  NotificationService,
-  TokenStorage
-} from '@perxtech/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { ConfigService, IConfig, NotificationService, TokenStorage } from '@perxtech/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Router } from '@angular/router';
@@ -32,7 +20,6 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private configService: ConfigService,
     private store: TokenStorage,
-    private authenticationService: AuthenticationService,
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
       if (message === 'LOGIN_SESSION_EXPIRED') {
@@ -71,10 +58,5 @@ export class AppComponent implements OnInit {
       }
     );
 
-    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (!isAuth) {
-        this.router.navigateByUrl('/login');
-      }
-    });
   }
 }
