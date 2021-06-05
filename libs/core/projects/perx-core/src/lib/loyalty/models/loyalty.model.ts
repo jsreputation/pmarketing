@@ -69,6 +69,16 @@ export interface IExchangerate {
   sourceCampaignName: string;
 }
 
+export interface IPointTransferResponse {
+  id: number;
+}
+
+export interface IPointTransfer {
+  sourceId: number;
+  destinationId: number;
+  amount: number;
+}
+
 export interface ILoyaltyTransaction {
   id: number;
   name?: string;

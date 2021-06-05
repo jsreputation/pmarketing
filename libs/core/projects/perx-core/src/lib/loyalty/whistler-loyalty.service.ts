@@ -25,6 +25,8 @@ import {
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
+  IPointTransfer,
+  IPointTransferResponse,
 } from './models/loyalty.model';
 import { LoyaltyService } from './loyalty.service';
 
@@ -141,6 +143,11 @@ export class WhistlerLoyaltyService extends LoyaltyService {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/tslint/config
   public getLoyaltyExchangerates(sourceLoyaltyId: number, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<IExchangerate[]> {
+    throw new Error('Not implemented.');
+  }
+
+  // @ts-ignore
+  public tansferPoints(pointTransfer: IPointTransfer): Observable<IPointTransferResponse> {
     throw new Error('Not implemented.');
   }
 }

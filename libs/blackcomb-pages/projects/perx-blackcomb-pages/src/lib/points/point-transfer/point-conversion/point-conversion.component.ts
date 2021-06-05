@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IExchangerate, ILoyalty, LoyaltyService } from '@perxtech/core';
+import { IExchangerate, ILoyalty, IPointTransfer, LoyaltyService } from '@perxtech/core';
 
 interface ISelectOption {
   value: number;
@@ -22,6 +22,7 @@ export class PointConversionComponent implements OnInit {
   public expiryMessage: string | undefined;
   public currentExchangeRate: IExchangerate | undefined;
   private exchangeRates: IExchangerate[];
+  private pointsAmount: number;
 
   constructor(
     private loyaltyService: LoyaltyService,
@@ -62,6 +63,7 @@ export class PointConversionComponent implements OnInit {
   public onPointValueChanged(element: HTMLInputElement): void {
     if (this.currentExchangeRate && !isNaN(element.valueAsNumber)) {
       this.buildConfirmationMessage(element.valueAsNumber);
+      this.pointsAmount = element.valueAsNumber;
     } else {
       this.exchangeCalculationMessage = undefined;
     }
@@ -112,10 +114,22 @@ export class PointConversionComponent implements OnInit {
       if (this.currentExchangeRate) {
         const rate = this.currentExchangeRate;
         const dateString = this.datePipe.transform(rate.destinationCampaignEndsAt, 'd MMMM y');
-        this.expiryMessage = message
+        this.expiryMessage = dateString ? message
           .replace('{programName}', rate.destinationCampaignName)
-          .replace('{date}', dateString ? dateString : '');
+          .replace('{date}', dateString ? dateString : '') : '';
       }
     });
+  }
+
+  public transferPoints(): void {
+    if (this.currentExchangeRate) {
+      const transfer: IPointTransfer = {
+        amount: this.pointsAmount,
+        sourceId: this.currentExchangeRate.sourceCampaignId,
+        destinationId: this.currentExchangeRate.destinationCampaignId
+      };
+      // TODO: handle this
+      this.loyaltyService.tansferPoints(transfer).subscribe(console.log);
+    }
   }
 }

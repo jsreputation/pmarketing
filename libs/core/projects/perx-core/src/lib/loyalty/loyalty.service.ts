@@ -3,7 +3,9 @@ import {
   IExchangerate,
   ILoyalty,
   ILoyaltyTransaction,
-  ILoyaltyTransactionHistory
+  ILoyaltyTransactionHistory,
+  IPointTransfer,
+  IPointTransferResponse
 } from './models/loyalty.model';
 
 export abstract class LoyaltyService {
@@ -24,4 +26,5 @@ export abstract class LoyaltyService {
   ): Observable<ILoyaltyTransactionHistory[]>;
 
   public abstract getLoyaltyExchangerates(sourceLoyaltyId: number, page?: number, pageSize?: number): Observable<IExchangerate[]>;
+  public abstract tansferPoints(pointTransfer: IPointTransfer): Observable<IPointTransferResponse>;
 }
