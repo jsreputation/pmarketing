@@ -15,11 +15,11 @@ interface ISelectOption {
 
 export class PointConversionComponent implements OnInit {
   public loyaltyProgramList: ISelectOption[];
-  public currentExchangeRate: IExchangerate | undefined;
   public exchangeRateMessage: string | undefined;
   public confirmationMessage: string | undefined;
   public exchangeCalculationMessage: string | undefined;
   public expiryMessage: string | undefined;
+  private currentExchangeRate: IExchangerate | undefined;
   private exchangeRates: IExchangerate[];
 
   constructor(private loyaltyService: LoyaltyService, private translateService: TranslateService) { }
@@ -66,6 +66,7 @@ export class PointConversionComponent implements OnInit {
       } else {
         // reset exchange rate message
         this.exchangeRateMessage = undefined;
+        this.exchangeCalculationMessage = undefined;
       }
     }
   }
@@ -83,15 +84,19 @@ export class PointConversionComponent implements OnInit {
 
   private buildConfirmationMessage(): void {
     this.translateService.get('POINTS_TRANSFER.CONVERSION_CALCULATION').subscribe((message: string) => {
-      this.exchangeCalculationMessage = message.replace('{programName}', 'asdf').replace('{points}', '1234');
+      if (this.currentExchangeRate?.destinationCampaignName) {
+        this.exchangeCalculationMessage = message.replace('{programName}', this.currentExchangeRate.destinationCampaignName).replace('{points}', '1234');
+      }
+
     });
     this.buildExchangeRateMessage();
   }
 
   private buildExpiryMessage(): void {
     this.translateService.get('POINTS_TRANSFER.EXPIRY_NOTICE').subscribe((message: string) => {
-      this.expiryMessage = message.replace('{programName}', 'asdf').replace('{date}', 'asdfasdff');
+      if (this.currentExchangeRate?.destinationCampaignName) {
+        this.expiryMessage = message.replace('{programName}', this.currentExchangeRate.destinationCampaignName).replace('{date}', 'asdfasdff');
+      }
     });
   }
-
 }

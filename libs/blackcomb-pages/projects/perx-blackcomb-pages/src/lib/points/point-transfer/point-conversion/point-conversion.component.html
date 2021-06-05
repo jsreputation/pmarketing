@@ -32,13 +32,13 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.POINTS_TO_TRANSFER' | translate}}</mat-label>
-                    <input matInput value="" type="number">
+                    <input matInput value="" type="number" min="1">
                 </mat-form-field>
             </div>
             <div *ngIf="!exchangeCalculationMessage" class="notice">
                 {{'POINTS_TRANSFER.TRANSFER_NOTICE' | translate}}
             </div>
-            <div *ngIf="exchangeCalculationMessage" class="notice">
+            <div *ngIf="exchangeRateMessage && exchangeCalculationMessage" class="notice">
                 {{'POINTS_TRANSFER.CONVERSION_NOTICE' | translate}}
                 <div class="conversion">
                     {{exchangeCalculationMessage}}

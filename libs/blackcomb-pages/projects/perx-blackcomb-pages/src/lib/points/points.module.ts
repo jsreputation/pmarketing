@@ -16,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
   declarations: [
     PointHistoryComponent,
     PointConversionComponent,
-    PointConversionConfirmationComponent],
+    PointConversionConfirmationComponent
+  ],
   exports: [],
   imports: [
     CommonModule,
