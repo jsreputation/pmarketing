@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,7 +30,8 @@ describe('PointConversionComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        DatePipe
       ]
     })
       .compileComponents();
