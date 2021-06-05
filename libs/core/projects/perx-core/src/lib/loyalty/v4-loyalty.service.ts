@@ -103,9 +103,11 @@ interface IV4Loyalty {
 interface IV4ExchangeRate {
   id: number;
   destination_amount: number;
+  destination_stored_value_campaign_ends_at: Date;
   destination_stored_value_campaign_id: number;
   destination_stored_value_campaign_name: string;
   source_amount: number;
+  source_stored_value_campaign_ends_at: Date;
   source_stored_value_campaign_id: number;
   source_stored_value_campaign_name: string;
 }
@@ -281,9 +283,11 @@ export class V4LoyaltyService extends LoyaltyService {
     return {
       id: exchangeRate.id,
       destinationAmount: exchangeRate.destination_amount,
+      destinationCampaignEndsAt: exchangeRate.destination_stored_value_campaign_ends_at,
       destinationCampaignId: exchangeRate.destination_stored_value_campaign_id,
       destinationCampaignName: exchangeRate.destination_stored_value_campaign_name,
       sourceAmount: exchangeRate.source_amount,
+      sourceCampaignEndsAt: exchangeRate.source_stored_value_campaign_ends_at,
       sourceCampaignId: exchangeRate.source_stored_value_campaign_id,
       sourceCampaignName: exchangeRate.source_stored_value_campaign_name
     };

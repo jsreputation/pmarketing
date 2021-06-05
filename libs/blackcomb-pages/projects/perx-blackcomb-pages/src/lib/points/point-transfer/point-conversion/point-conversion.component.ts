@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,10 +20,13 @@ export class PointConversionComponent implements OnInit {
   public confirmationMessage: string | undefined;
   public exchangeCalculationMessage: string | undefined;
   public expiryMessage: string | undefined;
-  private currentExchangeRate: IExchangerate | undefined;
+  public currentExchangeRate: IExchangerate | undefined;
   private exchangeRates: IExchangerate[];
 
-  constructor(private loyaltyService: LoyaltyService, private translateService: TranslateService) { }
+  constructor(
+    private loyaltyService: LoyaltyService,
+    private translateService: TranslateService,
+    private datePipe: DatePipe) { }
 
   public ngOnInit(): void {
     this.getAllLoyaltyPrograms();
@@ -55,6 +59,14 @@ export class PointConversionComponent implements OnInit {
     this.buildExpiryMessage();
   }
 
+  public onPointValueChanged(element: HTMLInputElement): void {
+    if (this.currentExchangeRate && !isNaN(element.valueAsNumber)) {
+      this.buildConfirmationMessage(element.valueAsNumber);
+    } else {
+      this.exchangeCalculationMessage = undefined;
+    }
+  }
+
   private setCurrentExchangeRate(destinationCampaignId: number): void {
     // if source is not set by user on first load, exchange rates wont be defined. so dont even try
     if (this.exchangeRates) {
@@ -62,7 +74,7 @@ export class PointConversionComponent implements OnInit {
       this.currentExchangeRate = this.exchangeRates.find(rate => rate.destinationCampaignId === destinationCampaignId);
       // it is possible that some programs may not have rates defined
       if (this.currentExchangeRate) {
-        this.buildConfirmationMessage();
+        this.buildExchangeRateMessage();
       } else {
         // reset exchange rate message
         this.exchangeRateMessage = undefined;
@@ -75,27 +87,34 @@ export class PointConversionComponent implements OnInit {
     this.translateService.get(['POINTS_TRANSFER.POINT', 'POINTS_TRANSFER.POINTS']).subscribe((point: string[]) => {
       const pointText = point['POINTS_TRANSFER.POINT'];
       const pointsText = point['POINTS_TRANSFER.POINTS'];
-      if (this.currentExchangeRate?.sourceAmount && this.currentExchangeRate?.destinationAmount) {
+      if (this.currentExchangeRate) {
+        const rate = this.currentExchangeRate;
         this.exchangeRateMessage =
-          `${this.currentExchangeRate?.sourceAmount} ${this.currentExchangeRate.sourceAmount > 1 ? pointsText : pointText} => ${this.currentExchangeRate?.destinationAmount} ${this.currentExchangeRate?.destinationAmount > 1 ? pointsText : pointText}`;
+          `${rate.sourceAmount} ${rate.sourceAmount > 1 ? pointsText : pointText} => ${rate.destinationAmount} ${rate.destinationAmount > 1 ? pointsText : pointText}`;
       }
     });
   }
 
-  private buildConfirmationMessage(): void {
-    this.translateService.get('POINTS_TRANSFER.CONVERSION_CALCULATION').subscribe((message: string) => {
-      if (this.currentExchangeRate?.destinationCampaignName) {
-        this.exchangeCalculationMessage = message.replace('{programName}', this.currentExchangeRate.destinationCampaignName).replace('{points}', '1234');
-      }
-
-    });
-    this.buildExchangeRateMessage();
+  private buildConfirmationMessage(value: number): void {
+    if (this.currentExchangeRate) {
+      const rate = this.currentExchangeRate;
+      const pointConversion = (value * (rate.destinationAmount / rate.sourceAmount)).toString();
+      this.translateService.get('POINTS_TRANSFER.CONVERSION_CALCULATION').subscribe((message: string) => {
+        this.exchangeCalculationMessage = message
+          .replace('{programName}', rate.destinationCampaignName)
+          .replace('{points}', pointConversion);
+      });
+    }
   }
 
   private buildExpiryMessage(): void {
     this.translateService.get('POINTS_TRANSFER.EXPIRY_NOTICE').subscribe((message: string) => {
-      if (this.currentExchangeRate?.destinationCampaignName) {
-        this.expiryMessage = message.replace('{programName}', this.currentExchangeRate.destinationCampaignName).replace('{date}', 'asdfasdff');
+      if (this.currentExchangeRate) {
+        const rate = this.currentExchangeRate;
+        const dateString = this.datePipe.transform(rate.destinationCampaignEndsAt, 'd MMMM y');
+        this.expiryMessage = message
+          .replace('{programName}', rate.destinationCampaignName)
+          .replace('{date}', dateString ? dateString : '');
       }
     });
   }

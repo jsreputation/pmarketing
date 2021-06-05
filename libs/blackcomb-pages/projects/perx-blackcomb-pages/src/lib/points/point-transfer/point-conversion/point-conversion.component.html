@@ -32,7 +32,9 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.POINTS_TO_TRANSFER' | translate}}</mat-label>
-                    <input matInput value="" type="number" min="1">
+                    <input [disabled]="!currentExchangeRate" matInput type="number" min="1"
+                        (keyup)="onPointValueChanged($event.target)"
+                        (change)="onPointValueChanged($event.target)">
                 </mat-form-field>
             </div>
             <div *ngIf="!exchangeCalculationMessage" class="notice">

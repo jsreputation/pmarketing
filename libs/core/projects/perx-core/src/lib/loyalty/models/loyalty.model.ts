@@ -60,9 +60,11 @@ export interface ILoyalty {
 export interface IExchangerate {
   id: number;
   destinationAmount: number;
+  destinationCampaignEndsAt: Date;
   destinationCampaignId: number;
   destinationCampaignName: string;
   sourceAmount: number;
+  sourceCampaignEndsAt: Date;
   sourceCampaignId: number;
   sourceCampaignName: string;
 }
