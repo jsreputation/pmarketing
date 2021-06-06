@@ -439,7 +439,8 @@
     "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
     "CONVERSION_CALCULATION": "{points} points in {programName}",
     "POINT": "point",
-    "POINTS": "points"
+    "POINTS": "points",
+    "SUCCESS": "Point transfer completed successully!"
   },
   "Gold": "Gold",
   "Silver": "Silver",

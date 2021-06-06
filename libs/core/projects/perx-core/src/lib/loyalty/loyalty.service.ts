@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
+import { IV4PointsOutcome } from '../campaign/v4-campaign.service';
 import {
   IExchangerate,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
-  IPointTransfer,
-  IPointTransferResponse
+  IPointTransfer
 } from './models/loyalty.model';
 
 export abstract class LoyaltyService {
@@ -26,5 +26,5 @@ export abstract class LoyaltyService {
   ): Observable<ILoyaltyTransactionHistory[]>;
 
   public abstract getLoyaltyExchangerates(sourceLoyaltyId: number, page?: number, pageSize?: number): Observable<IExchangerate[]>;
-  public abstract tansferPoints(pointTransfer: IPointTransfer): Observable<IPointTransferResponse>;
+  public abstract tansferPoints(pointTransfer: IPointTransfer): Observable<IV4PointsOutcome>;
 }

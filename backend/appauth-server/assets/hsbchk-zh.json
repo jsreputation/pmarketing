@@ -379,7 +379,8 @@
     "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
     "CONVERSION_CALCULATION": "{points} points in {programName}",
     "POINT": "point",
-    "POINTS": "points"
+    "POINTS": "points",
+    "SUCCESS": "Point transfer completed successully!"
   },
   "CONTENT_PAGE": "找不到內容",
   "Gold": "黃金",

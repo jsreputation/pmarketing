@@ -27,8 +27,7 @@ import {
   TransactionDetailType,
   IStampTransactionHistory,
   IExchangerate,
-  IPointTransfer,
-  IPointTransferResponse,
+  IPointTransfer
 } from './models/loyalty.model';
 
 import {
@@ -43,7 +42,7 @@ import {
   V4TenantTransactionProperties,
   V4TransactionsService
 } from '../transactions/transaction-service/v4-transactions.service';
-import { IV4Campaign } from '../campaign/v4-campaign.service';
+import { IV4Campaign, IV4PointsOutcome } from '../campaign/v4-campaign.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -203,12 +202,8 @@ interface IV4LoyaltyTransactionPropertiesHistoryResponse {
 }
 
 interface IV4PointTransferResponse {
-  data: IV4PointTransfer;
+  data: IV4PointsOutcome;
   meta: IV4Meta;
-}
-
-interface IV4PointTransfer {
-  id: number;
 }
 
 @Injectable({
@@ -287,12 +282,6 @@ export class V4LoyaltyService extends LoyaltyService {
       images: {
         thumbnailUrl: oc(thumbnailImage).url()
       }
-    };
-  }
-
-  private static v4PointTransferResponseToPointTransfer(response: IV4PointTransfer): IPointTransferResponse {
-    return {
-      id: response.id
     };
   }
 
@@ -554,15 +543,13 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public tansferPoints(pointTransfer: IPointTransfer): Observable<IPointTransferResponse> {
+  public tansferPoints(pointTransfer: IPointTransfer): Observable<IV4PointsOutcome> {
     const payload = {
       amount: pointTransfer.amount,
       source_loyalty_id: pointTransfer.sourceId,
       destination_loyalty_id: pointTransfer.destinationId
     };
     return this.http.post<IV4PointTransferResponse>(`${this.apiHost}/v4/points_transfer`, payload).pipe(
-      map((res: IV4PointTransferResponse) => res.data),
-      map((response: IPointTransferResponse) => V4LoyaltyService.v4PointTransferResponseToPointTransfer(response))
-    );
+      map((res: IV4PointTransferResponse) => res.data));
   }
 }

@@ -68,11 +68,6 @@ export interface IExchangerate {
   sourceCampaignId: number;
   sourceCampaignName: string;
 }
-
-export interface IPointTransferResponse {
-  id: number;
-}
-
 export interface IPointTransfer {
   sourceId: number;
   destinationId: number;

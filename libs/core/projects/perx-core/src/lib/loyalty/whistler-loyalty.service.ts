@@ -26,7 +26,6 @@ import {
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
   IPointTransfer,
-  IPointTransferResponse,
 } from './models/loyalty.model';
 import { LoyaltyService } from './loyalty.service';
 

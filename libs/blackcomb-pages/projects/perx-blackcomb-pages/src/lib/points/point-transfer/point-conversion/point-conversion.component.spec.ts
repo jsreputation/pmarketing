@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ErrorMessageService, LoyaltyService, NotificationService } from '@perxtech/core';
 import { of } from 'rxjs';
@@ -20,6 +21,10 @@ describe('PointConversionComponent', () => {
 
   const notificationServiceStub: Partial<NotificationService> = {
     addSnack: () => { }
+  };
+
+  const router = {
+    navigate: jest.fn()
   };
 
   beforeEach(async(() => {
@@ -39,6 +44,7 @@ describe('PointConversionComponent', () => {
         {
           provide: ErrorMessageService, useValue: { getErrorMessageByErrorCode: () => of('') }
         },
+        { provide: Router, useValue: router },
         DatePipe
       ]
     })

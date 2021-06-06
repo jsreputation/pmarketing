@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorMessageService, IExchangerate, ILoyalty, IPointTransfer, LoyaltyService, NotificationService } from '@perxtech/core';
 
@@ -30,7 +31,8 @@ export class PointConversionComponent implements OnInit {
     private translateService: TranslateService,
     private datePipe: DatePipe,
     private notificationService: NotificationService,
-    private errorMessageService: ErrorMessageService) { }
+    private errorMessageService: ErrorMessageService,
+    private router: Router) { }
 
   public ngOnInit(): void {
     this.getAllLoyaltyPrograms();
@@ -140,10 +142,16 @@ export class PointConversionComponent implements OnInit {
         sourceId: this.currentExchangeRate.sourceCampaignId,
         destinationId: this.currentExchangeRate.destinationCampaignId
       };
-      // TODO: handle successful transfer
-      this.loyaltyService.tansferPoints(transfer).subscribe(
-        console.log,
+
+      this.loyaltyService.tansferPoints(transfer).subscribe(() => {
+        // show success message and navigate to point history
+        this.translateService.get('POINTS_TRANSFER.SUCCESS').subscribe((message: string) => {
+          this.notificationService.addSnack(message);
+          this.router.navigate(['/points/history']);
+        });
+      },
         (res) => {
+          // halde errors
           console.error(res);
           if (res?.error?.message) {
             this.notificationService.addSnack(res.error.message);
