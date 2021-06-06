@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IExchangerate, ILoyalty, IPointTransfer, LoyaltyService } from '@perxtech/core';
+import { ErrorMessageService, IExchangerate, ILoyalty, IPointTransfer, LoyaltyService, NotificationService } from '@perxtech/core';
 
 interface ISelectOption {
   value: number;
@@ -16,6 +16,7 @@ interface ISelectOption {
 
 export class PointConversionComponent implements OnInit {
   public loyaltyProgramList: ISelectOption[];
+  public destintionLoyaltyProgramList: ISelectOption[];
   public exchangeRateMessage: string | undefined;
   public confirmationMessage: string | undefined;
   public exchangeCalculationMessage: string | undefined;
@@ -27,7 +28,9 @@ export class PointConversionComponent implements OnInit {
   constructor(
     private loyaltyService: LoyaltyService,
     private translateService: TranslateService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private notificationService: NotificationService,
+    private errorMessageService: ErrorMessageService) { }
 
   public ngOnInit(): void {
     this.getAllLoyaltyPrograms();
@@ -48,11 +51,20 @@ export class PointConversionComponent implements OnInit {
   private getExchangeRates(sourceLoyaltyId: number): void {
     this.loyaltyService.getLoyaltyExchangerates(sourceLoyaltyId).subscribe((rates: IExchangerate[]) => {
       this.exchangeRates = rates;
+      this.buildDestinationList();
     });
   }
 
   public onSourceChanged(event: MatOptionSelectionChange): void {
     this.getExchangeRates(event.source.value);
+  }
+
+  private buildDestinationList(): void {
+    // build destimation list with only supported exchange rates
+    this.destintionLoyaltyProgramList = this.loyaltyProgramList
+      .filter((program) =>
+        this.exchangeRates.findIndex(x => x.destinationCampaignId === program.value) > -1
+      );
   }
 
   public onDestinationChanged(event: MatOptionSelectionChange): void {
@@ -128,8 +140,19 @@ export class PointConversionComponent implements OnInit {
         sourceId: this.currentExchangeRate.sourceCampaignId,
         destinationId: this.currentExchangeRate.destinationCampaignId
       };
-      // TODO: handle this
-      this.loyaltyService.tansferPoints(transfer).subscribe(console.log);
+      // TODO: handle successful transfer
+      this.loyaltyService.tansferPoints(transfer).subscribe(
+        console.log,
+        (res) => {
+          console.error(res);
+          if (res?.error?.message) {
+            this.notificationService.addSnack(res.error.message);
+          } else {
+            // get the a genenric error message
+            this.errorMessageService.getErrorMessageByErrorCode(0)
+              .subscribe(message => this.notificationService.addSnack(message));
+          }
+        });
     }
   }
 }

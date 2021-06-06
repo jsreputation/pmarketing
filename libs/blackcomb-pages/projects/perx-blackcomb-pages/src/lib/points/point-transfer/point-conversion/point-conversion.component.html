@@ -14,8 +14,10 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.TO' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onDestinationChanged($event)">
-                        <mat-option *ngFor="let loyaltyProgram of loyaltyProgramList" [value]="loyaltyProgram.value">
+                    <mat-select (selectionChange)="onDestinationChanged($event)"
+                        [disabled]="!destintionLoyaltyProgramList?.length">
+                        <mat-option *ngFor="let loyaltyProgram of destintionLoyaltyProgramList"
+                            [value]="loyaltyProgram.value">
                             {{loyaltyProgram.text}}
                         </mat-option>
                     </mat-select>
@@ -50,7 +52,8 @@
     </mat-card>
     <div class="bottom-sheet">
         <div>
-            <button (click)="transferPoints()" [disabled]="!exchangeCalculationMessage" mat-raised-button color="primary">
+            <button (click)="transferPoints()" [disabled]="!exchangeCalculationMessage" mat-raised-button
+                color="primary">
                 {{'POINTS_TRANSFER.TRANSFER_POINTS_CTA' | translate}}
             </button>
         </div>

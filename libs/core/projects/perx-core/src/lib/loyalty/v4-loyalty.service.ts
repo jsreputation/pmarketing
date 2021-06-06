@@ -555,7 +555,12 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public tansferPoints(pointTransfer: IPointTransfer): Observable<IPointTransferResponse> {
-    return this.http.post<IV4PointTransferResponse>(`${this.apiHost}/v4/points_transfer/`, pointTransfer).pipe(
+    const payload = {
+      amount: pointTransfer.amount,
+      source_loyalty_id: pointTransfer.sourceId,
+      destination_loyalty_id: pointTransfer.destinationId
+    };
+    return this.http.post<IV4PointTransferResponse>(`${this.apiHost}/v4/points_transfer`, payload).pipe(
       map((res: IV4PointTransferResponse) => res.data),
       map((response: IPointTransferResponse) => V4LoyaltyService.v4PointTransferResponseToPointTransfer(response))
     );

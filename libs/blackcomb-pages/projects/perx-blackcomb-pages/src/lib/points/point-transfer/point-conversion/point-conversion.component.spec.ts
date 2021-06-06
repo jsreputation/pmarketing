@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoyaltyService } from '@perxtech/core';
+import { ErrorMessageService, LoyaltyService, NotificationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { PointConversionComponent } from './point-conversion.component';
 
@@ -16,6 +16,10 @@ describe('PointConversionComponent', () => {
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([]),
     getLoyaltyExchangerates: () => of([])
+  };
+
+  const notificationServiceStub: Partial<NotificationService> = {
+    addSnack: () => { }
   };
 
   beforeEach(async(() => {
@@ -31,6 +35,10 @@ describe('PointConversionComponent', () => {
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
+        {
+          provide: ErrorMessageService, useValue: { getErrorMessageByErrorCode: () => of('') }
+        },
         DatePipe
       ]
     })
