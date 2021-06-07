@@ -28,7 +28,7 @@
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
       </div>
-      <div class="reward-operating-hours" *ngIf="reward.operatingHours">
+      <div class="reward-operating-hours" *ngIf="showOperatingHours && reward.operatingHours">
         {{getOperatingHours(reward.operatingHours)}}
       </div>
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">

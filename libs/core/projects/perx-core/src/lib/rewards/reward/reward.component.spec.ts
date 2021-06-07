@@ -5,6 +5,7 @@ import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material/icon';
+import { SettingsService } from '@perxtech/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -29,6 +30,10 @@ describe('RewardComponent', () => {
     loyalty: []
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -36,6 +41,9 @@ describe('RewardComponent', () => {
         UtilsModule,
         MatIconModule
       ],
+      providers: [
+        { provide: SettingsService, useValue: settingsServiceStub }
+      ]
     })
       .compileComponents();
   }));
