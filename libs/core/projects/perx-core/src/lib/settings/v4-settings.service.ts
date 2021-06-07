@@ -53,6 +53,7 @@ interface IV4Flags {
     show_leaderboard: boolean;
     show_quest: boolean;
     show_happy_hour_operating_hours: boolean;
+    show_point_transfer: boolean;
   };
 }
 
@@ -134,7 +135,8 @@ export class V4SettingsService extends SettingsService {
       systemSetsPassword: data.json_value.system_sets_password,
       showLeaderboard: data.json_value.show_leaderboard,
       showQuest: data.json_value.show_quest,
-      showHappyHourOperatingHours: data.json_value.show_happy_hour_operating_hours
+      showHappyHourOperatingHours: data.json_value.show_happy_hour_operating_hours,
+      showPointTransfer: data.json_value.show_point_transfer
     };
   }
 
