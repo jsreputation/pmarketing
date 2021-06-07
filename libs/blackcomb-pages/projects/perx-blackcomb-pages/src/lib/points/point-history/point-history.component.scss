@@ -1,0 +1,35 @@
+.point-history {
+    height: 100%;
+    overflow: auto;
+    .transaction {
+        display: flex;
+        flex-direction: row;
+        .program {
+            width: 60%;
+            h3 {
+                font-weight: normal;
+            }
+        }
+
+        .detail {
+            text-align: right;
+            width: 40%;
+            color: var(--disabled_text_color);
+
+            .positive-value {
+                color: var(--primary);
+            }
+        }
+
+        h2,
+        h3 {
+            margin: 0.5rem 0;
+            height: 25px;
+        }
+
+        .muted {
+            font-size: 1.4rem;
+            color: var(--disabled_text_color);
+        }
+    }
+}

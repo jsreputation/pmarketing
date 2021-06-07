@@ -82,7 +82,7 @@ const routes: Routes = [
         loadChildren: () =>
           import(
             '../progress-campaign-home/progress-campaign-home.module'
-            ).then((mod) => mod.ProgressCampaignHomeModule),
+          ).then((mod) => mod.ProgressCampaignHomeModule),
         canActivate: [ProtectedGuard],
       },
       {
@@ -290,6 +290,11 @@ const routes: Routes = [
       {
         path: 'prize-set-outcomes/:id',
         loadChildren: () => import('../prize-set-outcome/prize-set-outcome.module').then(m => m.PrizeSetOutcomeModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'points',
+        loadChildren: () => import('../points/points.module').then(m => m.PointsModule),
         canActivate: [ProtectedGuard]
       }
     ],

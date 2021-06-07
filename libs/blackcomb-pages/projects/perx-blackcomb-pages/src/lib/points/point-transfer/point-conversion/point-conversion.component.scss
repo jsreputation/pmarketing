@@ -1,0 +1,45 @@
+.point-conversion {
+    overflow: auto;
+    height: 100%;
+
+    .mat-form-field,
+    button {
+        width: 100%;
+        &:disabled {
+            opacity: 0.45;
+        }
+    }
+
+    .exchange-rate {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 1.2rem;
+    }
+
+    .notice {
+        background-color: #f2f2f2;
+        border-left: 0.2rem solid var(--disabled_text_color);
+        padding: 2rem;
+        font-size: 1.2rem;
+        color: var(--disabled_text_color);
+
+        .conversion {
+            font-size: 2rem;
+            color: var(--primary);
+            padding-bottom: 1.2rem;
+        }
+    }
+
+    .bottom-sheet {
+        background-color: var(--background);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.4rem 3rem;
+        button {
+            margin: 0.6rem;
+        }
+    }
+}

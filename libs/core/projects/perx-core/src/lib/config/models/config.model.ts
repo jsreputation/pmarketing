@@ -64,6 +64,7 @@ export interface IConfig<T> {
   showUserInfoOnAccountsPage?: boolean;
   showLuckyDrawDetailsOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
+  enablePointTransfer?: boolean;
 
   /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;

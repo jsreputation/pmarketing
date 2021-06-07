@@ -10,6 +10,7 @@ export class ErrorMessageService {
     constructor(private translateService: TranslateService) { }
 
     /*
+    Generic error message - 0 ERRORS.GENERIC
     InvalidTransaction -  4121
         - 'No remaining unused moves'
     GeneralError - 40
@@ -71,16 +72,17 @@ export class ErrorMessageService {
             case 40:
                 // General API error
                 if (errMessage && errMessage.match(/move/i)) {
-                  errorKey = 'ERRORS.NO_UNUSED_MOVES';
+                    errorKey = 'ERRORS.NO_UNUSED_MOVES';
                 } else if (errMessage && errMessage.match(/balance/i)) {
-                  errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
+                    errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
                 }
                 break;
             case 41:
                 if (errMessage && errMessage.match(/invited/i)) {
-                  errorKey = 'ERRORS.NOT_INVITED';
+                    errorKey = 'ERRORS.NOT_INVITED';
                 }
                 break;
+            case 0:
             default:
                 // Sorry, something went wrong
                 errorKey = 'ERRORS.GENERIC';

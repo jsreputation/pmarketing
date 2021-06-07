@@ -4,11 +4,8 @@
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig$ | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage">
-        <perx-core-profile-summary
-          [profile$]="profile$"
-          [loyalty$]="loyalty$"
-          [memberFn]="memberFn"
-        ></perx-core-profile-summary>
+        <perx-core-profile-summary [profile$]="profile$" [loyalty$]="loyalty$" [memberFn]="memberFn">
+        </perx-core-profile-summary>
       </div>
       <div class="section profile">
         <mat-nav-list>
@@ -28,7 +25,16 @@
           </ng-container>
         </mat-nav-list>
       </div>
-
+      <div *ngIf="aConfig?.enablePointTransfer && remoteFlags?.showPointTransfer" class="section">
+        <mat-nav-list>
+          <mat-list-item routerLink="/points/transfer">
+            {{'ACCOUNT_PAGE.TRANSFER_POINTS' | translate}}
+          </mat-list-item>
+          <mat-list-item routerLink="/points/history">
+            {{'ACCOUNT_PAGE.POINTS_TRANSFER_HISTORY' | translate}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
       <div class="section">
         <mat-nav-list>
           <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
