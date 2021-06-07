@@ -103,7 +103,7 @@ export class RewardComponent implements OnInit, OnChanges {
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string =
       `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
-    return `Play this game during: ${days}, ${hours}`;
+    return `Get a voucher during: ${days}, ${hours}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
