@@ -5,13 +5,18 @@ import { PointsModule as BCPointsModule, PointHistoryComponent, PointConversionC
 
 const routes: Routes = [
   {
+    path: '',
+    component: PointHistoryComponent
+  },
+  {
     path: 'transfer',
     component: PointConversionComponent
   },
   {
     path: 'history',
     component: PointHistoryComponent
-  }];
+  }
+];
 
 @NgModule({
   imports: [
