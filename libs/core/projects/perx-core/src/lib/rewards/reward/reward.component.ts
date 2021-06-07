@@ -4,6 +4,8 @@ import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
 import { IMacaron } from '../../macaron/models/macaron.model';
 import { IOperatingHours } from '../../campaign/models/campaign.model';
+import { SettingsService } from '../../settings/settings.service';
+import { IFlags } from '../../settings/models/settings.model';
 
 @Component({
   selector: 'perx-core-reward',
@@ -49,6 +51,10 @@ export class RewardComponent implements OnInit, OnChanges {
   @Output()
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
+  public showOperatingHours: boolean = false;
+
+  constructor(private settingsService: SettingsService) {}
+
   public ngOnInit(): void {
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
@@ -72,6 +78,12 @@ export class RewardComponent implements OnInit, OnChanges {
         return of(''); // is actually 0 or invalid value default
       };
     }
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      }
+    );
   }
 
   public ngOnChanges(): void {
