@@ -69,6 +69,7 @@ import {
   LoyaltyModule,
   LanguageInterceptor,
   QuestModule as PerxQuestModule,
+  SettingsService
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -123,6 +124,7 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
+  settingService: SettingsService,
   themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
@@ -130,7 +132,8 @@ export const setLanguage = (
       // for currentLang registering to determine lang ver of url navigation on content.component
       tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
+      switchMap(() => themesService.getThemeSetting()),
+      switchMap(() => settingService.getRemoteFlagsSettings())
     ).toPromise().then(() => resolve());
   });
 
@@ -181,7 +184,7 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService, SettingsService], multi: true
     },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {
