@@ -26,7 +26,7 @@ import {
   PagesObject,
   NotificationService,
   IConfig,
-  ThemesService, SettingsService, BadgeService
+  ThemesService, SettingsService, BadgeServiceModule
 } from '@perxtech/core';
 
 import { AccountComponent } from './account.component';
@@ -88,7 +88,8 @@ describe('AccountComponent', () => {
         MatIconModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        ConfigModule.forRoot({ ...environment })
+        ConfigModule.forRoot({ ...environment }),
+        BadgeServiceModule.forRoot()
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
@@ -97,8 +98,7 @@ describe('AccountComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: LoyaltyService, useValue: loyalityServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: BadgeService, useValue: {getAchievedBadgeCount: of()} }
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

@@ -3,9 +3,8 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { BadgeService } from '@perxtech/core';
+import { BadgeServiceModule } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { of } from 'rxjs';
 import { BadgeListComponent } from '../badge-list/badge-list.component';
 import { BadgeLandingComponent } from './badge-landing.component';
 
@@ -22,12 +21,12 @@ describe('BadgeLandingComponent', () => {
                 TranslateModule.forRoot(),
                 BrowserAnimationsModule,
                 NoopAnimationsModule,
-                InfiniteScrollModule
+                InfiniteScrollModule,
+                BadgeServiceModule.forRoot()
             ],
             providers: [
                 { provide: MatDialogRef, useValue: {} },
-                { provide: MAT_DIALOG_DATA, useValue: [] },
-                { provide: BadgeService, useValue: {getBadgesByState: of(), getAllBadges: of()} }
+                { provide: MAT_DIALOG_DATA, useValue: [] }
             ]
         }).compileComponents();
     }));
