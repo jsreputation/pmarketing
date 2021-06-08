@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BadgeDetailPopupComponent, IBadge } from '@perxtech/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'perx-core-badge-list',
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./badge-list.component.scss'],
 })
 export class BadgeListComponent {
-  @Input() public badges: Observable<IBadge[]>;
+  @Input() public badges: IBadge[];
 
   constructor(private dialog: MatDialog, private translate: TranslateService, private router: Router) { }
 
@@ -20,7 +19,7 @@ export class BadgeListComponent {
       this.dialog.open(BadgeDetailPopupComponent, {
         data: {
           title: badge.title,
-          imageUrl: badge.image.value.image_url,
+          imageUrl: badge.image?.value.image_url,
           description: badge.description,
           buttonTxt: viewWallet,
           active: badge.active,

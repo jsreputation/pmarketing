@@ -32,20 +32,33 @@ export class V4BadgeService implements IBadgeService {
       title: badge.name,
       description: badge?.description,
       image: badge.issued ?
-        badge.display_properties.earned_icon : badge.display_properties.unearned_icon
+        badge.display_properties?.earned_icon : badge.display_properties?.unearned_icon
     }));
   }
 
-  public getAllBadges(): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`)
+  public getAllBadges(page: number = 1, pageSize: number = 10): Observable<IBadge[]> {
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+      {
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      })
       .pipe(
         map((res) => res.data),
-        map((badges) => V4BadgeService.V4BadgeToIBadge(badges)),
+        map((badges) => V4BadgeService.V4BadgeToIBadge(badges))
       );
   }
 
-  public getBadgesByState(earned: boolean): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges?earned=${earned}`)
+  public getBadgesByState(earned: boolean, page: number = 1, pageSize: number = 10): Observable<IBadge[]> {
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+      {
+        params: {
+          earned: `${earned}`,
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      })
       .pipe(
         map((res) => res.data),
         map((badges) => V4BadgeService.V4BadgeToIBadge(badges)),

@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="row" *ngIf="badges | async as resolvedBadges">
-    <div *ngFor="let badge of resolvedBadges" class="badge" [ngClass]="{'disabled' : !badge.active}"
+  <div class="row" *ngIf="badges">
+    <div *ngFor="let badge of badges" class="badge" [ngClass]="{'disabled' : !badge.active}"
       (click)="viewBadgeDetail(badge)">
       <div class="badge-image">
         <img *ngIf="badge?.image" [src]="badge.image.value.image_url" />
