@@ -116,7 +116,7 @@ export class RewardComponent implements OnInit, OnChanges {
     const hours: string =
       `${('0'+openTime.getHours()).substr(-2)}:${('0'+openTime.getMinutes()).substr(-2)} -
       ${('0'+closeTime.getHours()).substr(-2)}:${('0'+closeTime.getMinutes()).substr(-2)}`;
-    return `Get a voucher during: ${days}, ${hours}`;
+    return `Collect a voucher during: ${days}, ${hours}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
