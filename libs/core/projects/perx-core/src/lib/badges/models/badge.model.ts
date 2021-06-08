@@ -7,8 +7,3 @@ export interface IBadge {
     description?: string;
     image: Asset;
 }
-
-export enum BadgeState {
-    earned,
-    unearned
-}

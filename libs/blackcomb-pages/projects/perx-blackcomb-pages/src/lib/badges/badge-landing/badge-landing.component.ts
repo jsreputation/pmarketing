@@ -18,11 +18,11 @@ export class BadgeLandingComponent implements OnInit {
   }
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    console.log(tabChangeEvent);
-    // let state;
-    // if (tabChangeEvent.index) {
-    //   state = tabChangeEvent.index > 1 ? BadgeState.unearned : BadgeState.earned;
-    // }
-    // this.badges = this.badgeService.getBadgesByState(state);
+    // index 0 = all, 1 = earned, 2 = unearned
+    if (tabChangeEvent.index) {
+      this.badges = this.badgeService.getBadgesByState(tabChangeEvent.index === 1);
+    } else {
+      this.badges = this.badgeService.getAllBadges();
+    }
   }
 }

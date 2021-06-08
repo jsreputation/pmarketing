@@ -44,17 +44,24 @@ export class V4BadgeService implements IBadgeService {
       );
   }
 
+  public getBadgesByState(earned: boolean): Observable<IBadge[]> {
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges?earned=${earned}`)
+      .pipe(
+        map((res) => res.data),
+        map((badges) => V4BadgeService.V4BadgeToIBadge(badges)),
+      );
+  }
+
   public getAchievedBadgeCount(): Observable<number> {
-    // TODO: Query with filter
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`)
-      .pipe(map((badges) => badges.meta.count));
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges?earned=true`)
+      .pipe(map((badges) => badges.meta.total_count));
   }
 }
 
 export interface IV4BadgeResponse {
   data: IV4Badge[];
   meta: {
-    count: number;
+    total_count: number;
   };
 }
 
