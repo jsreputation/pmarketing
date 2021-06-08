@@ -21,7 +21,7 @@ import {
   ILoyalty,
   SettingsService,
   IFlags,
-  IBadgeService,
+  BadgeService,
 } from '@perxtech/core';
 
 @Component({
@@ -51,7 +51,7 @@ export class AccountComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private themesService: ThemesService,
     private settingsService: SettingsService,
-    private badgeService: IBadgeService,
+    private badgeService: BadgeService,
   ) {
     this.preAuth = config.preAuth || false;
   }

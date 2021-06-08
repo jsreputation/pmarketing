@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { IBadge, IBadgeService } from '@perxtech/core';
+import { IBadge, BadgeService } from '@perxtech/core';
 import { iif } from 'rxjs';
 
 @Component({
-  selector: 'perx-core-badge-landing',
+  selector: 'badge-landing',
   templateUrl: './badge-landing.component.html',
   styleUrls: ['./badge-landing.component.scss'],
 })
@@ -14,7 +14,7 @@ export class BadgeLandingComponent implements OnInit {
   private paginationComplete: boolean = false;
   private selectedFilter: number = 0;
 
-  constructor(private badgeService: IBadgeService) { }
+  constructor(private badgeService: BadgeService) { }
 
   public ngOnInit(): void {
     this.badgeService.getAllBadges().subscribe((badges) => this.badges = badges);

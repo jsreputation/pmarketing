@@ -4,12 +4,13 @@ import {
   HttpClientTestingModule
 } from '@angular/common/http/testing';
 import { ConfigService } from '../../lib/config/config.service';
-import { IBadgeService } from './badge.service';
+import { BadgeService } from './badge.service';
 import { V4BadgeService } from './v4-badge.service';
 
-const badgeServiceStub: Partial<IBadgeService> = {
+const badgeServiceStub: Partial<BadgeService> = {
   getAchievedBadgeCount: () => of(),
-  getAllBadges: () => of()
+  getAllBadges: () => of(),
+  getBadgesByState: () => of()
 };
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
@@ -20,7 +21,7 @@ describe('V4BadgeService', () => {
     imports: [
       HttpClientTestingModule],
     providers: [
-      { provide: IBadgeService, useValue: badgeServiceStub },
+      { provide: BadgeService, useValue: badgeServiceStub },
       { provide: ConfigService, useValue: configServiceStub }]
   }));
 

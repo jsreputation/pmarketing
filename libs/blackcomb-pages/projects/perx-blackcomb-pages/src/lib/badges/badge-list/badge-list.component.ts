@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BadgeDetailPopupComponent, IBadge } from '@perxtech/core';
 
 @Component({
-  selector: 'perx-core-badge-list',
+  selector: 'badge-list',
   templateUrl: './badge-list.component.html',
   styleUrls: ['./badge-list.component.scss'],
 })

@@ -26,7 +26,7 @@ import {
   PagesObject,
   NotificationService,
   IConfig,
-  ThemesService, SettingsService
+  ThemesService, SettingsService, BadgeService
 } from '@perxtech/core';
 
 import { AccountComponent } from './account.component';
@@ -97,7 +97,8 @@ describe('AccountComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: LoyaltyService, useValue: loyalityServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: BadgeService, useValue: {getAchievedBadgeCount: of()} }
       ]
     })
       .compileComponents();

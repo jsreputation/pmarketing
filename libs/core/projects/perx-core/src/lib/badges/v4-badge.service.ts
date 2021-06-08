@@ -5,13 +5,13 @@ import { map } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../game/v4-game.service';
-import { IBadgeService } from './badge.service';
+import { BadgeService } from './badge.service';
 import { IBadge } from './models/badge.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class V4BadgeService implements IBadgeService {
+export class V4BadgeService implements BadgeService {
   private hostName: string;
 
   constructor(

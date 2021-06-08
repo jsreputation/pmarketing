@@ -99,8 +99,8 @@ export { IQuestService } from './lib/quest/quest.service';
 /**
  * Badges
  */
-export { BadgeModule } from './lib/badges/badge.service.module';
-export { IBadgeService } from './lib/badges/badge.service';
+export { BadgeServiceModule } from './lib/badges/badge.service.module';
+export { BadgeService } from './lib/badges/badge.service';
 export { IBadge } from './lib/badges/models/badge.model';
 export {
   BadgeDetailPopupComponent,

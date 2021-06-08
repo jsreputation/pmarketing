@@ -2,13 +2,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../config/config.service';
-import { IBadgeService } from '../badges/badge.service';
+import { BadgeService } from '../badges/badge.service';
 import { V4BadgeService } from '../badges/v4-badge.service';
 
-export function badgeServiceFactory(
-  http: HttpClient,
-  configService: ConfigService
-): IBadgeService {
+export function badgeServiceFactory(http: HttpClient, configService: ConfigService): BadgeService {
   return new V4BadgeService(http, configService);
 }
 @NgModule({
@@ -17,13 +14,13 @@ export function badgeServiceFactory(
     CommonModule
   ]
 })
-export class BadgeModule {
-  public static forRoot(): ModuleWithProviders<BadgeModule> {
+export class BadgeServiceModule {
+  public static forRoot(): ModuleWithProviders<BadgeServiceModule> {
     return {
-      ngModule: BadgeModule,
+      ngModule: BadgeServiceModule,
       providers: [
         {
-          provide: IBadgeService,
+          provide: BadgeService,
           useFactory: badgeServiceFactory,
           deps: [HttpClient, ConfigService]
         }
@@ -31,9 +28,9 @@ export class BadgeModule {
     };
   }
 
-  public static forChild(): ModuleWithProviders<BadgeModule> {
+  public static forChild(): ModuleWithProviders<BadgeServiceModule> {
     return {
-      ngModule: BadgeModule
+      ngModule: BadgeServiceModule
     };
   }
 }

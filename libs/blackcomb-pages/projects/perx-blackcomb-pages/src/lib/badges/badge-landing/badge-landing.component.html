@@ -2,13 +2,13 @@
   [scrollWindow]="false">
   <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)">
     <mat-tab [label]="'BADGES.ALL_TAB' | translate">
-      <perx-core-badge-list [badges]="badges"></perx-core-badge-list>
+      <badge-list [badges]="badges"></badge-list>
     </mat-tab>
     <mat-tab [label]="'BADGES.EARNED_TAB' | translate">
-      <perx-core-badge-list [badges]="badges"></perx-core-badge-list>
+      <badge-list [badges]="badges"></badge-list>
     </mat-tab>
     <mat-tab [label]="'BADGES.UNEARNED_TAB' | translate">
-      <perx-core-badge-list [badges]="badges"></perx-core-badge-list>
+      <badge-list [badges]="badges"></badge-list>
     </mat-tab>
   </mat-tab-group>
 </div>
