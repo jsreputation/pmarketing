@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
-import { RewardsModule, RewardsService, IReward, ThemesService, TokenStorage } from '@perxtech/core';
+import { IReward, RewardsModule, RewardsService, SettingsService, ThemesService, TokenStorage } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
@@ -39,6 +39,9 @@ describe('RewardDetailComponent', () => {
     getAppInfoProperty: () => null,
     setAppInfoProperty: () => { }
   };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,7 +54,8 @@ describe('RewardDetailComponent', () => {
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

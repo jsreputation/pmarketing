@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, RewardsModule, ThemesService, TokenStorage } from '@perxtech/core';
+import { RewardsModule, RewardsService, SettingsService, ThemesService, TokenStorage } from '@perxtech/core';
 import { RewardDetailComponent } from './reward-detail.component';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -16,6 +16,9 @@ describe('RewardDetailComponent', () => {
   const tokenStorageStub = {
     getAppInfoProperty: () => null,
     setAppInfoProperty: () => { }
+  };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
   };
 
   beforeEach(async(() => {
@@ -36,7 +39,9 @@ describe('RewardDetailComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: ThemesService, useValue: { } },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
+
       ]
     })
       .compileComponents();

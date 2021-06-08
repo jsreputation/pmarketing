@@ -2,13 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RewardsModule, RewardsService, LoyaltyService, IVoucherService, ThemesService } from '@perxtech/core';
+import {
+  IVoucherService,
+  LoyaltyService,
+  RedemptionType,
+  RewardsModule,
+  RewardsService,
+  SettingsService,
+  ThemesService,
+  TokenStorage,
+  VoucherState
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { rewards } from '../../mock/rewards.mock';
 import { loyalty } from '../../mock/loyalty.mock';
-import { VoucherState } from '@perxtech/core';
-import { RedemptionType, TokenStorage } from '@perxtech/core';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
@@ -56,6 +64,11 @@ const themesServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
 };
 
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () => of()
+};
+
+
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
@@ -74,6 +87,7 @@ describe('RewardDetailComponent', () => {
         { provide: IVoucherService, useValue: iVoucherServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
