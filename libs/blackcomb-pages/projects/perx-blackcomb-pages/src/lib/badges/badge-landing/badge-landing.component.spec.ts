@@ -4,6 +4,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BadgeListComponent } from '../badge-list/badge-list.component';
 import { BadgeLandingComponent } from './badge-landing.component';
 
@@ -23,15 +24,15 @@ describe('BadgeLandingComponent', () => {
                 MatTabsModule,
                 TranslateModule.forRoot(),
                 BrowserAnimationsModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
+                InfiniteScrollModule
             ],
             providers: [
                 { provide: MatDialogRef, useValue: {} },
                 { provide: MAT_DIALOG_DATA, useValue: [] },
                 { provide: Router, useValue: router }
             ]
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
