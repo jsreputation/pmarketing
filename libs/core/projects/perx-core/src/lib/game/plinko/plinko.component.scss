@@ -1,0 +1,40 @@
+.game-container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+}
+.contents-container {
+    position: relative;
+}
+.target-img-cont {
+    position: absolute;
+    bottom: 8px;
+    left: 112px;
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+}
+#ball_holder {
+   .left-holder{
+    transition: transform .3s linear;
+    transform-origin: top left;
+    &.open{
+        transform: rotate(5deg);
+    }
+   } 
+   .right-holder {
+    transition: transform .3s linear;
+    transform-origin: top right;
+    &.open{
+        transform: rotate(-5deg);
+    }
+   } 
+}
+
+button {
+    margin-top: 25px;
+}

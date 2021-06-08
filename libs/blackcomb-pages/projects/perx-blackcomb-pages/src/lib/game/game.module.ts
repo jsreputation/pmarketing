@@ -16,6 +16,7 @@ import { SpinComponent } from './spin/spin.component';
 import { TapComponent } from './tap/tap.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { PlinkoComponent } from './plinko/plinko.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ScratchComponent,
     GameComponent,
     SpinComponent,
-    SnakeComponent
+    SnakeComponent,
+    PlinkoComponent
   ],
   exports: [
     GameComponent,
@@ -33,6 +35,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ScratchComponent,
     SpinComponent,
     SnakeComponent,
+    PlinkoComponent
   ],
   imports: [
     CommonModule,
