@@ -21,8 +21,8 @@ import {
   ILoyalty,
   SettingsService,
   IFlags,
+  IBadgeService,
 } from '@perxtech/core';
-import { V4BadgeService } from 'libs/core/projects/perx-core/src/lib/badges/v4-badge.service';
 
 @Component({
   selector: 'perx-blackcomb-pages-account',
@@ -51,7 +51,7 @@ export class AccountComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private themesService: ThemesService,
     private settingsService: SettingsService,
-    private badgeService: V4BadgeService,
+    private badgeService: IBadgeService,
   ) {
     this.preAuth = config.preAuth || false;
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { BadgeState, IBadge } from '@perxtech/core';
-import { V4BadgeService } from 'libs/core/projects/perx-core/src/lib/badges/v4-badge.service';
+import { IBadge, IBadgeService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,17 +11,18 @@ import { Observable } from 'rxjs';
 export class BadgeLandingComponent implements OnInit {
   public badges: Observable<IBadge[]>;
 
-  constructor(private badgeService: V4BadgeService) { }
+  constructor(private badgeService: IBadgeService) { }
 
   public ngOnInit(): void {
-    this.badges = this.badgeService.getBadgesByState();
+    this.badges = this.badgeService.getAllBadges();
   }
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    let state;
-    if (tabChangeEvent.index) {
-      state = tabChangeEvent.index > 1 ? BadgeState.unearned : BadgeState.earned;
-    }
-    this.badges = this.badgeService.getBadgesByState(state);
+    console.log(tabChangeEvent);
+    // let state;
+    // if (tabChangeEvent.index) {
+    //   state = tabChangeEvent.index > 1 ? BadgeState.unearned : BadgeState.earned;
+    // }
+    // this.badges = this.badgeService.getBadgesByState(state);
   }
 }

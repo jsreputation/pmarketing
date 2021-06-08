@@ -6,11 +6,10 @@ import { IBadgeService } from '../badges/badge.service';
 import { V4BadgeService } from '../badges/v4-badge.service';
 
 export function badgeServiceFactory(
-  // http: HttpClient,
-  // configService: ConfigService
+  http: HttpClient,
+  configService: ConfigService
 ): IBadgeService {
-  // return new V4BadgeService(http, configService);
-  return new V4BadgeService();
+  return new V4BadgeService(http, configService);
 }
 @NgModule({
   declarations: [],
