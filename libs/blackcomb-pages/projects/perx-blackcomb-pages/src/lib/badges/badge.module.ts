@@ -5,16 +5,17 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BadgeLandingComponent } from './badge-landing/badge-landing.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { BadgeServiceModule } from '@perxtech/core';
 
 @NgModule({
   imports: [
     CommonModule,
     MatTabsModule,
-    TranslateModule,
-    InfiniteScrollModule
+    TranslateModule.forChild(),
+    InfiniteScrollModule,
+    BadgeServiceModule.forChild(),
   ],
-  declarations: [BadgeLandingComponent, BadgeListComponent],
-  exports: [BadgeLandingComponent, BadgeListComponent]
+  declarations: [BadgeLandingComponent, BadgeListComponent]
 })
 
 export class BadgeModule { }

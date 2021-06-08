@@ -8,13 +8,11 @@ import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 import {
   Observable,
   of,
 } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-
 import {
   AuthenticationService,
   ProfileModule,
@@ -26,17 +24,15 @@ import {
   PagesObject,
   NotificationService,
   IConfig,
-  ThemesService, SettingsService, BadgeServiceModule
+  ThemesService, SettingsService,  BadgeServiceModule,
 } from '@perxtech/core';
-
 import { AccountComponent } from './account.component';
-
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
-
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -89,7 +85,8 @@ describe('AccountComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment }),
-        BadgeServiceModule.forRoot()
+        BadgeServiceModule.forRoot(),
+        HttpClientModule
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
