@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
+  [scrollWindow]="false">
   <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)">
     <mat-tab [label]="'BADGES.ALL_TAB' | translate">
       <perx-core-badge-list [badges]="badges"></perx-core-badge-list>

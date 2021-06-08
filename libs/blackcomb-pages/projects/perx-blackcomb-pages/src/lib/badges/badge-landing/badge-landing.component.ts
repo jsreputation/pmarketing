@@ -17,7 +17,7 @@ export class BadgeLandingComponent implements OnInit {
   constructor(private badgeService: IBadgeService) { }
 
   public ngOnInit(): void {
-    this.badgeService.getAllBadges().subscribe(this.setBadges);
+    this.badgeService.getAllBadges().subscribe((badges) => this.badges = badges);
   }
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
@@ -27,9 +27,9 @@ export class BadgeLandingComponent implements OnInit {
     this.selectedFilter = tabChangeEvent.index;
     // index 0 = all, 1 = earned, 2 = unearned
     if (this.selectedFilter) {
-      this.badgeService.getBadgesByState(this.selectedFilter === 1).subscribe(this.setBadges);
+      this.badgeService.getBadgesByState(this.selectedFilter === 1).subscribe((badges) => this.badges = badges);
     } else {
-      this.badgeService.getAllBadges().subscribe(this.setBadges);
+      this.badgeService.getAllBadges().subscribe((badges) => this.badges = badges);
     }
   }
 
@@ -54,9 +54,5 @@ export class BadgeLandingComponent implements OnInit {
         this.paginationComplete = true;
       }
     });
-  }
-
-  private setBadges(badges: IBadge[]): void {
-    this.badges = badges;
   }
 }

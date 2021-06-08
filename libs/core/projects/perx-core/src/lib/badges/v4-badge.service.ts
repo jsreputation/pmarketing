@@ -36,7 +36,7 @@ export class V4BadgeService implements IBadgeService {
     }));
   }
 
-  public getAllBadges(page: number = 1, pageSize: number = 10): Observable<IBadge[]> {
+  public getAllBadges(page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
     return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
@@ -50,7 +50,7 @@ export class V4BadgeService implements IBadgeService {
       );
   }
 
-  public getBadgesByState(earned: boolean, page: number = 1, pageSize: number = 10): Observable<IBadge[]> {
+  public getBadgesByState(earned: boolean, page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
     return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
