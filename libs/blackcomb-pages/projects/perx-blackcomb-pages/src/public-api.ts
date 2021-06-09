@@ -106,3 +106,7 @@ export { LargeVouchersComponent } from './lib/large-vouchers/large-vouchers.comp
 export { LargeVouchersModule } from './lib/large-vouchers/large-vouchers.module';
 export { PrizeSetOutcomeComponent } from './lib/prize-set-outcome/prize-set-outcome.component';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
+export { PointsModule } from './lib/points/points.module';
+export { PointHistoryComponent } from './lib/points/point-history/point-history.component';
+export { PointConversionComponent } from './lib/points/point-transfer/point-conversion/point-conversion.component';
+export { PointConversionConfirmationComponent } from './lib/points/point-transfer/point-conversion-confirmation/point-conversion-confirmation.component';

@@ -216,7 +216,9 @@
     "TNC": "條款與細則",
     "DISCLAIMER": "Disclaimer",
     "PRIVACY_POLICY": "私隱政策",
-    "LOGOUT": "登出"
+    "LOGOUT": "登出",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "個人資料",
@@ -364,6 +366,21 @@
     "NOT_AVAILABLE_TITLE": "Sorry!",
     "NOT_AVAILABLE_CTA": "Close",
     "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
+  },
+  "POINTS_TRANSFER": {
+    "FROM": "From",
+    "TO": "To",
+    "POINTS_TO_TRANSFER": "Points to transfer",
+    "TRANSFER_NOTICE": "Transferred points will adhere to recipient program's points expiration cycle.",
+    "TRANSFER_POINTS_CTA": "Transfer Points",
+    "CANCEL": "Cancel",
+    "EXCHANGE_RATE": "Exchange rate:",
+    "EXPIRY_NOTICE": "Points transferred to {programName} will expire on {date}",
+    "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
+    "CONVERSION_CALCULATION": "{points} points in {programName}",
+    "POINT": "point",
+    "POINTS": "points",
+    "SUCCESS": "Point transfer completed successully!"
   },
   "CONTENT_PAGE": "找不到內容",
   "Gold": "黃金",

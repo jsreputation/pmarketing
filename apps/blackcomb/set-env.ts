@@ -216,6 +216,9 @@ const appConfigFile = `{
   "enableLeaderBoard": ${
     process.env.ENABLE_LEADER_BOARD ? process.env.ENABLE_LEADER_BOARD : false
   },
+  "enablePointTransfer": ${
+    process.env.ENABLE_POINT_TRANSFER ? process.env.ENABLE_POINT_TRANSFER : false
+  },
   "custom": {
     "stampsType": "${
       process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'

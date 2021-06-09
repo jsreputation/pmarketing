@@ -227,7 +227,9 @@
     "LOGOUT": "Log Out",
     "CONTACT_US": "Contact Us",
     "FAVORITE_REWARD": "Favorite Rewards",
-    "ALLOW_MARKETING": "I would like to receive marketing notifications"
+    "ALLOW_MARKETING": "I would like to receive marketing notifications",
+    "TRANSFER_POINTS": "Transfer Points",
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -447,6 +449,21 @@
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
     "LOYALTY_POINTS": "loyalty points"
+  },
+  "POINTS_TRANSFER": {
+    "FROM": "From",
+    "TO": "To",
+    "POINTS_TO_TRANSFER": "Points to transfer",
+    "TRANSFER_NOTICE": "Transferred points will adhere to recipient program's points expiration cycle.",
+    "TRANSFER_POINTS_CTA": "Transfer Points",
+    "CANCEL": "Cancel",
+    "EXCHANGE_RATE": "Exchange rate:",
+    "EXPIRY_NOTICE": "Points transferred to {programName} will expire on {date}",
+    "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
+    "CONVERSION_CALCULATION": "{points} points in {programName}",
+    "POINT": "point",
+    "POINTS": "points",
+    "SUCCESS": "Point transfer completed successully!"
   },
   "Gold": "Gold",
   "Silver": "Silver",

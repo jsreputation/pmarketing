@@ -133,5 +133,20 @@
     "NOT_AVAILABLE_TITLE": "Sorry!",
     "NOT_AVAILABLE_CTA": "Close",
     "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
+  },
+  "POINTS_TRANSFER": {
+    "FROM": "From",
+    "TO": "To",
+    "POINTS_TO_TRANSFER": "Points to transfer",
+    "TRANSFER_NOTICE": "Transferred points will adhere to recipient program's points expiration cycle.",
+    "TRANSFER_POINTS_CTA": "Transfer Points",
+    "CANCEL": "Cancel",
+    "EXCHANGE_RATE": "Exchange rate:",
+    "EXPIRY_NOTICE": "Points transferred to {programName} will expire on {date}",
+    "CONVERSION_NOTICE": "Upon transfer, these points will convert to",
+    "CONVERSION_CALCULATION": "{points} points in {programName}",
+    "POINT": "point",
+    "POINTS": "points",
+    "SUCCESS": "Point transfer completed successully!"
   }
 }

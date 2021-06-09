@@ -105,8 +105,9 @@ export class RewardsListComponent implements OnInit {
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string =
-      `${openTime.getHours()}:${openTime.getMinutes()} - ${closeTime.getHours()}:${closeTime.getMinutes()}`;
-    return `Available for collection during: ${days}, ${hours}`;
+      `${('0'+openTime.getHours()).substr(-2)}:${('0'+openTime.getMinutes()).substr(-2)} -
+      ${('0'+closeTime.getHours()).substr(-2)}:${('0'+closeTime.getMinutes()).substr(-2)}`;
+    return `Collect a voucher during: ${days}, ${hours}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
