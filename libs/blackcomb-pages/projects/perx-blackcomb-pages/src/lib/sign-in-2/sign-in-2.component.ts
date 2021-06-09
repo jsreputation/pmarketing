@@ -46,7 +46,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
-  public selectedCountry: string;
+  public defaultSelectedCountry: string;
 
   constructor(
     private router: Router,
@@ -69,7 +69,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     this.countriesList$ = this.route.data.pipe(
       tap((dataObj) => {
         this.validateMembership = dataObj.validateMembership;
-        this.selectedCountry = dataObj.defaultSelectedCountry;
+        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
       }),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) =>
