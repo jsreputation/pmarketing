@@ -131,7 +131,7 @@ interface IV4GetLoyaltyResponse {
 interface IV4PointHistory {
   id: number;
   identifier?: string;
-  loyalty_name: string;
+  loyalty_name?: string;
   name?: string;
   points: number;
   points_balance: number;
@@ -188,7 +188,7 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
-  loyalty_name: string;
+  loyalty_name?: string;
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
