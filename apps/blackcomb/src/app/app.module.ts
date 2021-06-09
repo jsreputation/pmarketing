@@ -124,7 +124,6 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  settingService: SettingsService,
   themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
@@ -133,7 +132,6 @@ export const setLanguage = (
       tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting()),
-      switchMap(() => settingService.getRemoteFlagsSettings())
     ).toPromise().then(() => resolve());
   });
 

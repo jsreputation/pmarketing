@@ -26,6 +26,9 @@ export interface IFlags {
   showLeaderboard?: boolean;
   showQuest?: boolean;
   showHappyHourOperatingHours?: boolean;
+  showBadgesButton?: boolean;
+  showPersonaliseRewards?: boolean;
+  showPointTransfer?: boolean;
 }
 
 export interface IRssFeeds {
