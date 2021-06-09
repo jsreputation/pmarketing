@@ -52,6 +52,7 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.appConfig = config;
