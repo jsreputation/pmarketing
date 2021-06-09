@@ -58,17 +58,17 @@ export class SignUpComponent implements OnInit {
       }
     );
     this.theme = this.themesService.getThemeSetting();
-    this.countriesList$ = this.route.data.pipe(
+    this.route.data.pipe(
       tap((dataObj) => {
         this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
       }),
       map((dataObj) => dataObj.countryList),
-      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
-      takeUntil(this.destroy$)
-    );
-
-    this.route.queryParams
-      .subscribe((params: Params) => {
+      switchMap((countriesList) =>
+        this.countriesList$ = this.generalStaticDataService.getCountriesList(countriesList)
+      ),
+      takeUntil(this.destroy$),
+      switchMap(() => this.route.queryParams)
+    ).subscribe((params: Params) => {
         if (params.registration && params.registration === 'invitation') {
           this.isPreregisteredMode = true;
         }
@@ -113,6 +113,9 @@ export class SignUpComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
   }
+    if (this.defaultSelectedCountry) {
+      this.signupForm.controls.countryCode.setValue(this.defaultSelectedCountry);
+    }
 
   }
 
