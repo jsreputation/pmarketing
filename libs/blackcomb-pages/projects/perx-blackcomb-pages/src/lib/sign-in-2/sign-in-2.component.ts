@@ -46,7 +46,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
-  public selectedCountry: string | null;
+  public selectedCountry: string;
 
   constructor(
     private router: Router,

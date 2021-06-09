@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   public confirmPasswordHide: boolean = true;
   public passwordHide: boolean = true;
   public isPreregisteredMode: boolean = false;
-  public selectedCountry: string | null;
+  public selectedCountry: string;
 
   constructor(
     private fb: FormBuilder,
