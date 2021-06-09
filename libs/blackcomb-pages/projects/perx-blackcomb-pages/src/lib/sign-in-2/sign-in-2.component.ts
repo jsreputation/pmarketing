@@ -10,32 +10,12 @@ import {
   NotificationService,
   ThemesService,
 } from '@perxtech/core';
-import {
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Navigation,
-  Router
-} from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Navigation, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Observable,
-  Subject
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -66,6 +46,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
+  public defaultSelectedCountry: string;
 
   constructor(
     private router: Router,
@@ -85,27 +66,28 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.route.data.pipe(
-      tap((dataObj) => this.validateMembership = dataObj.validateMembership),
+    this.route.data.pipe(
+      tap((dataObj) => {
+        this.validateMembership = dataObj.validateMembership;
+        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
+      }),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) =>
-        this.generalStaticDataService.getCountriesList(countriesList),
+        this.countriesList$ = this.generalStaticDataService.getCountriesList(countriesList)
       ),
       takeUntil(this.destroy$),
-    );
-    this.configService
-      .readAppConfig<ISigninConfig>()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((conf) => {
-        this.appConfig = conf;
-        if (conf.countryCodePrefix) {
-          this.countryCodePrefix = conf.countryCodePrefix;
-        }
-        if (conf.custom && conf.custom.loginMethod) {
-          this.loginMethod = conf.custom.loginMethod;
-        }
-        this.initForm();
-      });
+      switchMap(() => this.configService.readAppConfig<ISigninConfig>()),
+      takeUntil(this.destroy$),
+    ).subscribe((conf) => {
+      this.appConfig = conf;
+      if (conf.countryCodePrefix) {
+        this.countryCodePrefix = conf.countryCodePrefix;
+      }
+      if (conf.custom && conf.custom.loginMethod) {
+        this.loginMethod = conf.custom.loginMethod;
+      }
+      this.initForm();
+    });
     // todo: make this a input
     const token = this.authService.getAppAccessToken();
     if (token) {
@@ -251,6 +233,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
     });
     if (!this.countryCodePrefix && this.loginMethod === LoginType.phone) {
       this.loginForm.controls.countryCode.setValidators([Validators.required]);
+    }
+    if (this.defaultSelectedCountry) {
+      this.loginForm.controls.countryCode.setValue(this.defaultSelectedCountry);
     }
   }
 }

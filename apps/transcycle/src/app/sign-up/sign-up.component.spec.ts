@@ -1,11 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   AuthenticationService,
   Config,
@@ -18,17 +12,14 @@ import {
   ThemesService
 } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
@@ -83,6 +74,7 @@ const activatedRouteStub: Partial<ActivatedRoute> = {
   data: of(),
   queryParams: of({})
 };
+const formBuilder: FormBuilder = new FormBuilder();
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -120,7 +112,8 @@ describe('SignUpComponent', () => {
         { provide: ThemesService, useValue: themeServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: MatDatepickerModule },
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: FormBuilder, useValue: formBuilder }
       ]
     })
       .compileComponents();
@@ -129,6 +122,25 @@ describe('SignUpComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
+    component.signupForm = formBuilder.group({
+      lastName: [ '', Validators.required ],
+      dob: [ '', Validators.required ],
+      countryCode: [ '', Validators.required ],
+      mobileNo: [ '', [ Validators.required, Validators.pattern('^[0-9]*$') ] ],
+      password: [ '', [ Validators.required, Validators.minLength(6) ] ],
+      confirmPassword: [ '', Validators.required ],
+      engineNumber: [ '', Validators.required ],
+    });
+
+    component.signupForm.setValue({
+      lastName: 'Doe',
+      dob: '1-1-1970',
+      countryCode: '123456',
+      mobileNo: '123456',
+      password: 'qwerty123',
+      confirmPassword: 'qwerty123',
+      engineNumber: '1555888'
+    });
     fixture.detectChanges();
   });
 
