@@ -10,32 +10,12 @@ import {
   NotificationService,
   ThemesService,
 } from '@perxtech/core';
-import {
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Navigation,
-  Router
-} from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Navigation, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Observable,
-  Subject
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -66,6 +46,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
+  public defaultSelectedCountry: string | null;
 
   constructor(
     private router: Router,
@@ -86,7 +67,10 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
-      tap((dataObj) => this.validateMembership = dataObj.validateMembership),
+      tap((dataObj) => {
+        this.validateMembership = dataObj.validateMembership;
+        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
+      }),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) =>
         this.generalStaticDataService.getCountriesList(countriesList),
