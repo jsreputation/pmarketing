@@ -215,6 +215,20 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   }
                   return lat === 0 || lng === 0 ? false : true;
                 }),
+                // then filter for all locations that are within search radius
+                filter((voucherLocation: IVoucherLocation) => {
+                  const voucherLocationlat = voucherLocation.latitude !== null ? parseFloat(voucherLocation.latitude) : 0;
+                  const voucherLocationlng = voucherLocation.longitude !== null ? parseFloat(voucherLocation.longitude) : 0;
+                  const voucherLocationlocationLatLng: google.maps.LatLng = new google.maps.LatLng(
+                    {
+                      lat: voucherLocationlat,
+                      lng: voucherLocationlng
+                    }
+                  );
+
+                  // @ts-ignore ts thinks this.map could be undefined... but only in this line
+                  return google.maps.geometry.spherical.computeDistanceBetween(voucherLocationlocationLatLng, this.map.getBounds().getCenter()) < rad;
+                }),
                 tap((location: IVoucherLocation) => {
                   const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
                   const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
