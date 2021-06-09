@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   public confirmPasswordHide: boolean = true;
   public passwordHide: boolean = true;
   public isPreregisteredMode: boolean = false;
-  public defaultSelectedCountry: string | null = '';
+  public selectedCountry: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +60,7 @@ export class SignUpComponent implements OnInit {
     this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       tap((dataObj) => {
-        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
+        this.selectedCountry = dataObj.defaultSelectedCountry;
       }),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
