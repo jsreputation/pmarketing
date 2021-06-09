@@ -12,6 +12,7 @@ import { ICustomProperties } from '../profile/profile.model';
 interface IV4PointHistory {
   id: number;
   identifier?: string;
+  loyalty_name: string;
   name?: string;
   points: number;
   points_balance: number;
@@ -27,6 +28,7 @@ interface IV4PointHistory {
 interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
+  loyalty_name: string;
   identifier: string;
   transacted_at: Date;
   amount: number;
@@ -102,6 +104,7 @@ const transactionRaw: IV4LoyaltyTransactionPropertiesHistory = {
   id: 1,
   name: 'test',
   identifier: 'test',
+  loyalty_name: 'name',
   transacted_at: new Date(),
   transaction_details: {
     type: TransactionDetailType.transaction, data: {
@@ -128,6 +131,7 @@ const transactionRaw: IV4LoyaltyTransactionPropertiesHistory = {
 };
 const historyRaw: IV4PointHistory = {
   id: 1,
+  loyalty_name: 'name',
   points: 23,
   points_balance: 33,
   points_balance_converted_to_currency: 21,
@@ -153,6 +157,7 @@ const loyaltyRaw: IV4Loyalty = {
     points_balance: 3,
     points_balance_converted_to_currency: 6,
     points_date: 'test',
+    loyalty_name: 'name',
     properties: {}
   }],
   tiers: [

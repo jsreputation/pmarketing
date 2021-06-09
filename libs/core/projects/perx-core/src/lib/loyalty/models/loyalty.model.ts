@@ -85,6 +85,7 @@ export interface ILoyaltyTransaction {
   currencyBalance: number;
   earnedDate: string;
   properties: {};
+  loyaltyName: string;
 }
 
 export interface IRewardTransactionHistory {
@@ -125,6 +126,7 @@ export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
   identifier?: string;
+  loyaltyName: string;
   transactedAt?: Date;
   pointsAmount?: number;
   properties?: ICustomProperties;
