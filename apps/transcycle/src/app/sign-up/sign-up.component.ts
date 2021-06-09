@@ -1,17 +1,6 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-  Params
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   AuthenticationService,
   ConfigService,
@@ -25,15 +14,8 @@ import {
   NotificationService,
   ThemesService
 } from '@perxtech/core';
-import {
-  map,
-  switchMap,
-  takeUntil
-} from 'rxjs/operators';
-import {
-  Observable,
-  Subject
-} from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { Moment } from 'moment';
 
 @Component({
@@ -55,6 +37,7 @@ export class SignUpComponent implements OnInit {
   public confirmPasswordHide: boolean = true;
   public passwordHide: boolean = true;
   public isPreregisteredMode: boolean = false;
+  public defaultSelectedCountry: string | null = '';
 
   constructor(
     private fb: FormBuilder,
@@ -76,6 +59,9 @@ export class SignUpComponent implements OnInit {
     );
     this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
+      tap((dataObj) => {
+        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
+      }),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
       takeUntil(this.destroy$)
