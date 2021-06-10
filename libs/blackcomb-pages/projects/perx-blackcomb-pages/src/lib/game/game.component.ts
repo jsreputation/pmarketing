@@ -17,7 +17,8 @@ import {
   IRewardPopupConfig,
   IConfig,
   ConfigService,
-  IPrizeSetOutcome
+  IPrizeSetOutcome,
+  IBadgeOutcome
 } from '@perxtech/core';
 import {
   map,
@@ -42,7 +43,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
 import { MatDialog } from '@angular/material/dialog';
-import { IBadgeOutcome } from 'libs/core/projects/perx-core/src/lib/campaign/models/campaign.model';
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
