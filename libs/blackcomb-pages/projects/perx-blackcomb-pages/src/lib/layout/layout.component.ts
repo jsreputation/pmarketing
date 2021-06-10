@@ -106,11 +106,7 @@ export class LayoutComponent implements OnInit {
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
     ).subscribe(
-      (flags: IFlags) => {
-        this.appRemoteFlags = flags;
-        console.log('appConfig', this.appConfig);
-        console.log('appRemoteFlags', this.appRemoteFlags);
-      }
+      (flags: IFlags) => this.appRemoteFlags = flags
     );
 
     this.router.events
