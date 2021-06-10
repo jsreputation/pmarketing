@@ -29,6 +29,40 @@ export interface IFlags {
   showBadgesButton?: boolean;
   showPersonaliseRewards?: boolean;
   showPointTransfer?: boolean;
+
+  // local flag
+  showAccountsPage?: boolean;
+  showCampaignLandingPage?: boolean;
+  showCampaignRewardsCounterOnHomepage?: boolean;
+  showCatalogOnHomePage?: boolean;
+  showExpiryOnRewardDetail?: boolean;
+  showExtraLoyaltyOnHomePage?: boolean;
+  showForgetPasswordOnLogin?: boolean;
+  showGameTriesOnCampaignCard?: boolean;
+  showHistoryPage?: boolean;
+  showHomePage?: boolean;
+  showLeaderboardLinkOnHomePage?: boolean;
+  showLogo?: boolean;
+  showLoyaltyProgress?: boolean;
+  showMacaronOnRewardDetails?: boolean;
+  showPasswordToggleOnSignUpPage?: boolean;
+  showPopupCampaign?: boolean;
+  showPrizeSetOutcome?: boolean;
+  showProgressBarCampaignsOnHomePage?: boolean;
+  showQrPageSubtitle?: boolean;
+  showQuestCampaignsOnHomePage?: boolean;
+  showQuizOnHomePage?: boolean;
+  showReferralCampaignsOnHomePage?: boolean;
+  showReferralDetails?: boolean;
+  showRewardNavButton?: boolean;
+  showRewardsOnHomepage?: boolean;
+  showStampCampaignsOnHomePage?: boolean;
+  showSubtitleLogin?: boolean;
+  showSurveyOnHomePage?: boolean;
+  showTransactionHistoryOnAccountsPage?: boolean;
+  showUserInfoOnAccountsPage?: boolean;
+  showUserQR?: boolean;
+  showVoucherBookingFromRewardsPage?: boolean;
 }
 
 export interface IRssFeeds {
