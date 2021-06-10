@@ -10,7 +10,8 @@ import {
   CampaignType,
   ICampaign,
   ICampaignOutcome,
-  IReferral
+  IReferral,
+  IBadgeOutcome
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
@@ -126,6 +127,13 @@ export interface IV4PointsOutcome {
   outcome_type: OutcomeType.points;
   points: number;
   properties: any;
+}
+
+export interface IV4BadgeOutcome {
+  id: number;
+  outcome_type: OutcomeType.badge;
+  badge_id: number;
+  state: 'issued' | 'unissued';
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -372,6 +380,15 @@ export class V4CampaignService implements ICampaignService {
       outcomeType: points.outcome_type,
       points: points.points,
       properties: points.properties
+    };
+  }
+
+  public static v4BadgeToBadge(badge: IV4BadgeOutcome): IBadgeOutcome {
+    return {
+      id: badge.id,
+      outcomeType: badge.outcome_type,
+      badgeId: badge.badge_id,
+      state: badge.state
     };
   }
 }
