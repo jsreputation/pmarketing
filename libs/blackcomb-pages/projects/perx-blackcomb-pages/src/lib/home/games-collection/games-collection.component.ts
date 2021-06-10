@@ -65,8 +65,8 @@ export class GamesCollectionComponent implements OnInit {
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string =
-      `${('0'+openTime.getHours()).substr(-2)}:${('0'+openTime.getMinutes()).substr(-2)} -
-      ${('0'+closeTime.getHours()).substr(-2)}:${('0'+closeTime.getMinutes()).substr(-2)}`;
+      `${(`0${openTime.getHours()}`).substr(-2)}:${(`0${openTime.getMinutes()}`).substr(-2)} -
+      ${(`0${closeTime.getHours()}`).substr(-2)}:${(`0${closeTime.getMinutes()}`).substr(-2)}`;
     return `Campaign available during: ${days}, ${hours}`;
   }
 
