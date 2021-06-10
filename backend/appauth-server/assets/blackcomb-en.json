@@ -436,9 +436,9 @@
     "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   },
   "PRIZE_SET": {
-    "HEADING": "Congrats! You won this prize basket.",
+    "HEADING": "Congrats! You won this prize set.",
     "SUB_HEADING": "includes ALL of the following:",
-    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE BASKET",
+    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE SET",
     "PENDING_STATE": "Supply Pending",
     "FAILED_STATE": "Failed",
     "VIEW_WALLET": "VIEW WALLET",
