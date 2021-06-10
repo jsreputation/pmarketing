@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -60,6 +60,7 @@ describe('SignIn2Component', () => {
     getLoyalty: (): Observable<ILoyalty> => of(),
     getLoyalties: (): Observable<ILoyalty[]> => of([])
   };
+  const formBuilder: FormBuilder = new FormBuilder();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -86,6 +87,7 @@ describe('SignIn2Component', () => {
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: FormBuilder, useValue: formBuilder }
       ]
     })
       .compileComponents();
@@ -94,6 +96,17 @@ describe('SignIn2Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SignIn2Component);
     component = fixture.componentInstance;
+    component.loginForm = formBuilder.group({
+      customerID: [ '', Validators.required ],
+      countryCode: [ '', Validators.required ],
+      password: [ '', [ Validators.required, Validators.minLength(6) ] ],
+    });
+
+    component.loginForm.setValue({
+      countryCode: '65',
+      customerID: '123456',
+      password: 'qwerty123',
+    });
     fixture.detectChanges();
   });
 
