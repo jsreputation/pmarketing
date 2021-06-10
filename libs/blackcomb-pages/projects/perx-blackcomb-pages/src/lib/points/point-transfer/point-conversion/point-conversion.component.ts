@@ -4,6 +4,7 @@ import { MatOptionSelectionChange } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorMessageService, IExchangerate, ILoyalty, IPointTransfer, LoyaltyService, NotificationService } from '@perxtech/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface ISelectOption {
   value: number;
@@ -144,6 +145,8 @@ export class PointConversionComponent implements OnInit {
       };
 
       this.loyaltyService.tansferPoints(transfer).subscribe(() => {
+        // clear cache
+        globalCacheBusterNotifier.next();
         // show success message and navigate to point history
         this.translateService.get('POINTS_TRANSFER.SUCCESS').subscribe((message: string) => {
           this.notificationService.addSnack(message);
