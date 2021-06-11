@@ -56,6 +56,39 @@ interface IV4Flags {
     show_badges_button: boolean;
     show_personalise_rewards: boolean;
     show_point_transfer: boolean;
+
+    show_accounts_page?: boolean;
+    show_campaign_landing_page?: boolean;
+    show_campaign_rewards_counter_on_homepage?: boolean;
+    show_catalog_on_home_page?: boolean;
+    show_expiry_on_reward_detail?: boolean;
+    show_extra_loyalty_on_home_page?: boolean;
+    show_forget_password_on_login?: boolean;
+    show_game_tries_on_campaign_card?: boolean;
+    show_history_page?: boolean;
+    show_home_page?: boolean;
+    show_leaderboard_link_on_home_page?: boolean;
+    show_logo?: boolean;
+    show_loyalty_progress?: boolean;
+    show_macaron_on_reward_details?: boolean;
+    show_password_toggle_on_sign_up_page?: boolean;
+    show_popup_campaign?: boolean;
+    show_prize_set_outcome?: boolean;
+    show_progress_bar_campaigns_on_home_page?: boolean;
+    show_qr_page_subtitle?: boolean;
+    show_quest_campaigns_on_home_page?: boolean;
+    show_quiz_on_home_page?: boolean;
+    show_referral_campaigns_on_home_page?: boolean;
+    show_referral_details?: boolean;
+    show_reward_nav_button?: boolean;
+    show_rewards_on_homepage?: boolean;
+    show_stamp_campaigns_on_home_page?: boolean;
+    show_subtitle_login?: boolean;
+    show_survey_on_home_page?: boolean;
+    show_transaction_history_on_accounts_page?: boolean;
+    show_user_info_on_accounts_page?: boolean;
+    show_user_qr?: boolean;
+    show_voucher_booking_from_rewards_page?: boolean;
   };
 }
 
@@ -140,7 +173,40 @@ export class V4SettingsService extends SettingsService {
       showHappyHourOperatingHours: data.json_value.show_happy_hour_operating_hours,
       showBadgesButton: data.json_value.show_badges_button,
       showPersonaliseRewards: data.json_value.show_personalise_rewards,
-      showPointTransfer: data.json_value.show_point_transfer
+      showPointTransfer: data.json_value.show_point_transfer,
+
+      showAccountsPage: data.json_value.show_accounts_page,
+      showCampaignLandingPage: data.json_value.show_campaign_landing_page,
+      showCampaignRewardsCounterOnHomepage: data.json_value.show_campaign_rewards_counter_on_homepage,
+      showCatalogOnHomePage: data.json_value.show_catalog_on_home_page,
+      showExpiryOnRewardDetail: data.json_value.show_expiry_on_reward_detail,
+      showExtraLoyaltyOnHomePage: data.json_value.show_extra_loyalty_on_home_page,
+      showForgetPasswordOnLogin: data.json_value.show_forget_password_on_login,
+      showGameTriesOnCampaignCard: data.json_value.show_game_tries_on_campaign_card,
+      showHistoryPage: data.json_value.show_history_page,
+      showHomePage: data.json_value.show_home_page,
+      showLeaderboardLinkOnHomePage: data.json_value.show_leaderboard_link_on_home_page,
+      showLogo: data.json_value.show_logo,
+      showLoyaltyProgress: data.json_value.show_loyalty_progress,
+      showMacaronOnRewardDetails: data.json_value.show_macaron_on_reward_details,
+      showPasswordToggleOnSignUpPage: data.json_value.show_password_toggle_on_sign_up_page,
+      showPopupCampaign: data.json_value.show_popup_campaign,
+      showPrizeSetOutcome: data.json_value.show_prize_set_outcome,
+      showProgressBarCampaignsOnHomePage: data.json_value.show_progress_bar_campaigns_on_home_page,
+      showQrPageSubtitle: data.json_value.show_qr_page_subtitle,
+      showQuestCampaignsOnHomePage: data.json_value.show_quest_campaigns_on_home_page,
+      showQuizOnHomePage: data.json_value.show_quiz_on_home_page,
+      showReferralCampaignsOnHomePage: data.json_value.show_referral_campaigns_on_home_page,
+      showReferralDetails: data.json_value.show_referral_details,
+      showRewardNavButton: data.json_value.show_reward_nav_button,
+      showRewardsOnHomepage: data.json_value.show_rewards_on_homepage,
+      showStampCampaignsOnHomePage: data.json_value.show_stamp_campaigns_on_home_page,
+      showSubtitleLogin: data.json_value.show_subtitle_login,
+      showSurveyOnHomePage: data.json_value.show_survey_on_home_page,
+      showTransactionHistoryOnAccountsPage: data.json_value.show_transaction_history_on_accounts_page,
+      showUserInfoOnAccountsPage: data.json_value.show_user_info_on_accounts_page,
+      showUserQR: data.json_value.show_user_qr,
+      showVoucherBookingFromRewardsPage: data.json_value.show_voucher_booking_from_rewards_page,
     };
   }
 

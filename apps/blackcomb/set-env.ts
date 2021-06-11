@@ -272,7 +272,10 @@ const appConfigFile = `{
   },
   "showPrizeSetOutcome": ${
     process.env.SHOW_PRIZE_SET_OUTCOME ? process.env.SHOW_PRIZE_SET_OUTCOME : false
-  }
+  },
+  "showBadgesButton": ${ process.env.SHOW_BADGES_BUTTON || false },
+  "showPersonaliseRewards": ${ process.env.SHOW_PERSONALISE_REWARDS || false },
+  "showPointTransfer": ${ process.env.SHOW_POINT_TRANSFER || false }
 }
 `;
 
