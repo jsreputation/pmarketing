@@ -1,0 +1,14 @@
+<div class="container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
+  [scrollWindow]="false">
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)">
+    <mat-tab [label]="'BADGES.ALL_TAB' | translate">
+      <badge-list [badges]="badges"></badge-list>
+    </mat-tab>
+    <mat-tab [label]="'BADGES.EARNED_TAB' | translate">
+      <badge-list [badges]="badges"></badge-list>
+    </mat-tab>
+    <mat-tab [label]="'BADGES.UNEARNED_TAB' | translate">
+      <badge-list [badges]="badges"></badge-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

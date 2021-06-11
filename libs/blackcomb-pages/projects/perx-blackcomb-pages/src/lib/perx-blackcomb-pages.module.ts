@@ -92,6 +92,7 @@ import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.comp
 import { QuestModule } from './quest/quest.module';
 import { LargeVouchersModule } from './large-vouchers/large-vouchers.module';
 import { PrizeSetOutcomeModule } from './prize-set-outcome/prize-set-outcome.module';
+import { BadgeModule } from './badges/badge.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -188,6 +189,7 @@ const comps: any[] = [
     QuestModule,
     LargeVouchersModule,
     PrizeSetOutcomeModule,
+    BadgeModule
   ],
   entryComponents: [FilterDialogComponent],
   exports: [...comps],

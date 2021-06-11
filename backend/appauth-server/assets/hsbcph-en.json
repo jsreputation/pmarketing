@@ -223,7 +223,8 @@
     "CONTACT_US": "Contact Us",
     "FAQS": "FAQs",
     "TRANSFER_POINTS": "Transfer Points",
-    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History",
+    "BADGES": "My Badges"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -435,6 +436,12 @@
     "POINT": "point",
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!"
+  },
+  "BADGES": {
+    "ALL_TAB": "All",
+    "EARNED_TAB": "Earned",
+    "UNEARNED_TAB": "Unearned",
+    "VIEW_WALLET": "Close"
   },
   "Gold": "Gold",
   "Silver": "Silver",

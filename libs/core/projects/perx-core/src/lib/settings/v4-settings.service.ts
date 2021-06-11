@@ -53,10 +53,8 @@ interface IV4Flags {
     show_leaderboard: boolean;
     show_quest: boolean;
     show_happy_hour_operating_hours: boolean;
-    show_badges_button: boolean;
     show_personalise_rewards: boolean;
     show_point_transfer: boolean;
-
     show_accounts_page?: boolean;
     show_campaign_landing_page?: boolean;
     show_campaign_rewards_counter_on_homepage?: boolean;
@@ -89,6 +87,7 @@ interface IV4Flags {
     show_user_info_on_accounts_page?: boolean;
     show_user_qr?: boolean;
     show_voucher_booking_from_rewards_page?: boolean;
+    show_badges_button: boolean;
   };
 }
 
@@ -171,10 +170,7 @@ export class V4SettingsService extends SettingsService {
       showLeaderboard: data.json_value.show_leaderboard,
       showQuest: data.json_value.show_quest,
       showHappyHourOperatingHours: data.json_value.show_happy_hour_operating_hours,
-      showBadgesButton: data.json_value.show_badges_button,
       showPersonaliseRewards: data.json_value.show_personalise_rewards,
-      showPointTransfer: data.json_value.show_point_transfer,
-
       showAccountsPage: data.json_value.show_accounts_page,
       showCampaignLandingPage: data.json_value.show_campaign_landing_page,
       showCampaignRewardsCounterOnHomepage: data.json_value.show_campaign_rewards_counter_on_homepage,
@@ -207,6 +203,8 @@ export class V4SettingsService extends SettingsService {
       showUserInfoOnAccountsPage: data.json_value.show_user_info_on_accounts_page,
       showUserQR: data.json_value.show_user_qr,
       showVoucherBookingFromRewardsPage: data.json_value.show_voucher_booking_from_rewards_page,
+      showPointTransfer: data.json_value.show_point_transfer,
+      showBadgesButton: data.json_value.show_badges_button
     };
   }
 

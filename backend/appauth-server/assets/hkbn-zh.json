@@ -88,6 +88,12 @@
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!"
   },
+  "BADGES": {
+    "ALL_TAB": "All",
+    "EARNED_TAB": "Earned",
+    "UNEARNED_TAB": "Unearned",
+    "VIEW_WALLET": "Close"
+  },
   "LOGIN": "登入",
   "REGISTER_FOR_AN_ACCOUNT": "立即登記會員賬戶",
   "MOBILE_NUMBER_OR_EMAIL": "電話號碼或電郵地址",

@@ -59,7 +59,7 @@ export enum CampaignState {
 export interface ProgressBarFields {
   stages: number;
   current: number;
-  stageLabels: string|number[];
+  stageLabels: string | number[];
   lightStage?: number;
   // for pay and spend include pending and processed
   totalCurrent?: number;
@@ -158,6 +158,13 @@ export interface IPointsOutcome {
   outcomeType: OutcomeType.points;
   points: number;
   properties: any;
+}
+
+export interface IBadgeOutcome {
+  badgeId: number;
+  id: number;
+  outcomeType: OutcomeType.badge;
+  state: 'issued' | 'unissued';
 }
 
 export interface IOperatingHours {

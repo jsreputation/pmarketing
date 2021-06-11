@@ -1,0 +1,25 @@
+button {
+  margin-top: 4rem;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.img-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem;
+
+  img {
+    margin: 0 auto 2rem;
+    max-width: 50%;
+    height: auto;
+    align-self: flex-start; //MEG-31: https://stackoverflow.com/a/61196907/1179865
+  }
+}
+
+mat-dialog-content {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  white-space: pre-line;
+  color: var(--disabled_text_color);
+}

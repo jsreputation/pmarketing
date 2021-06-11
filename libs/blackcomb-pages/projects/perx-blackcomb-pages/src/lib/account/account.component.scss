@@ -17,5 +17,13 @@
       text-decoration: none;
       color: black;
     }
+
+    &.badges {
+      .count {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+      }
+    }
   }
 }
