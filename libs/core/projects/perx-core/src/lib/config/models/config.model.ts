@@ -51,6 +51,10 @@ export interface IConfig<T> {
   showHistoryPage?: boolean;
   showNearMePage?: boolean;
   enableLeaderBoard? : boolean;
+  showQuest? : boolean;
+  showBadgesButton? : boolean;
+  showPersonaliseRewards? : boolean;
+  showPointTransfer? : boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;
