@@ -1,35 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError, from, timer } from 'rxjs';
-import {
-  map,
-  flatMap,
-  mergeAll,
-  scan,
-  tap,
-  filter,
-  mergeMap,
-  toArray,
-  switchMap,
-  skip, share
-} from 'rxjs/operators';
+import { from, Observable, of, throwError, timer } from 'rxjs';
+import { filter, flatMap, map, mergeAll, mergeMap, scan, share, skip, switchMap, tap, toArray } from 'rxjs/operators';
 
-import {
-  IStampCard,
-  IStamp,
-  StampCardState,
-  StampState,
-  ICampaignOutcome,
-  IStampOutcome,
-} from './models/stamp.model';
+import { ICampaignOutcome, IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignType, ICampaign, CampaignOutcomeType } from '../campaign/models/campaign.model';
+import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 
@@ -101,6 +83,7 @@ interface IV4Outcome {
 interface IV4StampCard {
   id: number;
   user_account_id: number;
+  team_id?: number;
   state: StampCardState;
   campaign_id: number;
   card_number: number;
@@ -260,6 +243,7 @@ export class V4StampService implements StampService {
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
+      teamId: stampCard.team_id,
       title: oc(stampCard).display_properties.header.value.title(),
       subTitle: oc(stampCard).display_properties.header.value.description(),
       userAccountId: stampCard.user_account_id,
