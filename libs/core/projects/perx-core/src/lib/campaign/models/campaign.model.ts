@@ -90,6 +90,7 @@ export interface ICampaign {
   termsAndConditions?: string;
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
+  teamSize?: number;
 }
 
 export enum CommChannel {

@@ -4,14 +4,14 @@ import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
   CampaignDisplayProperties,
-  IPointsOutcome,
   CampaignOutcomeType,
   CampaignState,
   CampaignType,
   ICampaign,
   ICampaignOutcome,
   IReferral,
-  IBadgeOutcome
+  IBadgeOutcome,
+  IPointsOutcome
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
@@ -85,6 +85,7 @@ export interface IV4Campaign {
   terms_and_conditions?: string;
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
+  team_size?: number; // used for stamp team campaigns
 }
 
 type CountObject = {
@@ -263,6 +264,7 @@ export class V4CampaignService implements ICampaignService {
       campaignBannerUrl,
       operatingHours,
       isOperating: campaign.operating_now,
+      teamSize: campaign.team_size,
       displayProperties,
       customFields
     };
