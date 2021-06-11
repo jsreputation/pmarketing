@@ -2,6 +2,7 @@ import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
 import { IWProperties } from '@perxtech/whistler';
 import { CampaignOutcomeType } from '../../campaign/models/campaign.model';
+
 export interface ICampaignOutcome {
   id: number;
   campaignId: number;
@@ -69,6 +70,7 @@ export interface IStampCard {
   subTitle?: string; // added
   buttonText?: string; // added
   id: number;
+  teamId?: number;
   userAccountId?: number; // made optional
   state: StampCardState;
   campaignId?: number; // made optional
