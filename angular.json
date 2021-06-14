@@ -37,14 +37,16 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/dbshk-agent/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/dbshk-agent/src/index.prod.html",
                 "output": "index.html"
@@ -59,9 +61,7 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/dbshk-agent/ngsw-config.json"
+              ]
             }
           },
           "outputs": [
@@ -157,14 +157,16 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/philipssg/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/philipssg/src/index.prod.html",
                 "output": "index.html"
@@ -179,9 +181,7 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/philipssg/ngsw-config.json"
+              ]
             },
             "staging": {
               "optimization": true,
@@ -318,14 +318,15 @@
               ]
             },
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/starhub/src/index.prod.html",
                 "output": "index.html"
@@ -433,15 +434,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/prudential/src/index.prod.html",
                 "output": "index.html"
@@ -548,14 +549,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/oracle-pay/src/index.prod.html",
                 "output": "index.html"
@@ -662,14 +664,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/merck-merchant/src/index.prod.html",
                 "output": "index.html"
@@ -781,14 +784,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/merck-customer/src/index.prod.html",
                 "output": "index.html"
@@ -913,14 +917,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/hsbchk/src/index.prod.html",
                 "output": "index.html"
@@ -1067,14 +1072,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/hsbc-rewards/src/index.prod.html",
                 "output": "index.html"
@@ -1181,14 +1187,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/hsbc/src/index.prod.html",
                 "output": "index.html"
@@ -1295,14 +1302,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/hkbn/src/index.prod.html",
                 "output": "index.html"
@@ -1409,14 +1417,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/components-demo/src/index.prod.html",
                 "output": "index.html"
@@ -1524,14 +1533,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/bpi/src/index.prod.html",
                 "output": "index.html"
@@ -1641,14 +1651,16 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/blackcomb/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/blackcomb/src/index.prod.html",
                 "output": "index.html"
@@ -1663,9 +1675,7 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/blackcomb/ngsw-config.json"
+              ]
             }
           },
           "outputs": [
@@ -1761,14 +1771,16 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/transcycle/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/transcycle/src/index.prod.html",
                 "output": "index.html"
@@ -1783,9 +1795,7 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/transcycle/ngsw-config.json"
+              ]
             }
           },
           "outputs": [
@@ -1902,15 +1912,16 @@
               ]
             },
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/all-it/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
               "index": {
                 "input": "apps/all-it/src/index.prod.html",
                 "output": "index.html"
@@ -1921,9 +1932,7 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/all-it/ngsw-config.json"
+              ]
             }
           },
           "outputs": [
@@ -2017,14 +2026,15 @@
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": false,
+              "serviceWorker": true,
               "vendorChunk": false,
-              "buildOptimizer": false,
               "index": {
                 "input": "apps/abenson/src/index.prod.html",
                 "output": "index.html"
