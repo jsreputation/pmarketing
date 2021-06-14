@@ -7,17 +7,6 @@
         <perx-core-profile-summary [profile$]="profile$" [loyalty$]="loyalty$" [memberFn]="memberFn">
         </perx-core-profile-summary>
       </div>
-      <div *ngIf="remoteFlags?.showBadgesButton" class="section badges">
-        <mat-nav-list>
-          <mat-list-item routerLink="/badges">
-            {{'ACCOUNT_PAGE.BADGES' | translate}}
-            <div class="count">
-              {{acquiredBadges | async}}
-              <mat-icon>chevron_right</mat-icon>
-            </div>
-          </mat-list-item>
-        </mat-nav-list>
-      </div>
       <div class="section profile">
         <mat-nav-list>
           <mat-list-item *ngIf="aConfig.showUserInfoOnAccountsPage" routerLink="/profile">
@@ -34,6 +23,17 @@
             <mat-list-item [routerLink]="[ '/profile', 'edit-mobile' ]">Change Mobile Number</mat-list-item>
             <mat-list-item [routerLink]="[ 'support' ]">Customer Support</mat-list-item>
           </ng-container>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="remoteFlags?.showBadgesButton" class="section badges">
+        <mat-nav-list>
+          <mat-list-item routerLink="/badges">
+            {{'ACCOUNT_PAGE.BADGES' | translate}}
+            <div class="count">
+              {{acquiredBadges | async}}
+              <mat-icon>chevron_right</mat-icon>
+            </div>
+          </mat-list-item>
         </mat-nav-list>
       </div>
       <div *ngIf="aConfig?.enablePointTransfer && remoteFlags?.showPointTransfer" class="section">
