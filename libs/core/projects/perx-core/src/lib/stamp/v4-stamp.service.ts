@@ -91,72 +91,73 @@ interface IV4StampCard {
     total_slots: number;
     rewards: IV4Outcome[];
   };
-  display_properties: {
-    button_text?: string;
-    cols?: number;
-    rows?: number;
-    header?: {
-      value: {
-        title: string;
-        description: string;
-      }
-    }
-    card_image?: {
-      value?: {
-        image_url?: string;
-        file?: string; // default if image_url is not present
-      }
-    };
-    //  todo: temporarily map this until v4 dashboard fixes naming
-    card_background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    total_slots?: number;
-    display_campaign_as: string;
-    background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    thumbnail_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    reward_positions?: number[];
-    button_Bg_colour?: string;
-    button_text_colour?: string;
-  };
+  display_properties: StampCampaignDisplayProperties
   stamps?: IV4Stamp[];
+}
+
+export interface StampCampaignDisplayProperties {
+  cols?: number;
+  rows?: number;
+  header?: {
+    value: {
+      title: string;
+      description: string;
+    }
+  }
+  card_image?: {
+    value?: {
+      image_url?: string;
+      file?: string; // default if image_url is not present
+    }
+  };
+  //  todo: temporarily map this until v4 dashboard fixes naming
+  card_background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  total_slots?: number;
+  display_campaign_as: string;
+  background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  thumbnail_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  reward_positions?: number[];
+  button_Bg_colour?: string;
+  button_text_colour?: string;
 }
 
 // tslint:disable-next-line:max-line-length
