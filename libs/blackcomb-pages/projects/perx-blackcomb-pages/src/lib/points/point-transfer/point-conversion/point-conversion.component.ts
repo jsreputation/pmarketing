@@ -25,7 +25,8 @@ export class PointConversionComponent implements OnInit {
   public expiryMessage: string | undefined;
   public currentExchangeRate: IExchangerate | undefined;
   private exchangeRates: IExchangerate[];
-  private pointsAmount: number;
+  public pointsAmount: number;
+  public showConfirmation: boolean;
 
   constructor(
     private loyaltyService: LoyaltyService,
@@ -154,7 +155,7 @@ export class PointConversionComponent implements OnInit {
         });
       },
         (res) => {
-          // halde errors
+          // handle errors
           console.error(res);
           if (res?.error?.message) {
             this.notificationService.addSnack(res.error.message);
@@ -166,4 +167,18 @@ export class PointConversionComponent implements OnInit {
         });
     }
   }
+
+  public showTransferConfirmation(): void {
+    this.exchangeCalculationMessage = undefined;
+    this.showConfirmation = true;
+  }
+
+  public showTransferConversion(): void {
+    this.showConfirmation = false;
+  }
+
+  public back(): void {
+    this.router.navigate(['/account']);
+  }
+
 }

@@ -1,0 +1,68 @@
+@import "../../../mixins";
+
+.point-conversion-confirmation {
+    overflow: auto;
+    height: 100%;
+
+    button {
+        width: 100%;
+    }
+
+    .exchange-rate {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border: 1px solid var(--disabled_text_color);
+        border-right: none;
+        border-left: none;
+        margin: 1.4rem 0;
+        padding: 1.8rem 0;
+    }
+
+    .transaction {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1.2rem;
+        .program {
+            width: 60%;
+            h3 {
+                font-weight: normal;
+                line-height: 25px;
+                @include ellipse-lines(1);
+            }
+        }
+
+        .detail {
+            text-align: right;
+            width: 40%;
+            color: var(--disabled_text_color);
+
+            .positive-value {
+                color: var(--primary);
+            }
+        }
+    }
+
+    h2,
+    h3 {
+        margin: 0.5rem 0;
+        height: 25px;
+    }
+
+    .muted {
+        font-size: 1.4rem;
+        color: var(--disabled_text_color);
+    }
+
+    .bottom-sheet {
+        background-color: var(--background);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.4rem 3rem;
+        button {
+            margin: 0.6rem;
+        }
+    }
+}
