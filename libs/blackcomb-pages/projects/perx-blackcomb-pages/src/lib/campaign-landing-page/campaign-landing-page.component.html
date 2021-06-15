@@ -38,9 +38,9 @@
                       <a [routerLink]="['/reward-detail',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon></a>
                   </ng-container>
               </ng-container>
-              </div>             
+              </div>
             </div>
-          </mat-list-item>          
+          </mat-list-item>
       </mat-list>
   </div>
     <div *ngIf="config?.media?.youtube" class="video">
@@ -49,7 +49,8 @@
     </div>
     <div class="tnc" *ngIf="config?.body" [innerHtml]="config?.body?.text | safeHtml"></div>
   </div>
-  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+  <div class="bottom-nav-container mat-elevation-z2">
     <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{config?.buttonText?.text || 'Play'}}</button>
-  </mat-toolbar>
+    <button mat-flat-button *ngIf="config?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="next()">{{config?.buttonText2?.text}}</button>
+  </div>
 </div>
