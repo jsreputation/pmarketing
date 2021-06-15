@@ -18,22 +18,6 @@
     height: 48px;
     background-size: cover;
 }
-#ball_holder {
-   .left-holder{
-    transition: transform .3s linear;
-    transform-origin: top left;
-    &.open{
-        transform: rotate(5deg);
-    }
-   } 
-   .right-holder {
-    transition: transform .3s linear;
-    transform-origin: top right;
-    &.open{
-        transform: rotate(-5deg);
-    }
-   } 
-}
 
 button {
     margin-top: 25px;

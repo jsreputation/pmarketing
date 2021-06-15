@@ -1,6 +1,10 @@
 <div class="game-container">
     <div class="contents-container">
         <svg width="276" height="486" viewBox="0 0 276 486" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path [attr.d]="ballPath" stroke-width="0" stroke="red" id="theMotionPath"/> 
+            <animateMotion id="animateEl" fill="freeze" (beginEvent)="startedGame()" (endEvent)="finishedGame()"
+             [attr.dur]="animDuration" begin="indefinite" xlink:href="#custom_ball" [attr.path]="ballPath">        
+            </animateMotion>   
             <g>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M103.511 0V83.8694L0 201.532V0H103.511Z" fill="black"/>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M168.489 0V83.8694L272 201.532V0H168.489Z" fill="black"/>
@@ -27,20 +31,10 @@
             </g>
 
             <g id="ball_holder" [attr.fill]="stageColor">
-                <path class="left-holder" [ngClass]="gameStarted ? 'open' : ''" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z" />
-                <path class="right-holder" [ngClass]="gameStarted ? 'open' : ''" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
+                <path [attr.transform]="rotateValue1" class="left-holder" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z" />
+                <path [attr.transform]="rotateValue2" class="right-holder" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
             </g>
-            <g id="custom_ball" render-order="1">
-                <rect x="123.911" y="18.1333" width="24.1778" height="24.1778" rx="12.0889" [attr.fill]="ballColor"/>
-                <rect x="123.911" y="18.1333" width="24.1778" height="24.1778" rx="12.0889" fill="url(#ball_radial)" fill-opacity="0.5"/>
-                <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M142.997 24.9684C144.333 26.6825 145.13 28.8385 145.13 31.1804C145.13 32.1495 144.993 33.0867 144.739 33.9739C145.442 33.3717 146.234 32.6967 147.068 31.9866C147.169 31.3842 147.221 30.7654 147.221 30.1344C147.221 27.3771 146.221 24.8534 144.564 22.9064L142.997 24.9684ZM142.259 39.4157L143.07 37.2981C141.319 39.5986 138.604 41.1262 135.528 41.2791C135.706 41.2875 135.885 41.2917 136.064 41.2917C138.356 41.2917 140.486 40.6007 142.259 39.4157Z" fill="white" fill-opacity="0.5"/>
-                <path d="M136 40.3111C130.428 40.3111 125.911 35.7941 125.911 30.2222H121.911C121.911 38.0033 128.219 44.3111 136 44.3111V40.3111ZM146.089 30.2222C146.089 35.7941 141.572 40.3111 136 40.3111V44.3111C143.781 44.3111 150.089 38.0033 150.089 30.2222H146.089ZM136 20.1333C141.572 20.1333 146.089 24.6502 146.089 30.2222H150.089C150.089 22.4411 143.781 16.1333 136 16.1333V20.1333ZM136 16.1333C128.219 16.1333 121.911 22.4411 121.911 30.2222H125.911C125.911 24.6502 130.428 20.1333 136 20.1333V16.1333Z" fill="black" fill-opacity="0.05"/> 
-                <animateMotion id="animateEl" fill="freeze" (beginEvent)="startedGame()" (endEvent)="finishedGame()"
-                 [attr.dur]="animDuration" begin="indefinite">
-                    <mpath xlink:href="#theMotionPath"/>
-                </animateMotion> 
-                <path [attr.d]="ballPath" stroke-width=".5" fill="none" id="theMotionPath"/>       
-            </g>
+            
             <g id="peg_container" [attr.fill]="stageColor">   
                 <g>
                 <path d="M128 108.556C128 104.137 131.582 100.556 136 100.556C140.418 100.556 144 104.137 144 108.556C144 112.974 140.418 116.556 136 116.556C131.582 116.556 128 112.974 128 108.556Z"/>
@@ -226,6 +220,12 @@
                 <path d="M207.5 427.556C207.5 423.137 211.082 419.556 215.5 419.556C219.918 419.556 223.5 423.137 223.5 427.556C223.5 431.974 219.918 435.556 215.5 435.556C211.082 435.556 207.5 431.974 207.5 427.556Z"/>
                 <rect x="207.5" y="419.556" width="16" height="16" rx="8" fill="url(#peg_radial)" fill-opacity="0.5"/>
                 </g>
+            </g>
+            <g id="custom_ball" [attr.transform]="transformVal">
+                <circle cx="135.5" cy="29.1333" r="12.0889" [attr.fill]="ballColor"/>
+                <circle cx="135.5" cy="29.1333" r="12.0889" fill="url(#ball_radial)" fill-opacity="0.5"/>
+                <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M142.997 24.9684C144.333 26.6825 145.13 28.8385 145.13 31.1804C145.13 32.1495 144.993 33.0867 144.739 33.9739C145.442 33.3717 146.234 32.6967 147.068 31.9866C147.169 31.3842 147.221 30.7654 147.221 30.1344C147.221 27.3771 146.221 24.8534 144.564 22.9064L142.997 24.9684ZM142.259 39.4157L143.07 37.2981C141.319 39.5986 138.604 41.1262 135.528 41.2791C135.706 41.2875 135.885 41.2917 136.064 41.2917C138.356 41.2917 140.486 40.6007 142.259 39.4157Z" fill="white" fill-opacity="0.5"/>
+                <path d="M136 40.3111C130.428 40.3111 125.911 35.7941 125.911 30.2222H121.911C121.911 38.0033 128.219 44.3111 136 44.3111V40.3111ZM146.089 30.2222C146.089 35.7941 141.572 40.3111 136 40.3111V44.3111C143.781 44.3111 150.089 38.0033 150.089 30.2222H146.089ZM136 20.1333C141.572 20.1333 146.089 24.6502 146.089 30.2222H150.089C150.089 22.4411 143.781 16.1333 136 16.1333V20.1333ZM136 16.1333C128.219 16.1333 121.911 22.4411 121.911 30.2222H125.911C125.911 24.6502 130.428 20.1333 136 20.1333V16.1333Z" fill="black" fill-opacity="0.05"/> 
             </g>
             <defs>
             <radialGradient id="ball_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30 6) rotate(105.255) scale(22.8035)">

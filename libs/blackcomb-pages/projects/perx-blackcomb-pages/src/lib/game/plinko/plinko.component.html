@@ -1,3 +1,8 @@
 <div [ngStyle]="{'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }">
-    <perx-core-plinko></perx-core-plinko>
+    <perx-core-plinko 
+    [targetImg]="targetImg" 
+    [stageColor]="stageColor" 
+    [ballColor]="ballColor"
+    [willWin]="willWin"
+    (completed)="gameCompleted()"></perx-core-plinko>
 </div>

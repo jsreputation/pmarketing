@@ -13,7 +13,8 @@ export enum GameType {
   snake = 'snake',
   quiz = 'quiz',
   survey = 'survey',
-  invite = 'invite'
+  invite = 'invite',
+  plinko = 'plinko'
 }
 
 export interface IEngagementTransaction {
@@ -157,6 +158,13 @@ export interface IScratch {
   underlyingFailImg?: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
+}
+
+export interface IPlinko {
+  backgroundImgUrl?: string;
+  targetImg?: string;
+  stageColor?: string;
+  ballColor?: string;
 }
 export interface IPlayOutcome {
   vouchers?: IVoucher[];
