@@ -1,6 +1,9 @@
 <div class="main-container" [ngStyle]="{'background-image': 'url(' + backgroundUrl + ')' }">
   <div class="landing-page">
     <div class="header">
+      <div *ngIf="config?.media?.bannerImage">
+        <img [src]="config?.media?.bannerImage | safeUrl"/>
+      </div>
       <h1 class="title">{{campaign?.name}}</h1>
       <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
     </div>
