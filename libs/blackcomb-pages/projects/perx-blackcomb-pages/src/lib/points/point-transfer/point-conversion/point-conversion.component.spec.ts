@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ErrorMessageService, LoyaltyService, NotificationService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { PointConversionConfirmationComponent } from '../point-conversion-confirmation/point-conversion-confirmation.component';
 import { PointConversionComponent } from './point-conversion.component';
 
 describe('PointConversionComponent', () => {
@@ -29,7 +30,7 @@ describe('PointConversionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PointConversionComponent],
+      declarations: [PointConversionComponent, PointConversionConfirmationComponent],
       imports: [
         BrowserAnimationsModule,
         MatFormFieldModule,
