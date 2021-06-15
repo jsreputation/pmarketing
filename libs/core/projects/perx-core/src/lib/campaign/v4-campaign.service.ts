@@ -202,9 +202,11 @@ export class V4CampaignService implements ICampaignService {
     if (dp && ((dp as QuestDisplayProperties).header || (dp as QuestDisplayProperties).body ||
       (dp as QuestDisplayProperties).image || (dp as QuestDisplayProperties).quest_success_image)) {
       const qp = (dp as QuestDisplayProperties);
-      displayProperties = {
-        questDetails: {}
-      };
+      if (displayProperties === undefined) {
+        displayProperties = {
+          questDetails: {}
+        };
+      }
       if (qp.header) {
         displayProperties.questDetails = {
           title: qp.header.value.title,
