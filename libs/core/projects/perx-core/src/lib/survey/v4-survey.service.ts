@@ -16,7 +16,7 @@ import {
   IV4Voucher,
   V4VouchersService
 } from '../vouchers/v4-vouchers.service';
-import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome, IV4BadgeOutcome } from '../campaign/v4-campaign.service';
 import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 interface V4NextMoveResponse {
@@ -251,24 +251,29 @@ export class V4SurveyService implements SurveyService {
       switchMap(baseUrl => this.http.put(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
       map((answerResponse: any) => {
         const v4Vouchers = answerResponse.data.outcomes.filter(outcome => outcome.id &&
-            outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
+          outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
         const v4Points = answerResponse.data.outcomes.filter(outcome =>
-            outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+          outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
         const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
-            outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+          outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+        const v4Badges = answerResponse.data.outcomes.filter(outcome => outcome.id &&
+          outcome.outcome_type.toLowerCase() === OutcomeType.badge) as IV4BadgeOutcome[];
         const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
         const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
         const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
-        if (answerResponse.data.outcomes &&
-          answerResponse.data.outcomes[0] &&
+        const badges = v4Badges.map(badge => V4CampaignService.v4BadgeToBadge(badge));
+        if (answerResponse.data.outcomes?.length &&
           (answerResponse.data.outcomes[0].outcome_type === OutcomeType.reward
             || answerResponse.data.outcomes[0].outcome_type === OutcomeType.points
-            || answerResponse.data.outcomes[0].outcome_type === OutcomeType.prizeSet)) {
-          return { rewardAcquired: true,
-                ...(vouchers && vouchers.length && {vouchers}),
-                ...(points && {points}),
-                ...(prizeSets && {prizeSets})
-           };
+            || answerResponse.data.outcomes[0].outcome_type === OutcomeType.prizeSet
+            || answerResponse.data.outcomes[0].outcome_type.toLowerCase() === OutcomeType.badge)) {
+          return {
+            rewardAcquired: true,
+            ...(vouchers?.length && { vouchers }),
+            ...(points && { points }),
+            ...(prizeSets && { prizeSets }),
+            ...(badges && { badges })
+          };
         }
         return { rewardAcquired: false };
       }),

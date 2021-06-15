@@ -49,6 +49,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private prizeSetOutcome: IPrizeSetOutcome;
   public showPrizeSetOutcome: boolean = false;
   private prizeSetBtnTxt: string;
+  private isBadgeOucome: boolean;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -228,7 +229,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
                   ? this.successPopUp
                   : this.noRewardsPopUp;
                 if (res && res.prizeSets && res.prizeSets.length > 0) {
-                    this.prizeSetOutcome = res.prizeSets[0];
+                  this.prizeSetOutcome = res.prizeSets[0];
+                }
+
+                if (res?.badges) {
+                  this.isBadgeOucome = true;
                 }
                 this.redirectUrlAndPopUp();
               },
@@ -267,16 +272,20 @@ export class SurveyComponent implements OnInit, OnDestroy {
     ) {
       this.router.navigate(['/signup'], { state });
     } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
-        const data: IRewardPopupConfig = this.popupData;
-        data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
-        data.afterClosedCallBackRedirect = this;
-        data.disableOverlayClose = true;
-        data.showCloseBtn = false;
-        data.buttonTxt = this.prizeSetBtnTxt;
-        this.dialog.open(RewardPopupComponent, {data});
+      const data: IRewardPopupConfig = this.popupData;
+      data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
+      data.afterClosedCallBackRedirect = this;
+      data.disableOverlayClose = true;
+      data.showCloseBtn = false;
+      data.buttonTxt = this.prizeSetBtnTxt;
+      this.dialog.open(RewardPopupComponent, { data });
     } else {
+      if (this.isBadgeOucome) {
+        this.router.navigate(['/badges']);
+      } else {
         this.router.navigate(['/wallet']);
-        this.notificationService.addPopup(this.popupData);
+      }
+      this.notificationService.addPopup(this.popupData);
     }
   }
 
