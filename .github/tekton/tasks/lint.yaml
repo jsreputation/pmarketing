@@ -10,7 +10,7 @@ spec:
         type: git
         targetPath: project
   stepTemplate:
-    image: circleci/node:10
+    image: circleci/node:14
     resources: &resources
       limits:
         cpu: 3

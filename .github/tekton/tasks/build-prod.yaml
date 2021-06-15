@@ -14,7 +14,7 @@ spec:
       type: string
       description: The application name to build
   stepTemplate:
-    image: circleci/node:10-browsers
+    image: circleci/node:14-browsers
     resources: &resources
       limits:
         cpu: 3
