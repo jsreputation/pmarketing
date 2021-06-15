@@ -113,3 +113,7 @@ export { PointConversionConfirmationComponent } from './lib/points/point-transfe
 export { BadgeListComponent } from './lib/badges/badge-list/badge-list.component';
 export { BadgeLandingComponent } from './lib/badges/badge-landing/badge-landing.component';
 export { BadgeModule } from './lib/badges/badge.module';
+export { CreateTeamComponent } from './lib/teams/create-team/create-team.component';
+export { JoinTeamComponent } from './lib/teams/join-team/join-team.component';
+export { PendingTeamComponent } from './lib/teams/pending-team/pending-team.component';
+export { TeamsModule } from './lib/teams/teams.module';
