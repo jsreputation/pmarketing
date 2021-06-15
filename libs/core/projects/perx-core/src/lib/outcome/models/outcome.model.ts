@@ -24,7 +24,7 @@ export enum OutcomeType {
   reward = 'reward',
   points = 'points',
   custom = 'custom',
-  prizeSet = 'PrizeSet',
+  prizeSet = 'prize_set',
   badge = 'badge',
 }
 
