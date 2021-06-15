@@ -7,11 +7,11 @@ import {
   CampaignOutcomeType,
   CampaignState,
   CampaignType,
+  IBadgeOutcome,
   ICampaign,
   ICampaignOutcome,
-  IReferral,
-  IBadgeOutcome,
-  IPointsOutcome
+  IPointsOutcome,
+  IReferral
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
@@ -31,6 +31,7 @@ import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
 import { QuestDisplayProperties } from '../quest/v4-quest.service';
+import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 
 interface IV4Image {
   type: string;
@@ -51,7 +52,8 @@ type DisplayProperties = TreeDisplayProperties |
   ScratchDisplayProperties |
   SpinDisplayProperties |
   QuizDisplayProperties |
-  QuestDisplayProperties;
+  QuestDisplayProperties |
+  StampCampaignDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
 type CampaignConfig = {
@@ -171,20 +173,36 @@ export class V4CampaignService implements ICampaignService {
       );
     let displayProperties: CampaignDisplayProperties | undefined;
     const dp: DisplayProperties | null = campaign.display_properties || null;
-    if (dp && (dp as QuizDisplayProperties).landing_page) {
-      const lp = (dp as QuizDisplayProperties).landing_page;
-      displayProperties = {
-        landingPage: {
-          body: lp.body[lang],
-          buttonText: lp.button_text[lang]
-        }
-      };
-      let youtubeUrl = oc(lp).media.youtube() || null;
-      if (youtubeUrl) {
-        youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
+    if (dp && (dp as StampCampaignDisplayProperties).landing_page) {
+      const lp = (dp as StampCampaignDisplayProperties).landing_page;
+      if (lp) {
+        displayProperties = {
+          landingPage: {
+            body: {
+              text: lp.body ? lp.body[lang].text : ''
+            },
+            buttonText: {
+              text: lp.button_text ? lp.button_text[lang].text : ''
+            },
+            buttonText2: {
+              text: lp.button_text2 ? lp.button_text2[lang].text : ''
+            },
+            tnc: {
+              text: lp.tnc ? lp.tnc[lang].text : ''
+            }
+          }
+        };
+        let youtubeUrl = oc(lp).media.youtube() || null;
+        if (youtubeUrl) {
+          youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
 
-        // @ts-ignore
-        displayProperties.landingPage.media = { youtube: youtubeUrl };
+          // @ts-ignore
+          displayProperties.landingPage.media = {...displayProperties.landingPage.media, youtube: youtubeUrl };
+        }
+        if (lp.media?.banner_image) {
+          // @ts-ignore
+          displayProperties.landingPage.media = {...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url}
+        }
       }
     }
     if (dp && (dp as GameProperties).background_image) {
