@@ -295,7 +295,7 @@ export class V4GameService implements IGameService {
     const v4Vouchers: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
     const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
     const v4Badges: IV4BadgeOutcome[] =
-      res.data.outcomes.filter((out) => out.outcome_type.toLowerCase() === OutcomeType.badge) as IV4BadgeOutcome[];
+      res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.badge) as IV4BadgeOutcome[];
     const v4PrizeSets: IV4PrizeSetOutcome[] = res.data.outcomes.filter((out) =>
       out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
     const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));

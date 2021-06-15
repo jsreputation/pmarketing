@@ -257,7 +257,7 @@ export class V4SurveyService implements SurveyService {
         const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
           outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
         const v4Badges = answerResponse.data.outcomes.filter(outcome => outcome.id &&
-          outcome.outcome_type.toLowerCase() === OutcomeType.badge) as IV4BadgeOutcome[];
+          outcome.outcome_type === OutcomeType.badge) as IV4BadgeOutcome[];
         const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
         const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
         const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
@@ -266,7 +266,7 @@ export class V4SurveyService implements SurveyService {
           (answerResponse.data.outcomes[0].outcome_type === OutcomeType.reward
             || answerResponse.data.outcomes[0].outcome_type === OutcomeType.points
             || answerResponse.data.outcomes[0].outcome_type === OutcomeType.prizeSet
-            || answerResponse.data.outcomes[0].outcome_type.toLowerCase() === OutcomeType.badge)) {
+            || answerResponse.data.outcomes[0].outcome_type === OutcomeType.badge)) {
           return {
             rewardAcquired: true,
             ...(vouchers?.length && { vouchers }),
