@@ -388,6 +388,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           ),
           takeLast(1)
         );
+      // this.stampCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.stamp));
     }
 
     if (this.appConfig.showSurveyOnHomePage) {
