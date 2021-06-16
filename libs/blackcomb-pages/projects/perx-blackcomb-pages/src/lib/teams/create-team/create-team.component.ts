@@ -61,6 +61,7 @@ export class CreateTeamComponent implements OnInit {
         this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PICK_A_TEAM_NAME'];
         if (!this.campaign) { // temporary condition until team API is ready
           this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME'];
+          // this.createTeamForm.get('teamUsername').value =
         }
       }
     );
