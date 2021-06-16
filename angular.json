@@ -2138,6 +2138,11 @@
     },
     "core": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "libs/core",
       "sourceRoot": "libs/core/projects/perx-core/src",
       "prefix": "perx-core",
@@ -2166,6 +2171,11 @@
     },
     "blackcomb-pages": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "libs/blackcomb-pages",
       "sourceRoot": "libs/blackcomb-pages/projects/perx-blackcomb-pages/src",
       "prefix": "perx-blackcomb-pages",

@@ -1,0 +1,59 @@
+.create-team-page-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-team-content-container {
+  font-size: 12px;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+
+  img, svg {
+    width: 100%;
+    height: 22rem;
+    object-fit: cover;
+  }
+  svg {
+    background: #E8E8E8;
+  }
+  .title {
+    font-size: 16px;
+  }
+  .description {
+    font-weight: normal;
+    line-height: 20px;
+    margin: 2rem 0;
+  }
+  .subtitle {
+    color: rgba(0, 0, 0, 0.38);
+    font-weight: bold;
+    margin-top: 1.2rem;
+  }
+}
+
+.bottom-nav-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: var(--surface_colour, #fff) !important;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  padding: 1.6rem;
+
+  button {
+    text-decoration: none;
+    text-align: center;
+    height: 4rem;
+    width: 100%;
+    flex: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 1.6rem;
+    }
+  }
+}
+

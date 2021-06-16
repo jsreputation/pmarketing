@@ -14,6 +14,7 @@ import { ICampaignService } from '../campaign/icampaign.service';
 import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Asset } from '../quest/v4-quest.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -91,72 +92,90 @@ interface IV4StampCard {
     total_slots: number;
     rewards: IV4Outcome[];
   };
-  display_properties: {
-    button_text?: string;
-    cols?: number;
-    rows?: number;
+  display_properties: StampCampaignDisplayProperties
+  stamps?: IV4Stamp[];
+}
+
+export interface StampCampaignDisplayProperties {
+  landing_page?: {
     header?: {
+      type: string;
       value: {
         title: string;
         description: string;
       }
-    }
-    card_image?: {
-      value?: {
-        image_url?: string;
-        file?: string; // default if image_url is not present
-      }
     };
-    //  todo: temporarily map this until v4 dashboard fixes naming
-    card_background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    total_slots?: number;
-    display_campaign_as: string;
-    background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    thumbnail_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    reward_positions?: number[];
-    button_Bg_colour?: string;
-    button_text_colour?: string;
+    body?: { en: { text: string } };
+    media?: { youtube?: string; banner_image?: Asset;};
+    heading: string;
+    button_text?: { en: { text: string } };
+    button_text2?: { en: { text: string } };
+    tnc?: { en: { text: string } };
+    sub_heading?: string;
   };
-  stamps?: IV4Stamp[];
+  button_text?: string;
+  cols?: number;
+  rows?: number;
+  header?: {
+    value: {
+      title: string;
+      description: string;
+    }
+  }
+  card_image?: {
+    value?: {
+      image_url?: string;
+      file?: string; // default if image_url is not present
+    }
+  };
+  //  todo: temporarily map this until v4 dashboard fixes naming
+  card_background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  total_slots?: number;
+  display_campaign_as: string;
+  background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  thumbnail_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  reward_positions?: number[];
+  button_Bg_colour?: string;
+  button_text_colour?: string;
 }
 
 // tslint:disable-next-line:max-line-length
