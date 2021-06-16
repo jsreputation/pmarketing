@@ -241,7 +241,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (campaign.type === 'stamp' && !campaign.teamSize) {
+    if (campaign.type === 'stamp' && campaign.teamSize) {
       this.router.navigate([`campaign-welcome/${campaign.id}`]);
       return;
     }
