@@ -7,7 +7,7 @@ import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
 import { IQQuestion } from '../quiz.service';
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { IPrizeSetOutcome } from '../../prize-set-outcome/models/prize-set-outcome.model';
-import { IPointsOutcome } from '../../campaign/models/campaign.model';
+import { IBadgeOutcome, IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IQAnswer {
   questionId: string;
@@ -106,4 +106,5 @@ export interface IQuizResultOutcome {
   vouchers?: IVoucher[];
   points?: IPointsOutcome[];
   prizeSets?: IPrizeSetOutcome[];
+  badges?: IBadgeOutcome[];
 }

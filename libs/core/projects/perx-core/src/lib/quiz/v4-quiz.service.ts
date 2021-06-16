@@ -36,7 +36,7 @@ import {
   IV4Voucher,
   V4VouchersService
 } from '../vouchers/v4-vouchers.service';
-import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome, IV4BadgeOutcome } from '../campaign/v4-campaign.service';
 import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 
 const enum V4QuizMode {
@@ -280,16 +280,25 @@ export class V4QuizService implements QuizService {
           outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
         const v4PrizeSets = answerResponse.data.outcomes.filter(outcome => outcome.id &&
           outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+        const v4Badges = answerResponse.data.outcomes.filter(badge => badge.id &&
+          badge.outcome_type === OutcomeType.badge) as IV4BadgeOutcome[];
         const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
         const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
         const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
-        const isRewardAcquired: boolean = ((vouchers && vouchers.length > 0) || (points && points.length > 0) ||
-         (prizeSets && prizeSets.length > 0)) ? true : false;
+        const badges = v4Badges.map(badge => V4CampaignService.v4BadgeToBadge(badge));
+        const isRewardAcquired: boolean = (
+          (vouchers?.length > 0)
+          || (points?.length > 0)
+          || (prizeSets?.length > 0)
+          || (badges?.length > 0)) ? true : false;
         if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
-          return { rewardAcquired: isRewardAcquired,
-            ...(vouchers && vouchers.length && {vouchers}),
-            ...(points && {points}),
-            ...(prizeSets && {prizeSets}) };
+          return {
+            rewardAcquired: isRewardAcquired,
+            ...(vouchers?.length && { vouchers }),
+            ...(points && { points }),
+            ...(prizeSets && { prizeSets }),
+            ...(badges && { badges }),
+          };
         }
         return { rewardAcquired: false };
       }),
