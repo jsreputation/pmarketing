@@ -1,1 +1,44 @@
-<p>create-team works!</p>
+<div class="create-team-page-container" *ngIf="campaign$ | async as campaign">
+  <div class="create-team-content-container">
+    <img [src]="landingPageConfig?.media.bannerImage" *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Create a team'">
+    <ng-template #defaultImgTemplate>
+      <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0H375V200H0V0Z" fill="#E8E8E8" />
+        <path
+          d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
+          fill="#DADADA" />
+      </svg>
+    </ng-template>
+    <div class="create-team-content">
+      <form [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
+        <div class="text-block">
+          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
+          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+        </div>
+        <mat-form-field appearance="standard" class="full-width__input">
+          <mat-label>Team Name</mat-label>
+          <input matInput formControlName="teamName">
+          <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">
+            Team name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <div class="text-block">
+          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
+          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+        </div>
+        <mat-form-field appearance="standard" class="full-width__input">
+          <mat-label>Team Username</mat-label>
+          <input matInput formControlName="teamUserName">
+          <mat-error *ngIf="createTeamForm.get('teamUserName')?.hasError('required')">
+            Username is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <mat-toolbar class="bottom-toolbar mat-elevation-z2">
+    <button color="primary" type="submit" mat-flat-button>
+      {{ 'TEAMS.CREATE_TEAM' | translate }}
+    </button>
+  </mat-toolbar>
+</div>
