@@ -244,6 +244,9 @@ export class GameComponent implements OnInit, OnDestroy {
           if (gameTransaction.points) {
             this.points = gameTransaction.points[0];
           }
+          if (gameTransaction.badges) {
+            this.badge = gameTransaction.badges[0];
+          }
           if (gameTransaction.prizeSets && gameTransaction.prizeSets.length > 0) {
             this.prizeSetReserved = true;
           }

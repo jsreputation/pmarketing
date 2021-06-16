@@ -247,6 +247,8 @@ export class V4GameService implements IGameService {
           const rewards = res.data.outcomes.filter(outcome => outcome.id && outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
           const points = res.data.outcomes.filter(outcome =>
             outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+          const badges = res.data.outcomes.filter(outcome =>
+            outcome.id && outcome.outcome_type === OutcomeType.badge) as IV4BadgeOutcome[];
           const v4PrizeSets = res.data.outcomes.filter(outcome => outcome.id &&
             outcome.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
           return {
@@ -261,7 +263,8 @@ export class V4GameService implements IGameService {
               return accRewardIds;
             }, [] as number[]),
             points: points.map(point => V4CampaignService.v4PointsToPoints(point)),
-            prizeSets: v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet))
+            prizeSets: v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet)),
+            badges: badges.map(badge => V4CampaignService.v4BadgeToBadge(badge))
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
