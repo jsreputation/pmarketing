@@ -15,9 +15,9 @@
           <p class="title">{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_HEADING' | translate }}</p>
           <p class="subtitle">{{teamUserNameSubtitle}}</p>
         </div>
-        <mat-form-field [appearance]="campaign ? 'fill' : 'standard'" class="full-width__input">
+        <mat-form-field [appearance]="!campaign ? 'fill' : 'standard'" class="full-width__input">
           <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>
-          <input matInput formControlName="teamName" [readonly]="!!campaign">
+          <input matInput formControlName="teamName" [readonly]="!!!campaign">
           <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">
             Team name is <strong>required</strong>
           </mat-error>

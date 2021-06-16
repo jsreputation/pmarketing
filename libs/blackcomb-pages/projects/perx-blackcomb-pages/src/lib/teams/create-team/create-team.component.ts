@@ -59,7 +59,7 @@ export class CreateTeamComponent implements OnInit {
     this.translateService.get([ 'TEAMS.CREATE_PAGE.PICK_A_TEAM_NAME', 'TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME' ]).subscribe(
       (translations: string[]) => {
         this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PICK_A_TEAM_NAME'];
-        if (this.campaign) { // temporary condition until team API is ready
+        if (!this.campaign) { // temporary condition until team API is ready
           this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME'];
         }
       }
