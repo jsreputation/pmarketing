@@ -12,22 +12,22 @@
     <div class="create-team-content">
       <form class="create-form" [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
         <div class="text-block">
-          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
-          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_HEADING' | translate }}</p>
+          <p class="subtitle">{{ 'TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME' | translate }}</p>
         </div>
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Name</mat-label>
+          <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>
           <input matInput formControlName="teamName">
           <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">
             Team name is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <div class="text-block">
-          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
-          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.USERNAME_HEADING' | translate }}</p>
+          <p class="subtitle">{{ 'TEAMS.CREATE_PAGE.USERNAME_SUBHEADING' | translate }}</p>
         </div>
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Username</mat-label>
+          <mat-label>{{ 'TEAMS.CREATE_PAGE.USERNAME_FORM_LABEL' | translate }}</mat-label>
           <input matInput formControlName="teamUserName">
           <mat-error *ngIf="createTeamForm.get('teamUserName')?.hasError('required')">
             Username is <strong>required</strong>
@@ -38,7 +38,7 @@
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button color="primary" type="submit" mat-flat-button>
-      {{ 'TEAMS.CREATE_TEAM' | translate }}
+      {{ 'TEAMS.CREATE_PAGE.CTA' | translate }}
     </button>
   </div>
 </div>
