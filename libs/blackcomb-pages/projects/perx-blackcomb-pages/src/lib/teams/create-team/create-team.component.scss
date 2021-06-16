@@ -35,10 +35,25 @@
   }
 }
 
-.bottom-toolbar {
-  background: white !important;
+.bottom-nav-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: var(--surface_colour, #fff) !important;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  padding: 1.6rem;
+
   button {
+    text-decoration: none;
+    text-align: center;
+    height: 4rem;
     width: 100%;
-    background: #2664ED !important;
+    flex: 0;
+
+    &:not(:last-child) {
+      margin-bottom: 1.6rem;
+    }
   }
 }
+
