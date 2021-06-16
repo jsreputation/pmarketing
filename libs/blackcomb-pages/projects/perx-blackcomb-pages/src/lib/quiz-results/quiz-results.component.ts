@@ -146,8 +146,11 @@ export class QuizResultsComponent implements OnInit {
           this.dialog.open(RewardPopupComponent, { data });
         } else {
           this.notificationService.addPopup(this.popup);
-          nextRoute = this.badgeOutcomes?.length > 0 ? '/badges' : '/wallet';
-          this.router.navigate([nextRoute]);
+          if (this.badgeOutcomes?.length) {
+            this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
+          } else {
+            this.router.navigate(['/wallet']);
+          }
         }
       });
     }

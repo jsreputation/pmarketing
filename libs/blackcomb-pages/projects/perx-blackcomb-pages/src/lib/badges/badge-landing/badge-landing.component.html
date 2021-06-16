@@ -1,6 +1,6 @@
 <div class="container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
   [scrollWindow]="false">
-  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)">
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedFilter">
     <mat-tab [label]="'BADGES.ALL_TAB' | translate">
       <badge-list [badges]="badges"></badge-list>
     </mat-tab>

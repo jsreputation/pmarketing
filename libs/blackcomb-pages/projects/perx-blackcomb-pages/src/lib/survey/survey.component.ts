@@ -281,7 +281,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.dialog.open(RewardPopupComponent, { data });
     } else {
       if (this.isBadgeOucome) {
-        this.router.navigate(['/badges']);
+        this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
       } else {
         this.router.navigate(['/wallet']);
       }

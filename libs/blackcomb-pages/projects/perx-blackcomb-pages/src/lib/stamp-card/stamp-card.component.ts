@@ -210,7 +210,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 } else if (voucherId) {
                   data.url = `/voucher-detail/${voucherId}`;
                 } else {
-                  data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges' : '/wallet';
+                  data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
                 }
                 this.dialog.open(RewardPopupComponent, { data });
               });
