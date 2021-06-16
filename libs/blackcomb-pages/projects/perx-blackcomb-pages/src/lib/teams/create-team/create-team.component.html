@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" type="submit" mat-flat-button>
+    <button color="primary" type="submit" [disabled]="!createTeamForm.valid" mat-flat-button>
       {{ 'TEAMS.CREATE_PAGE.CTA' | translate }}
     </button>
   </div>
