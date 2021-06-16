@@ -1,4 +1,4 @@
-<div class="create-team-page-container" *ngIf="campaign$ | async as campaign">
+<div class="create-team-page-container" *ngIf="campaign">
   <div class="create-team-content-container">
     <img [src]="landingPageConfig?.media.bannerImage" *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Create a team'">
     <ng-template #defaultImgTemplate>
@@ -13,7 +13,7 @@
       <form class="create-form" [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
         <div class="text-block">
           <p class="title">{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_HEADING' | translate }}</p>
-          <p class="subtitle">{{ 'TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME' | translate }}</p>
+          <p class="subtitle">{{teamUserNameSubtitle}}</p>
         </div>
         <mat-form-field appearance="standard" class="full-width__input">
           <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>
