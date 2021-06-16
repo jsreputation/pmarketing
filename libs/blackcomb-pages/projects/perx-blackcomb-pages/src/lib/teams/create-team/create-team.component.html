@@ -10,7 +10,7 @@
       </svg>
     </ng-template>
     <div class="create-team-content">
-      <form [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
+      <form class="create-form" [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
         <div class="text-block">
           <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
           <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
