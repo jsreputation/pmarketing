@@ -88,6 +88,7 @@ interface IV4Flags {
     show_user_qr?: boolean;
     show_voucher_booking_from_rewards_page?: boolean;
     show_badges_button: boolean;
+    show_outcomes_on_campaign_landing_page?: boolean;
   };
 }
 
@@ -204,7 +205,8 @@ export class V4SettingsService extends SettingsService {
       showUserQR: data.json_value.show_user_qr,
       showVoucherBookingFromRewardsPage: data.json_value.show_voucher_booking_from_rewards_page,
       showPointTransfer: data.json_value.show_point_transfer,
-      showBadgesButton: data.json_value.show_badges_button
+      showBadgesButton: data.json_value.show_badges_button,
+      showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page
     };
   }
 
