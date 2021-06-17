@@ -325,7 +325,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/starhub/src/index.prod.html",
@@ -441,7 +440,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/prudential/src/index.prod.html",
@@ -556,7 +554,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/oracle-pay/src/index.prod.html",
@@ -671,7 +668,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/merck-merchant/src/index.prod.html",
@@ -791,7 +787,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/merck-customer/src/index.prod.html",
@@ -924,7 +919,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/hsbchk/src/index.prod.html",
@@ -1079,7 +1073,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/hsbc-rewards/src/index.prod.html",
@@ -1194,7 +1187,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/hsbc/src/index.prod.html",
@@ -1309,7 +1301,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/hkbn/src/index.prod.html",
@@ -1424,7 +1415,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/components-demo/src/index.prod.html",
@@ -1540,7 +1530,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/bpi/src/index.prod.html",
@@ -2033,7 +2022,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "serviceWorker": true,
               "vendorChunk": false,
               "index": {
                 "input": "apps/abenson/src/index.prod.html",
