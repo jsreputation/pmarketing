@@ -1,7 +1,6 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
-import { IQuest, IQuestTask } from '../../quest/quest.model';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -132,30 +131,6 @@ export interface ICampaignOutcome {
   prizeSetItems?: string[];
 }
 
-export interface IProgressCampaign extends IQuest {
-  // Quest reference
-  // id: number;
-  // campaignId: number;
-  // userAccountId: number;
-  // state?: string;
-  // completedAt?: Date;
-  // completedTasks?: IQuestTask[];
-  completedProgress?: number;
-  unitBaseName?: string;
-}
-
-export interface IProgressLevel extends IQuestTask {
-  // Quest reference
-  // id: number;
-  // campaignId?: number;
-  // ordering?: number;
-  // state?: string;
-  // title?: string;
-  // description?: string;
-  // imageUrl?: string;
-  completedProgress?: number;
-  levelTarget?: number;
-}
 export interface IPointsOutcome {
   id: number;
   outcomeType: OutcomeType.points;

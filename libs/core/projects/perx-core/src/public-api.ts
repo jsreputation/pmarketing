@@ -83,8 +83,6 @@ export {
   IPointsOutcome,
   ICampaignOutcome,
   CampaignOutcomeType,
-  IProgressCampaign,
-  IProgressLevel,
   IOperatingHours,
   IBadgeOutcome
 } from './lib/campaign/models/campaign.model';
