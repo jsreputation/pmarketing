@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
   AuthenticationService,
+  BadgeServiceModule,
   CampaignModule,
   CampaignServiceModule,
   ConfigModule,
@@ -161,6 +162,7 @@ export const setLanguage = (
     }),
     WalletHistoryModule,
     QuestModule.forRoot(),
+    BadgeServiceModule.forRoot()
   ],
   providers: [
     {
