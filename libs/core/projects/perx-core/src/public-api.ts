@@ -96,6 +96,13 @@ export { IQuest, IQuestTask, QuestState } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
 
 /**
+ * Progress Campaigns
+ */
+export { ProgressCampaignServiceModule } from './lib/progress-campaign/progress-campaign.service.module'
+export { IMilestone, IProgressTotal, IProgressTransaction } from './lib/progress-campaign/progress-campaign.model'
+export { ProgressCampaignService } from './lib/progress-campaign/progress-campaign.service'
+
+/**
  * Badges
  */
 export { BadgeServiceModule } from './lib/badges/badge.service.module';
