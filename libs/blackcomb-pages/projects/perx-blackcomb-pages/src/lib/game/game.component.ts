@@ -17,7 +17,8 @@ import {
   IRewardPopupConfig,
   IConfig,
   ConfigService,
-  IPrizeSetOutcome
+  IPrizeSetOutcome,
+  IBadgeOutcome
 } from '@perxtech/core';
 import {
   map,
@@ -60,6 +61,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private rewardCount: string;
   private points: IPointsOutcome;
+  private badge: IBadgeOutcome;
   private isEmbedded: boolean;
   public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
@@ -361,7 +363,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private checkFailureOrSuccess(): void {
-    if (this.rewardCount || this.points || (this.showPrizeSetOutcome && (this.prizeSetOutcome || this.prizeSetReserved))) {
+    if (this.rewardCount || this.points || this.badge || (this.showPrizeSetOutcome && (this.prizeSetOutcome || this.prizeSetReserved))) {
       this.fillSuccess(this.rewardCount, this.points);
     } else {
       this.fillFailure();
@@ -377,6 +379,10 @@ export class GameComponent implements OnInit, OnDestroy {
         }
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
+        }
+
+        if (gameOutcome && gameOutcome.badges?.length) {
+          this.badge = gameOutcome.badges[0];
         }
         if (this.showPrizeSetOutcome && gameOutcome && gameOutcome.prizeSets && gameOutcome.prizeSets.length > 0) {
           this.prizeSetOutcome = gameOutcome.prizeSets[0];
@@ -486,16 +492,21 @@ export class GameComponent implements OnInit, OnDestroy {
       ) {
         this.router.navigate(['/signup'], { state });
       } else if (this.showPrizeSetOutcome && this.prizeSetOutcome) {
-          const data: IRewardPopupConfig = this.popupData;
-          data.buttonTxt = this.prizeSetBtnTxt,
+        const data: IRewardPopupConfig = this.popupData;
+        data.buttonTxt = this.prizeSetBtnTxt,
           data.url = `/prize-set-outcomes/${this.prizeSetOutcome.prizeSetId}?transactionId=${this.prizeSetOutcome.transactionId}`;
-          data.afterClosedCallBackRedirect = this;
-          data.disableOverlayClose = true;
-          data.showCloseBtn = false;
-          this.dialog.open(RewardPopupComponent, {data});
+        data.afterClosedCallBackRedirect = this;
+        data.disableOverlayClose = true;
+        data.showCloseBtn = false;
+        this.dialog.open(RewardPopupComponent, { data });
       } else {
+        // navigate to badge list if user has won a badge, since badges are not added to the wallet
+        if (this.willWin && this.badge) {
+          this.router.navigate(['/badges']);
+        } else {
           this.router.navigate(['/wallet']);
-          this.notificationService.addPopup(this.popupData);
+        }
+        this.notificationService.addPopup(this.popupData);
       }
     } else {
       this.notificationService.addPopup(this.popupData);

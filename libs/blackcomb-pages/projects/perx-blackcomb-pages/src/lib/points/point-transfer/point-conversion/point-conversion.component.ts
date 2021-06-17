@@ -4,6 +4,7 @@ import { MatOptionSelectionChange } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorMessageService, IExchangerate, ILoyalty, IPointTransfer, LoyaltyService, NotificationService } from '@perxtech/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface ISelectOption {
   value: number;
@@ -24,7 +25,8 @@ export class PointConversionComponent implements OnInit {
   public expiryMessage: string | undefined;
   public currentExchangeRate: IExchangerate | undefined;
   private exchangeRates: IExchangerate[];
-  private pointsAmount: number;
+  public pointsAmount: number;
+  public showConfirmation: boolean;
 
   constructor(
     private loyaltyService: LoyaltyService,
@@ -144,6 +146,8 @@ export class PointConversionComponent implements OnInit {
       };
 
       this.loyaltyService.tansferPoints(transfer).subscribe(() => {
+        // clear cache
+        globalCacheBusterNotifier.next();
         // show success message and navigate to point history
         this.translateService.get('POINTS_TRANSFER.SUCCESS').subscribe((message: string) => {
           this.notificationService.addSnack(message);
@@ -151,7 +155,7 @@ export class PointConversionComponent implements OnInit {
         });
       },
         (res) => {
-          // halde errors
+          // handle errors
           console.error(res);
           if (res?.error?.message) {
             this.notificationService.addSnack(res.error.message);
@@ -163,4 +167,18 @@ export class PointConversionComponent implements OnInit {
         });
     }
   }
+
+  public showTransferConfirmation(): void {
+    this.exchangeCalculationMessage = undefined;
+    this.showConfirmation = true;
+  }
+
+  public showTransferConversion(): void {
+    this.showConfirmation = false;
+  }
+
+  public back(): void {
+    this.router.navigate(['/account']);
+  }
+
 }

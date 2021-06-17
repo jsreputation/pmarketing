@@ -111,3 +111,10 @@ export { PointHistoryComponent } from './lib/points/point-history/point-history.
 export { PointConversionComponent } from './lib/points/point-transfer/point-conversion/point-conversion.component';
 export { PointConversionConfirmationComponent } from './lib/points/point-transfer/point-conversion-confirmation/point-conversion-confirmation.component';
 export { PlinkoComponent } from './lib/game/plinko/plinko.component';
+export { BadgeListComponent } from './lib/badges/badge-list/badge-list.component';
+export { BadgeLandingComponent } from './lib/badges/badge-landing/badge-landing.component';
+export { BadgeModule } from './lib/badges/badge.module';
+export { CreateTeamComponent } from './lib/teams/create-team/create-team.component';
+export { JoinTeamComponent } from './lib/teams/join-team/join-team.component';
+export { PendingTeamComponent } from './lib/teams/pending-team/pending-team.component';
+export { TeamsModule } from './lib/teams/teams.module';

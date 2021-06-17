@@ -15,11 +15,13 @@ export interface CampaignDisplayProperties {
 
 export interface CampaignLandingPage {
   body?: { text: string };
-  media?: { youtube?: string; };
+  media?: { youtube?: string; bannerImage?: string};
   heading?: { text: string };
   buttonText?: { text: string };
+  buttonText2?: { text: string };
   subHeading?: { text: string };
   backgroundUrl?: string;
+  tnc?: { text: string };
 }
 
 export interface QuestProperties {
@@ -59,7 +61,7 @@ export enum CampaignState {
 export interface ProgressBarFields {
   stages: number;
   current: number;
-  stageLabels: string|number[];
+  stageLabels: string | number[];
   lightStage?: number;
   // for pay and spend include pending and processed
   totalCurrent?: number;
@@ -90,6 +92,7 @@ export interface ICampaign {
   termsAndConditions?: string;
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
+  teamSize?: number;
 }
 
 export enum CommChannel {
@@ -157,6 +160,13 @@ export interface IPointsOutcome {
   outcomeType: OutcomeType.points;
   points: number;
   properties: any;
+}
+
+export interface IBadgeOutcome {
+  badgeId: number;
+  id: number;
+  outcomeType: OutcomeType.badge;
+  state: 'issued' | 'unissued';
 }
 
 export interface IOperatingHours {

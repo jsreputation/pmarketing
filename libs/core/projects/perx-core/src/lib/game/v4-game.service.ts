@@ -13,7 +13,7 @@ import { ScratchV4ToV4Mapper, ShakeV4ToV4Mapper, SpinV4ToV4Mapper, TapV4ToV4Mapp
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { V4CampaignService, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { V4CampaignService, IV4PointsOutcome, IV4BadgeOutcome } from '../campaign/v4-campaign.service';
 import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
 import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
 
@@ -147,7 +147,7 @@ interface IV4PlayGeneral {
   id: number;
   use_account_id: number;
   state: TransactionState;
-  outcomes: (IV4RewardOutcome | IV4PointsOutcome | IV4PrizeSetOutcome)[];
+  outcomes: (IV4RewardOutcome | IV4PointsOutcome | IV4PrizeSetOutcome | IV4BadgeOutcome)[];
 }
 
 interface IV4PlayResponse {
@@ -274,19 +274,19 @@ export class V4GameService implements IGameService {
           };
         }),
         catchError((err: HttpErrorResponse) => throwError(err))
-          // {
-          // let errorStateObj: { errorState: string };
-          // if (err.error && err.error.message && err.error.code && err.error.code === 40) {
-          //   errorStateObj = { errorState: err.error.mesage };
-          //   if (err.error.message.match(/move/i)) {
-          //     errorStateObj = { errorState: Error400States.move };
-          //   } else if (err.error.message.match(/balance/i)) {
-          //     errorStateObj = { errorState: Error400States.balance };
-          //   }
-          //   return throwError(errorStateObj);
-          // }
-          // return throwError(err);
-          // })
+        // {
+        // let errorStateObj: { errorState: string };
+        // if (err.error && err.error.message && err.error.code && err.error.code === 40) {
+        //   errorStateObj = { errorState: err.error.mesage };
+        //   if (err.error.message.match(/move/i)) {
+        //     errorStateObj = { errorState: Error400States.move };
+        //   } else if (err.error.message.match(/balance/i)) {
+        //     errorStateObj = { errorState: Error400States.balance };
+        //   }
+        //   return throwError(errorStateObj);
+        // }
+        // return throwError(err);
+        // })
       );
   }
 
@@ -303,64 +303,68 @@ export class V4GameService implements IGameService {
   private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
     const v4Vouchers: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
     const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+    const v4Badges: IV4BadgeOutcome[] =
+      res.data.outcomes.filter((out) => out.outcome_type.toLowerCase() === OutcomeType.badge) as IV4BadgeOutcome[];
     const v4PrizeSets: IV4PrizeSetOutcome[] = res.data.outcomes.filter((out) =>
-                              out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
+      out.outcome_type === OutcomeType.prizeSet) as IV4PrizeSetOutcome[];
     const vouchers = v4Vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher));
     const points = v4Points.map(point => V4CampaignService.v4PointsToPoints(point));
+    const badges = v4Badges.map(badge => V4CampaignService.v4BadgeToBadge(badge));
     const prizeSets = v4PrizeSets.map(prizeSet => V4PrizeSetOutcomeService.v4PrizeSetOutcomeToPrizeSetOutcome(prizeSet));
     return {
-      ...(vouchers && vouchers.length && {vouchers}),
-      ...(points && {points}),
-      ...(prizeSets && {prizeSets}),
+      ...(vouchers && vouchers.length && { vouchers }),
+      ...(points && { points }),
+      ...(badges && { badges }),
+      ...(prizeSets && { prizeSets }),
       rawPayload: res
     };
   }
 
   public getActiveGames(): Observable<IGame[]> {
-    return this.campaignService.getCampaigns({page: 1, type: CampaignType.game })
-    .pipe(
-      // i + 2 because index starts at 0, but for the next call, page 2 needs to load.
-      expand((cs, i) => cs.length !== 0 ? this.campaignService.getCampaigns({page: i + 2, type: CampaignType.game}) : EMPTY),
-      reduce((acc, cs) => acc.concat(cs)),
-      map(cs => {
-        const now = (new Date()).getTime();
-        return cs.filter(c => {
-          if (c.beginsAt === null) {
-            return true;
+    return this.campaignService.getCampaigns({ page: 1, type: CampaignType.game })
+      .pipe(
+        // i + 2 because index starts at 0, but for the next call, page 2 needs to load.
+        expand((cs, i) => cs.length !== 0 ? this.campaignService.getCampaigns({ page: i + 2, type: CampaignType.game }) : EMPTY),
+        reduce((acc, cs) => acc.concat(cs)),
+        map(cs => {
+          const now = (new Date()).getTime();
+          return cs.filter(c => {
+            if (c.beginsAt === null) {
+              return true;
+            }
+            return !!(c.beginsAt && c.beginsAt.getTime() <= now);
+          });
+        }),
+        // for each campaign, fetch associated games
+        switchMap((cs: ICampaign[]) => combineLatest([
+          ...cs.map(c => of(c)),
+          ...cs.map(c => this.getGamesFromCampaign(c).pipe(
+            catchError((err) => {
+              console.log(err);
+              return of([]);
+            })))
+        ])),
+        map((s: (ICampaign | IGame[])[]) => {
+          // split again the campaigns from the games
+          // @ts-ignore
+          const campaigns: ICampaign[] = s.splice(0, s.length / 2);
+          // @ts-ignore
+          const games: IGame[][] = s;
+          const res: IGame[] = [];
+          // eslint-disable-next-line guard-for-in
+          for (const i in games) {
+            const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
+            // if there is no underlying game, move on to next campaign
+            if (gs.length === 0) {
+              continue;
+            }
+            const g = gs[0];
+            const c = campaigns[i];
+            g.imgUrl = oc(c).thumbnailUrl();
+            res.push(g);
           }
-          return !! (c.beginsAt && c.beginsAt.getTime() <= now);
-        });
-      }),
-      // for each campaign, fetch associated games
-      switchMap((cs: ICampaign[]) => combineLatest([
-        ...cs.map(c => of(c)),
-        ...cs.map(c => this.getGamesFromCampaign(c).pipe(
-          catchError((err) => {
-            console.log(err);
-            return of([]);
-          })))
-      ])),
-      map((s: (ICampaign | IGame[])[]) => {
-        // split again the campaigns from the games
-        // @ts-ignore
-        const campaigns: ICampaign[] = s.splice(0, s.length / 2);
-        // @ts-ignore
-        const games: IGame[][] = s;
-        const res: IGame[] = [];
-        // eslint-disable-next-line guard-for-in
-        for (const i in games) {
-          const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
-          // if there is no underlying game, move on to next campaign
-          if (gs.length === 0) {
-            continue;
-          }
-          const g = gs[0];
-          const c = campaigns[i];
-          g.imgUrl = oc(c).thumbnailUrl();
-          res.push(g);
-        }
-        return res;
-      })
-    );
+          return res;
+        })
+      );
   }
 }

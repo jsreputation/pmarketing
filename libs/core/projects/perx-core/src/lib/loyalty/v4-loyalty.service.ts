@@ -131,6 +131,7 @@ interface IV4GetLoyaltyResponse {
 interface IV4PointHistory {
   id: number;
   identifier?: string;
+  loyalty_name?: string;
   name?: string;
   points: number;
   points_balance: number;
@@ -187,6 +188,7 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
+  loyalty_name?: string;
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
@@ -311,8 +313,14 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,
       earnedDate: pointHistory.points_date,
-      properties: pointHistory.properties
+      properties: pointHistory.properties,
+      loyaltyName: pointHistory.loyalty_name
     };
+  }
+
+  private static buildLoyaltyIdentifier(amount: number): string {
+    // VS-6377: temp. get BE to investigate and pass identifier for point transfer transactions
+    return amount > 0 ? 'Points Earned' : 'Points Spent';
   }
 
   public static v4TransactionHistoryToTransactionHistory(
@@ -392,14 +400,16 @@ export class V4LoyaltyService extends LoyaltyService {
     return {
       id: transactionHistory.id,
       name: transactionHistory.name,
-      identifier: transactionHistory.identifier,
+      identifier: transactionHistory.identifier ?
+        transactionHistory.identifier : V4LoyaltyService.buildLoyaltyIdentifier(transactionHistory.amount),
       transactedAt: transactionHistory.transacted_at,
       pointsAmount: transactionHistory.amount,
       properties: transactionHistory.properties as ICustomProperties,
       transactionDetails: {
         type: oc(transactionHistory).transaction_details.type(),
         data
-      }
+      },
+      loyaltyName: transactionHistory.loyalty_name
     };
   }
 

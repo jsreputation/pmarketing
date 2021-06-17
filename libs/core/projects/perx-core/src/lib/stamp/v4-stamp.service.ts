@@ -1,37 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError, from, timer } from 'rxjs';
-import {
-  map,
-  flatMap,
-  mergeAll,
-  scan,
-  tap,
-  filter,
-  mergeMap,
-  toArray,
-  switchMap,
-  skip, share
-} from 'rxjs/operators';
+import { from, Observable, of, throwError, timer } from 'rxjs';
+import { filter, flatMap, map, mergeAll, mergeMap, scan, share, skip, switchMap, tap, toArray } from 'rxjs/operators';
 
-import {
-  IStampCard,
-  IStamp,
-  StampCardState,
-  StampState,
-  ICampaignOutcome,
-  IStampOutcome,
-} from './models/stamp.model';
+import { ICampaignOutcome, IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignType, ICampaign, CampaignOutcomeType } from '../campaign/models/campaign.model';
+import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Asset } from '../quest/v4-quest.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -101,6 +84,7 @@ interface IV4Outcome {
 interface IV4StampCard {
   id: number;
   user_account_id: number;
+  team_id?: number;
   state: StampCardState;
   campaign_id: number;
   card_number: number;
@@ -108,72 +92,90 @@ interface IV4StampCard {
     total_slots: number;
     rewards: IV4Outcome[];
   };
-  display_properties: {
-    button_text?: string;
-    cols?: number;
-    rows?: number;
+  display_properties: StampCampaignDisplayProperties
+  stamps?: IV4Stamp[];
+}
+
+export interface StampCampaignDisplayProperties {
+  landing_page?: {
     header?: {
+      type: string;
       value: {
         title: string;
         description: string;
       }
-    }
-    card_image?: {
-      value?: {
-        image_url?: string;
-        file?: string; // default if image_url is not present
-      }
     };
-    //  todo: temporarily map this until v4 dashboard fixes naming
-    card_background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_active_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    gift_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    stamp_inactive_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    total_slots?: number;
-    display_campaign_as: string;
-    background_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    thumbnail_image?: {
-      value?: {
-        image_url?: string;
-        file?: string;
-      }
-    };
-    reward_positions?: number[];
-    button_Bg_colour?: string;
-    button_text_colour?: string;
+    body?: { en: { text: string } };
+    media?: { youtube?: string; banner_image?: Asset;};
+    heading: string;
+    button_text?: { en: { text: string } };
+    button_text2?: { en: { text: string } };
+    tnc?: { en: { text: string } };
+    sub_heading?: string;
   };
-  stamps?: IV4Stamp[];
+  button_text?: string;
+  cols?: number;
+  rows?: number;
+  header?: {
+    value: {
+      title: string;
+      description: string;
+    }
+  }
+  card_image?: {
+    value?: {
+      image_url?: string;
+      file?: string; // default if image_url is not present
+    }
+  };
+  //  todo: temporarily map this until v4 dashboard fixes naming
+  card_background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_active_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  gift_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  stamp_inactive_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  total_slots?: number;
+  display_campaign_as: string;
+  background_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  thumbnail_image?: {
+    value?: {
+      image_url?: string;
+      file?: string;
+    }
+  };
+  reward_positions?: number[];
+  button_Bg_colour?: string;
+  button_text_colour?: string;
 }
 
 // tslint:disable-next-line:max-line-length
@@ -260,6 +262,7 @@ export class V4StampService implements StampService {
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
+      teamId: stampCard.team_id,
       title: oc(stampCard).display_properties.header.value.title(),
       subTitle: oc(stampCard).display_properties.header.value.description(),
       userAccountId: stampCard.user_account_id,

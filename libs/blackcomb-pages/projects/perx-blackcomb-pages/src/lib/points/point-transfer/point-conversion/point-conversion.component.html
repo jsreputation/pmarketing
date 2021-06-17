@@ -1,4 +1,4 @@
-<div class="point-conversion">
+<div *ngIf="!showConfirmation" class="point-conversion">
     <mat-card>
         <mat-card-content>
             <div>
@@ -52,13 +52,18 @@
     </mat-card>
     <div class="bottom-sheet">
         <div>
-            <button (click)="transferPoints()" [disabled]="!exchangeCalculationMessage" mat-raised-button
+            <button (click)="showTransferConfirmation()" [disabled]="!exchangeCalculationMessage" mat-raised-button
                 color="primary">
                 {{'POINTS_TRANSFER.TRANSFER_POINTS_CTA' | translate}}
             </button>
         </div>
         <div>
-            <button mat-stroked-button color="primary">{{'POINTS_TRANSFER.CANCEL' | translate}}</button>
+            <button (click)="back()" mat-stroked-button color="primary">{{'POINTS_TRANSFER.CANCEL' |
+                translate}}</button>
         </div>
     </div>
 </div>
+<point-conversion-confirmation *ngIf="showConfirmation" [exchangeRateMessage]="exchangeRateMessage"
+    [expiryMessage]="expiryMessage" [exchangeRate]="currentExchangeRate" [pointValue]="pointsAmount"
+    (canceled)="showTransferConversion()" (transferPoints)="transferPoints()">
+</point-conversion-confirmation>

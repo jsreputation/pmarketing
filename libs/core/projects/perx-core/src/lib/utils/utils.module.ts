@@ -45,6 +45,7 @@ import { GettingStartedPipe } from './getting-started/getting-started.pipe';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
 import { LeaderboardCTAComponent } from './leaderboard-cta/leaderboard-cta.component';
+import { BadgeDetailPopupComponent } from './badge-detail-popup/badge-detail-popup.component';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -74,7 +75,8 @@ const components = [
   CountDownComponent,
   LocationFilterPopupComponent,
   StatisticCardComponent,
-  LeaderboardCTAComponent
+  LeaderboardCTAComponent,
+  BadgeDetailPopupComponent
 ];
 
 const pipes = [

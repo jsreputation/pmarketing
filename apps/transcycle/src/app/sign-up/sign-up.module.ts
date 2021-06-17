@@ -1,14 +1,8 @@
 import { NgModule } from '@angular/core';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SignUpComponent } from './sign-up.component';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   AuthenticationModule,
@@ -25,11 +19,7 @@ import {
   MatMomentDateModule,
   MomentDateAdapter
 } from '@angular/material-moment-adapter';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE
-} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,7 +29,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: SignUpComponent },
+  {
+    path: '', pathMatch: 'full',
+    component: SignUpComponent,
+    data: { defaultSelectedCountry: '63'} // philippines
+  },
   { path: '*', redirectTo: '' }
 ];
 @NgModule({

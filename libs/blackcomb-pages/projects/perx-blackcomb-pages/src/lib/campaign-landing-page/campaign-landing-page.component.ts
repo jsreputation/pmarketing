@@ -1,39 +1,24 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Params,
-  Router
-} from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   CampaignLandingPage,
+  CampaignOutcomeType,
+  CampaignType,
   ConfigService,
   ICampaign,
+  ICampaignOutcome,
   ICampaignService,
   IConfig,
-  ITheme,
-  ThemesService,
-  CampaignOutcomeType,
-  ICampaignOutcome,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
+  IReward,
+  ITheme,
   PrizeSetOutcomeType,
   RewardsService,
-  IReward
+  ThemesService
 } from '@perxtech/core';
-import { Subject, forkJoin, Observable, of, combineLatest, } from 'rxjs';
-import {
-  filter,
-  flatMap,
-  map,
-  switchMap,
-  tap,
-  catchError,
-  startWith,
-} from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, of, Subject, } from 'rxjs';
+import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -171,8 +156,26 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`survey/${this.campaign.id}`]);
         return;
       }
-
+      if (this.campaign.type === CampaignType.stamp) {
+        if (!this.campaign.teamSize || !(this.campaign.teamSize > 0)) {
+          // this.router.navigate([`teams/create/${this.campaign.id}`]);
+          this.router.navigate([`teams/create`]);
+          return;
+        }
+      }
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
+    }
+  }
+
+  public nextSecondary(): void {
+    if (this.campaign) {
+      if (this.campaign.type === CampaignType.stamp) {
+        if (! this.campaign.teamSize || ! (this.campaign.teamSize > 0)) {
+          // this.router.navigate([`teams/join/${this.campaign.id}`]);
+          this.router.navigate([ `teams/join` ]);
+          return;
+        }
+      }
     }
   }
 }

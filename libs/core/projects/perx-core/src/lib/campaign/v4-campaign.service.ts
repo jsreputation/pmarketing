@@ -4,12 +4,13 @@ import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
   CampaignDisplayProperties,
-  IPointsOutcome,
   CampaignOutcomeType,
   CampaignState,
   CampaignType,
+  IBadgeOutcome,
   ICampaign,
   ICampaignOutcome,
+  IPointsOutcome,
   IReferral
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
@@ -30,6 +31,7 @@ import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
 import { QuestDisplayProperties } from '../quest/v4-quest.service';
+import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 
 interface IV4Image {
   type: string;
@@ -50,7 +52,8 @@ type DisplayProperties = TreeDisplayProperties |
   ScratchDisplayProperties |
   SpinDisplayProperties |
   QuizDisplayProperties |
-  QuestDisplayProperties;
+  QuestDisplayProperties |
+  StampCampaignDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
 type CampaignConfig = {
@@ -84,6 +87,7 @@ export interface IV4Campaign {
   terms_and_conditions?: string;
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
+  team_size?: number; // used for stamp team campaigns
 }
 
 type CountObject = {
@@ -128,6 +132,13 @@ export interface IV4PointsOutcome {
   properties: any;
 }
 
+export interface IV4BadgeOutcome {
+  id: number;
+  outcome_type: OutcomeType.badge;
+  badge_id: number;
+  state: 'issued' | 'unissued';
+}
+
 const campaignsCacheBuster: Subject<boolean> = new Subject();
 
 @Injectable({ providedIn: 'root' })
@@ -162,20 +173,36 @@ export class V4CampaignService implements ICampaignService {
       );
     let displayProperties: CampaignDisplayProperties | undefined;
     const dp: DisplayProperties | null = campaign.display_properties || null;
-    if (dp && (dp as QuizDisplayProperties).landing_page) {
-      const lp = (dp as QuizDisplayProperties).landing_page;
-      displayProperties = {
-        landingPage: {
-          body: lp.body[lang],
-          buttonText: lp.button_text[lang]
-        }
-      };
-      let youtubeUrl = oc(lp).media.youtube() || null;
-      if (youtubeUrl) {
-        youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
+    if (dp && (dp as StampCampaignDisplayProperties).landing_page) {
+      const lp = (dp as StampCampaignDisplayProperties).landing_page;
+      if (lp) {
+        displayProperties = {
+          landingPage: {
+            body: {
+              text: lp.body ? lp.body[lang].text : ''
+            },
+            buttonText: {
+              text: lp.button_text ? lp.button_text[lang].text : ''
+            },
+            buttonText2: {
+              text: lp.button_text2 ? lp.button_text2[lang].text : ''
+            },
+            tnc: {
+              text: lp.tnc ? lp.tnc[lang].text : ''
+            }
+          }
+        };
+        let youtubeUrl = oc(lp).media.youtube() || null;
+        if (youtubeUrl) {
+          youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
 
-        // @ts-ignore
-        displayProperties.landingPage.media = { youtube: youtubeUrl };
+          // @ts-ignore
+          displayProperties.landingPage.media = {...displayProperties.landingPage.media, youtube: youtubeUrl };
+        }
+        if (lp.media?.banner_image) {
+          // @ts-ignore
+          displayProperties.landingPage.media = {...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url}
+        }
       }
     }
     if (dp && (dp as GameProperties).background_image) {
@@ -193,9 +220,11 @@ export class V4CampaignService implements ICampaignService {
     if (dp && ((dp as QuestDisplayProperties).header || (dp as QuestDisplayProperties).body ||
       (dp as QuestDisplayProperties).image || (dp as QuestDisplayProperties).quest_success_image)) {
       const qp = (dp as QuestDisplayProperties);
-      displayProperties = {
-        questDetails: {}
-      };
+      if (displayProperties === undefined) {
+        displayProperties = {
+          questDetails: {}
+        };
+      }
       if (qp.header) {
         displayProperties.questDetails = {
           title: qp.header.value.title,
@@ -255,6 +284,7 @@ export class V4CampaignService implements ICampaignService {
       campaignBannerUrl,
       operatingHours,
       isOperating: campaign.operating_now,
+      teamSize: campaign.team_size,
       displayProperties,
       customFields
     };
@@ -372,6 +402,15 @@ export class V4CampaignService implements ICampaignService {
       outcomeType: points.outcome_type,
       points: points.points,
       properties: points.properties
+    };
+  }
+
+  public static v4BadgeToBadge(badge: IV4BadgeOutcome): IBadgeOutcome {
+    return {
+      id: badge.id,
+      outcomeType: badge.outcome_type,
+      badgeId: badge.badge_id,
+      state: badge.state
     };
   }
 }

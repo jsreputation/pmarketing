@@ -98,7 +98,34 @@ export const campaigns: ICampaign[] = [
       }
     },
     enrolled: true
-  }
+  },
+  { // an actual stamp campaign on generic staging but need to be mocked as the teamSize property was not yet available
+    id: 1421,
+    name: 'Stamp Card Teams integration test',
+    description: 'Get some friends together and work towards completing the stamp card as one!',
+    type: CampaignType.stamp,
+    state: CampaignState.active,
+    endsAt: new Date('2022-10-17T03:24:00'),
+    thumbnailUrl: 'assets/prize.png',
+    teamSize: 5,
+    displayProperties: {
+      landingPage: {
+        heading: { text: 'this is a heading' },
+        subHeading: { text: 'this is a heading' },
+        buttonText: { text: 'create a team' },
+        buttonText2: { text: 'join a team' },
+        body: { text: 'Create or join a 4-member team. You can create/join 1 team.\n' +
+            'Once you\'re part of a completed team.. Complete the following steps to earn stamps:\n' +
+            'Do KYC\n' +
+            'Switch to e-statements\n' +
+            'Make the 1st transfer' },
+        media: {
+          bannerImage: 'https://picsum.photos/350/185?random=1'
+        }
+      },
+
+    }
+  },
 ];
 
 export const campaignOutcomes: ICampaignOutcome[] = [

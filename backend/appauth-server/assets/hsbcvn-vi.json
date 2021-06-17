@@ -197,7 +197,8 @@
     "FAQs": "FAQs",
     "LOGOUT": "Đăng xuất",
     "TRANSFER_POINTS": "Transfer Points",
-    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History",
+    "BADGES": "My Badges"
   },
   "STATUS_LABELS": {
     "ISSUED": "Tán thành",
@@ -381,7 +382,16 @@
     "CONVERSION_CALCULATION": "{points} points in {programName}",
     "POINT": "point",
     "POINTS": "points",
-    "SUCCESS": "Point transfer completed successully!"
+    "SUCCESS": "Point transfer completed successully!",
+    "YOU_ARE_ABOUT_TO_TRANSFER":"You are about to tansfer",
+    "YOU_WILL_RECEIVE":"You will receive",
+    "TRANSFER_POINTS_CONFIRM_CTA":"COnfirm Points Transfer"
+  },
+  "BADGES": {
+    "ALL_TAB": "All",
+    "EARNED_TAB": "Earned",
+    "UNEARNED_TAB": "Unearned",
+    "VIEW_WALLET": "Close"
   },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",

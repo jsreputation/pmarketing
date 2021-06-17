@@ -1,17 +1,6 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-  Params
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   AuthenticationService,
   ConfigService,
@@ -25,15 +14,8 @@ import {
   NotificationService,
   ThemesService
 } from '@perxtech/core';
-import {
-  map,
-  switchMap,
-  takeUntil
-} from 'rxjs/operators';
-import {
-  Observable,
-  Subject
-} from 'rxjs';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { Moment } from 'moment';
 
 @Component({
@@ -55,6 +37,7 @@ export class SignUpComponent implements OnInit {
   public confirmPasswordHide: boolean = true;
   public passwordHide: boolean = true;
   public isPreregisteredMode: boolean = false;
+  public defaultSelectedCountry: string;
 
   constructor(
     private fb: FormBuilder,
@@ -69,20 +52,24 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.appConfig = config;
       }
     );
     this.theme = this.themesService.getThemeSetting();
-    this.countriesList$ = this.route.data.pipe(
+    this.route.data.pipe(
+      tap((dataObj) => {
+        this.defaultSelectedCountry = dataObj.defaultSelectedCountry;
+      }),
       map((dataObj) => dataObj.countryList),
-      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
-      takeUntil(this.destroy$)
-    );
-
-    this.route.queryParams
-      .subscribe((params: Params) => {
+      switchMap((countriesList) =>
+        this.countriesList$ = this.generalStaticDataService.getCountriesList(countriesList)
+      ),
+      takeUntil(this.destroy$),
+      switchMap(() => this.route.queryParams)
+    ).subscribe((params: Params) => {
         if (params.registration && params.registration === 'invitation') {
           this.isPreregisteredMode = true;
         }
@@ -127,6 +114,9 @@ export class SignUpComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
   }
+    if (this.defaultSelectedCountry) {
+      this.signupForm.controls.countryCode.setValue(this.defaultSelectedCountry);
+    }
 
   }
 

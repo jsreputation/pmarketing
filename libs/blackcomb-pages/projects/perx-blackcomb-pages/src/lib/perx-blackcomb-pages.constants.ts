@@ -28,5 +28,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/favorite-rewards',
   '/quest',
   '/points/history',
-  '/points/transfer'
+  '/points/transfer',
+  '/badges'
 ];

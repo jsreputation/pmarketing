@@ -85,7 +85,8 @@ export {
   CampaignOutcomeType,
   IProgressCampaign,
   IProgressLevel,
-  IOperatingHours
+  IOperatingHours,
+  IBadgeOutcome
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -95,6 +96,19 @@ export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-
 export { QuestModule } from './lib/quest/quest.service.module';
 export { IQuest, IQuestTask, QuestState } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
+
+/**
+ * Badges
+ */
+export { BadgeServiceModule } from './lib/badges/badge.service.module';
+export { BadgeService } from './lib/badges/badge.service';
+export { IBadge } from './lib/badges/models/badge.model';
+export {
+  BadgeDetailPopupComponent,
+  IBadgeDetailPopupConfig,
+  BadgeDetailPopUpClosedCallBack
+} from './lib/utils/badge-detail-popup/badge-detail-popup.component';
+
 /**
  * Stamps
  */

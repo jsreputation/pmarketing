@@ -69,6 +69,8 @@ import {
   LoyaltyModule,
   LanguageInterceptor,
   QuestModule as PerxQuestModule,
+  SettingsService,
+  BadgeServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -130,7 +132,7 @@ export const setLanguage = (
       // for currentLang registering to determine lang ver of url navigation on content.component
       tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
+      switchMap(() => themesService.getThemeSetting()),
     ).toPromise().then(() => resolve());
   });
 
@@ -174,14 +176,15 @@ export const setLanguage = (
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ForgotPasswordModule,
-    PerxQuestModule.forRoot()
+    PerxQuestModule.forRoot(),
+    BadgeServiceModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService, SettingsService], multi: true
     },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {

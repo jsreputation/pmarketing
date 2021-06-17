@@ -295,6 +295,15 @@ const routes: Routes = [
       {
         path: 'points',
         loadChildren: () => import('../points/points.module').then(m => m.PointsModule),
+      },
+      {
+        path: 'badges',
+        loadChildren: () => import('../badges/badges.module').then(m => m.BadgesModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'teams',
+        loadChildren: () => import('../teams/teams.module').then(m => m.TeamsModule),
         canActivate: [ProtectedGuard]
       }
     ],

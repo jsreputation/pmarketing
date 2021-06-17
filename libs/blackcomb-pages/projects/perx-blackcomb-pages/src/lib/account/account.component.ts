@@ -21,6 +21,7 @@ import {
   ILoyalty,
   SettingsService,
   IFlags,
+  BadgeService,
 } from '@perxtech/core';
 
 @Component({
@@ -38,6 +39,7 @@ export class AccountComponent implements OnInit {
   public appConfig$: Observable<IConfig<void>>;
   public memberFn: (membershipTierName: string) => Observable<string>;
   public remoteFlags: IFlags;
+  public acquiredBadges: Observable<number>;
 
   constructor(
     public config: Config,
@@ -48,7 +50,8 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private themesService: ThemesService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private badgeService: BadgeService,
   ) {
     this.preAuth = config.preAuth || false;
   }
@@ -73,6 +76,7 @@ export class AccountComponent implements OnInit {
       this.translate
         .get([membershipTierName, 'HOME.MEMBER'])
         .pipe(map((res) => `${res[membershipTierName]}${res['HOME.MEMBER']}`));
+    this.getAchievedBadgeCount();
   }
 
   public logout(): void {
@@ -89,5 +93,9 @@ export class AccountComponent implements OnInit {
       a.target = '_blank';
       a.click();
     }
+  }
+
+  private getAchievedBadgeCount(): void {
+    this.acquiredBadges = this.badgeService.getAchievedBadgeCount();
   }
 }
