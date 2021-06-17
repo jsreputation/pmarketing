@@ -383,15 +383,30 @@
     "POINT": "point",
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!",
-    "YOU_ARE_ABOUT_TO_TRANSFER":"You are about to tansfer",
-    "YOU_WILL_RECEIVE":"You will receive",
-    "TRANSFER_POINTS_CONFIRM_CTA":"COnfirm Points Transfer"
+    "YOU_ARE_ABOUT_TO_TRANSFER": "You are about to tansfer",
+    "YOU_WILL_RECEIVE": "You will receive",
+    "TRANSFER_POINTS_CONFIRM_CTA": "COnfirm Points Transfer"
   },
   "BADGES": {
     "ALL_TAB": "All",
     "EARNED_TAB": "Earned",
     "UNEARNED_TAB": "Unearned",
     "VIEW_WALLET": "Close"
+  },
+  "PRIZE_SET": {
+    "HEADING": "Congrats! You won this prize set.",
+    "SUB_HEADING": "includes ALL of the following:",
+    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE SET",
+    "PENDING_STATE": "Supply Pending",
+    "FAILED_STATE": "Failed",
+    "VIEW_WALLET": "VIEW WALLET",
+    "BACK_BTN": "BACK",
+    "LOYALTY_POINTS": "loyalty points",
+    "CONTACT_TXT": "contact support for any questions"
+  },
+  "CAMPAIGN_LANDING": {
+    "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
+    "LOYALTY_POINTS": "loyalty points"
   },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
