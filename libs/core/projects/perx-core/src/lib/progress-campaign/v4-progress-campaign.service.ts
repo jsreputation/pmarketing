@@ -1,0 +1,88 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ConfigService, IConfig } from '@perxtech/core';
+import { ProgressCampaignService } from './progress-campaign.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
+import { IMilestone } from './progress-campaign.model';
+import { ICampaignOutcome } from '../stamp/models/stamp.model';
+import { IV4Outcome } from '../stamp/v4-stamp.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class V4ProgressCampaignService implements ProgressCampaignService {
+  private hostName: string;
+
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.hostName = config.apiHost as string;
+      });
+  }
+
+  public getCampaignProgressMilestones(campaignId: number): Observable<IMilestone[]> {
+    return this.http.get<IV4ProgressMilestoneResponse>(`${this.hostName}/v4/milestones?campaign_id=${campaignId}`)
+      .pipe(
+        map((res => res.data)),
+        map((milestones: IV4ProgressMilestone[]) => milestones.map(
+          (milestone: IV4ProgressMilestone) => V4ProgressCampaignService.v4MilestoneToMilestone(milestone))
+        )
+      );
+  }
+
+  public getCampaignProgressTransactions(campaignId: number): Observable<any> {
+    return undefined;
+  }
+
+  public getCampaignTotalProgress(campaignId: number): Observable<any> {
+    return undefined;
+  }
+
+  private static v4MilestoneToMilestone(milestone: IV4ProgressMilestone): IMilestone {
+    return {
+      id: milestone.id,
+      displayProperties: milestone.display_properties, // to be mapped in future when used
+      outcomesIssued: milestone.milestone_outcome_issued_to_user,
+      name: milestone.name,
+      outcomes: milestone.outcomes.map((milestoneOutcome: IV4Outcome) =>
+        V4ProgressCampaignService.v4OutcomeToOutcome(milestoneOutcome)
+      ),
+      points: milestone.points
+    };
+  }
+
+  private static v4OutcomeToOutcome(reward: IV4Outcome): ICampaignOutcome {
+    return {
+      id: reward.id,
+      campaignId: reward.campaign_id,
+      modularizableType: reward.modularizable_type,
+      modularizableId: reward.modularizable_id,
+      createdAt: reward.created_at,
+      updatedAt: reward.updated_at,
+      refereeRequiredForReward: reward.referee_required_for_reward,
+      totalRewardLimit: reward.total_reward_limit,
+      totalUserLimit: reward.total_user_limit,
+      awardToTeferral: reward.award_to_referral,
+      awardToReferee: reward.award_to_referee,
+      totalReferreeLimit: reward.total_referree_limit,
+      stampNumber: reward.stamp_number,
+    };
+  }
+}
+
+export interface IV4ProgressMilestoneResponse {
+  data: IV4ProgressMilestone[];
+  meta: {
+    count: number;
+  };
+};
+
+export interface IV4ProgressMilestone {
+  id: number;
+  display_properties: null;
+  milestone_outcome_issued_to_user: boolean;
+  name: string;
+  outcomes: IV4Outcome[];
+  points: number;
+};

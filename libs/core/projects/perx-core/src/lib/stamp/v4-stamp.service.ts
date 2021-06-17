@@ -59,7 +59,7 @@ interface IV4StampAllTransactionResponse {
   data: IV4StampCard;
 }
 
-interface IV4Outcome {
+export interface IV4Outcome {
   id: number;
   campaign_id: number;
   modularizable_type: string;
