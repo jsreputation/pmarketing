@@ -4,7 +4,7 @@ import { ConfigService, IConfig } from '@perxtech/core';
 import { ProgressCampaignService } from './progress-campaign.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { IMilestone } from './progress-campaign.model';
+import { IMilestone, IProgressTotal } from './progress-campaign.model';
 import { ICampaignOutcome } from '../stamp/models/stamp.model';
 import { IV4Outcome } from '../stamp/v4-stamp.service';
 
@@ -35,8 +35,17 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
     return undefined;
   }
 
-  public getCampaignTotalProgress(campaignId: number): Observable<any> {
-    return undefined;
+  public getCampaignTotalProgress(campaignId: number): Observable<IProgressTotal> {
+    return this.http.get<IV4ProgressTotalResponse>(
+      `${this.hostName}/v4/progress_points_transactions/total_points?campaign_id=${campaignId}`
+    ).pipe(
+      map(res => res.data),
+      map((total: IV4ProgressTotal) => {
+        return {
+          userTotalAccumulatedCampaignPoints: total.user_total_campaign_points
+        };
+      })
+    );
   }
 
   private static v4MilestoneToMilestone(milestone: IV4ProgressMilestone): IMilestone {
@@ -86,3 +95,12 @@ export interface IV4ProgressMilestone {
   outcomes: IV4Outcome[];
   points: number;
 };
+
+
+export interface IV4ProgressTotalResponse {
+  data: IV4ProgressTotal
+};
+
+export interface IV4ProgressTotal {
+  user_total_campaign_points: number;
+}

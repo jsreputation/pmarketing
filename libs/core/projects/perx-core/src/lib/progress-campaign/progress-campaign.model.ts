@@ -34,3 +34,7 @@ export interface IMilestone {
   outcomes: ICampaignOutcome[];
   points: number;
 }
+
+export interface IProgressTotal {
+  userTotalAccumulatedCampaignPoints: number;
+}
