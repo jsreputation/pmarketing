@@ -18,12 +18,13 @@ import {
   PerxCoreModule,
   ProfileModule,
   ProfileServiceModule,
+  QuestModule,
   RewardsModule,
+  SettingsModule,
   ThemesService,
   TokenStorage,
   UtilsModule,
   VouchersModule,
-  QuestModule,
 } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -38,12 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import {
-  HTTP_INTERCEPTORS,
-  HttpBackend,
-  HttpClient,
-  HttpClientModule,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule, } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -60,11 +56,7 @@ import { QRCodeComponent } from './qr-code/qr-code.component';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { PopupComponent } from './popup/popup.component';
 import { registerLocaleData } from '@angular/common';
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, } from '@ngx-translate/core';
 import { switchMap, tap } from 'rxjs/operators';
 
 import enGb from '@angular/common/locales/en-GB';
@@ -127,6 +119,7 @@ export const setLanguage = (
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
