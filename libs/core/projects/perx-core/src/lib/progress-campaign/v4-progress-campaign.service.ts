@@ -4,7 +4,7 @@ import { ConfigService, IConfig } from '@perxtech/core';
 import { ProgressCampaignService } from './progress-campaign.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import { IMilestone, IProgressTotal } from './progress-campaign.model';
+import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
 import { ICampaignOutcome } from '../stamp/models/stamp.model';
 import { IV4Outcome } from '../stamp/v4-stamp.service';
 
@@ -31,8 +31,16 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       );
   }
 
-  public getCampaignProgressTransactions(campaignId: number): Observable<any> {
-    return undefined;
+  public getCampaignProgressTransactions(campaignId: number): Observable<IProgressTransaction[]> {
+    return this.http.get<IV4ProgressTransactionsResponse>(
+      `${this.hostName}/v4/progress_points_transactions?campaign_id=${campaignId}`
+    ).pipe(
+      map(res => res.data),
+      map((progressTransactions: IV4ProgressTransaction[]) =>
+        progressTransactions.map((progressTransaction: IV4ProgressTransaction) =>
+          V4ProgressCampaignService.v4progressTransactionsToprogressTransactions(progressTransaction))
+      )
+    );
   }
 
   public getCampaignTotalProgress(campaignId: number): Observable<IProgressTotal> {
@@ -59,6 +67,15 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       ),
       points: milestone.points
     };
+  }
+
+  private static v4progressTransactionsToprogressTransactions(progresstransaction: IV4ProgressTransaction): IProgressTransaction {
+    return {
+      id: progresstransaction.id,
+      amount: progresstransaction.amount,
+      campaignId: progresstransaction.campaign_id,
+      userAccountid: progresstransaction.user_account_id
+    }
   }
 
   private static v4OutcomeToOutcome(reward: IV4Outcome): ICampaignOutcome {
@@ -104,3 +121,17 @@ export interface IV4ProgressTotalResponse {
 export interface IV4ProgressTotal {
   user_total_campaign_points: number;
 }
+
+export interface IV4ProgressTransactionsResponse {
+  data: IV4ProgressTransaction[];
+  meta: {
+    count: number;
+  };
+};
+
+export interface IV4ProgressTransaction {
+  id: number;
+  amount: number;
+  campaign_id: number;
+  user_account_id: number;
+};

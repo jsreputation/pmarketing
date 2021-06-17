@@ -38,3 +38,10 @@ export interface IMilestone {
 export interface IProgressTotal {
   userTotalAccumulatedCampaignPoints: number;
 }
+
+export interface IProgressTransaction {
+  id: number;
+  amount: number;
+  campaignId: number;
+  userAccountid: number;
+}
