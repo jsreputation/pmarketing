@@ -7,6 +7,7 @@ import {
   AccountComponent,
   AccountModule as BCPAccountModule
 } from '@perxtech/blackcomb-pages';
+import { BadgeServiceModule } from '@perxtech/core';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +17,8 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     BCPAccountModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    BadgeServiceModule.forRoot()
   ]
 })
 export class AccountModule { }
