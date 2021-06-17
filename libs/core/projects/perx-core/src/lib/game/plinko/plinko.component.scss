@@ -10,15 +10,26 @@
 .contents-container {
     position: relative;
 }
-.target-img-cont {
-    position: absolute;
-    bottom: 8px;
-    left: 112px;
-    width: 48px;
-    height: 48px;
-    background-size: cover;
-}
 
 button {
     margin-top: 25px;
+}
+
+#gate {
+   .left-gate {
+        transition: transform 50ms linear;
+        transform-origin: top left;
+        transform-box: fill-box;
+        &.open {
+            transform: rotate(50deg);
+        }
+   } 
+   .right-gate {
+        transition: transform 50ms linear;
+        transform-origin: top right;
+        transform-box: fill-box;
+        &.open {
+            transform: rotate(-50deg);
+        }
+   } 
 }

@@ -113,6 +113,15 @@ export function defaultSpin(): ISpin {
   };
 }
 
+export function defaultPlinko(): IPlinko {
+  return {
+    backgroundImageUrl: '',
+    targetImage: '',
+    stageColor: '',
+    ballColor: ''
+  };
+}
+
 export interface ISpin {
   numberOfWedges: number;
   rewardSlots: number[];
@@ -161,8 +170,8 @@ export interface IScratch {
 }
 
 export interface IPlinko {
-  backgroundImgUrl?: string;
-  targetImg?: string;
+  backgroundImageUrl?: string;
+  targetImage?: string;
   stageColor?: string;
   ballColor?: string;
 }

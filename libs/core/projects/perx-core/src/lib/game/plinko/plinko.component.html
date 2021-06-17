@@ -3,8 +3,7 @@
         <svg width="276" height="486" viewBox="0 0 276 486" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path [attr.d]="ballPath" stroke-width="0" stroke="red" id="theMotionPath"/> 
             <animateMotion id="animateEl" fill="freeze" (beginEvent)="startedGame()" (endEvent)="finishedGame()"
-             [attr.dur]="animDuration" begin="indefinite" xlink:href="#custom_ball" [attr.path]="ballPath">        
-            </animateMotion>   
+             [attr.dur]="animDuration" begin="indefinite" xlink:href="#custom_ball" [attr.path]="ballPath"/>              
             <g>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M103.511 0V83.8694L0 201.532V0H103.511Z" fill="black"/>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M168.489 0V83.8694L272 201.532V0H168.489Z" fill="black"/>
@@ -16,6 +15,7 @@
             <g id="custom_stage_elements" [attr.fill]="stageColor">
                 <rect opacity="0.8" x="4.53345" y="429.911" width="48.96" height="49.1111" />
                 <rect opacity="0.8" x="111.52" y="429.911" width="49" height="49"/>
+                <image x="111.52" y="429.911" width="48" height="48" [attr.xlink:href]="targetImg" />
                 <rect opacity="0.8" x="218.507" y="429.911" width="48.96" height="49.1111"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M103.511 0H98.9778V81.706L0 194.216V201.532L103.511 83.8693V83.8667V76.5528V0Z"/>
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M168.489 0H173.022V81.706L272 194.216V201.532L168.489 83.8693V83.8667V76.5528V0Z"/>
@@ -30,9 +30,9 @@
                 <rect width="103.511" height="4.53333"/>
             </g>
 
-            <g id="ball_holder" [attr.fill]="stageColor">
-                <path [attr.transform]="rotateValue1" class="left-holder" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z" />
-                <path [attr.transform]="rotateValue2" class="right-holder" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
+            <g id="gate" [attr.fill]="stageColor">
+                <path [ngClass]="{'open': gameStarted}" class="left-gate" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z"/>    
+                <path [ngClass]="{'open': gameStarted}" class="right-gate" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
             </g>
             
             <g id="peg_container" [attr.fill]="stageColor">   
@@ -238,7 +238,5 @@
             </radialGradient>
             </defs>
         </svg>
-        <div class="target-img-cont" [ngStyle]="{'background-image': targetImg ? 'url(' + targetImg + ')' : '' }">
-        </div>
     </div>
 </div>  

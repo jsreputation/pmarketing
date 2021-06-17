@@ -31,6 +31,7 @@ import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { PlinkoComponent } from './plinko/plinko.component';
 
 const game: IGame = {
   id: 1,
@@ -181,7 +182,8 @@ describe('GameComponent', () => {
         TapComponent,
         ScratchComponent,
         SpinComponent,
-        SnakeComponent
+        SnakeComponent,
+        PlinkoComponent
       ],
       imports: [
         MatProgressBarModule,
