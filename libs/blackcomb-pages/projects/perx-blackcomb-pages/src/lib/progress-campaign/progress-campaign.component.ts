@@ -48,24 +48,26 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
 
   public ngAfterViewInit(): void {
     // update level connector height
-    const numMilestones = this.milestones.length;
-    const taskCards = [ ...this.milestonesConnectorDiv.nativeElement.parentElement.children ]
-      .filter((child) => child.classList.contains('task-card'));
-    if (taskCards.length > 1 && numMilestones > 1) {
-      // we want the height up to the 2nd last element
-      // - 1 for 0 index conversion. i.e. taskCard.length = 3, the 2nd last index is 1;
-      const numElementsForHeight = taskCards.slice(0, taskCards.length - 2).length;
+    if (!!this.milestones) {
+      const numMilestones = this.milestones.length;
+      const taskCards = [ ...this.milestonesConnectorDiv.nativeElement.parentElement.children ]
+        .filter((child) => child.classList.contains('task-card'));
+      if (taskCards.length > 1 && numMilestones > 1) {
+        // we want the height up to the 2nd last element
+        // - 1 for 0 index conversion. i.e. taskCard.length = 3, the 2nd last index is 1;
+        const numElementsForHeight = taskCards.slice(0, taskCards.length - 2).length;
 
-      if (taskCards.length === numMilestones) {
-        let cumulativeHeights = 0;
-        // get the heights for numElementsForHeights inclusive i.e. both 0 and 1 - from length = 2
-        for (let i = 0; i <= numElementsForHeight; i++) {
-          cumulativeHeights += taskCards[i].offsetHeight;
+        if (taskCards.length === numMilestones) {
+          let cumulativeHeights = 0;
+          // get the heights for numElementsForHeights inclusive i.e. both 0 and 1 - from length = 2
+          for (let i = 0; i <= numElementsForHeight; i++) {
+            cumulativeHeights += taskCards[i].offsetHeight;
+          }
+          this.milestonesConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
         }
-        this.milestonesConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
       }
+      // else there is only 1 level, don't make a line
     }
-    // else there is only 1 level, don't make a line
   }
 
   public ngOnInit(): void {
