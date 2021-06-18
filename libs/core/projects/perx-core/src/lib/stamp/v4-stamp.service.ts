@@ -3,11 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
 import { from, Observable, of, throwError, timer } from 'rxjs';
 import { filter, flatMap, map, mergeAll, mergeMap, scan, share, skip, switchMap, tap, toArray } from 'rxjs/operators';
-
 import { ICampaignOutcome, IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
-
 import { IVoucher } from '../vouchers/models/voucher.model';
-
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -211,7 +208,7 @@ export class V4StampService implements StampService {
       updatedAt: stamp.updated_at,
       campaignId: stamp.campaign_id,
       vouchers: stamp.vouchers,
-      ...(outcomes && outcomes.length && {outcomes}),
+      ...(outcomes && outcomes.length && { outcomes }),
     };
   }
 

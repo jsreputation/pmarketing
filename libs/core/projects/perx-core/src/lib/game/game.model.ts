@@ -23,6 +23,7 @@ export interface IEngagementTransaction {
   rewardIds?: number[];
   points?: IPointsOutcome[];
   prizeSets?: IPrizeSetOutcome[];
+  badges?: IBadgeOutcome[];
 }
 export interface IGameOutcome {
   title: string;

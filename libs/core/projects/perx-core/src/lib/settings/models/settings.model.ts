@@ -62,6 +62,7 @@ export interface IFlags {
   showUserQR?: boolean;
   showVoucherBookingFromRewardsPage?: boolean;
   showBadgesButton?: boolean;
+  showOutcomesOnCampaignLandingPage?: boolean;
 }
 
 export interface IRssFeeds {

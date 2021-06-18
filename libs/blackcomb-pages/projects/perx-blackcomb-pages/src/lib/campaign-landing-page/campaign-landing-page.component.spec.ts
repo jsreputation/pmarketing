@@ -6,7 +6,8 @@ import {
   ICampaignService, ThemesService,
   UtilsModule,
   RewardsService,
-  IPrizeSetOutcomeService
+  IPrizeSetOutcomeService,
+  SettingsService
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
@@ -32,6 +33,7 @@ describe('CampaignLandingPageComponent', () => {
   };
   const rewardServiceStub: Partial<RewardsService> = {};
   const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
+  const settingsServiceStub: Partial<SettingsService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,7 +51,8 @@ describe('CampaignLandingPageComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
-        { provide: RewardsService, useValue: rewardServiceStub }
+        { provide: RewardsService, useValue: rewardServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

@@ -167,16 +167,19 @@ export class StampCardComponent implements OnInit, OnDestroy {
             }
 
             const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
-                                                || outcome.state !== 'failed');
+              || outcome.state !== 'failed');
+
+            const badgeOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.badge
+              || outcome.state !== 'failed');
 
             if ((stamp.vouchers && stamp.vouchers.length > 0) ||
-                        (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
+              (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
 
               let prizeSetOutcomes: IStampOutcome[];
               let voucherId;
               if (this.showPrizeSetOutcome && stampOutcomes) {
                 prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
-                                                                        CampaignOutcomeType.prizeSet);
+                  CampaignOutcomeType.prizeSet);
               }
               if (stamp.vouchers && stamp.vouchers.length > 0) {
                 voucherId = stamp.vouchers[0].id;
@@ -207,7 +210,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 } else if (voucherId) {
                   data.url = `/voucher-detail/${voucherId}`;
                 } else {
-                  data.url = '/wallet';
+                  data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
                 }
                 this.dialog.open(RewardPopupComponent, { data });
               });

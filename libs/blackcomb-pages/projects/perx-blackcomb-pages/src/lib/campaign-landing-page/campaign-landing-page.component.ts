@@ -15,9 +15,11 @@ import {
   ITheme,
   PrizeSetOutcomeType,
   RewardsService,
-  ThemesService
+  ThemesService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
-import { combineLatest, forkJoin, Observable, of, Subject, } from 'rxjs';
+import { combineLatest, forkJoin, Observable, of, Subject, iif } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -34,6 +36,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public buttonStyle: { [key: string]: string } = {};
   public campaignOutcomes: ICampaignOutcome[];
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
+  public showCampaignOutcomes: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,7 +45,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private router: Router,
     private prizeSetOutcomeService: IPrizeSetOutcomeService,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private settingsService: SettingsService
   ) {}
 
   public ngOnInit(): void {
@@ -63,12 +67,17 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
             ? theme.properties['--button_text_color']
             : '';
         }),
+        switchMap(() => this.settingsService.getRemoteFlagsSettings()),
+        tap((flags: IFlags) => {
+          this.showCampaignOutcomes = flags.showOutcomesOnCampaignLandingPage ? flags.showOutcomesOnCampaignLandingPage : false ;
+        }),
         switchMap(() => this.activatedRoute.params),
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
            forkJoin(
-            [this.campaignService.getCampaign(campaignId), this.getCampaignOutcome(campaignId)])
+            [this.campaignService.getCampaign(campaignId), iif(() => this.showCampaignOutcomes,
+              this.getCampaignOutcome(campaignId), of([]))])
         )
       ).subscribe(([campaign, outcomes]: [ICampaign, ICampaignOutcome[]]) => {
         this.campaign = campaign;
