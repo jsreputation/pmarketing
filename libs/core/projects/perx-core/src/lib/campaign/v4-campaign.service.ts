@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
+import { EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
   CampaignDisplayProperties,
@@ -385,6 +385,12 @@ export class V4CampaignService implements ICampaignService {
         ),
         catchError(e => of(e))
       );
+  }
+
+  public enrolIntoCampaign(campaignId: number): Observable<boolean> {
+    return this.http.post(`${this.baseUrl}/v4/campaigns/${campaignId}/enrol`, null, {observe : 'response'} ).pipe(
+      map((response: HttpResponse<any>) => response.status === 200 ? true : false ) ,
+      catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error)));
   }
 
   public static v4CampaignOutcomeToCampaignOutcome(campaignOutcome: IV4CampaignOutcome): ICampaignOutcome {
