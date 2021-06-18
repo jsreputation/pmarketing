@@ -111,4 +111,18 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
       this.router.navigate([ '/reward-detail', outcome.id ]);
     }
   }
+
+  public startProgress(campaignId: number): void {
+    this.campaignService.enrolIntoCampaign(campaignId)
+      .subscribe((isEnrolled: boolean) => {
+        if (isEnrolled) {
+          // set current active milestone
+          this.activeMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+        } else {
+          this.notificationService.addSnack('Campaign enrolment failed');
+        }
+      }, error => {
+        this.notificationService.addSnack(error.error.message);
+      });
+  }
 }
