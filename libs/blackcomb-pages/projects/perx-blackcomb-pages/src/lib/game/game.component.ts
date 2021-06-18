@@ -244,6 +244,9 @@ export class GameComponent implements OnInit, OnDestroy {
           if (gameTransaction.points) {
             this.points = gameTransaction.points[0];
           }
+          if (gameTransaction.badges) {
+            this.badge = gameTransaction.badges[0];
+          }
           if (gameTransaction.prizeSets && gameTransaction.prizeSets.length > 0) {
             this.prizeSetReserved = true;
           }
@@ -502,7 +505,7 @@ export class GameComponent implements OnInit, OnDestroy {
       } else {
         // navigate to badge list if user has won a badge, since badges are not added to the wallet
         if (this.willWin && this.badge) {
-          this.router.navigate(['/badges']);
+          this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
         } else {
           this.router.navigate(['/wallet']);
         }

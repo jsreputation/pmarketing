@@ -10,7 +10,7 @@ import { ISelectPayload } from '../question/select/select.component';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { IPrizeSetOutcome } from '../../prize-set-outcome/models/prize-set-outcome.model';
-import { IPointsOutcome } from '../../campaign/models/campaign.model';
+import { IBadgeOutcome, IPointsOutcome } from '../../campaign/models/campaign.model';
 
 export interface IAnswer {
   questionId: string;
@@ -53,8 +53,8 @@ export interface ISurveyOutcome {
 
 export interface ISurvey {
   id?: number;
-  title?: {text: string};
-  subTitle?: {text: string};
+  title?: { text: string };
+  subTitle?: { text: string };
   progressBarColor?: MaterialColor;
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;
@@ -103,4 +103,5 @@ export interface ISurveyResultOutcome {
   vouchers?: IVoucher[];
   points?: IPointsOutcome[];
   prizeSets?: IPrizeSetOutcome[];
+  badges?: IBadgeOutcome[];
 }

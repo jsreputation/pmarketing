@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import {
   IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory,
-  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig, ConfigService, IConfig
+  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig, ConfigService, IConfig, IBadgeOutcome
 } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -25,6 +25,7 @@ export class QuizResultsComponent implements OnInit {
   public subTitle: string;
   public rewardsAcquired: boolean = false;
   public prizeSetOutcomes: IPrizeSetOutcome[];
+  public badgeOutcomes: IBadgeOutcome[];
   public showPrizeSetOutcome: boolean = false;
 
   constructor(
@@ -53,19 +54,22 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[] } | string) => {
+        map((res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], badges?: IBadgeOutcome[] } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], rewardAcquired: boolean }) => {
+      .subscribe((res: {
+        points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], rewardAcquired: boolean, badges: IBadgeOutcome[]
+      }) => {
         this.results = res.points;
         this.prizeSetOutcomes = res.prizeSets ? res.prizeSets : [];
         this.rewardsAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
+        this.badgeOutcomes = res.badges ? res.badges : [];
         this.fetchTitle();
         this.fetchSubTitle();
       });
@@ -132,18 +136,21 @@ export class QuizResultsComponent implements OnInit {
           ctaButtonClass: 'ga_game_completion'
         };
         if (this.showPrizeSetOutcome && this.prizeSetOutcomes && this.prizeSetOutcomes.length > 0) {
-            const prizeSetOutcome = this.prizeSetOutcomes[0];
-            const data: IRewardPopupConfig = this.popup;
-            data.url = `/prize-set-outcomes/${prizeSetOutcome.prizeSetId}?transactionId=${prizeSetOutcome.transactionId}`;
-            data.afterClosedCallBackRedirect = this;
-            data.disableOverlayClose = true;
-            data.showCloseBtn = false;
-            data.buttonTxt = res['PRIZE_SET.OUTCOME_SUCCESS_TITLE'];
-            this.dialog.open(RewardPopupComponent, {data});
+          const prizeSetOutcome = this.prizeSetOutcomes[0];
+          const data: IRewardPopupConfig = this.popup;
+          data.url = `/prize-set-outcomes/${prizeSetOutcome.prizeSetId}?transactionId=${prizeSetOutcome.transactionId}`;
+          data.afterClosedCallBackRedirect = this;
+          data.disableOverlayClose = true;
+          data.showCloseBtn = false;
+          data.buttonTxt = res['PRIZE_SET.OUTCOME_SUCCESS_TITLE'];
+          this.dialog.open(RewardPopupComponent, { data });
         } else {
           this.notificationService.addPopup(this.popup);
-          nextRoute = '/wallet';
-          this.router.navigate([nextRoute]);
+          if (this.badgeOutcomes?.length) {
+            this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
+          } else {
+            this.router.navigate(['/wallet']);
+          }
         }
       });
     }

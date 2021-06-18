@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ActivatedRoute } from '@angular/router';
 import { IBadge, BadgeService } from '@perxtech/core';
-import { iif } from 'rxjs';
+import { iif, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'badge-landing',
@@ -10,14 +12,23 @@ import { iif } from 'rxjs';
 })
 export class BadgeLandingComponent implements OnInit {
   public badges: IBadge[];
+  public selectedFilter: number = 0;
   private pageNumber: number = 2;
   private paginationComplete: boolean = false;
-  private selectedFilter: number = 0;
+  private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private badgeService: BadgeService) { }
+  constructor(private badgeService: BadgeService, private activeRoute: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this.badgeService.getAllBadges().subscribe((badges) => this.badges = badges);
+    this.activeRoute.queryParams.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe((params) => {
+      if (params?.filter) {
+        this.selectedFilter = params.filter === 'earned' ? 1 : 0;
+        this.destroy$.next();
+      }
+      this.fetchBadges();
+    });
   }
 
   public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
@@ -25,12 +36,15 @@ export class BadgeLandingComponent implements OnInit {
     this.pageNumber = 2;
     this.paginationComplete = false;
     this.selectedFilter = tabChangeEvent.index;
+    this.fetchBadges();
+  }
+
+  private fetchBadges(): void {
     // index 0 = all, 1 = earned, 2 = unearned
-    if (this.selectedFilter) {
-      this.badgeService.getBadgesByState(this.selectedFilter === 1).subscribe((badges) => this.badges = badges);
-    } else {
-      this.badgeService.getAllBadges().subscribe((badges) => this.badges = badges);
-    }
+    iif(() => this.selectedFilter > 0,
+      this.badgeService.getBadgesByState(this.selectedFilter === 1),
+      this.badgeService.getAllBadges()
+    ).subscribe((badges) => this.badges = badges);
   }
 
   public onScroll(): void {
@@ -40,8 +54,7 @@ export class BadgeLandingComponent implements OnInit {
     }
 
     // do we have a filter applied
-    const activeFilter = this.selectedFilter > 0 ? true : false;
-    iif(() => activeFilter,
+    iif(() => this.selectedFilter > 0,
       this.badgeService.getBadgesByState(this.selectedFilter === 1, this.pageNumber),
       this.badgeService.getAllBadges(this.pageNumber)
     ).subscribe((badges) => {
