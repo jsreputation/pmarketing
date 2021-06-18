@@ -32,7 +32,7 @@ export interface IMilestone {
   outcomesIssued: boolean;
   name: string;
   outcomes: ICampaignOutcome[];
-  points: number;
+  pointsRequired: number;
 }
 
 export interface IProgressTotal {

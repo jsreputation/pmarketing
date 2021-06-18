@@ -65,7 +65,7 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       outcomes: milestone.outcomes.map((milestoneOutcome: IV4Outcome) =>
         V4ProgressCampaignService.v4OutcomeToOutcome(milestoneOutcome)
       ),
-      points: milestone.points
+      pointsRequired: milestone.points
     };
   }
 
