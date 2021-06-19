@@ -128,7 +128,7 @@ export interface ICampaignOutcome {
   type: CampaignOutcomeType;
   name?: string;
   pointsCount?: number;
-  prizeSetItems?: string[];
+  prizeSetItems?: string[]; // populated from campaign landing pages logic, not from API
   campaignId: number;
   createdAt?: string;
   updatedAt?: string;
