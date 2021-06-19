@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { QuestModule as BCPQuestModule, UtilsModule } from '@perxtech/core';
+import { ProgressCampaignServiceModule, UtilsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -28,8 +28,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     RouterModule,
     MatListModule,
-    BCPQuestModule.forChild(),
-    MatTabsModule
+    MatTabsModule,
+    ProgressCampaignServiceModule.forChild()
   ],
   providers: []
 })

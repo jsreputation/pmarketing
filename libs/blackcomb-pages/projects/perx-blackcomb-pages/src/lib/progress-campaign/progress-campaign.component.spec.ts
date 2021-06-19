@@ -6,13 +6,20 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
-import { ICampaignService, IQuestService, NotificationService } from '@perxtech/core';
+import { ICampaignService, NotificationService, ProgressCampaignService, UtilsModule } from '@perxtech/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-const questServiceStub: Partial<IQuestService> = {};
 const campaignServiceStub: Partial<ICampaignService> = {};
 const notificationServiceStub: Partial<NotificationService> = {};
+const progressCampaignServiceStub: Partial<ProgressCampaignService> = {
+  getCampaignProgressMilestones: () => of([]),
+  getCampaignTotalProgress: () => of({userTotalAccumulatedCampaignPoints: 0})
+};
 
 describe('ProgressCampaignComponent', () => {
   let component: ProgressCampaignComponent;
@@ -21,18 +28,23 @@ describe('ProgressCampaignComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ProgressCampaignComponent ],
-      imports: [ MatProgressBarModule,
+      imports: [
+        HttpClientTestingModule,
         MatIconModule,
-        RouterTestingModule,
-        MatToolbarModule,
         TranslateModule.forRoot(),
-        MatListModule,
-        MatTabsModule,
+        UtilsModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterTestingModule,
+        MatListModule,
+        MatTabsModule,
       ],
       providers: [
-        { provide: IQuestService, useValue: questServiceStub },
+        { provide: ProgressCampaignService, useValue: progressCampaignServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub }
       ]
