@@ -201,7 +201,6 @@ export class V4StampService implements StampService {
       id: reward.id,
       campaignId: reward.campaign_id,
       type: reward.modularizable_type,
-      modularizableId: reward.modularizable_id,
       createdAt: reward.created_at,
       updatedAt: reward.updated_at,
       refereeRequiredForReward: reward.referee_required_for_reward,

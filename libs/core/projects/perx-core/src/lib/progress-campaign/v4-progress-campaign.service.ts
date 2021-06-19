@@ -84,7 +84,6 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       campaignId: reward.campaign_id,
       type: reward.modularizable_type,
       name: reward.name,
-      modularizableId: reward.modularizable_id,
       createdAt: reward.created_at,
       updatedAt: reward.updated_at,
       refereeRequiredForReward: reward.referee_required_for_reward,

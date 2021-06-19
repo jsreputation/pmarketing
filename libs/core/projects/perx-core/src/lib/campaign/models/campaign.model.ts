@@ -130,7 +130,6 @@ export interface ICampaignOutcome {
   pointsCount?: number;
   prizeSetItems?: string[];
   campaignId: number;
-  modularizableId: number;
   createdAt?: string;
   updatedAt?: string;
   // ordering: any|null;
