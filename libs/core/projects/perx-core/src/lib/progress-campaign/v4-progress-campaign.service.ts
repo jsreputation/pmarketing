@@ -5,8 +5,7 @@ import { ProgressCampaignService } from './progress-campaign.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
-import { ICampaignOutcome } from '../campaign/models/campaign.model';
-import { IV4CampaignOutcome } from '../campaign/v4-campaign.service';
+import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +62,7 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       outcomesIssued: milestone.milestone_outcome_issued_to_user,
       name: milestone.name,
       outcomes: milestone.outcomes.map((milestoneOutcome: IV4CampaignOutcome) =>
-        V4ProgressCampaignService.v4OutcomeToOutcome(milestoneOutcome)
+        V4CampaignService.v4CampaignOutcomeToCampaignOutcome(milestoneOutcome)
       ),
       pointsRequired: milestone.points
     };
@@ -76,25 +75,6 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       campaignId: progresstransaction.campaign_id,
       userAccountid: progresstransaction.user_account_id
     }
-  }
-
-  private static v4OutcomeToOutcome(reward: IV4CampaignOutcome): ICampaignOutcome {
-    return {
-      id: reward.id,
-      campaignId: reward.campaign_id,
-      type: reward.modularizable_type,
-      name: reward.name,
-      createdAt: reward.created_at,
-      updatedAt: reward.updated_at,
-      refereeRequiredForReward: reward.referee_required_for_reward,
-      totalRewardLimit: reward.total_reward_limit,
-      totalUserLimit: reward.total_user_limit,
-      awardToTeferral: reward.award_to_referral,
-      awardToReferee: reward.award_to_referee,
-      totalReferreeLimit: reward.total_referree_limit,
-      stampNumber: reward.stamp_number,
-      pointsCount: reward.points_count
-    };
   }
 }
 

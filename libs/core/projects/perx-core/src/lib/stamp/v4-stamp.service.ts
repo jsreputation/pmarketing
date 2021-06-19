@@ -10,11 +10,11 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignOutcomeType, CampaignType, ICampaign, ICampaignOutcome } from '../campaign/models/campaign.model';
+import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
-import { IV4CampaignOutcome } from '../campaign/v4-campaign.service';
+import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -196,23 +196,6 @@ export class V4StampService implements StampService {
     };
   }
 
-  private static v4OutcomeToOutcome(reward: IV4CampaignOutcome): ICampaignOutcome {
-    return {
-      id: reward.id,
-      campaignId: reward.campaign_id,
-      type: reward.modularizable_type,
-      createdAt: reward.created_at,
-      updatedAt: reward.updated_at,
-      refereeRequiredForReward: reward.referee_required_for_reward,
-      totalRewardLimit: reward.total_reward_limit,
-      totalUserLimit: reward.total_user_limit,
-      awardToTeferral: reward.award_to_referral,
-      awardToReferee: reward.award_to_referee,
-      totalReferreeLimit: reward.total_referree_limit,
-      stampNumber: reward.stamp_number
-    };
-  }
-
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
     const stampCardDP = oc(stampCard).display_properties;
     const cardImageUrl = stampCardDP.card_image.value.image_url(
@@ -252,7 +235,7 @@ export class V4StampService implements StampService {
       campaignConfig: {
         totalSlots: oc(stampCard).campaign_config.total_slots(0),
         rewards: oc(stampCard).campaign_config.rewards([])
-          .map((rewards: IV4CampaignOutcome) => V4StampService.v4OutcomeToOutcome(rewards)),
+          .map((rewards: IV4CampaignOutcome) => V4CampaignService.v4CampaignOutcomeToCampaignOutcome(rewards)),
       },
       results: {},
       displayProperties: {

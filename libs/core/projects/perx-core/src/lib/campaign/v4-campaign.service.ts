@@ -412,7 +412,17 @@ export class V4CampaignService implements ICampaignService {
       id: campaignOutcome.modularizable_id,
       type: campaignOutcome.modularizable_type,
       name: campaignOutcome.outcome ? campaignOutcome.outcome.name : '',
-      pointsCount: campaignOutcome.points_count
+      pointsCount: campaignOutcome.points_count,
+      campaignId: campaignOutcome.campaign_id,
+      createdAt: campaignOutcome.created_at,
+      updatedAt: campaignOutcome.updated_at,
+      refereeRequiredForReward: campaignOutcome.referee_required_for_reward,
+      totalRewardLimit: campaignOutcome.total_reward_limit,
+      totalUserLimit: campaignOutcome.total_user_limit,
+      awardToTeferral: campaignOutcome.award_to_referral,
+      awardToReferee: campaignOutcome.award_to_referee,
+      totalReferreeLimit: campaignOutcome.total_referree_limit,
+      stampNumber: campaignOutcome.stamp_number
     };
   }
 
