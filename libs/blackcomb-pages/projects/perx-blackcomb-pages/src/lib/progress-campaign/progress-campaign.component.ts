@@ -15,6 +15,11 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
+enum ProgressBarDisplayMode {
+  cumulative = 'cumulative',
+  individual = 'individual'
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
   templateUrl: './progress-campaign.component.html',
@@ -35,6 +40,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
   public milestones: IMilestone[];
   public activeMilestone: IMilestone | undefined;
   public currentUserPoints: number;
+  public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
 
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
@@ -86,18 +92,19 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
       takeUntil(this.destroy$)
     ).subscribe(([ campaign, milestones, currentUserProgress ]: [ ICampaign, IMilestone[], IProgressTotal ]) => {
 
-      this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints
+      this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints;
       this.milestones = milestones;
       this.campaign$ = of(campaign);
       this.progressConfig = campaign.displayProperties?.progressDetails;
 
       const [ finalMilestone ] = milestones.slice(-1);
       if (!! finalMilestone) {
-        this.campaignProgress = (this.currentUserPoints / finalMilestone.pointsRequired) * 100;
+        this.campaignProgress = this.currentUserPoints === 0 ? 0 : (this.currentUserPoints / finalMilestone.pointsRequired) * 100;
       }
 
       if (!! campaign.enrolled) {
         this.isEnrolled = campaign.enrolled;
+        // get first item where points required points has not been met
         this.activeMilestone = milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
       }
     });
@@ -126,5 +133,46 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
       }, error => {
         this.notificationService.addSnack(error.error.message);
       });
+  }
+
+  public milestoneCompletedProgressCalculation(milestone: IMilestone): number {
+
+    // past milestones
+    if (milestone.pointsRequired < this.currentUserPoints) {
+      return milestone.pointsRequired;
+    }
+
+    if (milestone.pointsRequired === this.activeMilestone?.pointsRequired && this.milestones.length > 0) {
+        const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === this.activeMilestone?.pointsRequired);
+        const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
+        return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
+          ? this.currentUserPoints
+          : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
+    }
+
+    if (milestone.pointsRequired === this.currentUserPoints) {
+      return 100;
+    }
+
+    return 0;
+  }
+
+
+  public milestoneRequiredProgressCalculation(milestone: IMilestone): number {
+
+    // past milestones
+    if (milestone.pointsRequired < this.currentUserPoints) {
+      return milestone.pointsRequired;
+    }
+
+    if (this.milestones.length > 0) {
+      const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === milestone.pointsRequired);
+      const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
+      return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
+        ? milestone.pointsRequired
+        : milestone.pointsRequired - this.milestones[lastMilestoneIndex].pointsRequired;
+    }
+
+    return 0;
   }
 }

@@ -39,56 +39,55 @@
               <p class="subtitle">{{progressConfig?.description}}</p>
               <p class="description">{{progressConfig?.body}}</p>
           </div>
-          <div class="current-level-container task-card-container" *ngIf="activeLevel!">
+          <div class="current-level-container task-card-container" *ngIf="activeMilestone!">
             <p>Currently Active Level:</p>
             <div class="task-card">
               <div class="task-img-section">
                 <div class="task-img-container">
-                  <img [src]="activeLevel?.imageUrl" [alt]="activeLevel?.title">
+<!--                  <img [src]="activeMilestone?.imageUrl" [alt]="activeMilestone?.name">-->
                 </div>
-                <div class="active-macaron-container"
-                     *ngIf="activeLevel?.state === 'in_progress'">
+                <div class="active-macaron-container">
                   <span class="macaron">Active</span>
                 </div>
               </div>
-              <div class="task-content">
+              <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
                   <span class="task-subtitle">
-                      {{activeLevel?.completedProgress}} / {{activeLevel?.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                    {{milestoneCompletedProgressCalculation(activeMilestone)}} / {{milestoneRequiredProgressCalculation(activeMilestone)}} CP
                   </span>
                 <mat-progress-bar mode="determinate"
-                                  [value]="activeLevel?.completedProgress/activeLevel?.levelTarget * 100"></mat-progress-bar>
+                                  [value]="milestoneCompletedProgressCalculation(activeMilestone)/milestoneRequiredProgressCalculation(activeMilestone) * 100"></mat-progress-bar>
               </div>
             </div>˚
           </div>
           <div class="mat-tab-group-wrapper">
             <mat-tab-group mat-stretch-tabs>
               <mat-tab [label]="'Levels'">
-                <div class="task-card-container" *ngIf="levels$ | async as levels">
-                  <div #milestonesConnectorDiv class="level-connector-line" [attr.data-spanlevels]="levels.length"></div>
-                  <div class="task-card" *ngFor="let level of levels">
+                <div class="task-card-container" *ngIf="milestones">
+                  <div #milestonesConnectorDiv class="level-connector-line" [attr.data-spanlevels]="milestones.length"></div>
+                  <div class="task-card" *ngFor="let milestone of milestones">
                     <div class="task-img-section">
                       <div class="task-img-container">
                         <img class="success-icon" [src]="progressConfig?.successImageUrl"
-                             *ngIf="(level.state === 'completed')">
-                        <img [src]="level.imageUrl" [alt]="level.title">
+                             *ngIf="(milestone.outcomesIssued)">
+                        <img [src]="milestone.displayProperties?.icon.value.image_url" [alt]="milestone.name">
                       </div>
                       <div class="active-macaron-container"
-                           *ngIf="level.state === 'in_progress'">
+                           *ngIf="milestone.pointsRequired === activeMilestone?.pointsRequired">
                         <span class="macaron">Active</span>
                       </div>
                     </div>
-                    <div class="task-content">
+                    <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
                   <span class="task-subtitle">
-                      {{level.completedProgress}} / {{level.levelTarget}} {{progressCampaign?.unitBaseName || 'CP'}}
+                    {{milestoneCompletedProgressCalculation(milestone)}} / {{milestoneRequiredProgressCalculation(milestone)}} CP
                   </span>
                       <mat-progress-bar mode="determinate"
-                                        [value]="level.completedProgress/level.levelTarget * 100"></mat-progress-bar>
-                      <div class="prize-wrapper" *ngIf="campaignOutcome$ | async as outcomes">
-                    <span class="subtitle" *ngIf="(outcomes | outcomesFromLevelPipe:level).length > 0">
+                                        [value]="milestoneCompletedProgressCalculation(milestone)/milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
+                      <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
+                    <span class="subtitle" *ngIf="outcomes.length > 0">
                       Complete level and you stand to win: *
                     </span>
                         <mat-nav-list>
-                          <mat-list-item *ngFor="let outcome of outcomes | outcomesFromLevelPipe:level"
+                          <mat-list-item *ngFor="let outcome of outcomes"
                                          (click)="outcomeClicked(outcome)"
                                          [disabled]="outcome.type !== 'Reward::Campaign'">
                             <div class="outcome-container">
