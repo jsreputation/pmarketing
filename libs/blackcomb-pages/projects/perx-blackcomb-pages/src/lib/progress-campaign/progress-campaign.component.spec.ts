@@ -23,22 +23,22 @@ describe('ProgressCampaignComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProgressCampaignComponent, OutcomesFromLevelPipe ],
       imports: [ MatProgressBarModule,
-         MatIconModule,
-         RouterTestingModule,
-         MatToolbarModule,
-         TranslateModule.forRoot(),
-         MatListModule,
-         MatTabsModule,
-         MatProgressSpinnerModule,
-         MatProgressBarModule,
+        MatIconModule,
+        RouterTestingModule,
+        MatToolbarModule,
+        TranslateModule.forRoot(),
+        MatListModule,
+        MatTabsModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
       ],
-         providers: [
-          { provide: IQuestService, useValue: questServiceStub },
-          { provide: NotificationService, useValue: notificationServiceStub },
-          { provide: ICampaignService, useValue: campaignServiceStub }
-         ]
+      providers: [
+        { provide: IQuestService, useValue: questServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

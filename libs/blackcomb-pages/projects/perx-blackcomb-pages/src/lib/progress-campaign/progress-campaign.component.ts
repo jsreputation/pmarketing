@@ -23,7 +23,7 @@ enum ProgressBarDisplayMode {
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
   templateUrl: './progress-campaign.component.html',
-  styleUrls: ['./progress-campaign.component.scss']
+  styleUrls: [ './progress-campaign.component.scss' ]
 })
 export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -31,7 +31,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
 
   public questCompleted: boolean = false;
   public campaignProgress: number = 0;
-  public completedTaskIds: (number|undefined)[] = [];
+  public completedTaskIds: (number | undefined)[] = [];
   public questState: string = '';
   public state: typeof QuestState = QuestState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
@@ -50,11 +50,12 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
               private router: Router,
               private notificationService: NotificationService,
               private progressCampaignService: ProgressCampaignService,
-              private campaignService: ICampaignService) { }
+              private campaignService: ICampaignService) {
+  }
 
   public ngAfterViewInit(): void {
     // update level connector height
-    if (!!this.milestones) {
+    if (!! this.milestones) {
       const numMilestones = this.milestones.length;
       const taskCards = [ ...this.milestonesConnectorDiv.nativeElement.parentElement.children ]
         .filter((child) => child.classList.contains('task-card'));
@@ -143,11 +144,11 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
     }
 
     if (milestone.pointsRequired === this.activeMilestone?.pointsRequired && this.milestones.length > 0) {
-        const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === this.activeMilestone?.pointsRequired);
-        const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
-        return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
-          ? this.currentUserPoints
-          : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
+      const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === this.activeMilestone?.pointsRequired);
+      const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
+      return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
+        ? this.currentUserPoints
+        : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
     }
 
     if (milestone.pointsRequired === this.currentUserPoints) {

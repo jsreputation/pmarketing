@@ -14,8 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
-  declarations: [ProgressCampaignComponent ],
-  exports: [ProgressCampaignComponent],
+  declarations: [ ProgressCampaignComponent ],
+  exports: [ ProgressCampaignComponent ],
   imports: [
     CommonModule,
     TranslateModule.forChild(),
@@ -33,4 +33,5 @@ import { MatTabsModule } from '@angular/material/tabs';
   ],
   providers: []
 })
-export class ProgressCampaignModule { }
+export class ProgressCampaignModule {
+}
