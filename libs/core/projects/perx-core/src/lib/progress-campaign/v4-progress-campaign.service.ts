@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ConfigService, IConfig } from '@perxtech/core';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 import { ProgressCampaignService } from './progress-campaign.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
