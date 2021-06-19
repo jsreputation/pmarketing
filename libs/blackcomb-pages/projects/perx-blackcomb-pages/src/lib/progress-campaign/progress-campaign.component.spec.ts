@@ -9,7 +9,6 @@ import { ProgressCampaignComponent } from './progress-campaign.component';
 import { ICampaignService, IQuestService, NotificationService } from '@perxtech/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { OutcomesFromLevelPipe } from './outcomes-from-level.pipe';
 
 const questServiceStub: Partial<IQuestService> = {};
 const campaignServiceStub: Partial<ICampaignService> = {};
@@ -21,7 +20,7 @@ describe('ProgressCampaignComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressCampaignComponent, OutcomesFromLevelPipe ],
+      declarations: [ ProgressCampaignComponent ],
       imports: [ MatProgressBarModule,
         MatIconModule,
         RouterTestingModule,
