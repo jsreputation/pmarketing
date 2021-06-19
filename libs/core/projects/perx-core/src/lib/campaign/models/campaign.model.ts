@@ -126,10 +126,23 @@ export enum CampaignOutcomeType {
 export interface ICampaignOutcome {
   id: number;
   type: CampaignOutcomeType;
-  name: string;
+  name?: string;
   pointsCount?: number;
-  levelId?: number;
   prizeSetItems?: string[];
+  campaignId: number;
+  modularizableId: number;
+  createdAt: string;
+  updatedAt: string;
+  // ordering: any|null;
+  refereeRequiredForReward?: number;
+  totalRewardLimit: number;
+  totalUserLimit: number;
+  awardToTeferral: boolean;
+  awardToReferee: boolean;
+  totalReferreeLimit: number;
+  stampNumber?: number;
+  // totalReferreeReward_limit: any|null;
+  // hidden: any|null;
 }
 
 export interface IPointsOutcome {

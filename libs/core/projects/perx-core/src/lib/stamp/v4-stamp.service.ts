@@ -3,15 +3,18 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
 import { from, Observable, of, throwError, timer } from 'rxjs';
 import { filter, flatMap, map, mergeAll, mergeMap, scan, share, skip, switchMap, tap, toArray } from 'rxjs/operators';
-import { ICampaignOutcome, IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
+
+import { IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
+
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import { CampaignOutcomeType, CampaignType, ICampaign, ICampaignOutcome } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
+import { IV4CampaignOutcome } from '../campaign/v4-campaign.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -216,7 +219,7 @@ export class V4StampService implements StampService {
     return {
       id: reward.id,
       campaignId: reward.campaign_id,
-      modularizableType: reward.modularizable_type,
+      type: reward.modularizable_type,
       modularizableId: reward.modularizable_id,
       createdAt: reward.created_at,
       updatedAt: reward.updated_at,
@@ -226,7 +229,7 @@ export class V4StampService implements StampService {
       awardToTeferral: reward.award_to_referral,
       awardToReferee: reward.award_to_referee,
       totalReferreeLimit: reward.total_referree_limit,
-      stampNumber: reward.stamp_number,
+      stampNumber: reward.stamp_number
     };
   }
 

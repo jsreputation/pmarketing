@@ -1,5 +1,5 @@
 import { IQuest, IQuestTask } from '../quest/quest.model';
-import { ICampaignOutcome } from '../stamp/models/stamp.model';
+import { ICampaignOutcome } from '../campaign/models/campaign.model';
 
 export interface IProgressCampaign extends IQuest {
   // Quest reference
@@ -28,7 +28,13 @@ export interface IProgressLevel extends IQuestTask {
 
 export interface IMilestone {
   id: number;
-  displayProperties: null;
+  displayProperties?: {
+    icon: {
+      value: {
+        image_url: string;
+      }
+    };
+  } | null;
   outcomesIssued: boolean;
   name: string;
   outcomes: ICampaignOutcome[];

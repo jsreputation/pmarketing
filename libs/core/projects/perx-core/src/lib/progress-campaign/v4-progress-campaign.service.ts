@@ -5,7 +5,7 @@ import { ProgressCampaignService } from './progress-campaign.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
-import { ICampaignOutcome } from '../stamp/models/stamp.model';
+import { ICampaignOutcome } from '../campaign/models/campaign.model';
 import { IV4Outcome } from '../stamp/v4-stamp.service';
 
 @Injectable({
@@ -82,7 +82,8 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
     return {
       id: reward.id,
       campaignId: reward.campaign_id,
-      modularizableType: reward.modularizable_type,
+      type: reward.modularizable_type,
+      name: reward.name,
       modularizableId: reward.modularizable_id,
       createdAt: reward.created_at,
       updatedAt: reward.updated_at,
@@ -93,6 +94,7 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
       awardToReferee: reward.award_to_referee,
       totalReferreeLimit: reward.total_referree_limit,
       stampNumber: reward.stamp_number,
+      pointsCount: reward.points_count
     };
   }
 }
