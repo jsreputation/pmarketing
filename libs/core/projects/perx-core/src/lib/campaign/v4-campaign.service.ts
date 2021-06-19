@@ -118,6 +118,20 @@ export interface IV4CampaignOutcome {
   modularizable_type: CampaignOutcomeType;
   outcome: IV4CampaignOutcomeItem;
   points_count?: number;
+  campaign_id: number;
+  name: string
+  created_at: string;
+  updated_at: string;
+  // ordering: any|null;
+  referee_required_for_reward: number;
+  total_reward_limit: number;
+  total_user_limit: number;
+  award_to_referral: boolean;
+  award_to_referee: boolean;
+  total_referree_limit: number;
+  stamp_number: number;
+  // total_referree_reward_limit: any|null;
+  // hidden: any|null;
 }
 
 export interface IV4CampaignOutcomeItem {
