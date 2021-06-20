@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
+  CampaignState,
   ICampaign,
   ICampaignOutcome,
   ICampaignService,
@@ -8,8 +9,7 @@ import {
   IProgressTotal,
   NotificationService,
   ProgressCampaignService,
-  ProgressProperties,
-  QuestState
+  ProgressProperties
 } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
@@ -33,7 +33,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
   public campaignProgress: number = 0;
   public completedTaskIds: (number | undefined)[] = [];
   public questState: string = '';
-  public state: typeof QuestState = QuestState;
+  public state: typeof CampaignState = CampaignState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
   public isEnrolled: boolean = false;

@@ -127,17 +127,17 @@
       </div>
     </div>
   </div>
-  <mat-toolbar class="bottom-toolbar mat-elevation-z2"
+  <div class="bottom-nav-container mat-elevation-z2"
                *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">
     <button color="primary" (click)="startProgress(campaign.id)" mat-flat-button>
       {{ 'PROGRESS_CAMPAIGN.CTA_NEXT_TXT' | translate }}
     </button>
-  </mat-toolbar>
+  </div>
   <ng-template #viewWalletTemplate>
-    <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="campaign.state === state.completed">
+    <div class="bottom-nav-container mat-elevation-z2" *ngIf="campaign.state === state.completed">
       <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
         {{ 'PROGRESS_CAMPAIGN.VIEW_WALLET' | translate }}
       </button>
-    </mat-toolbar>
+    </div>
   </ng-template>
 </div>
