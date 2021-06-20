@@ -499,6 +499,11 @@
     "LOYALTY_POINTS": "loyalty points",
     "CONTACT_TXT": "contact support for any questions"
   },
+  "PROGRESS_CAMPAIGN": {
+    "TNC_HEADER": "Terms and Conditions",
+    "ENROLL_BTN_TEXT": "Start",
+    "VIEW_WALLET": "View Wallet"
+  },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
     "LOYALTY_POINTS": "loyalty points"

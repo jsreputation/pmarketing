@@ -119,7 +119,7 @@
           <mat-tab [label]="'How To Participate'">
             <div class="participate-container">
               <div class="tnc">{{progressConfig?.howToParticipateBody}}</div>
-              <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
+              <h4 *ngIf="campaign.termsAndConditions">{{ 'PROGRESS_CAMPAIGN.TNC_HEADER' | translate }}</h4>
               <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
             </div>
           </mat-tab>
@@ -130,7 +130,7 @@
   <div class="bottom-nav-container mat-elevation-z2"
                *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">
     <button color="primary" (click)="startProgress(campaign.id)" mat-flat-button>
-      {{ 'PROGRESS_CAMPAIGN.CTA_NEXT_TXT' | translate }}
+      {{ 'PROGRESS_CAMPAIGN.ENROLL_BTN_TEXT' | translate }}
     </button>
   </div>
   <ng-template #viewWalletTemplate>

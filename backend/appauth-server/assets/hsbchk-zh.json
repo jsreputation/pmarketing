@@ -386,6 +386,11 @@
     "YOU_WILL_RECEIVE": "You will receive",
     "TRANSFER_POINTS_CONFIRM_CTA": "COnfirm Points Transfer"
   },
+  "PROGRESS_CAMPAIGN": {
+    "TNC_HEADER": "Terms and Conditions",
+    "ENROLL_BTN_TEXT": "Start",
+    "VIEW_WALLET": "View Wallet"
+  },
   "BADGES": {
     "ALL_TAB": "All",
     "EARNED_TAB": "Earned",
