@@ -32,7 +32,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
   public questCompleted: boolean = false;
   public campaignProgress: number = 0;
   public completedTaskIds: (number | undefined)[] = [];
-  public questState: string = '';
   public state: typeof CampaignState = CampaignState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
