@@ -60,6 +60,15 @@
                               [value]="milestoneCompletedProgressCalculation(activeMilestone)
                               /milestoneRequiredProgressCalculation(activeMilestone) * 100"></mat-progress-bar>
           </div>
+          <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
+                  <span class="task-subtitle">
+                    {{currentUserPoints}}
+                    / {{activeMilestone.pointsRequired}} CP
+                  </span>
+            <mat-progress-bar mode="determinate"
+                              [value]="currentUserPoints
+                              /activeMilestone.pointsRequired * 100"></mat-progress-bar>
+          </div>
         </div>
       </div>
       <div class="mat-tab-group-wrapper">
@@ -88,6 +97,38 @@
                   <mat-progress-bar mode="determinate"
                                     [value]="milestoneCompletedProgressCalculation(milestone)
                                     /milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
+                  <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
+                    <span class="subtitle" *ngIf="outcomes.length > 0">
+                      Complete level and you stand to win: *
+                    </span>
+                    <mat-nav-list>
+                      <mat-list-item *ngFor="let outcome of outcomes"
+                                     (click)="outcomeClicked(outcome)"
+                                     [disabled]="outcome.type !== 'Reward::Campaign'">
+                        <div class="outcome-container">
+                          <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
+                          <div [ngSwitch]="outcome.type">
+                            <ng-container *ngSwitchCase="outcomeType.reward">
+                              {{outcome.name}}
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.points">
+                              {{outcome.pointsCount}} points
+                            </ng-container>
+                          </div>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
+                        </div>
+                      </mat-list-item>
+                    </mat-nav-list>
+                  </div>
+                </div>
+                <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
+                  <span class="task-subtitle">
+                    {{currentUserPoints}}
+                    / {{milestone.pointsRequired}} CP
+                  </span>
+                  <mat-progress-bar mode="determinate"
+                                    [value]="currentUserPoints
+                                    /milestone.pointsRequired * 100"></mat-progress-bar>
                   <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
                     <span class="subtitle" *ngIf="outcomes.length > 0">
                       Complete level and you stand to win: *
