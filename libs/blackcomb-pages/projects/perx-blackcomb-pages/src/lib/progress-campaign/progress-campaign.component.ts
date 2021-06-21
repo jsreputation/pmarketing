@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
   CampaignState,
@@ -25,11 +25,12 @@ enum ProgressBarDisplayMode {
   templateUrl: './progress-campaign.component.html',
   styleUrls: [ './progress-campaign.component.scss' ]
 })
-export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public campaign$: Observable<ICampaign>;
 
   public questCompleted: boolean = false;
+  public lineDrawned: boolean = false;
   public campaignProgress: number = 0;
   public completedTaskIds: (number | undefined)[] = [];
   public state: typeof CampaignState = CampaignState;
@@ -52,9 +53,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
               private campaignService: ICampaignService) {
   }
 
-  public ngAfterViewInit(): void {
+  public ngAfterViewChecked(): void {
     // update level connector height
-    if (!! this.milestones) {
+    if (!! this.milestones && !this.lineDrawned) {
       const numMilestones = this.milestones.length;
       const taskCards = [ ...this.milestonesConnectorDiv.nativeElement.parentElement.children ]
         .filter((child) => child.classList.contains('task-card'));
@@ -72,6 +73,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
           this.milestonesConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
         }
       }
+      this.lineDrawned = true;
       // else there is only 1 level, don't make a line
     }
   }
