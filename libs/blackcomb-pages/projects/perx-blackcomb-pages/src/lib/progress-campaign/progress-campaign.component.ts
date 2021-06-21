@@ -29,7 +29,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
   public campaign$: Observable<ICampaign>;
 
-  public questCompleted: boolean = false;
   public lineDrawned: boolean = false;
   public campaignProgress: number = 0;
   public completedTaskIds: (number | undefined)[] = [];
