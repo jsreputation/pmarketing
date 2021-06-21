@@ -134,7 +134,7 @@
     </button>
   </div>
   <ng-template #viewWalletTemplate>
-    <div class="bottom-nav-container mat-elevation-z2" *ngIf="campaign.state === state.completed">
+    <div class="bottom-nav-container mat-elevation-z2" *ngIf="currentUserPoints >= milestones.slice(-1)[0].pointsRequired">
       <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
         {{ 'PROGRESS_CAMPAIGN.VIEW_WALLET' | translate }}
       </button>
