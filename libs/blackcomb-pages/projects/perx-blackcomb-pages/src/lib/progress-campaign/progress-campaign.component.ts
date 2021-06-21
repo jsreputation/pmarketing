@@ -37,7 +37,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
   public isEnrolled: boolean = false;
   public milestones: IMilestone[];
-  public activeMilestone: IMilestone | undefined;
+  public activeMilestone: IMilestone;
   public currentUserPoints: number;
   public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
 
@@ -106,7 +106,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       if (!! campaign.enrolled) {
         this.isEnrolled = campaign.enrolled;
         // get first item where points required points has not been met
-        this.activeMilestone = milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+        const foundActiveMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+
+        if (foundActiveMilestone) {
+          this.activeMilestone = foundActiveMilestone;
+        } else {
+          console.error('active milestone not found');
+        }
       }
     });
   }
@@ -127,7 +133,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe((isEnrolled: boolean) => {
         if (isEnrolled) {
           // set current active milestone
-          this.activeMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+          const foundActiveMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+
+          if (foundActiveMilestone) {
+            this.activeMilestone = foundActiveMilestone;
+          } else {
+            console.error('active milestone not found');
+          }
+
         } else {
           this.notificationService.addSnack('Campaign enrolment failed');
         }
