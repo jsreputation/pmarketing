@@ -77,12 +77,12 @@
             <div class="task-card-container" *ngIf="milestones">
               <div #milestonesConnectorDiv class="level-connector-line"
                    [attr.data-spanlevels]="milestones.length"></div>
-              <div class="task-card" *ngFor="let milestone of milestones">
+              <div class="task-card" *ngFor="let milestone of milestones; let i = index;">
                 <div class="task-img-section">
                   <div class="task-img-container">
                     <img class="success-icon" [src]="progressConfig?.successImageUrl"
                          *ngIf="(milestone.outcomesIssued)">
-                    <img [src]="milestone.displayProperties?.icon.value.image_url" [alt]="milestone.name">
+                    <img [src]="milestone.displayProperties?.icon.imageUrl" [alt]="'milestone ' + i">
                   </div>
                   <div class="active-macaron-container"
                        *ngIf="milestone.pointsRequired === activeMilestone?.pointsRequired">
@@ -99,7 +99,7 @@
                                     /milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
                   <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
                     <span class="subtitle" *ngIf="outcomes.length > 0">
-                      Complete level and you stand to win: *
+                      {{milestone.encouragementText}} *
                     </span>
                     <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes"

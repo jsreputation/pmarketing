@@ -28,17 +28,17 @@ export interface IProgressLevel extends IQuestTask {
 
 export interface IMilestone {
   id: number;
-  displayProperties?: {
-    icon: {
-      value: {
-        image_url: string;
-      }
-    };
-  } | null;
+  displayProperties?: IMilestoneDisplayProperties;
   outcomesIssued: boolean;
-  name: string;
+  encouragementText: string;
   outcomes: ICampaignOutcome[];
   pointsRequired: number;
+}
+
+export interface IMilestoneDisplayProperties {
+  icon: {
+    imageUrl: string;
+  };
 }
 
 export interface IProgressTotal {

@@ -78,6 +78,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   }
 
   public ngOnInit(): void {
+
     this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
       map((params: ParamMap) => params.get('id')),

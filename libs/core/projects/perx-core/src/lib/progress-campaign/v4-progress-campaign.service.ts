@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
 import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
 import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
+import { Asset } from '../game/v4-game.service';
 
 @Injectable({
   providedIn: 'root'
@@ -59,9 +60,13 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
   private static v4MilestoneToMilestone(milestone: IV4ProgressMilestone): IMilestone {
     return {
       id: milestone.id,
-      displayProperties: milestone.display_properties, // to be mapped in future when used
+      displayProperties: {
+        icon: {
+          imageUrl: milestone.display_properties.icon.value.image_url
+        }
+      }, // to be mapped in future when used
       outcomesIssued: milestone.milestone_outcome_issued_to_user,
-      name: milestone.name,
+      encouragementText: milestone.name,
       outcomes: milestone.outcomes.map((milestoneOutcome: IV4CampaignOutcome) =>
         V4CampaignService.v4CampaignOutcomeToCampaignOutcome(milestoneOutcome)
       ),
@@ -88,13 +93,16 @@ export interface IV4ProgressMilestoneResponse {
 
 export interface IV4ProgressMilestone {
   id: number;
-  display_properties: null;
+  display_properties: IV4ProgressMilestoneDisplayProperties;
   milestone_outcome_issued_to_user: boolean;
   name: string;
   outcomes: IV4CampaignOutcome[];
   points: number;
 };
 
+export interface IV4ProgressMilestoneDisplayProperties {
+  icon: Asset;
+}
 
 export interface IV4ProgressTotalResponse {
   data: IV4ProgressTotal
