@@ -38,7 +38,7 @@ export interface IV4Stamp {
 
 export interface IV4StampOutcome {
   id: number;
-  actual_outcome_type: CampaignOutcomeType;
+  actual_outcome_type: CampaignOutcomeType; // todo: this has always been mapped incorrectly
   actual_outcome_id: number;
   campaign_prize_type: CampaignOutcomeType;
   campaign_prize_id: number;

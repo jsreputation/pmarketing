@@ -119,8 +119,7 @@ export enum CampaignOutcomeType {
   points = 'StoredValue::Campaign',
   custom = 'CustomOutcome',
   prizeSet = 'PrizeSet',
-  badge = 'BadgeTransaction',
-  badges = 'Badge'
+  badge = 'Badge'
 }
 
 export interface ICampaignOutcome {
