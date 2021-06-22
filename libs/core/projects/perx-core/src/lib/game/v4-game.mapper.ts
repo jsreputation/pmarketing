@@ -226,10 +226,12 @@ export class PlinkoV4ToV4Mapper extends GameV4Mapper {
     const defaultPlinko = this.default();
     const config: IPlinko = {
       ...defaultPlinko,
-      backgroundImageUrl: dpPlinko.background_image_url?.value.image_url || dpPlinko.background_image_url?.value.file,
-      targetImage: dpPlinko.target_image?.value.image_url || dpPlinko.target_image?.value.file,
-      stageColor: dpPlinko.stage_color,
-      ballColor: dpPlinko.ball_color
+      //backgroundImage: dpPlinko.background_image?.value.image_url || dpPlinko.background_image?.value.file,
+      backgroundImage:   'https://cdn.perxtech.io/model_image/source/1636/henry-co-odukx8c2gg-unsplash-2f6d49c0-e4c1-4ad6-958f-c2d5bac82a9b.jpg',
+      targetImage: dpPlinko.target_image?.value.image_url || dpPlinko.target_image?.value.file ||
+        'https://cdn.perxtech.net/content/dashboard/wheel2.png',
+      stageColor: dpPlinko.stage_color || '#D99B0C',
+      ballColor: dpPlinko.ball_color || '#5BBE0D'
     };
     const commonProps = this.mapCommonPropertiesHelper(game);
     return {
@@ -240,7 +242,7 @@ export class PlinkoV4ToV4Mapper extends GameV4Mapper {
   }
   public default(): IPlinko {
     return {
-      backgroundImageUrl: '',
+      backgroundImage: '',
       targetImage: '',
       stageColor: '',
       ballColor: ''

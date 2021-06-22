@@ -116,7 +116,7 @@ export function defaultSpin(): ISpin {
 
 export function defaultPlinko(): IPlinko {
   return {
-    backgroundImageUrl: '',
+    backgroundImage: '',
     targetImage: '',
     stageColor: '',
     ballColor: ''
@@ -171,7 +171,7 @@ export interface IScratch {
 }
 
 export interface IPlinko {
-  backgroundImageUrl?: string;
+  backgroundImage?: string;
   targetImage?: string;
   stageColor?: string;
   ballColor?: string;

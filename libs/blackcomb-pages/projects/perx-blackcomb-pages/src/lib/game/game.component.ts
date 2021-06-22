@@ -233,6 +233,7 @@ export class GameComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (gameTransaction: IEngagementTransaction) => {
+          this.startGameAnimation = true;
           this.transactionId = gameTransaction.id;
           if (
             gameTransaction.voucherIds &&

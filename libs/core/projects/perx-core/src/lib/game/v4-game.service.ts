@@ -112,7 +112,7 @@ export interface SpinWedge {
 }
 
 export interface PlinkoDisplayProperties extends GameProperties {
-  background_image_url?: Asset;
+  background_image?: Asset;
   target_image?: Asset;
   stage_color?: string;
   ball_color?: string;

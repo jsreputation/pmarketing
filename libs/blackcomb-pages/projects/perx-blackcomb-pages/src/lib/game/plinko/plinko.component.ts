@@ -8,16 +8,11 @@ import { IGame, IPlinko } from '@perxtech/core';
 export class PlinkoComponent implements OnInit {
 
   @Input() public willWin: boolean = false;
-
   @Input() public game: IGame;
+  @Input() public startGame: boolean = false;
 
   @Output() public broken: EventEmitter<void> = new EventEmitter();
   @Output() public loaded: EventEmitter<boolean> = new EventEmitter();
-
-  public backgroundImgUrl: string = 'https://cdn.perxtech.io/model_image/source/1636/henry-co-odukx8c2gg-unsplash-2f6d49c0-e4c1-4ad6-958f-c2d5bac82a9b.jpg';
-  public targetImg: string = 'https://cdn.perxtech.net/content/dashboard/wheel2.png';
-  public stageColor: string = '#D99B0C';
-  public ballColor: string = '#5BBE0D';
 
   constructor() { }
 

@@ -3,7 +3,7 @@
         <svg width="276" height="486" viewBox="0 0 276 486" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path [attr.d]="ballPath" stroke-width="0" stroke="red" id="theMotionPath"/> 
             <animateMotion id="animateEl" fill="freeze" (beginEvent)="startedGame()" (endEvent)="finishedGame()"
-             [attr.dur]="animDuration" begin="indefinite" xlink:href="#custom_ball" [attr.path]="ballPath"/>              
+             [attr.dur]="animationDuration" begin="indefinite" xlink:href="#custom_ball" [attr.path]="ballPath"/>              
             <g>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M103.511 0V83.8694L0 201.532V0H103.511Z" fill="black"/>
                 <path opacity="0.8" fill-rule="evenodd" clip-rule="evenodd" d="M168.489 0V83.8694L272 201.532V0H168.489Z" fill="black"/>
@@ -31,8 +31,8 @@
             </g>
 
             <g id="gate" [attr.fill]="stageColor">
-                <path [ngClass]="{'open': gameStarted}" class="left-gate" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z"/>    
-                <path [ngClass]="{'open': gameStarted}" class="right-gate" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
+                <path [ngClass]="{'open': startedAnimation}" class="left-gate" d="M103.511 34.7556L133.733 42.3112V46.8445L103.511 39.2889V34.7556Z"/>    
+                <path [ngClass]="{'open': startedAnimation}" class="right-gate" d="M138.267 42.3112L168.489 34.7556V39.2889L138.267 46.8445V42.3112Z"/>
             </g>
             
             <g id="peg_container" [attr.fill]="stageColor">   

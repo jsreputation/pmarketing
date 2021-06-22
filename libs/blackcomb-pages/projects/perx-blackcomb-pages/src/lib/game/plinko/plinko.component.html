@@ -1,8 +1,9 @@
-<div [ngStyle]="{'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }">
+<div [ngStyle]="{'background-image': config.backgroundImage ? 'url(' + config.backgroundImage + ')' : '' }">
     <perx-core-plinko 
-    [targetImg]="targetImg" 
-    [stageColor]="stageColor" 
-    [ballColor]="ballColor"
+    [targetImg]="config.targetImage" 
+    [stageColor]="config.stageColor" 
+    [ballColor]="config.ballColor"
     [willWin]="willWin"
+    [startGame]="startGame"
     (completed)="gameCompleted()"></perx-core-plinko>
 </div>
