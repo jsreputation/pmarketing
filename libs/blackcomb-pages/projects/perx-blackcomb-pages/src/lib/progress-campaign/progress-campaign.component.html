@@ -36,8 +36,8 @@
     </div>
     <div class="progress-campaign-content">
       <div class="header">
-        <p class="title">{{progressConfig?.title}}</p>
-        <p class="subtitle">{{progressConfig?.description}}</p>
+        <p class="title">{{progressConfig?.intro.title}}</p>
+        <p class="subtitle">{{progressConfig?.intro.description}}</p>
         <p class="description">{{progressConfig?.body}}</p>
       </div>
       <div class="current-level-container task-card-container" *ngIf="activeMilestone!">
@@ -45,7 +45,7 @@
         <div class="task-card">
           <div class="task-img-section">
             <div class="task-img-container">
-              <!--                  <img [src]="activeMilestone?.imageUrl" [alt]="activeMilestone?.name">-->
+                <img [src]="activeMilestone?.displayProperties.icon.imageUrl" [alt]="'active milestone'">
             </div>
             <div class="active-macaron-container">
               <span class="macaron">Active</span>
@@ -54,7 +54,8 @@
           <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
                   <span class="task-subtitle">
                     {{milestoneCompletedProgressCalculation(activeMilestone)}}
-                    / {{milestoneRequiredProgressCalculation(activeMilestone)}} CP
+                    / {{milestoneRequiredProgressCalculation(activeMilestone)}}
+                    {{progressConfig.levelTab.description ? progressConfig.levelTab.description : 'CP'}}
                   </span>
             <mat-progress-bar mode="determinate"
                               [value]="milestoneCompletedProgressCalculation(activeMilestone)
@@ -63,7 +64,8 @@
           <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
                   <span class="task-subtitle">
                     {{currentUserPoints}}
-                    / {{activeMilestone.pointsRequired}} CP
+                    / {{activeMilestone.pointsRequired}}
+                    {{progressConfig.levelTab.description ? progressConfig.levelTab.description : 'CP'}}
                   </span>
             <mat-progress-bar mode="determinate"
                               [value]="currentUserPoints
@@ -73,7 +75,7 @@
       </div>
       <div class="mat-tab-group-wrapper">
         <mat-tab-group mat-stretch-tabs>
-          <mat-tab [label]="'Levels'">
+          <mat-tab [label]="progressConfig?.levelTab?.title">
             <div class="task-card-container" *ngIf="milestones">
               <div #milestonesConnectorDiv class="level-connector-line"
                    [attr.data-spanlevels]="milestones.length"></div>
@@ -92,14 +94,15 @@
                 <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
                   <span class="task-subtitle">
                     {{milestoneCompletedProgressCalculation(milestone)}}
-                    / {{milestoneRequiredProgressCalculation(milestone)}} CP
+                    / {{milestoneRequiredProgressCalculation(milestone)}}
+                    {{progressConfig.levelTab.description ? progressConfig.levelTab.description : 'CP'}}
                   </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="milestoneCompletedProgressCalculation(milestone)
                                     /milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
                   <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
                     <span class="subtitle" *ngIf="outcomes.length > 0">
-                      {{milestone.encouragementText}} *
+                      {{milestone.encouragementText}}
                     </span>
                     <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes"
@@ -124,14 +127,15 @@
                 <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
                   <span class="task-subtitle">
                     {{currentUserPoints}}
-                    / {{milestone.pointsRequired}} CP
+                    / {{milestone.pointsRequired}}
+                    {{progressConfig.levelTab.description ? progressConfig.levelTab.description : 'CP'}}
                   </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="currentUserPoints
                                     /milestone.pointsRequired * 100"></mat-progress-bar>
                   <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
                     <span class="subtitle" *ngIf="outcomes.length > 0">
-                      Complete level and you stand to win: *
+                      {{milestone.encouragementText}}
                     </span>
                     <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes"
@@ -156,9 +160,10 @@
               </div>
             </div>
           </mat-tab>
-          <mat-tab [label]="'How To Participate'">
+          <mat-tab [label]="progressConfig?.howToTab?.title">
             <div class="participate-container">
-              <div class="tnc">{{progressConfig?.howToParticipateBody}}</div>
+              <h4>{{progressConfig?.howToTab?.title}}</h4>
+              <div class="tnc">{{progressConfig?.howToTab?.description}}</div>
               <h4 *ngIf="campaign.termsAndConditions">{{ 'PROGRESS_CAMPAIGN.TNC_HEADER' | translate }}</h4>
               <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
             </div>
