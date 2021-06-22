@@ -574,7 +574,7 @@ export class GameComponent implements OnInit, OnDestroy {
         .subscribe((text) => (this.outOfTriesPopup.text = text));
     }
 
-    if (this.isEmbedded && this.outOfTriesPopup.buttonTxt) {
+    if (!this.isEmbedded && this.outOfTriesPopup.buttonTxt) {
       this.translate
         .get(this.outOfTriesPopup.buttonTxt)
         .subscribe((text) => (this.outOfTriesPopup.buttonTxt = text));
