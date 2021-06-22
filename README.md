@@ -135,3 +135,14 @@ you should have the server now listening on http://localhost:8000
 # TAG Deployment
 
 See the [wiki](../../wiki/Tag-Deployment) page.
+
+# Manual deployment
+- Build and push Docker image
+  ```bash
+  # Authenticate to DockerHub
+  docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASS}
+  # Pass valid tag to build_and_push script. I.e. perx-demo-staging-0.0.1
+  ./scripts/build_and_push.sh perx-demo-staging-0.0.1
+  ```
+- Pull/clone `git@github.com:PerxTech/microsite-deploy.git` repo
+- Folow [manual deploy](https://github.com/PerxTech/microsite-deploy#deploy-manually-from-local-pc) procedure
