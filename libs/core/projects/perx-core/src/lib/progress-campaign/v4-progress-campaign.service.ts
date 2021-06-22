@@ -125,3 +125,29 @@ export interface IV4ProgressTransaction {
   campaign_id: number;
   user_account_id: number;
 };
+
+export interface IV4ProgressDisplayProperties {
+  header?: {
+    value: {
+      title: string;
+      description: string;
+    }
+    level_tab: {
+      value: {
+        title: string;
+        description: string;
+      }
+    }
+    how_to_participate_tab: {
+      value: {
+        title: string;
+        description: string;
+      }
+    }
+  };
+  image?: Asset;
+  body?: string;
+  milestones_success_image?: {
+    icon: Asset;
+  };
+};

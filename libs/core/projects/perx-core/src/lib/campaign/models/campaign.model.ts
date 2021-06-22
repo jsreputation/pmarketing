@@ -37,7 +37,18 @@ export interface ProgressProperties extends QuestProperties {
   // body?: string;
   // imageUrl?: string;
   // successImageUrl?: string;
-  howToParticipateBody?: string;
+  intro?: {
+    title: string;
+    description: string;
+  }
+  levelTab?: {
+    title: string;
+    description: string;
+  }
+  howToTab?: {
+    title: string;
+    description: string;
+  }
 }
 
 export enum CampaignType {
