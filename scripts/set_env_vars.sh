@@ -132,6 +132,7 @@ home_redirect=(
   perx-demo4
   petron-demo
   oracle-demo
+  siampiwat
 )
 
 for app in "${home_redirect[@]}"; do
@@ -173,6 +174,7 @@ blackcomb_app_base=(
   perx-demo
   petron-demo
   razer
+  siampiwat
   techfis
   zeal
 )
