@@ -299,7 +299,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private getTargetAngle(neededIndex: number): number {
     // randomize the result within the target slice
-    const v = (neededIndex + Math.random()) * this.arcDeg;
+    // but anything more than 0.84 as a offset will be too close (or overlap) to the next clockwise slice
+    const v = (neededIndex + (Math.random() * 0.84)) * this.arcDeg;
     // pointer is at the top, not at 0, therefore we add 270
     return - v + 270;
   }
