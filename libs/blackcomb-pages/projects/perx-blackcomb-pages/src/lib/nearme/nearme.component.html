@@ -11,6 +11,13 @@
   <div class="loc-card-container">
       <div *ngIf="current" class="loc-card mat-elevation-z8">
         <div class="card-content">
+
+          <button mat-icon-button
+                  class="close-btn"
+                  (click)="onClose()">
+            <mat-icon>close</mat-icon>
+          </button>
+
           <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
           <div class="merchant include-heart">
             <p>{{current.merchantName}}</p>

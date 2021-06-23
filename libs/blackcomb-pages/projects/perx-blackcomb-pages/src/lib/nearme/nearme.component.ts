@@ -109,6 +109,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
       });
   }
 
+  public onClose(): void {
+    this.current = null;
+  }
+
   private loadScript(): Promise<void> {
     // don't load it more than once.
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
