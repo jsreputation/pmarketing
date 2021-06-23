@@ -132,6 +132,7 @@ home_redirect=(
   perx-demo4
   petron-demo
   oracle-demo
+  rush
   siampiwat
 )
 
@@ -174,6 +175,7 @@ blackcomb_app_base=(
   perx-demo
   petron-demo
   razer
+  rush
   siampiwat
   techfis
   zeal
