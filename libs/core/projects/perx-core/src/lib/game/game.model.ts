@@ -38,7 +38,7 @@ export interface IGame {
   campaignDescription?: string;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch | ISpin | ISnake | null;
+  config: ITree | IPinata | IScratch | ISpin | ISnake | IPlinko | null;
   backgroundImg?: string;
   texts: {
     title?: string;

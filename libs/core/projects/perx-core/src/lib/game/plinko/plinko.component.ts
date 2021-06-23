@@ -78,12 +78,10 @@ export class PlinkoComponent implements OnInit, AfterViewInit {
   }
 
   public startedGame(): void {
-    console.log('game started');
   }
 
   public finishedGame(): void {
     this.completed.emit();
-    console.log('game ended');
   }
 
 }

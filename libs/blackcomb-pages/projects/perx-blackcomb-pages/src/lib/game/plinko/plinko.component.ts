@@ -21,7 +21,7 @@ export class PlinkoComponent implements OnInit {
   }
 
   public get config(): IPlinko {
-    return this.game.config as IPlinko;
+    return this.game?.config as IPlinko;
   }
 
   public gameCompleted(): void {

@@ -1,7 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GameModule} from '@perxtech/core';
+import { GameModule, GameType} from '@perxtech/core';
 
 import { PlinkoComponent } from './plinko.component';
+
+const dummyIGame = {
+  id: 1,
+  type: GameType.plinko,
+  remainingNumberOfTries: 3,
+  config: {
+    backgroundImage: '',
+    targetImage: '',
+    stageColor: '',
+    ballColor: ''
+  },
+  texts: {
+  },
+  results: {
+  },
+};
 
 describe('PlinkoComponent', () => {
   let component: PlinkoComponent;
@@ -18,6 +34,7 @@ describe('PlinkoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PlinkoComponent);
     component = fixture.componentInstance;
+    component.game = dummyIGame;
     fixture.detectChanges();
   });
 
