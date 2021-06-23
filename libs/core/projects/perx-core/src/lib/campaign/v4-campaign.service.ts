@@ -275,7 +275,7 @@ export class V4CampaignService implements ICampaignService {
           },
           levelTab: {
             title: v4ProgressProps.header.level_tab.value.title,
-            description: v4ProgressProps.header.level_tab.value.description
+            pointsAbbreviation: v4ProgressProps.header.level_tab.value.points_abbreviation
           },
           howToTab: {
             title: v4ProgressProps.header.how_to_participate_tab.value.title,

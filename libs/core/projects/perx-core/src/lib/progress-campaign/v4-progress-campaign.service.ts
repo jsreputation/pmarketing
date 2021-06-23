@@ -135,7 +135,7 @@ export interface IV4ProgressDisplayProperties {
     level_tab: {
       value: {
         title: string;
-        description: string;
+        points_abbreviation: string;
       }
     }
     how_to_participate_tab: {

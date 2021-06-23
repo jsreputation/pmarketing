@@ -43,7 +43,7 @@ export interface ProgressProperties extends QuestProperties {
   }
   levelTab?: {
     title: string;
-    description: string;
+    pointsAbbreviation: string;
   }
   howToTab?: {
     title: string;
