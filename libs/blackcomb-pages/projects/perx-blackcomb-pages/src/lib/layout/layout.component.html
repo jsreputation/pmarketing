@@ -40,6 +40,12 @@
           <span translate>NAVIGATION.REWARDS</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage && appRemoteFlags?.showNearMePage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">location_on</mat-icon>
+          <span translate>NAVIGATION.NEARME</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
@@ -56,12 +62,6 @@
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
           <span translate>NAVIGATION.DEALS</span>
-        </div>
-      </a>
-      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage && appRemoteFlags?.showNearMePage">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false">location_on</mat-icon>
-          <span translate>NAVIGATION.NEARME</span>
         </div>
       </a>
       <a matRipple [routerLink]="[ '/leaderboards' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.showLeaderboard && appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage">
