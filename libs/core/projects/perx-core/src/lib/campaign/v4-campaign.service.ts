@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
+import { EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
   CampaignDisplayProperties,
@@ -32,6 +32,7 @@ import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
 import { QuestDisplayProperties } from '../quest/v4-quest.service';
 import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
+import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-campaign.service';
 
 interface IV4Image {
   type: string;
@@ -53,6 +54,7 @@ type DisplayProperties = TreeDisplayProperties |
   SpinDisplayProperties |
   QuizDisplayProperties |
   QuestDisplayProperties |
+  IV4ProgressDisplayProperties |
   StampCampaignDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
@@ -118,6 +120,20 @@ export interface IV4CampaignOutcome {
   modularizable_type: CampaignOutcomeType;
   outcome: IV4CampaignOutcomeItem;
   points_count?: number;
+  campaign_id: number;
+  name: string
+  created_at: string;
+  updated_at: string;
+  // ordering: any|null;
+  referee_required_for_reward: number;
+  total_reward_limit: number;
+  total_user_limit: number;
+  award_to_referral: boolean;
+  award_to_referee: boolean;
+  total_referree_limit: number;
+  stamp_number: number;
+  // total_referree_reward_limit: any|null;
+  // hidden: any|null;
 }
 
 export interface IV4CampaignOutcomeItem {
@@ -217,8 +233,7 @@ export class V4CampaignService implements ICampaignService {
       );
     }
 
-    if (dp && ((dp as QuestDisplayProperties).header || (dp as QuestDisplayProperties).body ||
-      (dp as QuestDisplayProperties).image || (dp as QuestDisplayProperties).quest_success_image)) {
+    if (dp && (dp as QuestDisplayProperties).quest_success_image) {
       const qp = (dp as QuestDisplayProperties);
       if (displayProperties === undefined) {
         displayProperties = {
@@ -244,6 +259,47 @@ export class V4CampaignService implements ICampaignService {
         displayProperties.questDetails.successImageUrl = qp.quest_success_image.value.image_url || qp.quest_success_image.value.file;
       }
     }
+
+    if (dp && (dp as IV4ProgressDisplayProperties).milestones_success_image) {
+      const v4ProgressProps = (dp as IV4ProgressDisplayProperties);
+      if (displayProperties === undefined) {
+        displayProperties = {
+          progressDetails: {}
+        };
+      }
+      if (v4ProgressProps.header) {
+        displayProperties.progressDetails = {
+          intro: {
+            title: v4ProgressProps.header.value.title,
+            description: v4ProgressProps.header.value.description
+          },
+          levelTab: {
+            title: v4ProgressProps.header.level_tab.value.title,
+            pointsAbbreviation: v4ProgressProps.header.level_tab.value.points_abbreviation
+          },
+          howToTab: {
+            title: v4ProgressProps.header.how_to_participate_tab.value.title,
+            description: v4ProgressProps.header.how_to_participate_tab.value.description
+          },
+        };
+      }
+
+      if (v4ProgressProps.body) {
+        // @ts-ignore
+        displayProperties.progressDetails.body = v4ProgressProps.body;
+      }
+
+      if (v4ProgressProps.image) {
+        // @ts-ignore
+        displayProperties.progressDetails.imageUrl = v4ProgressProps.image.value.image_url || v4ProgressProps.image.value.file;
+      }
+
+      if (v4ProgressProps.milestones_success_image) {
+        // @ts-ignore
+        displayProperties.progressDetails.successImageUrl = v4ProgressProps.milestones_success_image.icon.value.image_url || v4ProgressProps.milestones_success_image.icon.value.file;
+      }
+    }
+
 
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
@@ -387,12 +443,28 @@ export class V4CampaignService implements ICampaignService {
       );
   }
 
+  public enrolIntoCampaign(campaignId: number): Observable<boolean> {
+    return this.http.post(`${this.baseUrl}/v4/campaigns/${campaignId}/enrol`, null, {observe : 'response'} ).pipe(
+      map((response: HttpResponse<any>) => response.status === 200 ? true : false ) ,
+      catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error)));
+  }
+
   public static v4CampaignOutcomeToCampaignOutcome(campaignOutcome: IV4CampaignOutcome): ICampaignOutcome {
     return {
       id: campaignOutcome.modularizable_id,
       type: campaignOutcome.modularizable_type,
       name: campaignOutcome.outcome ? campaignOutcome.outcome.name : '',
-      pointsCount: campaignOutcome.points_count
+      pointsCount: campaignOutcome.points_count,
+      campaignId: campaignOutcome.campaign_id,
+      createdAt: campaignOutcome.created_at,
+      updatedAt: campaignOutcome.updated_at,
+      refereeRequiredForReward: campaignOutcome.referee_required_for_reward,
+      totalRewardLimit: campaignOutcome.total_reward_limit,
+      totalUserLimit: campaignOutcome.total_user_limit,
+      awardToTeferral: campaignOutcome.award_to_referral,
+      awardToReferee: campaignOutcome.award_to_referee,
+      totalReferreeLimit: campaignOutcome.total_referree_limit,
+      stampNumber: campaignOutcome.stamp_number
     };
   }
 

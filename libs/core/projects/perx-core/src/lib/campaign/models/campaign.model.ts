@@ -1,7 +1,6 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
-import { IQuest, IQuestTask } from '../../quest/quest.model';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -38,7 +37,18 @@ export interface ProgressProperties extends QuestProperties {
   // body?: string;
   // imageUrl?: string;
   // successImageUrl?: string;
-  howToParticipateBody?: string;
+  intro?: {
+    title: string;
+    description: string;
+  }
+  levelTab?: {
+    title: string;
+    pointsAbbreviation: string;
+  }
+  howToTab?: {
+    title: string;
+    description: string;
+  }
 }
 
 export enum CampaignType {
@@ -120,42 +130,30 @@ export enum CampaignOutcomeType {
   points = 'StoredValue::Campaign',
   custom = 'CustomOutcome',
   prizeSet = 'PrizeSet',
-  badge = 'BadgeTransaction'
+  badge = 'Badge'
 }
 
 export interface ICampaignOutcome {
   id: number;
   type: CampaignOutcomeType;
-  name: string;
+  name?: string;
   pointsCount?: number;
-  levelId?: number;
-  prizeSetItems?: string[];
+  prizeSetItems?: string[]; // populated from campaign landing pages logic, not from API
+  campaignId: number;
+  createdAt?: string;
+  updatedAt?: string;
+  // ordering: any|null;
+  refereeRequiredForReward?: number;
+  totalRewardLimit?: number;
+  totalUserLimit?: number;
+  awardToTeferral?: boolean;
+  awardToReferee?: boolean;
+  totalReferreeLimit?: number;
+  stampNumber?: number;
+  // totalReferreeReward_limit: any|null;
+  // hidden: any|null;
 }
 
-export interface IProgressCampaign extends IQuest {
-  // Quest reference
-  // id: number;
-  // campaignId: number;
-  // userAccountId: number;
-  // state?: string;
-  // completedAt?: Date;
-  // completedTasks?: IQuestTask[];
-  completedProgress?: number;
-  unitBaseName?: string;
-}
-
-export interface IProgressLevel extends IQuestTask {
-  // Quest reference
-  // id: number;
-  // campaignId?: number;
-  // ordering?: number;
-  // state?: string;
-  // title?: string;
-  // description?: string;
-  // imageUrl?: string;
-  completedProgress?: number;
-  levelTarget?: number;
-}
 export interface IPointsOutcome {
   id: number;
   outcomeType: OutcomeType.points;

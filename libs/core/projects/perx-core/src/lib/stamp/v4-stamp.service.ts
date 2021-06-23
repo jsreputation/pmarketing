@@ -3,7 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
 import { from, Observable, of, throwError, timer } from 'rxjs';
 import { filter, flatMap, map, mergeAll, mergeMap, scan, share, skip, switchMap, tap, toArray } from 'rxjs/operators';
-import { ICampaignOutcome, IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
+
+import { IStamp, IStampCard, IStampOutcome, StampCardState, StampState, } from './models/stamp.model';
+
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
@@ -12,6 +14,7 @@ import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
+import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -35,7 +38,7 @@ export interface IV4Stamp {
 
 export interface IV4StampOutcome {
   id: number;
-  actual_outcome_type: CampaignOutcomeType;
+  actual_outcome_type: CampaignOutcomeType; // todo: this has always been mapped incorrectly
   actual_outcome_id: number;
   campaign_prize_type: CampaignOutcomeType;
   campaign_prize_id: number;
@@ -59,25 +62,6 @@ interface IV4StampAllTransactionResponse {
   data: IV4StampCard;
 }
 
-interface IV4Outcome {
-  id: number;
-  campaign_id: number;
-  modularizable_type: string;
-  modularizable_id: number;
-  created_at: string;
-  updated_at: string;
-  // ordering: any|null;
-  referee_required_for_reward: number;
-  total_reward_limit: number;
-  total_user_limit: number;
-  award_to_referral: boolean;
-  award_to_referee: boolean;
-  total_referree_limit: number;
-  stamp_number: number;
-  // total_referree_reward_limit: any|null;
-  // hidden: any|null;
-}
-
 interface IV4StampCard {
   id: number;
   user_account_id: number;
@@ -87,7 +71,7 @@ interface IV4StampCard {
   card_number: number;
   campaign_config?: {
     total_slots: number;
-    rewards: IV4Outcome[];
+    rewards: IV4CampaignOutcome[];
   };
   display_properties: StampCampaignDisplayProperties
   stamps?: IV4Stamp[];
@@ -212,24 +196,6 @@ export class V4StampService implements StampService {
     };
   }
 
-  private static v4OutcomeToOutcome(reward: IV4Outcome): ICampaignOutcome {
-    return {
-      id: reward.id,
-      campaignId: reward.campaign_id,
-      modularizableType: reward.modularizable_type,
-      modularizableId: reward.modularizable_id,
-      createdAt: reward.created_at,
-      updatedAt: reward.updated_at,
-      refereeRequiredForReward: reward.referee_required_for_reward,
-      totalRewardLimit: reward.total_reward_limit,
-      totalUserLimit: reward.total_user_limit,
-      awardToTeferral: reward.award_to_referral,
-      awardToReferee: reward.award_to_referee,
-      totalReferreeLimit: reward.total_referree_limit,
-      stampNumber: reward.stamp_number,
-    };
-  }
-
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
     const stampCardDP = oc(stampCard).display_properties;
     const cardImageUrl = stampCardDP.card_image.value.image_url(
@@ -269,7 +235,7 @@ export class V4StampService implements StampService {
       campaignConfig: {
         totalSlots: oc(stampCard).campaign_config.total_slots(0),
         rewards: oc(stampCard).campaign_config.rewards([])
-          .map((rewards: IV4Outcome) => V4StampService.v4OutcomeToOutcome(rewards)),
+          .map((rewards: IV4CampaignOutcome) => V4CampaignService.v4CampaignOutcomeToCampaignOutcome(rewards)),
       },
       results: {},
       displayProperties: {

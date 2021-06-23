@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
-import {
-  PerxBlackcombPagesModule,
-  ProgressCampaignComponent
-} from '@perxtech/blackcomb-pages';
+import { RouterModule, Routes } from '@angular/router';
+import { PerxBlackcombPagesModule, ProgressCampaignComponent, } from '@perxtech/blackcomb-pages';
+import { ProgressCampaignServiceModule as PerxProgressCampaignServiceModule } from '@perxtech/core';
 
 
 const routes: Routes = [
@@ -15,6 +10,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    PerxProgressCampaignServiceModule.forChild(),
     PerxBlackcombPagesModule,
     RouterModule.forChild(routes),
   ]

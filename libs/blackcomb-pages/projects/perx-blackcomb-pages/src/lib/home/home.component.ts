@@ -52,7 +52,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
+
+// import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -425,15 +426,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     if (this.appConfig.showProgressBarCampaignsOnHomePage) {
-      // this.progressCampaigns$ = this.campaignService
-      //   .getCampaigns({ type: CampaignType.progress })
-      //   .pipe(
-      //     switchMap((campaigns: ICampaign[]) =>
-      //       of(campaigns).pipe(catchError((err) => of(err)))
-      //     ),
-      //     takeLast(1)
-      //   );
-      this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
+      this.progressCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.progress })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+      // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
     }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
