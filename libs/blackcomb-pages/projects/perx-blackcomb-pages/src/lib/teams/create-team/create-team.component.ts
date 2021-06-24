@@ -17,6 +17,7 @@ export class CreateTeamComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
   public createTeamForm: FormGroup;
+  public teamUserNameSubtitle: string;
 
   constructor(
     private fb: FormBuilder,
@@ -38,13 +39,14 @@ export class CreateTeamComponent implements OnInit {
       (campaign: ICampaign) => {
         this.campaign = campaign;
         this.landingPageConfig = campaign.displayProperties?.landingPage;
+        this.initTranslate();
         this.initForm();
       }
     );
   }
   public initForm(): void {
     this.createTeamForm = this.fb.group({
-      // teamName: ['', Validators.required],
+      teamName: ['', Validators.required],
       teamUserName: ['', Validators.required]
     });
   }
@@ -52,5 +54,16 @@ export class CreateTeamComponent implements OnInit {
     if (this.createTeamForm.valid) {
       // todo: implement when customisability is ready
     }
+  }
+  public initTranslate(): void {
+    this.translateService.get([ 'TEAMS.CREATE_PAGE.PICK_A_TEAM_NAME', 'TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME' ]).subscribe(
+      (translations: string[]) => {
+        this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PICK_A_TEAM_NAME'];
+        if (!this.campaign) { // temporary condition until team API is ready
+          this.teamUserNameSubtitle = translations['TEAMS.CREATE_PAGE.PREDEFINED_TEAM_NAME'];
+          // this.createTeamForm.get('teamUsername').value =
+        }
+      }
+    );
   }
 }

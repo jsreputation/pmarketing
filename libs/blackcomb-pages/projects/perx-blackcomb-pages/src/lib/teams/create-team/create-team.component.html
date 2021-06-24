@@ -14,14 +14,17 @@
         <div class="text-block">
           <p class="title">{{ 'TEAMS.CREATE_PAGE.PAGE_TITLE' | translate }}</p>
         </div>
-<!--        not supported for the foreseeable future -->
-<!--        <mat-form-field [appearance]="!campaign ? 'fill' : 'standard'" class="full-width__input">-->
-<!--          <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>-->
-<!--          <input matInput formControlName="teamName" [readonly]="!!!campaign">-->
-<!--          <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">-->
-<!--            Team name is <strong>required</strong>-->
-<!--          </mat-error>-->
-<!--        </mat-form-field>-->
+        <div class="text-block">
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_HEADING' | translate }}</p>
+          <p class="subtitle">{{teamUserNameSubtitle}}</p>
+        </div>
+        <mat-form-field [appearance]="!campaign ? 'fill' : 'standard'" class="full-width__input">
+          <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>
+          <input matInput formControlName="teamName" [readonly]="!!!campaign">
+          <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">
+            Team name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
         <div class="text-block">
           <p class="title">{{ 'TEAMS.CREATE_PAGE.USERNAME_HEADING' | translate }}</p>
           <p class="subtitle">{{ 'TEAMS.CREATE_PAGE.USERNAME_SUBHEADING' | translate }}</p>
