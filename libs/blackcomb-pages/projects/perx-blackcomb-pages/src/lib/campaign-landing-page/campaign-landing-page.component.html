@@ -48,6 +48,7 @@
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="tnc" *ngIf="config?.body" [innerHtml]="config?.body?.text | safeHtml"></div>
+    <div class="tnc" *ngIf="campaign?.termsAndConditions" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{config?.buttonText?.text || 'Play'}}</button>

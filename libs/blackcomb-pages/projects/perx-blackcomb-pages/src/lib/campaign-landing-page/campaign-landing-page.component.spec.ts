@@ -3,11 +3,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
-  ICampaignService, ThemesService,
-  UtilsModule,
-  RewardsService,
+  ICampaignService,
   IPrizeSetOutcomeService,
-  SettingsService
+  RewardsService,
+  SettingsService,
+  TeamsService,
+  ThemesService,
+  UtilsModule
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
@@ -34,6 +36,9 @@ describe('CampaignLandingPageComponent', () => {
   const rewardServiceStub: Partial<RewardsService> = {};
   const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
   const settingsServiceStub: Partial<SettingsService> = {};
+  const teamsServiceStub: Partial<TeamsService> = {
+    createATeamforCampaign: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,7 +57,8 @@ describe('CampaignLandingPageComponent', () => {
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
         { provide: RewardsService, useValue: rewardServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: TeamsService, useValue: teamsServiceStub }
       ]
     })
       .compileComponents();
