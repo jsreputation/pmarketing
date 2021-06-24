@@ -200,7 +200,7 @@ export class V4TransactionsService extends TransactionsService {
       }
     };
     if (endDate) {
-      queryParams.params = {...queryParams.params, ...{end_date: endDate.toISOString()}};
+      queryParams.params = {...queryParams.params, ...{end_date: endDate.toUTCString()}};
     }
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
@@ -217,7 +217,7 @@ export class V4TransactionsService extends TransactionsService {
       state: state || 'pending|processed'
     };
     if (endDate) {
-      params = {...params, ...{end_date: endDate.toISOString()}};
+      params = {...params, ...{end_date: endDate.toUTCString()}};
     }
     return this.http.get(`${this.apiHost}/v4/transaction_summary`, { params }).pipe(
       map((res: { data: { total_amount: number } }) => ({ totalAmount: +res.data.total_amount || 0 }))
