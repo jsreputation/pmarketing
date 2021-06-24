@@ -49,6 +49,8 @@ export class CreateTeamComponent implements OnInit {
     });
   }
   public createTeam(): void {
-
+    if (this.createTeamForm.valid) {
+      // todo: implement when customisability is ready
+    }
   }
 }

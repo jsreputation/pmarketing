@@ -10,7 +10,7 @@
       </svg>
     </ng-template>
     <div class="create-team-content">
-      <form class="create-form" [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
+      <form class="create-form" [formGroup]="createTeamForm">
         <div class="text-block">
           <p class="title">{{ 'TEAMS.CREATE_PAGE.PAGE_TITLE' | translate }}</p>
         </div>
@@ -37,7 +37,7 @@
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" type="submit" [disabled]="!createTeamForm.valid" mat-flat-button>
+    <button color="primary" (click)="createTeam()" [disabled]="!createTeamForm.valid" mat-flat-button>
       {{ 'TEAMS.CREATE_PAGE.CTA' | translate }}
     </button>
   </div>
