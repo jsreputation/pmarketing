@@ -414,6 +414,7 @@
   },
   "TEAMS": {
     "CREATE_PAGE": {
+      "PAGE_TITLE": "Create a Team",
       "TEAM_NAME_HEADING": "Team Name",
       "PICK_A_TEAM_NAME": "Pick a name for your team",
       "PREDEFINED_TEAM_NAME": "A team name has been generated for you",
