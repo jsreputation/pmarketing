@@ -13,10 +13,12 @@ import {
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IReward,
+  ITeam,
   ITheme,
   PrizeSetOutcomeType,
   RewardsService,
   SettingsService,
+  TeamsService,
   ThemesService
 } from '@perxtech/core';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
@@ -46,7 +48,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private prizeSetOutcomeService: IPrizeSetOutcomeService,
     private rewardsService: RewardsService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private teamsService: TeamsService
   ) {}
 
   public ngOnInit(): void {
@@ -166,9 +169,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         return;
       }
       if (this.campaign.type === CampaignType.stamp) {
-        if (!this.campaign.teamSize || !(this.campaign.teamSize > 0)) {
-          this.router.navigate([`teams/create/${this.campaign.id}`]);
-          // this.router.navigate([`teams/create`]);
+        if (this.campaign.teamSize && (this.campaign.teamSize > 0)) {
+          this.createTeam(this.campaign.id);
           return;
         }
       }
@@ -186,5 +188,15 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         }
       }
     }
+  }
+
+  private createTeam(campaignId: number): void {
+    this.teamsService.createATeamforCampaign(campaignId).subscribe(
+      (team: ITeam) => {
+        if (team.id) {
+          this.router.navigate([`teams/pending`]);
+        }
+      }
+    )
   }
 }
