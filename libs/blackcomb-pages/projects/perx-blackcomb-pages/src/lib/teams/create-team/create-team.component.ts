@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -28,9 +28,8 @@ export class CreateTeamComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(
-      // filter((params: ParamMap) => params.has('id')),
-      // map((params: ParamMap) => params.get('id')),
-      map(() => '1421'),
+      filter((params: ParamMap) => params.has('campaignId')),
+      map((params: ParamMap) => params.get('campaignId')),
       switchMap((cid: string) => {
         const campaignId: number = Number.parseInt(cid, 10);
         return this.campaignService.getCampaign(campaignId);

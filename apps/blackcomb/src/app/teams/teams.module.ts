@@ -10,7 +10,7 @@ import {
 
 const routes: Routes = [
   {
-    path: 'create',
+    path: 'create/:campaignId',
     component: CreateTeamComponent
   },
   {

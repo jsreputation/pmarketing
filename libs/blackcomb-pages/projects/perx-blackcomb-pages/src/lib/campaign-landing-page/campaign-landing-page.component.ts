@@ -9,17 +9,17 @@ import {
   ICampaignOutcome,
   ICampaignService,
   IConfig,
+  IFlags,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IReward,
   ITheme,
   PrizeSetOutcomeType,
   RewardsService,
-  ThemesService,
   SettingsService,
-  IFlags
+  ThemesService
 } from '@perxtech/core';
-import { combineLatest, forkJoin, Observable, of, Subject, iif } from 'rxjs';
+import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -167,8 +167,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       }
       if (this.campaign.type === CampaignType.stamp) {
         if (!this.campaign.teamSize || !(this.campaign.teamSize > 0)) {
-          // this.router.navigate([`teams/create/${this.campaign.id}`]);
-          this.router.navigate([`teams/create`]);
+          this.router.navigate([`teams/create/${this.campaign.id}`]);
+          // this.router.navigate([`teams/create`]);
           return;
         }
       }
