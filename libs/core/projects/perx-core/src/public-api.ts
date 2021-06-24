@@ -106,6 +106,7 @@ export { ProgressCampaignService } from './lib/progress-campaign/progress-campai
  * Teams
  */
 export { TeamsServiceModule } from './lib/teams/teams.service.module'
+export { ITeam, TeamState } from './lib/teams/teams.model'
 export { TeamsService } from './lib/teams/teams.service'
 
 /**
