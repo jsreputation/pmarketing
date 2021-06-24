@@ -103,6 +103,12 @@ export { IMilestone, IProgressTotal, IProgressTransaction } from './lib/progress
 export { ProgressCampaignService } from './lib/progress-campaign/progress-campaign.service'
 
 /**
+ * Teams
+ */
+export { TeamsServiceModule } from './lib/teams/teams.service.module'
+export { TeamsService } from './lib/teams/teams.service'
+
+/**
  * Badges
  */
 export { BadgeServiceModule } from './lib/badges/badge.service.module';
