@@ -46,7 +46,7 @@ export class CreateTeamComponent implements OnInit {
   }
   public initForm(): void {
     this.createTeamForm = this.fb.group({
-      teamName: ['', Validators.required],
+      // teamName: ['', Validators.required],
       teamUserName: ['', Validators.required]
     });
   }
