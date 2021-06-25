@@ -6,8 +6,9 @@
     "PROFILE": "Profile",
     "CONDITION": "Condition",
     "LANGUAGE": "Language",
+    "TERM_AND_CONDITION": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
-    "TRANSACTION_HISTORY": "Transaction History"
+    "TRANSACTION_HISTORY": "Transaction History",
   },
   "LOGIN_PAGE": {
     "LOGIN_SUBTITLE": "M-Gear Program",
@@ -135,6 +136,7 @@
     "PROFILE": "Profile",
     "TRANSACTION_HISTORY": "Transaction History",
     "PRIVACY_POLICY": "Privacy Policy",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
     "CONDITION_UPDATED": "Condition Updated.",
     "TIER": "Tier",
     "LOGOUT": "Log Out"
