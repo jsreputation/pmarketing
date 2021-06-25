@@ -2,7 +2,6 @@
   "BOOKING_PAGE": {
     "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
   },
-  "BACK_TO_WALLET": "Back to Wallet",
   "LANDING": {
     "CAMPAIGN_TITLE": "Weekly LIFE Dojo Winners Wanted! ",
     "CAMPAIGN_INTRO": "LIFE Dojo returns with weekly quizzes and a grand lucky draw. \nTest your knowledge and earn points to enter the lucky draw. Choose from three difficulty levels, and answer each question within 15 seconds by choosing the best answer. It’s time to play!",
@@ -24,7 +23,7 @@
   },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
-    "HAVE_AN_ACCOUNT": "Have an account?",
+    "HAVE_AN_ACCOUNT": "Have an account",
     "LOG_IN": "Log in",
     "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
     "MOBILE_FIELD": "Mobile",
@@ -59,7 +58,7 @@
     "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 alphanumeric digits",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
-    "BUTTON_SUBMIT": "SIGN UP"
+    "BUTTON_SUBMIT": "Submit"
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
@@ -83,13 +82,13 @@
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
-    "USERNAME_FIELD": "Username",
-    "USERNAME_REQUIRED_TXT": "Please enter your username",
+    "USERNAME_FIELD": "Player Code",
+    "USERNAME_REQUIRED_TXT": "Please enter your player code",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
     "PASSWORD_FIELD": "Password",
-    "PASSWORD_INVALID_TXT": "Password incorrect",
-    "PASSWORD_REQUIRED_TXT": "Please input a password",
+    "PASSWORD_INVALID_TXT": "Card not found",
+    "PASSWORD_REQUIRED_TXT": "Please provide a password",
     "FORGET_PASSWORD_TXT": "Forgot password?",
     "POPUP_TITLE": "We could not reach the server",
     "POPUP_TXT": "Please try again soon",
@@ -125,8 +124,7 @@
     "DEALS": "Deals",
     "ACCOUNT": "Account",
     "PAY": "Pay",
-    "NEARME": "Near Me",
-    "STAMPS": "Stamps"
+    "NEARME": "Near Me"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
@@ -138,11 +136,11 @@
     "SUMMARY_CORRECT": "You got {{total_correct}} out of {{total_length}} questions correct!",
     "SUMMARY_TIME_TAKEN": "You took a total of ",
     "QUESTION_TIME_TAKEN": "You took {{time}} to answer this.",
-    "POSITIVE_OUTCOME_TXT": "",
-    "POSITIVE_OUTCOME_REWARD": "Congratulations! Get your reward!",
+    "POSITIVE_OUTCOME_TXT": "Congratulations! You scored {{points}} points",
+    "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
     "POSITIVE_OUTCOME_CTA": "View Reward",
-    "NO_OUTCOME_SCORE": "",
-    "NO_OUTCOME_TXT": "You didn't receive any reward.",
+    "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
+    "NO_OUTCOME_TXT": "",
     "NO_OUTCOME_CTA": "Try another quiz",
     "NOT_AVAILABLE_TITLE": "Sorry!",
     "NOT_AVAILABLE_CTA": "Close",
@@ -208,13 +206,6 @@
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
     "NO_RANK": "NA"
   },
-  "STATUS_LABELS": {
-    "ISSUED": "Approved",
-    "REDEEMED": "Redeemed",
-    "EXPIRED": "Expired",
-    "RESERVED": "Pending",
-    "RELEASED": "Declined"
-  },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
     "TRANSACTION_HISTORY": "Transaction History",
@@ -223,14 +214,20 @@
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
-    "FAQS": "FAQs",
-    "LOGOUT": "Log Out",
     "CONTACT_US": "Contact Us",
+    "FAQs": "FAQs",
+    "LOGOUT": "Log Out",
     "FAVORITE_REWARD": "Favorite Rewards",
-    "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
     "BADGES": "My Badges"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -252,14 +249,15 @@
     "CTA_SAVE_TXT": "Save",
     "ENTER_EMAIL": "Enter Email",
     "ENTER_POSTCODE": "Enter Postcode",
-    "ENTER_NICKNAME": "Enter Nickname"
+    "ENTER_NICKNAME": "Enter Nickname",
+    "ALLOW_MARKETING": "I would like to receive marketing notifications"
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.<br/><br/>Share your referral code with a friend today!<br/>*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
-    "SHARE_COPY_TITLE": "Join me in this journey",
-    "SHARE_COPY_TXT": "Join me and sign up on {{url}} and use {{code}} for both of us to get rewards!",
+    "SHARE_COPY_TITLE": "Join me in this game",
+    "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code {{code}} when signing up and earn 3x lucky draw chances.\n",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
@@ -268,7 +266,6 @@
     "MY_QR": "My QR",
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
-    "REFERRAL_CAMPAIGNS": "Referral Campaigns",
     "CATALOG": "Catalog",
     "MEMBER": " member",
     "GAMES": "Games",
@@ -285,9 +282,13 @@
     "POINT_TO": "Points to {nextTierName}",
     "GAME_TRIES_LEFT": "tries left",
     "ALL": "All",
+    "HUNG_FOOK_TONG": "Hung Fook Tong",
+    "BIG_BIG_SHOP": "big big shop",
+    "HOME+": "Home+",
+    "HKBN": "HKBN",
+    "QUEST_CAMPAIGNS": "Quests",
     "CLOSE": "Close",
     "REWARDS": "Rewards",
-    "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
   },
@@ -368,7 +369,6 @@
     "GAME_SUCCESS_TITLE": "Congratulations!",
     "GAME_SUCCESS_TEXT": "You earned",
     "GAME_SUCCESS_TEXT_REWARDS": " {{rewards}} rewards",
-    "GAME_SUCCESS_TEXT_POINT": " 1 point",
     "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
@@ -400,7 +400,7 @@
   },
   "PUZZLE": {
     "PUZZLE": "Puzzle",
-    "PLAY_NOW": "Play now!",
+    "PLAY_NOW": "View now!",
     "NEW_PIECES": "New pieces",
     "NEW_STAMPS": " new stamps"
   },
@@ -410,15 +410,6 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited."
-  },
-  "QUEST_CAMPAIGN": {
-    "CTA_NEXT_TXT": "START",
-    "VIEW_WALLET": "VIEW WALLET",
-    "QUEST_COMPLETED": "QUEST COMPLETED:",
-    "PROGRESS": "YOUR PROGRESS:",
-    "EARNED_PRIZES": "YOUR EARNED PRIZES:",
-    "PRIZES": "PRIZES:",
-    "TNC": "Terms and Conditions"
   },
   "MACARON": {
     "BALANCE": "{{amount}} left",
@@ -436,21 +427,6 @@
     "NOT_AVAILABLE_CTA": "Close",
     "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   },
-  "PRIZE_SET": {
-    "HEADING": "Congrats! You won this prize set.",
-    "SUB_HEADING": "includes ALL of the following:",
-    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE SET",
-    "PENDING_STATE": "Supply Pending",
-    "FAILED_STATE": "Failed",
-    "VIEW_WALLET": "VIEW WALLET",
-    "BACK_BTN": "BACK",
-    "LOYALTY_POINTS": "loyalty points",
-    "CONTACT_TXT": "contact support for any questions"
-  },
-  "CAMPAIGN_LANDING": {
-    "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
-  },
   "POINTS_TRANSFER": {
     "FROM": "From",
     "TO": "To",
@@ -465,9 +441,9 @@
     "POINT": "point",
     "POINTS": "points",
     "SUCCESS": "Point transfer completed successully!",
-    "YOU_ARE_ABOUT_TO_TRANSFER":"You are about to tansfer",
-    "YOU_WILL_RECEIVE":"You will receive",
-    "TRANSFER_POINTS_CONFIRM_CTA":"COnfirm Points Transfer"
+    "YOU_ARE_ABOUT_TO_TRANSFER": "You are about to tansfer",
+    "YOU_WILL_RECEIVE": "You will receive",
+    "TRANSFER_POINTS_CONFIRM_CTA": "COnfirm Points Transfer"
   },
   "PROGRESS_CAMPAIGN": {
     "TNC_HEADER": "Terms and Conditions",
@@ -479,6 +455,21 @@
     "EARNED_TAB": "Earned",
     "UNEARNED_TAB": "Unearned",
     "VIEW_WALLET": "Close"
+  },
+  "PRIZE_SET": {
+    "HEADING": "Congrats! You won this prize set.",
+    "SUB_HEADING": "includes ALL of the following:",
+    "OUTCOME_SUCCESS_TITLE": "VIEW PRIZE SET",
+    "PENDING_STATE": "Supply Pending",
+    "FAILED_STATE": "Failed",
+    "VIEW_WALLET": "VIEW WALLET",
+    "BACK_BTN": "BACK",
+    "LOYALTY_POINTS": "loyalty points",
+    "CONTACT_TXT": "contact support for any questions"
+  },
+  "CAMPAIGN_LANDING": {
+    "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
+    "LOYALTY_POINTS": "loyalty points"
   },
   "TEAMS": {
     "CREATE_PAGE": {
@@ -501,5 +492,6 @@
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
   "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "DESCRIPTION": "Description"
 }
