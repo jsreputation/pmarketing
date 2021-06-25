@@ -5,10 +5,7 @@ import { ConfigService } from '../../config/config.service';
 import { TransactionsService } from './transactions.service';
 import { IConfig } from '../../config/models/config.model';
 import { Observable } from 'rxjs';
-import {
-  ITransaction,
-  ITransactionProperties
-} from '../models/transactions.model';
+import { ITransaction, ITransactionProperties } from '../models/transactions.model';
 import { map } from 'rxjs/operators';
 
 const DEFAULT_PAGE_COUNT: number = 25;
@@ -200,7 +197,7 @@ export class V4TransactionsService extends TransactionsService {
       }
     };
     if (endDate) {
-      queryParams.params = {...queryParams.params, ...{end_date: endDate.toUTCString()}};
+      queryParams.params = {...queryParams.params, ...{end_date: endDate.toISOString()}};
     }
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
@@ -217,7 +214,7 @@ export class V4TransactionsService extends TransactionsService {
       state: state || 'pending|processed'
     };
     if (endDate) {
-      params = {...params, ...{end_date: endDate.toUTCString()}};
+      params = {...params, ...{end_date: endDate.toISOString()}};
     }
     return this.http.get(`${this.apiHost}/v4/transaction_summary`, { params }).pipe(
       map((res: { data: { total_amount: number } }) => ({ totalAmount: +res.data.total_amount || 0 }))
