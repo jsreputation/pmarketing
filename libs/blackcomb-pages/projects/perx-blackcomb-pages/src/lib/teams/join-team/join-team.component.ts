@@ -1,8 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
+import {
+  CampaignLandingPage,
+  ICampaign,
+  ICampaignService,
+  ITeam,
+  NotificationService,
+  TeamsService
+} from '@perxtech/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -17,11 +24,15 @@ export class JoinTeamComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
   public joinTeamForm: FormGroup;
+  public campaignId: number;
 
   constructor(
     private fb: FormBuilder,
     protected route: ActivatedRoute,
-    private campaignService: ICampaignService
+    private router: Router,
+    private notificationService: NotificationService,
+    private campaignService: ICampaignService,
+    private teamsService: TeamsService
   ) { }
 
   public ngOnInit(): void {
@@ -36,6 +47,7 @@ export class JoinTeamComponent implements OnInit {
     ).subscribe(
       (campaign: ICampaign) => {
         this.campaign$ = of(campaign);
+        this.campaignId = campaign.id;
         this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.initForm();
       }
@@ -49,7 +61,17 @@ export class JoinTeamComponent implements OnInit {
   }
   public joinTeam(): void {
     if (this.joinTeamForm.valid){
-
+      const teamCode = this.joinTeamForm.get('teamCode').value;
+      this.teamsService.joinATeamForCampaign(this.campaignId, teamCode).subscribe(
+        (team: ITeam) => {
+          if (team.id) {
+            this.router.navigate(['teams/pending']);
+          }
+        },
+        (err) => {
+          this.notificationService.addSnack(err.message);
+        }
+      )
     }
   }
 }
