@@ -55,7 +55,12 @@
 				</mat-error>
 			</mat-form-field>
 			<div class="accept-terms">
-				<mat-checkbox color="primary" formControlName="accept_terms">{{ 'SIGN_UP_PAGE.ACCEPT_TERMS' | translate }}</mat-checkbox>
+<!--				<mat-checkbox color="primary" formControlName="accept_terms">{{ 'SIGN_UP_PAGE.ACCEPT_TERMS' | translate }}</mat-checkbox>-->
+				<mat-checkbox color="primary"
+                      formControlName="accept_terms">
+          <div class="disclamair" [innerHtml]="'SIGN_UP_PAGE.ACCEPT_TERMS' | translate"></div>
+        </mat-checkbox>
+
 			</div>
 			<div class="checkbox-container">
 				<mat-checkbox color="primary" formControlName="accept_marketing"></mat-checkbox>
