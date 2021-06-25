@@ -14,7 +14,7 @@
       <div class="text-block">
         <p class="title">{{ 'TEAMS.JOIN_TEAM_HEADING' | translate }}</p>
       </div>
-      <form class="join-form" [formGroup]="joinTeamForm" (ngSubmit)="joinTeam()">
+      <form class="join-form" [formGroup]="joinTeamForm">
         <mat-form-field appearance="standard" class="full-width__input">
           <mat-label>Team Code</mat-label>
           <input matInput formControlName="teamcODE">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" type="submit" mat-flat-button>
+    <button color="primary" (click)="joinTeam()" mat-flat-button>
       {{ 'TEAMS.JOIN_TEAM' | translate }}
     </button>
   </div>

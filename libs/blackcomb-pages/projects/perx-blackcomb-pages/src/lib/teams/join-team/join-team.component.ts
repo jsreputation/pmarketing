@@ -48,6 +48,8 @@ export class JoinTeamComponent implements OnInit {
     });
   }
   public joinTeam(): void {
+    if (this.joinTeamForm.valid){
 
+    }
   }
 }
