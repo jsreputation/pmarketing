@@ -5,10 +5,7 @@ import { ConfigService } from '../../config/config.service';
 import { TransactionsService } from './transactions.service';
 import { IConfig } from '../../config/models/config.model';
 import { Observable } from 'rxjs';
-import {
-  ITransaction,
-  ITransactionProperties
-} from '../models/transactions.model';
+import { ITransaction, ITransactionProperties } from '../models/transactions.model';
 import { map } from 'rxjs/operators';
 
 const DEFAULT_PAGE_COUNT: number = 25;
