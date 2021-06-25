@@ -286,6 +286,7 @@
     "BIG_BIG_SHOP": "big big shop",
     "HOME+": "Home+",
     "HKBN": "HKBN",
+    "QUEST_CAMPAIGNS": "Quests",
     "CLOSE": "Close",
     "REWARDS": "Rewards",
     "SURVEYS": "Surveys",
@@ -469,6 +470,10 @@
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
     "LOYALTY_POINTS": "loyalty points"
+  },
+  "QUEST_CAMPAIGN": {
+    "PROGRESS": "Progress",
+    "PRIZES": "Prizes"
   },
   "TEAMS": {
     "CREATE_PAGE": {
