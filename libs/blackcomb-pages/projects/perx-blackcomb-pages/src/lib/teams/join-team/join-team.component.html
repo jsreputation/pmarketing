@@ -16,10 +16,10 @@
       </div>
       <form class="join-form" [formGroup]="joinTeamForm" (ngSubmit)="joinTeam()">
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Name</mat-label>
-          <input matInput formControlName="teamName">
-          <mat-error *ngIf="joinTeamForm.get('teamName')!.hasError('required')">
-            Team name is <strong>required</strong>
+          <mat-label>Team Code</mat-label>
+          <input matInput formControlName="teamcODE">
+          <mat-error *ngIf="joinTeamForm.get('teamCode')!.hasError('required')">
+            Team Code is <strong>required</strong>
           </mat-error>
         </mat-form-field>
 <!--        <mat-form-field appearance="standard" class="full-width__input">-->
