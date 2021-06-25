@@ -109,7 +109,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onClose(): void {
+  public onCloseMerchantDetailPopup(): void {
     this.current = null;
   }
 
@@ -306,6 +306,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
 
   public searchThisArea(): void {
     this.clearMarkers();
+    this.onCloseMerchantDetailPopup();
+
     const bounds = this.map.getBounds();
     if (bounds) {
       const center = bounds.getCenter();
