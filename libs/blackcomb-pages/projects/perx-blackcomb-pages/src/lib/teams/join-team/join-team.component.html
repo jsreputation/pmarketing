@@ -22,13 +22,13 @@
             Team name is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Username</mat-label>
-          <input matInput formControlName="teamUserName">
-          <mat-error *ngIf="joinTeamForm.get('teamUserName')?.hasError('required')">
-            Username is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+<!--        <mat-form-field appearance="standard" class="full-width__input">-->
+<!--          <mat-label>Team Username</mat-label>-->
+<!--          <input matInput formControlName="teamUserName">-->
+<!--          <mat-error *ngIf="joinTeamForm.get('teamUserName')?.hasError('required')">-->
+<!--            Username is <strong>required</strong>-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
       </form>
       <div class="text-block">
         <div class="instructions" [innerHTML]="campaign.displayProperties.landingPage.body.text | safeHtml "></div>

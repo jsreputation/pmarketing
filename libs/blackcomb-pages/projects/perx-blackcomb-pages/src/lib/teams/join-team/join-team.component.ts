@@ -44,7 +44,7 @@ export class JoinTeamComponent implements OnInit {
   public initForm(): void {
     this.joinTeamForm = this.fb.group({
       teamName: ['', Validators.required],
-      teamUserName: ['', Validators.required]
+      // teamUserName: ['', Validators.required]
     });
   }
   public joinTeam(): void {
