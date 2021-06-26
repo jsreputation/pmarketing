@@ -57,7 +57,11 @@
 			<div class="accept-terms">
 				<mat-checkbox color="primary"
                       formControlName="accept_terms">
-          <div class="disclamair" [innerHtml]="'SIGN_UP_PAGE.ACCEPT_TERMS' | translate"></div>
+          {{'SIGN_UP_PAGE.ACCEPT_TERMS' | translate}}
+          <span class="link"
+                (click)='goTermAndCondition()'>
+            {{'SIGN_UP_PAGE.TERM_AND_CONDITION' | translate}}
+          </span>
         </mat-checkbox>
 
 			</div>
