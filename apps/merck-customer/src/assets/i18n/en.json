@@ -72,11 +72,12 @@
     "PASSWORD_SIX_CHARS": "Password should be at least 6 characters",
     "CONFIRM_PASSWORD": "Confirm password",
     "CONFIRM_PASSWORD_IS": "Passwords must match",
-    "ACCEPT_TERMS": "I accept the terms and conditions",
+    "ACCEPT_TERMS": "I accept the",
     "AGREE_MARKETING": "I agree to receive marketing communications from Merck Group HK",
-    "ACCEPT_TNC": "Please accept terms & conditions.",
+    "ACCEPT_TNC": "Please accept ",
     "ACCEPT_MARKETING": "Please agree to receive marketing communications from Merck Group hk.",
-    "REGISTER_BTN": "Register"
+    "REGISTER_BTN": "Register",
+    "TERM_AND_CONDITION": "terms & conditions."
   },
   "FORGET_PW_PAGE": {
     "COUNTRY_HONGKONG": "Hong Kong Island",
