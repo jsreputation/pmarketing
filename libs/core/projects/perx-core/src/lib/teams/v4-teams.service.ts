@@ -18,6 +18,24 @@ interface IV4TeamResponse {
   meta: any;
 }
 
+export interface IV4TeamsDisplayProperties {
+  teams?: {
+    landing_page: {
+      pre_enrolment_message: string;
+      stamps_earn_message: string;
+      button_text: string;
+      button_text_secondary: string;
+    },
+    join_page: {
+      description: string;
+    },
+    invite_message: {
+      description: string;
+      code_blurb: string;
+    }
+  }
+};
+
 @Injectable({
   providedIn: 'root'
 })
