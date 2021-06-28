@@ -81,6 +81,14 @@
 
       .merchant {
         margin-top: 1rem;
+        position: relative;
+        z-index: 1;
+
+        .heart-icon {
+          position: absolute;
+          right: 0;
+          top: 3rem;
+        }
       }
 
       .reward {
@@ -121,9 +129,11 @@
 
       .close-btn {
         position: absolute;
+        z-index: 2;
         top: 0;
-        right: 2rem;
-        width: auto;
+        right: 1.3rem;
+        width: 4rem;
+        height: 4rem;
 
         .mat-icon {
           color: #606060;
