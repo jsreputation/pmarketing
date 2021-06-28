@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { PreLoginGuard } from './pre-login.guard';
 import { ErrorComponent } from './error/error.component';
+
 const routes: Routes = [
   {
     path: 'login',

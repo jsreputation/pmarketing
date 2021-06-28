@@ -11,6 +11,8 @@ const WIN_PATHS: string[] = [
   'M135 43V89.5C106.5 89.5 115.167 108 112 119C135 119 140.5 139 140.5 148.5C165.5 158 165.5 168 165.5 179C186.5 179 181.333 197.667 186.5 207.5C160 213 158.667 217.833 152.5 224.5C167.3 224.5 173 241.5 173 241.5C197.5 249 199.667 259.5 197.5 268C209 271 213.5 285 213.5 295.5C200.7 289.5 188.333 312.833 186.5 323C165.5 323 167.333 339.5 165.5 352.5C171.5 346.9 184.333 360.833 197.5 365C185.966 361.35 184.167 381.5 180.5 387C159.5 387 158 390.5 152.5 400C165.5 391.739 159 412.5 159 412.5C135 412.5 140.5 433.5 135 439.5V461.5'
 ];
 
+const GAME_ANIMATION_DURATION: string = '7s';
+
 @Component({
   selector: 'perx-core-plinko',
   templateUrl: './plinko.component.html',
@@ -65,7 +67,7 @@ export class PlinkoComponent implements OnInit, AfterViewInit {
         const random = Math.floor(Math.random() * LOSE_PATHS.length);
         this.ballPath = LOSE_PATHS[random];
       }
-      this.animationDuration = '7s';
+      this.animationDuration = GAME_ANIMATION_DURATION;
       const anim = <any> document.getElementById('animateEl');
       setTimeout(() =>  {
         this.transformVal = 'translate(-135.5 -29.1333)';
