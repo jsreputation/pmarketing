@@ -20,7 +20,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CommonModule,
     MatToolbarModule,
     RouterModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,

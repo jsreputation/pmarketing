@@ -1,26 +1,7 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
 import { IWProperties } from '@perxtech/whistler';
-import { CampaignOutcomeType } from '../../campaign/models/campaign.model';
-
-export interface ICampaignOutcome {
-  id: number;
-  campaignId: number;
-  modularizableType: string;
-  modularizableId: number;
-  createdAt: string;
-  updatedAt: string;
-  // ordering: any|null;
-  refereeRequiredForReward: number;
-  totalRewardLimit: number;
-  totalUserLimit: number;
-  awardToTeferral: boolean;
-  awardToReferee: boolean;
-  totalReferreeLimit: number;
-  stampNumber: number;
-  // totalReferreeReward_limit: any|null;
-  // hidden: any|null;
-}
+import { CampaignOutcomeType, ICampaignOutcome } from '../../campaign/models/campaign.model';
 
 export enum StampState {
   redeemed = 'redeemed',

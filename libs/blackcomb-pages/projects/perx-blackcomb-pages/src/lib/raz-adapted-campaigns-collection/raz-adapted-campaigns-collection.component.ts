@@ -86,7 +86,8 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             switchMap((stampCards) => {
               if (oc(campaign).customFields.transaction_based(false)) {
                 return this.transactionsService.getTransactions(
-                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, undefined,
+                  campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined).pipe(
                     map(transactionData => ({
                       ...campaign as ICampaign,
                       ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
@@ -119,12 +120,14 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
     }
 
     if (this.loyaltyCampaigns) {
-      const transactionSummaryProcessed$ = this.transactionsService.getTransactionSummary(TransactionState.processed);
-      const transactionSummary$ = this.transactionsService.getTransactionSummary();
       this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
-            concatMap((campaignRwd) => combineLatest(transactionSummary$, transactionSummaryProcessed$).pipe(
+            concatMap((campaignRwd) => combineLatest(
+              [this.transactionsService.getTransactionSummary(undefined, campaignRwd.customFields.transactions_ends_at ?
+                new Date(campaignRwd.customFields.transactions_ends_at) : undefined),
+              this.transactionsService.getTransactionSummary(TransactionState.processed, campaignRwd.customFields.transactions_ends_at ?
+                 new Date(campaignRwd.customFields.transactions_ends_at) : undefined)]).pipe(
               map(([summaryFull, summaryProcessed]) => {
                 if (summaryFull && summaryProcessed && campaignRwd.rewards) {
                   return {

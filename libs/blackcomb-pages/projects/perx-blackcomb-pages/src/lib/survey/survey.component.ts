@@ -1,29 +1,25 @@
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input
-} from '@angular/core';
-import {
-  NotificationService,
-  ISurvey,
-  SurveyService,
-  IPopupConfig,
-  IPrePlayStateData,
   AuthenticationService,
-  RewardPopupComponent,
-  IRewardPopupConfig,
-  ISurveyResultOutcome,
   ConfigService,
   IConfig,
-  IPrizeSetOutcome
+  IPopupConfig,
+  IPrePlayStateData,
+  IPrizeSetOutcome,
+  IRewardPopupConfig,
+  ISurvey,
+  ISurveyResultOutcome,
+  NotificationService,
+  RewardPopupComponent,
+  SurveyService
 } from '@perxtech/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+
 interface IAnswer {
   questionId: string;
   content: any;
@@ -231,8 +227,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
                 if (res && res.prizeSets && res.prizeSets.length > 0) {
                   this.prizeSetOutcome = res.prizeSets[0];
                 }
-
-                if (res?.badges) {
+                if (res?.badges!.length > 0) {
                   this.isBadgeOucome = true;
                 }
                 this.redirectUrlAndPopUp();

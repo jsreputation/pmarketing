@@ -52,7 +52,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
+
+// import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -225,23 +226,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    if (campaign.type === CampaignType.game) {
-      // currently only the quiz have proper data for landing page, once other campaign
-      // type have proper data, move this block out
-      if (this.appConfig.showCampaignLandingPage) {
+    const subTypeSupportLandingPage = ['quiz', 'survey'];
+    if (this.appConfig.showCampaignLandingPage) {
+      if (subTypeSupportLandingPage.includes(campaign.subType as string)) {
         this.router.navigate([`campaign-welcome/${campaign.id}`]);
         return;
       }
+    }
 
+    if (campaign.subType === 'quiz') {
       this.router.navigate([`quiz/${campaign.id}`]);
       return;
     }
+
     if (campaign.subType === 'survey') {
       this.router.navigate([`survey/${campaign.id}`]);
       return;
     }
 
-    if (campaign.type === 'stamp' && campaign.teamSize) {
+    if (campaign.type === 'stamp' && campaign.teamSize! > 0) {
       this.router.navigate([`campaign-welcome/${campaign.id}`]);
       return;
     }
@@ -424,16 +427,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         );
     }
 
-    if (this.appConfig.showProgressBarCampaignsOnHomePage) {
-      // this.progressCampaigns$ = this.campaignService
-      //   .getCampaigns({ type: CampaignType.progress })
-      //   .pipe(
-      //     switchMap((campaigns: ICampaign[]) =>
-      //       of(campaigns).pipe(catchError((err) => of(err)))
-      //     ),
-      //     takeLast(1)
-      //   );
-      this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
+    if (this.appConfig.showProgressBarCampaignsOnHomePage || this.appRemoteFlags.showProgressBarCampaignsOnHomePage) {
+      this.progressCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.progress })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+      // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
     }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(

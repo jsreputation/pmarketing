@@ -97,7 +97,8 @@ export class RazProgressCampaignComponent implements OnInit {
             switchMap((stampCards) => {
               if (oc(campaign).customFields.transaction_based(false)) {
                 return this.transactionsService.getTransactions(
-                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, undefined,
+                  campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined).pipe(
                     map(transactionData => ({
                       ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
                     }))
@@ -113,12 +114,14 @@ export class RazProgressCampaignComponent implements OnInit {
         }
         if (campaign.type === CampaignType.give_reward) {
           // only supports one loyalty prgm, hardcode default
-          const transactionSummary$ = this.transactionsService.getTransactionSummary();
+          const transactionSummary$ = this.transactionsService.getTransactionSummary(undefined,
+            campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined);
           // doing this because
           // this had to be the only object passed to campaign progress, cant off fetch from reward observable the state
           // to do actual light up of stamps, campaign progress bar is | async to campaignprogress and only updates from here
-          const transactionSummaryProcessed$ = this.transactionsService.getTransactionSummary(TransactionState.processed);
-          return combineLatest(transactionSummary$, transactionSummaryProcessed$).pipe(
+          const transactionSummaryProcessed$ = this.transactionsService.getTransactionSummary(TransactionState.processed,
+            campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined);
+          return combineLatest([transactionSummary$, transactionSummaryProcessed$]).pipe(
             map(([summaryFull, summaryProcessed]) => {
               if (campaign.rewards) {
                 return {
@@ -176,7 +179,8 @@ export class RazProgressCampaignComponent implements OnInit {
 
                   if (oc(campaign).customFields.transaction_based(false)) {
                     return this.transactionsService.getTransactions(
-                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, TransactionState.processed).pipe(
+                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, TransactionState.processed,
+                      campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined).pipe(
                         map(transactionData => {
                           if (campaign && campaign.rewards) {
                             return campaign.rewards.map((reward, index) => {
@@ -239,7 +243,9 @@ export class RazProgressCampaignComponent implements OnInit {
         if (campaign.type === CampaignType.give_reward) {
           this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
           this.cd.detectChanges();
-          return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
+          return this.transactionsService.getTransactionSummary(TransactionState.processed,
+            campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined)
+          .pipe(
             map((summary) => {
               if (campaign.rewards) {
                 const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (

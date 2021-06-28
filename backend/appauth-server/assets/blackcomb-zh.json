@@ -462,11 +462,29 @@
     "YOU_WILL_RECEIVE":"You will receive",
     "TRANSFER_POINTS_CONFIRM_CTA":"COnfirm Points Transfer"
   },
+  "PROGRESS_CAMPAIGN": {
+    "TNC_HEADER": "Terms and Conditions",
+    "ENROLL_BTN_TEXT": "Start",
+    "VIEW_WALLET": "View Wallet"
+  },
   "BADGES": {
     "ALL_TAB": "All",
     "EARNED_TAB": "Earned",
     "UNEARNED_TAB": "Unearned",
     "VIEW_WALLET": "Close"
+  },
+  "TEAMS": {
+    "CREATE_PAGE": {
+      "PAGE_TITLE": "Create a Team",
+      "TEAM_NAME_HEADING": "Team Name",
+      "PICK_A_TEAM_NAME": "Pick a name for your team",
+      "PREDEFINED_TEAM_NAME": "A team name has been generated for you",
+      "TEAM_NAME_FORM_LABEL": "Team Name",
+      "USERNAME_HEADING": "Your Username",
+      "USERNAME_SUBHEADING": "Please generate a unique username for yourself",
+      "USERNAME_FORM_LABEL": "Team Username",
+      "CTA": "Create Team"
+    }
   },
   "Gold": "黃金",
   "Silver": "銀卡",

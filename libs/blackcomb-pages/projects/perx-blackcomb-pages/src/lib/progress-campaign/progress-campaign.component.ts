@@ -1,119 +1,120 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
-  CampaignType,
+  CampaignState,
   ICampaign,
   ICampaignOutcome,
-  IProgressCampaign,
-  IProgressLevel,
-  ProgressProperties,
-  QuestState
+  ICampaignService,
+  IMilestone,
+  IProgressTotal,
+  NotificationService,
+  ProgressCampaignService,
+  ProgressProperties
 } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
-import { EMPTY, forkJoin, Observable, of, Subject } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import {
-  campaignLevels as mockCampaignLevels,
-  campaignOutcomes as mockCampaignOutcomes,
-  campaigns as mockCampaigns,
-  progressCampaigns as mockProgressCampaigns
-} from '../mock/campaigns.mock';
+
+enum ProgressBarDisplayMode {
+  cumulative = 'cumulative',
+  individual = 'individual'
+}
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
   templateUrl: './progress-campaign.component.html',
-  styleUrls: ['./progress-campaign.component.scss']
+  styleUrls: [ './progress-campaign.component.scss' ]
 })
-export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public campaign$: Observable<ICampaign>;
-  public levels$: Observable<IProgressLevel[]>;
-  public activeLevel: IProgressLevel | undefined;
-  public campaignOutcome$: Observable<ICampaignOutcome[]>;
-  public progressCampaign: IProgressCampaign;
 
-  public questCompleted: boolean = false;
+  public lineDrawned: boolean = false;
   public campaignProgress: number = 0;
-  public taskTotalLen: number = 0;
-  public completedTaskIds: (number|undefined)[] = [];
-  public questState: string = '';
-  public state: typeof QuestState = QuestState;
+  public completedTaskIds: (number | undefined)[] = [];
+  public state: typeof CampaignState = CampaignState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
+
+  public isEnrolled: boolean = false;
+  public milestones: IMilestone[];
+  public activeMilestone: IMilestone;
+  public currentUserPoints: number;
+  public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
 
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
-  @ViewChild('levelConnectorDiv') private levelConnectorDiv: ElementRef;
+  @ViewChild('milestonesConnectorDiv') private milestonesConnectorDiv: ElementRef;
 
   constructor(protected route: ActivatedRoute,
-              private router: Router) {}
-              // private notificationService: NotificationService,
-              // private campaignService: ICampaignService) { }
+              private router: Router,
+              private notificationService: NotificationService,
+              private progressCampaignService: ProgressCampaignService,
+              private campaignService: ICampaignService) {
+  }
 
-  public ngAfterViewInit(): void {
+  public ngAfterViewChecked(): void {
     // update level connector height
-    this.levels$?.subscribe(
-      (levels: IProgressLevel[]) => {
-        const numLevels = levels.length;
-        const taskCards = [...this.levelConnectorDiv.nativeElement.parentElement.children]
-          .filter((child) => child.classList.contains('task-card'));
-        if (taskCards.length > 1 && numLevels > 1) {
-          // we want the height up to the 2nd last element
-          // - 1 for 0 index conversion. i.e. taskCard.length = 3, the 2nd last index is 1;
-          const numElementsForHeight = taskCards.slice(0, taskCards.length - 2).length;
+    if (!! this.milestones && !this.lineDrawned) {
+      const numMilestones = this.milestones.length;
+      const taskCards = [ ...this.milestonesConnectorDiv.nativeElement.parentElement.children ]
+        .filter((child) => child.classList.contains('task-card'));
+      if (taskCards.length > 1 && numMilestones > 1) {
+        // we want the height up to the 2nd last element
+        // - 1 for 0 index conversion. i.e. taskCard.length = 3, the 2nd last index is 1;
+        const numElementsForHeight = taskCards.slice(0, taskCards.length - 2).length;
 
-          if (taskCards.length === numLevels) {
-            let cumulativeHeights = 0;
-            // get the heights for numElementsForHeights inclusive i.e. both 0 and 1 - from length = 2
-            for (let i = 0; i <= numElementsForHeight; i++ ) {
-              cumulativeHeights += taskCards[i].offsetHeight;
-            }
-            this.levelConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
+        if (taskCards.length === numMilestones) {
+          let cumulativeHeights = 0;
+          // get the heights for numElementsForHeights inclusive i.e. both 0 and 1 - from length = 2
+          for (let i = 0; i <= numElementsForHeight; i++) {
+            cumulativeHeights += taskCards[i].offsetHeight;
           }
+          this.milestonesConnectorDiv.nativeElement.style.height = `${cumulativeHeights}px`;
         }
-        // else there is only 1 level, don't make a line
       }
-    );
+      this.lineDrawned = true;
+      // else there is only 1 level, don't make a line
+    }
   }
 
   public ngOnInit(): void {
+
     this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
       map((params: ParamMap) => params.get('id')),
       switchMap((cid: string) => {
           const campaignId: number = Number.parseInt(cid, 10);
           return forkJoin(
-            // this.campaignService.getCampaign(campaignId),
-            of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress && campaign.id === campaignId)[0]),
-            // this.campaignService.getCampaignOutcomes(campaignId),
-            of(mockCampaignOutcomes),
-            // this.questService.getQuestLevel(campaignId),
-            of(mockCampaignLevels.filter(level => level.campaignId === campaignId)),
-            // this.questService.getQuestFromCampaign(campaignId)
-            of(mockProgressCampaigns.filter(progress => progress.campaignId === campaignId))
+            this.campaignService.getCampaign(campaignId),
+            this.progressCampaignService.getCampaignProgressMilestones(campaignId),
+            this.progressCampaignService.getCampaignTotalProgress(campaignId),
           );
         }
       ),
-      switchMap(([campaign, outcomes, levels, progress]: [ICampaign, ICampaignOutcome[], IProgressLevel[], IProgressCampaign[]]) => {
-        this.taskTotalLen = levels.length;
-        if (progress && progress.length > 0) {
-          this.questState = progress[0].state ? progress[0].state : '';
-          // return this.questService.getQuestProgress(quests[0].id).pipe(
-          //   map((quest) => [campaign, outcomes, level, quest])
-          // );
-          return of([campaign, outcomes, levels, progress[0]]);
-        }
-        return of([campaign, outcomes, levels, EMPTY]);
-      }),
       takeUntil(this.destroy$)
-      ).subscribe(([campaign, outcomes, levels, progress]: [ICampaign, ICampaignOutcome[], IProgressLevel[], IProgressCampaign]) => {
-        this.updateProgessBar(progress);
-        this.progressConfig = campaign.displayProperties?.progressDetails;
-        this.campaign$ = of(campaign);
-        this.levels$ = of(levels);
-        this.activeLevel = levels.find(level => level.state === QuestState.inProgress);
-        this.progressCampaign = progress;
-        this.campaignOutcome$ = of(outcomes);
+    ).subscribe(([ campaign, milestones, currentUserProgress ]: [ ICampaign, IMilestone[], IProgressTotal ]) => {
 
+      this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints;
+      this.milestones = milestones;
+      this.campaign$ = of(campaign);
+      this.progressConfig = campaign.displayProperties?.progressDetails;
+
+      const [ finalMilestone ] = milestones.slice(-1);
+      if (!! finalMilestone) {
+        this.campaignProgress = this.currentUserPoints === 0 ? 0 : (this.currentUserPoints / finalMilestone.pointsRequired) * 100;
+      }
+
+      if (!! campaign.enrolled) {
+        this.isEnrolled = campaign.enrolled;
+        // get first item where points required points has not been met
+        const foundActiveMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+
+        if (foundActiveMilestone) {
+          this.activeMilestone = foundActiveMilestone;
+        } else {
+          console.error('active milestone not found');
+        }
+      }
     });
   }
 
@@ -122,15 +123,71 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewIn
     this.destroy$.complete();
   }
 
-  private updateProgessBar(progressCampaign: IProgressCampaign): void {
-    if (progressCampaign?.completedProgress) {
-      this.campaignProgress = progressCampaign.completedProgress;
-    }
-  }
-
   public outcomeClicked(outcome: ICampaignOutcome): void {
     if (outcome.type === CampaignOutcomeType.reward) {
       this.router.navigate([ '/reward-detail', outcome.id ]);
     }
+  }
+
+  public startProgress(campaignId: number): void {
+    this.campaignService.enrolIntoCampaign(campaignId)
+      .subscribe((isEnrolled: boolean) => {
+        if (isEnrolled) {
+          // set current active milestone
+          const foundActiveMilestone = this.milestones.find(milestone => this.currentUserPoints < milestone.pointsRequired);
+
+          if (foundActiveMilestone) {
+            this.activeMilestone = foundActiveMilestone;
+          } else {
+            console.error('active milestone not found');
+          }
+
+        } else {
+          this.notificationService.addSnack('Campaign enrolment failed');
+        }
+      }, error => {
+        this.notificationService.addSnack(error.error.message);
+      });
+  }
+
+  public milestoneCompletedProgressCalculation(milestone: IMilestone): number {
+
+    // past milestones
+    if (milestone.pointsRequired < this.currentUserPoints) {
+      return milestone.pointsRequired;
+    }
+
+    if (milestone.pointsRequired === this.activeMilestone?.pointsRequired && this.milestones.length > 0) {
+      const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === this.activeMilestone?.pointsRequired);
+      const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
+      return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
+        ? this.currentUserPoints
+        : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
+    }
+
+    if (milestone.pointsRequired === this.currentUserPoints) {
+      return 100;
+    }
+
+    return 0;
+  }
+
+
+  public milestoneRequiredProgressCalculation(milestone: IMilestone): number {
+
+    // past milestones
+    if (milestone.pointsRequired < this.currentUserPoints) {
+      return milestone.pointsRequired;
+    }
+
+    if (this.milestones.length > 0) {
+      const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === milestone.pointsRequired);
+      const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;
+      return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
+        ? milestone.pointsRequired
+        : milestone.pointsRequired - this.milestones[lastMilestoneIndex].pointsRequired;
+    }
+
+    return 0;
   }
 }
