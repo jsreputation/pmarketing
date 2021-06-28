@@ -1,6 +1,9 @@
 <div *ngIf="quiz" class="quiz-main-container"
   [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
   <div class="quiz-page">
+    <div *ngIf='isRefreshBrowser'>
+      <h1>HELLO GUY</h1>
+    </div>
     <div class="progress-container">
       <div class="progress">
         <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}} <strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
