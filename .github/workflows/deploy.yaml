@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: deploy
 on:
   push:
@@ -18,169 +19,47 @@ jobs:
 
       - name: Set environment variables
         run: |
-          REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
-          echo "GITHUB_REF: ${GITHUB_REF}"
-          if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
-            echo "APP=${BASH_REMATCH[1]}" >> "${GITHUB_ENV}"
-            echo "TARGET_ENV=${BASH_REMATCH[2]}" >> "${GITHUB_ENV}"
-            echo "SEM_VER=${BASH_REMATCH[4]}" >> "${GITHUB_ENV}"
-            echo "DOCKER_TAG=${GITHUB_REF##*/}" >> "${GITHUB_ENV}"
-          else
-            echo "Error! Unrecognized tag"
-            exit 1
-          fi
+          ./scripts/set_env_vars.sh
 
-      - name: Set env APIHOST
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+
+      # TODO: check the status of: https://github.com/actions/cache/issues/556
+      # Cache is broken for tagged deploy
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-${{ env.APP }}-${{ env.TARGET_ENV }}-buildx
+          restore-keys: |
+            ${{ runner.os }}-${{ env.APP }}-
+
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: "perxtech/microsite-apps-ng:${{ env.DOCKER_TAG }}"
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          build-args: |
+            app=${{ env.APP }}
+            apihost=${{ env.APIHOST }}
+            basehref=${{ env.BASE_HREF }}
+            preauth=${{ env.PREAUTH }}
+            iswhistler=${{ env.IS_WHISTLER }}
+            sourcetype=${{ env.SOURCE_TYPE }}
+            env=${{ env.TARGET_ENV }}
+            appbase=${{ env.APP_BASE }}
+            redirectdest=${{ env.REDIRECT_AFTER_LOGIN }}
+            perx_app_version=${{ env.PERX_APP_VERSION }}
+
+      - name: Move cache
         run: |
-          if [ ${TARGET_ENV} == 'staging' ]; then
-            APIHOST="https://api.perxtech.io"
-          elif [ ${TARGET_ENV} == 'production' ]; then
-            if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
-            then
-              APIHOST="https://api-hsbc.perxtech.net"
-            elif [ $APP == 'starhub' ]; then
-              APIHOST="https://api-starhub.perxtech.net"
-            else
-              APIHOST="https://api.perxtech.net"
-            fi
-          fi
-          echo APIHOST is ${APIHOST}
-          echo "APIHOST=${APIHOST}" >> "${GITHUB_ENV}"
-
-      - name: Set env PREAUTH
-        run: |
-          if [ $APP == 'prudential' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
-          then
-            PREAUTH="true"
-          else
-            PREAUTH="false"
-          fi
-          echo PREAUTH is ${PREAUTH}
-          echo "PREAUTH=${PREAUTH}" >> "${GITHUB_ENV}"
-
-      - name: Set env BASE_HREF
-        run: |
-          if [ $APP == 'hsbc' ]
-          then
-            BASE_HREF="/site/hsbc/collect2/"
-          elif [ $APP == 'hsbc-rewards' ]
-          then
-            BASE_HREF="/site/hsbc/rewardscatalogue/"
-          elif [ $APP == 'hsbc-xmas' ]
-          then
-            BASE_HREF="/site/hsbc/xmas/"
-          elif [ $APP == 'dbshk-agent' ]
-          then
-            BASE_HREF="/treasures/emgm-poc/"
-          else
-            BASE_HREF="/"
-          fi
-          echo BASE_HREF is ${BASE_HREF}
-          echo "BASE_HREF=${BASE_HREF}" >> "${GITHUB_ENV}"
-
-      - name: Set IS_WHISTLER to false
-        run: echo "IS_WHISTLER=false" >> "${GITHUB_ENV}"
-
-      - name: Set PERX_APP_VERSION
-        run: echo "PERX_APP_VERSION=${APP}@${SEM_VER}:${GITHUB_SHA}" >> "${GITHUB_ENV}"
-
-      - name: Set env SOURCE_TYPE
-        run: |
-          if [ $APP == 'hsbc' ]
-          then
-            SOURCE_TYPE="hsbc-collect2"
-          elif [ $APP == 'hsbc-rewards' ]
-          then
-            SOURCE_TYPE="hsbc-rewards"
-          elif [ $APP == 'hsbc-xmas' ]
-          then
-            SOURCE_TYPE="hsbc-xmas"
-          elif [ $APP == 'hsbcph-blackcomb' ]
-          then
-            SOURCE_TYPE="hsbc-rewards"
-          fi
-          echo SOURCE_TYPE is ${SOURCE_TYPE}
-          echo "SOURCE_TYPE=${SOURCE_TYPE}" >> "${GITHUB_ENV}"
-
-      - name: Set env REDIRECT_AFTER_LOGIN
-        run: |
-          if [ $APP == 'all-it' ] || \
-            [ $APP == 'bdo' ] || \
-            [ $APP == 'feature-demo' ] || \
-            [ $APP == 'globeathome' ] || \
-            [ $APP == 'globeone' ] || \
-            [ $APP == 'megaworld' ] || \
-            [ $APP == 'partners-demo' ] || \
-            [ $APP == 'perx-demo' ] || \
-            [ $APP == 'perx-demo2' ] || \
-            [ $APP == 'perx-demo3' ] || \
-            [ $APP == 'perx-demo4' ] || \
-            [ $APP == 'petron-demo' ] || \
-            [ $APP == 'oracle-demo' ]
-          then
-            REDIRECT_AFTER_LOGIN="/home"
-          elif [ $APP == 'blackcomb' ]
-          then
-            REDIRECT_AFTER_LOGIN="/wallet"
-          fi
-          echo REDIRECT_AFTER_LOGIN is ${REDIRECT_AFTER_LOGIN}
-          echo "REDIRECT_AFTER_LOGIN=${REDIRECT_AFTER_LOGIN}" >> "${GITHUB_ENV}"
-
-      - name: Transform env APP
-        run: |
-          if [ $APP == 'hsbc-xmas' ]
-          then
-            APP="hsbc"
-          elif [ $APP == 'perx-demo2' ] || [ $APP == 'perx-demo3' ] || [ $APP == 'perx-demo4' ]
-          then
-            APP="perx-demo"
-          fi
-          echo Final APP is ${APP}
-          echo "APP=${APP}" >> "${GITHUB_ENV}"
-
-      - name: Set env APP_BASE
-        run: |
-          if [ $APP == 'bdo' ] || \
-          [ $APP == 'daiichi-dlvn' ] || \
-          [ $APP == 'feature-demo' ] || \
-          [ $APP == 'globeathome' ] || \
-          [ $APP == 'globeone' ] || \
-          [ $APP == 'hsbcph-blackcomb' ] || \
-          [ $APP == 'hsbcvn' ] || \
-          [ $APP == 'hoolah' ] || \
-          [ $APP == 'johnsen360' ] || \
-          [ $APP == 'megaworld' ] || \
-          [ $APP == 'oracle-demo' ] || \
-          [ $APP == 'partners-demo' ] || \
-          [ $APP == 'perx-demo' ] || \
-          [ $APP == 'petron-demo' ] || \
-          [ $APP == 'razer' ] || \
-          [ $APP == 'techfis' ] || \
-          [ $APP == 'zeal' ]
-          then
-            APP_BASE="blackcomb"
-          else
-            APP_BASE=$APP
-          fi
-          echo APP_BASE is ${APP_BASE}
-          echo "APP_BASE=${APP_BASE}" >> "${GITHUB_ENV}"
-
-      - name: Set env APP_ENV
-        run: |
-          APP_ENV=$TARGET_ENV
-          echo APP_ENV is ${APP_ENV}
-          echo "APP_ENV=${APP_ENV}" >> "${GITHUB_ENV}"
-
-      - name: Install skaffold
-        env:
-          SKAFFOLD_VERSION: 1.17.2
-        run: |
-          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64
-          chmod +x skaffold
-          sudo mv skaffold /usr/local/bin
-
-      - name: Docker build
-        run: skaffold build
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
     name: Deploy
@@ -218,7 +97,7 @@ jobs:
 
       - name: Login to Dockerhub
         run: |
-          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER}} --password-stdin
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
       - name: Generate kubeconfig
         uses: azure/k8s-set-context@v1
@@ -230,35 +109,27 @@ jobs:
         run: |
           kubectl config use-context ${TARGET_ENV}
 
-      - name: Install sops
-        env:
-          SOPS_VERSION: 3.5.0
-        run: |
-          curl -LsS  https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb -o sops.deb && \
-          sudo dpkg -i sops.deb
-
-      - name: Install helm
-        env:
-          HELM_VERSION: 3.2.4
-        run: |
-          curl -LsSO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
-          tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
-          sudo mv linux-amd64/helm /usr/local/bin/helm
-          helm repo add perx https://chartmuseum.perxtech.io --username perx --password ${{ secrets.HELM_PASSWORD }}
-          helm repo update
-
-      - name: Install skaffold
-        env:
-          SKAFFOLD_VERSION: 1.17.2
-        run: |
-          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64
-          chmod +x skaffold
-          sudo mv skaffold /usr/local/bin
-
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
+        run: |
+          echo "Deploying ${APP}"
+          make deploy
+
+      # TODO: Below is temporary deploy to staging-a account. TO be removed once migration is finished.
+      - name: Set kube context (staging-a)
+        if: ${{ env.TARGET_ENV }} == "staging"
+        run: |
+          kubectl config use-context staging-a
+
+      - name: Deploy (staging-a)
+        if: ${{ env.TARGET_ENV }} == "staging"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
         run: |
           echo "Deploying ${APP}"
           make deploy

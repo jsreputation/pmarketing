@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  CampaignOutcomeType,
   ICampaign,
-  IQuestService,
-  IQuest,
-  IQuestTask,
-  QuestState,
-  NotificationService,
-  ICampaignService,
-  QuestProperties,
   ICampaignOutcome,
-  CampaignOutcomeType
+  ICampaignService,
+  IQuest,
+  IQuestService,
+  IQuestTask,
+  NotificationService,
+  QuestProperties,
+  QuestState
 } from '@perxtech/core';
-import { switchMap, filter, map, takeUntil } from 'rxjs/operators';
-import { Observable, forkJoin, of, EMPTY, Subject } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { EMPTY, forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { oc } from 'ts-optchain';
 
@@ -86,7 +86,7 @@ export class QuestComponent implements OnInit, OnDestroy {
   }
 
   public startQuest(campaignId: number): void {
-    this.questService.postEnrollQuest(campaignId).pipe(
+    this.campaignService.enrolIntoCampaign(campaignId).pipe(
       switchMap((isEnrolled: boolean) => {
         if (isEnrolled) {
           this.isEnrolled = true;

@@ -1,32 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  map,
-  tap,
-} from 'rxjs/operators';
+import { Observable, of, } from 'rxjs';
+import { map, tap, } from 'rxjs/operators';
 
 import {
-  IWCampaignAttributes,
-  IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
+  IJsonApiListPayload,
+  IWCampaignAttributes,
   WCampaignStatus,
   WEngagementType,
 } from '@perxtech/whistler';
 
-import {
-  ICampaign,
-  CampaignType,
-  CampaignState,
-  IReferral,
-  ICampaignOutcome
-} from './models/campaign.model';
-import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
+import { CampaignState, CampaignType, ICampaign, ICampaignOutcome, IReferral } from './models/campaign.model';
+import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
 
@@ -170,4 +158,10 @@ export class WhistlerCampaignService implements ICampaignService {
   public getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]> {
     throw new Error('Method not implemented.');
   }
+
+  // @ts-ignore
+  public enrolIntoCampaign(campaignId: number): Observable<boolean> {
+    throw new Error('Method not implemented.');
+  };
+
 }

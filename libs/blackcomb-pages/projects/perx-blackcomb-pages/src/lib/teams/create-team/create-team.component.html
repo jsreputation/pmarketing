@@ -1,4 +1,4 @@
-<div class="create-team-page-container" *ngIf="campaign$ | async as campaign">
+<div class="create-team-page-container" *ngIf="campaign">
   <div class="create-team-content-container">
     <img [src]="landingPageConfig?.media.bannerImage" *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Create a team'">
     <ng-template #defaultImgTemplate>
@@ -10,24 +10,27 @@
       </svg>
     </ng-template>
     <div class="create-team-content">
-      <form [formGroup]="createTeamForm" (ngSubmit)="createTeam()">
+      <form class="create-form" [formGroup]="createTeamForm">
         <div class="text-block">
-          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
-          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.PAGE_TITLE' | translate }}</p>
         </div>
-        <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Name</mat-label>
-          <input matInput formControlName="teamName">
+        <div class="text-block">
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_HEADING' | translate }}</p>
+          <p class="subtitle">{{teamUserNameSubtitle}}</p>
+        </div>
+        <mat-form-field [appearance]="!campaign ? 'fill' : 'standard'" class="full-width__input">
+          <mat-label>{{ 'TEAMS.CREATE_PAGE.TEAM_NAME_FORM_LABEL' | translate }}</mat-label>
+          <input matInput formControlName="teamName" [readonly]="!!!campaign">
           <mat-error *ngIf="createTeamForm.get('teamName')!.hasError('required')">
             Team name is <strong>required</strong>
           </mat-error>
         </mat-form-field>
         <div class="text-block">
-          <p class="title">{{ 'TEAMS.CREATE_TEAM_HEADING' | translate }}</p>
-          <p class="subtitle">{{ 'TEAMS.CREATE_TEAM_SUBHEADING' | translate }}</p>
+          <p class="title">{{ 'TEAMS.CREATE_PAGE.USERNAME_HEADING' | translate }}</p>
+          <p class="subtitle">{{ 'TEAMS.CREATE_PAGE.USERNAME_SUBHEADING' | translate }}</p>
         </div>
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Username</mat-label>
+          <mat-label>{{ 'TEAMS.CREATE_PAGE.USERNAME_FORM_LABEL' | translate }}</mat-label>
           <input matInput formControlName="teamUserName">
           <mat-error *ngIf="createTeamForm.get('teamUserName')?.hasError('required')">
             Username is <strong>required</strong>
@@ -37,8 +40,8 @@
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" type="submit" mat-flat-button>
-      {{ 'TEAMS.CREATE_TEAM' | translate }}
+    <button color="primary" (click)="createTeam()" [disabled]="!createTeamForm.valid" mat-flat-button>
+      {{ 'TEAMS.CREATE_PAGE.CTA' | translate }}
     </button>
   </div>
 </div>

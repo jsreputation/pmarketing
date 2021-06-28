@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { IQuestService } from './quest.service';
 import { IQuest, IQuestTask } from './quest.model';
-import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { Observable, throwError, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -53,12 +53,6 @@ export class V4QuestService implements IQuestService {
         map((quest: IV4Quest) => V4QuestService.v4QuestToQuest(quest)));
   }
 
-
-  public  postEnrollQuest(campaignId: number): Observable<boolean> {
-    return this.http.post(`${this.hostName}/v4/campaigns/${campaignId}/enrol`, null, {observe : 'response'} ).pipe(
-      map((response: HttpResponse<any>) => response.status === 200 ? true : false ) ,
-      catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error)));
-  }
 
    private static v4QuestToQuest(quest: IV4Quest): IQuest {
 

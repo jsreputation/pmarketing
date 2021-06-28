@@ -173,4 +173,8 @@ export class SignupComponent implements OnInit, PageAppearence {
   public goToLogin(): void {
     this.router.navigateByUrl('/login');
   }
+
+  public goTermAndCondition(): void {
+    this.router.navigateByUrl('/c/tnc');
+  }
 }

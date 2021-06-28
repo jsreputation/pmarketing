@@ -95,14 +95,14 @@ const appConfigFile = `{
 async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile], [rssFeedsPath, rssFeeds]],
   (item: [[string, string], [string, string]], callback: any) => {
 
-    console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
-    console.log(colors.grey(item[1]));
+    // console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
+    // console.log(colors.grey(item[1]));
 
     writeFile(item[0], item[1], (err: any) => {
       if (err) {
         throw console.error(err);
       }
-      console.log(colors.magenta(`file generated correctly at ${item[0]} \n`));
+      // console.log(colors.magenta(`file generated correctly at ${item[0]} \n`));
       callback();
     });
   });
