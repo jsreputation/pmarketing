@@ -286,6 +286,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
         center,
         radius
       });
+
+      google.maps.event.addListener(this.searchRadiusCircle, 'click', (_) => {
+        this.onCloseMerchantDetailPopup();
+      });
     }
   }
 
