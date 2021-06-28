@@ -22,16 +22,17 @@
           <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
           <div class="merchant include-heart">
             <p>{{current.merchantName}}</p>
-            <mat-icon class="show-pointer heart-icon"
-                      *ngIf="showRewardFavButton"
-                      (click)="rewardFavoriteHandler(current)">
-              {{current?.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
           </div>
           <div class="reward">
             <h1>{{current.name}}</h1>
             <div *ngIf="upcoming" class="macaron-container">
               <span class="macaron">Upcoming</span>
             </div>
+
+            <mat-icon class="show-pointer heart-icon"
+                      *ngIf="showRewardFavButton"
+                      (click)="rewardFavoriteHandler(current)">
+              {{current?.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
           </div>
           <span>
             <p class="price">{{currentPrice?.points ? currentPrice?.points : 0}}<p>

@@ -81,18 +81,18 @@
 
       .merchant {
         margin-top: 1rem;
+      }
+
+      .reward {
+        display: flex;
         position: relative;
         z-index: 1;
 
         .heart-icon {
           position: absolute;
           right: 0;
-          top: 3rem;
+          top: 0.4rem;
         }
-      }
-
-      .reward {
-        display: flex;
 
         .macaron-container {
           margin-left: 1rem;
