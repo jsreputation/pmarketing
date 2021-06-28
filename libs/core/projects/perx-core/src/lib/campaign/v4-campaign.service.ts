@@ -33,6 +33,7 @@ import { Cacheable } from 'ngx-cacheable';
 import { QuestDisplayProperties } from '../quest/v4-quest.service';
 import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-campaign.service';
+import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 
 interface IV4Image {
   type: string;
@@ -55,6 +56,7 @@ type DisplayProperties = TreeDisplayProperties |
   QuizDisplayProperties |
   QuestDisplayProperties |
   IV4ProgressDisplayProperties |
+  IV4TeamsDisplayProperties |
   StampCampaignDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
@@ -300,6 +302,35 @@ export class V4CampaignService implements ICampaignService {
       }
     }
 
+    if (dp && (dp as IV4TeamsDisplayProperties).teams) {
+      const v4TeamsProps = (dp as IV4TeamsDisplayProperties).teams;
+
+      if (displayProperties === undefined) {
+        displayProperties = {
+          teamsDetails: {}
+        };
+      }
+      if (v4TeamsProps?.landing_page) {
+        displayProperties.teamsDetails!.landingPage = {
+          preEnrolmentMessage: v4TeamsProps.landing_page.pre_enrolment_message,
+          stampsEarnMessage: v4TeamsProps.landing_page.stamps_earn_message,
+          buttonText: v4TeamsProps.landing_page.button_text,
+          buttonTextSecondary: v4TeamsProps.landing_page.button_text_secondary
+        }
+      }
+
+      if (v4TeamsProps?.join_page) {
+        displayProperties.teamsDetails!.joinPage = {
+          description: v4TeamsProps.join_page.description
+        }
+      }
+      if (v4TeamsProps?.invite_message) {
+        displayProperties.teamsDetails!.inviteMessage = {
+          description: v4TeamsProps.invite_message.description,
+          codeBlurb: v4TeamsProps.invite_message.code_blurb
+        }
+      }
+    }
 
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
