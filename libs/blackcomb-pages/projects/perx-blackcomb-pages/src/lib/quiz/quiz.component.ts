@@ -1,23 +1,12 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  ActivatedRoute, NavigationStart,
-  ParamMap,
-  Router
-} from '@angular/router';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   IAnswerResult,
   IPoints,
   IPopupConfig,
   IQAnswer,
   IQuiz,
+  IQuizResultOutcome,
   ISwipePayload,
   ITracker,
   LocaleIdFactory,
@@ -28,25 +17,10 @@ import {
   QuizService,
   SwipeConfiguration,
   SwipeListType,
-  TokenStorage,
-  IQuizResultOutcome
+  TokenStorage
 } from '@perxtech/core';
-import {
-  BehaviorSubject,
-  iif,
-  Observable,
-  of,
-  Subject, Subscription,
-  throwError
-} from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { BehaviorSubject, iif, Observable, of, Subject, Subscription, throwError } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 export const browserRefresh = false;
