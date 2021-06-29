@@ -84,7 +84,6 @@ describe('SignupComponent', () => {
 
     it('should call addSnack if terms and conditions is accepted and receive marketing communications NOT accepted', () => {
       component.signupForm.controls.accept_terms.setValue(true);
-      component.signupForm.controls.accept_marketing.setValue(false);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
@@ -96,7 +95,6 @@ describe('SignupComponent', () => {
       component.signupForm.controls.password.setValue(1234);
       component.signupForm.controls.confirmPassword.setValue(1234);
       component.signupForm.controls.accept_terms.setValue(true);
-      component.signupForm.controls.accept_marketing.setValue(true);
       component.signupForm.controls.mobileNo.setValue(1234);
       component.signupForm.controls.countryCode.setValue(852);
       // component.signupForm.controls.name.setValue('testUser');
