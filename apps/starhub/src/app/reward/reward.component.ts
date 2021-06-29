@@ -67,11 +67,7 @@ export class RewardComponent implements OnInit {
           });
         }
 
-        this.macaron = this.macaronService.getMacaron(reward);
-        this.isRewardsDetailsFetched = true;
-        if (this.macaron !== null) {
-          this.isButtonEnable = this.macaron.isButtonEnabled;
-        }
+        this.updateRewardStatus();
 
         if (reward.loyalty && reward.loyalty.length) {
           this.isButtonEnable = reward.loyalty.some((tier: ILoyaltyTierInfo) => tier.attained && !tier.sneakPeek);
@@ -124,6 +120,19 @@ export class RewardComponent implements OnInit {
   }
 
   private refreshReward(): void {
-    this.rewardsService.getReward(this.reward.id);
+    this.rewardsService.getReward(this.reward.id).subscribe(
+      (reward) => {
+        this.reward = reward;
+        this.updateRewardStatus()
+      }
+    );
+  }
+
+  private updateRewardStatus(): void {
+    this.macaron = this.macaronService.getMacaron(this.reward);
+    this.isRewardsDetailsFetched = true;
+    if (this.macaron !== null) {
+      this.isButtonEnable = this.macaron.isButtonEnabled;
+    }
   }
 }
