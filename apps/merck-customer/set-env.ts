@@ -14,9 +14,9 @@ const displayProperties = `"displayProperties": {
   "account": {
       "pages": [
           {
-              "key": "privacy-policy",
-              "title": "PRIVACY_POLICY",
-              "content_url": "${process.env.PRIVACY_POLICY_URL ? process.env.PRIVACY_POLICY_URL : ''}"
+              "key": "tnc",
+              "title": "TERMS_AND_CONDITIONS",
+              "content_url": "${process.env.TNC_URL ? process.env.TNC_URL : ''}"
           }
       ]
   }
