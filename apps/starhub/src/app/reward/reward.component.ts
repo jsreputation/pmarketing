@@ -99,17 +99,18 @@ export class RewardComponent implements OnInit {
               (message: string) => {
                 if (response.status === 401) {
                   this.router.navigate([ '/error' ]);
-                }
-                if (response.error.code === 4103) { // rewards run out due to reward limits
-                  this.refreshReward(); // refresh the reward to show fully redeemed
-                  this.isButtonEnable = false;
-                  this.notificationService.addSnack(message);
                 } else {
-                  this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
-                  this.notificationService.addSnack('Sorry! Could not save reward.');
+                  if (response.error.code === 4103) { // rewards run out due to reward limits
+                    this.refreshReward(); // refresh the reward to show fully redeemed
+                    this.isButtonEnable = false;
+                  } else {
+                    // change button back to enable which it originally is, before save is triggered
+                    this.isButtonEnable = true;
+                  }
+                  this.notificationService.addSnack(message);
                 }
-            }
-          )
+              }
+            );
         }
       }
     );
