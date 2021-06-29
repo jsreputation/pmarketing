@@ -82,15 +82,6 @@ describe('SignupComponent', () => {
       expect(notificationServiceSpy).toHaveBeenCalledWith('SIGN_UP_PAGE.ACCEPT_TNC');
     });
 
-    it('should call addSnack if terms and conditions is accepted and receive marketing communications NOT accepted', () => {
-      component.signupForm.controls.accept_terms.setValue(true);
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
-      const notificationServiceSpy = spyOn(notificationService, 'addSnack');
-      component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('SIGN_UP_PAGE.ACCEPT_MARKETING');
-    });
-
     it('should able to signup', fakeAsync(() => {
       component.signupForm.controls.password.setValue(1234);
       component.signupForm.controls.confirmPassword.setValue(1234);
