@@ -12,6 +12,8 @@ import {
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { IMacaron, MacaronService } from '../services/macaron.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
 @Component({
   selector: 'app-reward',
@@ -34,7 +36,8 @@ export class RewardComponent implements OnInit {
     private notificationService: NotificationService,
     private analyticsService: AnalyticsService,
     private macaronService: MacaronService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private errorMessageService: ErrorMessageService
   ) { }
 
   public ngOnInit(): void {
@@ -92,12 +95,18 @@ export class RewardComponent implements OnInit {
     this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id).subscribe(
       () => this.router.navigate(['/home/vouchers']),
-      (error) => {
-        this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
+      (response) => {
         this.loadingSubmit = false;
-        this.notificationService.addSnack('Sorry! Could not save reward.');
-        if (error.status === 401) {
-          this.router.navigate(['/error']);
+        if (response instanceof HttpErrorResponse) {
+          this.errorMessageService.getErrorMessageByErrorCode(response.error.code, response.error.message)
+            .subscribe(
+              (message: string) => {
+                this.notificationService.addSnack(message);
+                if (response.status === 401) {
+                  this.router.navigate([ '/error' ]);
+                }
+              }
+          )
         }
       }
     );
