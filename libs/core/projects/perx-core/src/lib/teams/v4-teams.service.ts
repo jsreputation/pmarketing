@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ConfigService, IConfig, TeamsService } from '@perxtech/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
 import { ITeam, TeamState } from './teams.model';
 import { of, throwError } from 'rxjs';
+import { TeamsService } from '../teams/teams.service';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4Team {
   id: number;
