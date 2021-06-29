@@ -81,6 +81,7 @@ interface IV4Flags {
     show_reward_nav_button?: boolean;
     show_rewards_on_homepage?: boolean;
     show_stamp_campaigns_on_home_page?: boolean;
+    show_stamp_teams?: boolean;
     show_subtitle_login?: boolean;
     show_survey_on_home_page?: boolean;
     show_transaction_history_on_accounts_page?: boolean;
@@ -198,6 +199,7 @@ export class V4SettingsService extends SettingsService {
       showRewardNavButton: data.json_value.show_reward_nav_button,
       showRewardsOnHomepage: data.json_value.show_rewards_on_homepage,
       showStampCampaignsOnHomePage: data.json_value.show_stamp_campaigns_on_home_page,
+      showStampTeams: data.json_value.show_stamp_teams,
       showSubtitleLogin: data.json_value.show_subtitle_login,
       showSurveyOnHomePage: data.json_value.show_survey_on_home_page,
       showTransactionHistoryOnAccountsPage: data.json_value.show_transaction_history_on_accounts_page,
