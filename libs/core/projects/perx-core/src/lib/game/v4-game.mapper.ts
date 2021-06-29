@@ -1,12 +1,13 @@
 // just the mapper remove the various switches
-import { IGame, IGameOutcome, IPinata, IScratch, ISpin, ITree, GameType as TYPE } from './game.model';
-import { Outcome, Game, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, TreeDisplayProperties } from './v4-game.service';
+import { IGame, IGameOutcome, IPinata, IScratch, ISpin, ITree, IPlinko, GameType as TYPE } from './game.model';
+import { Outcome, Game, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, TreeDisplayProperties,
+   PlinkoDisplayProperties } from './v4-game.service';
 import { oc } from 'ts-optchain';
 import { patchUrl } from '../utils/patch-url.function';
 
 export abstract class GameV4Mapper {
   public abstract v4MapToMap(game: Game): IGame;
-  public abstract default(game: Game): ITree | IPinata | IScratch | ISpin;
+  public abstract default(game: Game): ITree | IPinata | IScratch | ISpin | IPlinko;
   // see if possible ->
   protected mapCommonPropertiesHelper(game: Game): Partial<IGame> {
     const texts: { [key: string]: string } = {};
@@ -216,5 +217,34 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
       background: ''
     };
   }
+}
+
+export class PlinkoV4ToV4Mapper extends GameV4Mapper {
+  public v4MapToMap(game: Game): IGame {
+    const type = TYPE.plinko;
+    const dpPlinko: PlinkoDisplayProperties = game.display_properties as PlinkoDisplayProperties;
+    const defaultPlinko = this.default();
+    const config: IPlinko = {
+      ...defaultPlinko,
+     backgroundImage: dpPlinko.background_image?.value.image_url || dpPlinko.background_image?.value.file,
+     targetImage: dpPlinko.target_image?.value.image_url || dpPlinko.target_image?.value.file,
+     stageColor: dpPlinko.stage_color,
+     ballColor: dpPlinko.ball_color
+    };
+    const commonProps = this.mapCommonPropertiesHelper(game);
+    return {
+      type,
+      ...commonProps,
+      config
+    } as IGame;
+  }
+  public default(): IPlinko {
+    return {
+      backgroundImage: '',
+      targetImage: '',
+      stageColor: '',
+      ballColor: ''
+    };
+   }
 }
 

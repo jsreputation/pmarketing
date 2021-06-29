@@ -153,7 +153,8 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
-  IEngagementTransaction
+  IEngagementTransaction,
+  IPlinko
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -163,6 +164,7 @@ export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.compo
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 export { SnakeGameComponent } from './lib/game/snake/snake.component';
 export { MineSweeperComponent } from './lib/game/mine-sweeper/mine-sweeper.component';
+export { PlinkoComponent } from './lib/game/plinko/plinko.component';
 /**
  * Profile
  */
