@@ -244,8 +244,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (campaign.type === 'stamp' && campaign.teamSize! > 0) {
-      this.router.navigate([`campaign-welcome/${campaign.id}`]);
+    if (this.appRemoteFlags.showStampTeams &&
+      campaign.type === 'stamp' &&
+      campaign.teamSize! > 0) {
+      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
       return;
     }
 
