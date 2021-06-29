@@ -11,6 +11,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { TeamsProperties } from '../../../../../../../core/projects/perx-core/src/lib/campaign/models/campaign.model';
 
 @Component({
   selector: 'perx-blackcomb-pages-join-team',
@@ -23,6 +24,7 @@ export class JoinTeamComponent implements OnInit {
   public campaign$: Observable<ICampaign>;
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
+  public teamsConfig: TeamsProperties | undefined;
   public joinTeamForm: FormGroup;
   public campaignId: number;
 
@@ -49,6 +51,7 @@ export class JoinTeamComponent implements OnInit {
         this.campaign$ = of(campaign);
         this.campaignId = campaign.id;
         this.landingPageConfig = campaign.displayProperties?.landingPage;
+        this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.initForm();
       }
     );
