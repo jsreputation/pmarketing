@@ -116,6 +116,7 @@ export interface PlinkoDisplayProperties extends GameProperties {
   target_image?: Asset;
   stage_color?: string;
   ball_color?: string;
+  game_duration?: number;
 }
 
 export interface Game {

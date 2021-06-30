@@ -229,7 +229,8 @@ export class PlinkoV4ToV4Mapper extends GameV4Mapper {
      backgroundImage: dpPlinko.background_image?.value.image_url || dpPlinko.background_image?.value.file,
      targetImage: dpPlinko.target_image?.value.image_url || dpPlinko.target_image?.value.file,
      stageColor: dpPlinko.stage_color,
-     ballColor: dpPlinko.ball_color
+     ballColor: dpPlinko.ball_color,
+     gameDuration: dpPlinko.game_duration
     };
     const commonProps = this.mapCommonPropertiesHelper(game);
     return {

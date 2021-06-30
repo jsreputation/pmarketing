@@ -12,7 +12,8 @@ const dummyIGame = {
     backgroundImage: '',
     targetImage: '',
     stageColor: '',
-    ballColor: ''
+    ballColor: '',
+    gameDuration: 3
   },
   texts: {
   },
