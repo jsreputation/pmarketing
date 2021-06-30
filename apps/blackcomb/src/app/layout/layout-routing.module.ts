@@ -144,6 +144,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard, LegacyRouteGuard]
       },
       {
+        path: "progress-campaign/:id",
+        "pathMatch": "full",
+        "redirectTo": "legacy-progress-campaign/:id"
+      },
+      {
         path: "progress/:id",
         loadChildren: () => import('../progress-campaign/progress-campaign.module').then((mod) => mod.ProgressCampaignModule),
         canActivate: [ProtectedGuard]
