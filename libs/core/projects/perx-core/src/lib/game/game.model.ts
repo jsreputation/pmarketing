@@ -119,7 +119,8 @@ export function defaultPlinko(): IPlinko {
     backgroundImage: '',
     targetImage: '',
     stageColor: '',
-    ballColor: ''
+    ballColor: '',
+    gameDuration: 3
   };
 }
 
@@ -175,6 +176,7 @@ export interface IPlinko {
   targetImage?: string;
   stageColor?: string;
   ballColor?: string;
+  gameDuration?: number;
 }
 export interface IPlayOutcome {
   vouchers?: IVoucher[];
