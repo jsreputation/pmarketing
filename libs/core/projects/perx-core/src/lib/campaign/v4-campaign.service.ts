@@ -307,7 +307,8 @@ export class V4CampaignService implements ICampaignService {
 
       if (displayProperties === undefined) {
         displayProperties = {
-          teamsDetails: {}
+          teamsDetails: {},
+          landingPage: {}
         };
       }
       if (v4TeamsProps?.landing_page) {
@@ -317,6 +318,22 @@ export class V4CampaignService implements ICampaignService {
           buttonText: v4TeamsProps.landing_page.button_text,
           buttonTextSecondary: v4TeamsProps.landing_page.button_text_secondary
         }
+
+        displayProperties.landingPage! = {
+          buttonText: {
+            text: v4TeamsProps.landing_page.button_text
+          },
+          buttonText2: {
+            text: v4TeamsProps.landing_page.button_text_secondary
+          },
+          body: {
+            text: v4TeamsProps.landing_page.stamps_earn_message
+          },
+          subHeading: {
+            text: v4TeamsProps.landing_page.pre_enrolment_message
+          }
+        }
+
       }
 
       if (v4TeamsProps?.join_page) {

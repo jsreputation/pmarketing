@@ -181,7 +181,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public nextSecondary(): void {
     if (this.campaign) {
       if (this.campaign.type === CampaignType.stamp) {
-        if (! this.campaign.teamSize || ! (this.campaign.teamSize > 0)) {
+        if (this.campaign.teamSize! > 0) {
           this.router.navigate([`teams/join/${this.campaign.id}`]);
           return;
         }
