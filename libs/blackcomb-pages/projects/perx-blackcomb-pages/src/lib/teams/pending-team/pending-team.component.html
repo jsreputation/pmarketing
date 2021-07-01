@@ -1,7 +1,7 @@
 <div class="pending-team-page-container" *ngIf="campaign$ | async as campaign">
   <div class="pending-team-content-container">
-    <img [src]="landingPageConfig?.media.bannerImage"
-         *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
+    <img [src]="landingPageConfig?.media?.bannerImage"
+         *ngIf="landingPageConfig?.media?.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
     <ng-template #defaultImgTemplate>
       <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>

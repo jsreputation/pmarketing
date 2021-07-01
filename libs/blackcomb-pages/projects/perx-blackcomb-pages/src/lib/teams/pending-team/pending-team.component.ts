@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { CampaignLandingPage, ICampaign, ICampaignService, NotificationService } from '@perxtech/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -35,9 +35,8 @@ export class PendingTeamComponent implements OnInit {
   public ngOnInit(): void {
     this.initTranslate();
     this.route.paramMap.pipe(
-      // filter((params: ParamMap) => params.has('id')),
-      // map((params: ParamMap) => params.get('id')),
-      map(() => '1421'),
+      filter((params: ParamMap) => params.has('id')),
+      map((params: ParamMap) => params.get('id')),
       switchMap((cid: string) => {
         const campaignId: number = Number.parseInt(cid, 10);
         return this.campaignService.getCampaign(campaignId);
