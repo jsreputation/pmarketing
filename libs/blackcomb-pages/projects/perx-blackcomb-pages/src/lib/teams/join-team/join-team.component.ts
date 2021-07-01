@@ -72,7 +72,7 @@ export class JoinTeamComponent implements OnInit {
       this.teamsService.joinATeamForCampaign(this.campaignId, teamCode).subscribe(
         (team: ITeam) => {
           if (team.id) {
-            this.router.navigate(['teams/pending']);
+            this.router.navigate([`teams/pending/${this.campaignId}`]);
           }
         },
         (err: HttpErrorResponse) => {
