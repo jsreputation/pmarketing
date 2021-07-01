@@ -63,6 +63,7 @@ export class JoinTeamComponent implements OnInit {
     });
   }
   public joinTeam(): void {
+    this.joinTeamForm.markAllAsTouched();
     if (this.joinTeamForm.valid){
       const teamCode = this.joinTeamForm.get('teamCode')!.value;
       this.teamsService.joinATeamForCampaign(this.campaignId, teamCode).subscribe(
