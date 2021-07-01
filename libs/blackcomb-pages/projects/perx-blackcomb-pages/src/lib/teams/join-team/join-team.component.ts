@@ -6,12 +6,12 @@ import {
   ICampaignService,
   ITeam,
   NotificationService,
+  TeamsProperties,
   TeamsService
 } from '@perxtech/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
-import { TeamsProperties } from '../../../../../../../core/projects/perx-core/src/lib/campaign/models/campaign.model';
 
 @Component({
   selector: 'perx-blackcomb-pages-join-team',
