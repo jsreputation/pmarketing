@@ -138,6 +138,12 @@
       "USERNAME_SUBHEADING": "Please generate a unique username for yourself",
       "USERNAME_FORM_LABEL": "Team Username",
       "CTA": "Create Team"
+    },
+    "JOIN_PAGE": {
+      "PAGE_TITLE": "Join a Team",
+      "TEAM_CODE_HINT": "Team Code",
+      "TEAM_CODE_HINT_ERROR": "Team Code is required",
+      "CTA": "Join Team"
     }
   }
 }

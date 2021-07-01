@@ -12,14 +12,14 @@
     </ng-template>
     <div class="join-team-content">
       <div class="text-block">
-        <p class="title">{{ 'TEAMS.JOIN_TEAM_HEADING' | translate }}</p>
+        <p class="title">{{ 'TEAMS.JOIN_PAGE.PAGE_TITLE' | translate }}</p>
       </div>
       <form class="join-form" [formGroup]="joinTeamForm">
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Code</mat-label>
+          <mat-label>{{'TEAMS.JOIN_PAGE.TEAM_CODE_HINT' | translate }}</mat-label>
           <input matInput formControlName="teamCode">
           <mat-error *ngIf="joinTeamForm.get('teamCode')!.hasError('required')">
-            Team Code is <strong>required</strong>
+            {{'TEAMS.JOIN_PAGE.TEAM_CODE_HINT_ERROR' | translate }}
           </mat-error>
         </mat-form-field>
 <!--        <mat-form-field appearance="standard" class="full-width__input">-->
@@ -37,7 +37,7 @@
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button color="primary" (click)="joinTeam()" mat-flat-button>
-      {{ 'TEAMS.JOIN_TEAM' | translate }}
+      {{'TEAMS.JOIN_PAGE.CTA' | translate }}
     </button>
   </div>
 </div>
