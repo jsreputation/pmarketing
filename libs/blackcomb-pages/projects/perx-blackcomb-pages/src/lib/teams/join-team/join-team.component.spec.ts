@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JoinTeamComponent } from './join-team.component';
-import { ICampaignService, TeamsService, UtilsModule } from '@perxtech/core';
+import { ErrorMessageService, ICampaignService, TeamsService, UtilsModule } from '@perxtech/core';
 import { of } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,10 @@ describe('JoinTeamComponent', () => {
     joinATeamForCampaign: () => of()
   };
 
+  const errorMessageServiceStub: Partial<ErrorMessageService> = {
+    getErrorMessageByErrorCode: () => of('')
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ JoinTeamComponent ],
@@ -37,8 +41,8 @@ describe('JoinTeamComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
-        { provide: TeamsService, useValue: teamsServiceStub }
-
+        { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: ErrorMessageService, useValue: errorMessageServiceStub }
       ]
     })
     .compileComponents();

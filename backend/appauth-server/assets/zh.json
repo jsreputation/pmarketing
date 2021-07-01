@@ -271,7 +271,8 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
-    "NOT_INVITED": "The user was not invited."
+    "NOT_INVITED": "The user was not invited.",
+    "INVALID_INVITE_CODE": "Invalid invite code"
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",
@@ -337,6 +338,12 @@
       "USERNAME_SUBHEADING": "Please generate a unique username for yourself",
       "USERNAME_FORM_LABEL": "Team Username",
       "CTA": "Create Team"
+    },
+    "JOIN_PAGE": {
+      "PAGE_TITLE": "Join a Team",
+      "TEAM_CODE_HINT": "Team Code",
+      "TEAM_CODE_HINT_ERROR": "Team Code is required",
+      "CTA": "Join Team"
     }
   }
 }
