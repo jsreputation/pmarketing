@@ -408,7 +408,8 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
-    "NOT_INVITED": "The user was not invited."
+    "NOT_INVITED": "The user was not invited.",
+    "INVALID_INVITE_CODE": "Invalid invite code"
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",

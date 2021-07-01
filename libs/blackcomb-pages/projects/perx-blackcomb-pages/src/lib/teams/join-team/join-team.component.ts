@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import {
   CampaignLandingPage,
+  ErrorMessageService,
   ICampaign,
   ICampaignService,
   ITeam,
@@ -12,6 +13,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-pages-join-team',
@@ -34,7 +36,8 @@ export class JoinTeamComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private campaignService: ICampaignService,
-    private teamsService: TeamsService
+    private teamsService: TeamsService,
+    private errorMessageService: ErrorMessageService
   ) { }
 
   public ngOnInit(): void {
@@ -72,10 +75,14 @@ export class JoinTeamComponent implements OnInit {
             this.router.navigate(['teams/pending']);
           }
         },
-        (err) => {
-          this.notificationService.addSnack(err.message);
+        (err: HttpErrorResponse) => {
+          this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+            .subscribe(
+              (errMessage: string) => {
+                this.notificationService.addSnack(errMessage);
+              });
         }
-      )
+      );
     }
   }
 }

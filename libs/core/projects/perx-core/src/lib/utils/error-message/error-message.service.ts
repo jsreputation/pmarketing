@@ -75,6 +75,8 @@ export class ErrorMessageService {
                     errorKey = 'ERRORS.NO_UNUSED_MOVES';
                 } else if (errMessage && errMessage.match(/balance/i)) {
                     errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
+                } else if (errMessage && errMessage.match(/Invalid invitation code/i)) {
+                  errorKey = 'ERRORS.INVALID_INVITE_CODE'
                 }
                 break;
             case 41:
