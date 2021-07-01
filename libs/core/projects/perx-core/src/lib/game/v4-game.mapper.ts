@@ -12,8 +12,8 @@ export abstract class GameV4Mapper {
   protected mapCommonPropertiesHelper(game: Game): Partial<IGame> {
     const texts: { [key: string]: string } = {};
     if (game.display_properties.header) {
-      texts.title = game.display_properties.header.value.title;
-      texts.subTitle = game.display_properties.header.value.description;
+      texts.title = game.display_properties.header?.value?.title;
+      texts.subTitle = game.display_properties.header?.value?.description;
       if (game.display_properties.header.header_colour) {
         texts.headerColour = game.display_properties.header.header_colour;
       }
