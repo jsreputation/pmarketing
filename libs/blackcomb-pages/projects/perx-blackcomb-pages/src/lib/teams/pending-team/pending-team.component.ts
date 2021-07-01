@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CampaignLandingPage, ICampaign, ICampaignService, NotificationService } from '@perxtech/core';
+import { CampaignLandingPage, ICampaign, ICampaignService, NotificationService, TeamsProperties } from '@perxtech/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +23,7 @@ export class PendingTeamComponent implements OnInit {
   public shareText: string;
   public pendingTeamForm: FormGroup;
   public teamUsername: string;
+  public teamsConfig: TeamsProperties | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -35,8 +36,8 @@ export class PendingTeamComponent implements OnInit {
   public ngOnInit(): void {
     this.initTranslate();
     this.route.paramMap.pipe(
-      filter((params: ParamMap) => params.has('id')),
-      map((params: ParamMap) => params.get('id')),
+      filter((params: ParamMap) => params.has('campaignId')),
+      map((params: ParamMap) => params.get('campaignId')),
       switchMap((cid: string) => {
         const campaignId: number = Number.parseInt(cid, 10);
         return this.campaignService.getCampaign(campaignId);
@@ -46,6 +47,7 @@ export class PendingTeamComponent implements OnInit {
       (campaign: ICampaign) => {
         this.campaign$ = of(campaign);
         this.landingPageConfig = campaign.displayProperties?.landingPage;
+        this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = ''; // campaign.displayProperties.pendingPage.body.text;
         this.teamUsername = 'John Doe';
         this.initForm(); // switchmap(() => teamservice.getTeam());
