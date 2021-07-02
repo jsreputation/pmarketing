@@ -5,22 +5,23 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  AuthenticationService,
+  ConfigService,
   ICampaignService,
+  IGameService,
   InstantOutcomeService,
+  IQuestService,
+  IReward,
   LoyaltyModule,
-  RewardsModule,
-  UtilsModule,
-  RewardsService,
   LoyaltyService,
   ProfileService,
-  IGameService,
-  ThemesService,
-  ConfigService,
-  IReward,
-  AuthenticationService,
-  TokenStorage,
+  RewardsModule,
+  RewardsService,
   SettingsService,
-  IQuestService
+  TeamsService,
+  ThemesService,
+  TokenStorage,
+  UtilsModule
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -105,6 +106,10 @@ describe('HomeComponent', () => {
     claim: () => of([])
   };
 
+  const teamsServiceStub: Partial<TeamsService> = {
+    getTeam: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
@@ -138,6 +143,7 @@ describe('HomeComponent', () => {
         },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: IQuestService, useValue: questServiceStub },
+        { provide: TeamsService, useValue: teamsServiceStub },
       ]
     })
       .compileComponents();

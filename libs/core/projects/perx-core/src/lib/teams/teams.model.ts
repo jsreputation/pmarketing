@@ -4,6 +4,7 @@ export interface ITeam {
   campaignId: number;
   invitationCode: string;
   state: TeamState;
+  joinedMembersCount: number;
 }
 
 export enum TeamState {

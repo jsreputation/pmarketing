@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { CampaignLandingPage, ICampaign, ICampaignService, NotificationService } from '@perxtech/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import {
+  CampaignLandingPage,
+  ICampaign,
+  ICampaignService,
+  ITeam,
+  NotificationService,
+  TeamsProperties,
+  TeamsService
+} from '@perxtech/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -16,59 +24,80 @@ export class PendingTeamComponent implements OnInit {
   public campaign$: Observable<ICampaign>;
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
-  public code: string = 'testcode';
+  public progressBarHeading: string;
+  public waitingTxt: string;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public teamCodeShareText: string;
   public shareText: string;
   public pendingTeamForm: FormGroup;
-  public teamUsername: string;
+  // public teamUsername: string;
+  public teamsConfig: TeamsProperties | undefined;
+  public team: ITeam;
 
   constructor(
     private fb: FormBuilder,
     protected route: ActivatedRoute,
+    protected router: Router,
     private notificationService: NotificationService,
     private campaignService: ICampaignService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private teamsService: TeamsService
   ) { }
 
   public ngOnInit(): void {
-    this.initTranslate();
     this.route.paramMap.pipe(
-      // filter((params: ParamMap) => params.has('id')),
-      // map((params: ParamMap) => params.get('id')),
-      map(() => '1421'),
+      filter((params: ParamMap) => params.has('campaignId')),
+      map((params: ParamMap) => params.get('campaignId')),
       switchMap((cid: string) => {
         const campaignId: number = Number.parseInt(cid, 10);
-        return this.campaignService.getCampaign(campaignId);
+        return combineLatest([
+          this.campaignService.getCampaign(campaignId),
+          this.teamsService.getTeam(campaignId)
+          ]);
       }),
       takeUntil(this.destroy$)
     ).subscribe(
-      (campaign: ICampaign) => {
+      ([campaign , team]) => {
         this.campaign$ = of(campaign);
+        this.team = team;
         this.landingPageConfig = campaign.displayProperties?.landingPage;
-        this.shareText = ''; // campaign.displayProperties.pendingPage.body.text;
-        this.teamUsername = 'John Doe';
-        this.initForm(); // switchmap(() => teamservice.getTeam());
+        this.teamsConfig = campaign.displayProperties?.teamsDetails;
+        this.shareText = this.teamsConfig?.inviteMessage?.description || '';
+        this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
+        // this.teamUsername = 'John Doe';
+        this.initForm();
+        this.initTranslate();
       }
     );
   }
 
   public initForm(): void {
     this.pendingTeamForm = this.fb.group({
-      teamName: [`${this.code}`]
+      teamName: [`${this.team.invitationCode}`]
     });
   }
 
   public leaveTeam(): void {
-
+    this.teamsService.leaveATeam(this.team.id).pipe(
+      switchMap((success: boolean) => combineLatest([of(success), this.campaign$]))
+    ).subscribe(
+      ([success, campaign]) => {
+        if (success) {
+          this.notificationService.addSnack('You are no longer part of this team');
+          this.router.navigate([`campaign-welcome/${campaign.id}`])
+        } else {
+          this.notificationService.addSnack('Could not leave team, please try again later');
+        }
+      }
+    )
   }
 
   public share(): void {
     // @ts-ignore
     if (navigator.share) {
       const data = {
-        text: `${this.shareText}\n${this.teamCodeShareText}`,
+        text: `${this.shareText}\n${this.teamCodeShareText} ${this.team.invitationCode}`,
       };
       // @ts-ignore
       (navigator as any)
@@ -86,7 +115,7 @@ export class PendingTeamComponent implements OnInit {
 
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.shareText}\n${this.teamCodeShareText}`)
+      .writeText(`${this.shareText}\n${this.teamCodeShareText} ${this.team.invitationCode}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
@@ -94,17 +123,22 @@ export class PendingTeamComponent implements OnInit {
   private initTranslate(): void {
     this.translate
       .get([
-        'TEAMS.SHARE_COPY_TXT',
-        'TEAMS.COPY_TO_CLIPBOARD',
-        'TEAMS.CLIPBOARD_ERROR_TXT',
+        'TEAMS.PENDING_PAGE.PROGRESS_BAR_DESCRIPTION',
+        'TEAMS.PENDING_PAGE.WAITING_FOR_MORE_USER',
+        'TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD',
+        'TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT',
       ])
-      .subscribe((res: any) => {
-        this.teamCodeShareText = res['TEAMS.SHARE_COPY_TXT'].replace(
-          '{{code}}',
-          this.code
-        );
-        this.copyToClipboardTxt = res['TEAMS.COPY_TO_CLIPBOARD'];
-        this.clipboardErrorTxt = res['TEAMS.CLIPBOARD_ERROR_TXT'];
+      .pipe(
+        switchMap((translateResults: any) => combineLatest([ of(translateResults), this.campaign$ ]))
+      )
+      .subscribe(([ translateResults, campaign ]) => {
+        this.progressBarHeading = translateResults['TEAMS.PENDING_PAGE.PROGRESS_BAR_DESCRIPTION']
+          .replace('{{joinedMembersCount}}', this.team.joinedMembersCount)
+          .replace('{{teamSize}}', campaign.teamSize);
+        this.waitingTxt = translateResults['TEAMS.PENDING_PAGE.WAITING_FOR_MORE_USER']
+          .replace('{{numAdditionalRequired}}', (campaign.teamSize! - this.team.joinedMembersCount));
+        this.copyToClipboardTxt = translateResults['TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = translateResults['TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
   }
 }
