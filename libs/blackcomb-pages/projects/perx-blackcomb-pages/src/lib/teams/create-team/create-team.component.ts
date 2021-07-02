@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
+import { ICampaign, ICampaignService } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,7 +15,6 @@ export class CreateTeamComponent implements OnInit {
 
   public campaign: ICampaign;
   private destroy$: Subject<void> = new Subject();
-  public landingPageConfig: CampaignLandingPage | undefined;
   public createTeamForm: FormGroup;
   public teamUserNameSubtitle: string;
 
@@ -38,7 +37,6 @@ export class CreateTeamComponent implements OnInit {
     ).subscribe(
       (campaign: ICampaign) => {
         this.campaign = campaign;
-        this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.initTranslate();
         this.initForm();
       }
