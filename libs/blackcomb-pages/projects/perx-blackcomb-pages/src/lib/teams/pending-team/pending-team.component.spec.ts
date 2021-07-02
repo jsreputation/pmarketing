@@ -10,6 +10,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PendingTeamComponent', () => {
   let component: PendingTeamComponent;
@@ -26,6 +27,7 @@ describe('PendingTeamComponent', () => {
         UtilsModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterTestingModule,
         MatFormFieldModule,
         MatInputModule,
         MatProgressBarModule,
