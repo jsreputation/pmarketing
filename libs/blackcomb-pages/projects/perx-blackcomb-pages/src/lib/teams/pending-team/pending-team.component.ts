@@ -62,6 +62,7 @@ export class PendingTeamComponent implements OnInit {
         this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = this.teamsConfig?.inviteMessage?.description || '';
+        this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
         // this.teamUsername = 'John Dtchmap(() => teamservice.getTeam());oe';
         this.initForm();
         this.initTranslate();
@@ -94,7 +95,7 @@ export class PendingTeamComponent implements OnInit {
     // @ts-ignore
     if (navigator.share) {
       const data = {
-        text: `${this.shareText}\n${this.teamCodeShareText}`,
+        text: `${this.shareText}\n${this.teamCodeShareText} ${this.team.invitationCode}`,
       };
       // @ts-ignore
       (navigator as any)
@@ -112,7 +113,7 @@ export class PendingTeamComponent implements OnInit {
 
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.shareText}\n${this.teamCodeShareText}`)
+      .writeText(`${this.shareText}\n${this.teamCodeShareText} ${this.team.invitationCode}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
@@ -120,17 +121,12 @@ export class PendingTeamComponent implements OnInit {
   private initTranslate(): void {
     this.translate
       .get([
-        'TEAMS.SHARE_COPY_TXT',
-        'TEAMS.COPY_TO_CLIPBOARD',
-        'TEAMS.CLIPBOARD_ERROR_TXT',
+        'TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD',
+        'TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT',
       ])
       .subscribe((res: any) => {
-        this.teamCodeShareText = res['TEAMS.SHARE_COPY_TXT'].replace(
-          '{{code}}',
-          this.team.invitationCode
-        );
-        this.copyToClipboardTxt = res['TEAMS.COPY_TO_CLIPBOARD'];
-        this.clipboardErrorTxt = res['TEAMS.CLIPBOARD_ERROR_TXT'];
+        this.copyToClipboardTxt = res['TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = res['TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
   }
 }
