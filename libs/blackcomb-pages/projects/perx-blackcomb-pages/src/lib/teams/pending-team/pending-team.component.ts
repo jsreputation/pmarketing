@@ -65,7 +65,7 @@ export class PendingTeamComponent implements OnInit {
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = this.teamsConfig?.inviteMessage?.description || '';
         this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
-        // this.teamUsername = 'John Dtchmap(() => teamservice.getTeam());oe';
+        // this.teamUsername = 'John Doe';
         this.initForm();
         this.initTranslate();
       }
