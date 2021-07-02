@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { CampaignLandingPage, ICampaign, ICampaignService, NotificationService, TeamsProperties } from '@perxtech/core';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import {
+  CampaignLandingPage,
+  ICampaign,
+  ICampaignService,
+  ITeam,
+  NotificationService,
+  TeamsProperties,
+  TeamsService
+} from '@perxtech/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,13 +32,15 @@ export class PendingTeamComponent implements OnInit {
   public pendingTeamForm: FormGroup;
   public teamUsername: string;
   public teamsConfig: TeamsProperties | undefined;
+  public team: ITeam;
 
   constructor(
     private fb: FormBuilder,
     protected route: ActivatedRoute,
     private notificationService: NotificationService,
     private campaignService: ICampaignService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private teamsService: TeamsService
   ) { }
 
   public ngOnInit(): void {
@@ -40,15 +50,20 @@ export class PendingTeamComponent implements OnInit {
       map((params: ParamMap) => params.get('campaignId')),
       switchMap((cid: string) => {
         const campaignId: number = Number.parseInt(cid, 10);
-        return this.campaignService.getCampaign(campaignId);
+        return combineLatest([
+          this.campaignService.getCampaign(campaignId),
+          this.teamsService.getTeam(campaignId)
+          ]);
       }),
       takeUntil(this.destroy$)
     ).subscribe(
-      (campaign: ICampaign) => {
+      ([campaign , team]) => {
         this.campaign$ = of(campaign);
+        this.team = team;
+        console.log(team);
         this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
-        this.shareText = ''; // campaign.displayProperties.pendingPage.body.text;
+        this.shareText = this.teamsConfig?.inviteMessage?.description || '';
         this.teamUsername = 'John Doe';
         this.initForm(); // switchmap(() => teamservice.getTeam());
       }

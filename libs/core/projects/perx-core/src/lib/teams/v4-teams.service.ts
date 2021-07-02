@@ -13,6 +13,7 @@ interface IV4Team {
   campaign_id: number;
   invitation_code: string;
   state: TeamState;
+  user_counts: number;
 }
 
 interface IV4TeamResponse {
@@ -83,7 +84,8 @@ export class V4TeamsService implements TeamsService{
       id: team.id,
       campaignId: team.campaign_id,
       invitationCode: team.invitation_code,
-      state: team.state
+      state: team.state,
+      joinedMembersCount: team.user_counts
     }
   }
 }
