@@ -73,7 +73,7 @@ export class V4TeamsService implements TeamsService{
   }
 
   leaveATeam(teamId: number): Observable<boolean> {
-    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`).pipe(
+    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`, { observe: 'response'}).pipe(
       map((response: HttpResponse<any>) => response.status === 200),
       catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error))
     );
