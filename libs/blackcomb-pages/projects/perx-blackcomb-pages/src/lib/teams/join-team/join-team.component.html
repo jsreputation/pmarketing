@@ -1,7 +1,7 @@
 <div class="join-team-page-container" *ngIf="campaign$ | async as campaign">
   <div class="join-team-content-container">
-    <img [src]="landingPageConfig?.media.bannerImage"
-         *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Join a team'">
+    <img [src]="landingPageConfig?.media?.bannerImage"
+         *ngIf="landingPageConfig?.media?.bannerImage; else defaultImgTemplate" [alt]="'Join a team'">
     <ng-template #defaultImgTemplate>
       <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>
@@ -12,32 +12,32 @@
     </ng-template>
     <div class="join-team-content">
       <div class="text-block">
-        <p class="title">{{ 'TEAMS.JOIN_TEAM_HEADING' | translate }}</p>
+        <p class="title">{{ 'TEAMS.JOIN_PAGE.PAGE_TITLE' | translate }}</p>
       </div>
-      <form class="join-form" [formGroup]="joinTeamForm" (ngSubmit)="joinTeam()">
+      <form class="join-form" [formGroup]="joinTeamForm">
         <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Name</mat-label>
-          <input matInput formControlName="teamName">
-          <mat-error *ngIf="joinTeamForm.get('teamName')!.hasError('required')">
-            Team name is <strong>required</strong>
+          <mat-label>{{'TEAMS.JOIN_PAGE.TEAM_CODE_HINT' | translate }}</mat-label>
+          <input matInput formControlName="teamCode">
+          <mat-error *ngIf="joinTeamForm.get('teamCode')!.hasError('required')">
+            {{'TEAMS.JOIN_PAGE.TEAM_CODE_HINT_ERROR' | translate }}
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" class="full-width__input">
-          <mat-label>Team Username</mat-label>
-          <input matInput formControlName="teamUserName">
-          <mat-error *ngIf="joinTeamForm.get('teamUserName')?.hasError('required')">
-            Username is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+<!--        <mat-form-field appearance="standard" class="full-width__input">-->
+<!--          <mat-label>Team Username</mat-label>-->
+<!--          <input matInput formControlName="teamUserName">-->
+<!--          <mat-error *ngIf="joinTeamForm.get('teamUserName')?.hasError('required')">-->
+<!--            Username is <strong>required</strong>-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
       </form>
       <div class="text-block">
-        <div class="instructions" [innerHTML]="campaign.displayProperties.landingPage.body.text | safeHtml "></div>
+        <div class="instructions" [innerHTML]="teamsConfig?.joinPage.description | safeHtml "></div>
       </div>
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" type="submit" mat-flat-button>
-      {{ 'TEAMS.JOIN_TEAM' | translate }}
+    <button color="primary" (click)="joinTeam()" mat-flat-button>
+      {{'TEAMS.JOIN_PAGE.CTA' | translate }}
     </button>
   </div>
 </div>

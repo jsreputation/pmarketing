@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { JoinTeamComponent } from './join-team.component';
-import { ICampaignService, UtilsModule } from '@perxtech/core';
+import { ErrorMessageService, ICampaignService, TeamsService, UtilsModule } from '@perxtech/core';
 import { of } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('JoinTeamComponent', () => {
   let component: JoinTeamComponent;
@@ -15,6 +16,13 @@ describe('JoinTeamComponent', () => {
 
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([]),
+  };
+  const teamsServiceStub: Partial<TeamsService> = {
+    joinATeamForCampaign: () => of()
+  };
+
+  const errorMessageServiceStub: Partial<ErrorMessageService> = {
+    getErrorMessageByErrorCode: () => of('')
   };
 
   beforeEach(async () => {
@@ -26,13 +34,15 @@ describe('JoinTeamComponent', () => {
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
+        RouterTestingModule,
         TranslateModule.forRoot()
 
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
-
+        { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: ErrorMessageService, useValue: errorMessageServiceStub }
       ]
     })
     .compileComponents();

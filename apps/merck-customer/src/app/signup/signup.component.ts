@@ -39,10 +39,6 @@ export class SignupComponent implements OnInit, PageAppearence {
     return this.signupForm.get('accept_terms');
   }
 
-  public get accept_marketing(): AbstractControl | null {
-    return this.signupForm.get('accept_marketing');
-  }
-
   public get countryCode(): AbstractControl | null {
     return this.signupForm.get('countryCode');
   }
@@ -84,7 +80,6 @@ export class SignupComponent implements OnInit, PageAppearence {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       accept_terms: [false, Validators.required],
-      accept_marketing: [false, Validators.required],
       countryCode: ['852', Validators.required]
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
   }
@@ -116,14 +111,6 @@ export class SignupComponent implements OnInit, PageAppearence {
       const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
         this.translate.get('SIGN_UP_PAGE.ACCEPT_TNC').subscribe(text =>
-          this.notificationService.addSnack(text)
-        );
-        return;
-      }
-
-      const marketingCommunication = this.signupForm.value.accept_marketing as boolean;
-      if (!marketingCommunication) {
-        this.translate.get('SIGN_UP_PAGE.ACCEPT_MARKETING').subscribe(text =>
           this.notificationService.addSnack(text)
         );
         return;

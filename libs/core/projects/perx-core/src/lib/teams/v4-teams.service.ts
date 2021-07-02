@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ConfigService, IConfig, TeamsService } from '@perxtech/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
 import { ITeam, TeamState } from './teams.model';
 import { of, throwError } from 'rxjs';
+import { TeamsService } from '../teams/teams.service';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4Team {
   id: number;
@@ -17,6 +19,24 @@ interface IV4TeamResponse {
   data: IV4Team;
   meta: any;
 }
+
+export interface IV4TeamsDisplayProperties {
+  teams?: {
+    landing_page: {
+      pre_enrolment_message: string;
+      stamps_earn_message: string;
+      button_text: string;
+      button_text_secondary: string;
+    },
+    join_page: {
+      description: string;
+    },
+    invite_message: {
+      description: string;
+      code_blurb: string;
+    }
+  }
+};
 
 @Injectable({
   providedIn: 'root'

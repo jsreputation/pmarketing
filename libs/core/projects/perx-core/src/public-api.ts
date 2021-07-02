@@ -84,7 +84,8 @@ export {
   ICampaignOutcome,
   CampaignOutcomeType,
   IOperatingHours,
-  IBadgeOutcome
+  IBadgeOutcome,
+  TeamsProperties
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -153,7 +154,8 @@ export {
   defaultTree,
   IPlayOutcome,
   ISlice,
-  IEngagementTransaction
+  IEngagementTransaction,
+  IPlinko
 } from './lib/game/game.model';
 export { IGameService } from './lib/game/igame.service';
 export { IGameComponent } from './lib/game/igame.component';
@@ -163,6 +165,7 @@ export { ScratchCardComponent } from './lib/game/scratch-card/scratch-card.compo
 export { SpinTheWheelComponent } from './lib/game/spin-the-wheel/spin-the-wheel.component';
 export { SnakeGameComponent } from './lib/game/snake/snake.component';
 export { MineSweeperComponent } from './lib/game/mine-sweeper/mine-sweeper.component';
+export { PlinkoComponent } from './lib/game/plinko/plinko.component';
 /**
  * Profile
  */

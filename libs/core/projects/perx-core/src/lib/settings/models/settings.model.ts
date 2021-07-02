@@ -55,6 +55,7 @@ export interface IFlags {
   showRewardNavButton?: boolean;
   showRewardsOnHomepage?: boolean;
   showStampCampaignsOnHomePage?: boolean;
+  showStampTeams?: boolean;
   showSubtitleLogin?: boolean;
   showSurveyOnHomePage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;

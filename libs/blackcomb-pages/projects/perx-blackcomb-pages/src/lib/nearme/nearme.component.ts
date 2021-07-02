@@ -109,6 +109,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
       });
   }
 
+  public onCloseMerchantDetailPopup(): void {
+    this.current = null;
+  }
+
   private loadScript(): Promise<void> {
     // don't load it more than once.
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
@@ -282,6 +286,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
         center,
         radius
       });
+
+      google.maps.event.addListener(this.searchRadiusCircle, 'click', (_) => {
+        this.onCloseMerchantDetailPopup();
+      });
     }
   }
 
@@ -302,6 +310,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
 
   public searchThisArea(): void {
     this.clearMarkers();
+    this.onCloseMerchantDetailPopup();
+
     const bounds = this.map.getBounds();
     if (bounds) {
       const center = bounds.getCenter();

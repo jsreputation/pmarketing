@@ -6,6 +6,7 @@ import { ScratchCardComponent } from './scratch-card/scratch-card.component';
 import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component';
 import { SnakeGameComponent } from './snake/snake.component';
 import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
+import { PlinkoComponent } from './plinko/plinko.component';
 
 // https://github.com/ng-packagr/ng-packagr/issues/641
 // @dynamic
@@ -17,6 +18,7 @@ import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
     SpinTheWheelComponent,
     SnakeGameComponent,
     MineSweeperComponent,
+    PlinkoComponent,
   ],
   imports: [
     CommonModule
@@ -28,7 +30,8 @@ import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
     ScratchCardComponent,
     SpinTheWheelComponent,
     SnakeGameComponent,
-    MineSweeperComponent
+    MineSweeperComponent,
+    PlinkoComponent
   ]
 })
 export class GameModule {}

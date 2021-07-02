@@ -31,6 +31,14 @@
       [game]="game"
       (broken)=gameCompleted()>
     </perx-blackcomb-pages-snake>
+    <perx-blackcomb-pages-plinko
+      *ngSwitchCase="gt.plinko"
+      [willWin]="willWin"
+      [game]="game"
+      [startGame]="startGameAnimation"
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
+    ></perx-blackcomb-pages-plinko>
   </div>
   <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
 </div>
