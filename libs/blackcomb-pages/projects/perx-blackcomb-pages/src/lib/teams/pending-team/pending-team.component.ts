@@ -24,7 +24,6 @@ export class PendingTeamComponent implements OnInit {
   public campaign$: Observable<ICampaign>;
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
-  public code: string = 'testcode';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public teamCodeShareText: string;
@@ -44,7 +43,6 @@ export class PendingTeamComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.initTranslate();
     this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('campaignId')),
       map((params: ParamMap) => params.get('campaignId')),
@@ -60,19 +58,19 @@ export class PendingTeamComponent implements OnInit {
       ([campaign , team]) => {
         this.campaign$ = of(campaign);
         this.team = team;
-        console.log(team);
         this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = this.teamsConfig?.inviteMessage?.description || '';
         // this.teamUsername = 'John Dtchmap(() => teamservice.getTeam());oe';
         this.initForm(); // switchmap(() => teamservice.getTeam());
+        this.initTranslate();
       }
     );
   }
 
   public initForm(): void {
     this.pendingTeamForm = this.fb.group({
-      teamName: [`${this.code}`]
+      teamName: [`${this.team.invitationCode}`]
     });
   }
 
@@ -117,7 +115,7 @@ export class PendingTeamComponent implements OnInit {
       .subscribe((res: any) => {
         this.teamCodeShareText = res['TEAMS.SHARE_COPY_TXT'].replace(
           '{{code}}',
-          this.code
+          this.team.invitationCode
         );
         this.copyToClipboardTxt = res['TEAMS.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['TEAMS.CLIPBOARD_ERROR_TXT'];
