@@ -30,7 +30,7 @@ export class PendingTeamComponent implements OnInit {
   public teamCodeShareText: string;
   public shareText: string;
   public pendingTeamForm: FormGroup;
-  public teamUsername: string;
+  // public teamUsername: string;
   public teamsConfig: TeamsProperties | undefined;
   public team: ITeam;
 
@@ -64,7 +64,7 @@ export class PendingTeamComponent implements OnInit {
         this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = this.teamsConfig?.inviteMessage?.description || '';
-        this.teamUsername = 'John Doe';
+        // this.teamUsername = 'John Dtchmap(() => teamservice.getTeam());oe';
         this.initForm(); // switchmap(() => teamservice.getTeam());
       }
     );
