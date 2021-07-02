@@ -24,6 +24,8 @@ export class PendingTeamComponent implements OnInit {
   public campaign$: Observable<ICampaign>;
   private destroy$: Subject<void> = new Subject();
   public landingPageConfig: CampaignLandingPage | undefined;
+  public progressBarHeading: string;
+  public waitingTxt: string;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public teamCodeShareText: string;
@@ -121,12 +123,22 @@ export class PendingTeamComponent implements OnInit {
   private initTranslate(): void {
     this.translate
       .get([
+        'TEAMS.PENDING_PAGE.PROGRESS_BAR_DESCRIPTION',
+        'TEAMS.PENDING_PAGE.WAITING_FOR_MORE_USER',
         'TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD',
         'TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT',
       ])
-      .subscribe((res: any) => {
-        this.copyToClipboardTxt = res['TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD'];
-        this.clipboardErrorTxt = res['TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT'];
+      .pipe(
+        switchMap((translateResults: any) => combineLatest([ of(translateResults), this.campaign$ ]))
+      )
+      .subscribe(([ translateResults, campaign ]) => {
+        this.progressBarHeading = translateResults['TEAMS.PENDING_PAGE.PROGRESS_BAR_DESCRIPTION']
+          .replace('{{joinedMembersCount}}', this.team.joinedMembersCount)
+          .replace('{{teamSize}}', campaign.teamSize);
+        this.waitingTxt = translateResults['TEAMS.PENDING_PAGE.WAITING_FOR_MORE_USER']
+          .replace('{{numAdditionalRequired}}', (campaign.teamSize! - this.team.joinedMembersCount));
+        this.copyToClipboardTxt = translateResults['TEAMS.PENDING_PAGE.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = translateResults['TEAMS.PENDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
   }
 }
