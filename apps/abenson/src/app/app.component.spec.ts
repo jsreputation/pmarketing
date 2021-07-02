@@ -159,9 +159,9 @@ describe('AppComponent', () => {
     questService = TestBed.get<IQuestService>(
       IQuestService as Type<IQuestService>
     );
-   teamsService = TestBed.get<TeamsService>(
-     TeamsService as Type<TeamsService>
-   );
+    teamsService = TestBed.get<TeamsService>(
+      TeamsService as Type<TeamsService>
+    );
 
     app.ngOnInit();
     tick();
