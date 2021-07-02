@@ -69,7 +69,7 @@ export const appInit =
     }
 
     configService.readAppConfig().pipe(
-      tap((_: IConfig<void>) => translateService.setDefaultLang('zh')),
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'zh')),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
