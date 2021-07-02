@@ -9,7 +9,7 @@ import {
   TeamsProperties,
   TeamsService
 } from '@perxtech/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -36,6 +36,7 @@ export class PendingTeamComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     protected route: ActivatedRoute,
+    protected router: Router,
     private notificationService: NotificationService,
     private campaignService: ICampaignService,
     private translate: TranslateService,
@@ -75,7 +76,18 @@ export class PendingTeamComponent implements OnInit {
   }
 
   public leaveTeam(): void {
-
+    this.teamsService.leaveATeam(this.team.id).pipe(
+      switchMap((success: boolean) => combineLatest([of(success), this.campaign$]))
+    ).subscribe(
+      ([success, campaign]) => {
+        if (success) {
+          this.notificationService.addSnack('You are no longer part of this team');
+          this.router.navigate([`campaign-welcome/${campaign.id}`])
+        } else {
+          this.notificationService.addSnack('Could not leave team, please try again later');
+        }
+      }
+    )
   }
 
   public share(): void {
