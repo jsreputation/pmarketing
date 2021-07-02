@@ -14,9 +14,9 @@
       <div class="text-block">
         <p class="title">{{ 'TEAMS.PENDING_TEAM_HEADING' | translate }}</p>
       </div>
-      <div class="team-counter-container">
-        <span class="team-counter-subtitle">3 of 4 have pledged to join this team</span>
-        <mat-progress-bar class="team-counter-progress-bar" mode="determinate" [value]="3/4 * 100"></mat-progress-bar>
+      <div class="team-counter-container" *ngIf="this.team.joinedMembersCount">
+        <span class="team-counter-subtitle">{{this.team.joinedMembersCount}} of {{this.campaign.teamSize!}} have pledged to join this team</span>
+        <mat-progress-bar class="team-counter-progress-bar" mode="determinate" [value]="this.team.joinedMembersCount/this.campaign.teamSize * 100"></mat-progress-bar>
       </div>
       <div class="text-block">
 <!--        <span class="subtitle">{{ 'TEAMS.WELCOME_BACK_USER' | translate }}, {{teamUsername}}</span>-->
