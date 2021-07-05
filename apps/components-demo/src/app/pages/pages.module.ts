@@ -37,7 +37,6 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UtilsModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -74,8 +73,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PuzzlesModule,
     SurveyModule,
     UtilsModule,
-    MatButtonModule,
-    TranslateModule
+    MatButtonModule
   ]
 })
 export class PagesModule { }
