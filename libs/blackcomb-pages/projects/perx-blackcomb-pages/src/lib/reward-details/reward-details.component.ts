@@ -41,8 +41,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+  public isButtonEnable: boolean = true;
   public isRewardsDetailsFetched: boolean = false;
-  public isButtonEnable: boolean = false;
   public favDisabled: boolean = false;
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
