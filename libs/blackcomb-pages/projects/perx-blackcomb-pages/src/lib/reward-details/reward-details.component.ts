@@ -47,12 +47,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
   public maxRewardCost?: number;
+  public notAvailableLabel?: Observable<string>;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
     this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
     this.expiryLabel = this.translate.get('REWARD.EXPIRY');
+    this.notAvailableLabel = this.translate.get('REWARD.N_A');
   }
 
   constructor(
