@@ -41,6 +41,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+  public isRewardsDetailsFetched: boolean = false;
+  public isButtonEnable: boolean = false;
   public favDisabled: boolean = false;
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
@@ -116,6 +118,28 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
         .subscribe(
           (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
           (err: HttpErrorResponse) => {
+
+
+            if (err instanceof HttpErrorResponse) {
+              this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+                .subscribe(
+                  (message: string) => {
+                    if (err.status === 401) {
+                      this.router.navigate([ '/error' ]);
+                    } else {
+                      if (err.error.code === 4103) { // rewards run out due to reward limits
+                        this.refreshReward(); // refresh the reward to show fully redeemed
+                        this.isButtonEnable = false;
+                      } else {
+                        // change button back to enable which it originally is, before save is triggered
+                        this.isButtonEnable = true;
+                      }
+                      this.notificationService.addSnack(message);
+                    }
+                  }
+                );
+            }
+
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
                 this.notificationService.addSnack(message);
@@ -150,5 +174,22 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private refreshReward(): void {
+    this.rewardsService.getReward(this.rewardData.id).subscribe(
+      (reward) => {
+        this.rewardData = reward;
+        this.updateRewardStatus();
+      }
+    );
+  }
+
+  private updateRewardStatus(): void {
+    this.macaron = this.macaronService.getMacaron(this.rewardData);
+    this.isRewardsDetailsFetched = true;
+    if (this.macaron !== null) {
+      this.isButtonEnable = this.macaron.isButtonEnabled;
+    }
   }
 }

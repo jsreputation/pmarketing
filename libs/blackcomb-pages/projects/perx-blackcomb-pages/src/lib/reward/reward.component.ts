@@ -1,25 +1,25 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject, combineLatest, throwError, iif } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, iif, Observable, of, Subject, throwError } from 'rxjs';
 import {
+  AuthenticationService,
+  FeedItem,
+  FeedReaderService,
+  IEngagementTransaction,
   InstantOutcomeService,
-  IReward,
   IOutcome,
   IPopupConfig,
-  IEngagementTransaction,
-  RewardsService,
-  AuthenticationService,
-  NotificationService,
   IPrePlayStateData,
   IPrice,
-  RssFeedsPages,
-  FeedReaderService,
-  SettingsService,
+  IReward,
   IRssFeeds,
   IRssFeedsData,
-  FeedItem
+  NotificationService,
+  RewardsService,
+  RssFeedsPages,
+  SettingsService
 } from '@perxtech/core';
-import { map, switchMap, catchError, tap, takeUntil, mergeMap, finalize, } from 'rxjs/operators';
+import { catchError, finalize, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -73,7 +73,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private rewardService: RewardsService,
     private feedService: FeedReaderService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
   ) {
     this.displayPriceFn = () => '';
   }
