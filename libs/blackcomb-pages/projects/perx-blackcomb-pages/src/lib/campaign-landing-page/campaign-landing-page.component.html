@@ -12,66 +12,68 @@
         </svg>
       </ng-template>
     </div>
-    <div class="header">
-<!--      <div *ngIf="config?.media?.bannerImage">-->
-<!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
-<!--      </div>-->
-      <h1 class="title">{{campaign?.name}}</h1>
-      <ng-container *ngIf="!isTeamsEnabled">
-        <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
-      </ng-container>
-      <ng-container *ngIf="campaign?.displayProperties.teamsDetails?.landingPage && isTeamsEnabled">
-        <div class="rich-text-container"
-             [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.preEnrolmentMessage | safeHtml"></div>
-        <div class="rich-text-container"
-             [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.stampsEarnMessage | safeHtml"></div>
-      </ng-container>
+    <div class="main-container">
+      <div class="header">
+  <!--      <div *ngIf="config?.media?.bannerImage">-->
+  <!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
+  <!--      </div>-->
+        <h1 class="title">{{campaign?.name}}</h1>
+        <ng-container *ngIf="!isTeamsEnabled">
+          <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
+        </ng-container>
+        <ng-container *ngIf="campaign?.displayProperties.teamsDetails?.landingPage && isTeamsEnabled">
+          <div class="rich-text-container"
+               [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.preEnrolmentMessage | safeHtml"></div>
+          <div class="rich-text-container"
+               [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.stampsEarnMessage | safeHtml"></div>
+        </ng-container>
 
-    </div>
-    <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
-      <p>{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
-      <mat-list >
-          <mat-list-item *ngFor="let outcome of campaignOutcomes">
-            <div class="outcome-container">
-              <div class="icon">
-                <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
-              </div>
-              <div class="outcome-details">
-                <ng-container [ngSwitch]="outcome.type">
+      </div>
+      <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
+        <p>{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
+        <mat-list >
+            <mat-list-item *ngFor="let outcome of campaignOutcomes">
+              <div class="outcome-container">
+                <div class="icon">
+                  <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
+                </div>
+                <div class="outcome-details">
+                  <ng-container [ngSwitch]="outcome.type">
+                      <ng-container *ngSwitchCase="outcomeType.prizeSet">
+                        {{outcome.name}}
+                        <span *ngIf="outcome?.prizeSetItems" class="included-items">&nbsp;(includes {{ outcome?.prizeSetItems?.join(', ')}})</span>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="outcomeType.reward">
+                         {{outcome.name}}
+                      </ng-container>
+                      <ng-container *ngSwitchCase="outcomeType.points">
+                          {{outcome.pointsCount}}&nbsp;{{'CAMPAIGN_LANDING.LOYALTY_POINTS' | translate}}
+                      </ng-container>
+                  </ng-container>
+                </div>
+                <div class="icon">
+                  <ng-container [ngSwitch]="outcome.type">
                     <ng-container *ngSwitchCase="outcomeType.prizeSet">
-                      {{outcome.name}}
-                      <span *ngIf="outcome?.prizeSetItems" class="included-items">&nbsp;(includes {{ outcome?.prizeSetItems?.join(', ')}})</span>
+                      <a [routerLink]="['/prize-set-outcomes',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon> </a>
                     </ng-container>
                     <ng-container *ngSwitchCase="outcomeType.reward">
-                       {{outcome.name}}
-                    </ng-container>
-                    <ng-container *ngSwitchCase="outcomeType.points">
-                        {{outcome.pointsCount}}&nbsp;{{'CAMPAIGN_LANDING.LOYALTY_POINTS' | translate}}
+                        <a [routerLink]="['/reward-detail',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon></a>
                     </ng-container>
                 </ng-container>
+                </div>
               </div>
-              <div class="icon">
-                <ng-container [ngSwitch]="outcome.type">
-                  <ng-container *ngSwitchCase="outcomeType.prizeSet">
-                    <a [routerLink]="['/prize-set-outcomes',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon> </a>
-                  </ng-container>
-                  <ng-container *ngSwitchCase="outcomeType.reward">
-                      <a [routerLink]="['/reward-detail',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon></a>
-                  </ng-container>
-              </ng-container>
-              </div>
-            </div>
-          </mat-list-item>
-      </mat-list>
-  </div>
-    <div *ngIf="landingPageConfig?.media?.youtube" class="video">
-      <iframe height="185" width="80%" [src]="landingPageConfig?.media?.youtube | safeUrl" frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </mat-list-item>
+        </mat-list>
     </div>
-    <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
-    <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
-      <h2 class="subtitle">Terms and Conditions</h2>
-      <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+      <div *ngIf="landingPageConfig?.media?.youtube" class="video">
+        <iframe height="185" width="80%" [src]="landingPageConfig?.media?.youtube | safeUrl" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
+      <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
+        <h2 class="subtitle">Terms and Conditions</h2>
+        <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+      </div>
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">

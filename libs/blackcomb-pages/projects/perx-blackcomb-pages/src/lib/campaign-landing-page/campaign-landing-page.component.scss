@@ -33,26 +33,28 @@ h2 {
     background: #E8E8E8;
   }
 
-  .header {
-    z-index: 1;
+  .main-container{
     padding: 0 3.2rem;
-    display: flex;
-    flex-direction: column;
-  }
 
-  .video {
-    padding: 2rem;
-    display: flex;
-
-    iframe {
-      flex: 1;
+    .header {
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
-  }
 
-  .rich-text-container {
-    padding: 0 3.2rem;
-    font-size: 1.6rem;
-    color: var(--font_color, white);
+    .video {
+      padding: 2rem;
+      display: flex;
+
+      iframe {
+        flex: 1;
+      }
+    }
+
+    .rich-text-container {
+      font-size: 1.6rem;
+      color: var(--font_color, white);
+    }
   }
 }
 
@@ -79,13 +81,11 @@ h2 {
 }
 
 .prize-container {
-  padding: 0 3.2rem;
 
   p {
     font-size: 1.2rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.6);
-    padding: 0 2rem;
     margin-bottom: 0;
   }
   .mat-list-item-content {
