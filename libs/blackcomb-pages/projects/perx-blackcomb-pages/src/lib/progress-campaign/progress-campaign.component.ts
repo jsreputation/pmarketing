@@ -101,7 +101,12 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
       const [ finalMilestone ] = milestones.slice(-1);
       if (!! finalMilestone) {
-        this.campaignProgress = this.currentUserPoints === 0 ? 0 : (this.currentUserPoints / finalMilestone.pointsRequired) * 100;
+        this.campaignProgress = this.currentUserPoints === 0 ? 0 : parseFloat(
+          Number(`${
+            Math.floor(
+              Number(`${(this.currentUserPoints / finalMilestone.pointsRequired) * 100}e2`)
+            )}e-2`
+          ).toFixed(1));
       }
 
       if (!! campaign.enrolled) {
