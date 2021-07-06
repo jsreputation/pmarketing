@@ -69,10 +69,12 @@
         <iframe height="185" width="80%" [src]="landingPageConfig?.media?.youtube | safeUrl" frameborder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-      <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
-      <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
-        <h2 class="subtitle">Terms and Conditions</h2>
-        <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+      <div class="additional-info-container">
+        <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
+        <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
+          <h2 class="subtitle">Terms and Conditions</h2>
+          <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+        </div>
       </div>
     </div>
   </div>
