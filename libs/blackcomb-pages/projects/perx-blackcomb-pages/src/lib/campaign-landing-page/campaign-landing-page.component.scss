@@ -55,7 +55,7 @@
   .rich-text-container {
     align-items: center;
     text-align: center;
-    padding: 2rem;
+    padding: 0 3.2rem;
     font-size: 1.6rem;
     color: var(--font_color, white);
   }
@@ -84,6 +84,7 @@
 }
 
 .prize-container {
+  padding: 0 3.2rem;
 
   p {
     font-size: 1.2rem;
