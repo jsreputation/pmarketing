@@ -32,13 +32,14 @@ import { oc } from 'ts-optchain';
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
-  public config: CampaignLandingPage | undefined;
+  public landingPageConfig: CampaignLandingPage | undefined;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
   public buttonStyle: { [key: string]: string } = {};
   public campaignOutcomes: ICampaignOutcome[];
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
   public showCampaignOutcomes: boolean = false;
+  public isTeamsEnabled: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -84,9 +85,10 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         )
       ).subscribe(([campaign, outcomes]: [ICampaign, ICampaignOutcome[]]) => {
         this.campaign = campaign;
-        this.config = oc(campaign).displayProperties.landingPage();
-        this.backgroundUrl = oc(this.config).backgroundUrl('');
+        this.landingPageConfig = oc(campaign).displayProperties.landingPage();
+        this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
+        this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
       });
   }
 
@@ -169,7 +171,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         return;
       }
       if (this.campaign.type === CampaignType.stamp) {
-        if (this.campaign.teamSize && (this.campaign.teamSize > 0)) {
+        if (this.isTeamsEnabled) {
           this.createTeam(this.campaign.id);
           return;
         }
