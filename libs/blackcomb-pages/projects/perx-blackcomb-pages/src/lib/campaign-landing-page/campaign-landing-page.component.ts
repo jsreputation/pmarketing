@@ -39,6 +39,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaignOutcomes: ICampaignOutcome[];
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
   public showCampaignOutcomes: boolean = false;
+  public isTeamsEnabled: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -87,6 +88,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         this.landingPageConfig = oc(campaign).displayProperties.landingPage();
         this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
+        this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
       });
   }
 
@@ -169,7 +171,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         return;
       }
       if (this.campaign.type === CampaignType.stamp) {
-        if (this.campaign.teamSize && (this.campaign.teamSize > 0)) {
+        if (this.isTeamsEnabled) {
           this.createTeam(this.campaign.id);
           return;
         }

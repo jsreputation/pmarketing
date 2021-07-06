@@ -17,8 +17,10 @@
         </ng-template>
       </div>
       <h1 class="title">{{campaign?.name}}</h1>
-      <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
-      <h2 class="subtitle" [innerHtml]="landingPageConfig?.subHeading.text | safeHtml"></h2>
+      <h2 class="subtitle" *ngIf="!isTeamsEnabled"
+          [innerHtml]="campaign?.description | safeHtml"></h2>
+      <h2 class="subtitle" *ngIf="isTeamsEnabled"
+          [innerHtml]="landingPageConfig?.subHeading?.text | safeHtml"></h2>
     </div>
     <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
       <p>{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
@@ -61,7 +63,7 @@
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="tnc" *ngIf="landingPageConfig?.body" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
-    <div class="tnc" *ngIf="campaign?.termsAndConditions" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+    <div class="tnc" *ngIf="campaign?.termsAndConditions && isTeamsEnabled" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{landingPageConfig?.buttonText?.text || 'Play'}}</button>
