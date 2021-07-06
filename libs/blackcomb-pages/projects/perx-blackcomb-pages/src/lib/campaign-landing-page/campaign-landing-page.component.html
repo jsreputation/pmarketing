@@ -72,7 +72,7 @@
       <div class="additional-info-container">
         <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
         <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
-          <h2 class="subtitle">Terms and Conditions</h2>
+          <p class="subtitle">Terms and Conditions</p>
           <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
         </div>
       </div>
