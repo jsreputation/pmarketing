@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import {
-  CampaignLandingPage,
-  ICampaign,
-  ICampaignService,
-  ITeam,
-  NotificationService,
-  TeamsProperties,
-  TeamsService
-} from '@perxtech/core';
+import { ICampaign, ICampaignService, ITeam, NotificationService, TeamsProperties, TeamsService } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +15,6 @@ export class PendingTeamComponent implements OnInit {
 
   public campaign$: Observable<ICampaign>;
   private destroy$: Subject<void> = new Subject();
-  public landingPageConfig: CampaignLandingPage | undefined;
   public progressBarHeading: string;
   public waitingTxt: string;
   public copyToClipboardTxt: string;
@@ -61,7 +52,6 @@ export class PendingTeamComponent implements OnInit {
       ([campaign , team]) => {
         this.campaign$ = of(campaign);
         this.team = team;
-        this.landingPageConfig = campaign.displayProperties?.landingPage;
         this.teamsConfig = campaign.displayProperties?.teamsDetails;
         this.shareText = this.teamsConfig?.inviteMessage?.description || '';
         this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
