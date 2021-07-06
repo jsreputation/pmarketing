@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {
-  ActivatedRoute, NavigationStart,
+  ActivatedRoute,
   ParamMap,
   Router
 } from '@angular/router';

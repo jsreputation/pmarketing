@@ -22,7 +22,8 @@
             [disabled]="(
             loyalty ?  (loyalty.pointsBalance <  0 || loyalty.pointsBalance < (maxRewardCost || 0)) : false)  ||
             waitForSubmission ||
-            (remoteFlags?.showHappyHourOperatingHours && !isOperating)"
+            (remoteFlags?.showHappyHourOperatingHours && !isOperating)
+            || isDisableWhenNavigateFromCampaignLandingPage"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="buyReward()">

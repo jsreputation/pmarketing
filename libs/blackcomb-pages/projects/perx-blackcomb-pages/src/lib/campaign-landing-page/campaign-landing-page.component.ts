@@ -193,7 +193,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     this.teamsService.createATeamforCampaign(campaignId).subscribe(
       (team: ITeam) => {
         if (team.id) {
-          this.router.navigate([`teams/pending`]);
+          this.router.navigate(['teams/pending']);
         }
       }
     )

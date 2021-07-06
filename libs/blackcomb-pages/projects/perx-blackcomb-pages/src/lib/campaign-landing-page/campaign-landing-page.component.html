@@ -36,7 +36,10 @@
                     <a [routerLink]="['/prize-set-outcomes',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon> </a>
                   </ng-container>
                   <ng-container *ngSwitchCase="outcomeType.reward">
-                      <a [routerLink]="['/reward-detail',outcome.id]"><mat-icon matListIcon>navigate_next</mat-icon></a>
+                      <a [routerLink]="['/reward-detail',outcome.id]"
+                         [queryParams]='{ isFromCampaignLandingPage: true }' ] >
+                        <mat-icon matListIcon>navigate_next</mat-icon>
+                      </a>
                   </ng-container>
               </ng-container>
               </div>
