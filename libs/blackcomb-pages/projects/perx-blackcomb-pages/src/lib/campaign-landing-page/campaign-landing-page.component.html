@@ -17,10 +17,16 @@
         </ng-template>
       </div>
       <h1 class="title">{{campaign?.name}}</h1>
-      <h2 class="subtitle" *ngIf="!isTeamsEnabled"
-          [innerHtml]="campaign?.description | safeHtml"></h2>
-      <div class="rich-text-container" *ngIf="isTeamsEnabled"
-          [innerHtml]="landingPageConfig?.subHeading?.text | safeHtml"></div>
+      <ng-container *ngIf="!isTeamsEnabled">
+        <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
+      </ng-container>
+      <ng-container *ngIf="campaign?.displayProperties.teamsDetails?.landingPage && isTeamsEnabled">
+        <div class="rich-text-container"
+             [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.preEnrolmentMessage | safeHtml"></div>
+        <div class="rich-text-container"
+             [innerHtml]="campaign?.displayProperties.teamsDetails?.landingPage.stampsEarnMessage | safeHtml"></div>
+      </ng-container>
+
     </div>
     <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
       <p>{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
@@ -62,11 +68,11 @@
       <iframe height="185" width="80%" [src]="landingPageConfig?.media?.youtube | safeUrl" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="rich-text-container" *ngIf="landingPageConfig?.body" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
-    <ng-container *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
-      <h2>Terms and Conditions</h2>
+    <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
+    <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
+      <h2 class="subtitle">Terms and Conditions</h2>
       <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
-    </ng-container>
+    </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{landingPageConfig?.buttonText?.text || 'Play'}}</button>
