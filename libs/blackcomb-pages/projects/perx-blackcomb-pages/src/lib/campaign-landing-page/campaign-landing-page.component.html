@@ -4,9 +4,9 @@
 <!--      <div *ngIf="config?.media?.bannerImage">-->
 <!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
 <!--      </div>-->
-      <div *ngIf="campaign || config">
-        <img [src]="(campaign?.campaignBannerUrl || config?.media?.bannerImage) | safeUrl"
-             *ngIf="campaign?.campaignBannerUrl || config?.media?.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
+      <div *ngIf="campaign || landingPageConfig">
+        <img [src]="(campaign?.campaignBannerUrl || landingPageConfig?.media?.bannerImage) | safeUrl"
+             *ngIf="campaign?.campaignBannerUrl || landingPageConfig?.media?.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
         <ng-template #defaultImgTemplate>
           <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>
@@ -18,7 +18,7 @@
       </div>
       <h1 class="title">{{campaign?.name}}</h1>
       <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
-      <h2 class="subtitle" [innerHtml]="config?.subHeading.text | safeHtml"></h2>
+      <h2 class="subtitle" [innerHtml]="landingPageConfig?.subHeading.text | safeHtml"></h2>
     </div>
     <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
       <p>{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
@@ -56,15 +56,15 @@
           </mat-list-item>
       </mat-list>
   </div>
-    <div *ngIf="config?.media?.youtube" class="video">
-      <iframe height="185" width="80%" [src]="config?.media?.youtube | safeUrl" frameborder="0"
+    <div *ngIf="landingPageConfig?.media?.youtube" class="video">
+      <iframe height="185" width="80%" [src]="landingPageConfig?.media?.youtube | safeUrl" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="tnc" *ngIf="config?.body" [innerHtml]="config?.body?.text | safeHtml"></div>
+    <div class="tnc" *ngIf="landingPageConfig?.body" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
     <div class="tnc" *ngIf="campaign?.termsAndConditions" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{config?.buttonText?.text || 'Play'}}</button>
-    <button mat-stroked-button color="primary" *ngIf="config?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{config?.buttonText2?.text}}</button>
+    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{landingPageConfig?.buttonText?.text || 'Play'}}</button>
+    <button mat-stroked-button color="primary" *ngIf="landingPageConfig?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{landingPageConfig?.buttonText2?.text}}</button>
   </div>
 </div>

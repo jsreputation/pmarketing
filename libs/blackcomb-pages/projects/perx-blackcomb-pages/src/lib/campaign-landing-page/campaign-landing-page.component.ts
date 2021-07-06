@@ -32,7 +32,7 @@ import { oc } from 'ts-optchain';
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
-  public config: CampaignLandingPage | undefined;
+  public landingPageConfig: CampaignLandingPage | undefined;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
   public buttonStyle: { [key: string]: string } = {};
@@ -84,8 +84,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         )
       ).subscribe(([campaign, outcomes]: [ICampaign, ICampaignOutcome[]]) => {
         this.campaign = campaign;
-        this.config = oc(campaign).displayProperties.landingPage();
-        this.backgroundUrl = oc(this.config).backgroundUrl('');
+        this.landingPageConfig = oc(campaign).displayProperties.landingPage();
+        this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
       });
   }
