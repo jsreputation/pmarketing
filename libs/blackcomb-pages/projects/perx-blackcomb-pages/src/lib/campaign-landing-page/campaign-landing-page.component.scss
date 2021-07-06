@@ -17,6 +17,15 @@
     flex-direction: column;
     align-items: center;
 
+    img, svg {
+      width: 100%;
+      height: 22rem;
+      object-fit: cover;
+    }
+    svg {
+      background: #E8E8E8;
+    }
+
     h1 {
       font-weight: 500;
       font-size: 2rem;
