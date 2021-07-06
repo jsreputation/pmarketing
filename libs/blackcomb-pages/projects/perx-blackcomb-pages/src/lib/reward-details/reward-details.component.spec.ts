@@ -1,8 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
 import {
@@ -24,10 +20,7 @@ import {
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -118,7 +111,10 @@ describe('RewardComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: { params: of({ id: 3 }) } },
+        { provide: ActivatedRoute, useValue: {
+          params: of({ id: 3 }),
+          queryParams: of({ isFromCampaignLandingPage: true })
+        } },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
@@ -142,5 +138,19 @@ describe('RewardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('test queryParam in route', (done) => {
+    const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
+
+    fixture.detectChanges();
+
+    console.log('-> activatedRoute', activatedRoute);
+
+    activatedRoute.queryParams.subscribe((value) => {
+      console.log('value ===== value =====', value);
+      expect(value).toEqual({ isFromCampaignLandingPage: true });
+      done();
+    });
   });
 });
