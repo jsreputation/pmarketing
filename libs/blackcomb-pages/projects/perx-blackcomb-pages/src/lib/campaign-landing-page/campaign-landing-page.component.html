@@ -5,8 +5,8 @@
 <!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
 <!--      </div>-->
       <div *ngIf="campaign || config">
-        <img [src]="(campaign.campaignBannerUrl || config?.media?.bannerImage) | safeUrl"
-             *ngIf="campaign.campaignBannerUrl || config?.media?.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
+        <img [src]="(campaign?.campaignBannerUrl || config?.media?.bannerImage) | safeUrl"
+             *ngIf="campaign?.campaignBannerUrl || config?.media?.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
         <ng-template #defaultImgTemplate>
           <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>
