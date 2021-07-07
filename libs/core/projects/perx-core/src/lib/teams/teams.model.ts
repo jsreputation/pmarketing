@@ -8,5 +8,6 @@ export interface ITeam {
 }
 
 export enum TeamState {
-  inProgress = 'in_progress'
+  inProgress = 'in_progress',
+  completed = 'completed'
 }
