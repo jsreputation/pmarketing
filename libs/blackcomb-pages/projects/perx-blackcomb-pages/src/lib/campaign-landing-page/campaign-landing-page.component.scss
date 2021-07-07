@@ -104,11 +104,19 @@ h2 {
     .additional-info-container {
       margin-top: 2rem;
 
-      p.subtitle {
+      .tnc-container {
         font-size: 1.2rem;
-        font-weight: 500;
-        color: rgba(0, 0, 0, 0.6);
-        margin-bottom: 0;
+
+        .subtitle {
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.6);
+          margin-bottom: 0;
+        }
+
+        div {
+          line-height: 20px;
+          font-size: 1.2rem;
+        }
       }
     }
   }
