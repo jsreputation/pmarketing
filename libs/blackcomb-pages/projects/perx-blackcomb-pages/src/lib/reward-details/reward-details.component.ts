@@ -47,14 +47,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
   public maxRewardCost?: number;
-  public notAvailableLabel?: Observable<string>;
+  public notAvailableLabel: string;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
+    this.translate.get('REWARD.N_A').subscribe((text) => this.notAvailableLabel = text);
     this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
     this.expiryLabel = this.translate.get('REWARD.EXPIRY');
-    this.notAvailableLabel = this.translate.get('REWARD.N_A');
   }
 
   constructor(
@@ -92,9 +92,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
         switchMap((id: number) => this.rewardsService.getReward(id)),
         tap((reward: IReward) => {
           this.rewardData = reward;
-          if (reward.displayProperties) {
-            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+
+          if (reward.inventory && reward.inventory.rewardTotalBalance === 0) {
+            this.isButtonEnable = false;
           }
+
+          {if (reward.displayProperties) {
+            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+          }}
           this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
@@ -126,18 +131,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
               this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
                 .subscribe(
                   (message: string) => {
-                    if (err.status === 401) {
-                      this.router.navigate([ '/error' ]);
+                    if (err.error.code === 4103) { // rewards run out due to reward limits
+                      this.refreshReward(); // refresh the reward to show fully redeemed
+                      this.isButtonEnable = false;
                     } else {
-                      if (err.error.code === 4103) { // rewards run out due to reward limits
-                        this.refreshReward(); // refresh the reward to show fully redeemed
-                        this.isButtonEnable = false;
-                      } else {
-                        // change button back to enable which it originally is, before save is triggered
-                        this.isButtonEnable = true;
-                      }
-                      this.notificationService.addSnack(message);
+                      // change button back to enable which it originally is, before save is triggered
+                      this.isButtonEnable = true;
                     }
+                    this.notificationService.addSnack(message);
                   }
                 );
             }
