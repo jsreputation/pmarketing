@@ -5,28 +5,25 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  AuthenticationService,
+  ConfigService,
   ICampaignService,
+  IGameService,
   InstantOutcomeService,
+  IQuestService,
+  IReward,
   LoyaltyModule,
-  RewardsModule,
-  UtilsModule,
-  RewardsService,
   LoyaltyService,
   ProfileService,
-  IGameService,
-  ThemesService,
-  ConfigService,
-  IReward,
-  AuthenticationService,
-  TokenStorage,
+  RewardsModule,
+  RewardsService,
   SettingsService,
-  IQuestService
+  TeamsService,
+  ThemesService,
+  TokenStorage,
+  UtilsModule
 } from '@perxtech/core';
-import {
-  CampaignsCollectionComponent,
-  CatalogsComponent,
-  GamesCollectionComponent
-} from '@perxtech/blackcomb-pages';
+import { CampaignsCollectionComponent, CatalogsComponent, GamesCollectionComponent } from '@perxtech/blackcomb-pages';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -106,6 +103,10 @@ describe('HomeComponent', () => {
     claim: () => of([])
   };
 
+  const teamsServiceStub: Partial<TeamsService> = {
+    getTeam: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
@@ -139,6 +140,7 @@ describe('HomeComponent', () => {
         },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: IQuestService, useValue: questServiceStub },
+        { provide: TeamsService, useValue: teamsServiceStub },
       ]
     })
       .compileComponents();

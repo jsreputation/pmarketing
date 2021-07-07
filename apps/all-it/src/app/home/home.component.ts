@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HomeComponent as BCHomeComponent } from '@perxtech/blackcomb-pages';
 import {
   AuthenticationService,
@@ -13,32 +10,22 @@ import {
   IGameService,
   ILoyalty,
   InstantOutcomeService,
+  IQuestService,
   IReward,
   LoyaltyService,
   ProfileService,
   RewardsService,
   SettingsService,
+  TeamsService,
   ThemesService,
-  TokenStorage,
-  IQuestService
+  TokenStorage
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  finalize,
-  map,
-  switchMap,
-  tap
-} from 'rxjs/operators';
-import {
-  EMPTY,
-  iif
-} from 'rxjs';
-import {
-  CurrencyPipe,
-  DatePipe
-} from '@angular/common';
+import { finalize, map, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, iif } from 'rxjs';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -70,7 +57,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     datePipe: DatePipe,
 
     private loyaltyService: LoyaltyService,
-    questService: IQuestService
+    questService: IQuestService,
+    teamsService: TeamsService
   ) {
     super(
       rewardsService,
@@ -90,7 +78,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       currencyPipe,
       tokenService,
       datePipe,
-      questService
+      questService,
+      teamsService
     );
   }
 

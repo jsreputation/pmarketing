@@ -1,4 +1,5 @@
-<mat-toolbar class="toolbar mat-elevation-z3" [ngStyle]="{ 'background-color' : theme.properties['--header_color'] }">
+<mat-toolbar class="toolbar mat-elevation-z3"
+             [ngStyle]="{ 'background-color' : theme ? theme.properties['--header_color']: '' }">
     <mat-icon
         class="backArrow"
         (click)="goBack()">

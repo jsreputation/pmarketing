@@ -13,6 +13,7 @@ interface IV4Team {
   campaign_id: number;
   invitation_code: string;
   state: TeamState;
+  users_count: number;
 }
 
 interface IV4TeamResponse {
@@ -25,8 +26,14 @@ export interface IV4TeamsDisplayProperties {
     landing_page: {
       pre_enrolment_message: string;
       stamps_earn_message: string;
-      button_text: string;
-      button_text_secondary: string;
+      team_complete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
+      team_incomplete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
     },
     join_page: {
       description: string;
@@ -72,7 +79,7 @@ export class V4TeamsService implements TeamsService{
   }
 
   leaveATeam(teamId: number): Observable<boolean> {
-    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`).pipe(
+    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`, { observe: 'response'}).pipe(
       map((response: HttpResponse<any>) => response.status === 200),
       catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error))
     );
@@ -83,7 +90,8 @@ export class V4TeamsService implements TeamsService{
       id: team.id,
       campaignId: team.campaign_id,
       invitationCode: team.invitation_code,
-      state: team.state
+      state: team.state,
+      joinedMembersCount: team.users_count
     }
   }
 }

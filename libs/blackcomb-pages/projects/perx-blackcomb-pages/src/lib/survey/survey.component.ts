@@ -227,7 +227,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
                 if (res && res.prizeSets && res.prizeSets.length > 0) {
                   this.prizeSetOutcome = res.prizeSets[0];
                 }
-                if (res?.badges!.length > 0) {
+                if (res?.badges && res.badges.length > 0) {
                   this.isBadgeOucome = true;
                 }
                 this.redirectUrlAndPopUp();
