@@ -191,7 +191,11 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       }
       if (this.campaign.type === CampaignType.stamp) {
         if (this.isTeamsEnabled) {
-          this.createTeam(this.campaign.id);
+          if (this.teamCompleted){
+            this.router.navigate([`stamp/${this.campaign.id}`]);
+          } else {
+            this.createTeam(this.campaign.id);
+          }
           return;
         }
       }
