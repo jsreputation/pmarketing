@@ -221,12 +221,17 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   }
 
   private initCTAs(): void {
-    this.primaryCtaText = this.landingPageConfig?.buttonText?.text || this.primaryCtaText
+    this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ? this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
     this.secondaryCtaText = this.landingPageConfig?.buttonText2?.text || undefined;
 
     if (this.isTeamsEnabled) {
-      this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonText
-      this.secondaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonTextSecondary
+      if (!this.teamCompleted){
+        this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonText
+        this.secondaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonTextSecondary
+      } else {
+        this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamComplete?.buttonText;
+        this.secondaryCtaText = undefined; // explictly disable the secondary cta button
+      }
     }
   }
 }
