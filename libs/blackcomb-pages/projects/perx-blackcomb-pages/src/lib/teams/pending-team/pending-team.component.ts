@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { ICampaign, ICampaignService, ITeam, NotificationService, TeamsProperties, TeamsService } from '@perxtech/core';
+import {
+  ICampaign,
+  ICampaignService,
+  ITeam,
+  NotificationService,
+  TeamsProperties,
+  TeamsService,
+  TeamState
+} from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -50,14 +58,22 @@ export class PendingTeamComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe(
       ([campaign , team]) => {
-        this.campaign$ = of(campaign);
-        this.team = team;
-        this.teamsConfig = campaign.displayProperties?.teamsDetails;
-        this.shareText = this.teamsConfig?.inviteMessage?.description || '';
-        this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
-        // this.teamUsername = 'John Doe';
-        this.initForm();
-        this.initTranslate();
+        if (team.state === TeamState.inProgress)
+        {
+          this.campaign$ = of(campaign);
+          this.team = team;
+          this.teamsConfig = campaign.displayProperties?.teamsDetails;
+          this.shareText = this.teamsConfig?.inviteMessage?.description || '';
+          this.teamCodeShareText = this.teamsConfig?.inviteMessage?.codeBlurb || '';
+          // this.teamUsername = 'John Doe';
+          this.initForm();
+          this.initTranslate();
+        } else { // team is completed
+          this.router.navigate([`campaign-welcome/${campaign.id}`], { replaceUrl: true })
+        }
+      },
+      () => { // team or campaign does not exist
+        this.router.navigate(['home'], { replaceUrl: true })
       }
     );
   }
