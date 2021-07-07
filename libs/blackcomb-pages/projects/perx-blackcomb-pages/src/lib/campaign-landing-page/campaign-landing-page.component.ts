@@ -41,6 +41,9 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public showCampaignOutcomes: boolean = false;
   public isTeamsEnabled: boolean = false;
 
+  public primaryCtaText: string | undefined = 'Continue';
+  public secondaryCtaText: string | undefined;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private campaignService: ICampaignService,
@@ -89,6 +92,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
         this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
+        this.initCTAs();
       });
   }
 
@@ -199,5 +203,15 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  private initCTAs(): void {
+    this.primaryCtaText = this.landingPageConfig?.buttonText?.text || this.primaryCtaText
+    this.secondaryCtaText = this.landingPageConfig?.buttonText2?.text || undefined;
+
+    if (this.isTeamsEnabled) {
+      this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonText
+      this.secondaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonTextSecondary
+    }
   }
 }
