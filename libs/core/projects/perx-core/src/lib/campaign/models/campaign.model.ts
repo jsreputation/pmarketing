@@ -56,8 +56,14 @@ export interface TeamsProperties {
   landingPage?: {
     preEnrolmentMessage: string;
     stampsEarnMessage: string;
-    buttonText: string;
-    buttonTextSecondary: string;
+    teamComplete?: {
+      buttonText?: string;
+      buttonTextSecondary?: string;
+    }
+    teamIncomplete?: {
+      buttonText?: string;
+      buttonTextSecondary?: string;
+    }
   }
   joinPage?: {
     description: string;
