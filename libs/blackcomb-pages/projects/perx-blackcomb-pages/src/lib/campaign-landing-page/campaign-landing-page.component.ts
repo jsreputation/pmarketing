@@ -19,6 +19,7 @@ import {
   RewardsService,
   SettingsService,
   TeamsService,
+  TeamState,
   ThemesService
 } from '@perxtech/core';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
@@ -40,6 +41,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
   public showCampaignOutcomes: boolean = false;
   public isTeamsEnabled: boolean = false;
+  public teamCompleted: boolean = false;
 
   public primaryCtaText: string | undefined = 'Continue';
   public secondaryCtaText: string | undefined;
@@ -82,18 +84,31 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
-           forkJoin(
-            [this.campaignService.getCampaign(campaignId), iif(() => this.showCampaignOutcomes,
-              this.getCampaignOutcome(campaignId), of([]))])
+           forkJoin([
+             this.campaignService.getCampaign(campaignId),
+             iif(() => this.showCampaignOutcomes,
+              this.getCampaignOutcome(campaignId), of([])),
+             this.teamsService.getTeam(campaignId).pipe(
+               catchError(() => of({})) // let the parent observable carry on when user is not part of team
+             )
+           ])
         )
-      ).subscribe(([campaign, outcomes]: [ICampaign, ICampaignOutcome[]]) => {
-        this.campaign = campaign;
-        this.landingPageConfig = oc(campaign).displayProperties.landingPage();
-        this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
-        this.campaignOutcomes = outcomes;
-        this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
-        this.initCTAs();
-      });
+      ).subscribe(([ campaign, outcomes, userTeam ]: [ ICampaign, ICampaignOutcome[], ITeam ]) => {
+      this.campaign = campaign;
+      this.landingPageConfig = oc(campaign).displayProperties.landingPage();
+      this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
+      this.campaignOutcomes = outcomes;
+      this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
+      if (userTeam && this.isTeamsEnabled) {
+        if (userTeam.state === TeamState.completed) {
+          this.teamCompleted = true;
+        } else {
+          // state == inprogress therefore user is already part of a team for this campaign
+          this.router.navigate([ `teams/pending/${campaign.id}` ], { replaceUrl: true });
+        }
+      }
+      this.initCTAs();
+    });
   }
 
   public getCampaignOutcome(campaignId: number): Observable<ICampaignOutcome[]> {
