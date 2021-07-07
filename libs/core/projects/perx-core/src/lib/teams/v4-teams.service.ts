@@ -26,8 +26,14 @@ export interface IV4TeamsDisplayProperties {
     landing_page: {
       pre_enrolment_message: string;
       stamps_earn_message: string;
-      button_text: string;
-      button_text_secondary: string;
+      team_complete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
+      team_incomplete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
     },
     join_page: {
       description: string;

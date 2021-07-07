@@ -315,17 +315,17 @@ export class V4CampaignService implements ICampaignService {
         displayProperties.teamsDetails!.landingPage = {
           preEnrolmentMessage: v4TeamsProps.landing_page.pre_enrolment_message,
           stampsEarnMessage: v4TeamsProps.landing_page.stamps_earn_message,
-          buttonText: v4TeamsProps.landing_page.button_text,
-          buttonTextSecondary: v4TeamsProps.landing_page.button_text_secondary
+          teamComplete: {
+            buttonText: v4TeamsProps.landing_page.team_complete?.button_text,
+            buttonTextSecondary: v4TeamsProps.landing_page.team_complete?.button_text_secondary
+          },
+          teamIncomplete: {
+            buttonText: v4TeamsProps.landing_page.team_incomplete?.button_text,
+            buttonTextSecondary: v4TeamsProps.landing_page.team_incomplete?.button_text_secondary
+          },
         }
 
         displayProperties.landingPage! = {
-          buttonText: {
-            text: v4TeamsProps.landing_page.button_text
-          },
-          buttonText2: {
-            text: v4TeamsProps.landing_page.button_text_secondary
-          },
           body: {
             text: v4TeamsProps.landing_page.stamps_earn_message
           },
