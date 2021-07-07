@@ -74,11 +74,11 @@
         </div>
       </div>
     </div>
-    <div class="tnc" *ngIf="config?.body" [innerHtml]="config?.body?.text | safeHtml"></div>
+    <div class="tnc" *ngIf="landingPageConfig?.body" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
     <div class="tnc" *ngIf="campaign?.termsAndConditions" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{config?.buttonText?.text || 'Play'}}</button>
-    <button mat-stroked-button color="primary" *ngIf="config?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{config?.buttonText2?.text}}</button>
+    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{landingPageConfig?.buttonText?.text || 'Play'}}</button>
+    <button mat-stroked-button color="primary" *ngIf="landingPageConfig?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{landingPageConfig?.buttonText2?.text}}</button>
   </div>
 </div>

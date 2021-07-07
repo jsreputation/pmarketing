@@ -36,7 +36,7 @@ import {
   iif,
   Observable,
   of,
-  Subject, Subscription,
+  Subject,
   throwError
 } from 'rxjs';
 import {
@@ -48,8 +48,6 @@ import {
   tap
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-
-export const browserRefresh = false;
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -89,8 +87,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   };
   private submitErrorTxt: string;
   public disableNextButton: boolean = true;
-  public subscription: Subscription;
-  public isRefreshBrowser: boolean = false;
 
   constructor(
     private router: Router,
@@ -103,12 +99,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
-
-    window.addEventListener('beforeunload',  (e: BeforeUnloadEvent) => {
-      const confirmationMessage = 'Do you wanna refresh!';
-      e.returnValue = confirmationMessage;
-      return confirmationMessage;
-    });
   }
 
   public ngOnInit(): void {
