@@ -119,7 +119,7 @@ export class LayoutComponent implements OnInit {
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
       .subscribe(url => {
-        this.isLeaderboardPage = this.router.url.startsWith('/leaderboard') ? true : false;
+        this.isLeaderboardPage = url.startsWith('/leaderboard') ? true : false;
         this.initBackArrow(url);
       });
     this.initBackArrow(this.router.url);
