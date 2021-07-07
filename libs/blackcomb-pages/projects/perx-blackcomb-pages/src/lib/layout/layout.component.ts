@@ -67,6 +67,7 @@ export class LayoutComponent implements OnInit {
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
   public tenant: string;
+  public isLeaderboardPage: boolean = false;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -90,6 +91,8 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.isLeaderboardPage = this.router.url.startsWith('/leaderboard') ? true : false;
+
     this.route.data.subscribe(
       (dataObj) => {
         this.tenant = dataObj.tenant;
@@ -115,7 +118,10 @@ export class LayoutComponent implements OnInit {
         filter((event: Event) => event instanceof NavigationEnd),
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
-      .subscribe(url => this.initBackArrow(url));
+      .subscribe(url => {
+        this.isLeaderboardPage = this.router.url.startsWith('/leaderboard') ? true : false;
+        this.initBackArrow(url);
+      });
     this.initBackArrow(this.router.url);
     this.route.queryParams.subscribe((params) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
