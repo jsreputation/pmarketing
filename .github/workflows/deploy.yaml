@@ -120,12 +120,13 @@ jobs:
 
       # TODO: Below is temporary deploy to staging-a account. TO be removed once migration is finished.
       - name: Set kube context (staging-a)
-        if: ${{ env.TARGET_ENV == "staging" }}
+        if: ${{ env.TARGET_ENV == 'staging' }}
+
         run: |
           kubectl config use-context staging-a
 
       - name: Deploy (staging-a)
-        if: ${{ env.TARGET_ENV == "staging" }}
+        if: ${{ env.TARGET_ENV == 'staging' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
