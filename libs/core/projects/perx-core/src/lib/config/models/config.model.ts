@@ -40,6 +40,7 @@ export interface IConfig<T> {
   showStampCampaignsOnHomePage?: boolean;
   showExtraLoyaltyOnHomePage?: boolean;
   showRewardNavButton?: boolean;
+  showGameTriesOnCampaignCard?: boolean;
   showSurveyFirstOnHomePageCampaignList?: boolean;
   showQuestCampaignsOnHomePage?: boolean;
   showProgressBarCampaignsOnHomePage?: boolean;
