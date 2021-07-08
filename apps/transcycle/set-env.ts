@@ -258,9 +258,6 @@ const appConfigFile = `{
   "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
     : false
   },
-  "showGameTriesOnCampaignCard": ${
-    process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD ? process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD : false
-  },
   "showPasswordToggleOnSignUpPage": ${
     process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE ? process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE : false
   }
