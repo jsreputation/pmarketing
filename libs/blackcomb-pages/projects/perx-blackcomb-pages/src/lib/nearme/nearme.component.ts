@@ -14,7 +14,7 @@ import {
   SettingsService
 } from '@perxtech/core';
 
-import { from, iif, Subject } from 'rxjs';
+import { from, iif, of, Subject } from 'rxjs';
 import { filter, finalize, mergeMap, take, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
@@ -200,62 +200,64 @@ export class NearmeComponent implements OnInit, OnDestroy {
     this.rewardsService.nearMe(rad, latitude, longitude).pipe(
       take(1),
       mergeMap((rewards: IReward[]) =>
-        from(rewards).pipe(
-          mergeMap(reward => this.vouchersService.getRewardLocations(reward.id).pipe(
-            mergeMap((locations: IVoucherLocation[]) =>
-              from(locations).pipe(
-                filter((location: IVoucherLocation) => {
-                  const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
-                  const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
+        iif(() => !rewards.length
+          , of([])
+          , from(rewards).pipe(
+            mergeMap(reward => this.vouchersService.getRewardLocations(reward.id).pipe(
+              mergeMap((locations: IVoucherLocation[]) =>
+                from(locations).pipe(
+                  filter((location: IVoucherLocation) => {
+                    const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
+                    const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
 
-                  if (filterCategories && filterCategories.length > 0) {
-                    const tags = reward.categoryTags ? reward.categoryTags : [];
-                    for (let i = 0; i < tags.length; i++) {
-                      if (filterCategories.includes(tags[i].title)) {
-                        return lat === 0 || lng === 0 ? false : true;
+                    if (filterCategories && filterCategories.length > 0) {
+                      const tags = reward.categoryTags ? reward.categoryTags : [];
+                      for (let i = 0; i < tags.length; i++) {
+                        if (filterCategories.includes(tags[i].title)) {
+                          return lat === 0 || lng === 0 ? false : true;
+                        }
                       }
+                      return false;
                     }
-                    return false;
-                  }
-                  return lat === 0 || lng === 0 ? false : true;
-                }),
-                // then filter for all locations that are within search radius
-                filter((voucherLocation: IVoucherLocation) => {
-                  const voucherLocationlat = voucherLocation.latitude !== null ? parseFloat(voucherLocation.latitude) : 0;
-                  const voucherLocationlng = voucherLocation.longitude !== null ? parseFloat(voucherLocation.longitude) : 0;
-                  const voucherLocationlocationLatLng: google.maps.LatLng = new google.maps.LatLng(
-                    {
-                      lat: voucherLocationlat,
-                      lng: voucherLocationlng
-                    }
-                  );
+                    return lat === 0 || lng === 0 ? false : true;
+                  }),
+                  // then filter for all locations that are within search radius
+                  filter((voucherLocation: IVoucherLocation) => {
+                    const voucherLocationlat = voucherLocation.latitude !== null ? parseFloat(voucherLocation.latitude) : 0;
+                    const voucherLocationlng = voucherLocation.longitude !== null ? parseFloat(voucherLocation.longitude) : 0;
+                    const voucherLocationlocationLatLng: google.maps.LatLng = new google.maps.LatLng(
+                      {
+                        lat: voucherLocationlat,
+                        lng: voucherLocationlng
+                      }
+                    );
 
-                  // @ts-ignore ts thinks this.map could be undefined... but only in this line
-                  return google.maps.geometry.spherical.computeDistanceBetween(voucherLocationlocationLatLng, this.map.getBounds().getCenter()) < rad;
-                }),
-                tap((location: IVoucherLocation) => {
-                  const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
-                  const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
-                  const latLng: google.maps.LatLng = new google.maps.LatLng({ lat, lng });
-                  const marker = new google.maps.Marker({
-                    position: latLng,
-                    map: this.map,
-                  });
-                  marker.addListener('click', () => {
-                    this.current = reward;
-                    this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
-                    this.merchantImg = this.current.merchantImg ? true : false;
+                    // @ts-ignore ts thinks this.map could be undefined... but only in this line
+                    return google.maps.geometry.spherical.computeDistanceBetween(voucherLocationlocationLatLng, this.map.getBounds().getCenter()) < rad;
+                  }),
+                  tap((location: IVoucherLocation) => {
+                    const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
+                    const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
+                    const latLng: google.maps.LatLng = new google.maps.LatLng({ lat, lng });
+                    const marker = new google.maps.Marker({
+                      position: latLng,
+                      map: this.map,
+                    });
+                    marker.addListener('click', () => {
+                      this.current = reward;
+                      this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
+                      this.merchantImg = this.current.merchantImg ? true : false;
 
-                    const sellingFrom = this.current.sellingFrom;
-                    const nowTime: number = (new Date()).getTime();
-                    this.upcoming = sellingFrom && sellingFrom.getTime() > nowTime ? true : false;
-                  });
-                  this.markersArray.push(marker);
-                })
+                      const sellingFrom = this.current.sellingFrom;
+                      const nowTime: number = (new Date()).getTime();
+                      this.upcoming = sellingFrom && sellingFrom.getTime() > nowTime ? true : false;
+                    });
+                    this.markersArray.push(marker);
+                  })
+                )
               )
-            )
+            ))
           ))
-        )
       )
     ).subscribe(() => {
       if (this.firstLoad) {
