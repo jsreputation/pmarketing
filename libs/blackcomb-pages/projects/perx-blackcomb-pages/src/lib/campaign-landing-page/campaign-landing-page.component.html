@@ -71,7 +71,7 @@
     </div>
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
-    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{landingPageConfig?.buttonText?.text || 'Play'}}</button>
-    <button mat-stroked-button color="primary" *ngIf="landingPageConfig?.buttonText2?.text" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{landingPageConfig?.buttonText2?.text}}</button>
+    <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()">{{primaryCtaText}}</button>
+    <button mat-stroked-button color="primary" *ngIf="secondaryCtaText" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{secondaryCtaText}}</button>
   </div>
 </div>
