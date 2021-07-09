@@ -159,7 +159,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public milestoneCompletedProgressCalculation(milestone: IMilestone): number {
 
     // past milestones
-    if (milestone.pointsRequired < this.currentUserPoints) {
+    if (milestone.pointsRequired <= this.currentUserPoints) {
       return milestone.pointsRequired;
     }
 
@@ -169,10 +169,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
         ? this.currentUserPoints
         : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
-    }
-
-    if (milestone.pointsRequired === this.currentUserPoints) {
-      return 100;
     }
 
     return 0;
