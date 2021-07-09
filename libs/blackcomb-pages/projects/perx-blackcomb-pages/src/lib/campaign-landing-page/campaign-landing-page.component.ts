@@ -179,6 +179,15 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  public outcomeClicked(outcome: ICampaignOutcome): void {
+    if (outcome.type === CampaignOutcomeType.reward) {
+      this.router.navigate([ '/reward-detail', outcome.id ]);
+    }
+    if (outcome.type === CampaignOutcomeType.prizeSet) {
+      this.router.navigate([ '/prize-set-outcomes', outcome.id ]);
+    }
+  }
+
   public next(): void {
     if (this.campaign) {
       if (this.campaign.subType === 'quiz') {

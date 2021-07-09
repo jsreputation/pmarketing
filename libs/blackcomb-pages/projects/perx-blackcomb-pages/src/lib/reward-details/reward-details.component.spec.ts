@@ -113,7 +113,7 @@ describe('RewardComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: {
           params: of({ id: 3 }),
-          queryParams: of({ isFromCampaignLandingPage: true })
+          queryParams: of({ previewReward: true })
         } },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -149,7 +149,7 @@ describe('RewardComponent', () => {
 
     activatedRoute.queryParams.subscribe((value) => {
       console.log('value ===== value =====', value);
-      expect(value).toEqual({ isFromCampaignLandingPage: true });
+      expect(value).toEqual({ previewReward: true });
       done();
     });
   });

@@ -114,8 +114,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   public checkNavigateFromCampaignLandingPage(): void {
     const urlParams = new URLSearchParams(window.location.search);
-    const isFromCampaignLandingPage = urlParams.get('isFromCampaignLandingPage');
-    this.isDisableWhenNavigateFromCampaignLandingPage = Boolean(isFromCampaignLandingPage);
+    const previewReward = urlParams.get('previewReward');
+    this.isDisableWhenNavigateFromCampaignLandingPage = Boolean(previewReward);
   }
 
   public buyReward(): void {
