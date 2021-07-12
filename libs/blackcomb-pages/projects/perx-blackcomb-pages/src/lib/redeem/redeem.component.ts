@@ -53,6 +53,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
     imageUrl: '',
     disableOverlayClose: true
   };
+  public isVoucherValid: boolean = false;
 
   private initTranslate(): void {
     this.translate.get('REDEMPTION.TITLE').subscribe((text) => this.headLine = text);
@@ -95,6 +96,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
           this.voucher = voucher;
+          this.isVoucherValid = this.voucher.vaildFrom ?  new Date().getTime() > this.voucher.vaildFrom.getTime()  : false;
           if (this.rewardSuccessPopUp.text && voucher.reward) {
             this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }

@@ -27,6 +27,7 @@ export interface IVoucher {
   redemptionType?: RedemptionType | null;
   accessoryImage?: string | null;
   merchantLocation?: IMerchantLocation | null;
+  vaildFrom?: Date | null;
 }
 
 export interface IMerchantLocation {
