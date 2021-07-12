@@ -253,7 +253,8 @@
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
-    "TNC": "Terms and Conditions"
+    "TNC": "Terms and Conditions",
+    "N_A": "Not Available"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",

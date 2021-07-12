@@ -353,7 +353,8 @@
     "TNC": "Terms and Conditions",
     "EXPIRY": "Expiry",
     "CODE": "Code",
-    "POINT": "Points"
+    "POINT": "Points",
+    "N_A": "Not Available"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",
