@@ -287,7 +287,8 @@
     "TNC": "Các điều khoản và điều kiện",
     "EXPIRY": "Hết hạn",
     "CODE": "Mã",
-    "POINT": "Điểm"
+    "POINT": "Điểm",
+    "N_A": "Không có sẵn"
   },
   "GAME_PAGE": {
     "STAMPS_LABEL_TXT": "tem mới",

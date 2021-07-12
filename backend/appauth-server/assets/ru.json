@@ -168,6 +168,9 @@
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
     "LOYALTY_POINTS": "loyalty points"
   },
+  "REWARD": {
+    "N_A": "Not Available"
+  },
   "TEAMS": {
     "CREATE_PAGE": {
       "PAGE_TITLE": "Create a Team",

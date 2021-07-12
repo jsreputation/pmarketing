@@ -164,6 +164,9 @@
     "UNEARNED_TAB": "Unearned",
     "VIEW_WALLET": "Close"
   },
+  "REWARD": {
+    "N_A": "Không có sẵn"
+  },
   "PRIZE_SET": {
     "HEADING": "Congrats! You won this prize set.",
     "SUB_HEADING": "includes ALL of the following:",

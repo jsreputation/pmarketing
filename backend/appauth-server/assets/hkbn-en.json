@@ -146,6 +146,9 @@
       "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
     }
   },
+  "REWARD": {
+    "N_A": "Not Available"
+  },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
   "MOBILE_NUMBER_OR_EMAIL": "Mobile Number or email address",
