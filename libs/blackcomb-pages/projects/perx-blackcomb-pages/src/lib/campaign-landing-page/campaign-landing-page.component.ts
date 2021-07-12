@@ -99,12 +99,15 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
       this.campaignOutcomes = outcomes;
       this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
-      if (userTeam && this.isTeamsEnabled) {
-        if (userTeam.state === TeamState.completed) {
-          this.teamCompleted = true;
-        } else {
-          // state == inprogress therefore user is already part of a team for this campaign
-          this.router.navigate([ `teams/pending/${campaign.id}` ], { replaceUrl: true });
+      if (this.isTeamsEnabled) {
+        switch (userTeam.state){
+          case TeamState.completed:
+            this.teamCompleted = true;
+            break;
+          case TeamState.inProgress:
+            this.router.navigate([ `teams/pending/${campaign.id}` ], { replaceUrl: true });
+            break;
+        // do nothing if there's no team state available due to catch error
         }
       }
       this.initCTAs();
