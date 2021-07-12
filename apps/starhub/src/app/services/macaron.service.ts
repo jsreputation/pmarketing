@@ -50,7 +50,7 @@ export class MacaronService {
       return {
         label: 'Expired',
         class: 'expired',
-        isButtonEnabled: true
+        isButtonEnabled: false
       };
     }
 
