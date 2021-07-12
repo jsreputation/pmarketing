@@ -55,6 +55,7 @@ export class RedemptionComponent implements OnInit {
   private pinInputComponent: PinInputComponent;
 
   private appConfig: IConfig<IStarhubConfig>;
+  public isVoucherValid: boolean = false;
 
   constructor(
     private vouchersService: IVoucherService,
@@ -81,6 +82,7 @@ export class RedemptionComponent implements OnInit {
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
           this.voucher = voucher;
+          this.isVoucherValid = this.voucher.vaildFrom ?  new Date().getTime() > this.voucher.vaildFrom.getTime()  : false;
           const categories: ICategoryTags[] = voucher.reward && voucher.reward.categoryTags ? voucher.reward.categoryTags : [];
           const category: string | undefined = !isEmptyArray(categories) ? categories[0].title : undefined;
           if (category !== undefined) {

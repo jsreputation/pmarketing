@@ -185,6 +185,7 @@ export class V4VouchersService implements IVoucherService {
         name: v.merchant_location.name,
         postalCode: v.merchant_location.postal_code
       } : null,
+      vaildFrom: v.valid_from !== null ? new Date(v.valid_from) : null,
     };
   }
 
