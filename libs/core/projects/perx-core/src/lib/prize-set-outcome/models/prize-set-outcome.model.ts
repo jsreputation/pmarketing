@@ -35,7 +35,9 @@ export enum PrizeSetOutcomeType {
 
 export enum PrizeSetIssuedType {
     voucher = 'Reward::Transaction',
-    points = 'StoredValue::Transaction'
+    points = 'StoredValue::Transaction',
+    badge = 'BadgeTransaction',
+    prizeSet = 'PrizeSetTransaction'
 }
 
 export enum PrizeSetState {

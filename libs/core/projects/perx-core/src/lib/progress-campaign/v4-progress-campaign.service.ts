@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
 import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 import { Asset } from '../game/v4-game.service';
+import { PrizeSetIssuedType } from '@perxtech/core';
+import { IMilestoneIssuedOutcome } from '../outcome/models/outcome.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,30 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
     );
   }
 
+  public getCampaignMilestoneOutcomesForUser(campaignId: number): Observable<IMilestoneIssuedOutcome[]> {
+    return this.http.get<IV4ProgressMilestoneIssuedOutcomesResponse>(
+      `${this.hostName}/v4/user_milestone_outcomes?campaign_id=${campaignId}`
+    ).pipe(
+      map(res => res.data),
+      map((milestoneOutcomes: IV4ProgressMilestoneIssuedOutcome[]) => {
+        return milestoneOutcomes.map((milestoneOutcome: IV4ProgressMilestoneIssuedOutcome) =>
+          V4ProgressCampaignService.v4MilestoneIssuedOutomeToMilestoneIssuedOutcome(milestoneOutcome)
+        )
+      })
+    )
+  }
+
+  private static v4MilestoneIssuedOutomeToMilestoneIssuedOutcome(milestoneOutcome: IV4ProgressMilestoneIssuedOutcome): IMilestoneIssuedOutcome {
+    return {
+      id: milestoneOutcome.id,
+      milestoneId: milestoneOutcome.milestone_id,
+      outcomeId: milestoneOutcome.actual_outcome_id,
+      outcomeType: milestoneOutcome.actual_outcome_type,
+      progressPointsTransactionId: milestoneOutcome.progress_points_transaction_id,
+      state: milestoneOutcome.state
+    }
+  }
+
   private static v4MilestoneToMilestone(milestone: IV4ProgressMilestone): IMilestone {
     return {
       id: milestone.id,
@@ -84,12 +110,28 @@ export class V4ProgressCampaignService implements ProgressCampaignService {
   }
 }
 
+export interface IV4ProgressMilestoneIssuedOutcomesResponse {
+  data: IV4ProgressMilestoneIssuedOutcome[];
+  meta: {
+    count: number;
+  };
+};
+
 export interface IV4ProgressMilestoneResponse {
   data: IV4ProgressMilestone[];
   meta: {
     count: number;
   };
 };
+
+export interface IV4ProgressMilestoneIssuedOutcome {
+  id: number;
+  milestone_id: number;
+  actual_outcome_id: number;
+  actual_outcome_type: PrizeSetIssuedType;
+  progress_points_transaction_id: number;
+  state: string; // success
+}
 
 export interface IV4ProgressMilestone {
   id: number;
