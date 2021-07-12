@@ -87,7 +87,6 @@ export class CampaignsCollectionComponent implements OnInit {
       .pipe(
         tap((flags: IFlags) => {
           this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
-          console.log(`${this.showOperatingHours} <- flag`);
         }),
         switchMap(() => iif(
           () => this.withRewardsCounter,
