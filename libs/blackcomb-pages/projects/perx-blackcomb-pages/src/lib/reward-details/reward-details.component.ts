@@ -45,7 +45,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
   public maxRewardCost?: number;
-  public isDisableWhenNavigateFromCampaignLandingPage: boolean = false;
+  public isPreviewReward: boolean = false;
 
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
@@ -71,7 +71,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   public ngOnInit(): void {
 
-    this.checkNavigateFromCampaignLandingPage();
+    this.checkPreviewMode();
 
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
@@ -112,10 +112,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
 
-  public checkNavigateFromCampaignLandingPage(): void {
+  public checkPreviewMode(): void {
     const urlParams = new URLSearchParams(window.location.search);
     const previewReward = urlParams.get('previewReward');
-    this.isDisableWhenNavigateFromCampaignLandingPage = Boolean(previewReward);
+    this.isPreviewReward = Boolean(previewReward);
   }
 
   public buyReward(): void {

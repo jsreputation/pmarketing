@@ -45,11 +45,10 @@
                       </ng-container>
                   </ng-container>
                 </div>
-                <div class="icon" *ngIf="outcome.type !== outcomeType.points">
-                  <a [routerLink]="['/reward-detail',outcome.id]"
-                     [queryParams]='{ previewReward: true }' ]>
-                    <mat-icon matListIcon>navigate_next</mat-icon>
-                  </a>
+                <div class="icon"
+                     (click)='onOutcomeClicked(outcome.id)'
+                     *ngIf="outcome.type !== outcomeType.points">
+                  <mat-icon matListIcon>navigate_next</mat-icon>
                 </div>
               </div>
             </mat-list-item>

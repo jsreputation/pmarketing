@@ -111,6 +111,10 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onOutcomeClicked(outcomeId: number): void {
+    this.router.navigate([`reward-detail/${outcomeId}`, { previewReward: true } ]);
+  }
+
   public getCampaignOutcome(campaignId: number): Observable<ICampaignOutcome[]> {
     let prizeSetOutcomes: ICampaignOutcome[] = [];
     let allOutcomes: ICampaignOutcome[] = [];
