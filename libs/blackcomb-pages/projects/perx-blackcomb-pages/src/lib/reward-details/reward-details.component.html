@@ -25,7 +25,7 @@
             [disabled]="(
             loyalty ?  (loyalty.pointsBalance <  0 || loyalty.pointsBalance < (maxRewardCost || 0)) : false)  ||
             waitForSubmission ||
-            (remoteFlags?.showHappyHourOperatingHours && !isOperating)"
+            (remoteFlags?.showHappyHourOperatingHours && !isOperating) || !isButtonEnable"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="buyReward()">
@@ -36,7 +36,9 @@
           mode="indeterminate">
         </mat-progress-spinner>
       </i>
-      <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
+      <span *ngIf="!waitForSubmission">
+        {{ isButtonEnable ? buttonLabel : notAvailableLabel }}
+      </span>
     </button>
   </div>
 </div>

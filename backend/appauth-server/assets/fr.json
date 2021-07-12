@@ -237,7 +237,8 @@
   "REWARD": {
     "GET_VOUCHER": "Obtenir",
     "DESCRIPTION": "Description",
-    "TNC": "Conditions d'utilisation"
+    "TNC": "Conditions d'utilisation",
+    "N_A": "Indisponible"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",

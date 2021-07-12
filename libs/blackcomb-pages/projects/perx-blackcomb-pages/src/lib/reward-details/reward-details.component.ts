@@ -41,14 +41,18 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+  public isButtonEnable: boolean = true;
+  public isRewardsDetailsFetched: boolean = false;
   public favDisabled: boolean = false;
   public macaron?: IMacaron | null = null;
   public isOperating?: boolean;
   public maxRewardCost?: number;
+  public notAvailableLabel: string;
   public isPreviewReward: boolean = false;
 
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
+    this.translate.get('REWARD.N_A').subscribe((text) => this.notAvailableLabel = text);
     this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
@@ -93,9 +97,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
         switchMap((id: number) => this.rewardsService.getReward(id)),
         tap((reward: IReward) => {
           this.rewardData = reward;
-          if (reward.displayProperties) {
-            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+
+          if (reward.inventory && reward.inventory.rewardTotalBalance === 0) {
+            this.isButtonEnable = false;
           }
+
+          {if (reward.displayProperties) {
+            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+          }}
           this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
@@ -127,6 +136,24 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
         .subscribe(
           (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
           (err: HttpErrorResponse) => {
+
+
+            if (err instanceof HttpErrorResponse) {
+              this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+                .subscribe(
+                  (message: string) => {
+                    if (err.error.code === 4103) { // rewards run out due to reward limits
+                      this.refreshReward(); // refresh the reward to show fully redeemed
+                      this.isButtonEnable = false;
+                    } else {
+                      // change button back to enable which it originally is, before save is triggered
+                      this.isButtonEnable = true;
+                    }
+                    this.notificationService.addSnack(message);
+                  }
+                );
+            }
+
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
                 this.notificationService.addSnack(message);
@@ -161,6 +188,23 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private refreshReward(): void {
+    this.rewardsService.getReward(this.rewardData.id).subscribe(
+      (reward) => {
+        this.rewardData = reward;
+        this.updateRewardStatus();
+      }
+    );
+  }
+
+  private updateRewardStatus(): void {
+    this.macaron = this.macaronService.getMacaron(this.rewardData);
+    this.isRewardsDetailsFetched = true;
+    if (this.macaron !== null) {
+      this.isButtonEnable = this.macaron.isButtonEnabled;
+    }
   }
 }
 

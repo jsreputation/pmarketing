@@ -418,7 +418,8 @@
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions",
-    "POINT": "Points"
+    "POINT": "Points",
+    "N_A": "Not Available"
   },
   "GAME_PAGE": {
     "STAMPS_LABEL_TXT": " new stamps",

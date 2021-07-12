@@ -232,7 +232,8 @@
   "REWARD": {
     "GET_VOUCHER": "獲得優惠券",
     "DESCRIPTION": "獎勵詳情",
-    "TNC": "條款與細則"
+    "TNC": "條款與細則",
+    "N_A": "Not Available"
   },
   "QR": {
     "QR_TO_MERCHANT": "向商家出示此二維碼",
