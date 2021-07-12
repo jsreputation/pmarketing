@@ -29,6 +29,8 @@ export interface ICategories {
   isSelected: boolean;
 }
 
+export interface IPosition { lng: number; lat: number }
+
 @Component({
   selector: 'perx-blackcomb-pages-nearme',
   templateUrl: './nearme.component.html',
@@ -56,6 +58,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public lastRad: number;
   private searchRadiusCircle: Circle | null;
   public favDisabled: boolean  = false;
+  public currentPosition: IPosition;
   @Output()
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
@@ -68,6 +71,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+
     this.rewardsService.getCategories().subscribe((catagories: ITabConfigExtended[]) => {
       catagories.forEach(cat => {
         const category: ICategories = {
@@ -163,8 +167,14 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   private drawCurrentLocation(): void {
+
+    if (this.currentPosition) {
+      return this.map.setCenter(this.currentPosition);
+    }
+
     // location from html5
     if (navigator.geolocation) {
+
       navigator.geolocation.getCurrentPosition(
         (position: Position) => {
           // build postion obj
@@ -172,6 +182,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
+          this.currentPosition = pos;
           // define and place marker
           const marker = new google.maps.Marker({
             position: pos,
