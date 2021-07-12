@@ -44,6 +44,7 @@ import {
   RewardsService,
   RssFeedsPages,
   SettingsService,
+  TeamsService,
   ThemesService,
   TokenStorage
 } from '@perxtech/core';
@@ -117,7 +118,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected currencyPipe: CurrencyPipe,
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
-    protected questService: IQuestService
+    protected questService: IQuestService,
+    protected teamsService: TeamsService
   ) { }
 
   public ngOnInit(): void {
@@ -247,7 +249,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.appRemoteFlags.showStampTeams &&
       campaign.type === 'stamp' &&
       campaign.teamSize! > 0) {
-      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+      this.teamsService.getTeam(campaign.id).subscribe(
+        () => {
+          this.router.navigate([ `teams/pending/${campaign.id}` ]);
+        },
+        () => {
+          // expecting a error 500 in console
+          this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+        }
+      );
       return;
     }
 

@@ -27,6 +27,7 @@ export class GamesCollectionComponent implements OnInit {
   public buttonStyle: { [key: string]: string } = {};
   public appConfig: IConfig<void>;
   public showOperatingHours: boolean = false;
+  public showGameTries: boolean = false;
 
   constructor(
     private themesService: ThemesService,
@@ -47,6 +48,7 @@ export class GamesCollectionComponent implements OnInit {
       switchMap(() => this.settingsService.getRemoteFlagsSettings())
     ).subscribe((flags: IFlags) => {
       this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      this.showGameTries = flags.showGameTriesOnCampaignCard ? flags.showGameTriesOnCampaignCard : false;
     });
   }
 

@@ -118,7 +118,7 @@
                               {{outcome.pointsCount}} points
                             </ng-container>
                           </div>
-                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
+                          <mat-icon matListIcon *ngIf="outcome.type !== 'StoredValue::Campaign'">navigate_next</mat-icon>
                         </div>
                       </mat-list-item>
                     </mat-nav-list>
