@@ -444,6 +444,8 @@
     "NEW_STAMP": "new stamp",
     "VIEW_WALLET": "View Wallet",
     "YOU_GOT_A_NEW_STAMP": "You got a new stamp!",
+    "STAMP_CARD_UPDATED": "Stamp card updated",
+    "CARD_COMPLETED": "Stamp card completed by your team-mate!",
     "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
     "REWARD_POPUP_TITLE": "Congratulations!",
     "REWARD_POPUP_TEXT": "Here is a reward for you.",

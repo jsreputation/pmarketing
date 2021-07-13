@@ -1,16 +1,23 @@
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
-  StampService,
+  CampaignOutcomeType,
+  ConfigService,
+  IConfig,
+  IRewardPopupConfig,
+  IStamp,
   IStampCard,
+  IStampOutcome,
+  ITheme,
   NotificationService,
   PuzzleCollectReward,
-  IStamp,
-  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig,
-  IRewardPopupConfig, RewardPopupComponent, IStampOutcome,
+  RewardPopupComponent,
+  StampService,
+  StampState,
+  ThemesService,
 } from '@perxtech/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
-import { Subject, Observable, of, forkJoin } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { debounceTime, filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 import { MatDialog } from '@angular/material/dialog';
@@ -101,15 +108,42 @@ export class StampCardComponent implements OnInit, OnDestroy {
           )),
         takeUntil(this.destroy$)
       ).subscribe(([prevStamps, currStamps]) => {
-        // after skip once we get definitely prev and current
-        if ((currStamps && currStamps.stamps) &&
-          (prevStamps && prevStamps.stamps) &&
-          prevStamps.stamps.length < currStamps.stamps.length) {
-          this.stampCard = currStamps;
+      // after skip once we get definitely prev and current
+      if ((currStamps && currStamps.stamps) &&
+        (prevStamps && prevStamps.stamps)) {
+        this.stampCard = currStamps;
+
+        const prevNumIssuedState = prevStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
+        const currNumIssuedState = currStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
+
+        if (prevNumIssuedState > currNumIssuedState) {
+         this.translate.get('STAMP_CAMPAIGN.STAMP_CARD_UPDATED').pipe(
+           debounceTime(500)
+         ).subscribe(translation => this.notificationService.addSnack(translation));
+        }
+
+        if (prevStamps.stamps.length < currStamps.stamps.length) {
           this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
             .subscribe(translation => this.notificationService.addSnack(translation));
         }
-      }, () => this.router.navigate(['/wallet']));
+        // user's other team member had finished redeeming the stamp card while user was on the page
+        if (!currStamps.id) {
+          this.translate.get('STAMP_CAMPAIGN.CARD_COMPLETED')
+            .subscribe(translation => this.notificationService.addSnack(translation));
+          // if (currStamps.campaignId) {
+          //   this.stampService.getStamps(currStamps.campaignId).subscribe(
+          //     (stamps: IStamp[]) => {
+          //       const stampWithVoucher = stamps.reverse().find((stamp) => stamp.vouchers && (stamp.vouchers.length > 0));
+          //       if (stampWithVoucher) {
+          //         this.showRewardPopup(stampWithVoucher);
+          //       }
+          //     }
+          //   );
+          // }
+          this.router.navigate([`/stamp/${currStamps?.campaignId}`])
+        }
+      }
+    }, () => this.router.navigate([ '/wallet' ]));
   }
 
   public ngOnDestroy(): void {
@@ -165,56 +199,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                   text: translation
                 }));
             }
-
-            const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
-              || outcome.state !== 'failed');
-
-            const badgeOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.badge
-              || outcome.state !== 'failed');
-
-            if ((stamp.vouchers && stamp.vouchers.length > 0) ||
-              (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
-
-              let prizeSetOutcomes: IStampOutcome[];
-              let voucherId;
-              if (this.showPrizeSetOutcome && stampOutcomes) {
-                prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
-                  CampaignOutcomeType.prizeSet);
-              }
-              if (stamp.vouchers && stamp.vouchers.length > 0) {
-                voucherId = stamp.vouchers[0].id;
-              }
-
-              forkJoin([
-                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
-                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
-                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
-                this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
-              ]).subscribe(translations => {
-                const [title, text, buttonTxt, prizeSetBtnTxt] = translations;
-                const data: IRewardPopupConfig = {
-                  title,
-                  text,
-                  imageUrl: 'assets/prize.png',
-                  disableOverlayClose: true,
-                  ctaButtonClass: 'ga_game_completion',
-                  // url: `/voucher-detail/${voucherId}`,
-                  afterClosedCallBackRedirect: this,
-                  showCloseBtn: false,
-                  buttonTxt
-                };
-
-                if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
-                  data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeId}?transactionId=${prizeSetOutcomes[0].actualOutcomeId}`;
-                  data.buttonTxt = prizeSetBtnTxt;
-                } else if (voucherId) {
-                  data.url = `/voucher-detail/${voucherId}`;
-                } else {
-                  data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
-                }
-                this.dialog.open(RewardPopupComponent, { data });
-              });
-            }
+            this.showRewardPopup(stamp);
 
           } else {
             if (!this.stampCard || !this.stampCard.stamps) {
@@ -265,5 +250,62 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public closeAndRedirect(url: string): void {
     this.router.navigateByUrl(url);
+  }
+
+  private showRewardPopup(stamp: IStamp): void {
+
+    const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
+      || outcome.state !== 'failed');
+
+    const badgeOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.badge
+      || outcome.state !== 'failed');
+
+    if ((stamp.vouchers && stamp.vouchers.length > 0) ||
+      (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
+
+      let prizeSetOutcomes: IStampOutcome[];
+      let voucherId;
+      if (this.showPrizeSetOutcome && stampOutcomes) {
+        prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
+          CampaignOutcomeType.prizeSet);
+      }
+      if (stamp.vouchers && stamp.vouchers.length > 0) {
+        voucherId = stamp.vouchers[0].id;
+      }
+
+      forkJoin([
+        this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
+        this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
+        this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
+        this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
+      ]).subscribe(translations => {
+        const [title, text, buttonTxt, prizeSetBtnTxt] = translations;
+        const data: IRewardPopupConfig = {
+          title,
+          text,
+          imageUrl: 'assets/prize.png',
+          disableOverlayClose: true,
+          ctaButtonClass: 'ga_game_completion',
+          // url: `/voucher-detail/${voucherId}`,
+          afterClosedCallBackRedirect: this,
+          showCloseBtn: false,
+          buttonTxt
+        };
+
+        if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
+          data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeId}?transactionId=${prizeSetOutcomes[0].actualOutcomeId}`;
+          data.buttonTxt = prizeSetBtnTxt;
+        } else if (voucherId) {
+          data.url = `/voucher-detail/${voucherId}`;
+        } else {
+          data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
+        }
+        this.dialog.open(RewardPopupComponent, { data });
+
+        // stop all observables and prepare for routing
+        this.destroy$.next();
+        this.destroy$.complete();
+      });
+    }
   }
 }
