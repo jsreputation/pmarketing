@@ -126,6 +126,22 @@ export class StampCardComponent implements OnInit, OnDestroy {
           this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
             .subscribe(translation => this.notificationService.addSnack(translation));
         }
+        // user's other team member had finished redeeming the stamp card while user was on the page
+        if (!currStamps.id) {
+          this.translate.get('STAMP_CAMPAIGN.CARD_COMPLETED')
+            .subscribe(translation => this.notificationService.addSnack(translation));
+          if (currStamps.campaignId) {
+            this.stampService.getStamps(currStamps.campaignId).subscribe(
+              (stamps: IStamp[]) => {
+                const stampWithVoucher = stamps.reverse().find((stamp) => stamp.vouchers && (stamp.vouchers.length > 0));
+                if (stampWithVoucher) {
+                  this.showRewardPopup(stampWithVoucher);
+                }
+              }
+            );
+          }
+          // this.router.navigate([`/stamp/${currStamps?.campaignId}`])
+        }
       }
     }, () => this.router.navigate([ '/wallet' ]));
   }
