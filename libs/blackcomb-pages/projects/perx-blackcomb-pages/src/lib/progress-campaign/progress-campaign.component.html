@@ -55,7 +55,7 @@
                   <span class="task-subtitle">
                     {{milestoneCompletedProgressCalculation(activeMilestone)}}
                     / {{milestoneRequiredProgressCalculation(activeMilestone)}}
-                    {{progressConfig?.levelTab?.description ? progressConfig?.levelTab?.description : 'CP'}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
                   </span>
             <mat-progress-bar mode="determinate"
                               [value]="milestoneCompletedProgressCalculation(activeMilestone)
@@ -65,7 +65,7 @@
                   <span class="task-subtitle">
                     {{currentUserPoints}}
                     / {{activeMilestone.pointsRequired}}
-                    {{progressConfig?.levelTab?.description ? progressConfig?.levelTab?.description : 'CP'}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
                   </span>
             <mat-progress-bar mode="determinate"
                               [value]="currentUserPoints
@@ -95,7 +95,7 @@
                   <span class="task-subtitle">
                     {{milestoneCompletedProgressCalculation(milestone)}}
                     / {{milestoneRequiredProgressCalculation(milestone)}}
-                    {{progressConfig?.levelTab?.description ? progressConfig?.levelTab?.description : 'CP'}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
                   </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="milestoneCompletedProgressCalculation(milestone)
@@ -128,7 +128,7 @@
                   <span class="task-subtitle">
                     {{currentUserPoints}}
                     / {{milestone.pointsRequired}}
-                    {{progressConfig?.levelTab?.description ? progressConfig?.levelTab?.description : 'CP'}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
                   </span>
                   <mat-progress-bar mode="determinate"
                                     [value]="currentUserPoints
