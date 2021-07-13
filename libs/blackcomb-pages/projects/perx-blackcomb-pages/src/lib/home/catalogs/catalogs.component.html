@@ -10,7 +10,7 @@
     [horizontal]="true"
   >
     <mat-card *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
-      <img mat-card-image [src]="catalog.catalogBanner">
+      <img mat-card-image [src]="catalog.catalogThumbnail ? catalog.catalogThumbnail : catalog.catalogBanner">
       <mat-card-content>
         <div>
           <h1>{{catalog.name}}</h1>
