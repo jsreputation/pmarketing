@@ -182,7 +182,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
         // we do have a issued outcome that matches the reward id
         this.router.navigate(['/voucher-detail', (voucher as unknown as Voucher).id])
       } else {
-        this.router.navigate([ '/reward-detail', outcome.id ]);
+        this.router.navigate([ '/reward-detail', outcome.id ], { queryParams:  { previewReward: true } });
       }
     }
   }
