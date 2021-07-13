@@ -16,7 +16,7 @@ import {
   ThemesService,
 } from '@perxtech/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
@@ -112,6 +112,16 @@ export class StampCardComponent implements OnInit, OnDestroy {
       if ((currStamps && currStamps.stamps) &&
         (prevStamps && prevStamps.stamps)) {
         this.stampCard = currStamps;
+
+        const prevNumIssuedState = prevStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
+        const currNumIssuedState = currStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
+
+        if (prevNumIssuedState > currNumIssuedState) {
+         this.translate.get('STAMP_CAMPAIGN.STAMP_CARD_UPDATED').pipe(
+           debounceTime(500)
+         ).subscribe(translation => this.notificationService.addSnack(translation));
+        }
+
         if (prevStamps.stamps.length < currStamps.stamps.length) {
           this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
             .subscribe(translation => this.notificationService.addSnack(translation));
