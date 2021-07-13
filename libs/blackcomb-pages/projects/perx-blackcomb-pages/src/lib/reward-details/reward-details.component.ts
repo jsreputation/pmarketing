@@ -48,6 +48,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public isOperating?: boolean;
   public maxRewardCost?: number;
   public notAvailableLabel: string;
+  public isPreviewReward: boolean = false;
+
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
     this.translate.get('REWARD.N_A').subscribe((text) => this.notAvailableLabel = text);
@@ -72,6 +74,9 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   public ngOnInit(): void {
+
+    this.checkPreviewMode();
+
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
 
@@ -114,6 +119,12 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
       this.macaron = this.macaronService.getMacaron(reward);
       this.isOperating = reward?.isOperating;
     });
+  }
+
+  public checkPreviewMode(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const previewReward = urlParams.get('previewReward');
+    this.isPreviewReward = Boolean(previewReward);
   }
 
   public buyReward(): void {
@@ -196,3 +207,4 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 }
+
