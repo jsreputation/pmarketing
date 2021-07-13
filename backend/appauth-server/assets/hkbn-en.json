@@ -170,7 +170,7 @@
   "EMAIL_ALREADY_EXISTS": "This email address already exists",
   "ENTER_VALID_EMAIL": "Please enter a valid email address",
   "PASSWORD_6_CHAR": "Password should be at least 6 characters",
-  "CONFIRM_PASSWORD": "Confirm Password",checkNavigateFromCampaignLandingPage
+  "CONFIRM_PASSWORD": "Confirm Password",
   "PASSWORD_NOT_MATCH": "Passwords do not match",
   "I_ACCEPT_TERMS": "I accept the terms and conditions",
   "PLEASE_ACCEPT_TERMS": "Please accept the terms and conditions",
