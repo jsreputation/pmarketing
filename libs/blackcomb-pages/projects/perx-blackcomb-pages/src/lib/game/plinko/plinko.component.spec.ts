@@ -3,6 +3,7 @@ import { GameModule, GameType, SettingsService, ThemesService} from '@perxtech/c
 
 import { PlinkoComponent } from './plinko.component';
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
 const dummyIGame = {
   id: 1,
@@ -54,5 +55,23 @@ describe('PlinkoComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('By default game should be disabled', () => {
+    expect(component.isEnabled).toBe(false);
+  });
+
+  it('game should be enabled when button is pressed', () => {
+    const gameButton = fixture.debugElement.query(By.css('button')).nativeElement;
+    gameButton.click();
+    fixture.detectChanges();
+    expect(component.isEnabled).toBe(true);
+  });
+
+  it('emits broken event when game is completed', () => {
+    spyOn(component.broken, 'emit');
+    component.gameCompleted();
+    fixture.detectChanges();
+    expect(component.broken.emit).toHaveBeenCalled();
   });
 });

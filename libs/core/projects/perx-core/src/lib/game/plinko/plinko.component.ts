@@ -74,7 +74,6 @@ export class PlinkoComponent implements OnInit, AfterViewInit {
       }
       this.animationDuration = this.gameDuration ? `${this.gameDuration}s` : GAME_ANIMATION_DURATION;
       const anim = <any> document.getElementById('animateEl');
-      console.log(anim);
       setTimeout(() =>  {
         if (typeof anim.beginElement !== 'undefined') {
           this.transformVal = 'translate(-135.5 -29.1333)';
