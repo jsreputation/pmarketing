@@ -1,16 +1,23 @@
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
-  StampService,
+  CampaignOutcomeType,
+  ConfigService,
+  IConfig,
+  IRewardPopupConfig,
+  IStamp,
   IStampCard,
+  IStampOutcome,
+  ITheme,
   NotificationService,
   PuzzleCollectReward,
-  IStamp,
-  StampState, ThemesService, ITheme, CampaignOutcomeType, ConfigService, IConfig,
-  IRewardPopupConfig, RewardPopupComponent, IStampOutcome,
+  RewardPopupComponent,
+  StampService,
+  StampState,
+  ThemesService,
 } from '@perxtech/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
-import { Subject, Observable, of, forkJoin } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 import { MatDialog } from '@angular/material/dialog';
@@ -101,15 +108,16 @@ export class StampCardComponent implements OnInit, OnDestroy {
           )),
         takeUntil(this.destroy$)
       ).subscribe(([prevStamps, currStamps]) => {
-        // after skip once we get definitely prev and current
-        if ((currStamps && currStamps.stamps) &&
-          (prevStamps && prevStamps.stamps) &&
-          prevStamps.stamps.length < currStamps.stamps.length) {
-          this.stampCard = currStamps;
+      // after skip once we get definitely prev and current
+      if ((currStamps && currStamps.stamps) &&
+        (prevStamps && prevStamps.stamps)) {
+        this.stampCard = currStamps;
+        if (prevStamps.stamps.length < currStamps.stamps.length) {
           this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
             .subscribe(translation => this.notificationService.addSnack(translation));
         }
-      }, () => this.router.navigate(['/wallet']));
+      }
+    }, () => this.router.navigate([ '/wallet' ]));
   }
 
   public ngOnDestroy(): void {
