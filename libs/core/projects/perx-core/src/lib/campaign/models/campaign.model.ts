@@ -64,6 +64,7 @@ export interface TeamsProperties {
       buttonText?: string;
       buttonTextSecondary?: string;
     }
+    image?: string;
   }
   joinPage?: {
     description: string;

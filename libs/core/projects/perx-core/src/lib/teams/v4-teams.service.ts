@@ -7,6 +7,7 @@ import { of, throwError } from 'rxjs';
 import { TeamsService } from '../teams/teams.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Asset } from '../game/v4-game.service';
 
 interface IV4Team {
   id: number;
@@ -33,7 +34,8 @@ export interface IV4TeamsDisplayProperties {
       team_incomplete?: {
         button_text?: string;
         button_text_secondary?: string;
-      }
+      },
+      image: Asset;
     },
     join_page: {
       description: string;

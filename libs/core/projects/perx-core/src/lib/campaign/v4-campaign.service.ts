@@ -323,6 +323,7 @@ export class V4CampaignService implements ICampaignService {
             buttonText: v4TeamsProps.landing_page.team_incomplete?.button_text,
             buttonTextSecondary: v4TeamsProps.landing_page.team_incomplete?.button_text_secondary
           },
+          image: v4TeamsProps.landing_page.image?.value.image_url
         }
 
         displayProperties.landingPage! = {
@@ -331,6 +332,9 @@ export class V4CampaignService implements ICampaignService {
           },
           subHeading: {
             text: v4TeamsProps.landing_page.pre_enrolment_message
+          },
+          media: {
+            bannerImage: v4TeamsProps.landing_page.image?.value.image_url
           }
         }
 
