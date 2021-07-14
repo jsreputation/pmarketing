@@ -30,5 +30,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/points/history',
   '/points/transfer',
   '/badges',
-  '/progress'
+  '/progress',
+  '/teams'
 ];
