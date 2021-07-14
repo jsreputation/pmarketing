@@ -327,9 +327,6 @@ export class V4CampaignService implements ICampaignService {
         }
 
         displayProperties.landingPage! = {
-          body: {
-            text: v4TeamsProps.landing_page.stamps_earn_message
-          },
           subHeading: {
             text: v4TeamsProps.landing_page.pre_enrolment_message
           },
