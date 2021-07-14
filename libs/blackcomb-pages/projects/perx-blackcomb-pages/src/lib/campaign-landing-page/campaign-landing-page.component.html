@@ -1,8 +1,8 @@
 <div class="page-container" [ngStyle]="{'background-image': 'url(' + backgroundUrl + ')' }">
   <div class="landing-page">
     <div *ngIf="campaign || landingPageConfig">
-      <img [src]="(campaign?.campaignBannerUrl || landingPageConfig?.media?.bannerImage) | safeUrl"
-           *ngIf="campaign?.campaignBannerUrl || landingPageConfig?.media?.bannerImage" [alt]="'Pending a team'">
+      <img [src]="(landingPageConfig?.media?.bannerImage || campaign?.campaignBannerUrl) | safeUrl"
+           *ngIf="landingPageConfig?.media?.bannerImage || campaign?.campaignBannerUrl" [alt]="'Pending a team'">
     </div>
     <div class="main-container">
       <div class="header">
