@@ -37,6 +37,8 @@ interface TimerState {
   increase: number;
 }
 
+export const PERSIST_TIME = 'PERSIST_TIME';
+
 @Component({
   selector: 'perx-core-timer',
   templateUrl: './timer.component.html',
@@ -55,12 +57,16 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   @Input()
   public countType: TimerType;
 
+  @Input()
+  public isPersistTime: boolean = false;
+
   // stream of formatted time values
   public timer$: Observable<string>;
   private destroy$: Subject<void> = new Subject();
   private resetSubject$: Subject<void> = new Subject();
   private startSubject$: Subject<void> = new Subject();
   private stopSubject$: Subject<void> = new Subject();
+  public currentTimeValue: number;
 
   // refresh interval
   private INTERVAL: number = 100;
@@ -80,13 +86,16 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     const start: Observable<Partial<TimerState>> = this.startSubject$.pipe(map(() => ({ count: true })));
     const stop: Observable<Partial<TimerState>> = this.stopSubject$.pipe(map(() => ({ count: false })));
 
+    const timePersistTime = +(localStorage.getItem(PERSIST_TIME) || 0);
+
     const initState: TimerState = {
       count: false,
       speed: this.INTERVAL,
-      value: timerStartValue,
+      value: this.isPersistTime ? (timePersistTime || timerStartValue) : timerStartValue,
       countup: this.countType === TimerType.countUp ? true : false,
       increase: 1
     };
+
     this.timer$ = merge(
       reset,
       start,
@@ -100,7 +109,10 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
             interval(state.speed)
               .pipe(
                 tap(_ => state.value += state.countup ? state.increase : -state.increase),
-                map(_ => state.value)
+                map(_ => {
+                  this.currentTimeValue = state.value;
+                  return state.value;
+                })
               )
             : NEVER
       ),
@@ -116,6 +128,15 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
       map((ticks: number) => this.ticksToString(ticks)),
       takeUntil(this.destroy$)
     );
+
+    if (this.isPersistTime) {
+      window.addEventListener('beforeunload',  (e: BeforeUnloadEvent) => {
+        localStorage.setItem(PERSIST_TIME, this.currentTimeValue.toString());
+        const confirmationMessage = 'Do you wanna refresh!';
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+      });
+    }
   }
 
   public ngAfterViewInit(): void {
@@ -125,6 +146,10 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+
+    if (this.isPersistTime && !this.currentTimeValue) {
+      localStorage.removeItem(PERSIST_TIME);
+    }
   }
 
   private ticksToString(ticks: number): string {

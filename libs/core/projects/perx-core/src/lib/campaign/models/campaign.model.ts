@@ -10,6 +10,7 @@ export interface CampaignDisplayProperties {
   successPopUp?: IWProperties;
   questDetails?: QuestProperties;
   progressDetails?: ProgressProperties;
+  teamsDetails?: TeamsProperties;
 }
 
 export interface CampaignLandingPage {
@@ -48,6 +49,28 @@ export interface ProgressProperties extends QuestProperties {
   howToTab?: {
     title: string;
     description: string;
+  }
+}
+
+export interface TeamsProperties {
+  landingPage?: {
+    preEnrolmentMessage: string;
+    stampsEarnMessage: string;
+    teamComplete?: {
+      buttonText?: string;
+      buttonTextSecondary?: string;
+    }
+    teamIncomplete?: {
+      buttonText?: string;
+      buttonTextSecondary?: string;
+    }
+  }
+  joinPage?: {
+    description: string;
+  }
+  inviteMessage?: {
+    description: string;
+    codeBlurb: string;
   }
 }
 

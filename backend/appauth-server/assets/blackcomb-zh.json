@@ -337,7 +337,8 @@
     "TNC": "條款與細則",
     "EXPIRY": "過期",
     "CODE": "代碼",
-    "POINT": "點積分"
+    "POINT": "點積分",
+    "N_A": "无法使用"
   },
   "QR": {
     "QR_TO_MERCHANT": "向商家出示此二維碼",
@@ -402,7 +403,8 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
-    "NOT_INVITED": "The user was not invited."
+    "NOT_INVITED": "The user was not invited.",
+    "INVALID_INVITE_CODE": "Invalid invite code"
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",
@@ -484,6 +486,21 @@
       "USERNAME_SUBHEADING": "Please generate a unique username for yourself",
       "USERNAME_FORM_LABEL": "Team Username",
       "CTA": "Create Team"
+    },
+    "JOIN_PAGE": {
+      "PAGE_TITLE": "Join a Team",
+      "TEAM_CODE_HINT": "Team Code",
+      "TEAM_CODE_HINT_ERROR": "Team Code is required",
+      "CTA": "Join Team"
+    },
+    "PENDING_PAGE": {
+      "PROGRESS_BAR_DESCRIPTION": "{{joinedMembersCount}} of {{teamSize}} have pledged to join this team",
+      "PAGE_TITLE": "",
+      "WAITING_FOR_MORE_USER": "We’re waiting for {{numAdditionalRequired}} more teammates to join",
+      "LEAVE_CTA": "Leave Team",
+      "INVITE_CTA": "Invite to Team",
+      "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
+      "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
     }
   },
   "Gold": "黃金",

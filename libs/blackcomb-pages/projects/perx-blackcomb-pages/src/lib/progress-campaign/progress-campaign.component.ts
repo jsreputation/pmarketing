@@ -2,14 +2,21 @@ import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild }
 import {
   CampaignOutcomeType,
   CampaignState,
+  IBadge,
   ICampaign,
   ICampaignOutcome,
   ICampaignService,
   IMilestone,
+  IMilestoneIssuedOutcome,
+  IPoints,
+  IPrizeSet,
   IProgressTotal,
+  IVoucherService,
   NotificationService,
+  PrizeSetIssuedType,
   ProgressCampaignService,
-  ProgressProperties
+  ProgressProperties,
+  Voucher
 } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
@@ -19,6 +26,8 @@ enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
   individual = 'individual'
 }
+
+type IssuedOutcome = (Voucher | IBadge | IPrizeSet | IPoints);
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
@@ -37,6 +46,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
   public isEnrolled: boolean = false;
   public milestones: IMilestone[];
+  public issuedOutcomes: IssuedOutcome[] = [];
   public activeMilestone: IMilestone;
   public currentUserPoints: number;
   public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
@@ -44,13 +54,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
   @ViewChild('milestonesConnectorDiv') private milestonesConnectorDiv: ElementRef;
-
-  constructor(protected route: ActivatedRoute,
-              private router: Router,
-              private notificationService: NotificationService,
-              private progressCampaignService: ProgressCampaignService,
-              private campaignService: ICampaignService) {
-  }
 
   public ngAfterViewChecked(): void {
     // update level connector height
@@ -77,6 +80,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
     }
   }
 
+  constructor(protected route: ActivatedRoute,
+              private router: Router,
+              private notificationService: NotificationService,
+              private progressCampaignService: ProgressCampaignService,
+              private voucherService: IVoucherService,
+              private campaignService: ICampaignService) {
+  }
+
   public ngOnInit(): void {
 
     this.route.paramMap.pipe(
@@ -88,12 +99,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
             this.campaignService.getCampaign(campaignId),
             this.progressCampaignService.getCampaignProgressMilestones(campaignId),
             this.progressCampaignService.getCampaignTotalProgress(campaignId),
+            this.progressCampaignService.getCampaignMilestoneOutcomesForUser(campaignId)
           );
         }
       ),
       takeUntil(this.destroy$)
-    ).subscribe(([ campaign, milestones, currentUserProgress ]: [ ICampaign, IMilestone[], IProgressTotal ]) => {
-
+    ).subscribe(([ campaign, milestones, currentUserProgress, issuedOutcomes ]: [ ICampaign, IMilestone[], IProgressTotal, IMilestoneIssuedOutcome[] ]) => {
+      this.getTangibleOutcomes(issuedOutcomes);
       this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints;
       this.milestones = milestones;
       this.campaign$ = of(campaign);
@@ -101,7 +113,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
       const [ finalMilestone ] = milestones.slice(-1);
       if (!! finalMilestone) {
-        this.campaignProgress = this.currentUserPoints === 0 ? 0 : (this.currentUserPoints / finalMilestone.pointsRequired) * 100;
+        this.campaignProgress = this.currentUserPoints === 0 ? 0 : parseFloat(
+          Number(`${
+            Math.floor(
+              Number(`${(this.currentUserPoints / finalMilestone.pointsRequired) * 100}e2`)
+            )}e-2`
+          ).toFixed(1));
+        this.campaignProgress = this.campaignProgress > 100 ? 100 : this.campaignProgress;
       }
 
       if (!! campaign.enrolled) {
@@ -123,9 +141,49 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
     this.destroy$.complete();
   }
 
+  private getTangibleOutcomes(issuedOutcomes: IMilestoneIssuedOutcome[]): void {
+    issuedOutcomes.forEach((issuedOutcome) => {
+      switch (issuedOutcome.outcomeType) {
+        case PrizeSetIssuedType.voucher:
+          this.voucherService.get(issuedOutcome.outcomeId).subscribe(
+            (voucher) => {
+              this.issuedOutcomes.push(voucher);
+            }
+          )
+          break;
+        case PrizeSetIssuedType.points:
+          // don't need to do anything until loyalty modules are properly made
+          break;
+        case PrizeSetIssuedType.badge:
+          // todo: implement get single badge by id in the service
+          // this.badgeService.getBadgesByState(true).subscribe(
+          //   (badges) => {
+          //     const issuedBadge = badges.find((badge) => badge.id === issuedOutcome.outcomeId);
+          //     if (issuedBadge !== undefined) {
+          //       this.issuedOutcomes.push(issuedBadge);
+          //     }
+          //   }
+          // )
+          break;
+        case PrizeSetIssuedType.prizeSet:
+          // todo: implement after voucher demo
+          break;
+      }
+    });
+  }
+
   public outcomeClicked(outcome: ICampaignOutcome): void {
     if (outcome.type === CampaignOutcomeType.reward) {
-      this.router.navigate([ '/reward-detail', outcome.id ]);
+      const voucher = this.issuedOutcomes.find(
+        (issuedOutcome) => {
+          return (issuedOutcome as unknown as Voucher).reward?.id === outcome.id
+        });
+      if (voucher !== undefined) {
+        // we do have a issued outcome that matches the reward id
+        this.router.navigate(['/voucher-detail', (voucher as unknown as Voucher).id])
+      } else {
+        this.router.navigate([ '/reward-detail', outcome.id ]);
+      }
     }
   }
 
@@ -153,7 +211,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public milestoneCompletedProgressCalculation(milestone: IMilestone): number {
 
     // past milestones
-    if (milestone.pointsRequired < this.currentUserPoints) {
+    if (milestone.pointsRequired <= this.currentUserPoints) {
       return milestone.pointsRequired;
     }
 
@@ -163,10 +221,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       return currentMilestoneIndex === lastMilestoneIndex // is the first in the list
         ? this.currentUserPoints
         : this.currentUserPoints - this.milestones[lastMilestoneIndex].pointsRequired;
-    }
-
-    if (milestone.pointsRequired === this.currentUserPoints) {
-      return 100;
     }
 
     return 0;

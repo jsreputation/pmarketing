@@ -4,8 +4,10 @@ export interface ITeam {
   campaignId: number;
   invitationCode: string;
   state: TeamState;
+  joinedMembersCount: number;
 }
 
 export enum TeamState {
-  inProgress = 'in_progress'
+  inProgress = 'in_progress',
+  completed = 'completed'
 }

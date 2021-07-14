@@ -13,7 +13,8 @@ export enum GameType {
   snake = 'snake',
   quiz = 'quiz',
   survey = 'survey',
-  invite = 'invite'
+  invite = 'invite',
+  plinko = 'plinko'
 }
 
 export interface IEngagementTransaction {
@@ -37,7 +38,7 @@ export interface IGame {
   campaignDescription?: string;
   type: GameType;
   remainingNumberOfTries: number;
-  config: ITree | IPinata | IScratch | ISpin | ISnake | null;
+  config: ITree | IPinata | IScratch | ISpin | ISnake | IPlinko | null;
   backgroundImg?: string;
   texts: {
     title?: string;
@@ -113,6 +114,16 @@ export function defaultSpin(): ISpin {
   };
 }
 
+export function defaultPlinko(): IPlinko {
+  return {
+    backgroundImage: '',
+    targetImage: '',
+    stageColor: '',
+    ballColor: '',
+    gameDuration: 3
+  };
+}
+
 export interface ISpin {
   numberOfWedges: number;
   rewardSlots: number[];
@@ -158,6 +169,14 @@ export interface IScratch {
   underlyingFailImg?: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
+}
+
+export interface IPlinko {
+  backgroundImage?: string;
+  targetImage?: string;
+  stageColor?: string;
+  ballColor?: string;
+  gameDuration?: number;
 }
 export interface IPlayOutcome {
   vouchers?: IVoucher[];

@@ -1,21 +1,9 @@
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import {
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  MatSnackBar,
-  MatSnackBarModule
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   AuthenticationService,
@@ -29,6 +17,7 @@ import {
   ProfileService,
   RewardsService,
   SettingsService,
+  TeamsService,
   ThemesService,
   TokenStorage
 } from '@perxtech/core';
@@ -41,11 +30,7 @@ import { ChangeCityComponent } from './profile/change-city/change-city.component
 import { ChangeStreetAddressComponent } from './profile/change-street-address/change-street-address.component';
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
-import {
-  CurrencyPipe,
-  DatePipe,
-  Location
-} from '@angular/common';
+import { CurrencyPipe, DatePipe, Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/signup.component';
@@ -93,6 +78,7 @@ describe('AppComponent', () => {
   let settingsService: SettingsService;
   let profileService: ProfileService;
   let questService: IQuestService;
+  let teamsService: TeamsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -123,6 +109,7 @@ describe('AppComponent', () => {
         { provide: FeedReaderService, useValue: {} },
         { provide: SettingsService, useValue: {} },
         { provide: IQuestService, useValue: {} },
+        { provide: TeamsService, useValue: {} },
       ],
     }).compileComponents();
   }));
@@ -171,6 +158,9 @@ describe('AppComponent', () => {
     );
     questService = TestBed.get<IQuestService>(
       IQuestService as Type<IQuestService>
+    );
+    teamsService = TestBed.get<TeamsService>(
+      TeamsService as Type<TeamsService>
     );
 
     app.ngOnInit();
@@ -228,8 +218,9 @@ describe('AppComponent', () => {
         currencyPipe,
         tokenService,
         datePipe,
-        questService
-      )
+        questService,
+        teamsService
+  )
     );
     expect(app.showToolbar).toBeTruthy();
     app.onActivate(new TermsAndConditionComponent());

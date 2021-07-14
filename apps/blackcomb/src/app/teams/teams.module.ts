@@ -14,11 +14,11 @@ const routes: Routes = [
     component: CreateTeamComponent
   },
   {
-    path: 'join',
+    path: 'join/:campaignId',
     component: JoinTeamComponent
   },
   {
-    path: 'pending',
+    path: 'pending/:campaignId',
     component: PendingTeamComponent
   },
   {

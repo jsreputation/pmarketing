@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PendingTeamComponent } from './pending-team.component';
-import { ICampaignService, UtilsModule } from '@perxtech/core';
+import { ICampaignService, TeamsService, UtilsModule } from '@perxtech/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PendingTeamComponent', () => {
   let component: PendingTeamComponent;
@@ -17,6 +18,10 @@ describe('PendingTeamComponent', () => {
 
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([]),
+  };
+  const teamsServiceStub: Partial<TeamsService> = {
+    leaveATeam: () => of(),
+    getTeam: () => of()
   };
 
   beforeEach(async () => {
@@ -26,6 +31,7 @@ describe('PendingTeamComponent', () => {
         UtilsModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterTestingModule,
         MatFormFieldModule,
         MatInputModule,
         MatProgressBarModule,
@@ -34,7 +40,9 @@ describe('PendingTeamComponent', () => {
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } }
+        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
+        { provide: TeamsService, useValue: teamsServiceStub },
+
       ]
     })
     .compileComponents();

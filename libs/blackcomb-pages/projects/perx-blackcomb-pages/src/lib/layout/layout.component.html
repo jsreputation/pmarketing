@@ -64,9 +64,9 @@
           <span translate>NAVIGATION.DEALS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/leaderboards' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.showLeaderboard && appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage">
+      <a matRipple [routerLink]="[ '/leaderboards' ]"  [ngClass]="{'active': isLeaderboardPage}" *ngIf="appRemoteFlags?.showLeaderboard && appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage">
         <div class="nav-item">
-          <mat-icon aria-hidden="false">star_border</mat-icon>
+          <mat-icon aria-hidden="false" class="material-icons-outlined">emoji_events</mat-icon>
           <span translate>NAVIGATION.LEADER_BOARD</span>
         </div>
       </a>

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
 import {
   IAnswerResult,
   IPoints,
@@ -19,11 +19,12 @@ import {
   SwipeListType,
   TokenStorage
 } from '@perxtech/core';
-import { BehaviorSubject, iif, Observable, of, Subject, Subscription, throwError } from 'rxjs';
+import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { PERSIST_TIME } from '../../../../../../core/projects/perx-core/src/lib/utils/timer/timer.component';
 
-export const browserRefresh = false;
+export const PERSIST_DATA_QUESTION = 'persist_data_question';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -63,8 +64,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   };
   private submitErrorTxt: string;
   public disableNextButton: boolean = true;
-  public subscription: Subscription;
-  public isRefreshBrowser: boolean = false;
 
   constructor(
     private router: Router,
@@ -77,12 +76,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
-
-    window.addEventListener('beforeunload',  (e: BeforeUnloadEvent) => {
-      const confirmationMessage = 'Do you wanna refresh!';
-      e.returnValue = confirmationMessage;
-      return confirmationMessage;
-    });
   }
 
   public ngOnInit(): void {
@@ -122,9 +115,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     );
 
+
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
+        // this.quiz.timeConfig = {
+        //   timerCountSeconds: 400,
+        //   timerType: TimerType.countDown
+        // };
         this.fetchMoveId();
         this.resetTimer();
         // prepopulate answers
@@ -156,6 +154,13 @@ export class QuizComponent implements OnInit, OnDestroy {
       },
       () => this.router.navigate(['/wallet'])
     );
+
+    this.router.events.subscribe((val: NavigationEnd) => {
+      const persistTimer = localStorage.getItem(PERSIST_TIME);
+      if (persistTimer && !val.url.includes('quiz')) {
+        localStorage.removeItem(PERSIST_TIME);
+      }
+    });
   }
 
   public ngOnDestroy(): void {
@@ -195,9 +200,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        (finishPayload: IQuizResultOutcome) => this.redirectUrlAndPopUp(finishPayload),
+        (finishPayload: IQuizResultOutcome) => {
+          this.redirectUrlAndPopUp(finishPayload);
+          localStorage.removeItem(PERSIST_TIME);
+        },
         (err) => {
-          console.log(err);
+          console.log('err', err);
           this.notificationService.addSnack(this.submitErrorTxt);
           this.redirectUrlAndPopUp();
         }
@@ -332,6 +340,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         prizeSets: payload?.prizeSets,
         badges: payload?.badges
       });
+    localStorage.removeItem(PERSIST_TIME);
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

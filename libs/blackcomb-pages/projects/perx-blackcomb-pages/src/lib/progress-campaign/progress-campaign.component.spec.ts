@@ -6,7 +6,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
-import { ICampaignService, NotificationService, ProgressCampaignService, UtilsModule } from '@perxtech/core';
+import {
+  ICampaignService,
+  IVoucherService,
+  NotificationService,
+  ProgressCampaignService,
+  UtilsModule
+} from '@perxtech/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +25,10 @@ const notificationServiceStub: Partial<NotificationService> = {};
 const progressCampaignServiceStub: Partial<ProgressCampaignService> = {
   getCampaignProgressMilestones: () => of([]),
   getCampaignTotalProgress: () => of({userTotalAccumulatedCampaignPoints: 0})
+};
+
+const voucherServiceStub: Partial<IVoucherService> = {
+  get: () => of()
 };
 
 describe('ProgressCampaignComponent', () => {
@@ -46,7 +56,8 @@ describe('ProgressCampaignComponent', () => {
       providers: [
         { provide: ProgressCampaignService, useValue: progressCampaignServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: IVoucherService, useValue: voucherServiceStub }
       ]
     })
       .compileComponents();

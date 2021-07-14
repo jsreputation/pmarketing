@@ -18,11 +18,14 @@
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <!-- old disable logic-->
     <!--    [disabled]="(!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"-->
-    <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
+    <button *ngIf='!isPreviewReward'
+            mat-raised-button
+            color="primary"
+            class="reward-buy ga_purchase_reward"
             [disabled]="(
             loyalty ?  (loyalty.pointsBalance <  0 || loyalty.pointsBalance < (maxRewardCost || 0)) : false)  ||
             waitForSubmission ||
-            (remoteFlags?.showHappyHourOperatingHours && !isOperating)"
+            (remoteFlags?.showHappyHourOperatingHours && !isOperating) || !isButtonEnable"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="buyReward()">
@@ -33,7 +36,9 @@
           mode="indeterminate">
         </mat-progress-spinner>
       </i>
-      <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
+      <span *ngIf="!waitForSubmission">
+        {{ isButtonEnable ? buttonLabel : notAvailableLabel }}
+      </span>
     </button>
   </div>
 </div>

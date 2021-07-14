@@ -9,7 +9,7 @@ import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
-import { ScratchV4ToV4Mapper, ShakeV4ToV4Mapper, SpinV4ToV4Mapper, TapV4ToV4Mapper } from './v4-game.mapper';
+import { ScratchV4ToV4Mapper, ShakeV4ToV4Mapper, SpinV4ToV4Mapper, TapV4ToV4Mapper, PlinkoV4ToV4Mapper } from './v4-game.mapper';
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -111,9 +111,18 @@ export interface SpinWedge {
   has_reward: boolean;
 }
 
+export interface PlinkoDisplayProperties extends GameProperties {
+  background_image?: Asset;
+  target_image?: Asset;
+  stage_color?: string;
+  ball_color?: string;
+  game_duration?: number;
+}
+
 export interface Game {
   campaign_id?: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties | SpinDisplayProperties;
+  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties | SpinDisplayProperties
+  | PlinkoDisplayProperties;
   game_type: GameType;
   id: number;
   number_of_tries: number;
@@ -187,6 +196,7 @@ export class V4GameService implements IGameService {
       hit_the_pinata: new TapV4ToV4Mapper(),
       scratch_card: new ScratchV4ToV4Mapper(),
       spin_the_wheel: new SpinV4ToV4Mapper(),
+      plinko: new PlinkoV4ToV4Mapper(),
     };
     // get the correct mapper and apply it
     const gameMapper = gameMapperFetcher[game.game_type];

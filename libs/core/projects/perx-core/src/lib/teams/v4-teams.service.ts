@@ -1,22 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { ConfigService, IConfig, TeamsService } from '@perxtech/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from 'rxjs/operators';
 import { ITeam, TeamState } from './teams.model';
 import { of, throwError } from 'rxjs';
+import { TeamsService } from '../teams/teams.service';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4Team {
   id: number;
   campaign_id: number;
   invitation_code: string;
   state: TeamState;
+  users_count: number;
 }
 
 interface IV4TeamResponse {
   data: IV4Team;
   meta: any;
 }
+
+export interface IV4TeamsDisplayProperties {
+  teams?: {
+    landing_page: {
+      pre_enrolment_message: string;
+      stamps_earn_message: string;
+      team_complete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
+      team_incomplete?: {
+        button_text?: string;
+        button_text_secondary?: string;
+      }
+    },
+    join_page: {
+      description: string;
+    },
+    invite_message: {
+      description: string;
+      code_blurb: string;
+    }
+  }
+};
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +79,7 @@ export class V4TeamsService implements TeamsService{
   }
 
   leaveATeam(teamId: number): Observable<boolean> {
-    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`).pipe(
+    return this.http.delete(`${this.apiHost}/v4/team_members/me?team_id=${teamId}`, { observe: 'response'}).pipe(
       map((response: HttpResponse<any>) => response.status === 200),
       catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error))
     );
@@ -63,7 +90,8 @@ export class V4TeamsService implements TeamsService{
       id: team.id,
       campaignId: team.campaign_id,
       invitationCode: team.invitation_code,
-      state: team.state
+      state: team.state,
+      joinedMembersCount: team.users_count
     }
   }
 }

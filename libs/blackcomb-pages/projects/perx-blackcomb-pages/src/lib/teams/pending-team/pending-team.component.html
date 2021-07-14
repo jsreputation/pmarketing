@@ -1,7 +1,7 @@
 <div class="pending-team-page-container" *ngIf="campaign$ | async as campaign">
   <div class="pending-team-content-container">
-    <img [src]="landingPageConfig?.media.bannerImage"
-         *ngIf="landingPageConfig?.media.bannerImage; else defaultImgTemplate" [alt]="'Pending a team'">
+    <img [src]="campaign.campaignBannerUrl"
+         *ngIf="campaign.campaignBannerUrl; else defaultImgTemplate" [alt]="'Pending a team'">
     <ng-template #defaultImgTemplate>
       <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>
@@ -12,15 +12,15 @@
     </ng-template>
     <div class="pending-team-content">
       <div class="text-block">
-        <p class="title">{{ 'TEAMS.PENDING_TEAM_HEADING' | translate }}</p>
+        <p class="title">{{ 'TEAMS.PENDING_PAGE.PAGE_TITLE' | translate }}</p>
       </div>
-      <div class="team-counter-container">
-        <span class="team-counter-subtitle">3 of 4 have pledged to join this team</span>
-        <mat-progress-bar class="team-counter-progress-bar" mode="determinate" [value]="3/4 * 100"></mat-progress-bar>
+      <div class="team-counter-container" *ngIf="this.team.joinedMembersCount">
+        <span class="team-counter-subtitle">{{ this.progressBarHeading }}</span>
+        <mat-progress-bar class="team-counter-progress-bar" mode="determinate" [value]="this.team.joinedMembersCount/this.campaign.teamSize * 100"></mat-progress-bar>
       </div>
       <div class="text-block">
-        <span class="subtitle">{{ 'TEAMS.WELCOME_BACK_USER' | translate }}, {{teamUsername}}</span>
-        <p class="description">{{ 'TEAMS.WAITING_FOR_MORE_USER' | translate }}</p>
+<!--        <span class="subtitle">{{ 'TEAMS.WELCOME_BACK_USER' | translate }}, {{teamUsername}}</span>-->
+        <p class="description">{{ this.waitingTxt }}</p>
       </div>
       <form class="pending-form" [formGroup]="pendingTeamForm">
         <mat-form-field appearance="fill" class="full-width__input">
@@ -36,10 +36,10 @@
   </div>
   <div class="bottom-nav-container mat-elevation-z2">
     <button color="warn" mat-stroked-button (click)="leaveTeam()">
-      {{ 'TEAMS.LEAVE_TEAM' | translate }}
+      {{ 'TEAMS.PENDING_PAGE.LEAVE_CTA' | translate }}
     </button>
     <button color="primary" mat-flat-button (click)="share()">
-      {{ 'TEAMS.INVITE_TO_TEAM' | translate }}
+      {{ 'TEAMS.PENDING_PAGE.INVITE_CTA' | translate }}
     </button>
   </div>
 </div>

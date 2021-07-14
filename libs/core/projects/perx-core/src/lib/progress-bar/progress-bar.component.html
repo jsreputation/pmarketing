@@ -13,7 +13,7 @@
       <p class="in-progress" *ngIf="current" [ngStyle]="{
             'width': (
               current >= stageLabels[stageLabels?.length - 1]  ?
-              100 : ((100 / stages) * (currentRewardIndex || 0 + 1))
+              100 : ((100 / stages) * ((currentRewardIndex || 0) + 1))
              ) + '%'
           }">
         .

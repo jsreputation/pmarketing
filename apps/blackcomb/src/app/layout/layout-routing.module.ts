@@ -2,6 +2,7 @@ import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LegacyRouteGuard } from '../progress-campaign-home/legacy-route.guard';
 
 const routes: Routes = [
   {
@@ -140,7 +141,12 @@ const routes: Routes = [
       {
         path: "progress-campaigns",
         loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then((mod) => mod.ProgressCampaignHomeModule),
-        canActivate: [ProtectedGuard]
+        canActivate: [ProtectedGuard, LegacyRouteGuard]
+      },
+      {
+        path: "progress-campaign/:id",
+        "pathMatch": "full",
+        "redirectTo": "legacy-progress-campaign/:id"
       },
       {
         path: "progress/:id",
