@@ -17,38 +17,46 @@
     height: 22rem;
     object-fit: cover;
   }
+
   svg {
     background: #E8E8E8;
   }
-  .title {
-    font-size: 16px;
-  }
-  .description {
-    font-weight: normal;
-    line-height: 20px;
-    margin: 2rem 0;
-  }
-  .subtitle {
-    color: rgba(0, 0, 0, 0.38);
-    font-weight: bold;
-    margin-top: 1.2rem;
-  }
 
-  .team-counter-container {
-    margin-bottom: 1.5rem;
+  .pending-team-content {
+    padding: 0 2rem;
 
-    .team-counter-progress-bar {
-      margin-top: 0.7rem;
+    .title {
+      font-size: 16px;
     }
-  }
 
-  .pending-form {
-    display: flex;
-    flex-direction: column;
-    margin: 0 2rem;
+    .description {
+      font-weight: normal;
+      line-height: 20px;
+      margin: 2rem 0;
+    }
 
-    .share-icon {
-      cursor: pointer;
+    .subtitle {
+      color: rgba(0, 0, 0, 0.38);
+      font-weight: bold;
+      margin-top: 1.2rem;
+    }
+
+    .team-counter-container {
+      margin-bottom: 1.5rem;
+
+      .team-counter-progress-bar {
+        margin-top: 0.7rem;
+      }
+    }
+
+    .pending-form {
+      display: flex;
+      flex-direction: column;
+      margin: 0 2rem;
+
+      .share-icon {
+        cursor: pointer;
+      }
     }
   }
 }

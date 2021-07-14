@@ -20,24 +20,31 @@
   svg {
     background: #E8E8E8;
   }
-  .title {
-    font-size: 16px;
-  }
-  .description {
-    font-weight: normal;
-    line-height: 20px;
-    margin: 2rem 0;
-  }
-  .subtitle {
-    color: rgba(0, 0, 0, 0.38);
-    font-weight: bold;
-    margin-top: 1.2rem;
-  }
 
-  .join-form {
-    display: flex;
-    flex-direction: column;
-    margin: 0 2rem;
+  .join-team-content {
+    padding: 0 2rem;
+
+    .title {
+      font-size: 16px;
+    }
+
+    .description {
+      font-weight: normal;
+      line-height: 20px;
+      margin: 2rem 0;
+    }
+
+    .subtitle {
+      color: rgba(0, 0, 0, 0.38);
+      font-weight: bold;
+      margin-top: 1.2rem;
+    }
+
+    .join-form {
+      display: flex;
+      flex-direction: column;
+      margin: 0 2rem;
+    }
   }
 }
 
