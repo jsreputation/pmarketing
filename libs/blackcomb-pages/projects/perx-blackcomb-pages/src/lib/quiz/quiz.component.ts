@@ -24,8 +24,6 @@ import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operato
 import { TranslateService } from '@ngx-translate/core';
 import { PERSIST_TIME } from '../../../../../../core/projects/perx-core/src/lib/utils/timer/timer.component';
 
-export const PERSIST_DATA_QUESTION = 'persist_data_question';
-
 @Component({
   selector: 'perx-blackcomb-quiz',
   templateUrl: './quiz.component.html',
@@ -119,10 +117,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
-        // this.quiz.timeConfig = {
-        //   timerCountSeconds: 400,
-        //   timerType: TimerType.countDown
-        // };
         this.fetchMoveId();
         this.resetTimer();
         // prepopulate answers
@@ -340,7 +334,6 @@ export class QuizComponent implements OnInit, OnDestroy {
         prizeSets: payload?.prizeSets,
         badges: payload?.badges
       });
-    localStorage.removeItem(PERSIST_TIME);
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 
