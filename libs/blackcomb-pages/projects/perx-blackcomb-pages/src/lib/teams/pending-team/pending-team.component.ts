@@ -121,7 +121,7 @@ export class PendingTeamComponent implements OnInit {
 
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.shareText}\n${this.teamCodeShareText} ${this.team.invitationCode}`)
+      .writeText(`${this.team.invitationCode}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
