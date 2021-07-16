@@ -12,7 +12,8 @@ import {
   SafeHtmlPipe,
   SettingsService,
   StripHtmlPipe,
-  SurveyService
+  SurveyService,
+  ThemesService
 } from '@perxtech/core';
 
 describe('CampaignsCollectionComponent', () => {
@@ -39,6 +40,10 @@ describe('CampaignsCollectionComponent', () => {
     getRemoteFlagsSettings: () => of()
   };
 
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -56,7 +61,8 @@ describe('CampaignsCollectionComponent', () => {
         { provide: QuizService, useValue: quizServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();

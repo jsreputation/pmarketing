@@ -26,7 +26,7 @@
   <div class="flex-for-button">
     <button
       *ngIf="!(campaigns.length <= defaultNbCampaigns)"
-      mat-flat-button
+      mat-flat-button [ngStyle]="buttonStyle"
       class="see-button"
       (click)="showAllCampaigns = !showAllCampaigns">
       {{ (showAllCampaigns ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}

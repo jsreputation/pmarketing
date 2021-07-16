@@ -12,7 +12,9 @@ import {
   IQuiz,
   QuizService,
   SettingsService,
-  SurveyService
+  SurveyService,
+  ThemesService,
+  ITheme,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap, tap, withLatestFrom, } from 'rxjs/operators';
@@ -46,6 +48,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public isCampaignDisabled: boolean[] = [];
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
   public showOperatingHours: boolean = false;
+  public buttonStyle: { [key: string]: string } = {};
 
   constructor(
     private translate: TranslateService,
@@ -53,13 +56,19 @@ export class CampaignsCollectionComponent implements OnInit {
     private campaignService: ICampaignService,
     private quizService: QuizService,
     private surveyService: SurveyService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private themesService: ThemesService
   ) { }
 
 
   public ngOnInit(): void {
     this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
       this.rewardsLeft = text;
+    });
+
+    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
+      this.buttonStyle.color = theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
     });
 
     if (this.campaigns$) {
