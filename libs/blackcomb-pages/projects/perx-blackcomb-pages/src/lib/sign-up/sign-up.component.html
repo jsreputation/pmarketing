@@ -33,36 +33,53 @@
         </mat-error>
       </mat-form-field>
 
-      <div class="mobile-group">
-        <div class="country-code">
+      <div *ngIf="loginMethod === loginTypes.phone">
+        <div *ngIf="countryCodePrefix; then withPrefixBlock else elseBlock"></div>
+        <ng-template #withPrefixBlock>
           <mat-form-field appearance="standard" class="full-width__input">
-            <mat-label>Country Code</mat-label>
-            <mat-select formControlName="countryCode">
-              <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
-                <span>{{country.name}}&nbsp;</span>
-                <span>+{{country.code}}</span>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="mobile-number">
-          <mat-form-field appearance="standard" class="full-width__input">
-            <mat-label translate>SIGN_UP_PAGE.MOBILE_FIELD</mat-label>
-            <input matInput
-              autocomplete="tel-local"
-              formControlName="primary_identifier"
-              type="tel"
-              required>
+            <span matPrefix>+{{countryCodePrefix}}&nbsp;<span class="prefix-spacer"></span></span>
+            <input matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate"
+                   required
+                   formControlName="primary_identifier"
+                   [value]="">
             <mat-error *ngIf="signupForm.get('primary_identifier')!.hasError('required')">
               <span translate>SIGN_UP_PAGE.MOBILE_REQUIRED_TXT</span>
             </mat-error>
           </mat-form-field>
-        </div>
+        </ng-template>
+        <ng-template #elseBlock>
+          <div class="mobile-group">
+            <div class="country-code">
+              <mat-form-field appearance="standard" class="full-width__input">
+                <mat-label>Country Code</mat-label>
+                <mat-select formControlName="countryCode">
+                  <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
+                    <span>{{country.name}}&nbsp;</span>
+                    <span>+{{country.code}}</span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="mobile-number">
+              <mat-form-field appearance="standard" class="full-width__input">
+                <mat-label translate>SIGN_UP_PAGE.MOBILE_FIELD</mat-label>
+                <input matInput
+                       autocomplete="tel-local"
+                       formControlName="primary_identifier"
+                       type="tel"
+                       required>
+                <mat-error *ngIf="signupForm.get('primary_identifier')!.hasError('required')">
+                  <span translate>SIGN_UP_PAGE.MOBILE_REQUIRED_TXT</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-template>
       </div>
 
       <mat-form-field appearance="standard" class="full-width__input">
         <mat-label translate>SIGN_UP_PAGE.PASSWORD_FIELD</mat-label>
-        <input matInput 
+        <input matInput
           formControlName="password"
           [type]="passwordHide ? 'password' : 'text'"
           autocomplete="off"
