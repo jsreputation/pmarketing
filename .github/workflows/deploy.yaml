@@ -27,13 +27,13 @@ jobs:
 
       # TODO: check the status of: https://github.com/actions/cache/issues/556
       # Cache is broken for tagged deploy
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ env.APP }}-${{ env.TARGET_ENV }}-buildx
-          restore-keys: |
-            ${{ runner.os }}-${{ env.APP }}-
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-${{ env.APP }}-${{ env.TARGET_ENV }}-buildx
+      #     restore-keys: |
+      #       ${{ runner.os }}-${{ env.APP }}-
 
       - name: Build image
         uses: docker/build-push-action@v2
@@ -42,8 +42,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: "perxtech/microsite-apps-ng:${{ env.DOCKER_TAG }}"
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache-new
           build-args: |
             app=${{ env.APP }}
             apihost=${{ env.APIHOST }}
@@ -56,10 +56,10 @@ jobs:
             redirectdest=${{ env.REDIRECT_AFTER_LOGIN }}
             perx_app_version=${{ env.PERX_APP_VERSION }}
 
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      # - name: Move cache
+      #   run: |
+      #     rm -rf /tmp/.buildx-cache
+      #     mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
     name: Deploy
@@ -110,23 +110,6 @@ jobs:
           kubectl config use-context ${TARGET_ENV}
 
       - name: Deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          HELM_PASSWORD: ${{ secrets.HELM_PASSWORD }}
-        run: |
-          echo "Deploying ${APP}"
-          make deploy
-
-      # TODO: Below is temporary deploy to staging-a account. TO be removed once migration is finished.
-      - name: Set kube context (staging-a)
-        if: ${{ env.TARGET_ENV == 'staging' }}
-
-        run: |
-          kubectl config use-context staging-a
-
-      - name: Deploy (staging-a)
-        if: ${{ env.TARGET_ENV == 'staging' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
