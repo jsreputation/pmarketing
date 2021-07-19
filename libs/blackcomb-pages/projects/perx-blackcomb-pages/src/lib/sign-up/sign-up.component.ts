@@ -14,11 +14,11 @@ import {
   InstantOutcomeService,
   IPrePlayStateData,
   ISurvey,
-  ITheme,
+  ITheme, LoginType,
   NotificationService,
   PinMode,
   SurveyService,
-  ThemesService,
+  ThemesService
 } from '@perxtech/core';
 import {
   Component,
@@ -54,6 +54,10 @@ interface ISignupAttributes {
   [key: string]: any;
 }
 
+interface ISignUpConfig {
+  loginMethod: LoginType;
+}
+
 @Component({
   selector: 'perx-blackcomb-pages-sign-up',
   templateUrl: './sign-up.component.html',
@@ -67,8 +71,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public currentPointer: number;
   public errorMessage: string | null = null;
-  public appConfig: IConfig<void>;
+  public appConfig: IConfig<ISignUpConfig>;
   private stateData: IPrePlayStateData;
+  public loginMethod: LoginType;
+  public loginTypes: typeof LoginType = LoginType;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;
   private oldPI: string;
@@ -77,6 +83,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   public theme: Observable<ITheme>;
   public loadingSubmit: boolean = false;
+  public defaultSelectedCountry: string;
+  public countryCodePrefix: string;
   public signupForm: FormGroup = this.fb.group(
     {
       firstName: ['', Validators.required],
@@ -118,9 +126,21 @@ export class SignUpComponent implements OnInit, OnDestroy {
       ),
       takeUntil(this.destroy$)
     );
+
     this.configService
-      .readAppConfig<void>()
-      .subscribe((conf: IConfig<void>) => (this.appConfig = conf));
+      .readAppConfig<ISignUpConfig>()
+      .subscribe((conf: IConfig<ISignUpConfig>) => {
+        this.appConfig =  conf;
+        if (conf.countryCodePrefix) {
+          this.countryCodePrefix = conf.countryCodePrefix;
+        }
+
+        if (conf.custom && conf.custom.loginMethod) {
+          this.loginMethod = conf.custom.loginMethod;
+        }
+
+        this.onUpdateSignUpForm();
+      });
     this.theme = this.themesService.getThemeSetting();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
@@ -331,5 +351,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
       }
       passwordConfirmation.setErrors(null);
     };
+  }
+
+  public onUpdateSignUpForm(): void {
+    if (this.countryCodePrefix && this.loginMethod === LoginType.phone) {
+      this.signupForm.controls.countryCode.setValue([this.countryCodePrefix]);
+      this.signupForm.controls.countryCode.setValidators([Validators.required]);
+    }
   }
 }
