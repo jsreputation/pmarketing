@@ -98,7 +98,8 @@ export class RazProgressCampaignComponent implements OnInit {
               if (oc(campaign).customFields.transaction_based(false)) {
                 return this.transactionsService.getTransactions(
                   1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, undefined,
-                  campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined).pipe(
+                  campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined,
+                  'payment').pipe(
                     map(transactionData => ({
                       ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
                     }))
@@ -180,7 +181,8 @@ export class RazProgressCampaignComponent implements OnInit {
                   if (oc(campaign).customFields.transaction_based(false)) {
                     return this.transactionsService.getTransactions(
                       1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, TransactionState.processed,
-                      campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined).pipe(
+                      campaign.customFields.transactions_ends_at ? new Date(campaign.customFields.transactions_ends_at) : undefined,
+                      'payment').pipe(
                         map(transactionData => {
                           if (campaign && campaign.rewards) {
                             return campaign.rewards.map((reward, index) => {
