@@ -350,7 +350,8 @@
     "EXPIRY": "Expiry",
     "CODE": "Code",
     "POINT": "Points",
-    "N_A": "Not Available"
+    "N_A": "Not Available",
+    "BADGE": "Badge"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",

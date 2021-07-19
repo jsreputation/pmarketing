@@ -1,5 +1,5 @@
 <div class="quest-container" *ngIf="campaign$ | async as campaign">
-    <div class="quest-content-container">  
+    <div class="quest-content-container">
         <img [src]="questConfig?.imageUrl" *ngIf="questConfig?.imageUrl; else defaultImgTemplate" [alt]="questConfig?.title">
         <ng-template #defaultImgTemplate>
             <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,16 +9,16 @@
                   fill="#DADADA" />
             </svg>
         </ng-template>
-        <div class="quest-content">   
+        <div class="quest-content">
             <div class="progress-bar-container" *ngIf="campaign.enrolled || isEnrolled">
                 <p>{{ questState === state.completed ? ('QUEST_CAMPAIGN.QUEST_COMPLETED' | translate) : ('QUEST_CAMPAIGN.PROGRESS' | translate) }} {{taskCompletedLen}} OF {{taskTotalLen}}</p>
                 <mat-progress-bar mode="determinate" [value]="taskProgress"></mat-progress-bar>
-            </div> 
+            </div>
             <div class="header">
                 <p class="title">{{questConfig?.title}}</p>
                 <p class="expiry-date">{{questConfig?.description}}</p>
                 <p class="description">{{questConfig?.body}}</p>
-            </div>  
+            </div>
             <div class="task-card-container" *ngIf="tasks$ | async as tasks">
                 <div class="task-card" *ngFor="let task of tasks">
                     <div class="task-img-section">
@@ -48,8 +48,11 @@
                             <ng-container *ngSwitchCase="outcomeType.points">
                                 {{outcome.pointsCount}} points
                             </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.badge">
+                              {{ 'REWARD.BADGE' | translate }}: {{outcome.name}}
+                            </ng-container>
                         </ng-container>
-                    </mat-list-item>          
+                    </mat-list-item>
                 </mat-list>
             </div>
             <h4 *ngIf="campaign.termsAndConditions">{{ 'QUEST_CAMPAIGN.TNC' | translate }}</h4>
@@ -58,13 +61,13 @@
     </div>
     <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">
         <button color="primary" (click)="startQuest(campaign.id)" mat-flat-button>
-            {{ 'QUEST_CAMPAIGN.CTA_NEXT_TXT' | translate }}  
+            {{ 'QUEST_CAMPAIGN.CTA_NEXT_TXT' | translate }}
         </button>
     </mat-toolbar>
     <ng-template #viewWalletTemplate>
         <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="questState === state.completed">
             <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
-                {{ 'QUEST_CAMPAIGN.VIEW_WALLET' | translate }}  
+                {{ 'QUEST_CAMPAIGN.VIEW_WALLET' | translate }}
             </button>
         </mat-toolbar>
     </ng-template>

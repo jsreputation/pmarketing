@@ -481,8 +481,11 @@ export class V4CampaignService implements ICampaignService {
       .get<IV4CampaignOutcomeResponse>(`${this.baseUrl}/v4/campaigns/${id}/outcomes`)
       .pipe(
         map(resp => resp.data),
-        map((campaignOutcomes: IV4CampaignOutcome[]) => campaignOutcomes.filter(o => o.modularizable_type === CampaignOutcomeType.reward
-          || o.modularizable_type === CampaignOutcomeType.points || o.modularizable_type === CampaignOutcomeType.prizeSet)),
+        map((campaignOutcomes: IV4CampaignOutcome[]) =>
+          campaignOutcomes.filter(o => o.modularizable_type === CampaignOutcomeType.reward
+          || o.modularizable_type === CampaignOutcomeType.badge
+          || o.modularizable_type === CampaignOutcomeType.points
+          || o.modularizable_type === CampaignOutcomeType.prizeSet)),
         map((campaignOutcomes: IV4CampaignOutcome[]) =>
           campaignOutcomes.map(campaignOutcome =>
             V4CampaignService.v4CampaignOutcomeToCampaignOutcome(campaignOutcome)
