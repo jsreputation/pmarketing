@@ -183,7 +183,8 @@ export class V4TransactionsService extends TransactionsService {
     pageSize: number = DEFAULT_PAGE_COUNT,
     startAmount?: number,
     state?: string,
-    endDate?: Date
+    endDate?: Date,
+    transactionType?: string
   ): Observable<ITransaction[]> {
     const razerParams: {} = startAmount !== undefined ? {
       start_amount: `${startAmount}`,
@@ -198,6 +199,9 @@ export class V4TransactionsService extends TransactionsService {
     };
     if (endDate) {
       queryParams.params = {...queryParams.params, ...{end_date: endDate.toISOString()}};
+    }
+    if (transactionType) {
+      queryParams.params = {...queryParams.params, ...{ transaction_type: `${transactionType}`}};
     }
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
