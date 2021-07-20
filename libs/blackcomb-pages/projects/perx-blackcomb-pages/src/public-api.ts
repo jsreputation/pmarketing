@@ -80,7 +80,7 @@ export { TransactionComponent } from './lib/rebates/transaction/transaction.comp
 export { TransactionCompleteComponent } from './lib/rebates/transaction-complete/transaction-complete.component';
 export { TransactionShowComponent } from './lib/rebates/transaction-show/transaction-show.component';
 export { NearmeComponent } from './lib/nearme/nearme.component';
-export { BACK_ARROW_URLS, PERSIST_TIME } from './lib/perx-blackcomb-pages.constants';
+export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
 export { ProgressCampaignHomeModule } from './lib/progress-campaign-home/progress-campaign-home.module';
 export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/progress-campaign-home.component';

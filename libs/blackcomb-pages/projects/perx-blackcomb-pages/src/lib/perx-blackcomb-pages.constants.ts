@@ -31,5 +31,3 @@ export const BACK_ARROW_URLS: string[] = [
   '/points/transfer',
   '/badges'
 ];
-
-export const PERSIST_TIME = 'PERSIST_TIME';

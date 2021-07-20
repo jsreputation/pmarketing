@@ -101,3 +101,5 @@ export enum VoucherDistributionTypes {
   issue = 'issue',
   reserve = 'reserve'
 }
+
+export const PERSIST_TIME = 'PERSIST_TIME';

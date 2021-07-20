@@ -11,6 +11,7 @@ import {
   ITracker,
   LocaleIdFactory,
   NotificationService,
+  PERSIST_TIME,
   QuizComponent as QuizCoreComponent,
   QuizMode,
   QuizQuestionType,
@@ -22,7 +23,6 @@ import {
 import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { PERSIST_TIME } from '../../public-api';
 
 @Component({
   selector: 'perx-blackcomb-quiz',

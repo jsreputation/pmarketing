@@ -11,10 +11,10 @@ import {
   PipeTransform,
   SimpleChanges
 } from '@angular/core';
+import { PERSIST_TIME } from '@perxtech/core';
 import { interval, merge, NEVER, Observable, Subject } from 'rxjs';
 import { map, scan, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TimerType } from '../../quiz/models/quiz.model';
-import { PERSIST_TIME } from '@perxtech/blackcomb-pages';
 
 @Pipe({
   name: 'lengthForce',
