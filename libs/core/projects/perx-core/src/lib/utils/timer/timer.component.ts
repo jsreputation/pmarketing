@@ -14,6 +14,7 @@ import {
 import { interval, merge, NEVER, Observable, Subject } from 'rxjs';
 import { map, scan, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TimerType } from '../../quiz/models/quiz.model';
+import { PERSIST_TIME } from '@perxtech/blackcomb-pages';
 
 @Pipe({
   name: 'lengthForce',
@@ -36,8 +37,6 @@ interface TimerState {
   value: number;
   increase: number;
 }
-
-export const PERSIST_TIME = 'PERSIST_TIME';
 
 @Component({
   selector: 'perx-core-timer',
