@@ -19,6 +19,7 @@ import {
   IGameService,
   ITheme,
   NotificationService,
+  OutcomeType,
   SettingsService,
   ThemesService
 } from '@perxtech/core';
@@ -133,6 +134,7 @@ const mockTheme: ITheme = {
   }
 };
 
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -144,6 +146,21 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([game]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
+
+    play: () => of({
+      vouchers: [],
+      points: [],
+      badges: [],
+      prizeSets: [
+        {
+          transactionId: 10,
+          prizeSetId: 1,
+          outcomeType: OutcomeType.prizeSet,
+          state: 'completed'
+        }
+      ],
+      rawPayload: []
+    })
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -282,5 +299,23 @@ describe('GameComponent', () => {
     component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(false);
+  });
+
+  it('should set willWin true value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [], prizeSets: [
+        {
+          transactionId: 10,
+          prizeSetId: 1,
+          outcomeType: OutcomeType.prizeSet,
+          state: 'completed'
+        }
+      ] }));
+    component.ngOnInit();
+    component.showPrizeSetOutcome = true;
+    component.loadPreplay();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(true);
   });
 });
