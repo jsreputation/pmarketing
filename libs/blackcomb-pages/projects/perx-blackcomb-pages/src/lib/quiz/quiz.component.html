@@ -8,6 +8,7 @@
           *ngIf="(quiz.timeConfig | json) != '{}'" class="timer"
           [countType]="quiz?.timeConfig?.timerType"
           [timeToRun]="quiz.timeConfig?.timerCountSeconds * 1000"
+          [isPersistTime]='true'
           (done)="nextWithoutValidation()" [reset]="resetTimer$">
         </perx-core-timer>
       </div>
