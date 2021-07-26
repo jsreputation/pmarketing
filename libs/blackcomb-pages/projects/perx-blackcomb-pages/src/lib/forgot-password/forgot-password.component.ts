@@ -114,7 +114,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
-    return c1 && c2 ? c1.code === c2.code : c1 === c2;
+    return c1 && c2 ? c1 === c2 : false;
   }
 
   public ngOnDestroy(): void {
