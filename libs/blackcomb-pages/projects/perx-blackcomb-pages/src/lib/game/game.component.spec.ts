@@ -18,7 +18,7 @@ import {
   IGame,
   IGameService,
   ITheme,
-  NotificationService,
+  NotificationService, OutcomeType,
   SettingsService,
   ThemesService
 } from '@perxtech/core';
@@ -136,6 +136,7 @@ const mockTheme: ITheme = {
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
+  let notificationService: NotificationService;
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
@@ -155,7 +156,8 @@ describe('GameComponent', () => {
     getAnonymous: () => true,
   };
   const notificationServiceStub: Partial<NotificationService> = {
-    addPopup: () => void 0
+    addPopup: () => void 0,
+    addSnack: () => void 0,
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
@@ -215,10 +217,10 @@ describe('GameComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GameComponent);
+    notificationService = TestBed.get<NotificationService>(NotificationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -283,4 +285,23 @@ describe('GameComponent', () => {
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(false);
   });
+
+  it('should be displayed in popup when button view prize set ', fakeAsync(() => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
+    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, prizeSets: [
+        {
+          transactionId: 1,
+          prizeSetId: 2,
+          outcomeType: OutcomeType.prizeSet
+        }
+      ] }));
+    component.ngOnInit();
+    component.loadPreplay();
+    tick();
+    const spy = spyOn(notificationService, 'addSnack').and.returnValue(of('VIEW PRIZE SET'));
+    tick();
+    expect(spy).toHaveBeenCalled();
+  }));
 });
+
