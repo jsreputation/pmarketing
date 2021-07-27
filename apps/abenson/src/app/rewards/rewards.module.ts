@@ -9,6 +9,7 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [{
   path: '',
@@ -21,7 +22,8 @@ const routes: Routes = [{
     CommonModule,
     PerxRewardsModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatIconModule
   ],
   entryComponents: [
     RewardConfirmComponent

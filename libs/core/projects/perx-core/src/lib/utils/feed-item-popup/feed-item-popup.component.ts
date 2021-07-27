@@ -2,10 +2,11 @@ import {
   Component,
   Inject
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { FeedItem } from '../feed-reader.service';
 import { Router } from '@angular/router';
+import { IRewardPopupConfig, RewardPopupComponent } from '../../campaign/reward-popup/reward-popup.component';
 
 @Component({
   selector: 'perx-core--feed-item-popup',
@@ -17,11 +18,21 @@ export class FeedItemPopupComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public item: FeedItem,
-    private router: Router
+    public dialogRef: MatDialogRef<RewardPopupComponent>,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: IRewardPopupConfig
   ) {
     if (item.hideButton) {
       this.showButton = !item.hideButton;
     }
+
+    if (data.disableOverlayClose) {
+      dialogRef.disableClose = data.disableOverlayClose;
+    }
+  }
+
+  public onClose(): void {
+    this.dialogRef.close();
   }
 
   public goToItemLink(): void {

@@ -1,45 +1,61 @@
 .header {
-    background-color: white;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  
-    button {
-      background-color: transparent;
-      color: #0f69af;
-    }
-  
-    .title {
-      text-align: center;
-      font-size: 2.6rem;
-      font-weight: 900;
-    }
-  
-    .clear {
-      font-size: 1.4rem;
-      color: #0f69af;
+  background-color: white;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
+  button {
+    background-color: transparent;
+    color: #0f69af;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 2.6rem;
+    font-weight: 900;
+  }
+
+  .clear {
+    font-size: 1.4rem;
+    color: #0f69af;
+
+  }
+}
+
+mat-dialog-content {
+  p.label {
+    font-size: 1.6rem;
+    font-weight: 900;
+  }
+
+  mat-checkbox {
+    display: block;
+    padding: 0.5rem 0;
+  }
+}
+
+mat-dialog-actions {
+  button {
+    width: 100%;
+    background-color: #0f69af;
+    color: #ffffff;
+  }
+}
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: 1.3rem;
+    right: 1.3rem;
+    width: 4rem;
+    height: 4rem;
+
+    .mat-icon {
+      color: #606060;
     }
   }
-  
-  mat-dialog-content {
-    p.label {
-      font-size: 1.6rem;
-      font-weight: 900;
-    }
-  
-    mat-checkbox {
-      display: block;
-      padding: 0.5rem 0;
-    }
-  }
-  
-  mat-dialog-actions {
-    button {
-      width: 100%;
-      background-color: #0f69af;
-      color: #ffffff;
-    }
-  }
-  
+}

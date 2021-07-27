@@ -26,6 +26,7 @@ export class BadgeDetailPopupComponent {
   public imageUrl: string | null = null;
   public buttonTxt: string | null = 'close';
   public active: boolean;
+  public showButton: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<BadgeDetailPopupComponent>,
@@ -63,5 +64,9 @@ export class BadgeDetailPopupComponent {
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
     }
+  }
+
+  public onClose(): void {
+    this.dialogRef.close();
   }
 }
