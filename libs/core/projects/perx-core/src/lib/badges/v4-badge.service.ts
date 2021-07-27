@@ -69,6 +69,14 @@ export class V4BadgeService implements BadgeService {
     return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges?earned=true`)
       .pipe(map((badges) => badges.meta.total_count));
   }
+
+  public getBadge(id: number): Observable<IBadge> {
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges/${id}`)
+      .pipe(
+        map((res) => res.data),
+        map((badge: IV4Badge) => V4BadgeService.V4BadgeToIBadge(badge))
+      )
+  }
 }
 
 export interface IV4BadgeListResponse {
@@ -76,6 +84,10 @@ export interface IV4BadgeListResponse {
   meta: {
     total_count: number;
   };
+}
+
+export interface IV4BadgeResponse {
+  data: IV4Badge;
 }
 
 interface IV4Badge {
