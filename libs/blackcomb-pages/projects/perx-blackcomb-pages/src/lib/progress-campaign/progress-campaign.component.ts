@@ -10,6 +10,7 @@ import {
   IMilestoneIssuedOutcome,
   IPoints,
   IPrizeSet,
+  IPrizeSetOutcomeService,
   IProgressTotal,
   IVoucherService,
   NotificationService,
@@ -84,6 +85,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private router: Router,
               private notificationService: NotificationService,
               private progressCampaignService: ProgressCampaignService,
+              private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
               private campaignService: ICampaignService) {
   }
@@ -166,7 +168,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
           // )
           break;
         case PrizeSetIssuedType.prizeSet:
-          // todo: implement after voucher demo
+          this.prizeSetService.getPrizeSetDetails(issuedOutcome.outcomeId).subscribe(
+            (prizeSet: IPrizeSet) => {
+              if (prizeSet !== undefined) {
+                this.issuedOutcomes.push(prizeSet);
+              }
+            }
+          )
           break;
       }
     });
