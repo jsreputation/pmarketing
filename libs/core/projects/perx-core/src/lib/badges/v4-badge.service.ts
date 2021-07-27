@@ -37,7 +37,7 @@ export class V4BadgeService implements BadgeService {
   }
 
   public getAllBadges(page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
           page: `${page}`,
@@ -51,7 +51,7 @@ export class V4BadgeService implements BadgeService {
   }
 
   public getBadgesByState(earned: boolean, page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
           earned: `${earned}`,
@@ -66,12 +66,12 @@ export class V4BadgeService implements BadgeService {
   }
 
   public getAchievedBadgeCount(): Observable<number> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges?earned=true`)
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges?earned=true`)
       .pipe(map((badges) => badges.meta.total_count));
   }
 }
 
-export interface IV4BadgeResponse {
+export interface IV4BadgeListResponse {
   data: IV4Badge[];
   meta: {
     total_count: number;
