@@ -9,7 +9,7 @@ import {
   IMilestone,
   IMilestoneIssuedOutcome,
   IPoints,
-  IPrizeSet,
+  IPrizeSetItem,
   IPrizeSetOutcomeService,
   IProgressTotal,
   IVoucherService,
@@ -28,7 +28,7 @@ enum ProgressBarDisplayMode {
   individual = 'individual'
 }
 
-type IssuedOutcome = (Voucher | IBadge | IPrizeSet | IPoints);
+type IssuedOutcome = (Voucher | IBadge | IPrizeSetItem[] | IPoints);
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
@@ -168,10 +168,10 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
           // )
           break;
         case PrizeSetIssuedType.prizeSet:
-          this.prizeSetService.getPrizeSetDetails(issuedOutcome.outcomeId).subscribe(
-            (prizeSet: IPrizeSet) => {
-              if (prizeSet !== undefined) {
-                this.issuedOutcomes.push(prizeSet);
+          this.prizeSetService.getPrizeSetIssuedOutcomes(issuedOutcome.outcomeId).subscribe(
+            (prizeSetItem: IPrizeSetItem[]) => {
+              if (prizeSetItem !== undefined) {
+                this.issuedOutcomes.push(prizeSetItem);
               }
             }
           )
@@ -192,6 +192,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       } else {
         this.router.navigate([ '/reward-detail', outcome.id ], { queryParams:  { previewReward: true } });
       }
+    }
+    if (outcome.type === CampaignOutcomeType.prizeSet) {
+      this.router.navigate(['/prize-set-outcomes', outcome.id]);
     }
   }
 
