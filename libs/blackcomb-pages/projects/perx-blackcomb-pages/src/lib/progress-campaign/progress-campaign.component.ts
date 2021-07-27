@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
+  BadgeService,
   CampaignOutcomeType,
   CampaignState,
   IBadge,
@@ -87,7 +88,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private progressCampaignService: ProgressCampaignService,
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
-              private campaignService: ICampaignService) {
+              private campaignService: ICampaignService,
+              private badgeService: BadgeService) {
   }
 
   public ngOnInit(): void {
@@ -157,15 +159,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
           // don't need to do anything until loyalty modules are properly made
           break;
         case PrizeSetIssuedType.badge:
-          // todo: implement get single badge by id in the service
-          // this.badgeService.getBadgesByState(true).subscribe(
-          //   (badges) => {
-          //     const issuedBadge = badges.find((badge) => badge.id === issuedOutcome.outcomeId);
-          //     if (issuedBadge !== undefined) {
-          //       this.issuedOutcomes.push(issuedBadge);
-          //     }
-          //   }
-          // )
+          this.badgeService.getBadge(issuedOutcome.outcomeId).subscribe(
+            (badge: IBadge) => {
+              if (badge !== undefined) {
+                this.issuedOutcomes.push(badge);
+              }
+            }
+          )
           break;
         case PrizeSetIssuedType.prizeSet:
           this.prizeSetService.getPrizeSetIssuedOutcomes(issuedOutcome.outcomeId).subscribe(
