@@ -25,15 +25,15 @@ export class V4BadgeService implements BadgeService {
   }
 
 
-  private static V4BadgeToIBadge(badges: IV4Badge[]): IBadge[] {
-    return badges.map((badge) => ({
+  private static V4BadgeToIBadge(badge: IV4Badge): IBadge {
+    return {
       id: badge.id,
       active: badge.issued,
       title: badge.name,
       description: badge?.description,
       image: badge.issued ?
         badge.display_properties?.earned_icon : badge.display_properties?.unearned_icon
-    }));
+    };
   }
 
   public getAllBadges(page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
@@ -46,7 +46,7 @@ export class V4BadgeService implements BadgeService {
       })
       .pipe(
         map((res) => res.data),
-        map((badges) => V4BadgeService.V4BadgeToIBadge(badges))
+        map((badges) => badges.map((badge) => V4BadgeService.V4BadgeToIBadge(badge))),
       );
   }
 
@@ -61,7 +61,7 @@ export class V4BadgeService implements BadgeService {
       })
       .pipe(
         map((res) => res.data),
-        map((badges) => V4BadgeService.V4BadgeToIBadge(badges)),
+        map((badges) => badges.map((badge) => V4BadgeService.V4BadgeToIBadge(badge))),
       );
   }
 
