@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { IMilestone, IProgressTotal, IProgressTransaction } from './progress-campaign.model';
 import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 import { Asset } from '../game/v4-game.service';
-import { PrizeSetIssuedType } from '@perxtech/core';
+import { PrizeSetIssuedType } from '../prize-set-outcome/models/prize-set-outcome.model';
 import { IMilestoneIssuedOutcome } from '../outcome/models/outcome.model';
 
 @Injectable({

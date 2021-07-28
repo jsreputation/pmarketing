@@ -1,16 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
-import { CampaignRewardMode, ProgressBarFields } from '@perxtech/core';
+import { CampaignRewardMode } from '../../rewards/rewards-large-list/rewards-large-list.component';
+import { ProgressBarFields } from '../../campaign/models/campaign.model';
 import { map } from 'rxjs/operators';
 
 @Component({
