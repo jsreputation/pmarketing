@@ -25,14 +25,6 @@ export class FeedItemPopupComponent {
     if (item.hideButton) {
       this.showButton = !item.hideButton;
     }
-
-    if (data.disableOverlayClose) {
-      dialogRef.disableClose = data.disableOverlayClose;
-    }
-  }
-
-  public onClose(): void {
-    this.dialogRef.close();
   }
 
   public goToItemLink(): void {

@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IPopupConfig } from '@perxtech/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-call-us',
@@ -12,15 +11,7 @@ export class CallUsComponent {
 
   constructor(
     private dialogRef: MatDialogRef<CallUsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IPopupConfig,
   ) {
-    if (data.disableOverlayClose) {
-      dialogRef.disableClose = data.disableOverlayClose;
-    }
-
-    if (data.hideButton) {
-      this.showButton = false;
-    }
   }
 
   public back(): void {

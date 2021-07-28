@@ -130,6 +130,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
       width: '90%'
     }).afterClosed()
       .subscribe(response => {
+        console.log('response', response);
         if (response) {
           const merchantRebateData = response.data;
           const navigationExtras: NavigationExtras = {

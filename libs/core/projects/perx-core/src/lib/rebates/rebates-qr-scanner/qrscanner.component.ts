@@ -18,11 +18,11 @@ export class QrScannerComponent implements OnInit {
     public dialogRef: MatDialogRef<QrScannerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IPopupConfig,
   ) {
-    if (data.disableOverlayClose) {
+    if (data?.disableOverlayClose) {
       dialogRef.disableClose = data.disableOverlayClose;
     }
 
-    if (data.hideButton) {
+    if (data?.hideButton) {
       this.showButton = false;
     }
   }
@@ -32,6 +32,7 @@ export class QrScannerComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    console.log('ngOnInit', this.merchantTextFn());
     if (!this.merchantTextFn) {
       this.merchantTextFn = () => of('Capture the Merchant\’s QR Code in the frame below');
     }
