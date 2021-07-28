@@ -107,7 +107,8 @@
                     <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes"
                                      (click)="outcomeClicked(outcome)"
-                                     [disabled]="outcome.type === 'StoredValue::Campaign'">
+                                     [disabled]="outcome.type === 'StoredValue::Campaign' || outcome.type === 'Badge'">
+
                         <div class="outcome-container">
                           <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
                           <div [ngSwitch]="outcome.type">
@@ -120,8 +121,13 @@
                             <ng-container *ngSwitchCase="outcomeType.prizeSet">
                               {{outcome.name}} prize set
                             </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.badge">
+                              Badge - {{outcome.name}}
+                            </ng-container>
                           </div>
-                          <mat-icon matListIcon *ngIf="outcome.type !== 'StoredValue::Campaign'">navigate_next</mat-icon>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign' || outcome.type === 'PrizeSet'">
+                            navigate_next
+                          </mat-icon>
                         </div>
                       </mat-list-item>
                     </mat-nav-list>
@@ -143,7 +149,7 @@
                     <mat-nav-list>
                       <mat-list-item *ngFor="let outcome of outcomes"
                                      (click)="outcomeClicked(outcome)"
-                                     [disabled]="outcome.type !== 'Reward::Campaign'">
+                                     [disabled]="outcome.type === 'StoredValue::Campaign' || outcome.type === 'Badge'">
                         <div class="outcome-container">
                           <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
                           <div [ngSwitch]="outcome.type">
@@ -154,7 +160,7 @@
                               {{outcome.pointsCount}} points
                             </ng-container>
                           </div>
-                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign'">navigate_next</mat-icon>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign' || outcome.type === 'PrizeSet'">navigate_next</mat-icon>
                         </div>
                       </mat-list-item>
                     </mat-nav-list>
