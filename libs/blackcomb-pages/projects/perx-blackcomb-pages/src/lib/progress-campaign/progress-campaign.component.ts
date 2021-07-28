@@ -159,13 +159,13 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
           // don't need to do anything until loyalty modules are properly made
           break;
         case PrizeSetIssuedType.badge:
-          this.badgeService.getBadge(issuedOutcome.outcomeId).subscribe(
-            (badge: IBadge) => {
-              if (badge !== undefined) {
-                this.issuedOutcomes.push(badge);
-              }
-            }
-          )
+          // this.badgeService.getBadge(issuedOutcome.outcomeId).subscribe(
+          //   (badge: IBadge) => {
+          //     if (badge !== undefined) {
+          //       this.issuedOutcomes.push(badge);
+          //     }
+          //   }
+          // )
           break;
         case PrizeSetIssuedType.prizeSet:
           this.prizeSetService.getPrizeSetIssuedOutcomes(issuedOutcome.outcomeId).subscribe(
