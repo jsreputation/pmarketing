@@ -8,14 +8,14 @@ import { ISlice } from '@perxtech/core';
 })
 export class SpinComponent {
   public pointers: string[] = [
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer1.png',
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer2.png',
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer3.png'
+    'http://cdn.perxtech.net/content/dashboard/pointer1.png',
+    'http://cdn.perxtech.net/content/dashboard/pointer2.png',
+    'http://cdn.perxtech.net/content/dashboard/pointer3.png'
   ];
   public wheels: string[] = [
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel1.png',
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel2.png',
-    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel3.png',
+    'http://cdn.perxtech.net/content/dashboard/wheel1.png',
+    'http://cdn.perxtech.net/content/dashboard/wheel2.png',
+    'http://cdn.perxtech.net/content/dashboard/wheel3.png',
   ];
   public pointerIndex: any = 0;
   public wheelIndex: any = 0;
@@ -46,7 +46,7 @@ export class SpinComponent {
       backgroundColor: '#F8BBD0',
       // label: 'Netherlands',
       labelColor: '#212121',
-      backgroundImage: 'http://perx-cdn.s3.amazonaws.com/content/dashboard/post-stamp-2.png'
+      backgroundImage: 'http://cdn.perxtech.net/content/dashboard/post-stamp-2.png'
     },
     {
       id: 3,
@@ -65,7 +65,7 @@ export class SpinComponent {
       backgroundColor: '#F8BBD0',
       // label: 'Austria',
       labelColor: '#212121',
-      backgroundImage: 'http://perx-cdn.s3.amazonaws.com/content/dashboard/post-stamp-2.png'
+      backgroundImage: 'http://cdn.perxtech.net/content/dashboard/post-stamp-2.png'
     },
     // {
     //   id: '3',

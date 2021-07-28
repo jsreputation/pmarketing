@@ -170,7 +170,7 @@ const loyaltyRaw: IV4Loyalty = {
       multiplier_points_to_currency_rate: null,
       images: [
         {
-          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/1/bronze-e19b0160-a4a3-4e10-ae3f-c6809b4e68b7.png',
+          url: 'https://cdn.perxtech.net/merchant/membership_type/images/1/bronze-e19b0160-a4a3-4e10-ae3f-c6809b4e68b7.png',
           type: ''
         }
       ],
@@ -214,7 +214,7 @@ const loyaltyRaw: IV4Loyalty = {
       multiplier_points_to_currency_rate: null,
       images: [
         {
-          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/2/silver-e0cac38f-6dba-4dd2-af92-47b1b7891b1a.png',
+          url: 'https://cdn.perxtech.net/merchant/membership_type/images/2/silver-e0cac38f-6dba-4dd2-af92-47b1b7891b1a.png',
           type: ''
         }
       ],
@@ -232,7 +232,7 @@ const loyaltyRaw: IV4Loyalty = {
       multiplier_points_to_currency_rate: null,
       images: [
         {
-          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/3/gold-8c758cfb-e318-4129-a28f-35c02d0d9b09.png',
+          url: 'https://cdn.perxtech.net/merchant/membership_type/images/3/gold-8c758cfb-e318-4129-a28f-35c02d0d9b09.png',
           type: ''
         }
       ],
