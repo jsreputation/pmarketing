@@ -1,52 +1,27 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router
-} from '@angular/router';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
 import {
   IAnswerResult,
   IPoints,
   IPopupConfig,
   IQAnswer,
   IQuiz,
+  IQuizResultOutcome,
   ISwipePayload,
   ITracker,
   LocaleIdFactory,
   NotificationService,
+  PERSIST_TIME,
   QuizComponent as QuizCoreComponent,
   QuizMode,
   QuizQuestionType,
   QuizService,
   SwipeConfiguration,
   SwipeListType,
-  TokenStorage,
-  IQuizResultOutcome
+  TokenStorage
 } from '@perxtech/core';
-import {
-  BehaviorSubject,
-  iif,
-  Observable,
-  of,
-  Subject,
-  throwError
-} from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -138,6 +113,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     );
 
+
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
@@ -172,6 +148,13 @@ export class QuizComponent implements OnInit, OnDestroy {
       },
       () => this.router.navigate(['/wallet'])
     );
+
+    this.router.events.subscribe((val: NavigationEnd) => {
+      const persistTimer = localStorage.getItem(PERSIST_TIME);
+      if (persistTimer && !val.url.includes('quiz')) {
+        localStorage.removeItem(PERSIST_TIME);
+      }
+    });
   }
 
   public ngOnDestroy(): void {
@@ -211,9 +194,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        (finishPayload: IQuizResultOutcome) => this.redirectUrlAndPopUp(finishPayload),
+        (finishPayload: IQuizResultOutcome) => {
+          this.redirectUrlAndPopUp(finishPayload);
+          localStorage.removeItem(PERSIST_TIME);
+        },
         (err) => {
-          console.log(err);
+          console.log('err', err);
           this.notificationService.addSnack(this.submitErrorTxt);
           this.redirectUrlAndPopUp();
         }

@@ -804,6 +804,31 @@
                 }
               ]
             },
+            "staging": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/merck-customer/src/index.staging.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            },
             "zh": {
               "budgets": [
                 {

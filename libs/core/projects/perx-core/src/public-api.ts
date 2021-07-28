@@ -338,7 +338,8 @@ export {
   AccountPageObject,
   RssFeedsPages,
   IFlags,
-  VoucherDistributionTypes
+  VoucherDistributionTypes,
+  PERSIST_TIME
 } from './lib/settings/models/settings.model';
 
 /**
