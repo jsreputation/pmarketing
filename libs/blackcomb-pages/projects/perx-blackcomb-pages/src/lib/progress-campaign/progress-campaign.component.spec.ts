@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import {
   ICampaignService,
+  IPrizeSetOutcomeService,
   IVoucherService,
   NotificationService,
   ProgressCampaignService,
@@ -29,6 +30,10 @@ const progressCampaignServiceStub: Partial<ProgressCampaignService> = {
 
 const voucherServiceStub: Partial<IVoucherService> = {
   get: () => of()
+};
+
+const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
+  getPrizeSetIssuedOutcomes: () => of(),
 };
 
 describe('ProgressCampaignComponent', () => {
@@ -57,7 +62,8 @@ describe('ProgressCampaignComponent', () => {
         { provide: ProgressCampaignService, useValue: progressCampaignServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeServiceStub }
       ]
     })
       .compileComponents();
