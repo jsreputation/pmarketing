@@ -37,7 +37,7 @@ export class PopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IPopupConfig,
+    @Inject(MAT_DIALOG_DATA) public data: IPopupConfig
   ) {
     if (data.disableOverlayClose) {
       dialogRef.disableClose = data.disableOverlayClose;
