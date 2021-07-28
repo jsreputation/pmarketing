@@ -11,7 +11,7 @@ import {
   PipeTransform,
   SimpleChanges
 } from '@angular/core';
-import { PERSIST_TIME } from '@perxtech/core';
+import { PERSIST_TIME } from '../../settings/models/settings.model';
 import { interval, merge, NEVER, Observable, Subject } from 'rxjs';
 import { map, scan, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TimerType } from '../../quiz/models/quiz.model';
