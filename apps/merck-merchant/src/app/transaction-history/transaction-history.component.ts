@@ -28,10 +28,10 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
   public salesTxt: string;
   public redemptionTxt: string;
-  private pageNumberPurchase: number = 1;
+  private pageNumberPurchase: number = 2;
   private pageSizePurchase: number = 10;
   private complitePaginationPurchase: boolean = false;
-  private pageNumberReward: number = 1;
+  private pageNumberReward: number = 2;
   private pageSizeReward: number = 10;
   private complitePaginationReward: boolean = false;
   private currentSelectedLanguage: string = 'en';
@@ -71,11 +71,11 @@ export class TransactionHistoryComponent implements OnInit {
       of(`${this.datePipe.transform(tr.issuedDate, 'dd/MM/yyyy')}`);
     this.redemptionsPriceLabelFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${tr.customerName}`);
-    this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase).subscribe(
+    this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase - 1, this.pageSizePurchase).subscribe(
       (transactions: IMerchantPurchaseTransactionHistory[]) => this.purchaseTransactions = of(transactions),
       (err) => console.log(err)
     );
-    this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward).subscribe(
+    this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward - 1, this.pageSizeReward).subscribe(
       (transactions: IMerchantRewardTransactionHistory[]) => this.rewardTransactions = of(transactions),
       (err) => console.log(err)
     );
