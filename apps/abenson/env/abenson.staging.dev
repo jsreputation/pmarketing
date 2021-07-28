@@ -1,4 +1,4 @@
 APIHOST=https://api.perxtech.io
 COMING_SOON=true
-#LOGIN_METHOD=phone
+LOGIN_METHOD=phone
 
