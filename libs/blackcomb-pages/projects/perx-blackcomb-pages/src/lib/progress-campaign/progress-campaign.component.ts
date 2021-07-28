@@ -1,6 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
-  BadgeService,
   CampaignOutcomeType,
   CampaignState,
   IBadge,
@@ -88,8 +87,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private progressCampaignService: ProgressCampaignService,
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
-              private campaignService: ICampaignService,
-              private badgeService: BadgeService) {
+              private campaignService: ICampaignService) {
   }
 
   public ngOnInit(): void {
