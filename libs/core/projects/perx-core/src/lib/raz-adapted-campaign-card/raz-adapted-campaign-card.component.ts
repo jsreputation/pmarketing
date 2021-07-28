@@ -19,7 +19,7 @@ export class RazAdaptedCampaignCardComponent {
 
   public getCampaignImage(campaign: ICampaign): string {
     return campaign.thumbnailUrl ? campaign.thumbnailUrl :
-      (campaign.campaignBannerUrl || 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png');
+      (campaign.campaignBannerUrl || 'https://cdn.perxtech.io/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png');
   }
 
   public emitValue(campaign: ICampaign): void {
