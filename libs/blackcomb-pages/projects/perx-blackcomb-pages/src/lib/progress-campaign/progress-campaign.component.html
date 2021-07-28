@@ -120,6 +120,9 @@
                             <ng-container *ngSwitchCase="outcomeType.prizeSet">
                               {{outcome.name}} prize set
                             </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.badge">
+                              Badge - {{outcome.name}}
+                            </ng-container>
                           </div>
                           <mat-icon matListIcon *ngIf="outcome.type !== 'StoredValue::Campaign'">navigate_next</mat-icon>
                         </div>
