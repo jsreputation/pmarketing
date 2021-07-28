@@ -212,7 +212,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
     // past milestones
     if (milestone.pointsRequired <= this.currentUserPoints) {
-      return milestone.pointsRequired;
+      // same logic required as it is a completed past milestone
+      return this.milestoneRequiredProgressCalculation(milestone);
     }
 
     if (milestone.pointsRequired === this.activeMilestone?.pointsRequired && this.milestones.length > 0) {
@@ -228,12 +229,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
 
   public milestoneRequiredProgressCalculation(milestone: IMilestone): number {
-
-    // past milestones
-    if (milestone.pointsRequired < this.currentUserPoints) {
-      return milestone.pointsRequired;
-    }
-
     if (this.milestones.length > 0) {
       const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === milestone.pointsRequired);
       const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;

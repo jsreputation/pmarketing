@@ -25,19 +25,19 @@ export class V4BadgeService implements BadgeService {
   }
 
 
-  private static V4BadgeToIBadge(badges: IV4Badge[]): IBadge[] {
-    return badges.map((badge) => ({
+  private static V4BadgeToIBadge(badge: IV4Badge): IBadge {
+    return {
       id: badge.id,
       active: badge.issued,
       title: badge.name,
       description: badge?.description,
       image: badge.issued ?
         badge.display_properties?.earned_icon : badge.display_properties?.unearned_icon
-    }));
+    };
   }
 
   public getAllBadges(page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
           page: `${page}`,
@@ -46,12 +46,12 @@ export class V4BadgeService implements BadgeService {
       })
       .pipe(
         map((res) => res.data),
-        map((badges) => V4BadgeService.V4BadgeToIBadge(badges))
+        map((badges) => badges.map((badge) => V4BadgeService.V4BadgeToIBadge(badge))),
       );
   }
 
   public getBadgesByState(earned: boolean, page: number = 1, pageSize: number = 25): Observable<IBadge[]> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges`,
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges`,
       {
         params: {
           earned: `${earned}`,
@@ -61,21 +61,33 @@ export class V4BadgeService implements BadgeService {
       })
       .pipe(
         map((res) => res.data),
-        map((badges) => V4BadgeService.V4BadgeToIBadge(badges)),
+        map((badges) => badges.map((badge) => V4BadgeService.V4BadgeToIBadge(badge))),
       );
   }
 
   public getAchievedBadgeCount(): Observable<number> {
-    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges?earned=true`)
+    return this.http.get<IV4BadgeListResponse>(`${this.hostName}/v4/badges?earned=true`)
       .pipe(map((badges) => badges.meta.total_count));
+  }
+
+  public getBadge(id: number): Observable<IBadge> {
+    return this.http.get<IV4BadgeResponse>(`${this.hostName}/v4/badges/${id}`)
+      .pipe(
+        map((res) => res.data),
+        map((badge: IV4Badge) => V4BadgeService.V4BadgeToIBadge(badge))
+      )
   }
 }
 
-export interface IV4BadgeResponse {
+export interface IV4BadgeListResponse {
   data: IV4Badge[];
   meta: {
     total_count: number;
   };
+}
+
+export interface IV4BadgeResponse {
+  data: IV4Badge;
 }
 
 interface IV4Badge {
