@@ -9,7 +9,8 @@ import {
   IMilestone,
   IMilestoneIssuedOutcome,
   IPoints,
-  IPrizeSet,
+  IPrizeSetItem,
+  IPrizeSetOutcomeService,
   IProgressTotal,
   IVoucherService,
   NotificationService,
@@ -27,7 +28,7 @@ enum ProgressBarDisplayMode {
   individual = 'individual'
 }
 
-type IssuedOutcome = (Voucher | IBadge | IPrizeSet | IPoints);
+type IssuedOutcome = (Voucher | IBadge | IPrizeSetItem[] | IPoints);
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
@@ -84,6 +85,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private router: Router,
               private notificationService: NotificationService,
               private progressCampaignService: ProgressCampaignService,
+              private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
               private campaignService: ICampaignService) {
   }
@@ -155,18 +157,22 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
           // don't need to do anything until loyalty modules are properly made
           break;
         case PrizeSetIssuedType.badge:
-          // todo: implement get single badge by id in the service
-          // this.badgeService.getBadgesByState(true).subscribe(
-          //   (badges) => {
-          //     const issuedBadge = badges.find((badge) => badge.id === issuedOutcome.outcomeId);
-          //     if (issuedBadge !== undefined) {
-          //       this.issuedOutcomes.push(issuedBadge);
+          // this.badgeService.getBadge(issuedOutcome.outcomeId).subscribe(
+          //   (badge: IBadge) => {
+          //     if (badge !== undefined) {
+          //       this.issuedOutcomes.push(badge);
           //     }
           //   }
           // )
           break;
         case PrizeSetIssuedType.prizeSet:
-          // todo: implement after voucher demo
+          this.prizeSetService.getPrizeSetIssuedOutcomes(issuedOutcome.outcomeId).subscribe(
+            (prizeSetItem: IPrizeSetItem[]) => {
+              if (prizeSetItem !== undefined) {
+                this.issuedOutcomes.push(prizeSetItem);
+              }
+            }
+          )
           break;
       }
     });
@@ -184,6 +190,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       } else {
         this.router.navigate([ '/reward-detail', outcome.id ], { queryParams:  { previewReward: true } });
       }
+    }
+    if (outcome.type === CampaignOutcomeType.prizeSet) {
+      this.router.navigate(['/prize-set-outcomes', outcome.id]);
     }
   }
 
@@ -212,7 +221,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
     // past milestones
     if (milestone.pointsRequired <= this.currentUserPoints) {
-      return milestone.pointsRequired;
+      // same logic required as it is a completed past milestone
+      return this.milestoneRequiredProgressCalculation(milestone);
     }
 
     if (milestone.pointsRequired === this.activeMilestone?.pointsRequired && this.milestones.length > 0) {
@@ -228,12 +238,6 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
 
 
   public milestoneRequiredProgressCalculation(milestone: IMilestone): number {
-
-    // past milestones
-    if (milestone.pointsRequired < this.currentUserPoints) {
-      return milestone.pointsRequired;
-    }
-
     if (this.milestones.length > 0) {
       const currentMilestoneIndex = this.milestones.findIndex(item => item.pointsRequired === milestone.pointsRequired);
       const lastMilestoneIndex = currentMilestoneIndex > 0 ? currentMilestoneIndex - 1 : 0;

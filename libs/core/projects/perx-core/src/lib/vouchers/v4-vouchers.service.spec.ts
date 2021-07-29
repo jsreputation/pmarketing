@@ -101,11 +101,11 @@ describe('V4VouchersService', () => {
       selling_from: '2019-06-23T16:00:00.000Z',
       images: [
         {
-          url: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png',
+          url: 'https://cdn.perxtech.io/reward/item/images/5/mask-group-20fba3c8-62be-4ef2-8684-47cd953d0eba.png',
           type: 'reward_banner'
         },
         {
-          url: 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png',
+          url: 'https://cdn.perxtech.io/reward/item/images/5/mask-group-2-c8aff1cc-d802-43d1-931a-a730616e360b.png',
           type: 'reward_thumbnail'
         }
       ],

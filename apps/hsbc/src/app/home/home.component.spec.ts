@@ -63,7 +63,7 @@ describe('HomeComponent', () => {
         numberOfRows: 2,
         cardImage: {
           value: {
-            imageUrl: 'https://perx-cdn-staging.s3.amazonaws.com/model_image/source/34/puzzle1-4cd0eb3e-57cf-4aab-930d-f38dbcc8671b.png'
+            imageUrl: 'https://cdn.perxtech.io/model_image/source/34/puzzle1-4cd0eb3e-57cf-4aab-930d-f38dbcc8671b.png'
           }
         },
         totalSlots: 6,

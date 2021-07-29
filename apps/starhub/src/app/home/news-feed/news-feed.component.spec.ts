@@ -41,7 +41,7 @@ describe('NewsFeedComponent', () => {
       description: 'Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.',
       descriptionWithURL: '<div>Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.</div>',
       link: 'https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html',
-      image: 'https://perx-cdn-staging.s3.amazonaws.com/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
+      image: 'https://cdn.perxtech.io/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
       guid: 'TMRlovehate190813',
       pubDate: new Date('2019-09-03T09:46:03.000Z'),
     },
@@ -50,7 +50,7 @@ describe('NewsFeedComponent', () => {
       description: 'Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.',
       descriptionWithURL: '<div>Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.</div>',
       link: 'https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html',
-      image: 'https://perx-cdn-staging.s3.amazonaws.com/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
+      image: 'https://cdn.perxtech.io/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
       guid: 'TMRlovehate190813',
       pubDate: new Date('2019-09-03T09:46:03.000Z'),
     }

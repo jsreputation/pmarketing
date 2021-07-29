@@ -140,7 +140,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             });
           }
           this.appConfig = config;
-          this.initCampaign();
         }),
         switchMap(() => this.settingsService.getRemoteFlagsSettings())
       )
@@ -148,6 +147,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         (flags: IFlags) => {
           // todo: create a function to wrap all the rest of the init calls
           this.appRemoteFlags = flags;
+          this.initCampaign();
         },
         (error) => {
           console.error(error);
@@ -438,8 +438,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           takeLast(1)
         );
     }
-
+    console.log(this.appRemoteFlags?.showProgressBarCampaignsOnHomePage);
     if (this.appConfig.showProgressBarCampaignsOnHomePage || this.appRemoteFlags?.showProgressBarCampaignsOnHomePage) {
+      console.log('showing progress');
       this.progressCampaigns$ = this.campaignService
         .getCampaigns({ type: CampaignType.progress })
         .pipe(
