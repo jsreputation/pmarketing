@@ -26,7 +26,6 @@ describe('BadgeDetailPopupComponent', () => {
     fixture = TestBed.createComponent(BadgeDetailPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    console.log('component', component);
   });
 
   it('should create', () => {

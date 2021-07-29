@@ -11,14 +11,10 @@ export class RewardConfirmComponent {
 
   constructor(
     private dialogRef: MatDialogRef<RewardConfirmComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IRewardConfirmComponentParam,
+    @Inject(MAT_DIALOG_DATA) public data: IRewardConfirmComponentParam
   ) {
   }
   public closeDialog(result: boolean): void {
     this.dialogRef.close(result);
-  }
-
-  public onClose(): void {
-    this.dialogRef.close();
   }
 }
