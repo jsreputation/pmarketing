@@ -33,6 +33,10 @@ import {
 
 import * as uuid from 'uuid';
 
+interface ILoginConfig {
+  redirectAfterLogin: string;
+}
+
 // @dynamic
 @Component({
   selector: 'perx-blackcomb-pages-loading',
@@ -46,7 +50,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<void> = new Subject();
-  private appConfig: IConfig<void>;
+  private appConfig: IConfig<ILoginConfig>;
 
   constructor(
     private router: Router,
@@ -62,7 +66,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
+    this.configService.readAppConfig<ILoginConfig>().subscribe((conf: IConfig<ILoginConfig>) => this.appConfig = conf);
     const params = this.route.snapshot.queryParams;
     (window as any).primaryIdentifier = params.pi;
     const cid: string | null = params.cid;
@@ -144,7 +148,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private goToRouteFromConfig(): void {
-    this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
+    this.router.navigate([(this.appConfig.custom && this.appConfig.custom.redirectAfterLogin) || 'wallet']);
   }
 
   private getCampaignData(): void {
