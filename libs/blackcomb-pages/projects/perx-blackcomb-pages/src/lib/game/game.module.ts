@@ -29,7 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
     SpinComponent,
     SnakeComponent,
     PlinkoComponent,
-    // RewardPopupComponent
   ],
   exports: [
     GameComponent,
@@ -53,6 +52,5 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     CampaignModule
   ],
-  // entryComponents: [RewardPopupComponent]
 })
 export class GameModule { }
