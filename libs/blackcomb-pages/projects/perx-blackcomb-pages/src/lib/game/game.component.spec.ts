@@ -11,6 +11,7 @@ import {
   CampaignType,
   ConfigService,
   ErrorMessageService,
+  ExpireTimerComponent,
   GameModule,
   GameType,
   ICampaign,
@@ -18,7 +19,9 @@ import {
   IGame,
   IGameService,
   ITheme,
-  NotificationService, OutcomeType,
+  NotificationService,
+  OutcomeType,
+  RewardPopupComponent,
   SettingsService,
   ThemesService
 } from '@perxtech/core';
@@ -32,11 +35,13 @@ import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { PlinkoComponent } from './plinko/plinko.component';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 const game: IGame = {
   id: 1,
   campaignId: 1,
-  type: GameType.pinata,
+  type: GameType.plinko,
   remainingNumberOfTries: 1,
   config: {
     stillImg: '',
@@ -136,6 +141,7 @@ const mockTheme: ITheme = {
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
+  // @ts-ignore
   let notificationService: NotificationService;
 
   const themesServiceStub: Partial<ThemesService> = {
@@ -145,6 +151,7 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([game]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
+    play: () => of(),
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -157,7 +164,7 @@ describe('GameComponent', () => {
   };
   const notificationServiceStub: Partial<NotificationService> = {
     addPopup: () => void 0,
-    addSnack: () => void 0,
+    // addSnack: () => void 0,
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
@@ -166,6 +173,7 @@ describe('GameComponent', () => {
       preAuth: false,
       isWhistler: false,
       baseHref: '',
+      showPrizeSetOutcome: true
     })
   };
   const activatedRouteStub: Partial<ActivatedRoute> = {
@@ -185,14 +193,17 @@ describe('GameComponent', () => {
         ScratchComponent,
         SpinComponent,
         SnakeComponent,
-        PlinkoComponent
+        PlinkoComponent,
+        RewardPopupComponent,
+        ExpireTimerComponent
       ],
       imports: [
         MatProgressBarModule,
         NoopAnimationsModule,
         GameModule,
         TranslateModule.forRoot(),
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
@@ -211,7 +222,7 @@ describe('GameComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
-      // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
+      .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [RewardPopupComponent] } })
       .compileComponents();
   }));
 
@@ -289,19 +300,18 @@ describe('GameComponent', () => {
   it('should be displayed in popup when button view prize set ', fakeAsync(() => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
-    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, prizeSets: [
+    spyOn(gameService, 'play').and.returnValue(of({ id: 3, prizeSets: [
         {
           transactionId: 1,
           prizeSetId: 2,
           outcomeType: OutcomeType.prizeSet
         }
-      ] }));
+      ], voucherIds: [1, 2, 3]  }));
     component.ngOnInit();
-    component.loadPreplay();
+    component.loadPlay();
     tick();
-    const spy = spyOn(notificationService, 'addSnack').and.returnValue(of('VIEW PRIZE SET'));
-    tick();
-    expect(spy).toHaveBeenCalled();
+    component.redirectUrlAndPopUp();
+    expect(component.successPopUp.buttonTxt).toEqual('PRIZE_SET.OUTCOME_SUCCESS_TITLE');
   }));
 });
 

@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import {
-  AuthenticationModule,
+  AuthenticationModule, CampaignModule,
   CampaignServiceModule,
   GameModule as PerxGameModule,
-  GameServiceModule as PerxGameServiceModule
+  GameServiceModule as PerxGameServiceModule, RewardPopupComponent
 } from '@perxtech/core';
 import { GameComponent } from './game.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -17,6 +17,7 @@ import { TapComponent } from './tap/tap.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PlinkoComponent } from './plinko/plinko.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PlinkoComponent } from './plinko/plinko.component';
     GameComponent,
     SpinComponent,
     SnakeComponent,
-    PlinkoComponent
+    PlinkoComponent,
+    RewardPopupComponent
   ],
   exports: [
     GameComponent,
@@ -46,7 +48,10 @@ import { PlinkoComponent } from './plinko/plinko.component';
     PerxGameModule,
     MatProgressBarModule,
     MatButtonModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    MatIconModule,
+    CampaignModule
+  ],
+  entryComponents: [RewardPopupComponent]
 })
 export class GameModule { }

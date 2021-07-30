@@ -476,7 +476,7 @@ export class GameComponent implements OnInit, OnDestroy {
     return 'vouchers' in object || 'points' in object || 'prizeSet' in object;
   }
 
-  private redirectUrlAndPopUp(): void {
+  public redirectUrlAndPopUp(): void {
     globalCacheBusterNotifier.next();
     const state: IPrePlayStateData = {
       popupData: this.popupData,
