@@ -4,10 +4,12 @@ import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.c
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 
 @NgModule({
   declarations: [
-    ExpireTimerComponent
+    ExpireTimerComponent,
+    RewardPopupComponent
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   providers: [],
   exports: [
+    RewardPopupComponent,
     ExpireTimerComponent
   ]
 })
