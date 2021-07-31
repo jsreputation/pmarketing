@@ -438,9 +438,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           takeLast(1)
         );
     }
-    console.log(this.appRemoteFlags?.showProgressBarCampaignsOnHomePage);
     if (this.appConfig.showProgressBarCampaignsOnHomePage || this.appRemoteFlags?.showProgressBarCampaignsOnHomePage) {
-      console.log('showing progress');
       this.progressCampaigns$ = this.campaignService
         .getCampaigns({ type: CampaignType.progress })
         .pipe(
