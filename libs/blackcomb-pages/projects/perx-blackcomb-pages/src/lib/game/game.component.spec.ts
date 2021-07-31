@@ -181,6 +181,7 @@ describe('GameComponent', () => {
       preAuth: false,
       isWhistler: false,
       baseHref: '',
+      showPrizeSetOutcome: true
     })
   };
   const activatedRouteStub: Partial<ActivatedRoute> = {
@@ -313,7 +314,6 @@ describe('GameComponent', () => {
         }
       ] }));
     component.ngOnInit();
-    component.showPrizeSetOutcome = true;
     component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(true);
