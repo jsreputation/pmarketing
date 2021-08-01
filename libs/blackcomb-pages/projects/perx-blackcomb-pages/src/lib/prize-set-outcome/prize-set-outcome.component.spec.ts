@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
@@ -12,8 +12,12 @@ import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
-const loyaltyServiceStub: Partial<LoyaltyService> = {};
-const rewardServiceStub: Partial<RewardsService> = {};
+const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalty: () => of()
+};
+const rewardServiceStub: Partial<RewardsService> = {
+  getReward: () => of(),
+};
 const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
   getPrizeSetState: () => of(),
   getPrizeSetDetails: () => of(),
@@ -68,7 +72,8 @@ describe('PrizeSetOutcomeComponent', () => {
   it('component should call prizeSetOutcomeService.getPrizeSetState when has transactionId in query param', fakeAsync(() => {
     const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
 
-    const spyGetDetailPrize = spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of([{
+    const spyGetPrizeSetDetail = spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of({
+      id: 4,
       outcomes: [
         {
           campaignPrizeType: 'Reward::Campaign',
@@ -79,14 +84,16 @@ describe('PrizeSetOutcomeComponent', () => {
           campaignPrizeId: 4
         }
       ]
-    }]));
+    }));
 
-    // fixture.detectChanges();
+    const spyGetDetailPrize = spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of('success'));
+
     activatedRoute.params.subscribe((param) => console.log('activatedRoute.param', param));
     activatedRoute.queryParams.subscribe((queryParams) => console.log('activatedRoute.queryParams', queryParams));
+    component.ngOnInit();
 
-    spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of([]));
-    tick();
+    fixture.detectChanges();
+    expect(spyGetPrizeSetDetail).toHaveBeenCalled();
     expect(spyGetDetailPrize).toHaveBeenCalled();
   }));
 });
