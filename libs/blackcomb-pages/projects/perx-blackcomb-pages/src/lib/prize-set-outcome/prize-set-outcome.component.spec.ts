@@ -17,6 +17,7 @@ import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
 const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -115,5 +116,15 @@ describe('PrizeSetOutcomeComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     expect(spyGetIssueOutCome).toHaveBeenCalled();
+  }));
+
+  it('Should display error when when prize set state api returns failed', fakeAsync(() => {
+
+    spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of(prizeSetDetailMock));
+    spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of(PrizeSetState.failed));
+    component.ngOnInit();
+    fixture.detectChanges();
+    const marker = fixture.debugElement.query(By.css('.marker'));
+    expect(marker.nativeElement.textContent.trim()).toBe('PRIZE_SET.FAILED_STATE');
   }));
 });

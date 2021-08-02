@@ -30,12 +30,12 @@
                       {{ prizeSetStatus === 'failed' || outcome.state === 'failed' ? ('PRIZE_SET.FAILED_STATE' | translate) : ('PRIZE_SET.PENDING_STATE' | translate)}}
                     </div>
                   </div>
-                </mat-card-content>     
-                <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !prizeSetStatus"></mat-progress-bar>    
+                </mat-card-content>
+                <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !prizeSetStatus"></mat-progress-bar>
               </mat-card>
             </a>
           </ng-container>
-          <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.points">
+          <ng-container *ngIf="outcome.campaignPrizeType === outcomeType.points">
               <mat-card class="mat-elevation-z4">
                   <mat-card-content [ngClass]="{'pending': isActualOutcomeMode && outcome.state !== 'issued'}">
                       <div>
@@ -57,7 +57,7 @@
         <ng-template #loadingBlock>
           <div class="ghost-card-container">
             <mat-card *perxCoreRepeatTimes="repeatGhostCount" class="outcome-card ghost">
-                <div class="thumbnail-image ghost">   
+                <div class="thumbnail-image ghost">
                 </div>
                 <div class="outcome-details">
                   <h1 class="outcome-name ghost"></h1>
@@ -65,16 +65,16 @@
             </mat-card>
           </div>
         </ng-template>
-    </div> 
+    </div>
     <mat-toolbar class="bottom-toolbar mat-elevation-z2">
       <button color="primary" [routerLink]="['/wallet']" mat-flat-button *ngIf="isActualOutcomeMode; else backBtnBlock" class="wallet-btn">
-          {{ 'PRIZE_SET.VIEW_WALLET' | translate }} 
+          {{ 'PRIZE_SET.VIEW_WALLET' | translate }}
       </button>
       <ng-template #backBtnBlock>
         <button mat-stroked-button (click)="back()">
-          {{ 'PRIZE_SET.BACK_BTN' | translate }}   
+          {{ 'PRIZE_SET.BACK_BTN' | translate }}
         </button>
       </ng-template>
     </mat-toolbar>
   </div>
-  
+
