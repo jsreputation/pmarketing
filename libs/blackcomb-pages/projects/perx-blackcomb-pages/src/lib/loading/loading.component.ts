@@ -211,7 +211,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       );
     } else {
       this.router.navigateByUrl(
-        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `type/${this.campaignId}` // placehold might be
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}` // placehold might be
         // updated
       );
     }
