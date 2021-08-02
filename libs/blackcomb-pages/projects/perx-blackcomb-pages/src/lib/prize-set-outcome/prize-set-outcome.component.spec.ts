@@ -14,8 +14,8 @@ import { PrizeSetOutcomeComponent } from './prize-set-outcome.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatListModule } from '@angular/material/list';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -32,16 +32,29 @@ const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
   getPrizeSetIssuedOutcomes: () => of()
 };
 
+interface RouterWithQueryParam extends Router {
+  queryParams: Observable<{ transactionId: number }>,
+  params: Observable<{ id: number}>,
+}
+
+const routerStub: Partial<RouterWithQueryParam> = {
+  navigate: () => Promise.resolve(true),
+  queryParams: of({ transactionId: 1 }),
+  params: of({ id: 3 }),
+};
+
 const prizeSetDetailMock = {
   id: 4,
   outcomes: [
     {
       campaignPrizeType: 'Reward::Campaign',
-      campaignPrizeId: 1
+      campaignPrizeId: 1,
+      actualOutcomeId: 10
     },
     {
       campaignPrizeType: 'StoredValue::Campaign',
-      campaignPrizeId: 4
+      campaignPrizeId: 4,
+      actualOutcomeId: 5
     }
   ]
 };
@@ -50,6 +63,7 @@ describe('PrizeSetOutcomeComponent', () => {
   let component: PrizeSetOutcomeComponent;
   let fixture: ComponentFixture<PrizeSetOutcomeComponent>;
   let prizeSetOutcomeService: IPrizeSetOutcomeService;
+  let routerService: Router;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -66,11 +80,7 @@ describe('PrizeSetOutcomeComponent', () => {
       providers: [
         {
           provide: ActivatedRoute,
-          // useClass: ActivatedRouteMock,
-          useValue: {
-            queryParams: of({ transactionId: 1 }),
-            params: of({ id: 3 }),
-          },
+          useValue: routerStub,
         },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
@@ -86,7 +96,8 @@ describe('PrizeSetOutcomeComponent', () => {
     prizeSetOutcomeService = TestBed.get<IPrizeSetOutcomeService>(IPrizeSetOutcomeService as Type<IPrizeSetOutcomeService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+
+    routerService = fixture.debugElement.injector.get<Router>(Router as Type<Router>);  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -127,4 +138,17 @@ describe('PrizeSetOutcomeComponent', () => {
     const marker = fixture.debugElement.query(By.css('.marker'));
     expect(marker.nativeElement.textContent.trim()).toBe('PRIZE_SET.FAILED_STATE');
   }));
+
+  it('should check navigate to the voucher detail page when clicking on issued reward outcome card', fakeAsync(() => {
+    spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of(prizeSetDetailMock));
+    spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of(PrizeSetState.completed));
+    const routerSpy = spyOn(routerService, 'navigate');
+
+    component.ngOnInit();
+    fixture.detectChanges();
+    const navigateRewardButton = fixture.debugElement.query(By.css('.navigate-to-reward-btn'));
+    navigateRewardButton.triggerEventHandler('click', {});
+    expect(routerSpy).toHaveBeenCalledWith(['/voucher-detail', prizeSetDetailMock.outcomes[0].actualOutcomeId]);
+  }));
+
 });
