@@ -2,7 +2,14 @@ import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testi
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
-import { ICampaignService, IPrizeSetOutcomeService, LoyaltyService, RewardsService, UtilsModule } from '@perxtech/core';
+import {
+  ICampaignService,
+  IPrizeSetOutcomeService,
+  LoyaltyService,
+  PrizeSetState,
+  RewardsService,
+  UtilsModule
+} from '@perxtech/core';
 import { PrizeSetOutcomeComponent } from './prize-set-outcome.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,6 +28,21 @@ const rewardServiceStub: Partial<RewardsService> = {
 const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
   getPrizeSetState: () => of(),
   getPrizeSetDetails: () => of(),
+  getPrizeSetIssuedOutcomes: () => of()
+};
+
+const prizeSetDetailMock = {
+  id: 4,
+  outcomes: [
+    {
+      campaignPrizeType: 'Reward::Campaign',
+      campaignPrizeId: 1
+    },
+    {
+      campaignPrizeType: 'StoredValue::Campaign',
+      campaignPrizeId: 4
+    }
+  ]
 };
 
 describe('PrizeSetOutcomeComponent', () => {
@@ -72,21 +94,9 @@ describe('PrizeSetOutcomeComponent', () => {
   it('component should call prizeSetOutcomeService.getPrizeSetState when has transactionId in query param', fakeAsync(() => {
     const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
 
-    const spyGetPrizeSetDetail = spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of({
-      id: 4,
-      outcomes: [
-        {
-          campaignPrizeType: 'Reward::Campaign',
-          campaignPrizeId: 1
-        },
-        {
-          campaignPrizeType: 'StoredValue::Campaign',
-          campaignPrizeId: 4
-        }
-      ]
-    }));
+    const spyGetPrizeSetDetail = spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of(prizeSetDetailMock));
 
-    const spyGetDetailPrize = spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of('success'));
+    const spyGetDetailPrize = spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of(PrizeSetState.completed));
 
     activatedRoute.params.subscribe((param) => console.log('activatedRoute.param', param));
     activatedRoute.queryParams.subscribe((queryParams) => console.log('activatedRoute.queryParams', queryParams));
@@ -95,5 +105,15 @@ describe('PrizeSetOutcomeComponent', () => {
     fixture.detectChanges();
     expect(spyGetPrizeSetDetail).toHaveBeenCalled();
     expect(spyGetDetailPrize).toHaveBeenCalled();
+  }));
+
+  it('Should call api to get issued outcomes only when prize set state returned is completed', fakeAsync(() => {
+    spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of(prizeSetDetailMock));
+
+    spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of(PrizeSetState.completed));
+    const spyGetIssueOutCome = spyOn(prizeSetOutcomeService, 'getPrizeSetIssuedOutcomes').and.returnValue(of([prizeSetDetailMock]));
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(spyGetIssueOutCome).toHaveBeenCalled();
   }));
 });
