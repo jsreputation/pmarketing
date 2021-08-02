@@ -28,7 +28,8 @@ import {
   ICampaign,
   ICampaignService,
   IConfig,
-  ConfigService
+  ConfigService,
+  FlagLocalStorageService
 } from '@perxtech/core';
 
 import * as uuid from 'uuid';
@@ -61,6 +62,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
+    private flagLocalStorageService: FlagLocalStorageService
   ) {
     this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
   }
@@ -72,6 +74,15 @@ export class LoadingComponent implements OnInit, OnDestroy {
     const cid: string | null = params.cid;
     this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
     (window as any).campaignId = this.campaignId;
+    const paramArr: string[] = params.flags && params.flags.split(',');
+    const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+
+    if (chromelessFlag) {
+      this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+    } else if (params && params.flags === '') {
+      this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+    }
+
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       /*
       * The logic is:
