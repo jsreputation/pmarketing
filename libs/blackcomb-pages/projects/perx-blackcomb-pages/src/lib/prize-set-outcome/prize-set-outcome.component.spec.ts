@@ -33,8 +33,8 @@ const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
 };
 
 interface RouterWithQueryParam extends Router {
-  queryParams: Observable<{ transactionId: number }>,
-  params: Observable<{ id: number}>,
+  queryParams: Observable<{ transactionId: number }>;
+  params: Observable<{ id: number}>;
 }
 
 const routerStub: Partial<RouterWithQueryParam> = {
