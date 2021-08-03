@@ -151,7 +151,20 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([game]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
-    play: () => of(),
+    play: () => of({
+      vouchers: [],
+      points: [],
+      badges: [],
+      prizeSets: [
+        {
+          transactionId: 10,
+          prizeSetId: 1,
+          outcomeType: OutcomeType.prizeSet,
+          state: 'completed'
+        }
+      ],
+      rawPayload: []
+    }),
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -232,6 +245,7 @@ describe('GameComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -297,7 +311,24 @@ describe('GameComponent', () => {
     expect(component.willWin).toBe(false);
   });
 
-  it('should be displayed in popup when button view prize set ', fakeAsync(() => {
+  it('should set willWin true value when has prize set outcome', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [], prizeSets: [
+        {
+          transactionId: 10,
+          prizeSetId: 1,
+          outcomeType: OutcomeType.prizeSet,
+          state: 'completed'
+        }
+      ] }));
+    component.ngOnInit();
+    component.loadPreplay();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(true);
+  });
+
+  it('should be displayed in popup when button view prize set when has prize set outcome', fakeAsync(() => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
     spyOn(gameService, 'play').and.returnValue(of({ id: 3, prizeSets: [
@@ -314,4 +345,3 @@ describe('GameComponent', () => {
     expect(component.successPopUp.buttonTxt).toEqual('PRIZE_SET.OUTCOME_SUCCESS_TITLE');
   }));
 });
-
