@@ -4,7 +4,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import {
   AuthenticationModule,
-  CampaignModule,
   CampaignServiceModule,
   GameModule as PerxGameModule,
   GameServiceModule as PerxGameServiceModule
@@ -50,7 +49,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    CampaignModule
   ],
 })
 export class GameModule { }
