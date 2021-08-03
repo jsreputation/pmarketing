@@ -1,3 +1,10 @@
+<div class="close-btn-container">
+  <button mat-icon-button
+          class="close-btn"
+          (click)="closeDialog(false)" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <h2 mat-dialog-title class="reward-confirm-title">Confirm purchase?</h2>
 <p>You will be purchasing {{data.title}} for {{data.requiredPoints}} points.</p>
 <div mat-dialog-actions class="reward-confirm-actions">
