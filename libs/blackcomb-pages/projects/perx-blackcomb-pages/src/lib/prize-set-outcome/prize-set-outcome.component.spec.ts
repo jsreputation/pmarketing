@@ -104,14 +104,9 @@ describe('PrizeSetOutcomeComponent', () => {
   });
 
   it('component should call prizeSetOutcomeService.getPrizeSetState when has transactionId in query param', fakeAsync(() => {
-    const activatedRoute: ActivatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
-
     const spyGetPrizeSetDetail = spyOn(prizeSetOutcomeService, 'getPrizeSetDetails').and.returnValue(of(prizeSetDetailMock));
-
     const spyGetDetailPrize = spyOn(prizeSetOutcomeService, 'getPrizeSetState').and.returnValue(of(PrizeSetState.completed));
 
-    activatedRoute.params.subscribe((param) => console.log('activatedRoute.param', param));
-    activatedRoute.queryParams.subscribe((queryParams) => console.log('activatedRoute.queryParams', queryParams));
     component.ngOnInit();
 
     fixture.detectChanges();
