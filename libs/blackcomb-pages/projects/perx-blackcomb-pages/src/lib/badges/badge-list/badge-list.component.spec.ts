@@ -86,4 +86,3 @@ describe('BadgeListComponent', () => {
     });
 
 });
-active-badges-will-have-the-tenants-primary-color-as-the-background
