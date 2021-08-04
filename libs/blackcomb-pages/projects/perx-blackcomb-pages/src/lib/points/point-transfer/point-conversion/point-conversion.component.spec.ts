@@ -61,4 +61,9 @@ describe('PointConversionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('To field should list all available loyalty programs except for selected program', () => {
+    expect(1).toEqual(true);
+  });
+
 });
