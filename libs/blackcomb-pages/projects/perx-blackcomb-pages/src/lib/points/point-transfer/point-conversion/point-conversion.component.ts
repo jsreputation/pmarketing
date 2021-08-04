@@ -72,7 +72,6 @@ export class PointConversionComponent implements OnInit {
   }
 
   public onDestinationChanged(event: MatOptionSelectionChange): void {
-    console.log('onDestinationChanged');
     this.setCurrentExchangeRate(event.source.value);
     this.buildExpiryMessage();
   }
