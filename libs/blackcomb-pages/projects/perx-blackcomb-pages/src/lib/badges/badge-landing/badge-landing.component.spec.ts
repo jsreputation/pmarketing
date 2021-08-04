@@ -44,4 +44,5 @@ describe('BadgeLandingComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
 });
