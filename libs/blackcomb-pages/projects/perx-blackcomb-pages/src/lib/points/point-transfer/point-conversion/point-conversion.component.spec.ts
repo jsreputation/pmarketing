@@ -179,4 +179,8 @@ describe('PointConversionComponent', () => {
     const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
     expect(listLoyaltyOption.length).toEqual(mockLoyalty.length);
   });
+  it('To field should list all available loyalty programs except for selected program', () => {
+    expect(1).toEqual(true);
+  });
+
 });
