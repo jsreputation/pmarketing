@@ -194,8 +194,8 @@ export interface IBadgeOutcome {
 
 export interface IOperatingHours {
   id: number;
-  // is UTC DateTime from BE, but we'll only use the time portion
-  closesAt: Date;
-  opensAt: Date;
+  closesAt: string;
+  opensAt: string;
   days: number[]; // expects 0 - 6, Sunday - Saturday
+  formattedOffset: string;
 }
