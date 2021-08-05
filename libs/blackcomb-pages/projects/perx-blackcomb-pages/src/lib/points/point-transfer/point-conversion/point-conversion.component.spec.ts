@@ -14,6 +14,7 @@ import { PointConversionComponent } from './point-conversion.component';
 import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { mockExchangeRate, mockLoyalty } from './mockData/point.mock-data';
+import { MatOptionSelectionChange } from '@angular/material/core';
 
 describe('PointConversionComponent', () => {
   let component: PointConversionComponent;
@@ -57,9 +58,9 @@ describe('PointConversionComponent', () => {
   }));
 
   beforeEach(() => {
+    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
     fixture = TestBed.createComponent(PointConversionComponent);
     component = fixture.componentInstance;
-    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
   });
 
   it('should create', () => {
@@ -98,5 +99,44 @@ describe('PointConversionComponent', () => {
     fixture.detectChanges();
 
     expect(component.destintionLoyaltyProgramList.length).toBeTruthy();
+  });
+
+  it('should enable the submit button when all field valid', () => {
+    spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
+    spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const fromArrowButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper')).nativeElement;
+    fromArrowButton.click();
+    fixture.detectChanges();
+
+    fixture.debugElement.query(By.css('.mat-option-text')).nativeElement.click();
+    fixture.detectChanges();
+
+    const toArrowFieldButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper'));
+    toArrowFieldButton.nativeElement.click();
+    fixture.detectChanges();
+
+    fixture.debugElement.query(By.css('.mat-option-text')).nativeElement.click();
+    fixture.detectChanges();
+
+    component.onDestinationChanged({
+      isUserInput: false,
+      source: { value: component.destintionLoyaltyProgramList[0].value }
+    } as MatOptionSelectionChange);
+
+    const inputPointTransfer = fixture.debugElement.query(By.css('.point-transfer-value')).nativeElement;
+    const keyUpEvent = new KeyboardEvent('keyup', {
+      bubbles : true, cancelable : true, shiftKey : false
+    });
+    inputPointTransfer.value = 10;
+    inputPointTransfer.dispatchEvent(keyUpEvent);
+    fixture.detectChanges();
+
+    const buttonSubmit = fixture.debugElement.query(By.css('button')).nativeElement;
+
+    expect(buttonSubmit.disabled).toBeFalsy();
   });
 });
