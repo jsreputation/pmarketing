@@ -199,7 +199,7 @@ export class CampaignsCollectionComponent implements OnInit {
       }
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
-    const hours: string = `${operatingHours.opensAt.substr(0, 5)} - ${operatingHours.closesAt.substr(0, 5)}`;
+    const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
     return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 

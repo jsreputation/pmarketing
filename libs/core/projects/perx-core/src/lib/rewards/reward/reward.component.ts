@@ -109,7 +109,7 @@ export class RewardComponent implements OnInit, OnChanges {
       }
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
-    const hours: string = `${operatingHours.opensAt.substr(0, 5)} - ${operatingHours.closesAt.substr(0, 5)}`;
+    const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
     return `Collect a voucher during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 

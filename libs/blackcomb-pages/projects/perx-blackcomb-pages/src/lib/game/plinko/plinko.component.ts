@@ -67,7 +67,7 @@ export class PlinkoComponent implements OnInit {
       }
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
-    const hours: string = `${operatingHours.opensAt.substr(0, 5)} - ${operatingHours.closesAt.substr(0, 5)}`;
+    const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
     return `Play this game during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
