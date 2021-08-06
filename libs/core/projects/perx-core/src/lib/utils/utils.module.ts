@@ -124,8 +124,8 @@ export function notificationServiceFactory(): NotificationService {
     MatToolbarModule,
     MatCheckboxModule,
     ScrollingModule,
-    // MatToolbarModule,
-    // MatIconModule,
+    MatToolbarModule,
+    MatIconModule,
     TranslateModule.forChild()
   ],
   exports: [
