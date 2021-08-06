@@ -28,10 +28,15 @@ import {
   ICampaign,
   ICampaignService,
   IConfig,
-  ConfigService
+  ConfigService,
+  FlagLocalStorageService
 } from '@perxtech/core';
 
 import * as uuid from 'uuid';
+
+interface ILoginConfig {
+  redirectAfterLogin: string;
+}
 
 // @dynamic
 @Component({
@@ -46,7 +51,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignData: ICampaign | null = null;
 
   private destroy$: Subject<void> = new Subject();
-  private appConfig: IConfig<void>;
+  private appConfig: IConfig<ILoginConfig>;
 
   constructor(
     private router: Router,
@@ -57,17 +62,27 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
+    private flagLocalStorageService: FlagLocalStorageService
   ) {
     this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
+    this.configService.readAppConfig<ILoginConfig>().subscribe((conf: IConfig<ILoginConfig>) => this.appConfig = conf);
     const params = this.route.snapshot.queryParams;
     (window as any).primaryIdentifier = params.pi;
     const cid: string | null = params.cid;
     this.campaignId = cid ? Number.parseInt(cid, 10) : (window as any).campaignId;
     (window as any).campaignId = this.campaignId;
+    const paramArr: string[] = params.flags && params.flags.split(',');
+    const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+
+    if (chromelessFlag) {
+      this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+    } else if (params && params.flags === '') {
+      this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+    }
+
     if (this.preAuth && isPlatformBrowser(this.platformId)) {
       /*
       * The logic is:
@@ -144,7 +159,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private goToRouteFromConfig(): void {
-    this.router.navigate([this.appConfig && this.appConfig.redirectAfterLogin || 'wallet']);
+    this.router.navigate([(this.appConfig.custom && this.appConfig.custom.redirectAfterLogin) || 'wallet']);
   }
 
   private getCampaignData(): void {
@@ -196,7 +211,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       );
     } else {
       this.router.navigateByUrl(
-        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `type/${this.campaignId}` // placehold might be
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}` // placehold might be
         // updated
       );
     }

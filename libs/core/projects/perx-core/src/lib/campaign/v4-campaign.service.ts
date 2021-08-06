@@ -42,10 +42,10 @@ interface IV4Image {
 
 export interface IV4OperatingHours {
   id: number;
-  // is UTC DateTime from BE, but we'll only use the time portion
-  closes_at: Date;
-  opens_at: Date;
+  closes_at: string;
+  opens_at: string;
   days: number[]; // expects 0 - 6, Sunday - Saturday
+  formatted_offset: string;
 }
 
 /* eslint-disable @typescript-eslint/indent */
@@ -367,7 +367,8 @@ export class V4CampaignService implements ICampaignService {
         id: campaign.operating_hour.id,
         closesAt: campaign.operating_hour.closes_at,
         opensAt: campaign.operating_hour.opens_at,
-        days: campaign.operating_hour.days
+        days: campaign.operating_hour.days,
+        formattedOffset: campaign.operating_hour.formatted_offset
       };
     }
 

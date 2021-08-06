@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(email, password, undefined, undefined, scope).subscribe(
+    this.authService.login(email.toLowerCase(), password, undefined, undefined, scope).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {

@@ -211,6 +211,7 @@ export class GameComponent implements OnInit, OnDestroy {
           if (
             // GLOB-29: Let scratch card tries error be handled by the game service
             game.type !== GameType.scratch &&
+            game.type !== GameType.plinko &&
             game.remainingNumberOfTries <= 0 &&
             game.remainingNumberOfTries !== null
           ) {
@@ -476,7 +477,7 @@ export class GameComponent implements OnInit, OnDestroy {
     return 'vouchers' in object || 'points' in object || 'prizeSet' in object;
   }
 
-  private redirectUrlAndPopUp(): void {
+  public redirectUrlAndPopUp(): void {
     globalCacheBusterNotifier.next();
     const state: IPrePlayStateData = {
       popupData: this.popupData,

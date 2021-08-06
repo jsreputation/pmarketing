@@ -181,9 +181,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public outcomeClicked(outcome: ICampaignOutcome): void {
     if (outcome.type === CampaignOutcomeType.reward) {
       const voucher = this.issuedOutcomes.find(
-        (issuedOutcome) => {
-          return (issuedOutcome as unknown as Voucher).reward?.id === outcome.id
-        });
+        (issuedOutcome) => (issuedOutcome as unknown as Voucher).reward?.id === outcome.id);
       if (voucher !== undefined) {
         // we do have a issued outcome that matches the reward id
         this.router.navigate(['/voucher-detail', (voucher as unknown as Voucher).id])
