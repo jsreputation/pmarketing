@@ -19,13 +19,13 @@
   .close-btn {
     position: absolute;
     z-index: 2;
-    top: 1.3rem;
-    right: 1.3rem;
+    top: -1rem;
+    right: -1rem;
     width: 4rem;
     height: 4rem;
 
     .mat-icon {
-      color: #606060;
+      color: var(--button_text_color) !important;
     }
   }
 }

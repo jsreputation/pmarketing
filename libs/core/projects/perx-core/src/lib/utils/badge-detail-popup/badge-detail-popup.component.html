@@ -1,8 +1,3 @@
-
-<div *ngIf="imageUrl" class="img-wrapper">
-	<img [ngClass]="{'disabled' : !active}" [src]="imageUrl" />
-</div>
-<h2 *ngIf="title" mat-dialog-title>{{title}}</h2>
 <div class="close-btn-container" *ngIf="showButton">
   <button mat-icon-button
           class="close-btn"
@@ -10,6 +5,10 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
+<div *ngIf="imageUrl" class="img-wrapper">
+	<img [ngClass]="{'disabled' : !active}" [src]="imageUrl" />
+</div>
+<h2 *ngIf="title" mat-dialog-title>{{title}}</h2>
 <mat-dialog-content>{{description}}</mat-dialog-content>
 <button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed(buttonTxt)"
 	tabindex="-1">{{buttonTxt}}</button>
