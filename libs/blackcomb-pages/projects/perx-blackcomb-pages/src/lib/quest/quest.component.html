@@ -40,10 +40,11 @@
             <div class="reward-container">
                 <p>{{ questState === state.completed ?  ('QUEST_CAMPAIGN.EARNED_PRIZES' | translate) : ('QUEST_CAMPAIGN.PRIZES' | translate) }} </p>
                 <mat-list *ngIf="campaignOutcome$ | async as outcomes">
-                    <mat-list-item *ngFor="let outcome of outcomes">
+                    <mat-list-item *ngFor="let outcome of outcomes"
+                                   (click)="outcomeClicked(outcome)">
                         <ng-container [ngSwitch]="outcome.type">
                             <ng-container *ngSwitchCase="outcomeType.reward">
-                                <a [routerLink]="['/reward-detail',outcome.id]">{{outcome.name}} </a>
+                              {{outcome.name}}
                             </ng-container>
                             <ng-container *ngSwitchCase="outcomeType.points">
                                 {{outcome.pointsCount}} points
