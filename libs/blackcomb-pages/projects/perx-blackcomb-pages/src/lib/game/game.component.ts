@@ -15,7 +15,6 @@ import {
   ErrorMessageService,
   RewardPopupComponent,
   IRewardPopupConfig,
-  IConfig,
   ConfigService,
   IPrizeSetOutcome,
   IBadgeOutcome
@@ -118,18 +117,16 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
-
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-      }
-    );
+    combineLatest([
+      this.route.queryParams,
+      this.configService.readAppConfig()
+    ]).subscribe(([params, config]) => {
+      this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!config.disablePostGameNav;
+    });
 
     this.isAnonymousUser = this.auth.getAnonymous();
-    this.route.queryParams.subscribe((params: Params) => {
-      const paramArr: string[] = params.flags && params.flags.split(',');
-      this.isEmbedded = paramArr && paramArr.includes('nonav');
-    });
     this.popupData = this.noRewardsPopUp; // must pass data to notif,
     // see path to '[/wallet]' notif svc no popupData
 
