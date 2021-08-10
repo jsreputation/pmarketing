@@ -165,6 +165,7 @@
     "CASHBACK_SPENT": "{points} cashback spent"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Merchant to enter the code",
     "DESCRIPTION": "The merchant will enter the redemption code when you are ready to redeem at the venue.",
     "WRONG_PIN": "Incorrect PIN",

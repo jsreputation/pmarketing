@@ -162,6 +162,7 @@
     "POINT_SPENT": "{points} Points spent"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Input PIN",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
