@@ -54,7 +54,7 @@
         </div>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.howToRedeem">
-        How to Redeem
+        {{'REDEMPTION.HOW_TO_REDEEM_TITLE' | translate}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.howToRedeem">
         <div [innerHtml]="voucher.reward.howToRedeem"></div>
