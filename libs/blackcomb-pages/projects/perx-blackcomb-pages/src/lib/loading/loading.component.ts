@@ -76,14 +76,21 @@ export class LoadingComponent implements OnInit, OnDestroy {
     (window as any).campaignId = this.campaignId;
     const paramArr: string[] = params.flags && params.flags.split(',');
     const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+    const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
 
     if (chromelessFlag) {
       this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-    } else if (params && params.flags === '') {
+    }
+    if (preAuthFlag) {
+      this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
+    }
+    if (params && params.flags === '') {
       this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
     }
 
-    if (this.preAuth && isPlatformBrowser(this.platformId)) {
+    const preAuthMode = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('preAuth'));
+    if ((this.preAuth || preAuthMode) && isPlatformBrowser(this.platformId)) {
       /*
       * The logic is:
       * 1. check PI, then will call autoLogin
