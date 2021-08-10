@@ -164,6 +164,7 @@
     "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Nhập mã PIN",
     "DESCRIPTION": "Vui lòng xuất trình màn hình này cho nhân viên thu ngân để nhập mã PIN và đổi phần thưởng của bạn.",
     "WRONG_PIN": "Mã PIN không chính xác",

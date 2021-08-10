@@ -270,6 +270,7 @@
     "REDEEMED": "Redeemed"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Input PIN",
     "CODE_INSTRUCTION_TXT": "The merchant will enter the redemption code when you are ready to redeem at the venue.",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
