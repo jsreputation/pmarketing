@@ -59,7 +59,7 @@ export class LeaderboardAboutComponent implements OnInit {
           podium.outcomes.forEach((outcome, outcomeIndex) => {
             if (outcome.pointsCount) {
               // fetch loyalty detail to extract program name
-              this.loyaltyService.getLoyalty(outcome.id).subscribe((loyaltyProgram) => {
+              this.loyaltyService.getLoyalty(outcome.modularizableId).subscribe((loyaltyProgram) => {
                 podium.outcomes[outcomeIndex] = {
                   ...podium.outcomes[outcomeIndex],
                   name: `${outcome.pointsCount} ${this.loyaltyPoints} - ${loyaltyProgram.name}`
@@ -67,7 +67,7 @@ export class LeaderboardAboutComponent implements OnInit {
               });
             } else {
               //  get reward name
-              this.rewardService.getReward(outcome.id).subscribe((reward) => {
+              this.rewardService.getReward(outcome.modularizableId).subscribe((reward) => {
                 podium.outcomes[outcomeIndex] = reward as LeaderboardOutcome;
               });
             }

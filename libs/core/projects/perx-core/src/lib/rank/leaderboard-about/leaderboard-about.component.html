@@ -31,7 +31,7 @@
                 {{outcome.name}}
               </span>
               <ng-template #rewardLink>
-                <a class="reward-link" [routerLink]="['/reward-detail',outcome.id]">{{outcome.name}} </a>
+                <a class="reward-link" [routerLink]="['/reward-detail',outcome.id]" [queryParams] = "{ previewReward: true }">{{outcome.name}} </a>
               </ng-template>
             </div>
           </div>
