@@ -52,7 +52,8 @@ import {
   StampModule,
   TokenStorage,
   UtilsModule,
-  VouchersModule
+  VouchersModule,
+  TeamsServiceModule as PerxTeamsServiceModule,
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -202,7 +203,8 @@ export const appInit =
         deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
-    })
+    }),
+    PerxTeamsServiceModule.forRoot()
   ],
   entryComponents: [
     CategorySelectComponent,

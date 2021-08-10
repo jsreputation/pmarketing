@@ -83,8 +83,20 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       switchMap((params: Params) => {
         if (params.id) {
           const id = parseInt(params.id, 10);
-          return this.gameService.get(id);
+          return this.gameService.get(id).pipe(
+            switchMap((game: IGame) => {
+              if (game.campaignId) {
+                 return this.campaignService.getCampaign(game.campaignId).pipe(
+                  map((campaign: ICampaign) => {
+                    game.operatingHours = campaign?.operatingHours;
+                    game.isOperating = campaign?.isOperating;
+                    return game;
+                  }));
+              }
+              return of(game);
+            }));
         }
+
         const cid = parseInt(params.cid, 10);
         return this.campaignService.getCampaign(cid).pipe(
           switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),

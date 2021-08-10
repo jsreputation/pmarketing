@@ -180,3 +180,14 @@ mat-tab-group {
     }
   }
 }
+
+perx-blackcomb-pages-shake,
+perx-blackcomb-pages-tap,
+perx-blackcomb-pages-scratch,
+perx-blackcomb-pages-spin {
+  button:disabled,
+  button.disabled {
+    background-color: $light-grey!important;
+    color: $medium-grey!important;
+  }
+}
