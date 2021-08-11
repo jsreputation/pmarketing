@@ -20,7 +20,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-  CampaignServiceModule, ProfileServiceModule
+  CampaignServiceModule, ProfileServiceModule, SettingsModule
 } from '@perxtech/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -80,6 +80,7 @@ export const setLanguage = (
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     RewardsModule.forRoot(),

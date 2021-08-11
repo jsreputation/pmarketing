@@ -15,10 +15,11 @@ import {
   ErrorMessageService,
   RewardPopupComponent,
   IRewardPopupConfig,
-  IConfig,
   ConfigService,
   IPrizeSetOutcome,
-  IBadgeOutcome
+  SettingsService,
+  IBadgeOutcome,
+  IConfig,
 } from '@perxtech/core';
 import {
   map,
@@ -113,7 +114,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService,
     private errorMessageService: ErrorMessageService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
@@ -126,9 +128,12 @@ export class GameComponent implements OnInit, OnDestroy {
     );
 
     this.isAnonymousUser = this.auth.getAnonymous();
-    this.route.queryParams.subscribe((params: Params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      this.isEmbedded = paramArr && paramArr.includes('nonav');
+      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!flags.disablePostGameNav;
     });
     this.popupData = this.noRewardsPopUp; // must pass data to notif,
     // see path to '[/wallet]' notif svc no popupData

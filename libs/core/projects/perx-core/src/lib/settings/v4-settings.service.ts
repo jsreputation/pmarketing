@@ -90,6 +90,7 @@ interface IV4Flags {
     show_voucher_booking_from_rewards_page?: boolean;
     show_badges_button: boolean;
     show_outcomes_on_campaign_landing_page?: boolean;
+    disable_post_game_nav?: boolean;
   };
 }
 
@@ -208,7 +209,8 @@ export class V4SettingsService extends SettingsService {
       showVoucherBookingFromRewardsPage: data.json_value.show_voucher_booking_from_rewards_page,
       showPointTransfer: data.json_value.show_point_transfer,
       showBadgesButton: data.json_value.show_badges_button,
-      showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page
+      showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page,
+      disablePostGameNav: data.json_value.disable_post_game_nav,
     };
   }
 
