@@ -7,7 +7,9 @@ import {
   IReward,
   IVoucherService,
   NotificationService,
-  RewardsService
+  RewardsService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
@@ -26,6 +28,7 @@ export class RewardComponent implements OnInit {
   public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
+  public showOperatingHours: boolean = false;
 
   constructor(
     private location: Location,
@@ -37,7 +40,8 @@ export class RewardComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private macaronService: MacaronService,
     private configService: ConfigService,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
@@ -80,6 +84,10 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = false;
         }
       });
+
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+    });
   }
 
   public back(): void {

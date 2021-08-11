@@ -17,7 +17,8 @@ import {
   NotificationService,
   RewardsService,
   VoucherState,
-  UtilsModule
+  UtilsModule,
+  SettingsService
 } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
@@ -93,6 +94,9 @@ describe('RewardComponent', () => {
   const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
   const macaronServiceStub: Partial<MacaronService> = { getMacaron: () => null };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -117,6 +121,7 @@ describe('RewardComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: MacaronService, useValue: macaronServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

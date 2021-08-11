@@ -271,7 +271,7 @@ export class TaggedItemsComponent implements OnInit {
     }
   }
 
-  public getOperatingHours(operatingHours: IOperatingHours): string {
+  public getOperatingHours(operatingHours: IOperatingHours, campaignType: string): string {
 
     const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
 
@@ -282,7 +282,8 @@ export class TaggedItemsComponent implements OnInit {
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
-    return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
+    const operatingHoursText = campaignType === 'game' ? 'Campaign available during:' : 'Collect a voucher during:';
+    return `${operatingHoursText} ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
