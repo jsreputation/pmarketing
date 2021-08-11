@@ -23,6 +23,9 @@
         <span *ngIf="showBalance && macaron && macaron.class === 'running-out'"
           class="reward-balance">{{macaron.rewardBalance}}
           left</span>
+        <p class="operating-hours" *ngIf="showOperatingHours && reward.operatingHours">
+          {{getOperatingHours(reward.operatingHours)}}
+        </p>
       </div>
       <div *ngIf="showLoyaltyTierInfo" class="content tier-info">
         <div *ngIf="reward.loyalty && reward.loyalty.length; else allTiers">
