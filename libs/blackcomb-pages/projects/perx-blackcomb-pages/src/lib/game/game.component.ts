@@ -17,7 +17,9 @@ import {
   IRewardPopupConfig,
   ConfigService,
   IPrizeSetOutcome,
-  IBadgeOutcome
+  SettingsService,
+  IBadgeOutcome,
+  IConfig,
 } from '@perxtech/core';
 import {
   map,
@@ -112,21 +114,27 @@ export class GameComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService,
     private errorMessageService: ErrorMessageService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
-    combineLatest([
-      this.route.queryParams,
-      this.configService.readAppConfig()
-    ]).subscribe(([params, config]) => {
-      this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-      const paramArr: string[] = params.flags && params.flags.split(',');
-      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!config.disablePostGameNav;
-    });
+
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+      }
+    );
 
     this.isAnonymousUser = this.auth.getAnonymous();
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!flags.disablePostGameNav;
+    });
     this.popupData = this.noRewardsPopUp; // must pass data to notif,
     // see path to '[/wallet]' notif svc no popupData
 

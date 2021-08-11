@@ -88,7 +88,4 @@ export interface IConfig<T> {
 
   /*Prize set Outcome*/
   showPrizeSetOutcome?: boolean;
-
-  /*Game disable CTA on complete popup and post navigation*/
-  disablePostGameNav?: boolean;
 }
