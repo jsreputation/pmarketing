@@ -1,8 +1,7 @@
 <div class="page" *ngIf="theme && theme.properties && appConfig && appRemoteFlags" infiniteScroll
   [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
   <div class="loyalty-block" *ngIf="
-    appConfig.showLoyaltyBlockOnHomePage &&
-    appRemoteFlags.showLoyaltyBlockOnHomePage &&
+    (appConfig.showLoyaltyBlockOnHomePage || appRemoteFlags.showLoyaltyBlockOnHomePage) &&
     !appRemoteFlags.rebateDemoFlow">
     <perx-core-loyalty-summary [showLoyaltyProgress]="appConfig.showLoyaltyProgress" class="loyalty-item"
       [subTitleFn]="subTitleFn" [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn" [pointToFn]="pointToFn"
