@@ -269,16 +269,17 @@ export class GameComponent implements OnInit, OnDestroy {
             };
           } else if (
             err instanceof HttpErrorResponse &&
-            err.error &&
-            err.error.code === 4103
+            err.error
           ) {
-            console.log(`Error ${err.error.code}: ${err.error.message}`);
-            this.popupData = {
-              title: `Error ${err.error.code}`,
-              text: this.noRewardsPopUp.title,
-              buttonTxt: this.isEmbedded ? null : this.noRewardsPopUp.buttonTxt,
-              imageUrl: '',
-            };
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+            .subscribe((errorMessage) => {
+              this.popupData = {
+                title: 'Sorry!',
+                text: errorMessage,
+                buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                imageUrl: '',
+              };
+            });
           } else {
             this.popupData = this.noRewardsPopUp;
           }
