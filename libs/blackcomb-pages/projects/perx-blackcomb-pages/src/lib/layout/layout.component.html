@@ -34,13 +34,13 @@
           <span translate>NAVIGATION.STAMPS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && appConfig.showRewardNavButton">
+      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
         <div class="nav-item">
           <mat-icon aria-hidden="false">card_giftcard</mat-icon>
           <span translate>NAVIGATION.REWARDS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage && appRemoteFlags?.showNearMePage">
+      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage || appRemoteFlags?.showNearMePage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
           <span translate>NAVIGATION.NEARME</span>
@@ -70,7 +70,7 @@
           <span translate>NAVIGATION.LEADER_BOARD</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage">
+      <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage || appRemoteFlags?.showAccountsPage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_circle</mat-icon>
           <span translate>NAVIGATION.ACCOUNT</span>
