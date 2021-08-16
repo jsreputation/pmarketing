@@ -124,6 +124,7 @@ home_redirect=(
   feature-demo
   globeathome
   globeone
+  globesuperapp
   megaworld
   partners-demo
   perx-demo
@@ -165,6 +166,7 @@ blackcomb_app_base=(
   feature-demo
   globeathome
   globeone
+  globesuperapp
   hsbcph-blackcomb
   hsbcvn
   hoolah
