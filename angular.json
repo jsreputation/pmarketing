@@ -2131,6 +2131,120 @@
         }
       }
     },
+    "blackcomb-merchant": {
+      "projectType": "application",
+      "root": "apps/blackcomb-merchant",
+      "sourceRoot": "apps/blackcomb-merchant/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/blackcomb-merchant",
+            "index": "apps/blackcomb-merchant/src/index.html",
+            "main": "apps/blackcomb-merchant/src/main.ts",
+            "polyfills": "apps/blackcomb-merchant/src/polyfills.ts",
+            "tsConfig": "apps/blackcomb-merchant/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/blackcomb-merchant/src/favicon.ico",
+              "apps/blackcomb-merchant/src/assets",
+              "apps/blackcomb-merchant/src/manifest.webmanifest",
+              "apps/blackcomb-merchant/src/robots.txt"
+            ],
+            "styles": [
+              "apps/blackcomb-merchant/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/blackcomb-merchant/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/blackcomb-merchant/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "blackcomb-merchant:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "blackcomb-merchant:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "blackcomb-merchant:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/blackcomb-merchant/src/**/*.d.ts",
+              "apps/blackcomb-merchant/src/main.ts",
+              "apps/blackcomb-merchant/src/polyfills.ts",
+              "apps/blackcomb-merchant/src/**/*.spec.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/blackcomb-merchant"
+          ],
+          "options": {
+            "jestConfig": "apps/blackcomb-merchant/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/blackcomb-merchant/e2e/protractor.conf.js",
+            "devServerTarget": "blackcomb-merchant:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "blackcomb-merchant:serve:production"
+            }
+          }
+        }
+      }
+    },
     "whistler": {
       "projectType": "library",
       "root": "libs/whistler",

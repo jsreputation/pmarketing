@@ -19,6 +19,8 @@
     "build:blackcomb": "ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --",
     "build:blackcomb:production": "env-cmd -f apps/blackcomb/env/blackcomb.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "build:blackcomb:staging": "env-cmd -f apps/blackcomb/env/blackcomb.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
+    "start:blackcomb-merchant:staging": "env-cmd -f apps/blackcomb-merchant/env/blackcomb-merchant.staging.dev ts-node --project tsconfig.node.json apps/blackcomb-merchant/set-env.ts && yarn nx serve blackcomb-merchant --",
+    "build:blackcomb-merchant:staging": "env-cmd -f apps/blackcomb-merchant/env/blackcomb-merchant.staging ts-node --project tsconfig.node.json apps/blackcomb-merchant/set-env.ts && yarn nx build blackcomb-merchant --",
     "build:bpi:production": "echo 'skipping bpi build'",
     "build:bpi:staging": "echo 'skipping bpi build'",
     "build:components-demo": "nx build components-demo --",
