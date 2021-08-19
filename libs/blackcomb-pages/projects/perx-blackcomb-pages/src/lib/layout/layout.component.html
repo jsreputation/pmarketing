@@ -22,7 +22,7 @@
           <span translate>NAVIGATION.PAY</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage">
+      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">home</mat-icon>
           <span translate>NAVIGATION.HOME</span>
