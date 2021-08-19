@@ -7,15 +7,23 @@ import {
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HeaderComponent } from './header/header.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,
-                MatSnackBarModule],
-      declarations: [AppComponent],
+      imports: [
+          RouterTestingModule,
+          MatSnackBarModule,
+          MatToolbarModule
+      ],
+      declarations: [
+          AppComponent,
+          HeaderComponent
+      ],
       providers: [
           {
             provide: ConfigService,
