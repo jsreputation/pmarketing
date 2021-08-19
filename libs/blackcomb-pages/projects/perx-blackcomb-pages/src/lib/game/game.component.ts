@@ -133,7 +133,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.settingsService.getRemoteFlagsSettings()
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!flags.disablePostGameNav;
+      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!flags.disablePostGameNav || !!flags.chromeless;
     });
     this.popupData = this.noRewardsPopUp; // must pass data to notif,
     // see path to '[/wallet]' notif svc no popupData
