@@ -1,0 +1,48 @@
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    background-size: contain;
+    position: relative;
+
+    .toolbar {
+        height: 7rem;
+    }
+
+    .content-container {
+        flex: 1;
+        width: 100%;
+        overflow-y: scroll;
+        background-color: white!important;
+        border-radius: 1.6rem 1.6rem 0 0;
+    }
+
+    .content {
+        padding: 2.5rem;
+    }
+
+    .title-details p{   
+        color: white;
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .logoWrapper {
+        height: 5rem;
+        width: 13.6rem;
+        position: absolute;
+        margin: 0 auto;
+        top: 3rem;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 1;
+        .logo {
+          height: 100%;
+        }
+      }
+  }
+  
+

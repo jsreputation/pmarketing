@@ -1,0 +1,19 @@
+
+<div class="main-container" [ngStyle]="{backgroundImage: 'url(' + backgroundUrl + ')'}">
+    <div class="toolbar">
+        <app-header></app-header>
+    </div>
+    <div class="title-details">
+        <div class="logoWrapper">
+            <a [routerLink]="[ '/home' ]">
+                <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+            </a>
+        </div>
+        <p>{{subtitle}}</p>
+    </div>
+    <div class="content-container">
+        <div class="content">
+            <router-outlet></router-outlet>
+         </div>
+    </div>
+</div> 

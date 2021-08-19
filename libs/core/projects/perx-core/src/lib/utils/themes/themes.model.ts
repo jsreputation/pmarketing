@@ -52,6 +52,8 @@ interface IThemeProperties {
   '--surface_colour'?: string;
   '--popup_background_colour'?: string;
   'stampCard'?: IStampCardTheme;
+  '--background_image'?: string;
+  '--subtitle'?: string;
 }
 
 interface IStampCardTheme {

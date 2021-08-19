@@ -4,7 +4,12 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test", "lint", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint",
+          "e2e"
+        ]
       }
     }
   },
@@ -78,6 +83,9 @@
       "tags": []
     },
     "transcycle": {
+      "tags": []
+    },
+    "blackcomb-merchant": {
       "tags": []
     }
   },
