@@ -47,6 +47,7 @@ describe('BadgeLandingComponent', () => {
         expect(component).toBeTruthy();
     });
 
+
     it('should display 3 visible tabs in the badge landing page', () => {
       const allTabsLabel = [ 'BADGES.ALL_TAB', 'BADGES.EARNED_TAB', 'BADGES.UNEARNED_TAB' ];
       const listElmFind: string[] = [];
