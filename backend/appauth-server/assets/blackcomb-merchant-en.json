@@ -1,0 +1,13 @@
+{
+    "LOGIN_PAGE": {
+        "WELCOME": "Welcome",
+        "NAME": "Name",
+        "NAME_IS": "Name is",
+        "EMAIL_ADDRESS": "Email address",
+        "EMAIL_ADDRESS_IS": "Email address is",
+        "PASSWORD": "Password",
+        "PASSWORD_IS": "Password is",
+        "FORGOT_PASSWORD": "Forgot password",
+        "LOGIN": "Login"
+    }
+}
