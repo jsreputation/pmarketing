@@ -25,6 +25,7 @@ import {
 import { HTTP_INTERCEPTORS, HttpClient, HttpBackend, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const appInit =
   (
@@ -60,6 +61,7 @@ export const appInit =
     HttpClientModule,
     UtilsModule,
     AuthenticationModule,
+    BrowserAnimationsModule,
     PerxProfileServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
