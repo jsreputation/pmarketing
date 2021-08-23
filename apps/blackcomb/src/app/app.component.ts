@@ -30,6 +30,7 @@ import {
   ITheme,
   ThemesService,
   TokenStorage,
+  SettingsService
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -51,6 +52,7 @@ import {
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -81,7 +83,8 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
-    private storage: TokenStorage
+    private storage: TokenStorage,
+    private settingsService: SettingsService
   ) {
   }
 
@@ -152,9 +155,12 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.route.queryParams.subscribe((params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+      this.showHeader = (paramArr && paramArr.includes('chromeless') || !!flags.chromeless) ? false : !(ref instanceof SignIn2Component);
     });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
