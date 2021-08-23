@@ -126,7 +126,7 @@ const appConfigFile = `{
   "showLoyaltyBlockOnHomePage": ${
     process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
       ? process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
-      : true
+      : false
   },
   "showLoyaltyProgress": ${
     process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : true

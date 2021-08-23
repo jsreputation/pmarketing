@@ -2,8 +2,8 @@
   <div class="row" *ngIf="badges">
     <div *ngFor="let badge of badges" class="badge" [ngClass]="{'disabled' : !badge.active}"
       (click)="viewBadgeDetail(badge)">
-      <div class="badge-image">
-        <img *ngIf="badge?.image" [src]="badge.image?.value?.image_url" />
+      <div class="badge-image" [ngClass]="{'badge-image-square' : !badge?.image?.value?.image_url}">
+        <img *ngIf="badge.image?.value?.image_url" [src]="badge.image?.value?.image_url" />
       </div>
       <div class="badge-description">
         {{badge.title}}

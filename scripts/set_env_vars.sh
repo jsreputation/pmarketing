@@ -124,6 +124,7 @@ home_redirect=(
   feature-demo
   globeathome
   globeone
+  globesuperapp
   megaworld
   partners-demo
   perx-demo
@@ -161,11 +162,11 @@ echo "APP=${APP}" >>"${GITHUB_ENV}"
 # Set env APP_BASE
 blackcomb_app_base=(
   bdo
-  bnpl
   daiichi-dlvn
   feature-demo
   globeathome
   globeone
+  globesuperapp
   hsbcph-blackcomb
   hsbcvn
   hoolah

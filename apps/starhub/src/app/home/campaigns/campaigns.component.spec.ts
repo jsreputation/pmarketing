@@ -13,7 +13,8 @@ import {
   ICampaign,
   IGame,
   GameType,
-  ConfigService
+  ConfigService,
+  SettingsService
 } from '@perxtech/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
@@ -46,6 +47,10 @@ describe('CampaignsComponent', () => {
     })
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent, GhostCardComponent],
@@ -59,7 +64,8 @@ describe('CampaignsComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
