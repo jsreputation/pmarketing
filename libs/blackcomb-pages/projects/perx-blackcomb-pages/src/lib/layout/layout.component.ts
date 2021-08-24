@@ -46,6 +46,7 @@ import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
 import { LeaderboardsComponent } from '../leaderboard/leaderboards.component';
 import { BadgeLandingComponent } from '../badges/badge-landing/badge-landing.component';
+import { combineLatest } from 'rxjs';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -123,9 +124,12 @@ export class LayoutComponent implements OnInit {
         this.initBackArrow(url);
       });
     this.initBackArrow(this.router.url);
-    this.route.queryParams.subscribe((params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
 
       if (chromelessFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
