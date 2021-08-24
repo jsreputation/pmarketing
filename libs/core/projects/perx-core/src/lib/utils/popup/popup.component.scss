@@ -41,3 +41,21 @@ mat-dialog-content {
     margin: 0 0.5rem;
   }
 }
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -3.5rem;
+    right: -2rem;
+    width: 4rem;
+    height: 4rem;
+    background: #c8c8c8;
+
+    .mat-icon {
+      color: #606060;
+    }
+  }
+}

@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IData, ICategories } from '../nearme.component';
+import { ICategories, IData } from '../nearme.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-filter-dialog',
@@ -10,10 +10,11 @@ import { IData, ICategories } from '../nearme.component';
 })
 export class FilterDialogComponent implements OnInit {
   public categories: ICategories[];
+  public showButton: boolean = true;
 
   constructor(
     private dialogRef: MatDialogRef<FilterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: IData) { }
+    @Inject(MAT_DIALOG_DATA) private data: IData) {}
 
   public ngOnInit(): void {
     this.categories = this.data.categories;

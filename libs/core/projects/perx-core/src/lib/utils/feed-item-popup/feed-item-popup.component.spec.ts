@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 import { FeedItemPopupComponent } from './feed-item-popup.component';
@@ -31,10 +31,12 @@ describe('FeedItemPopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FeedItemPopupComponent],
       imports: [
-        MatIconModule
+        MatIconModule,
+        MatDialogModule
       ],
       providers: [
         { provide: Router, useValue: router },
+        { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: dataMock }
       ]
     })

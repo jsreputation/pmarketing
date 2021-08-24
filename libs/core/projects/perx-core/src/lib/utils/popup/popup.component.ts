@@ -87,4 +87,8 @@ export class PopupComponent {
       this.data.afterClosedCallBack.dialogClosed();
     }
   }
+
+  public onClose(): void {
+    this.dialogRef.close();
+  }
 }

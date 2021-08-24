@@ -26,7 +26,6 @@ import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { StorageModule } from './storage/storage.module';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
-import { MatIconModule } from '@angular/material/icon';
 import { SortRewardsPipe } from './directives/sort-rewards-pipe';
 import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
@@ -46,6 +45,7 @@ import { StatisticCardComponent } from './statistic-card/statistic-card.componen
 import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
 import { LeaderboardCTAComponent } from './leaderboard-cta/leaderboard-cta.component';
 import { BadgeDetailPopupComponent } from './badge-detail-popup/badge-detail-popup.component';
+import { MatIconModule } from '@angular/material/icon';
 
 export function themesServiceFactory(
   handler: HttpBackend,
