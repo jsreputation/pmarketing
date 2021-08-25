@@ -83,7 +83,8 @@ export enum CampaignType {
   survey = 'survey',
   invite = 'invite',
   quest = 'quest',
-  progress = 'progress'
+  progress = 'progress',
+  instant = 'instant'
 }
 
 export enum CampaignState {

@@ -9,12 +9,12 @@ import {
   ICampaignOutcome,
   ICampaignService,
   IConfig,
-  IFlags,
+  IFlags, IPopupConfig,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IReward,
   ITeam,
-  ITheme,
+  ITheme, NotificationService,
   PrizeSetOutcomeType,
   RewardsService,
   SettingsService,
@@ -55,7 +55,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private prizeSetOutcomeService: IPrizeSetOutcomeService,
     private rewardsService: RewardsService,
     private settingsService: SettingsService,
-    private teamsService: TeamsService
+    private teamsService: TeamsService,
+    private notificationService: NotificationService,
   ) {}
 
   public ngOnInit(): void {
@@ -100,7 +101,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       this.campaignOutcomes = outcomes;
       this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
       if (this.isTeamsEnabled) {
-        switch (userTeam.state){
+        switch (userTeam.state) {
           case TeamState.completed:
             this.teamCompleted = true;
             break;
@@ -193,6 +194,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public next(): void {
     if (this.campaign) {
+      const campaignId = this.campaign.id;
       if (this.campaign.subType === 'quiz') {
         this.router.navigate([`quiz/${this.campaign.id}`]);
         return;
@@ -203,13 +205,29 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       }
       if (this.campaign.type === CampaignType.stamp) {
         if (this.isTeamsEnabled) {
-          if (this.teamCompleted){
+          if (this.teamCompleted) {
             this.router.navigate([`stamp/${this.campaign.id}`]);
           } else {
             this.createTeam(this.campaign.id);
           }
           return;
         }
+      }
+      if (this.campaign.type === CampaignType.instant && !this.campaign.enrolled) {
+        const enrollPopUpConf: IPopupConfig = {
+          title: 'Campaign enrolled!',
+          text: 'All the best, you have until DATE_TIME to win prize(s)',
+          buttonTxt: 'Ok',
+          afterClosedCallBack: {
+            dialogClosed: (): void => {
+              this.campaignService.enrolIntoCampaign(campaignId).subscribe(result => {
+                console.log('result ', result);
+              });
+            },
+          },
+        };
+        this.notificationService.addPopup(enrollPopUpConf);
+        return;
       }
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
     }
@@ -233,15 +251,20 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
           this.router.navigate([`teams/pending/${campaignId}`]);
         }
       }
-    )
+    );
   }
 
   private initCTAs(): void {
-    this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ? this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
+    if (this.campaign?.type === CampaignType.instant && !this.campaign?.enrolled) {
+      this.primaryCtaText = 'Enroll';
+    } else {
+      this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ?
+        this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
+    }
     this.secondaryCtaText = this.landingPageConfig?.buttonText2?.text || undefined;
 
     if (this.isTeamsEnabled) {
-      if (!this.teamCompleted){
+      if (!this.teamCompleted) {
         this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonText
         this.secondaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonTextSecondary
       } else {

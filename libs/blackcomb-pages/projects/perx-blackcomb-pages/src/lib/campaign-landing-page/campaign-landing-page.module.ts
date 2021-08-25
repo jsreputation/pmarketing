@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    CampaignLandingPageComponent
+    CampaignLandingPageComponent,
   ],
   exports: [
     CampaignLandingPageComponent
