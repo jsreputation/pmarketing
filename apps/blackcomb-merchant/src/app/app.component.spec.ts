@@ -9,6 +9,8 @@ import { of } from 'rxjs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
@@ -18,7 +20,9 @@ describe('AppComponent', () => {
       imports: [
           RouterTestingModule,
           MatSnackBarModule,
-          MatToolbarModule
+          MatToolbarModule,
+          MatIconModule,
+          TranslateModule.forRoot()
       ],
       declarations: [
           AppComponent,
