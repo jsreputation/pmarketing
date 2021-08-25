@@ -25,6 +25,11 @@ import {
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  CampaignEnrollPopupComponent,
+  ICampaignEnrollPopupConfig
+} from './campaign-enroll-popup/campaign-enroll-popup.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
@@ -55,7 +60,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private prizeSetOutcomeService: IPrizeSetOutcomeService,
     private rewardsService: RewardsService,
     private settingsService: SettingsService,
-    private teamsService: TeamsService
+    private teamsService: TeamsService,
+    private dialog: MatDialog,
   ) {}
 
   public ngOnInit(): void {
@@ -100,7 +106,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       this.campaignOutcomes = outcomes;
       this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
       if (this.isTeamsEnabled) {
-        switch (userTeam.state){
+        switch (userTeam.state) {
           case TeamState.completed:
             this.teamCompleted = true;
             break;
@@ -203,13 +209,32 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       }
       if (this.campaign.type === CampaignType.stamp) {
         if (this.isTeamsEnabled) {
-          if (this.teamCompleted){
+          if (this.teamCompleted) {
             this.router.navigate([`stamp/${this.campaign.id}`]);
           } else {
             this.createTeam(this.campaign.id);
           }
           return;
         }
+      }
+      if (this.campaign.type === CampaignType.instant && !this.campaign.enrolled) {
+        const enrollPopUpConf: ICampaignEnrollPopupConfig = {
+          title: 'Campaign enrolled!',
+          description: 'All the best, you have until DATE_TIME to win prize(s)',
+          buttonTxt: 'Ok',
+          afterClosedCallBack: {
+            dialogClosed: (): void => {
+              this.campaignService.enrolIntoCampaign(this.campaign?.id || 0).subscribe(result => {
+                console.log('result ', result);
+              });
+            },
+          },
+        };
+        this.dialog.open(CampaignEnrollPopupComponent, {
+          data: enrollPopUpConf,
+          minWidth: '35.5rem'
+        });
+        return;
       }
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
     }
@@ -233,15 +258,20 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
           this.router.navigate([`teams/pending/${campaignId}`]);
         }
       }
-    )
+    );
   }
 
   private initCTAs(): void {
-    this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ? this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
+    if (this.campaign?.type === CampaignType.instant && !this.campaign?.enrolled) {
+      this.primaryCtaText = 'Enroll';
+    } else {
+      this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ?
+        this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
+    }
     this.secondaryCtaText = this.landingPageConfig?.buttonText2?.text || undefined;
 
     if (this.isTeamsEnabled) {
-      if (!this.teamCompleted){
+      if (!this.teamCompleted) {
         this.primaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonText
         this.secondaryCtaText = this.campaign?.displayProperties?.teamsDetails?.landingPage?.teamIncomplete?.buttonTextSecondary
       } else {
