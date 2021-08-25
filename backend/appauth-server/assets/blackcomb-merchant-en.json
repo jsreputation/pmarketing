@@ -9,5 +9,19 @@
         "PASSWORD_IS": "Password is",
         "FORGOT_PASSWORD": "Forgot password",
         "LOGIN": "Login"
-    }
+    },
+    "HOME": {
+        "SALES_SCAN": "Sales Scan",
+        "REDEMPTION": "Redemption",
+        "TRANSACTION_HISTORY": "Transaction History",
+        "LOGOUT": "Log Out",
+        "WELCOME_MSG": "What are we doing today?"
+    },
+    "TRANSACTION_HISTORY": {
+        "POINT_EARNED": "{points} Points earned",
+        "POINT_SPENT": "{points} Points spent",
+        "SALES_TXT": "Sales",
+        "REDEMPTION_TXT": "Redemptions"
+    },
+    "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }
