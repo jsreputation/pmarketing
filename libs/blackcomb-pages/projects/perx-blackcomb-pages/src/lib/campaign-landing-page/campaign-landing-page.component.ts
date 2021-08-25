@@ -9,12 +9,12 @@ import {
   ICampaignOutcome,
   ICampaignService,
   IConfig,
-  IFlags,
+  IFlags, IPopupConfig,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IReward,
   ITeam,
-  ITheme,
+  ITheme, NotificationService,
   PrizeSetOutcomeType,
   RewardsService,
   SettingsService,
@@ -25,11 +25,6 @@ import {
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
-import { MatDialog } from '@angular/material/dialog';
-import {
-  CampaignEnrollPopupComponent,
-  ICampaignEnrollPopupConfig
-} from './campaign-enroll-popup/campaign-enroll-popup.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
@@ -61,7 +56,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private rewardsService: RewardsService,
     private settingsService: SettingsService,
     private teamsService: TeamsService,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
   ) {}
 
   public ngOnInit(): void {
@@ -199,6 +194,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public next(): void {
     if (this.campaign) {
+      const campaignId = this.campaign.id;
       if (this.campaign.subType === 'quiz') {
         this.router.navigate([`quiz/${this.campaign.id}`]);
         return;
@@ -218,22 +214,19 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         }
       }
       if (this.campaign.type === CampaignType.instant && !this.campaign.enrolled) {
-        const enrollPopUpConf: ICampaignEnrollPopupConfig = {
+        const enrollPopUpConf: IPopupConfig = {
           title: 'Campaign enrolled!',
-          description: 'All the best, you have until DATE_TIME to win prize(s)',
+          text: 'All the best, you have until DATE_TIME to win prize(s)',
           buttonTxt: 'Ok',
           afterClosedCallBack: {
             dialogClosed: (): void => {
-              this.campaignService.enrolIntoCampaign(this.campaign?.id || 0).subscribe(result => {
+              this.campaignService.enrolIntoCampaign(campaignId).subscribe(result => {
                 console.log('result ', result);
               });
             },
           },
         };
-        this.dialog.open(CampaignEnrollPopupComponent, {
-          data: enrollPopUpConf,
-          minWidth: '35.5rem'
-        });
+        this.notificationService.addPopup(enrollPopUpConf);
         return;
       }
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);

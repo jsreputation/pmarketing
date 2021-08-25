@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
   ICampaignService,
-  IPrizeSetOutcomeService,
+  IPrizeSetOutcomeService, NotificationService,
   RewardsService,
   SettingsService,
   TeamsService,
@@ -39,6 +39,9 @@ describe('CampaignLandingPageComponent', () => {
   const teamsServiceStub: Partial<TeamsService> = {
     createATeamforCampaign: () => of()
   };
+  const notificationStub: Partial<NotificationService> = {
+    addPopup: () => { }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -58,7 +61,8 @@ describe('CampaignLandingPageComponent', () => {
         { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
         { provide: RewardsService, useValue: rewardServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: TeamsService, useValue: teamsServiceStub }
+        { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: NotificationService, useValue: notificationStub },
       ]
     })
       .compileComponents();
