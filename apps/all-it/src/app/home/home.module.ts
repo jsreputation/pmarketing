@@ -17,7 +17,8 @@ import {
   RewardsModule,
   UtilsModule,
   QuizModule,
-  SurveyModule
+  SurveyModule,
+  TeamsServiceModule as PerxTeamsServiceModule
 } from '@perxtech/core';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -51,6 +52,7 @@ const routes: Routes = [{
     RouterModule.forChild(routes),
     PageComponentsModule,
     SurveyModule,
+    PerxTeamsServiceModule.forRoot(),
   ],
   exports: [
     HomeComponent
