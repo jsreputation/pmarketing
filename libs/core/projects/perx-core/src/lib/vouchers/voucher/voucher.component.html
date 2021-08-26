@@ -53,12 +53,12 @@
             <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
         </div>
       </div>
-<!--      <div class="section-heading" *ngIf="voucher.reward.howToRedeem">-->
-<!--        How to redeem-->
-<!--      </div>-->
-<!--      <div class="section-content" *ngIf="voucher.reward.howToRedeem">-->
-<!--        <div [innerHtml]="voucher.reward.howToRedeem"></div>-->
-<!--      </div>-->
+      <div class="section-heading" *ngIf="voucher.reward.howToRedeem">
+        {{'REDEMPTION.HOW_TO_REDEEM_TITLE' | translate}}
+      </div>
+      <div class="section-content" *ngIf="voucher.reward.howToRedeem">
+        <div [innerHtml]="voucher.reward.howToRedeem"></div>
+      </div>
     </div>
   </div>
   <div class="actions-container" *ngIf="!hideActions">

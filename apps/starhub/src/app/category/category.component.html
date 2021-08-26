@@ -31,6 +31,7 @@
           <div class="fine hide-for-old-ux">{{reward.merchantName}}</div>
           <h1 class="hide-for-new-ux">{{reward.name}}</h1>
           <h2 class="hide-for-new-ux">{{reward.merchantName}}</h2>
+          <p class="operating-hours fine" *ngIf="showOperatingHours && reward.operatingHours">{{getOperatingHours(reward.operatingHours)}}</p>
         </div>
         <div class="icon">
           <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">

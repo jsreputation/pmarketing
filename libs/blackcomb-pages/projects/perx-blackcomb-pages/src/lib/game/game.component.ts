@@ -15,10 +15,11 @@ import {
   ErrorMessageService,
   RewardPopupComponent,
   IRewardPopupConfig,
-  IConfig,
   ConfigService,
   IPrizeSetOutcome,
-  IBadgeOutcome
+  SettingsService,
+  IBadgeOutcome,
+  IConfig,
 } from '@perxtech/core';
 import {
   map,
@@ -113,7 +114,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService,
     private errorMessageService: ErrorMessageService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
@@ -126,9 +128,12 @@ export class GameComponent implements OnInit, OnDestroy {
     );
 
     this.isAnonymousUser = this.auth.getAnonymous();
-    this.route.queryParams.subscribe((params: Params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      this.isEmbedded = paramArr && paramArr.includes('nonav');
+      this.isEmbedded = (paramArr && paramArr.includes('nonav')) || !!flags.disablePostGameNav;
     });
     this.popupData = this.noRewardsPopUp; // must pass data to notif,
     // see path to '[/wallet]' notif svc no popupData
@@ -211,6 +216,7 @@ export class GameComponent implements OnInit, OnDestroy {
           if (
             // GLOB-29: Let scratch card tries error be handled by the game service
             game.type !== GameType.scratch &&
+            game.type !== GameType.plinko &&
             game.remainingNumberOfTries <= 0 &&
             game.remainingNumberOfTries !== null
           ) {
@@ -263,16 +269,17 @@ export class GameComponent implements OnInit, OnDestroy {
             };
           } else if (
             err instanceof HttpErrorResponse &&
-            err.error &&
-            err.error.code === 4103
+            err.error
           ) {
-            console.log(`Error ${err.error.code}: ${err.error.message}`);
-            this.popupData = {
-              title: `Error ${err.error.code}`,
-              text: this.noRewardsPopUp.title,
-              buttonTxt: this.isEmbedded ? null : this.noRewardsPopUp.buttonTxt,
-              imageUrl: '',
-            };
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+            .subscribe((errorMessage) => {
+              this.popupData = {
+                title: 'Sorry!',
+                text: errorMessage,
+                buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                imageUrl: '',
+              };
+            });
           } else {
             this.popupData = this.noRewardsPopUp;
           }
@@ -476,7 +483,7 @@ export class GameComponent implements OnInit, OnDestroy {
     return 'vouchers' in object || 'points' in object || 'prizeSet' in object;
   }
 
-  private redirectUrlAndPopUp(): void {
+  public redirectUrlAndPopUp(): void {
     globalCacheBusterNotifier.next();
     const state: IPrePlayStateData = {
       popupData: this.popupData,

@@ -17,6 +17,7 @@ import { TapComponent } from './tap/tap.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PlinkoComponent } from './plinko/plinko.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { PlinkoComponent } from './plinko/plinko.component';
     GameComponent,
     SpinComponent,
     SnakeComponent,
-    PlinkoComponent
+    PlinkoComponent,
   ],
   exports: [
     GameComponent,
@@ -46,7 +47,8 @@ import { PlinkoComponent } from './plinko/plinko.component';
     PerxGameModule,
     MatProgressBarModule,
     MatButtonModule,
-    MatDialogModule
-  ]
+    MatDialogModule,
+    MatIconModule,
+  ],
 })
 export class GameModule { }

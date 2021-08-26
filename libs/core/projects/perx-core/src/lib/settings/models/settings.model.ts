@@ -64,6 +64,9 @@ export interface IFlags {
   showVoucherBookingFromRewardsPage?: boolean;
   showBadgesButton?: boolean;
   showOutcomesOnCampaignLandingPage?: boolean;
+  /*Game disable CTA on complete popup and post navigation*/
+  disablePostGameNav?: boolean;
+  chromeless?: boolean;
 }
 
 export interface IRssFeeds {

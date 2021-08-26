@@ -1,0 +1,32 @@
+
+<div class="main-container" [ngStyle]="{backgroundImage: 'url(' + backgroundUrl + ')'}">
+    <div class="toolbar">
+        <app-header></app-header>
+    </div>
+    <div class="header-container">
+        <div class="header">
+            <div class="title_header" *ngIf="isStandardLogoMode && showPageTitle else logoHeaderBlock">
+                <mat-icon class="backArrow" (click)="backArrowClick()">
+                    chevron_left 
+                </mat-icon>
+                <span>{{pageTitle}}</span>
+                <span></span>
+            </div>
+            <ng-template #logoHeaderBlock>
+                <div class="logo_header" [ngClass]="isStandardLogoMode ? 'standard_logo' : ''">
+                    <a [routerLink]="[ '/home' ]">
+                        <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+                    </a>
+                </div>
+            </ng-template>
+        </div>     
+        <div class="subtitle" [ngClass]="isStandardLogoMode ? 'collapse' : ''">
+            <p>{{subtitle}}</p> 
+        </div> 
+    </div>
+    <div class="content-container">
+        <div class="content">
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+         </div>
+    </div>
+</div> 

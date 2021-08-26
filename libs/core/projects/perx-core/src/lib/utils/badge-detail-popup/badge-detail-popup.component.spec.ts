@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BadgeDetailPopupComponent } from './badge-detail-popup.component';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('BadgeDetailPopupComponent', () => {
   let component: BadgeDetailPopupComponent;
@@ -10,7 +11,8 @@ describe('BadgeDetailPopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [BadgeDetailPopupComponent],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

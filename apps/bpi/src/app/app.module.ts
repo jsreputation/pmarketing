@@ -19,6 +19,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
+  SettingsModule,
   CampaignServiceModule, ProfileServiceModule
 } from '@perxtech/core';
 import { HeaderComponent } from './header/header.component';
@@ -64,6 +65,7 @@ export const setLanguage = (
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     ProfileModule,
     ProfileServiceModule.forRoot(),
     BrowserModule,

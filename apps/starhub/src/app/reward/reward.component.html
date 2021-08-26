@@ -1,7 +1,7 @@
 <div class="main">
   <app-reward-detail [reward]="reward" [macaron]="macaron" (hasExpired)="disableButtonOnExpired()"></app-reward-detail>
   <div *ngIf="isRewardsDetailsFetched" class="button-area">
-    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" perxCoreAppDebounceClick
+    <button [disabled]="(showOperatingHours && !reward.isOperating) || !isButtonEnable" class="full-width" mat-flat-button color="primary" perxCoreAppDebounceClick
       [debounceTime]="400" (debounceClick)="save()"><i *ngIf="loadingSubmit" class="loading-spin">
         <mat-progress-spinner [diameter]="30" mode="indeterminate">
         </mat-progress-spinner>

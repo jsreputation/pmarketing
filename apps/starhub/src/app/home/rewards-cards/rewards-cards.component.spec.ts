@@ -9,7 +9,7 @@ import {
 import { RewardsCardsComponent } from './rewards-cards.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { RewardsService, IReward, ConfigService } from '@perxtech/core';
+import { RewardsService, IReward, ConfigService, SettingsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { rewards } from '../../rewards.mock';
@@ -40,6 +40,10 @@ describe('RewardsCardsComponent', () => {
       })
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardsCardsComponent],
@@ -53,7 +57,8 @@ describe('RewardsCardsComponent', () => {
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: MacaronService, useValue: macaronServiceStub }
+        { provide: MacaronService, useValue: macaronServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     }).compileComponents();
   }));

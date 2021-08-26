@@ -417,3 +417,12 @@ export {
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
+/**
+ * Merchant app
+ */
+export { LoginModule as MerchantLoginModule } from './lib/merchant-app/login/login.module';
+export { LoginComponent as MerchantLoginComponent } from './lib/merchant-app/login/login.component';
+export { TransactionHistoryModule as MerchantTransactionHistoryModule } from './lib/merchant-app/transaction-history/transaction-history.module';
+export { TransactionHistoryComponent as MerchantTransactionHistoryComponent } from './lib/merchant-app/transaction-history/transaction-history.component';
+export { LandingPageModule as MerchantLandingPageModule } from './lib/merchant-app/landing-page/landing-page.module';
+export { LandingPageComponent as MerchantLandingPageComponent } from './lib/merchant-app/landing-page/landing-page.component';

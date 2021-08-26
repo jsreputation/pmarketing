@@ -17,6 +17,7 @@
         <div>
           <h1 class="hide-for-new-ux">{{campaign.name}}</h1>
           <div class="hide-for-old-ux semi-bold">{{campaign.name}}</div>
+          <h4 class="operating-hours fine" *ngIf="showOperatingHours && campaign.operatingHours">{{getOperatingHours(campaign.operatingHours)}}</h4>
         </div>
         <div class="icon">
           <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">

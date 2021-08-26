@@ -212,7 +212,8 @@ export class V4RewardsService extends RewardsService {
         id: reward.operating_hour.id,
         closesAt: reward.operating_hour.closes_at,
         opensAt: reward.operating_hour.opens_at,
-        days: reward.operating_hour.days
+        days: reward.operating_hour.days,
+        formattedOffset: reward.operating_hour.formatted_offset
       };
     }
 

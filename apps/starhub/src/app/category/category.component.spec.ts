@@ -14,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   ConfigService,
-  RewardsService
+  RewardsService,
+  SettingsService,
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
@@ -58,6 +59,10 @@ describe('CategoryComponent', () => {
     readAppConfig: () => of()
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -80,7 +85,8 @@ describe('CategoryComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
         { provide: MatBottomSheet, useValue: matBottomSheetStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {

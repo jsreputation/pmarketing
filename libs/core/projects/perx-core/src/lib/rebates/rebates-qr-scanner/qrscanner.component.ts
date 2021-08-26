@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { IPopupConfig } from '../../utils/popup/popup.component';
 
 @Component({
   selector: 'perx-core-qrscanner',
@@ -9,12 +10,26 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class QrScannerComponent implements OnInit {
 
+  public showButton: boolean = true;
   @Input()
   public merchantTextFn: () => Observable<string>;
 
   constructor(
     public dialogRef: MatDialogRef<QrScannerComponent>,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: IPopupConfig,
+  ) {
+    if (data?.disableOverlayClose) {
+      dialogRef.disableClose = data.disableOverlayClose;
+    }
+
+    if (data?.hideButton) {
+      this.showButton = false;
+    }
+  }
+
+  public onClose(): void {
+    this.dialogRef.close();
+  }
 
   public ngOnInit(): void {
     if (!this.merchantTextFn) {

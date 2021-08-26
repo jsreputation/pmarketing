@@ -34,10 +34,12 @@ export class ReferralPopupComponent implements OnInit {
   public addRefferalNameForm: FormGroup;
   public inviteSuccessMessage: string;
   public inviteFailureMessage: string;
+  public showButton: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<ReferralPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IReferralPopupConfig,
+    @Inject(MAT_DIALOG_DATA) public dataPopup: IPopupConfig,
     private fb: FormBuilder,
     private campaignInviteService: CampaignInviteService,
     private notificationService: NotificationService
@@ -59,6 +61,10 @@ export class ReferralPopupComponent implements OnInit {
     }
     if (data.namePlaceholder) {
       this.namePlaceholder = data.namePlaceholder;
+    }
+
+    if (dataPopup.hideButton) {
+      this.showButton = false;
     }
     this.inviteSuccessMessage = data.inviteSuccessMessage;
     this.inviteFailureMessage = data.inviteFailureMessage;

@@ -15,3 +15,20 @@ p {
   display: flex;
   justify-content: flex-end;
 }
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -2rem;
+    right: -2rem;
+    width: 4rem;
+    height: 4rem;
+
+    .mat-icon {
+      color: #606060;
+    }
+  }
+}
