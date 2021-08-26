@@ -8,7 +8,7 @@
   justify-content: flex-end;
 }
 
-button {
+button:not(.close-btn) {
   margin-top: 1.6rem;
   width: 100%;
   color: #ffffff;
@@ -58,8 +58,8 @@ app-expire-timer {
 
 .close-btn {
   position: absolute;
-  top: -2.5rem;
-  right: -1rem;
+  top: -1.3rem;
+  right: -1.3rem;
   width: 3.5rem;
   height: 3.5rem;
   display: flex;
