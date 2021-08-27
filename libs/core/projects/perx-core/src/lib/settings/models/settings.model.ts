@@ -47,6 +47,7 @@ export interface IFlags {
   showPopupCampaign?: boolean;
   showPrizeSetOutcome?: boolean;
   showProgressBarCampaignsOnHomePage?: boolean;
+  showInstantRewardCampaignsOnHomePage?: boolean;
   showQrPageSubtitle?: boolean;
   showQuestCampaignsOnHomePage?: boolean;
   showQuizOnHomePage?: boolean;

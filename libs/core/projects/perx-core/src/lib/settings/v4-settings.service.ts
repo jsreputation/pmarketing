@@ -73,6 +73,7 @@ interface IV4Flags {
     show_popup_campaign?: boolean;
     show_prize_set_outcome?: boolean;
     show_progress_bar_campaigns_on_home_page?: boolean;
+    show_instant_reward_campaigns_on_home_page?: boolean;
     show_qr_page_subtitle?: boolean;
     show_quest_campaigns_on_home_page?: boolean;
     show_quiz_on_home_page?: boolean;
@@ -193,6 +194,7 @@ export class V4SettingsService extends SettingsService {
       showPopupCampaign: data.json_value.show_popup_campaign,
       showPrizeSetOutcome: data.json_value.show_prize_set_outcome,
       showProgressBarCampaignsOnHomePage: data.json_value.show_progress_bar_campaigns_on_home_page,
+      showInstantRewardCampaignsOnHomePage: data.json_value.show_instant_reward_campaigns_on_home_page,
       showQrPageSubtitle: data.json_value.show_qr_page_subtitle,
       showQuestCampaignsOnHomePage: data.json_value.show_quest_campaigns_on_home_page,
       showQuizOnHomePage: data.json_value.show_quiz_on_home_page,

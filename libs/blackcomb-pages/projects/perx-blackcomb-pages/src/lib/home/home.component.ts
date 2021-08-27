@@ -74,6 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public stampCampaigns$: Observable<ICampaign[]>;
   public questCampaigns$: Observable<ICampaign[]>;
   public progressCampaigns$: Observable<ICampaign[]>;
+  public instantCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -258,6 +259,11 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
         }
       );
+      return;
+    }
+
+    if (campaign.type === 'instant') {
+      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
       return;
     }
 
@@ -448,6 +454,17 @@ export class HomeComponent implements OnInit, OnDestroy {
           takeLast(1)
         );
       // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
+    }
+
+    if (this.appConfig.showInstantRewardCampaignsOnHomePage || this.appRemoteFlags?.showInstantRewardCampaignsOnHomePage) {
+      this.instantCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.instant })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
     }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
