@@ -426,3 +426,7 @@ export { TransactionHistoryModule as MerchantTransactionHistoryModule } from './
 export { TransactionHistoryComponent as MerchantTransactionHistoryComponent } from './lib/merchant-app/transaction-history/transaction-history.component';
 export { LandingPageModule as MerchantLandingPageModule } from './lib/merchant-app/landing-page/landing-page.module';
 export { LandingPageComponent as MerchantLandingPageComponent } from './lib/merchant-app/landing-page/landing-page.component';
+export { RedeemModule as MerchantRedeemModule } from './lib/merchant-app/redeem/redeem.module';
+export { RedeemComponent as MerchantRedeemComponent } from './lib/merchant-app/redeem/redeem.component';
+export { QrscannerModule as MerchantQrscannerModule } from './lib/merchant-app/qrscanner/qrscanner.module';
+export { QrscannerComponent as MerchantQrscannerComponent } from './lib/merchant-app/qrscanner/qrscanner.component';

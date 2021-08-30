@@ -1,0 +1,13 @@
+<div class="container">
+  <div>
+    <div class="scanner">
+      <em></em>
+      <zxing-scanner
+        (scanSuccess)="scanSuccessHandler($event)"
+      ></zxing-scanner>
+    </div>
+    <p class="instruction">CAPTURE QR CODE WITHIN <br/>
+      THE FRAME ABOVE</p>
+  </div>
+  <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
+</div>
