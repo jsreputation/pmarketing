@@ -183,13 +183,28 @@ blackcomb_app_base=(
   zeal
 )
 
-for app in "${blackcomb_app_base[@]}"; do
+# Set env APP_BASE for merchant app
+blackcomb_merchant_app_base=(
+  generic-merchant
+)
+
+SET_APP_BASE=false
+
+for app in "${blackcomb_merchant_app_base[@]}"; do
   if [[ ${APP} == ${app} ]]; then
-    APP_BASE="blackcomb" && break
-  else
-    APP_BASE=${APP}
+    APP_BASE="blackcomb-merchant" && SET_APP_BASE=true && break
   fi
 done
+
+if [[ ${SET_APP_BASE} == false ]]; then
+  for app in "${blackcomb_app_base[@]}"; do
+    if [[ ${APP} == ${app} ]]; then
+      APP_BASE="blackcomb" && break
+    else
+      APP_BASE=${APP}
+    fi
+  done
+fi
 
 echo APP_BASE is ${APP_BASE}
 echo "APP_BASE=${APP_BASE}" >>"${GITHUB_ENV}"
