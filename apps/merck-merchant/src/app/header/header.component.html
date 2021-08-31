@@ -5,7 +5,7 @@
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <a routerLink="/home">
-      <img src="assets/logo-small.png" alt="">
+      <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
     </a>
     <div class="ghost-space">
     </div>
