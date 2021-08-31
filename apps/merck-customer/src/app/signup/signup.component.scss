@@ -3,7 +3,7 @@
 .main-container {
   width: 100%;
   height: 100%;
-  background: $main-blue-theme;
+  background: var(--login_background_colour);
   background-size: cover;
   position: fixed;
   display: flex;
@@ -26,7 +26,7 @@
 
   .logo-title {
     font-size: 2.2rem;
-    color: white;
+    color: $main-blue-theme;
     text-align: center;
     font-weight: 900;
     font-style: normal;
