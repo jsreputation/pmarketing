@@ -18,7 +18,7 @@
 <!--  <div class="logo-title">-->
 <!--    <ng-container>{{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}</ng-container>-->
 <!--  </div>-->
-  <div class="content-container">
+  <mat-card class="content-container">
     <div class="main-heading" translate>LOGIN_PAGE.LOGIN</div>
     <div class="subtitle">
       <ng-container>{{"LOGIN_PAGE.NOT_MEMBER" | translate }}? </ng-container><span translate class="link"
@@ -60,5 +60,5 @@
       <div class="forgot-text" (click)="goToForgotPassword()" translate>LOGIN_PAGE.FORGOT_PASSWORD</div>
       <button mat-flat-button type="submit" class="full-width__button">{{'LOGIN_PAGE.LOGIN' | translate}}</button>
     </form>
-  </div>
+  </mat-card>
 </div>
