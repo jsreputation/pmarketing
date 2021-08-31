@@ -15,6 +15,7 @@ import { SalesContactComponent } from '../sales-contact/sales-contact.component'
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -38,6 +39,7 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
+        MatCardModule,
         BrowserAnimationsModule,
         AuthenticationModule,
         TranslateModule.forRoot()
