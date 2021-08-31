@@ -73,5 +73,13 @@
   > .logo-container {
     text-align: center;
     flex: 0;
+    margin-bottom: 1rem;
+
+    .logo {
+      width: 100%;
+      max-width: 30rem;
+      max-height: 10rem;
+      object-fit: contain;
+    }
   }
 }

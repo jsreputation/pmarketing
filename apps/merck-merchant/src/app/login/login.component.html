@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container" *ngIf="theme">
   <div class="floating-container">
     <div class="translate-switch">
       <mat-form-field>
@@ -9,9 +9,13 @@
       </mat-form-field>
     </div>
     <div class="logo-container">
-      <a routerLink="/">
-        <img class="logo" src="assets/logo.png">
-      </a>
+      <div *ngIf="theme?.properties['--landing_page_logo'];else nav_logo">
+        <img class="logo" [attr.src]="theme?.properties['--landing_page_logo']"
+             [attr.alt]="theme?.properties['--title']" />
+      </div>
+      <ng-template #nav_logo>
+        <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+      </ng-template>
     </div>
     <div class="logo-title">
       {{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}
