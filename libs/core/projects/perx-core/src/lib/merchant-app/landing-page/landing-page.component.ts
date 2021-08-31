@@ -22,7 +22,6 @@ export class LandingPageComponent implements OnInit {
   }
 
   public onSalesScan(): void {
-    this.router.navigate(['/qrscanner/order']);
   }
 
   public onRedemption(): void {

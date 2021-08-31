@@ -23,5 +23,16 @@
         "SALES_TXT": "Sales",
         "REDEMPTION_TXT": "Redemptions"
     },
+    "REDEEM": {
+        "CANCEL": "Cancel",
+        "PROCEED": "Proceed",
+        "CLOSE": "Close"
+    },
+    "POPUP_CONTENT": {
+        "TRANSACTION_COMPLETED": "Transaction completed"
+    },
+    "ERRORS": {
+        "NOT_ENOUGH_POINTS": "User does not have enough points balance"
+    },
     "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }
