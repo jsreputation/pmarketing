@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 
 const themesServiceStub: Partial<ThemesService> = {
@@ -45,6 +46,7 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         MatSelectModule,
         MatFormFieldModule,
+        MatCardModule,
         MatInputModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
