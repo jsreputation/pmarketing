@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="pageProperties.header" class="toolbar">
+<mat-toolbar *ngIf="pageProperties.header" class="toolbar mat-elevation-z3">
 	<button [disabled]="!pageProperties.backButtonEnabled" mat-icon-button (click)="onLeftActionClick()">
 		<mat-icon *ngIf="pageProperties.backButtonEnabled">
 			{{leftIconToShow}}
