@@ -12,13 +12,17 @@
   align-items: center;
   overflow: scroll;
 
-  .logo {
-    margin-top: 7.2rem;
-    margin-bottom: 0.8rem;
-    flex-shrink: 0;
-    max-width: 20rem;
-    max-height: 8rem;
-    object-fit: contain;
+  .login-image {
+    margin-bottom: 1rem;
+
+    .logo {
+      margin-top: 7.2rem;
+      margin-bottom: 0.8rem;
+      width: 100%;
+      max-width: 30rem;
+      max-height: 10rem;
+      object-fit: contain;
+    }
   }
 
   .translate-switch {

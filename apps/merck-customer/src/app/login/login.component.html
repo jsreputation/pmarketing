@@ -1,10 +1,12 @@
-<div class="main-container">
-  <ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
-    <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
-  </ng-container>
-  <ng-template #defaultLogoTemplate>
-    <img class="logo" src="assets/logo.png">
-  </ng-template>
+<div class="main-container" *ngIf="theme">
+  <div class="login-image">
+    <ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
+      <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+    </ng-container>
+    <ng-template #defaultLogoTemplate>
+      <img class="logo" src="assets/logo.png">
+    </ng-template>
+  </div>
   <div class="translate-switch">
     <mat-form-field>
       <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
