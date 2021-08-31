@@ -8,7 +8,7 @@
             <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
         </ng-template>
     </div>
-    <div *ngIf="appConfig" class="login-form">
+    <mat-card *ngIf="appConfig" class="login-form">
         <h1>{{'LOGIN_PAGE.TITLE' | translate}}</h1>
         <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
             {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link" [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' |
@@ -107,5 +107,5 @@
                 </div>
             </button>
         </form>
-    </div>
+    </mat-card>
 </div>

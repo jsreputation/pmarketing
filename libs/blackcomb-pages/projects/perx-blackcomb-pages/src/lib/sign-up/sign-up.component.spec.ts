@@ -26,6 +26,7 @@ import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -96,6 +97,7 @@ describe('SignUpComponent', () => {
         HttpClientModule,
         ReactiveFormsModule,
         MatSelectModule,
+        MatCardModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
