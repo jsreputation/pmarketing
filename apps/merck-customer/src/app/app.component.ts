@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
         pageTitle: ''
       };
     }
-    this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
+    this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_backward' : '';
   }
 
   public onLeftActionClick(): void {
