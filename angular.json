@@ -2143,7 +2143,7 @@
             "{options.outputPath}"
           ],
           "options": {
-            "outputPath": "dist/apps/blackcomb-merchant",
+            "outputPath": "dist/blackcomb-merchant",
             "index": "apps/blackcomb-merchant/src/index.html",
             "main": "apps/blackcomb-merchant/src/main.ts",
             "polyfills": "apps/blackcomb-merchant/src/polyfills.ts",
