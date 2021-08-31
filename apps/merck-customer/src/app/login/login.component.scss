@@ -22,7 +22,7 @@
   }
 
   .translate-switch {
-    color: white;
+    color: $main-blue-theme;
     position: fixed;
     top: 3rem;
     right: 2rem;
@@ -34,11 +34,11 @@
 
       .mat-select-value {
         font-size: 1.5rem;
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-select-arrow {
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-form-field-underline {
