@@ -57,10 +57,10 @@ export class AppComponent implements OnInit {
       if (message === 'LOGIN_SESSION_EXPIRED') {
         this.router.navigate([ '/login' ]);
         this.translateService.get('LOGIN_SESSION_EXPIRED').subscribe(msg => {
-          this.snack.open(msg, 'x', { duration: 2000 });
+          this.snack.open(msg, 'x', { duration: 2000, panelClass: ['custom-snackbar']} );
         });
       } else {
-        this.snack.open(message, 'x', { duration: 2000 });
+        this.snack.open(message, 'x', { duration: 2000, panelClass: ['custom-snackbar']});
       }
     });
 

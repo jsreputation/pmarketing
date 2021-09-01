@@ -430,3 +430,5 @@ export { RedeemModule as MerchantRedeemModule } from './lib/merchant-app/redeem/
 export { RedeemComponent as MerchantRedeemComponent } from './lib/merchant-app/redeem/redeem.component';
 export { QrscannerModule as MerchantQrscannerModule } from './lib/merchant-app/qrscanner/qrscanner.module';
 export { QrscannerComponent as MerchantQrscannerComponent } from './lib/merchant-app/qrscanner/qrscanner.component';
+export { RegisterModule as MerchantRegisterModule } from './lib/merchant-app/register/register.module';
+export { RegisterComponent as MerchantRegisterComponent } from './lib/merchant-app/register/register.component';
