@@ -12,7 +12,7 @@ const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
 };
 
-describe('V4PrizeSetOutcomeService', () => {
+describe('V4InstantOutcomeTransactionService', () => {
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
