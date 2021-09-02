@@ -1,6 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject, } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  EMPTY,
+  forkJoin,
+  iif,
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
 import {
   catchError,
   filter,
@@ -29,6 +38,9 @@ import {
   IFlags,
   IGame,
   IGameService,
+  IInstantOutcome,
+  IInstantOutcomeTransaction,
+  IInstantOutcomeTransactionService,
   ILoyalty,
   InstantOutcomeService,
   IPrice,
@@ -46,7 +58,7 @@ import {
   SettingsService,
   TeamsService,
   ThemesService,
-  TokenStorage
+  TokenStorage,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -120,8 +132,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
     protected questService: IQuestService,
-    protected teamsService: TeamsService
-  ) { }
+    protected teamsService: TeamsService,
+    protected instantOutcomeTransactionService: IInstantOutcomeTransactionService
+  ) {}
 
   public ngOnInit(): void {
     this.configService
@@ -319,6 +332,38 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // requires public access for extended implementation
   public fetchPopupCampaigns(): void {
+    this.instantOutcomeTransactionService
+      .getInstantOutcomeTransactions()
+      .pipe(catchError(() => of([])))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((instantOutcomeTransactions: IInstantOutcomeTransaction[]) => {
+        const instantOutcomeTransactionsHaveOutcomes: IInstantOutcomeTransaction[] = instantOutcomeTransactions.filter(
+          (iot) => iot.outcomes.length > 0
+        );
+        const allInstantOutcomes: IInstantOutcome[] = instantOutcomeTransactionsHaveOutcomes.reduce(
+          (total: IInstantOutcome[], currentValue) => {
+            total = [...total, ...currentValue.outcomes];
+            return total;
+          },
+          []
+        );
+        const firstComefirstServeOutCome:
+          | IInstantOutcome
+          | undefined = allInstantOutcomes.length
+          ? allInstantOutcomes[0]
+          : undefined;
+        if (firstComefirstServeOutCome) {
+          const popupImageURL = 'assets/bd-campaign.svg';
+          const data = {
+            text: firstComefirstServeOutCome.details,
+            imageUrl: popupImageURL,
+            buttonTxt: 'Check it out',
+            afterClosedCallBack: this,
+          };
+          this.dialog.open(RewardPopupComponent, { data });
+        }
+      });
+
     this.campaignService
       .getCampaigns({ type: CampaignType.give_reward })
       .pipe(catchError(() => of([])))

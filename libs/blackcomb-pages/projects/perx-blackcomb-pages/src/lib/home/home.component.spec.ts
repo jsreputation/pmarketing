@@ -21,7 +21,8 @@ import {
   TeamsService,
   ThemesService,
   TokenStorage,
-  UtilsModule
+  UtilsModule,
+  IInstantOutcomeTransactionService,
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -34,6 +35,10 @@ import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
+
+const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
+  getInstantOutcomeTransactions: () => of([]),
+};
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -137,6 +142,7 @@ describe('HomeComponent', () => {
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: IInstantOutcomeTransactionService, useValue: instantOutcomeTransactionServiceStub },
         {
           provide: AuthenticationService,
           useValue: authServiceStub

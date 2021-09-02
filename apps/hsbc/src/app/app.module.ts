@@ -29,7 +29,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-  CampaignServiceModule, ProfileServiceModule,
+  CampaignServiceModule, ProfileServiceModule, InstantOutcomeTransactionServiceModule
 
   // ICampaignService,
   // ConfigService
@@ -121,6 +121,7 @@ export const setLanguage = (
     VouchersModule,
     RewardsModule.forRoot(),
     MerchantsModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
     AuthenticationModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),

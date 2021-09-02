@@ -52,7 +52,7 @@ import {
   UtilsModule,
   VouchersModule,
   LoyaltyModule,
-  LanguageInterceptor
+  LanguageInterceptor, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -127,6 +127,7 @@ export const setLanguage = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     AuthenticationModule,
     SignUpModule,
     ProfileModule,

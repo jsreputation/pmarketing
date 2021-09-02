@@ -360,6 +360,12 @@ export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome, IMilestoneIssuedOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
+ * InstantOutcomeTransaction
+ */
+export { IInstantOutcomeTransactionService } from './lib/instant-outcome-transaction/instant-outcome-transaction.service';
+export { IInstantOutcomeTransaction, IInstantOutcome } from './lib/instant-outcome-transaction/models/instant-outcome-transaction.model';
+export { InstantOutcomeTransactionServiceModule } from './lib/instant-outcome-transaction/instant-outcome-transaction-service.module';
+/**
  * Rank / Leaderboard
  */
 export { RankModule } from './lib/rank/rank.module';
