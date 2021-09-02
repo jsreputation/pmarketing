@@ -21,6 +21,14 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then((mod) => mod.ForgotPasswordModule),
+  },
+  {
+    path: 'merchant_admin/validate_reset_password_token',
+    loadChildren: () => import('./reset-password/reset-password.module').then((mod) => mod.ResetPasswordModule),
   }
 ];
 
