@@ -1,14 +1,16 @@
-<div class="main-container">
-	<ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
-		<img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
-	</ng-container>
-	<ng-template #defaultLogoTemplate>
-		<img class="logo" src="assets/logo.png">
-	</ng-template>
-	<div class="logo-title">
-		<ng-container i18n="@@login-subtitle">{{'SIGN_UP_PAGE.DLP' | translate}}</ng-container>
-	</div>
-	<div class="content-container">
+<div class="main-container" *ngIf="theme">
+  <div class="signup-image">
+    <ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
+      <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+    </ng-container>
+    <ng-template #defaultLogoTemplate>
+      <img class="logo" src="assets/logo.png">
+    </ng-template>
+  </div>
+<!--	<div class="logo-title">-->
+<!--		<ng-container i18n="@@login-subtitle">{{'SIGN_UP_PAGE.DLP' | translate}}</ng-container>-->
+<!--	</div>-->
+	<mat-card class="content-container mat-elevation-z3">
 		<div translate class="main-heading">SIGN_UP_PAGE.SIGN_UP</div>
 		<div class="subtitle"><ng-container>{{'SIGN_UP_PAGE.HAVE_ACCOUNT' | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">SIGN_UP_PAGE.LOGIN</span></div>
 		<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
@@ -67,5 +69,5 @@
 			</div>
 			<button mat-flat-button type="submit" [disabled]="!signupForm.valid" class="full-width__button">{{'SIGN_UP_PAGE.REGISTER_BTN' | translate }}</button>
 		</form>
-	</div>
+	</mat-card>
 </div>
