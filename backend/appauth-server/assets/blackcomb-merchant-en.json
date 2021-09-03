@@ -34,5 +34,17 @@
     "ERRORS": {
         "NOT_ENOUGH_POINTS": "User does not have enough points balance"
     },
+    "FORGET_PW_PAGE": {
+        "EMAIL_ADDRESS": "Email Address",
+        "EMAIL_ADDRESS_IS": "Email Address is",
+        "NEXT": "Next"
+    },
+    "RESET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
+        "PASSWORD": "Password",
+        "NEW_PASSWORD": "New password",
+        "CONFIRM_PASSWORD": "Confirm new password",
+        "SUBMIT_BUTTON": "Update password"
+    },
     "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

@@ -17,7 +17,7 @@ import {
   IReward,
   NotificationService,
   RedemptionType,
-  RewardsService,
+  RewardsService, ThemesService,
   Voucher,
   VoucherState
 } from '@perxtech/core';
@@ -85,6 +85,10 @@ describe('RedeemComponent', () => {
     redeemVoucher: () => of()
   };
 
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RedeemComponent, HeaderComponent],
@@ -105,7 +109,9 @@ describe('RedeemComponent', () => {
           provide: ErrorMessageService, useValue: {
             getErrorMessageByErrorCode: () => of('')
           }
-        }
+        },
+        { provide: ThemesService, useValue: themesServiceStub },
+
       ]
     })
       .compileComponents();

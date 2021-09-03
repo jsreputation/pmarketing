@@ -432,3 +432,7 @@ export { QrscannerModule as MerchantQrscannerModule } from './lib/merchant-app/q
 export { QrscannerComponent as MerchantQrscannerComponent } from './lib/merchant-app/qrscanner/qrscanner.component';
 export { RegisterModule as MerchantRegisterModule } from './lib/merchant-app/register/register.module';
 export { RegisterComponent as MerchantRegisterComponent } from './lib/merchant-app/register/register.component';
+export { ForgotPasswordModule as MerchantForgotPasswordModule } from './lib/merchant-app/forgot-password/forgot-password.module';
+export { ForgotPasswordComponent as MerchantForgotPasswordComponent } from './lib/merchant-app/forgot-password/forgot-password.component';
+export { ResetPasswordModule as MerchantResetPasswordModule } from './lib/merchant-app/reset-password/reset-password.module';
+export { ResetPasswordComponent as MerchantResetPasswordComponent } from './lib/merchant-app/reset-password/reset-password.component';

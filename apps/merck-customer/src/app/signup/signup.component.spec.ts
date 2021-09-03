@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 const themesServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
@@ -42,6 +43,7 @@ describe('SignupComponent', () => {
         MatFormFieldModule,
         MatSelectModule,
         MatInputModule,
+        MatCardModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
       ],

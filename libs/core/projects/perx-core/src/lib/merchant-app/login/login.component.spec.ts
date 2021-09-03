@@ -64,7 +64,7 @@ describe('LoginComponent', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     spyOn(routerStub, 'navigateByUrl').and.callThrough();
     component.onForgotPassword();
-    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/forgot');
+    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/forgot-password');
   });
 
   it('should navigate to home if authenticated', fakeAsync(() => {

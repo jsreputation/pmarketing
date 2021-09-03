@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService, ThemesService, TokenStorage } from '@perxtech/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from '@perxtech/core';
@@ -15,6 +15,7 @@ import { SalesContactComponent } from '../sales-contact/sales-contact.component'
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -23,6 +24,9 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
     const tokenStorageStub = { setAppInfoProperty: () => ({}) };
+    const themesServiceStub: Partial<ThemesService> = {
+      getThemeSetting: () => of()
+    };
 
     TestBed.configureTestingModule({
       declarations: [LoginComponent, SalesContactComponent],
@@ -35,6 +39,7 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
+        MatCardModule,
         BrowserAnimationsModule,
         AuthenticationModule,
         TranslateModule.forRoot()
@@ -50,7 +55,8 @@ describe('LoginComponent', () => {
             getAppAccessToken: () => 'token'
           }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     }).compileComponents();
   }));
