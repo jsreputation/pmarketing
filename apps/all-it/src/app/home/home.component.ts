@@ -7,7 +7,7 @@ import {
   ICampaignService,
   IConfig,
   IFlags,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   ILoyalty,
   InstantOutcomeService,
   IQuestService,
@@ -58,7 +58,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
 
     private loyaltyService: LoyaltyService,
     questService: IQuestService,
-    teamsService: TeamsService
+    teamsService: TeamsService,
+    instantOutcomeTransactionService: IInstantOutcomeTransactionService,
   ) {
     super(
       rewardsService,
@@ -79,7 +80,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       tokenService,
       datePipe,
       questService,
-      teamsService
+      teamsService,
+      instantOutcomeTransactionService,
     );
   }
 

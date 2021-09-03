@@ -8,7 +8,7 @@ import {
   AuthenticationService,
   ConfigService,
   ICampaignService,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   InstantOutcomeService,
   IQuestService,
   IReward,
@@ -107,6 +107,10 @@ describe('HomeComponent', () => {
     getTeam: () => of()
   };
 
+  const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
+    getInstantOutcomeTransactions: () => of([]),
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
@@ -141,6 +145,7 @@ describe('HomeComponent', () => {
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: IQuestService, useValue: questServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: IInstantOutcomeTransactionService, useValue: instantOutcomeTransactionServiceStub },
       ]
     })
       .compileComponents();

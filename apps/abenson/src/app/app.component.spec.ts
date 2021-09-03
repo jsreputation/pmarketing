@@ -10,7 +10,7 @@ import {
   ConfigService,
   FeedReaderService,
   ICampaignService,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   InstantOutcomeService,
   IQuestService,
   NotificationService,
@@ -74,6 +74,7 @@ describe('AppComponent', () => {
   let themesService: ThemesService;
   let authService: AuthenticationService;
   let instantOutcomeService: InstantOutcomeService;
+  let instantOutcomeTransactionService: IInstantOutcomeTransactionService;
   let feedService: FeedReaderService;
   let settingsService: SettingsService;
   let profileService: ProfileService;
@@ -219,7 +220,8 @@ describe('AppComponent', () => {
         tokenService,
         datePipe,
         questService,
-        teamsService
+        teamsService,
+        instantOutcomeTransactionService
   )
     );
     expect(app.showToolbar).toBeTruthy();
