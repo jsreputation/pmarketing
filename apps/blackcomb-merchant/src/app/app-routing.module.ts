@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
   },
+  { 
+    path: 'dashboard/merchant_user_account_invitations/accept',
+    loadChildren: () => import('./register/register.module').then((mod) => mod.RegisterModule)
+  },
   {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then((mod) => mod.ForgotPasswordModule),
