@@ -32,7 +32,8 @@
         "TRANSACTION_COMPLETED": "Transaction completed"
     },
     "ERRORS": {
-        "NOT_ENOUGH_POINTS": "User does not have enough points balance"
+        "NOT_ENOUGH_POINTS": "User does not have enough points balance",
+        "GENERIC": "Sorry, something went wrong"
     },
     "FORGET_PW_PAGE": {
         "EMAIL_ADDRESS": "Email Address",

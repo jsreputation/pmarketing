@@ -8,8 +8,6 @@ import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.serv
 import { IReward } from '../../rewards/models/reward.model';
 import { NotificationService } from '../../utils/notification/notification.service';
 import { RewardsService } from '../../rewards/rewards.service';
-import { IVoucher as Voucher } from '../../vouchers/models/voucher.model';
-import { flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -25,6 +23,7 @@ interface IPayload {
   id: number;
   rewardId?: number;
   identifier?: string;
+  voucherId?: number;
 }
 
 @Component({
@@ -73,14 +72,10 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
-    if (!this.payload.rewardId) {
-      throw new Error('reward id is required');
+    if (!this.payload.voucherId) {
+      throw new Error('voucher id is required');
     }
-    this.merchantService.issueVoucher(this.payload.rewardId, this.payload.identifier)
-      .pipe(
-        // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
-        flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
-      )
+    this.merchantService.redeemVoucher(this.payload.voucherId)
       .subscribe(
         () => this.notificationService.addSnack(this.transactionCompleteTxt),
         (err: IHttpResponseBase) =>
