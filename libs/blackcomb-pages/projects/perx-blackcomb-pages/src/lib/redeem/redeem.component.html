@@ -5,7 +5,7 @@
       <p class="title">Your reward is</p>
       <span class="code">
         {{ !isVoucherValid ? 'Not redeemable yet' : voucher.state }}
-      </span>           
+      </span>
     </div>
   <ng-template #available>
     <div *ngIf="redemptionType === rt.pin">
