@@ -1,4 +1,4 @@
-<div class="parent-container" *ngIf="voucher$">
+<div class="parent-container" *ngIf="voucher">
   <div class="full-page-container-white">
     <div class="code-redemption unavailable"
     *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired' || !isVoucherValid; else available">

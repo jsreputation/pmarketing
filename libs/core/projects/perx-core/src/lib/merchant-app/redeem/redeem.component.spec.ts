@@ -29,7 +29,7 @@ describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
 
-  history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
+  history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149, "voucherId": 1}' }, '', '');
   const locationStub: Partial<Location> = {
     back: () => {
     }
@@ -155,34 +155,6 @@ describe('RedeemComponent', () => {
     //   points: 10,
     // };
 
-    const issuedVoucher: Voucher = {
-      id: 1,
-      reward: {
-        id: 1,
-        name: '',
-        description: '',
-        subtitle: '',
-        validFrom: new Date(),
-        validTo: new Date(),
-        sellingFrom: new Date(),
-        rewardThumbnail: '',
-        rewardBanner: '',
-        merchantImg: '',
-        rewardPrice: [],
-        merchantId: 1,
-        merchantName: '',
-        merchantWebsite: '',
-        termsAndConditions: '',
-        howToRedeem: '',
-        categoryTags: [],
-        inventory: undefined,
-        loyalty: []
-      },
-      state: VoucherState.issued,
-      redemptionType: RedemptionType.none,
-      expiry: null,
-    };
-
     const redeemedVoucher: Voucher = {
       id: 1,
       reward: {
@@ -211,14 +183,6 @@ describe('RedeemComponent', () => {
       expiry: null,
     };
 
-    // const rewardsServiceSpy = spyOn(rewardsService, 'getRewardPricesOptions').and.returnValue(
-    //   of([price])
-    // );
-
-    const merchantAdminServiceIssueVoucherSpy = spyOn(merchantAdminService, 'issueVoucher').and.returnValue(
-      of(issuedVoucher)
-    );
-
     const merchantAdminServiceRedeemVoucherSpy = spyOn(merchantAdminService, 'redeemVoucher').and.returnValue(
       of(redeemedVoucher)
     );
@@ -226,8 +190,6 @@ describe('RedeemComponent', () => {
     const notificationSpy = spyOn(notificationService, 'addSnack');
 
     component.onProceed();
-    // expect(rewardsServiceSpy).toHaveBeenCalled();
-    expect(merchantAdminServiceIssueVoucherSpy).toHaveBeenCalled();
     expect(merchantAdminServiceRedeemVoucherSpy).toHaveBeenCalled();
     expect(notificationSpy).toHaveBeenCalledWith('POPUP_CONTENT.TRANSACTION_COMPLETED');
   });
