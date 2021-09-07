@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -51,6 +52,7 @@ describe('ResetPasswordComponent', () => {
         RouterTestingModule,
         MatFormFieldModule,
         MatInputModule,
+        MatCardModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
       ],

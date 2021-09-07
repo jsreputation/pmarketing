@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IMerchantAdminService, ThemesService } from '@perxtech/core';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
+import { MatCardModule } from '@angular/material/card';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -40,6 +41,7 @@ describe('ForgotPasswordComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
+        MatCardModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
       ],
