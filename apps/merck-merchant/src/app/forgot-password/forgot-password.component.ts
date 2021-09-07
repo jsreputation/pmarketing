@@ -1,16 +1,8 @@
-import {
-  Validators,
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, } from '@angular/forms';
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import {
-  IMerchantAdminService,
-  IMessageResponse,
-  NotificationService,
-} from '@perxtech/core';
+import { IMerchantAdminService, IMessageResponse, ITheme, NotificationService, ThemesService, } from '@perxtech/core';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,11 +12,13 @@ import {
 export class ForgotPasswordComponent {
 
   public loginForm: FormGroup;
+  public theme: ITheme;
 
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
+    private themesService: ThemesService
   ) {
     this.initForm();
   }
@@ -32,6 +26,9 @@ export class ForgotPasswordComponent {
   private initForm(): void {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
+    });
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
     });
   }
 
