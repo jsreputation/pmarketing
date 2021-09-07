@@ -3,7 +3,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
-import { AuthenticationService, IMerchantAdminService, IProfile, NotificationService, ProfileService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  IMerchantAdminService,
+  IProfile,
+  NotificationService,
+  ProfileService,
+  ThemesService
+} from '@perxtech/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +36,10 @@ describe('ResetPasswordComponent', () => {
 
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     resetPassword: () => of()
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -61,7 +72,8 @@ describe('ResetPasswordComponent', () => {
             addSnack: () => {
             }
           }
-        }
+        },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();
