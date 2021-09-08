@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NotificationService, IMerchantAdminService } from '@perxtech/core';
+import { IMerchantAdminService, ITheme, NotificationService, ThemesService } from '@perxtech/core';
 
 interface ResetData {
   resetPasswordToken: string;
@@ -25,13 +25,15 @@ export class ResetPasswordComponent implements OnInit {
     resetPasswordToken: '',
     clientId: '',
   };
+  public theme: ITheme;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private merchantAdminService: IMerchantAdminService,
     private notificationService: NotificationService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private themesService: ThemesService
   ) {
     const queryParams = this.activatedRoute.snapshot.queryParams;
     const { reset_password_token, client_id } = queryParams;
@@ -47,6 +49,10 @@ export class ResetPasswordComponent implements OnInit {
     this.resetPasswordForm = this.fb.group({
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
+    });
+
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
     });
   }
 
