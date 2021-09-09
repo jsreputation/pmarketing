@@ -42,7 +42,7 @@ import {
   IInstantOutcomeTransaction,
   IInstantOutcomeTransactionService,
   ILoyalty,
-  InstantOutcomeService,
+  InstantOutcomeService, IPopupConfig,
   IPrice,
   IProfile,
   IQuestService,
@@ -50,7 +50,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   ITabConfigExtended,
-  ITheme,
+  ITheme, NotificationService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -58,7 +58,7 @@ import {
   SettingsService,
   TeamsService,
   ThemesService,
-  TokenStorage,
+  TokenStorage
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -133,7 +133,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected datePipe: DatePipe,
     protected questService: IQuestService,
     protected teamsService: TeamsService,
-    protected instantOutcomeTransactionService: IInstantOutcomeTransactionService
+    protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
+    protected notificationService: NotificationService,
   ) {}
 
   public ngOnInit(): void {
@@ -353,14 +354,19 @@ export class HomeComponent implements OnInit, OnDestroy {
           ? allInstantOutcomes[0]
           : undefined;
         if (firstComefirstServeOutCome) {
-          const popupImageURL = 'assets/bd-campaign.svg';
-          const data = {
-            text: firstComefirstServeOutCome.details,
+          const popupImageURL = 'assets/png_icon_prize.svg';
+          const enrollPopUpConf: IPopupConfig = {
+            title: 'Congrats! You earned a prize!',
+            text: 'Claim now before they run out!',
+            buttonTxt: 'Claim prize',
             imageUrl: popupImageURL,
-            buttonTxt: 'Check it out',
-            afterClosedCallBack: this,
+            afterClosedCallBack: {
+              dialogClosed: (): void => {
+                console.log('click to Claim prize btn');
+              },
+            },
           };
-          this.dialog.open(RewardPopupComponent, { data });
+          this.notificationService.addPopup(enrollPopUpConf);
         }
       });
 

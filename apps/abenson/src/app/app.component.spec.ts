@@ -74,12 +74,12 @@ describe('AppComponent', () => {
   let themesService: ThemesService;
   let authService: AuthenticationService;
   let instantOutcomeService: InstantOutcomeService;
-  let instantOutcomeTransactionService: IInstantOutcomeTransactionService;
   let feedService: FeedReaderService;
   let settingsService: SettingsService;
   let profileService: ProfileService;
   let questService: IQuestService;
   let teamsService: TeamsService;
+  let instantOutcomeTransactionService: IInstantOutcomeTransactionService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -111,6 +111,8 @@ describe('AppComponent', () => {
         { provide: SettingsService, useValue: {} },
         { provide: IQuestService, useValue: {} },
         { provide: TeamsService, useValue: {} },
+        { provide: IInstantOutcomeTransactionService, useValue: {} },
+        { provide: NotificationService, useValue: {} },
       ],
     }).compileComponents();
   }));
@@ -162,6 +164,9 @@ describe('AppComponent', () => {
     );
     teamsService = TestBed.get<TeamsService>(
       TeamsService as Type<TeamsService>
+    );
+    instantOutcomeTransactionService = TestBed.get<IInstantOutcomeTransactionService>(
+      IInstantOutcomeTransactionService as Type<IInstantOutcomeTransactionService>
     );
 
     app.ngOnInit();
@@ -221,7 +226,8 @@ describe('AppComponent', () => {
         datePipe,
         questService,
         teamsService,
-        instantOutcomeTransactionService
+        instantOutcomeTransactionService,
+        ntfs
   )
     );
     expect(app.showToolbar).toBeTruthy();

@@ -23,6 +23,7 @@ import {
   TokenStorage,
   UtilsModule,
   IInstantOutcomeTransactionService,
+  NotificationService,
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -38,6 +39,9 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of([]),
+};
+const notificationServiceStub: Partial<NotificationService> = {
+  addPopup: () => of(),
 };
 
 const rewardsServiceStub: Partial<RewardsService> = {
@@ -150,6 +154,7 @@ describe('HomeComponent', () => {
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: IQuestService, useValue: questServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
       .compileComponents();
