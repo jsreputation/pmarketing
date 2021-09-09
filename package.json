@@ -153,6 +153,7 @@
     "test:bpi": "nx test bpi --detectOpenHandles",
     "test:components-demo": "nx test components-demo --detectOpenHandles",
     "test:dbshk-agent": "nx test dbshk-agent --detectOpenHandles",
+    "test:globesuperapp": "nx test globesuperapp --detectOpenHandles",
     "test:hkbn": "echo 'skipping hkbn tests'",
     "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "nx test hsbc-rewards --detectOpenHandles",
