@@ -112,7 +112,6 @@ describe('AppComponent', () => {
         { provide: IQuestService, useValue: {} },
         { provide: TeamsService, useValue: {} },
         { provide: IInstantOutcomeTransactionService, useValue: {} },
-        { provide: NotificationService, useValue: {} },
       ],
     }).compileComponents();
   }));
