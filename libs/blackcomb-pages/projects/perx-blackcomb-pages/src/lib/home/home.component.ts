@@ -360,6 +360,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             text: 'Claim now before they run out!',
             buttonTxt: 'Claim prize',
             imageUrl: popupImageURL,
+            titleBelowImage: true,
+            hideCloseButton: true,
             afterClosedCallBack: {
               dialogClosed: (): void => {
                 this.instantOutcomeTransactionService

@@ -1,16 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
+import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import {
-  combineLatest, forkJoin, iif, Observable, of,
-  Subject
-} from 'rxjs';
-import {
-  ILoyalty,
-  IPrizeSet,
-  IPrizeSetItem,
-  IPrizeSetOutcomeService, IReward,
+  IInstantOutcome,
+  IInstantOutcomeTransaction,
+  IInstantOutcomeTransactionService,
+  ILoyalty, InstantOutcomeCampaignPrizeType, InstantOutcomeTransactionState,
+  IReward,
   LoyaltyService,
-  PrizeSetOutcomeType, PrizeSetState,
   RewardsService
 } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,96 +16,148 @@ import { catchError, startWith, switchMap, takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'perx-blackcomb-pages-instant-reward-outcome',
   templateUrl: './instant-reward-outcome.component.html',
-  styleUrls: ['./instant-reward-outcome.component.scss']
+  styleUrls: ['./instant-reward-outcome.component.scss'],
 })
 export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
-
   public transactionId: number;
-  public outcomes: IPrizeSetItem[] = [];
-  public outcomeType: typeof PrizeSetOutcomeType = PrizeSetOutcomeType;
+  public outcomes: IInstantOutcome[] = [];
+  public outcomeType: typeof InstantOutcomeCampaignPrizeType = InstantOutcomeCampaignPrizeType;
   public isActualOutcomeMode: boolean = false;
   public repeatGhostCount: number = 3;
-  public prizeSet: IPrizeSet;
+  public transaction: IInstantOutcomeTransaction;
   private destroy$: Subject<void> = new Subject<void>();
-  public prizeSetStatus: string;
+  public instantRewardStatus: string;
 
-  constructor(private activeRoute: ActivatedRoute,
-              private location: Location,
-              private loyaltyService: LoyaltyService,
-              private rewardsService: RewardsService,
-              private prizeSetOutcomeService: IPrizeSetOutcomeService,
-              private router: Router) { }
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private location: Location,
+    private loyaltyService: LoyaltyService,
+    private rewardsService: RewardsService,
+    private instantOutcomeTransactionService: IInstantOutcomeTransactionService,
+    private router: Router
+  ) {}
 
   public ngOnInit(): void {
-    let prizeSetId: number;
     let transactionId: number;
-    combineLatest([this.activeRoute.params, this.activeRoute.queryParams]).pipe(
-      switchMap((params) => {
-        const id = params.find(param => param.id)?.id;
-        if (id) {
-          prizeSetId = Number.parseInt(id, 10);
-        }
-        const queryParam = params.find(param => param.transactionId)?.transactionId;
-        if (queryParam) {
-          transactionId = Number.parseInt(queryParam, 10);
-          this.isActualOutcomeMode = true;
-        }
-        return forkJoin([this.getPrizeSetOutcome(prizeSetId), iif(() => this.isActualOutcomeMode,
-          this.getPrizeSetState(transactionId), of([]))]);
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe(([outcomes, issuedOutcomes]: ([IPrizeSetItem[], IPrizeSetItem[]])) => {
-      outcomes?.map((campaignPrizeSet) => {
-        const issuedItem = issuedOutcomes?.find(prizeSet => prizeSet?.campaignPrizeId === campaignPrizeSet.campaignPrizeId);
-        if (issuedItem) {
-          campaignPrizeSet = Object.assign(campaignPrizeSet, issuedItem);
-        }
-      });
-      this.outcomes = outcomes;
-    });
-
-  }
-
-  public getPrizeSetOutcome(prizeSetId: number): Observable<IPrizeSetItem[]> {
-    let rewardOutcomes: IPrizeSetItem[] = [];
-    let pointOutcomes: IPrizeSetItem[] = [];
-    let allOutcomes: IPrizeSetItem[] = [];
-    return this.prizeSetOutcomeService.getPrizeSetDetails(prizeSetId).pipe(
-      switchMap((prizeSet) => {
-        this.prizeSet = prizeSet;
-        allOutcomes = prizeSet && prizeSet.outcomes;
-        rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
-        pointOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.points);
-        return forkJoin([
-          combineLatest([...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
-            .pipe(catchError(() => of([]))))]).pipe(startWith([])),
-          combineLatest([...pointOutcomes.map((outcome) => this.loyaltyService.getLoyalty(outcome.campaignPrizeId)
-            .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
-      }),
-      switchMap(([rewards, loyalties]: ([IReward[], ILoyalty[]])) => {
-        allOutcomes?.map((outcome) => {
-          if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
-            outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
-          } else if (outcome.campaignPrizeType === PrizeSetOutcomeType.points) {
-            outcome.loyaltyDetails = loyalties && loyalties.find(loyalty => loyalty?.id === outcome.campaignPrizeId);
+    combineLatest([this.activeRoute.params, this.activeRoute.queryParams])
+      .pipe(
+        switchMap((params) => {
+          const id = params.find((param) => param.id)?.id;
+          if (id) {
+            transactionId = Number.parseInt(id, 10);
+            this.isActualOutcomeMode = true;
           }
-        });
-        this.outcomes = allOutcomes;
-        return of(allOutcomes);
-      }));
-  }
-
-  public getPrizeSetState(transactionId: number): Observable<IPrizeSetItem[]> {
-    return this.prizeSetOutcomeService.getPrizeSetState(transactionId).pipe(
-      switchMap((status: string) => {
-          this.prizeSetStatus = status;
-          return status === PrizeSetState.completed ? this.prizeSetOutcomeService.getPrizeSetIssuedOutcomes(transactionId) : of([]);
-        }
+          return forkJoin([
+            this.getOutcomes(transactionId),
+            iif(
+              () => this.isActualOutcomeMode,
+              this.getTransactionState(transactionId),
+              of([])
+            ),
+          ]);
+        }),
+        takeUntil(this.destroy$)
       )
-    );
+      .subscribe(
+        ([outcomes, issuedOutcomes]: [IInstantOutcome[], IInstantOutcome[]]) => {
+          outcomes?.map((campaign) => {
+            const issuedItem = issuedOutcomes?.find(
+              (outcomeItem) =>
+                outcomeItem?.campaignPrizeId === campaign.campaignPrizeId
+            );
+            if (issuedItem) {
+              campaign = Object.assign(campaign, issuedItem);
+            }
+          });
+          this.outcomes = outcomes;
+        }
+      );
   }
 
-  public goToRewardDetails(outcome: IPrizeSetItem): void {
+  public getOutcomes(transactionId: number): Observable<IInstantOutcome[]> {
+    let rewardOutcomes: IInstantOutcome[] = [];
+    let pointOutcomes: IInstantOutcome[] = [];
+    let allOutcomes: IInstantOutcome[] = [];
+    return this.instantOutcomeTransactionService
+      .getInstantOutcomeTransaction(transactionId)
+      .pipe(
+        switchMap((instantOutcomeTransaction) => {
+          this.transaction = instantOutcomeTransaction;
+          allOutcomes =
+            instantOutcomeTransaction && instantOutcomeTransaction.outcomes;
+          rewardOutcomes = allOutcomes.filter(
+            (outcome) =>
+              outcome.campaignPrizeType ===
+              InstantOutcomeCampaignPrizeType.reward
+          );
+          pointOutcomes = allOutcomes.filter(
+            (outcome) =>
+              outcome.campaignPrizeType ===
+              InstantOutcomeCampaignPrizeType.points
+          );
+          return forkJoin([
+            combineLatest([
+              ...rewardOutcomes.map((outcome) =>
+                this.rewardsService
+                  .getReward(outcome.campaignPrizeId)
+                  .pipe(catchError(() => of([])))
+              ),
+            ]).pipe(startWith([])),
+            combineLatest([
+              ...pointOutcomes.map((outcome) =>
+                this.loyaltyService
+                  .getLoyalty(outcome.campaignPrizeId)
+                  .pipe(catchError(() => of([])))
+              ),
+            ]).pipe(startWith([])),
+          ]);
+        }),
+        switchMap(([rewards, loyalties]: [IReward[], ILoyalty[]]) => {
+          allOutcomes?.map((outcome) => {
+            if (
+              outcome.campaignPrizeType ===
+              InstantOutcomeCampaignPrizeType.reward
+            ) {
+              outcome.rewardDetails =
+                rewards &&
+                rewards.find(
+                  (reward) => reward?.id === outcome.campaignPrizeId
+                );
+            } else if (
+              outcome.campaignPrizeType ===
+              InstantOutcomeCampaignPrizeType.points
+            ) {
+              outcome.loyaltyDetails =
+                loyalties &&
+                loyalties.find(
+                  (loyalty) => loyalty?.id === outcome.campaignPrizeId
+                );
+            }
+          });
+          this.outcomes = allOutcomes;
+          return of(allOutcomes);
+        })
+      );
+  }
+
+  public getTransactionState(
+    transactionId: number
+  ): Observable<IInstantOutcome[]> {
+    return this.instantOutcomeTransactionService
+      .getInstantRewardState(transactionId)
+      .pipe(
+        switchMap((status: string) => {
+          this.instantRewardStatus = status;
+          return status === InstantOutcomeTransactionState.completed
+            ? this.instantOutcomeTransactionService.getInstantOutcomeTransactionOutcomes(
+                transactionId
+              )
+            : of([]);
+        })
+      );
+  }
+
+  public goToRewardDetails(outcome: IInstantOutcome): void {
     if (this.isActualOutcomeMode && outcome.actualOutcomeId) {
       this.router.navigate(['/voucher-detail', outcome.actualOutcomeId]);
     } else if (!this.isActualOutcomeMode && outcome.campaignPrizeId) {
@@ -124,5 +173,4 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

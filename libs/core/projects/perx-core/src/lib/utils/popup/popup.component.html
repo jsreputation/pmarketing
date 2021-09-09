@@ -1,14 +1,15 @@
-<div class="close-btn-container" *ngIf="showButton">
+<div class="close-btn-container" *ngIf="showButton || hideCloseButton">
   <button mat-icon-button
           class="close-btn"
           (click)="onClose()" tabindex="-1">
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<h1 *ngIf="title" mat-dialog-title>{{title}}</h1>
+<h1 *ngIf="title && !titleBelowImage" mat-dialog-title>{{title}}</h1>
 <div *ngIf="imageUrl" class="img-wrapper">
 	<img [src]="imageUrl"/>
 </div>
+<h1 *ngIf="title && titleBelowImage" mat-dialog-title>{{title}}</h1>
 <mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
 <div *ngIf="showButton" class="button-group">
 	<button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close (click)="buttonPressed2()" tabindex="-1">{{buttonTxt2}}</button>

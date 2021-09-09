@@ -40,6 +40,9 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of([]),
   claimPrize: () => of(),
+  getInstantRewardState: () => of(),
+  getInstantOutcomeTransaction: () => of(),
+  getInstantOutcomeTransactionOutcomes: () => of([]),
 };
 const notificationServiceStub: Partial<NotificationService> = {
   addPopup: () => of(),

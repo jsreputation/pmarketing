@@ -1,8 +1,7 @@
-
 <div class="card-list-container">
   <div class="outcome-container" >
     <ng-container *ngIf="outcomes && outcomes.length > 0; else loadingBlock">
-      <p class="title">{{isActualOutcomeMode ? ('PRIZE_SET.HEADING' | translate) : prizeSet?.name}}</p>
+      <p class="title">{{isActualOutcomeMode ? ('PRIZE_SET.HEADING' | translate) : transaction?.details}}</p>
       <p class="subtitle">{{'PRIZE_SET.SUB_HEADING' | translate}}</p>
       <div *ngFor="let outcome of outcomes" class="outcome-cards">
         <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.reward">
@@ -27,11 +26,11 @@
                 <div class="state-container" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
                   <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
                   <div class="marker">
-                    {{ prizeSetStatus === 'failed' || outcome.state === 'failed' ? ('PRIZE_SET.FAILED_STATE' | translate) : ('PRIZE_SET.PENDING_STATE' | translate)}}
+                    {{ instantRewardStatus === 'failed' || outcome.state === 'failed' ? ('PRIZE_SET.FAILED_STATE' | translate) : ('PRIZE_SET.PENDING_STATE' | translate)}}
                   </div>
                 </div>
               </mat-card-content>
-              <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !prizeSetStatus"></mat-progress-bar>
+              <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !instantRewardStatus"></mat-progress-bar>
             </mat-card>
           </a>
         </ng-container>
@@ -45,11 +44,11 @@
               <div class="state-container" *ngIf="isActualOutcomeMode && outcome.state !== 'issued'">
                 <p class="contact-text">{{'PRIZE_SET.CONTACT_TXT' | translate}}</p>
                 <div class="marker">
-                  {{ prizeSetStatus =='failed' || outcome.state == 'failed' ? ('PRIZE_SET.FAILED_STATE' | translate) : ('PRIZE_SET.PENDING_STATE' | translate)}}
+                  {{ instantRewardStatus =='failed' || outcome.state == 'failed' ? ('PRIZE_SET.FAILED_STATE' | translate) : ('PRIZE_SET.PENDING_STATE' | translate)}}
                 </div>
               </div>
             </mat-card-content>
-            <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !prizeSetStatus"></mat-progress-bar>
+            <mat-progress-bar color="primary" mode="indeterminate" *ngIf="isActualOutcomeMode && !instantRewardStatus"></mat-progress-bar>
           </mat-card>
         </ng-container>
       </div>
