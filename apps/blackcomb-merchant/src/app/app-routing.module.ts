@@ -15,6 +15,7 @@ const routes: Routes = [
       loadChildren: () => import('./transaction-history/transaction-history.module').then((mod) => mod.TransactionHistoryModule) },
       { path: 'qrscanner/:path', loadChildren: () => import('./qrscanner/qrscanner.module').then((mod) => mod.QrscannerModule) },
       { path: 'redeem', loadChildren: () => import('./redeem/redeem.module').then((mod) => mod.RedeemModule) },
+      { path: 'order', loadChildren: () => import('./order/order.module').then((mod) => mod.OrderModule) },
     ],
     canActivate: [ProtectedGuard]
   },

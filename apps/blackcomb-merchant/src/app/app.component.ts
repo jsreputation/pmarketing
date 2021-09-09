@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService, IConfig, ThemesService, ITheme, NotificationService, MerchantTransactionHistoryComponent,
-  MerchantRedeemComponent, MerchantQrscannerComponent } from '@perxtech/core';
+  MerchantRedeemComponent, MerchantQrscannerComponent, MerchantOrderComponent } from '@perxtech/core';
 import {
   switchMap,
   tap,
@@ -78,15 +78,18 @@ export class AppComponent implements OnInit {
     this.showPageTitle =
       ref instanceof MerchantTransactionHistoryComponent ||
       ref instanceof MerchantQrscannerComponent ||
-      ref instanceof MerchantRedeemComponent;
+      ref instanceof MerchantRedeemComponent ||
+      ref instanceof MerchantOrderComponent;
 
     this.pageTitle =
       ref instanceof MerchantTransactionHistoryComponent
         ? 'Transaction History'
         : ref instanceof MerchantQrscannerComponent
-        ? 'Scan Redemption QR'
+        ? 'Scan QR'
         : ref instanceof MerchantRedeemComponent
         ? 'Redemption'
+        : ref instanceof MerchantOrderComponent
+        ? 'Create Sales Record'
         : '';
   }
 

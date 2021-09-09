@@ -49,12 +49,12 @@ describe('LandingPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /*it('should navigate to /qrscanner/order onSalesScan', () => {
+  it('should navigate to /qrscanner/order onSalesScan', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigate').and.stub();
     component.onSalesScan();
     expect(routerSpy).toHaveBeenCalledWith(['/qrscanner/order']);
-  });*/
+  });
 
   it('should navigate to /qrscanner/redeem onRedemption', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
