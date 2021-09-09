@@ -16,7 +16,7 @@ import { NotificationService } from '../../utils/notification/notification.servi
 })
 export class ForgotPasswordComponent {
 
-  public loginForm: FormGroup;
+  public forgotPasswordForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -27,13 +27,13 @@ export class ForgotPasswordComponent {
   }
 
   private initForm(): void {
-    this.loginForm = this.fb.group({
+    this.forgotPasswordForm = this.fb.group({
       email: ['', Validators.required],
     });
   }
 
   public onSubmit(): void {
-    const email: string = this.loginForm.value.email as string;
+    const email: string = this.forgotPasswordForm.value.email as string;
     this.merchantAdminService.forgotPassword(email).subscribe(
       (res: IMessageResponse) => this.notificationService.addSnack(res.message),
       (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
