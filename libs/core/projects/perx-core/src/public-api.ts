@@ -436,3 +436,5 @@ export { ForgotPasswordModule as MerchantForgotPasswordModule } from './lib/merc
 export { ForgotPasswordComponent as MerchantForgotPasswordComponent } from './lib/merchant-app/forgot-password/forgot-password.component';
 export { ResetPasswordModule as MerchantResetPasswordModule } from './lib/merchant-app/reset-password/reset-password.module';
 export { ResetPasswordComponent as MerchantResetPasswordComponent } from './lib/merchant-app/reset-password/reset-password.component';
+export { OrderModule as MerchantOrderModule } from './lib/merchant-app/order/order.module';
+export { OrderComponent as MerchantOrderComponent } from './lib/merchant-app/order/order.component';
