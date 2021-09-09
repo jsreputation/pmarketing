@@ -362,12 +362,22 @@ export class HomeComponent implements OnInit, OnDestroy {
             imageUrl: popupImageURL,
             afterClosedCallBack: {
               dialogClosed: (): void => {
-                console.log('click to Claim prize btn');
+                this.instantOutcomeTransactionService
+                  .claimPrize(firstComefirstServeOutCome.instantOutcomeTransactionId)
+                  .subscribe((res) => {
+                    const outcomeFirst = res.outcomes?.length ? res.outcomes[0] : null;
+                    if (outcomeFirst) {
+                      this.router.navigate([`/instant-reward-outcomes/${outcomeFirst.instantOutcomeTransactionId}`]);
+                    }
+                  }, error => {
+                    console.log('Error when claim prize: ', error);
+                  });
               },
             },
           };
           this.notificationService.addPopup(enrollPopUpConf);
         }
+
       });
 
     this.campaignService

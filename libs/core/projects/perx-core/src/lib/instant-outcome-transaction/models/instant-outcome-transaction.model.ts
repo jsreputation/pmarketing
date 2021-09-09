@@ -32,4 +32,5 @@ export enum InstantOutcomeState {
 export enum InstantOutcomeTransactionState {
   issued = 'issued',
   redeemed = 'redeemed',
+  inProgress = 'in_progress',
 }

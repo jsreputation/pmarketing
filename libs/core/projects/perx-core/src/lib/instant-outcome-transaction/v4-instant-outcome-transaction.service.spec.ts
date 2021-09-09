@@ -7,6 +7,7 @@ import { ConfigService } from '../../lib/config/config.service';
 
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of(),
+  claimPrize: () => of(),
 };
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()

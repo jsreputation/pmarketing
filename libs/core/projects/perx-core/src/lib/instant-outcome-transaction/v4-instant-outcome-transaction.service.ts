@@ -11,7 +11,7 @@ import {
   InstantOutcomeActualOutcomeType,
   InstantOutcomeCampaignPrizeType,
   InstantOutcomeState,
-  InstantOutcomeTransactionState,
+  InstantOutcomeTransactionState
 } from './models/instant-outcome-transaction.model';
 
 export interface IV4InstantOutcomeTransaction {
@@ -23,6 +23,9 @@ export interface IV4InstantOutcomeTransaction {
 }
 interface IV4GetInstantOutcomeTransactionsResponse {
   data: IV4InstantOutcomeTransaction[];
+}
+interface IV4ClaimPrizeResponse {
+  data: IV4InstantOutcomeTransaction;
 }
 
 export interface IV4InstantOutcome {
@@ -65,6 +68,22 @@ export class V4InstantOutcomeTransactionService
             V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
               outcomeTransaction
             )
+          )
+        )
+      );
+  }
+  public claimPrize(instantOutcomeTransactionId: number): Observable<
+    IInstantOutcomeTransaction
+    > {
+    return this.http
+      .post<IV4ClaimPrizeResponse>(
+        `${this.baseUrl}/v4/instant_outcome_transactions/${instantOutcomeTransactionId}/redeem`, null
+      )
+      .pipe(
+        map((res: IV4ClaimPrizeResponse) => res.data),
+        map((outcomeTransaction: IV4InstantOutcomeTransaction) =>
+          V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
+            outcomeTransaction
           )
         )
       );
