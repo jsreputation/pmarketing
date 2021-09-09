@@ -3,14 +3,7 @@
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ]
-      }
+      "options": { "cacheableOperations": ["build", "test", "lint", "e2e"] }
     }
   },
   "implicitDependencies": {
@@ -22,77 +15,30 @@
     ".eslintrc.json": "*"
   },
   "projects": {
-    "globesuperapp": {
-      "tags": []
-    },
-    "blackcomb-pages": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "whistler": {
-      "tags": []
-    },
-    "abenson": {
-      "tags": []
-    },
-    "all-it": {
-      "tags": []
-    },
-    "blackcomb": {
-      "tags": []
-    },
-    "bpi": {
-      "tags": []
-    },
-    "components-demo": {
-      "tags": []
-    },
-    "hkbn": {
-      "tags": []
-    },
-    "hsbc": {
-      "tags": []
-    },
-    "hsbc-rewards": {
-      "tags": []
-    },
-    "hsbchk": {
-      "tags": []
-    },
-    "merck-customer": {
-      "tags": []
-    },
-    "merck-merchant": {
-      "tags": []
-    },
-    "oracle-pay": {
-      "tags": []
-    },
-    "prudential": {
-      "tags": []
-    },
-    "starhub": {
-      "tags": []
-    },
-    "appauth-server": {
-      "tags": []
-    },
-    "philipssg": {
-      "tags": []
-    },
-    "dbshk-agent": {
-      "tags": []
-    },
-    "transcycle": {
-      "tags": []
-    },
-    "blackcomb-merchant": {
-      "tags": []
-    }
+    "globesuperapp": { "tags": [] },
+    "blackcomb-pages": { "tags": [] },
+    "core": { "tags": [] },
+    "whistler": { "tags": [] },
+    "abenson": { "tags": [] },
+    "all-it": { "tags": [] },
+    "blackcomb": { "tags": [] },
+    "bpi": { "tags": [] },
+    "components-demo": { "tags": [] },
+    "hkbn": { "tags": [] },
+    "hsbc": { "tags": [] },
+    "hsbc-rewards": { "tags": [] },
+    "hsbchk": { "tags": [] },
+    "merck-customer": { "tags": [] },
+    "merck-merchant": { "tags": [] },
+    "oracle-pay": { "tags": [] },
+    "prudential": { "tags": [] },
+    "starhub": { "tags": [] },
+    "appauth-server": { "tags": [] },
+    "philipssg": { "tags": [] },
+    "dbshk-agent": { "tags": [] },
+    "transcycle": { "tags": [] },
+    "blackcomb-merchant": { "tags": [] },
+    "bcm-pages": { "tags": [] }
   },
-  "affected": {
-    "defaultBase": "master"
-  }
+  "affected": { "defaultBase": "master" }
 }
