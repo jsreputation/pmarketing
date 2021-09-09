@@ -2403,10 +2403,11 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/bcm-pages/projects/perx-bcm-pages"],
+          "outputs": ["coverage/libs/bcm-pages"],
           "options": {
             "jestConfig": "libs/bcm-pages/projects/perx-bcm-pages/jest.config.js",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "codeCoverage": true
           }
         }
       }
