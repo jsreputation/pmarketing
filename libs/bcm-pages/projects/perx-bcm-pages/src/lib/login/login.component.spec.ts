@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import 'zone.js/dist/zone';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { AuthenticationModule, AuthenticationService, TokenStorage } from '@perxtech/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationModule } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';

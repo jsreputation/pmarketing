@@ -1,9 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
-import { AuthenticationService } from '../../auth/authentication/authentication.service';
-import { NotificationService } from '../../utils/notification/notification.service';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService, NotificationService, TokenStorage } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
