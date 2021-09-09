@@ -167,6 +167,7 @@
     "test:blackcomb-merchant": "nx test blackcomb-merchant --detectOpenHandles",
     "test:appauth-server": "echo 'no tests'",
     "test:blackcomb-pages": "nx test blackcomb-pages --detectOpenHandles",
+    "test:bcm-pages": "nx test bcm-pages --detectOpenHandles",
     "test:core": "nx test core --detectOpenHandles",
     "test:whistler": "nx test whistler --detectOpenHandles",
     "test:transcycle": "nx test transcycle --detectOpenHandles",
