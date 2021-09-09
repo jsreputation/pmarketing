@@ -5,7 +5,9 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<h1 *ngIf="title" mat-dialog-title>{{title}}</h1>
+<div class="title-wrapper">
+  <h1 *ngIf="title" mat-dialog-title>{{title}}</h1>
+</div>
 <div *ngIf="imageUrl" class="img-wrapper">
 	<img [src]="imageUrl"/>
 </div>
