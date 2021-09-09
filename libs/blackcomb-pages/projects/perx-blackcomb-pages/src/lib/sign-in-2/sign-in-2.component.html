@@ -1,4 +1,5 @@
-<div class="content-container" *ngIf="theme | async as th">
+<div class="content-container" *ngIf="theme | async as th"
+    [ngStyle]="{backgroundImage: 'url(' + th?.properties['--login_page_bg_image'] + ')'}">
     <div class="login-image">
         <div *ngIf="th?.properties['--landing_page_logo'];else nav_logo">
             <img class="logo" [attr.src]="th?.properties['--landing_page_logo']"
