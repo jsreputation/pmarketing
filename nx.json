@@ -22,6 +22,9 @@
     ".eslintrc.json": "*"
   },
   "projects": {
+    "globesuperapp": {
+      "tags": []
+    },
     "blackcomb-pages": {
       "tags": []
     },

@@ -1750,6 +1750,126 @@
         }
       }
     },
+    "globesuperapp": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/globesuperapp",
+      "sourceRoot": "apps/globesuperapp/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/globesuperapp",
+            "index": "apps/globesuperapp/src/index.html",
+            "main": "apps/globesuperapp/src/main.ts",
+            "polyfills": "apps/globesuperapp/src/polyfills.ts",
+            "tsConfig": "apps/globesuperapp/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/globesuperapp/src/favicon.ico",
+              "apps/globesuperapp/src/assets",
+              "apps/globesuperapp/src/static",
+              "apps/globesuperapp/src/manifest.webmanifest",
+              "apps/globesuperapp/src/robots.txt"
+            ],
+            "styles": [
+              "apps/globesuperapp/src/styles.scss",
+              "apps/globesuperapp/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/globesuperapp/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/globesuperapp/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "globesuperapp:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "globesuperapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "globesuperapp:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/globesuperapp/e2e/protractor.conf.js",
+            "devServerTarget": "globesuperapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "globesuperapp:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/globesuperapp/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": [
+            "coverage/apps/globesuperapp"
+          ]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/globesuperapp/src/**/*.d.ts",
+              "apps/globesuperapp/src/main.ts",
+              "apps/globesuperapp/src/polyfills.ts",
+              "apps/globesuperapp/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
     "transcycle": {
       "projectType": "application",
       "schematics": {
