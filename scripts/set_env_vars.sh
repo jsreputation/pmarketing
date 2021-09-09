@@ -166,7 +166,6 @@ blackcomb_app_base=(
   feature-demo
   globeathome
   globeone
-  globesuperapp
   hsbcph-blackcomb
   hsbcvn
   hoolah
