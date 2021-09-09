@@ -1,5 +1,5 @@
 PREAUTH=false
-APIHOST=https://api.perxtech.io
+APIHOST=https://api-globe-superapp.perxtech.net
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true
 SHOW_CAMPAIGN_LANDING_PAGE=true

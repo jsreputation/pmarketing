@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface IPopupConfig {
   title?: string;
@@ -103,5 +103,8 @@ export class PopupComponent {
 
   public onClose(): void {
     this.dialogRef.close();
+    if (this.data.afterClosedCallBack) {
+      this.data.afterClosedCallBack.dialogClosed();
+    }
   }
 }

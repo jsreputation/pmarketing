@@ -1,0 +1,18 @@
+{
+    "name": "Dark",
+    "properties": {
+      "--font": "Roboto",
+      "--logo": "assets/the-1-logo.svg",
+      "--title": "The 1",
+      "--accent": "#EDEDED",
+      "--primary": "#DB1E2B",
+      "--button_text_color": "#ffffff",
+      "--button_background_color": "#DB1E2B",
+      "--header_color": "#000",
+      "--background": "#2C2C2C",
+      "--font_color": "#EDEDED",
+      "--login_background_colour": "#000",
+      "--surface_colour": "#231F20",
+      "--popup_background_colour": "#333333"
+    }
+}

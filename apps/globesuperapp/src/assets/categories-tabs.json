@@ -1,0 +1,42 @@
+[
+  {
+    "filterKey": null,
+    "filterValue": null,
+    "tabName": "ALL",
+    "rewardsType": null,
+    "currentPage": 1,
+    "completePagination": false
+  },
+  {
+    "filterKey": null,
+    "filterValue": null,
+    "tabName": "FOOD_BEVERAGE",
+    "rewardsType": "Food & Beverage",
+    "currentPage": 1,
+    "completePagination": false
+  },
+  {
+    "filterKey": null,
+    "filterValue": null,
+    "tabName": "TRAVEL",
+    "rewardsType": "Travel",
+    "currentPage": 1,
+    "completePagination": false
+  },
+  {
+    "filterKey": null,
+    "filterValue": null,
+    "tabName": "WELLNESS",
+    "rewardsType": "Wellness",
+    "currentPage": 1,
+    "completePagination": false
+  },
+  {
+    "filterKey": null,
+    "filterValue": null,
+    "tabName": "SHOPPING",
+    "rewardsType": "Shopping",
+    "currentPage": 1,
+    "completePagination": false
+  }
+]
