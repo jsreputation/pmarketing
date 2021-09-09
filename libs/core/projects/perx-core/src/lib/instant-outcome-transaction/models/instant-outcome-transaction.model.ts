@@ -1,3 +1,6 @@
+import { IReward } from '../../rewards/models/reward.model';
+import { ILoyalty } from '../../loyalty/models/loyalty.model';
+
 export interface IInstantOutcomeTransaction {
   id: number;
   campaignId: number;
@@ -15,10 +18,14 @@ export interface IInstantOutcome {
   details: string | null;
   instantOutcomeTransactionId: number;
   state: InstantOutcomeState;
+  rewardDetails?: IReward;
+  loyaltyDetails?: ILoyalty;
+  pointsCount?: number;
 }
 
 export enum InstantOutcomeCampaignPrizeType {
   reward = 'Reward::Campaign',
+  points = 'StoredValue::Campaign'
 }
 
 export enum InstantOutcomeActualOutcomeType {
@@ -32,4 +39,7 @@ export enum InstantOutcomeState {
 export enum InstantOutcomeTransactionState {
   issued = 'issued',
   redeemed = 'redeemed',
+  inProgress = 'in_progress',
+  completed = 'completed',
+  failed = 'failed',
 }

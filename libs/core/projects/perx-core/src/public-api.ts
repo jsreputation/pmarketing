@@ -363,7 +363,10 @@ export { OutcomeModule } from './lib/outcome/outcome.module';
  * InstantOutcomeTransaction
  */
 export { IInstantOutcomeTransactionService } from './lib/instant-outcome-transaction/instant-outcome-transaction.service';
-export { IInstantOutcomeTransaction, IInstantOutcome } from './lib/instant-outcome-transaction/models/instant-outcome-transaction.model';
+export {
+  IInstantOutcomeTransaction, IInstantOutcome,
+  InstantOutcomeCampaignPrizeType, InstantOutcomeTransactionState
+} from './lib/instant-outcome-transaction/models/instant-outcome-transaction.model';
 export { InstantOutcomeTransactionServiceModule } from './lib/instant-outcome-transaction/instant-outcome-transaction-service.module';
 /**
  * Rank / Leaderboard

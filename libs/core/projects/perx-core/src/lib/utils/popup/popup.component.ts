@@ -12,6 +12,8 @@ export interface IPopupConfig {
   hideButton?: boolean;
   panelClass?: string[] | string;
   ctaButtonClass?: string;
+  hideCloseButton?: boolean;
+  titleBelowImage?: boolean;
 }
 
 export interface PopUpClosedCallBack {
@@ -28,9 +30,11 @@ export interface PopUpClosedCallBack {
 })
 export class PopupComponent {
   public title: string | null = null;
+  public titleBelowImage: boolean = false;
   public text: string | null = null;
   public imageUrl: string | null = null;
   public showButton: boolean = true;
+  public hideCloseButton: boolean = false;
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
   public ctaButtonClass: string = '';
@@ -64,7 +68,16 @@ export class PopupComponent {
     }
 
     if (data.ctaButtonClass) {
+
       this.ctaButtonClass = data.ctaButtonClass;
+    }
+
+    if (data.hideCloseButton) {
+      this.hideCloseButton = true;
+    }
+
+    if (data.titleBelowImage) {
+      this.titleBelowImage = true;
     }
   }
 

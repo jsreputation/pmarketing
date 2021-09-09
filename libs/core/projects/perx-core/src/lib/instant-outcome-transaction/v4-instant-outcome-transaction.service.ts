@@ -2,8 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, timer } from 'rxjs';
+import {
+  catchError,
+  last,
+  map,
+  switchMap,
+  takeUntil,
+  takeWhile,
+} from 'rxjs/operators';
 import { IInstantOutcomeTransactionService } from './instant-outcome-transaction.service';
 import {
   IInstantOutcome,
@@ -23,6 +30,13 @@ export interface IV4InstantOutcomeTransaction {
 }
 interface IV4GetInstantOutcomeTransactionsResponse {
   data: IV4InstantOutcomeTransaction[];
+}
+interface IV4ClaimPrizeResponse {
+  data: IV4InstantOutcomeTransaction;
+}
+
+interface IV4GetInstantRewardResponse {
+  data: IV4InstantOutcomeTransaction;
 }
 
 export interface IV4InstantOutcome {
@@ -67,6 +81,72 @@ export class V4InstantOutcomeTransactionService
             )
           )
         )
+      );
+  }
+  public claimPrize(
+    instantOutcomeTransactionId: number
+  ): Observable<IInstantOutcomeTransaction> {
+    return this.http
+      .post<IV4ClaimPrizeResponse>(
+        `${this.baseUrl}/v4/instant_outcome_transactions/${instantOutcomeTransactionId}/redeem`,
+        null
+      )
+      .pipe(
+        map((res: IV4ClaimPrizeResponse) => res.data),
+        map((outcomeTransaction: IV4InstantOutcomeTransaction) =>
+          V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
+            outcomeTransaction
+          )
+        )
+      );
+  }
+
+  public getInstantRewardState(transactionId: number): Observable<string> {
+    return timer(0, 5000).pipe(
+      switchMap((_) =>
+        this.http.get<IV4GetInstantRewardResponse>(
+          `${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`
+        )
+      ),
+      map((res: IV4GetInstantRewardResponse) => res.data),
+      map((outcome: IV4InstantOutcomeTransaction) =>
+        V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
+          outcome
+        )
+      ),
+      takeWhile(
+        (transaction: IInstantOutcomeTransaction) =>
+          transaction.state !== 'completed' && transaction.state !== 'failed',
+        true
+      ),
+      takeUntil(timer(10500)),
+      last(),
+      map((transaction: IInstantOutcomeTransaction) => transaction.state),
+      catchError((_) => of('failed'))
+    );
+  }
+
+  public getInstantOutcomeTransaction(transactionId: number): Observable<IInstantOutcomeTransaction> {
+    return this.http.get<IV4GetInstantRewardResponse>(`${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`)
+      .pipe(
+        map((res: IV4GetInstantRewardResponse) => res.data),
+        map((outcome: IV4InstantOutcomeTransaction) =>
+          V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
+            outcome
+          )
+        ),
+      );
+  }
+  public getInstantOutcomeTransactionOutcomes(transactionId: number): Observable<IInstantOutcome[]> {
+    return this.http.get<IV4GetInstantRewardResponse>(`${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`)
+      .pipe(
+        map((res: IV4GetInstantRewardResponse) => res.data),
+        map((outcome: IV4InstantOutcomeTransaction) => {
+          const instantOutcomeTransaction = V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
+            outcome
+          );
+          return instantOutcomeTransaction.outcomes;
+        }),
       );
   }
 

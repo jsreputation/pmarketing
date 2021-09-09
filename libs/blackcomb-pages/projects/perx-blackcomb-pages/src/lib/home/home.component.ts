@@ -360,14 +360,26 @@ export class HomeComponent implements OnInit, OnDestroy {
             text: 'Claim now before they run out!',
             buttonTxt: 'Claim prize',
             imageUrl: popupImageURL,
+            titleBelowImage: true,
+            hideCloseButton: true,
             afterClosedCallBack: {
               dialogClosed: (): void => {
-                console.log('click to Claim prize btn');
+                this.instantOutcomeTransactionService
+                  .claimPrize(firstComefirstServeOutCome.instantOutcomeTransactionId)
+                  .subscribe((res) => {
+                    const outcomeFirst = res.outcomes?.length ? res.outcomes[0] : null;
+                    if (outcomeFirst) {
+                      this.router.navigate([`/instant-reward-outcomes/${outcomeFirst.instantOutcomeTransactionId}`]);
+                    }
+                  }, error => {
+                    console.log('Error when claim prize: ', error);
+                  });
               },
             },
           };
           this.notificationService.addPopup(enrollPopUpConf);
         }
+
       });
 
     this.campaignService
