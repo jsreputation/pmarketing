@@ -8,7 +8,7 @@ import {
   AuthenticationService,
   ConfigService,
   ICampaignService,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   InstantOutcomeService,
   IQuestService,
   IReward,
@@ -21,7 +21,8 @@ import {
   TeamsService,
   ThemesService,
   TokenStorage,
-  UtilsModule
+  UtilsModule,
+  NotificationService,
 } from '@perxtech/core';
 import { CampaignsCollectionComponent, CatalogsComponent, GamesCollectionComponent } from '@perxtech/blackcomb-pages';
 import { of } from 'rxjs';
@@ -107,6 +108,14 @@ describe('HomeComponent', () => {
     getTeam: () => of()
   };
 
+  const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
+    getInstantOutcomeTransactions: () => of([]),
+  };
+
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => of(),
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
@@ -141,6 +150,8 @@ describe('HomeComponent', () => {
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: IQuestService, useValue: questServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: IInstantOutcomeTransactionService, useValue: instantOutcomeTransactionServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
       .compileComponents();
