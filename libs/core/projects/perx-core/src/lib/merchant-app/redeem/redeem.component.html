@@ -6,6 +6,9 @@
     </div>
     <hr/>
     <div *ngIf="reward" class="reward">
+      <div class="reward-image-container">
+        <img class="reward-image" *ngIf="reward.rewardBanner || reward.rewardThumbnail" src="{{reward.rewardBanner || reward.rewardThumbnail}}" [alt]="reward.name"/>
+      </div>
       <p class="reward-name">
         {{reward.name}}
       </p>

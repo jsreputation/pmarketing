@@ -1,5 +1,5 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 
@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit, PageAppearence {
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
   public theme: ITheme;
+  public currentSelectedLanguage: string = 'en';
 
   public get name(): AbstractControl | null {
     return this.signupForm.get('name');
@@ -49,7 +50,8 @@ export class SignupComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private translate: TranslateService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
+    private cd: ChangeDetectorRef,
   ) {
     this.initForm();
     this.getAppToken();
@@ -163,5 +165,10 @@ export class SignupComponent implements OnInit, PageAppearence {
 
   public goTermAndCondition(): void {
     this.router.navigateByUrl('/c/tnc');
+  }
+
+  public switchLanguage(): void {
+    this.translate.use(this.currentSelectedLanguage);
+    this.cd.detectChanges();
   }
 }

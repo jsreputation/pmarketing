@@ -88,7 +88,7 @@
         "MOBILE_NO": "手機號碼",
         "MOBILE": "手機號碼",
         "MOBILE_NO_IS": "請輸入手機號碼",
-        "ENTER_NUMBER": "輸入你的手機號碼",
+        "STATIC_ENTER_NUMBER": "輸入你的手機號碼",
         "GET_OPT": "取得一次性密碼"
     },
     "OTP_PAGE": {

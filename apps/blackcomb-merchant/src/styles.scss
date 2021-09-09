@@ -88,3 +88,18 @@ button.mat-stroked-button {
   background-color: transparent!important;
   color: var(--primary)!important;
 }
+
+.mat-form-field {
+  font-size: 1.4rem!important;
+  display: block!important;
+}
+
+.custom-snackbar {
+  background: #FFC832;
+  color: black;
+  position: absolute;
+  top: 12rem;
+  margin: .5rem !important;
+  font-weight: 900;
+  max-width: calc(100% - 1rem) !important;
+} 
