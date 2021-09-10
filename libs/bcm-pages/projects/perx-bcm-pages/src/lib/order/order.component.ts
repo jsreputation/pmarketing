@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
-import { IMerchantProfile } from '../../merchant-admin/models/merchants-admin.model';
-import { NotificationService } from '../../utils/notification/notification.service';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { IMerchantAdminService, IMerchantProfile, NotificationService,  TokenStorage} from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';

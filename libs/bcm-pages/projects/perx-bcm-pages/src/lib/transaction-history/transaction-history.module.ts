@@ -4,9 +4,8 @@ import { NgModule } from '@angular/core';
 import { TransactionHistoryComponent } from './transaction-history.component';
 import { MatButtonModule } from '@angular/material/button';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { LoyaltyModule } from '../../loyalty/loyalty.module';
+import { LoyaltyModule, MerchantAdminModule } from '@perxtech/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MerchantAdminModule } from '../../merchant-admin/merchant-admin.module';
 
 @NgModule({
   declarations: [

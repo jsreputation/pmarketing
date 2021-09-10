@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MerchantResetPasswordModule, MerchantResetPasswordComponent } from '@perxtech/core';
+import { MerchantResetPasswordModule, MerchantResetPasswordComponent } from '@perxtech/bcm-pages';
 
 const routes: Routes = [{
   path: '',

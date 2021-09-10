@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, IConfig, ThemesService, ITheme, NotificationService, MerchantTransactionHistoryComponent,
-  MerchantRedeemComponent, MerchantQrscannerComponent, MerchantOrderComponent } from '@perxtech/core';
+import { ConfigService, IConfig, ThemesService, ITheme, NotificationService } from '@perxtech/core';
+import { MerchantTransactionHistoryComponent, MerchantRedeemComponent, MerchantQrscannerComponent, MerchantOrderComponent } from '@perxtech/bcm-pages';
 import {
   switchMap,
   tap,

@@ -2,14 +2,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { OnInit, Component } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Observable, of, forkJoin } from 'rxjs';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
-import {
-  IMerchantTransactionHistory,
-  IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
-} from '../../merchant-admin/models/merchants-admin.model';
-import { ConfigService } from '../../config/config.service';
-
+import { IMerchantAdminService, IMerchantTransactionHistory,
+  IMerchantPurchaseTransactionHistory, IMerchantRewardTransactionHistory, ConfigService} from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
 @Component({

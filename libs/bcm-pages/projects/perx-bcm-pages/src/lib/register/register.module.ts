@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
-import { MerchantAdminModule } from '../../merchant-admin/merchant-admin.module';
+import { MerchantAdminModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [RegisterComponent],

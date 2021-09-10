@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NotificationService } from '../../utils/notification/notification.service';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
+import { NotificationService, IMerchantAdminService } from '@perxtech/core';
 
 interface ResetData {
   resetPasswordToken: string;
