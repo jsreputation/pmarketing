@@ -338,30 +338,35 @@ export class HomeComponent implements OnInit, OnDestroy {
           ? instantOutcomeTransactionsHaveOutcomes[0]
           : undefined;
         if (firstComeFirstServeTransaction) {
-          const popupImageURL = 'assets/png_icon_prize.svg';
-          const enrollPopUpConf: IPopupConfig = {
-            title: 'Congrats! You earned a prize!',
-            text: 'Claim now before they run out!',
-            buttonTxt: 'Claim prize',
-            imageUrl: popupImageURL,
-            titleBelowImage: true,
-            hideCloseButton: true,
-            afterClosedCallBack: {
-              dialogClosed: (): void => {
-                this.instantOutcomeTransactionService
-                  .claimPrize(firstComeFirstServeTransaction.id)
-                  .subscribe((res) => {
-                    if (res) {
-                      this.router.navigate([`/instant-reward-outcomes/${firstComeFirstServeTransaction.id}`]);
-                    }
-                    console.log('no instantOutcomeTransaction: ', res);
-                  }, error => {
-                    console.log('Error when claim prize: ', error);
-                  });
-              },
-            },
-          };
-          this.notificationService.addPopup(enrollPopUpConf);
+          this.campaignService.getCampaign(firstComeFirstServeTransaction.campaignId)
+            .subscribe(campaignRes => {
+              const popupImageURL = campaignRes.displayProperties?.claimPrize?.image?.value.imageUrl || 'assets/png_icon_prize.svg';
+              const enrollPopUpConf: IPopupConfig = {
+                title: campaignRes.displayProperties?.claimPrize?.headline || 'Congrats! You earned a prize!',
+                text: campaignRes.displayProperties?.claimPrize?.subHeadline || 'Claim now before they run out!',
+                buttonTxt: campaignRes.displayProperties?.claimPrize?.buttonText || 'CLAIM PRIZE',
+                imageUrl: popupImageURL,
+                titleBelowImage: true,
+                hideCloseButton: true,
+                popupClass: 'custom-popup-class',
+                afterClosedCallBack: {
+                  dialogClosed: (): void => {
+                    this.instantOutcomeTransactionService
+                      .claimPrize(firstComeFirstServeTransaction.id)
+                      .subscribe((res) => {
+                        if (res) {
+                          this.router.navigate([`/instant-reward-outcomes/${firstComeFirstServeTransaction.id}`]);
+                        } else {
+                          console.log('no instantOutcomeTransaction: ', res);
+                        }
+                      }, error => {
+                        console.log('Error when claim prize: ', error);
+                      });
+                  },
+                },
+              };
+              this.notificationService.addPopup(enrollPopUpConf);
+            });
         }
 
       });

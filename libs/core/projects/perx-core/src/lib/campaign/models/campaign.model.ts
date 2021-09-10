@@ -11,17 +11,31 @@ export interface CampaignDisplayProperties {
   questDetails?: QuestProperties;
   progressDetails?: ProgressProperties;
   teamsDetails?: TeamsProperties;
+  claimPrize?: ClaimPrizeProperties;
 }
 
 export interface CampaignLandingPage {
   body?: { text: string };
   media?: { youtube?: string; bannerImage?: string};
   heading?: { text: string };
+  description?: { text: string };
   buttonText?: { text: string };
   buttonText2?: { text: string };
   subHeading?: { text: string };
   backgroundUrl?: string;
   tnc?: { text: string };
+}
+
+export interface ClaimPrizeProperties {
+  buttonText: string;
+  headline: string;
+  image?: {
+    value: {
+      filename: string;
+      imageUrl: string;
+    }
+  };
+  subHeadline: string;
 }
 
 export interface QuestProperties {

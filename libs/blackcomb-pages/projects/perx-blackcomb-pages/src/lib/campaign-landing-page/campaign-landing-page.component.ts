@@ -255,8 +255,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   private instantCampaignDisplayCtaBtn(isEnrolled: boolean | undefined): void {
     if (!isEnrolled) {
-      this.primaryCtaText = 'Enroll';
       this.isDisplayCtaBtn = true;
+      this.primaryCtaText = 'Enroll';
     } else {
       this.isDisplayCtaBtn = false;
     }
@@ -264,7 +264,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   private initCTAs(): void {
     if (this.campaign?.type === CampaignType.instant) {
-      this.instantCampaignDisplayCtaBtn(!this.campaign?.enrolled);
+      this.instantCampaignDisplayCtaBtn(this.campaign?.enrolled);
     } else {
       this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ?
         this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
