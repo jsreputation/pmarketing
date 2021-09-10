@@ -1,0 +1,59 @@
+@import "../mixins/mixins";
+
+.content-container {
+
+  width: 100%;
+  background-color: var(--login_background_colour);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include multiLineFormFieldError;
+  
+  ::ng-deep {
+    &[appearance="standard"],
+    &[appearance="legacy"] {
+
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.55em 0.75em 0 0.75em !important;
+        background-color: #F8F8FC !important;
+      }
+      .mat-form-field-underline {
+        background-color: #E9E9ED !important;
+      }
+
+      .mat-form-field-flex > div {
+        padding-bottom: 0.75em;
+        top: -0.5em;
+
+        span.prefix-spacer {
+          width: 0.3em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .login-form {
+    width: 100%;
+  }
+
+  .main-heading {
+    font-weight: 900;
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+  }
+
+  mat-form-field {
+    font-size: 1.4rem;
+  }
+
+  .forgot-text {
+    color: var(--primary);
+    margin-bottom: 3.5rem;
+    font-size: 1.2rem;
+  }
+
+}
+

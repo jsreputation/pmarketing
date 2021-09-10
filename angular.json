@@ -64,9 +64,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -105,9 +103,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/dbshk-agent"
-          ]
+          "outputs": ["coverage/apps/dbshk-agent"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -207,9 +203,7 @@
               "ngswConfigPath": "apps/philipssg/ngsw-config.json"
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -248,9 +242,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/philipssg"
-          ]
+          "outputs": ["coverage/apps/philipssg"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -290,9 +282,7 @@
               "apps/starhub/src/assets",
               "apps/starhub/src/robots.txt"
             ],
-            "styles": [
-              "apps/starhub/src/styles.scss"
-            ],
+            "styles": ["apps/starhub/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -343,9 +333,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -383,9 +371,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/starhub"
-          ]
+          "outputs": ["coverage/apps/starhub"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -426,9 +412,7 @@
               "apps/prudential/src/assets",
               "apps/prudential/src/robots.txt"
             ],
-            "styles": [
-              "apps/prudential/src/styles.scss"
-            ],
+            "styles": ["apps/prudential/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -458,9 +442,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -498,9 +480,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/prudential"
-          ]
+          "outputs": ["coverage/apps/prudential"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -540,9 +520,7 @@
               "apps/oracle-pay/src/assets",
               "apps/oracle-pay/src/robots.txt"
             ],
-            "styles": [
-              "apps/oracle-pay/src/styles.scss"
-            ],
+            "styles": ["apps/oracle-pay/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -572,9 +550,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -612,9 +588,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/oracle-pay"
-          ]
+          "outputs": ["coverage/apps/oracle-pay"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -654,9 +628,7 @@
               "apps/merck-merchant/src/assets",
               "apps/merck-merchant/src/robots.txt"
             ],
-            "styles": [
-              "apps/merck-merchant/src/styles.scss"
-            ],
+            "styles": ["apps/merck-merchant/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -686,9 +658,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -726,9 +696,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/merck-merchant"
-          ]
+          "outputs": ["coverage/apps/merck-merchant"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -773,9 +741,7 @@
               "apps/merck-customer/src/assets",
               "apps/merck-customer/src/robots.txt"
             ],
-            "styles": [
-              "apps/merck-customer/src/styles.scss"
-            ],
+            "styles": ["apps/merck-customer/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -842,9 +808,7 @@
               "i18nMissingTranslation": "error"
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -885,9 +849,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/merck-customer"
-          ]
+          "outputs": ["coverage/apps/merck-customer"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -993,9 +955,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1037,9 +997,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/hsbchk"
-          ]
+          "outputs": ["coverage/apps/hsbchk"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1079,13 +1037,9 @@
               "apps/hsbc-rewards/src/assets",
               "apps/hsbc-rewards/src/robots.txt"
             ],
-            "styles": [
-              "apps/hsbc-rewards/src/styles.scss"
-            ],
+            "styles": ["apps/hsbc-rewards/src/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
+              "includePaths": ["src/styles"]
             },
             "scripts": []
           },
@@ -1116,9 +1070,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1156,9 +1108,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/hsbc-rewards"
-          ]
+          "outputs": ["coverage/apps/hsbc-rewards"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1198,9 +1148,7 @@
               "apps/hsbc/src/assets",
               "apps/hsbc/src/robots.txt"
             ],
-            "styles": [
-              "apps/hsbc/src/styles.scss"
-            ],
+            "styles": ["apps/hsbc/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -1230,9 +1178,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1270,9 +1216,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/hsbc"
-          ]
+          "outputs": ["coverage/apps/hsbc"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1312,9 +1256,7 @@
               "apps/hkbn/src/assets",
               "apps/hkbn/src/robots.txt"
             ],
-            "styles": [
-              "apps/hkbn/src/styles.scss"
-            ],
+            "styles": ["apps/hkbn/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -1344,9 +1286,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1384,9 +1324,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/hkbn"
-          ]
+          "outputs": ["coverage/apps/hkbn"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1426,9 +1364,7 @@
               "apps/components-demo/src/assets",
               "apps/components-demo/src/robots.txt"
             ],
-            "styles": [
-              "apps/components-demo/src/styles.scss"
-            ],
+            "styles": ["apps/components-demo/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -1458,9 +1394,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1499,9 +1433,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/components-demo"
-          ]
+          "outputs": ["coverage/apps/components-demo"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1541,9 +1473,7 @@
               "apps/bpi/src/assets",
               "apps/bpi/src/robots.txt"
             ],
-            "styles": [
-              "apps/bpi/src/styles.scss"
-            ],
+            "styles": ["apps/bpi/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -1573,9 +1503,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1613,9 +1541,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/bpi"
-          ]
+          "outputs": ["coverage/apps/bpi"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1692,9 +1618,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1733,9 +1657,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/blackcomb"
-          ]
+          "outputs": ["coverage/apps/blackcomb"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1745,6 +1667,122 @@
               "apps/blackcomb/src/main.ts",
               "apps/blackcomb/src/polyfills.ts",
               "apps/blackcomb/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
+    "globesuperapp": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/globesuperapp",
+      "sourceRoot": "apps/globesuperapp/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/globesuperapp",
+            "index": "apps/globesuperapp/src/index.html",
+            "main": "apps/globesuperapp/src/main.ts",
+            "polyfills": "apps/globesuperapp/src/polyfills.ts",
+            "tsConfig": "apps/globesuperapp/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/globesuperapp/src/favicon.ico",
+              "apps/globesuperapp/src/assets",
+              "apps/globesuperapp/src/static",
+              "apps/globesuperapp/src/manifest.webmanifest",
+              "apps/globesuperapp/src/robots.txt"
+            ],
+            "styles": [
+              "apps/globesuperapp/src/styles.scss",
+              "apps/globesuperapp/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/globesuperapp/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/globesuperapp/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "globesuperapp:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "globesuperapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "globesuperapp:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/globesuperapp/e2e/protractor.conf.js",
+            "devServerTarget": "globesuperapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "globesuperapp:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/globesuperapp/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/globesuperapp"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/globesuperapp/src/**/*.d.ts",
+              "apps/globesuperapp/src/main.ts",
+              "apps/globesuperapp/src/polyfills.ts",
+              "apps/globesuperapp/src/**/*.spec.ts"
             ]
           }
         }
@@ -1812,9 +1850,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1853,9 +1889,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/transcycle"
-          ]
+          "outputs": ["coverage/apps/transcycle"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -1949,9 +1983,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -1990,9 +2022,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/all-it"
-          ]
+          "outputs": ["coverage/apps/all-it"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -2071,9 +2101,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -2114,9 +2142,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/apps/abenson"
-          ]
+          "outputs": ["coverage/apps/abenson"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -2139,11 +2165,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/blackcomb-merchant",
+            "outputPath": "dist/blackcomb-merchant",
             "index": "apps/blackcomb-merchant/src/index.html",
             "main": "apps/blackcomb-merchant/src/main.ts",
             "polyfills": "apps/blackcomb-merchant/src/polyfills.ts",
@@ -2155,9 +2179,7 @@
               "apps/blackcomb-merchant/src/manifest.webmanifest",
               "apps/blackcomb-merchant/src/robots.txt"
             ],
-            "styles": [
-              "apps/blackcomb-merchant/src/styles.scss"
-            ],
+            "styles": ["apps/blackcomb-merchant/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -2222,9 +2244,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/blackcomb-merchant"
-          ],
+          "outputs": ["coverage/apps/blackcomb-merchant"],
           "options": {
             "jestConfig": "apps/blackcomb-merchant/jest.config.json",
             "passWithNoTests": true,
@@ -2258,17 +2278,13 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/libs/whistler"
-          ]
+          "outputs": ["coverage/libs/whistler"]
         },
         "lint": {
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "files": [
-              "libs/whistler/projects/**/*.ts"
-            ]
+            "files": ["libs/whistler/projects/**/*.ts"]
           }
         }
       }
@@ -2291,9 +2307,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/libs/core"
-          ]
+          "outputs": ["coverage/libs/core"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -2324,9 +2338,7 @@
             "passWithNoTests": true,
             "codeCoverage": true
           },
-          "outputs": [
-            "coverage/libs/blackcomb-pages"
-          ]
+          "outputs": ["coverage/libs/blackcomb-pages"]
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -2363,19 +2375,40 @@
               "optimization": true,
               "extractLicenses": false,
               "inspect": false,
-              "assets": [
-                "backend/appauth-server/assets"
-              ]
+              "assets": ["backend/appauth-server/assets"]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "appauth-server:build"
+          }
+        }
+      }
+    },
+    "bcm-pages": {
+      "root": "libs/bcm-pages",
+      "sourceRoot": "libs/bcm-pages/projects/perx-bcm-pages/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/bcm-pages/**/*.d.ts",
+              "libs/bcm-pages/**/*.spec.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/bcm-pages"],
+          "options": {
+            "jestConfig": "libs/bcm-pages/projects/perx-bcm-pages/jest.config.js",
+            "passWithNoTests": true,
+            "codeCoverage": true
           }
         }
       }

@@ -12,6 +12,7 @@ import { AuthenticationModule, GameModule, SurveyModule, UtilsModule, ConfigModu
 import { SignUpComponent } from './sign-up.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [SignUpComponent],
@@ -37,6 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatCardModule
   ]
 })
 export class SignUpModule { }

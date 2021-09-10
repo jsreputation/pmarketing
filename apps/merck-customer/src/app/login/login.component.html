@@ -1,22 +1,24 @@
-<div class="main-container">
-  <ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
-    <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
-  </ng-container>
-  <ng-template #defaultLogoTemplate>
-    <img class="logo" src="assets/logo.png">
-  </ng-template>
+<div class="main-container" *ngIf="theme">
+  <div class="login-image">
+    <ng-container *ngIf="theme?.properties['--logo']; else defaultLogoTemplate">
+      <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+    </ng-container>
+    <ng-template #defaultLogoTemplate>
+      <img class="logo" src="assets/logo.png">
+    </ng-template>
+  </div>
   <div class="translate-switch">
     <mat-form-field>
       <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
-        <mat-option value="en" >En</mat-option>
-        <mat-option value="zh" >Zh</mat-option>
+        <mat-option value="en">En</mat-option>
+        <mat-option value="zh">中文</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="logo-title">
-    <ng-container>{{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}</ng-container>
-  </div>
-  <div class="content-container">
+  <!--  <div class="logo-title">-->
+  <!--    <ng-container>{{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}</ng-container>-->
+  <!--  </div>-->
+  <mat-card class="content-container mat-elevation-z3">
     <div class="main-heading" translate>LOGIN_PAGE.LOGIN</div>
     <div class="subtitle">
       <ng-container>{{"LOGIN_PAGE.NOT_MEMBER" | translate }}? </ng-container><span translate class="link"
@@ -58,5 +60,5 @@
       <div class="forgot-text" (click)="goToForgotPassword()" translate>LOGIN_PAGE.FORGOT_PASSWORD</div>
       <button mat-flat-button type="submit" class="full-width__button">{{'LOGIN_PAGE.LOGIN' | translate}}</button>
     </form>
-  </div>
+  </mat-card>
 </div>

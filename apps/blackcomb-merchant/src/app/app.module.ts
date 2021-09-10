@@ -20,7 +20,7 @@ import {
   LanguageService,
   UtilsModule,
   ProfileServiceModule as PerxProfileServiceModule,
-  SettingsModule,
+  SettingsModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpBackend, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
@@ -65,6 +65,7 @@ export const appInit =
     BrowserAnimationsModule,
     MatIconModule,
     PerxProfileServiceModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

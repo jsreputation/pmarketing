@@ -1,6 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject, } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  EMPTY,
+  forkJoin,
+  iif,
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
 import {
   catchError,
   filter,
@@ -29,8 +38,11 @@ import {
   IFlags,
   IGame,
   IGameService,
+  IInstantOutcome,
+  IInstantOutcomeTransaction,
+  IInstantOutcomeTransactionService,
   ILoyalty,
-  InstantOutcomeService,
+  InstantOutcomeService, IPopupConfig,
   IPrice,
   IProfile,
   IQuestService,
@@ -38,7 +50,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   ITabConfigExtended,
-  ITheme,
+  ITheme, NotificationService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -74,6 +86,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public stampCampaigns$: Observable<ICampaign[]>;
   public questCampaigns$: Observable<ICampaign[]>;
   public progressCampaigns$: Observable<ICampaign[]>;
+  public instantCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -119,8 +132,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
     protected questService: IQuestService,
-    protected teamsService: TeamsService
-  ) { }
+    protected teamsService: TeamsService,
+    protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
+    protected notificationService: NotificationService,
+  ) {}
 
   public ngOnInit(): void {
     this.configService
@@ -261,6 +276,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (campaign.type === 'instant') {
+      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+      return;
+    }
+
     if (campaign.type === 'quest') {
       this.router.navigate([`quest/${campaign.id}`]);
       return;
@@ -313,6 +333,55 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // requires public access for extended implementation
   public fetchPopupCampaigns(): void {
+    this.instantOutcomeTransactionService
+      .getInstantOutcomeTransactions()
+      .pipe(catchError(() => of([])))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((instantOutcomeTransactions: IInstantOutcomeTransaction[]) => {
+        const instantOutcomeTransactionsHaveOutcomes: IInstantOutcomeTransaction[] = instantOutcomeTransactions.filter(
+          (iot) => iot.outcomes.length > 0
+        );
+        const allInstantOutcomes: IInstantOutcome[] = instantOutcomeTransactionsHaveOutcomes.reduce(
+          (total: IInstantOutcome[], currentValue) => {
+            total = [...total, ...currentValue.outcomes];
+            return total;
+          },
+          []
+        );
+        const firstComefirstServeOutCome:
+          | IInstantOutcome
+          | undefined = allInstantOutcomes.length
+          ? allInstantOutcomes[0]
+          : undefined;
+        if (firstComefirstServeOutCome) {
+          const popupImageURL = 'assets/png_icon_prize.svg';
+          const enrollPopUpConf: IPopupConfig = {
+            title: 'Congrats! You earned a prize!',
+            text: 'Claim now before they run out!',
+            buttonTxt: 'Claim prize',
+            imageUrl: popupImageURL,
+            titleBelowImage: true,
+            hideCloseButton: true,
+            afterClosedCallBack: {
+              dialogClosed: (): void => {
+                this.instantOutcomeTransactionService
+                  .claimPrize(firstComefirstServeOutCome.instantOutcomeTransactionId)
+                  .subscribe((res) => {
+                    const outcomeFirst = res.outcomes?.length ? res.outcomes[0] : null;
+                    if (outcomeFirst) {
+                      this.router.navigate([`/instant-reward-outcomes/${outcomeFirst.instantOutcomeTransactionId}`]);
+                    }
+                  }, error => {
+                    console.log('Error when claim prize: ', error);
+                  });
+              },
+            },
+          };
+          this.notificationService.addPopup(enrollPopUpConf);
+        }
+
+      });
+
     this.campaignService
       .getCampaigns({ type: CampaignType.give_reward })
       .pipe(catchError(() => of([])))
@@ -448,6 +517,17 @@ export class HomeComponent implements OnInit, OnDestroy {
           takeLast(1)
         );
       // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
+    }
+
+    if (this.appConfig.showInstantRewardCampaignsOnHomePage || this.appRemoteFlags?.showInstantRewardCampaignsOnHomePage) {
+      this.instantCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.instant })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
     }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(

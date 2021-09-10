@@ -1,24 +1,28 @@
-<div class="main-container">
+<div class="main-container" *ngIf="theme">
   <div class="floating-container">
     <div class="translate-switch">
       <mat-form-field>
         <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
-          <mat-option value="en">En</mat-option>
-          <mat-option value="zh">Zh</mat-option>
+          <mat-option value="en">EN</mat-option>
+          <mat-option value="zh">中文</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="logo-container">
-      <a routerLink="/">
-        <img class="logo" src="assets/logo.png">
-      </a>
+      <div *ngIf="theme?.properties['--landing_page_logo'];else nav_logo">
+        <img class="logo" [attr.src]="theme?.properties['--landing_page_logo']"
+          [attr.alt]="theme?.properties['--title']" />
+      </div>
+      <ng-template #nav_logo>
+        <img class="logo" [attr.src]="theme?.properties['--logo']" [attr.alt]="theme?.properties['--title']" />
+      </ng-template>
     </div>
     <div class="logo-title">
       {{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}
     </div>
   </div>
   <div class="container">
-    <div class="content">
+    <mat-card class="content mat-elevation-z3">
       <div class="main-heading">{{"LOGIN_PAGE.WELCOME"|translate}}!</div>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -41,7 +45,8 @@
 
         <mat-form-field class="full-width__input">
           <mat-label>{{"LOGIN_PAGE.PASSWORD"|translate}}</mat-label>
-          <input type="password" matInput placeholder='{{"LOGIN_PAGE.PASSWORD"|translate}}' formControlName="password" required>
+          <input type="password" matInput placeholder='{{"LOGIN_PAGE.PASSWORD"|translate}}' formControlName="password"
+            required>
           <mat-error *ngIf="password && password.hasError('required')">
             {{"LOGIN_PAGE.PASSWORD_IS"|translate}} <strong>required</strong>
           </mat-error>
@@ -54,7 +59,7 @@
           <app-sales-contact></app-sales-contact>
         </div>
       </form>
-    </div>
+    </mat-card>
   </div>
 
 </div>

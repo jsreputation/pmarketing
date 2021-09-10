@@ -1,5 +1,5 @@
 export const EXTENDED_LOGO_URLS: string[] = [
   '/login',
-  '/forgot-password',
+  '/dashboard/merchant_user_account_invitations/accept'
 ];
 

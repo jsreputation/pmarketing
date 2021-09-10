@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ConfigService, LoyaltyModule } from '@perxtech/core';
+import { ConfigService, LoyaltyModule, ThemesService } from '@perxtech/core';
 import { Location } from '@angular/common';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
@@ -25,6 +25,9 @@ describe('TransactionHistoryComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,6 +49,7 @@ describe('TransactionHistoryComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();

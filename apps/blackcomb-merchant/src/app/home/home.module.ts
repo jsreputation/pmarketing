@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MerchantLandingPageComponent, MerchantLandingPageModule} from '@perxtech/core';
+import { MerchantLandingPageComponent, MerchantLandingPageModule} from '@perxtech/bcm-pages';
 
 const routes: Routes = [{
   path: '',

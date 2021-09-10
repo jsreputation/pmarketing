@@ -9,6 +9,7 @@ import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../../perx-core.models';
+import { ProfileService } from '../../profile/profile.service';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -53,7 +54,11 @@ describe('QrcodeRedemptionComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        {
+          provide: ProfileService,
+          useValue: { whoAmI: () => of({}) }
+        },
       ]
     })
       .compileComponents();

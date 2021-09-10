@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, IConfig, ThemesService, ITheme, NotificationService, MerchantTransactionHistoryComponent } from '@perxtech/core';
+import { ConfigService, IConfig, ThemesService, ITheme, NotificationService } from '@perxtech/core';
+import { MerchantTransactionHistoryComponent, MerchantRedeemComponent, MerchantQrscannerComponent, MerchantOrderComponent } from '@perxtech/bcm-pages';
 import {
   switchMap,
   tap,
@@ -56,10 +57,10 @@ export class AppComponent implements OnInit {
       if (message === 'LOGIN_SESSION_EXPIRED') {
         this.router.navigate([ '/login' ]);
         this.translateService.get('LOGIN_SESSION_EXPIRED').subscribe(msg => {
-          this.snack.open(msg, 'x', { duration: 2000 });
+          this.snack.open(msg, 'x', { duration: 2000, panelClass: ['custom-snackbar']} );
         });
       } else {
-        this.snack.open(message, 'x', { duration: 2000 });
+        this.snack.open(message, 'x', { duration: 2000, panelClass: ['custom-snackbar']});
       }
     });
 
@@ -75,11 +76,20 @@ export class AppComponent implements OnInit {
   public onActivate(ref: any): void {
 
     this.showPageTitle =
-      ref instanceof MerchantTransactionHistoryComponent;
+      ref instanceof MerchantTransactionHistoryComponent ||
+      ref instanceof MerchantQrscannerComponent ||
+      ref instanceof MerchantRedeemComponent ||
+      ref instanceof MerchantOrderComponent;
 
     this.pageTitle =
       ref instanceof MerchantTransactionHistoryComponent
         ? 'Transaction History'
+        : ref instanceof MerchantQrscannerComponent
+        ? 'Scan QR'
+        : ref instanceof MerchantRedeemComponent
+        ? 'Redemption'
+        : ref instanceof MerchantOrderComponent
+        ? 'Create Sales Record'
         : '';
   }
 

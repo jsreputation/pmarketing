@@ -6,14 +6,18 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
+import { ThemesService } from '@perxtech/core';
 
 describe('QrscannerComponent', () => {
   let component: QrscannerComponent;
   let fixture: ComponentFixture<QrscannerComponent>;
   const locationStub: Partial<Location> = { back: () => {} };
   const routerStub = { navigate: () => ({}) };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
   let params: Subject<Params>;
 
   beforeEach(async(() => {
@@ -26,6 +30,7 @@ describe('QrscannerComponent', () => {
         { provide: ActivatedRoute, useValue: {params} },
         { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub },
+        { provide: ThemesService, useValue: themesServiceStub },
 
       ]
     })

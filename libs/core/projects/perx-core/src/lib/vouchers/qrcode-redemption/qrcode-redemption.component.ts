@@ -1,7 +1,8 @@
 import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { IVoucher } from '../models/voucher.model';
-import { Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { IVoucherService } from '../ivoucher.service';
+import { ProfileService } from '../../profile/profile.service';
 
 @Component({
   selector: 'perx-core-qrcode-redemption',
@@ -13,14 +14,29 @@ export class QrcodeRedemptionComponent implements OnChanges {
   @Input()
   public voucherId: number;
 
-  @Input('voucher')
-  public voucher$: Observable<IVoucher>;
+  @Input()
+  public voucher: IVoucher;
+  public qrCodeDetails?: string;
 
-  constructor(private vouchersService: IVoucherService) { }
+  constructor(private vouchersService: IVoucherService,
+              private profileService: ProfileService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
-      this.voucher$ = this.vouchersService.get(this.voucherId);
+      forkJoin([ this.vouchersService.get(this.voucherId),
+      this.profileService.whoAmI()]).subscribe(
+        ([voucher, profile]) => {
+          this.voucher = voucher;
+          this.qrCodeDetails = JSON.stringify(
+            {
+              id: profile.id,
+              name: profile.lastName,
+              identifier: profile.identifier,
+              rewardId: this.voucher.reward?.id,
+              voucherId: this.voucherId,
+              voucherCode: this.voucher.code
+            });
+        });
     }
   }
 }

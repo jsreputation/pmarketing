@@ -1,9 +1,7 @@
-<app-header showBackButton="true"></app-header>
+<app-header [showBackButton]="true"></app-header>
 <div class="container">
   <div class="scanner">
     <em></em>
-    <zxing-scanner
-      (scanSuccess)="scanSuccessHandler($event)"
-    ></zxing-scanner>
+    <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"></zxing-scanner>
   </div>
 </div>

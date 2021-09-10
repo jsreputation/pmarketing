@@ -1,10 +1,12 @@
+@import '../../styles.scss';
+
 .full-width__input {
   width: 100%;
   display: block;
 }
 
 .main-container {
-  background-color: #0f69af;
+  background: var(--login_background_colour);
 
   .container {
     padding: 0 1.5rem 1.5rem;
@@ -46,7 +48,7 @@
   padding: 3rem 1.5rem 1.5rem;
 
   .translate-switch {
-    color: white;
+    color: $main-blue-theme;
     flex: 0;
     text-align: right;
 
@@ -57,11 +59,11 @@
 
       .mat-select-value {
         font-size: 1.5rem;
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-select-arrow {
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-form-field-underline {
@@ -73,5 +75,13 @@
   > .logo-container {
     text-align: center;
     flex: 0;
+    margin-bottom: 1rem;
+
+    .logo {
+      width: 100%;
+      max-width: 30rem;
+      max-height: 10rem;
+      object-fit: contain;
+    }
   }
 }

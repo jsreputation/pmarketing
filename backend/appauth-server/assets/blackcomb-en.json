@@ -290,7 +290,8 @@
     "REWARDS": "Rewards",
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
-    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
+    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

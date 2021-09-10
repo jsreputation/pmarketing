@@ -76,7 +76,8 @@
         "AGREE_MARKETING": "我同意及接收默克集團(香港)的市場資訊",
         "ACCEPT_TNC": "同意條款與細則",
         "ACCEPT_MARKETING": "同意接收默糖心的廣告信息",
-        "REGISTER_BTN": "註冊"
+        "REGISTER_BTN": "註冊",
+        "TERM_AND_CONDITION": "條款及細則"
     },
     "FORGET_PW_PAGE": {
         "COUNTRY_HONGKONG": "香港",
@@ -87,7 +88,7 @@
         "MOBILE_NO": "手機號碼",
         "MOBILE": "手機號碼",
         "MOBILE_NO_IS": "請輸入手機號碼",
-        "ENTER_NUMBER": "輸入你的手機號碼",
+        "STATIC_ENTER_NUMBER": "輸入你的手機號碼",
         "GET_OPT": "取得一次性密碼"
     },
     "OTP_PAGE": {
@@ -138,7 +139,8 @@
         "PRIVACY_POLICY": "私隱政策",
         "CONDITION_UPDATED": "信息更新成功",
         "TIER": "等级",
-        "LOGOUT": "登出"
+        "LOGOUT": "登出",
+        "TERMS_AND_CONDITIONS": "條款及細則"
     },
     "PROFILE": {
         "NAME": "姓名",

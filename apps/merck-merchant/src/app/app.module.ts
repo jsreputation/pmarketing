@@ -18,7 +18,7 @@ import {
   AuthenticationService,
   ConfigModule,
   ConfigService,
-  IConfig,
+  IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LoyaltyModule,
   MerchantAdminModule,
@@ -54,6 +54,7 @@ import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { switchMap, tap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatCardModule } from '@angular/material/card';
 
 export const appInit =
   (
@@ -110,6 +111,7 @@ export const appInit =
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatCardModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -117,6 +119,7 @@ export const appInit =
     ZXingScannerModule,
     MatSnackBarModule,
     RewardsModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     MerchantAdminModule,
     LoyaltyModule.forRoot(),

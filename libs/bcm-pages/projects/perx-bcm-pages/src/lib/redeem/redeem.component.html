@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="main">
+    <div *ngIf="payload" class="customer-info">
+      <p>{{ payload.name }}</p>
+      <small>ID: {{ payload.id }}</small>
+    </div>
+    <hr/>
+    <div *ngIf="reward" class="reward">
+      <div class="reward-image-container">
+        <img class="reward-image" *ngIf="reward.rewardBanner || reward.rewardThumbnail" src="{{reward.rewardBanner || reward.rewardThumbnail}}" [alt]="reward.name"/>
+      </div>
+      <p class="reward-name">
+        {{reward.name}}
+      </p>
+      <p *ngIf="!didProceed && reward?.rewardPrice?.length > 0" class="point">
+        {{getPrice()}}
+      </p>
+    </div>
+  </div>
+  <div class="btn-container">
+    <div class="btn-group-container" *ngIf="!didProceed && payload else proceeded">
+      <button mat-raised-button (click)="onProceed()" class="full-width__button mat-primary">{{"REDEEM.PROCEED"|translate}}</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
+    </div>
+    <ng-template #proceeded>
+      <button mat-raised-button (click)="onClose()" class="full-width__button mat-primary">{{"REDEEM.CLOSE"|translate}}</button>
+    </ng-template>
+  </div>
+</div>

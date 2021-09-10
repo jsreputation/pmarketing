@@ -44,6 +44,7 @@ export interface IConfig<T> {
   showSurveyFirstOnHomePageCampaignList?: boolean;
   showQuestCampaignsOnHomePage?: boolean;
   showProgressBarCampaignsOnHomePage?: boolean;
+  showInstantRewardCampaignsOnHomePage?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;

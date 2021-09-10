@@ -74,3 +74,32 @@ button.mat-stroked-button {
 .backArrow {
   color: var(--accent);
 }
+
+.full-width__input {
+  width: 100%;
+  display: block;
+}  
+
+.full-width__button {
+  width: 100%;
+}
+
+.btn-transparent {
+  background-color: transparent!important;
+  color: var(--primary)!important;
+}
+
+.mat-form-field {
+  font-size: 1.4rem!important;
+  display: block!important;
+}
+
+.custom-snackbar {
+  background: #FFC832;
+  color: black;
+  position: absolute;
+  bottom: 0;
+  margin: .5rem !important;
+  font-weight: 900;
+  max-width: calc(100% - 1rem) !important;
+} 
