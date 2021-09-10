@@ -3,11 +3,7 @@ import {
   OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErrorMessageService } from '../../utils/error-message/error-message.service';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
-import { IReward } from '../../rewards/models/reward.model';
-import { NotificationService } from '../../utils/notification/notification.service';
-import { RewardsService } from '../../rewards/rewards.service';
+import { ErrorMessageService, IMerchantAdminService, IReward, NotificationService,  RewardsService} from '@perxtech/core';
 import { HttpResponseBase } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 

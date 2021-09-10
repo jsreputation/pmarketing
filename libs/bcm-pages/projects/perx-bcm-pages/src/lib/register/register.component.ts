@@ -1,9 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from '../../utils/notification/notification.service';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
-import { ConfigService } from '../../config/config.service';
-import { IMerchantProfile } from '../../merchant-admin/models/merchants-admin.model';
+import { NotificationService, IMerchantAdminService, ConfigService, IMerchantProfile } from '@perxtech/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -83,7 +80,7 @@ export class RegisterComponent implements OnInit {
 
   public onSubmit(): void {
     const password: string = this.loginForm.value.password;
-    const confirmPassword: string = this.loginForm.value['confirmPassword'];
+    const confirmPassword: string = this.loginForm.value.confirmPassword;
 
     if (password !== confirmPassword) {
       this.notificationService.addSnack('Passwords do not match.');

@@ -5,9 +5,7 @@ import {
 } from '@angular/forms';
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IMerchantAdminService } from '../../merchant-admin/imerchant-admin.service';
-import { IMessageResponse } from '../../perx-core.models';
-import { NotificationService } from '../../utils/notification/notification.service';
+import { IMerchantAdminService, IMessageResponse, NotificationService } from '@perxtech/core';
 
 @Component({
   selector: 'app-forgot-password',

@@ -426,22 +426,3 @@ export {
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
-/**
- * Merchant app
- */
-export { TransactionHistoryModule as MerchantTransactionHistoryModule } from './lib/merchant-app/transaction-history/transaction-history.module';
-export { TransactionHistoryComponent as MerchantTransactionHistoryComponent } from './lib/merchant-app/transaction-history/transaction-history.component';
-export { LandingPageModule as MerchantLandingPageModule } from './lib/merchant-app/landing-page/landing-page.module';
-export { LandingPageComponent as MerchantLandingPageComponent } from './lib/merchant-app/landing-page/landing-page.component';
-export { RedeemModule as MerchantRedeemModule } from './lib/merchant-app/redeem/redeem.module';
-export { RedeemComponent as MerchantRedeemComponent } from './lib/merchant-app/redeem/redeem.component';
-export { QrscannerModule as MerchantQrscannerModule } from './lib/merchant-app/qrscanner/qrscanner.module';
-export { QrscannerComponent as MerchantQrscannerComponent } from './lib/merchant-app/qrscanner/qrscanner.component';
-export { RegisterModule as MerchantRegisterModule } from './lib/merchant-app/register/register.module';
-export { RegisterComponent as MerchantRegisterComponent } from './lib/merchant-app/register/register.component';
-export { ForgotPasswordModule as MerchantForgotPasswordModule } from './lib/merchant-app/forgot-password/forgot-password.module';
-export { ForgotPasswordComponent as MerchantForgotPasswordComponent } from './lib/merchant-app/forgot-password/forgot-password.component';
-export { ResetPasswordModule as MerchantResetPasswordModule } from './lib/merchant-app/reset-password/reset-password.module';
-export { ResetPasswordComponent as MerchantResetPasswordComponent } from './lib/merchant-app/reset-password/reset-password.component';
-export { OrderModule as MerchantOrderModule } from './lib/merchant-app/order/order.module';
-export { OrderComponent as MerchantOrderComponent } from './lib/merchant-app/order/order.component';

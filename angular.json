@@ -2397,7 +2397,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/bcm-pages/projects/perx-bcm-pages/**/*.ts"
+              "libs/bcm-pages/**/*.d.ts",
+              "libs/bcm-pages/**/*.spec.ts"
             ]
           }
         },

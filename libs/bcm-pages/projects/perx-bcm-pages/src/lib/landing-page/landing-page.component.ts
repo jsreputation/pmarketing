@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../auth/authentication/authentication.service';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-landing-page',
