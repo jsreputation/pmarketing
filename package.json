@@ -149,6 +149,7 @@
     "test-ci:local": "nx run-many --target=test --all --parallel",
     "test:abenson": "nx test abenson --detectOpenHandles",
     "test:all-it": "nx test all-it --detectOpenHandles",
+    "test:bdo": "nx test bdo --detectOpenHandles",
     "test:blackcomb": "nx test blackcomb --detectOpenHandles",
     "test:bpi": "nx test bpi --detectOpenHandles",
     "test:components-demo": "nx test components-demo --detectOpenHandles",
