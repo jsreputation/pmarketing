@@ -173,7 +173,8 @@
     "test:transcycle": "nx test transcycle --detectOpenHandles",
     "lint": "eslint --ext js,jsx src",
     "prettier": "prettier --write src/**/*.{ts,js,css,html}",
-    "postinstall": "node ./decorate-angular-cli.js"
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
+    "e2e": "ng e2e"
   },
   "husky": {
     "hooks": {
@@ -194,12 +195,16 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.1001.7",
     "@angular-devkit/build-ng-packagr": "0.1001.7",
+    "@angular-eslint/eslint-plugin": "~12.0.0",
+    "@angular-eslint/eslint-plugin-template": "~12.0.0",
+    "@angular-eslint/template-parser": "~12.0.0",
     "@angular/cli": "10.1.7",
     "@angular/compiler-cli": "10.2.5",
     "@angular/language-service": "10.2.5",
     "@briebug/jest-schematic": "^2.1.1",
     "@nrwl/angular": "^12.3.6",
     "@nrwl/cli": "11.6.2",
+    "@nrwl/cypress": "12.3.6",
     "@nrwl/eslint-plugin-nx": "11.6.2",
     "@nrwl/jest": "11.6.2",
     "@nrwl/linter": "11.6.2",
@@ -218,10 +223,12 @@
     "@typescript-eslint/eslint-plugin-tslint": "~2.3.0",
     "@typescript-eslint/parser": "4.3.0",
     "codelyzer": "6.0.2",
+    "cypress": "^7.3.0",
     "env-cmd": "^10.1.0",
     "eslint": "7.10.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "^2.19.1",
     "husky": "^4.3.0",
     "jest": "26.2.2",
