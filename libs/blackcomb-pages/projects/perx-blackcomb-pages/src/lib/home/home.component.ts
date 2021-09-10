@@ -267,7 +267,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (campaign.type === 'instant') {
+    if (campaign.type === CampaignType.instant) {
       this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
       return;
     }
