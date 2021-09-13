@@ -231,17 +231,11 @@ export class V4CampaignService implements ICampaignService {
           youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
 
           // @ts-ignore
-          displayProperties.landingPage.media = {
-            ...displayProperties.landingPage.media,
-            youtube: youtubeUrl,
-          };
+          displayProperties.landingPage.media = { ...displayProperties.landingPage.media, youtube: youtubeUrl, };
         }
         if (lp.media?.banner_image) {
           // @ts-ignore
-          displayProperties.landingPage.media = {
-            ...displayProperties.landingPage.media,
-            bannerImage: lp.media.banner_image.value.image_url,
-          };
+          displayProperties.landingPage.media = {...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url}
         }
       }
     }
