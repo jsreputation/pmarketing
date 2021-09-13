@@ -1,0 +1,40 @@
+@mixin ellipse-lines($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin icon {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 1.6rem;
+  width: 1.6rem;
+  color: white;
+}
+
+@mixin multiLineFormFieldError {
+  ::ng-deep .mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+
+      .mat-form-field-underline {
+        position: initial !important;
+        display: block;
+        margin-top: -1px;
+      }
+
+      .mat-form-field-subscript-wrapper,
+      .mat-form-field-ripple {
+        position: initial !important;
+        display: table;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        min-height: calc(1em + 1px);
+      }
+    }
+  }
+}

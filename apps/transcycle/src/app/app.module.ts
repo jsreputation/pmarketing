@@ -67,7 +67,7 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule,
+  VouchersModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -156,6 +156,7 @@ export const setLanguage = (
     OutcomeModule,
     SignUpModule,
     BrowserAnimationsModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     PerxMerchantsModule.forRoot(),
     PerxStampModule,
     ProfileModule,

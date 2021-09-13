@@ -16,7 +16,7 @@ import {
   UtilsModule,
   QuizModule,
   SurveyModule,
-  TeamsServiceModule,
+  TeamsServiceModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
@@ -41,6 +41,7 @@ import { PageComponentsModule } from '../page-components/page-components.module'
     CampaignModule,
     CampaignServiceModule.forChild(),
     TeamsServiceModule.forChild(),
+    InstantOutcomeTransactionServiceModule.forChild(),
     QuizModule,
     OutcomeModule,
     SurveyModule,

@@ -360,6 +360,15 @@ export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome, IMilestoneIssuedOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
+ * InstantOutcomeTransaction
+ */
+export { IInstantOutcomeTransactionService } from './lib/instant-outcome-transaction/instant-outcome-transaction.service';
+export {
+  IInstantOutcomeTransaction, IInstantOutcome,
+  InstantOutcomeCampaignPrizeType, InstantOutcomeTransactionState
+} from './lib/instant-outcome-transaction/models/instant-outcome-transaction.model';
+export { InstantOutcomeTransactionServiceModule } from './lib/instant-outcome-transaction/instant-outcome-transaction-service.module';
+/**
  * Rank / Leaderboard
  */
 export { RankModule } from './lib/rank/rank.module';
@@ -417,22 +426,3 @@ export {
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
-/**
- * Merchant app
- */
-export { LoginModule as MerchantLoginModule } from './lib/merchant-app/login/login.module';
-export { LoginComponent as MerchantLoginComponent } from './lib/merchant-app/login/login.component';
-export { TransactionHistoryModule as MerchantTransactionHistoryModule } from './lib/merchant-app/transaction-history/transaction-history.module';
-export { TransactionHistoryComponent as MerchantTransactionHistoryComponent } from './lib/merchant-app/transaction-history/transaction-history.component';
-export { LandingPageModule as MerchantLandingPageModule } from './lib/merchant-app/landing-page/landing-page.module';
-export { LandingPageComponent as MerchantLandingPageComponent } from './lib/merchant-app/landing-page/landing-page.component';
-export { RedeemModule as MerchantRedeemModule } from './lib/merchant-app/redeem/redeem.module';
-export { RedeemComponent as MerchantRedeemComponent } from './lib/merchant-app/redeem/redeem.component';
-export { QrscannerModule as MerchantQrscannerModule } from './lib/merchant-app/qrscanner/qrscanner.module';
-export { QrscannerComponent as MerchantQrscannerComponent } from './lib/merchant-app/qrscanner/qrscanner.component';
-export { RegisterModule as MerchantRegisterModule } from './lib/merchant-app/register/register.module';
-export { RegisterComponent as MerchantRegisterComponent } from './lib/merchant-app/register/register.component';
-export { ForgotPasswordModule as MerchantForgotPasswordModule } from './lib/merchant-app/forgot-password/forgot-password.module';
-export { ForgotPasswordComponent as MerchantForgotPasswordComponent } from './lib/merchant-app/forgot-password/forgot-password.component';
-export { ResetPasswordModule as MerchantResetPasswordModule } from './lib/merchant-app/reset-password/reset-password.module';
-export { ResetPasswordComponent as MerchantResetPasswordComponent } from './lib/merchant-app/reset-password/reset-password.component';
