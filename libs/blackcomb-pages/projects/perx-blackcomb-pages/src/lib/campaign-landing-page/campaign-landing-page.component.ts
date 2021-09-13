@@ -45,6 +45,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public primaryCtaText: string | undefined = 'Continue';
   public secondaryCtaText: string | undefined;
+  public isDisplayCtaBtn: boolean = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -214,19 +215,17 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         }
       }
       if (this.campaign.type === CampaignType.instant && !this.campaign.enrolled) {
-        const enrollPopUpConf: IPopupConfig = {
-          title: 'Campaign enrolled!',
-          text: 'All the best, you have until DATE_TIME to win prize(s)',
-          buttonTxt: 'Ok',
-          afterClosedCallBack: {
-            dialogClosed: (): void => {
-              this.campaignService.enrolIntoCampaign(campaignId).subscribe(result => {
-                console.log('result ', result);
-              });
-            },
-          },
-        };
-        this.notificationService.addPopup(enrollPopUpConf);
+        this.campaignService.enrolIntoCampaign(campaignId)
+          .subscribe(result => {
+            if (result) {
+              const enrollPopUpConf: IPopupConfig = {
+                title: 'Campaign enrolled!',
+                text: `All the best, you have until ${this.campaign?.endsAt ? this.campaign?.endsAt.toDateString() : ''} to win prize(s)`,
+                buttonTxt: 'Ok',
+              };
+              this.notificationService.addPopup(enrollPopUpConf);
+            }
+          });
         return;
       }
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
@@ -254,9 +253,18 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initCTAs(): void {
-    if (this.campaign?.type === CampaignType.instant && !this.campaign?.enrolled) {
+  private instantCampaignDisplayCtaBtn(isEnrolled: boolean | undefined): void {
+    if (!isEnrolled) {
+      this.isDisplayCtaBtn = true;
       this.primaryCtaText = 'Enroll';
+    } else {
+      this.isDisplayCtaBtn = false;
+    }
+  }
+
+  private initCTAs(): void {
+    if (this.campaign?.type === CampaignType.instant) {
+      this.instantCampaignDisplayCtaBtn(this.campaign?.enrolled);
     } else {
       this.primaryCtaText = this.landingPageConfig?.buttonText?.text?.length! > 0 ?
         this.landingPageConfig?.buttonText?.text : this.primaryCtaText;
