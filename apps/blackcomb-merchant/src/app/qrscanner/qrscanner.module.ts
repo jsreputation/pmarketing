@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MerchantQrscannerComponent, MerchantQrscannerModule } from '@perxtech/core';
+import { MerchantQrscannerComponent, MerchantQrscannerModule } from '@perxtech/bcm-pages';
 
 const routes: Routes = [{
   path: '',

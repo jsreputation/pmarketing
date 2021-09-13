@@ -46,10 +46,10 @@
     "build:globeathome:staging": "env-cmd -f apps/blackcomb/env/globeathome.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:globeathome:production": "env-cmd -f apps/blackcomb/env/globeathome.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "start:globeathome:staging": "env-cmd -f apps/blackcomb/env/globeathome.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
-    "build:globesuperapp:production": "env-cmd -f apps/blackcomb/env/globesuperapp.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
-    "build:globesuperapp:staging": "env-cmd -f apps/blackcomb/env/globesuperapp.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
-    "start:globesuperapp:production": "env-cmd -f apps/blackcomb/env/globesuperapp.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
-    "start:globesuperapp:staging": "env-cmd -f apps/blackcomb/env/globesuperapp.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
+    "build:globesuperapp:production": "env-cmd -f apps/globesuperapp/env/globesuperapp.production ts-node --project tsconfig.node.json apps/globesuperapp/set-env.ts && yarn nx build globesuperapp -- --prod",
+    "build:globesuperapp:staging": "env-cmd -f apps/globesuperapp/env/globesuperapp.staging ts-node --project tsconfig.node.json apps/globesuperapp/set-env.ts && yarn nx build globesuperapp -- --prod",
+    "start:globesuperapp:production": "env-cmd -f apps/globesuperapp/env/globesuperapp.production.dev ts-node --project tsconfig.node.json apps/globesuperapp/set-env.ts && yarn nx serve globesuperapp --",
+    "start:globesuperapp:staging": "env-cmd -f apps/globesuperapp/env/globesuperapp.staging.dev ts-node --project tsconfig.node.json apps/globesuperapp/set-env.ts && yarn nx serve globesuperapp --",
     "build:johnsen360:production": "env-cmd -f apps/blackcomb/env/johnsen360.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:johnsen360:production": "env-cmd -f apps/blackcomb/env/johnsen360.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:hkbn:production": "echo 'skipping hkbn build'",
@@ -153,6 +153,7 @@
     "test:bpi": "nx test bpi --detectOpenHandles",
     "test:components-demo": "nx test components-demo --detectOpenHandles",
     "test:dbshk-agent": "nx test dbshk-agent --detectOpenHandles",
+    "test:globesuperapp": "nx test globesuperapp --detectOpenHandles",
     "test:hkbn": "echo 'skipping hkbn tests'",
     "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "nx test hsbc-rewards --detectOpenHandles",
@@ -166,6 +167,7 @@
     "test:blackcomb-merchant": "nx test blackcomb-merchant --detectOpenHandles",
     "test:appauth-server": "echo 'no tests'",
     "test:blackcomb-pages": "nx test blackcomb-pages --detectOpenHandles",
+    "test:bcm-pages": "nx test bcm-pages --detectOpenHandles",
     "test:core": "nx test core --detectOpenHandles",
     "test:whistler": "nx test whistler --detectOpenHandles",
     "test:transcycle": "nx test transcycle --detectOpenHandles",
@@ -175,9 +177,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": [
-        "lint-staged"
-      ]
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
@@ -200,6 +200,7 @@
     "@briebug/jest-schematic": "^2.1.1",
     "@nrwl/angular": "^12.3.6",
     "@nrwl/cli": "11.6.2",
+    "@nrwl/eslint-plugin-nx": "11.6.2",
     "@nrwl/jest": "11.6.2",
     "@nrwl/linter": "11.6.2",
     "@nrwl/node": "11.6.2",

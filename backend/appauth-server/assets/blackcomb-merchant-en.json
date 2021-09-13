@@ -47,5 +47,24 @@
         "CONFIRM_PASSWORD": "Confirm new password",
         "SUBMIT_BUTTON": "Update password"
     },
+    "ORDER_PAGE": {
+        "SALES_RECORD": "Sales Record",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_IS": "Description is",
+        "AMOUNT_DUE": "Amount due",
+        "AMOUNT_DUE_IS": "Amount due is",
+        "AMOUNT_PAID": "Amount paid",
+        "AMOUNT_PAID_IS": "Amount paid is",
+        "TRANSACTION_DATE": "Transaction date",
+        "TIME": "Time",
+        "POINTS_REDEEMED": "Points redeemed",
+        "DISCOUNT": "Discount",
+        "AMOUNT_DUE_HINT": "Before any discount or points redemption",
+        "AMOUNT_PAID_HINT": "After any discount or points redemption",
+        "REVIEW": "Review",
+        "CANCEL": "Cancel",
+        "SUBMIT": "Submit",
+        "BACK": "Back"
+    },
     "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

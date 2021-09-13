@@ -38,4 +38,16 @@ describe('UrlRedemptionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('url field should be present', () => {
+    const url = fixture.nativeElement.querySelector('.url-txt');
+    expect(url).toBeTruthy();
+  });
+
+  it('url value should be equal to vouhcer.code', () => {
+    component.url = 'voucher.code';
+    fixture.detectChanges();
+    const url = fixture.nativeElement.querySelector('.url-txt');
+    expect(url.textContent.trim()).toEqual('voucher.code');
+  });
 });

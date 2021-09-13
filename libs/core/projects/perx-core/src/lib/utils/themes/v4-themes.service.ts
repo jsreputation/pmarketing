@@ -88,7 +88,8 @@ export class V4ThemesService extends ThemesService {
         '--login_background_colour': settingValues.login_page_bg_color,
         '--font_color': '#231f20',
         '--surface_colour': '#ffffff',
-        '--popup_background_colour': '#ffffff'
+        '--popup_background_colour': '#ffffff',
+        '--login_page_bg_image': settingValues?.background_image ? settingValues?.background_image : ''
       }
     };
   }

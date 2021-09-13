@@ -21,7 +21,7 @@ import {
   ConfigService,
   GameModule as PerxGameModule,
   GameServiceModule,
-  IConfig,
+  IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
   LoyaltyModule,
@@ -38,7 +38,7 @@ import {
   TokenStorage,
   TransactionsServiceModule as PerxTransactionsServiceModule,
   UtilsModule,
-  VouchersModule,
+  VouchersModule
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -104,6 +104,7 @@ registerLocaleData(localeENMY);
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     AuthenticationModule,
     SignupModule,
     ProfileModule,

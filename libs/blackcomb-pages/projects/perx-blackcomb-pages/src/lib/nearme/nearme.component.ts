@@ -81,11 +81,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.categories.push(category);
       });
     });
-    this.rewardsService.getAllFavoriteRewards().subscribe(
-      rewards => {
-        this.favoriteRewards = rewards ||  [];
-      }
-    );
+    
+    this.getFavoriteRewardList();
 
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       this.showRewardFavButton = flags.showRewardFavButton;
@@ -256,6 +253,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
                     });
                     marker.addListener('click', () => {
                       this.current = reward;
+                      const isFavorite = this.favoriteRewards.some((item: IReward) => item.id === reward.id);
+                      this.current.favorite = isFavorite;
                       this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
                       this.merchantImg = this.current.merchantImg ? true : false;
 
@@ -355,7 +354,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
       finalize(() => setTimeout(() => {
         this.favDisabled = false;
       }, 500))
-    ).subscribe();
+    ).subscribe(
+      () => {
+        this.getFavoriteRewardList();
+      }
+    );
   }
 
   public openDialog(): void {
@@ -377,6 +380,14 @@ export class NearmeComponent implements OnInit, OnDestroy {
     this.clearMarkers();
     const filteredCategories = this.categories.filter(category => category.isSelected).map(category => category.name);
     this.updateMarkers(this.lastLat, this.lastLng, this.lastRad, filteredCategories);
+  }
+
+  public getFavoriteRewardList(): void {
+    this.rewardsService.getAllFavoriteRewards().subscribe(
+      rewards => {
+        this.favoriteRewards = rewards ||  [];
+      }
+    );
   }
 
   public ngOnDestroy(): void {

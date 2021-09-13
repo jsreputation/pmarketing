@@ -65,7 +65,7 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule
+  LoyaltyModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -149,6 +149,7 @@ export const appInit = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     AuthenticationModule,
     SignUpModule,
     BrowserAnimationsModule,

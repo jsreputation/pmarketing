@@ -53,7 +53,7 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
-  TeamsServiceModule as PerxTeamsServiceModule,
+  TeamsServiceModule as PerxTeamsServiceModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -189,6 +189,7 @@ export const appInit =
     PerxGameServiceModule.forRoot(),
     PuzzlesModule,
     StampModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     QRCodeModule,
     NgxBarcode6Module,
