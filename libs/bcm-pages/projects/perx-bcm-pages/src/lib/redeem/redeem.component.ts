@@ -83,8 +83,4 @@ export class RedeemComponent implements OnInit {
       );
   }
 
-  public getPrice(): string {
-    const points = this.reward.rewardPrice && this.reward.rewardPrice[0].points || 0;
-    return `${points} points will be deducted`;
-  }
 }

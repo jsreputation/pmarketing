@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService } from '@perxtech/core';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-landing-page',
@@ -8,16 +8,12 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent implements OnInit {
 
-  public merchantUsername: string;
-
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
-    private tokenStorage: TokenStorage
+    private authService: AuthenticationService
   ) { }
 
   public ngOnInit(): void {
-    this.merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername') || '';
   }
 
   public onSalesScan(): void {
@@ -30,7 +26,6 @@ export class LandingPageComponent implements OnInit {
 
   public onLogOut(): void {
     this.authService.logout();
-    this.tokenStorage.clearAppInfoProperty(['merchantUsername']);
     this.router.navigate(['/login']);
   }
 
