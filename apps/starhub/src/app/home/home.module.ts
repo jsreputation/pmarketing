@@ -37,6 +37,7 @@ import { GhostsModule } from '../ghosts/ghosts.module';
 import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
 import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campaigns.component';
 import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
+import { StarsComponent } from './stars/stars.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
     NoRenewaleInNamePipe,
     QuizSurveyCampaignsComponent,
     TaggedItemsComponent,
+    StarsComponent
   ],
   imports: [
     ConfigModule.forChild(),
