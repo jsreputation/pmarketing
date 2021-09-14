@@ -224,6 +224,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
                 buttonTxt: 'Ok',
               };
               this.notificationService.addPopup(enrollPopUpConf);
+              this.instantCampaignDisplayCtaBtn(result);
             }
           });
         return;
