@@ -148,7 +148,7 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((status: string) => {
           this.instantRewardStatus = status;
-          return status === InstantOutcomeTransactionState.completed
+          return status === InstantOutcomeTransactionState.completed || status === InstantOutcomeTransactionState.redeemed
             ? this.instantOutcomeTransactionService.getInstantOutcomeTransactionOutcomes(
                 transactionId
               )
