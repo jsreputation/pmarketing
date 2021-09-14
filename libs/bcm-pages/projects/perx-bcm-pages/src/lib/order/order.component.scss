@@ -5,28 +5,30 @@
 
       .mat-form-field-flex {
         border-radius: 0 !important;
-        padding: 0.55em 0.75em 0 0.75em !important;
+        padding: 0.55em 0.75em 0.75em 0.75em !important;
         background-color: #F8F8FC !important;
+        box-sizing: border-box;
       }
       .mat-form-field-underline {
         background-color: #E9E9ED !important;
       }
 
       .mat-form-field-flex > div {
-        padding-bottom: 0.75em;
-        top: -0.5em;
+        padding-bottom: 1em;
+        top: 0.5em;
 
         span.prefix-spacer {
           width: 0.3em;
           display: inline-block;
         }
       }
+      .mat-form-field-infix {
+        border-width: 0 !important;
+      }
       .mat-form-field-suffix {
         padding-bottom: 0!important;
       }
-      .mat-hint {
-        padding: 0 10px;
-      }
+      
     }
   }
 
@@ -66,9 +68,6 @@
     width: 35%;
   }
 }
-.input-hint {
-  margin-bottom: 1.5rem;
-}
 
 .icon-container {
   display: flex;
@@ -87,7 +86,13 @@
 }
 
 .btn-container {
-  margin-top: 2rem;
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
   button:disabled {
     opacity: 0.45;
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IMerchantAdminService, IMerchantProfile, NotificationService,  TokenStorage} from '@perxtech/core';
+import { IMerchantAdminService, IMerchantProfile, NotificationService} from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
@@ -27,17 +27,12 @@ export class OrderComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
-    private tokenStorage: TokenStorage,
     private fb: FormBuilder,
   ) {
   }
 
   public get description(): AbstractControl | null {
     return this.orderForm.get('description');
-  }
-
-  public get amountDue(): AbstractControl | null {
-    return this.orderForm.get('amountDue');
   }
 
   public get amountPaid(): AbstractControl | null {
@@ -54,9 +49,6 @@ export class OrderComponent implements OnInit {
       transactionDate: [dateStamp, Validators.required],
       transactionTime: [timeStamp, Validators.required],
       description: ['', Validators.required],
-      amountDue: [0, Validators.required],
-      discount: [0],
-      pointsRedeemed: [0],
       amountPaid: [0]
     });
   }
@@ -81,24 +73,11 @@ export class OrderComponent implements OnInit {
     this.isSummaryActivated = !this.isSummaryActivated;
   }
 
-  public updateTotalAmount(): void {
-    const amountDue: number = this.orderForm.value.amountDue;
-    const discount: number = this.orderForm.value.discount;
-    const points: number = this.orderForm.value.pointsRedeemed;
-    const totalAmount = amountDue - (points * 10) - discount;
-    this.orderForm.controls.amountPaid.setValue(totalAmount);
-  }
-
   public onCompleteTransaction(): void {
 
     const description: string = this.orderForm.value.description;
     const amount: number = this.orderForm.value.amountPaid;
 
-    const merchantUsername = this.tokenStorage.getAppInfoProperty('merchantUsername');
-    if (!merchantUsername) {
-      this.notificationService.addSnack('merchant username is void');
-      return;
-    }
     // 0 padded date
     const date = new Date();
     // @ts-ignore
@@ -113,7 +92,7 @@ export class OrderComponent implements OnInit {
           }
 
           return this.merchantAdminService.createTransaction(
-              this.payload?.id, merchantUsername, amount, '',
+              this.payload?.id, '', amount, '',
               'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
               description);
         }))

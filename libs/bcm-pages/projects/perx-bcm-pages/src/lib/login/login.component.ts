@@ -1,7 +1,7 @@
 import { Component, OnInit, } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService, NotificationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -12,10 +12,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
-  public get name(): AbstractControl | null {
-    return this.loginForm.get('name');
-  }
 
   public get email(): AbstractControl | null {
     return this.loginForm.get('email');
@@ -30,14 +26,12 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private tokenStorage: TokenStorage,
   ) {
     this.initForm();
   }
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -47,12 +41,11 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const merchantUsername = this.loginForm.value.name as string;
     const email = this.loginForm.value.email as string;
     const password: string = this.loginForm.value.password;
     const scope: string = 'merchant_credentials';
 
-    if (!merchantUsername || !email || !password) {
+    if (!email || !password) {
       return;
     }
 
@@ -63,7 +56,6 @@ export class LoginComponent implements OnInit {
           (window as any).primaryIdentifier = email;
         }
 
-        this.tokenStorage.setAppInfoProperty(merchantUsername, 'merchantUsername');
         this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : '/home');
       },
       (err) => {

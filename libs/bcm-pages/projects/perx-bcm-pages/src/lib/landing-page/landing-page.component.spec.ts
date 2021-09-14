@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService } from '@perxtech/core';
 import { LandingPageComponent } from './landing-page.component';
 import { MatIconModule } from '@angular/material/icon';
 import { Type } from '@angular/core';
@@ -13,11 +13,6 @@ describe('LandingPageComponent', () => {
 
   const locationStub: Partial<Location> = {
     back: () => { }
-  };
-
-  const tokenStorageStub: Partial<TokenStorage> = {
-    clearAppInfoProperty: () => { },
-    getAppInfoProperty: () => undefined
   };
 
   beforeEach(async(() => {
@@ -33,7 +28,6 @@ describe('LandingPageComponent', () => {
           provide: AuthenticationService,
           useValue: { logout: () => null }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();
