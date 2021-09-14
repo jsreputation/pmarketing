@@ -132,7 +132,8 @@ export class V4InstantOutcomeTransactionService
       ),
       takeWhile(
         (transaction: IInstantOutcomeTransaction) =>
-          transaction.state !== 'completed' && transaction.state !== 'failed',
+          transaction.state !== InstantOutcomeTransactionState.completed && transaction.state !== InstantOutcomeTransactionState.failed
+          && transaction.state !== InstantOutcomeTransactionState.redeemed,
         true
       ),
       takeUntil(timer(10500)),
