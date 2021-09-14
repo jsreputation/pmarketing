@@ -45,28 +45,29 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
           const id = params.find((param) => param.id)?.id;
           if (id) {
             transactionId = Number.parseInt(id, 10);
-            this.isActualOutcomeMode = true;
           }
-          return forkJoin([
-            this.getOutcomes(transactionId),
-            iif(
-              () => this.isActualOutcomeMode,
-              this.getTransactionState(transactionId),
-              of([])
-            ),
-          ]);
+          this.isActualOutcomeMode = true;
+          return iif(
+            () => this.isActualOutcomeMode,
+            this.getTransactionState(transactionId),
+            of([])
+          );
         }),
+        switchMap((outcomes) => forkJoin([
+            this.getOutcomes(transactionId),
+            of(outcomes),
+          ])),
         takeUntil(this.destroy$)
       )
       .subscribe(
         ([outcomes, issuedOutcomes]: [IInstantOutcome[], IInstantOutcome[]]) => {
-          outcomes?.map((campaign) => {
-            const issuedItem = issuedOutcomes?.find(
-              (outcomeItem) =>
-                outcomeItem?.campaignPrizeId === campaign.campaignPrizeId
+          outcomes?.map((outcomeItem) => {
+            const issuedOutcome = issuedOutcomes?.find(
+              (issuedOutcomeItem) =>
+                issuedOutcomeItem?.campaignPrizeId === outcomeItem.campaignPrizeId
             );
-            if (issuedItem) {
-              campaign = Object.assign(campaign, issuedItem);
+            if (issuedOutcome) {
+              outcomeItem = Object.assign(outcomeItem, issuedOutcome);
             }
           });
           this.outcomes = outcomes;
