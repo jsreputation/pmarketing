@@ -34,7 +34,7 @@ export interface IThemeV4ApiProperties {
   CTA_button_bg_color: string;
   login_page_bg_color: string;
   CTA_button_text_color: string;
-  background_image: string;
+  login_page_bg_image: string;
 }
 /*eslint-enable camelcase */
 interface IThemeProperties {
