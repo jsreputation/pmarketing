@@ -59,8 +59,8 @@ export class HomeComponent implements OnInit {
   public lastOffset: number = 0;
   @ViewChild('contentScrolled')
   public contentScrolled: ElementRef;
-  public loyalty: ILoyalty;
-  public starsLoyalty: ILoyalty;
+  public loyalty: ILoyalty | undefined;
+  public starsLoyalty: ILoyalty | undefined;
   public profile: IProfile;
   private firstComefirstServeCampaign: ICampaign;
   private token: string;
@@ -108,8 +108,8 @@ export class HomeComponent implements OnInit {
         this.loyaltyService
           .getLoyalties()
           .subscribe((loyalties: ILoyalty[]) => {
-            this.loyalty = loyalties[0];
-            this.starsLoyalty = loyalties[1];
+            this.loyalty = loyalties.find((item: ILoyalty) => item.name === 'StarHub Post-paid Loyalty');
+            this.starsLoyalty = loyalties.find((item: ILoyalty) => item.name === 'Dev Second Loyalty');
           });
         if (this.hubclubCR) {
           this.profileService
