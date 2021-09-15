@@ -170,6 +170,7 @@
     "test:prudential": "echo 'skipping prudential tests'",
     "test:starhub": "nx test starhub --detectOpenHandles",
     "test:blackcomb-merchant": "nx test blackcomb-merchant --detectOpenHandles",
+    "test:spw-merchant": "nx test spw-merchant --detectOpenHandles",
     "test:appauth-server": "echo 'no tests'",
     "test:blackcomb-pages": "nx test blackcomb-pages --detectOpenHandles",
     "test:bcm-pages": "nx test bcm-pages --detectOpenHandles",
