@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('contentScrolled')
   public contentScrolled: ElementRef;
   public loyalty: ILoyalty;
+  public starsLoyalty: ILoyalty;
   public profile: IProfile;
   private firstComefirstServeCampaign: ICampaign;
   private token: string;
@@ -105,8 +106,11 @@ export class HomeComponent implements OnInit {
     ).subscribe(
       () => {
         this.loyaltyService
-          .getLoyalty()
-          .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
+          .getLoyalties()
+          .subscribe((loyalties: ILoyalty[]) => {
+            this.loyalty = loyalties[0];
+            this.starsLoyalty = loyalties[1];
+          });
         if (this.hubclubCR) {
           this.profileService
             .whoAmI()
