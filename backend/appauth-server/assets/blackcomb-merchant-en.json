@@ -15,7 +15,10 @@
         "REDEMPTION": "Redemption",
         "TRANSACTION_HISTORY": "Transaction History",
         "LOGOUT": "Log Out",
-        "WELCOME_MSG": "What are we doing today?"
+        "WELCOME_MSG": "What are we doing today?",
+        "GREETING_MORNING": "Good morning",
+        "GREETING_AFTERNOON": "Good afternoon",
+        "GREETING_EVENING": "Good evening"
     },
     "TRANSACTION_HISTORY": {
         "POINT_EARNED": "{points} Points earned",
