@@ -134,14 +134,15 @@ export class LayoutComponent implements OnInit {
 
       if (chromelessFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      } else if ('flags' in params) {
+        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
       if (preAuthFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
-      }
-      if (params && params.flags === '') {
-        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      } else if ('flags' in params) {
         this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
       }
+
     });
   }
 
