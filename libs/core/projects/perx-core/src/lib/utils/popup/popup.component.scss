@@ -45,9 +45,11 @@ mat-dialog-content {
   }
 }
 
-.close-btn-container {
+.popup-container {
   position: relative;
+}
 
+.close-btn-container {
   .close-btn {
     position: absolute;
     z-index: 2;
