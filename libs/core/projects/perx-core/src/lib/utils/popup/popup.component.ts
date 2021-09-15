@@ -14,6 +14,7 @@ export interface IPopupConfig {
   ctaButtonClass?: string;
   hideCloseButton?: boolean;
   titleBelowImage?: boolean;
+  popupClass?: string;
 }
 
 export interface PopUpClosedCallBack {
@@ -38,6 +39,7 @@ export class PopupComponent {
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
   public ctaButtonClass: string = '';
+  public popupClass: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -78,6 +80,10 @@ export class PopupComponent {
 
     if (data.titleBelowImage) {
       this.titleBelowImage = true;
+    }
+
+    if (data.popupClass) {
+      this.popupClass = data.popupClass;
     }
   }
 

@@ -1,6 +1,6 @@
 import 'zone.js/dist/zone';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AuthenticationModule, AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationModule, AuthenticationService } from '@perxtech/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +19,6 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
-    const tokenStorageStub = { setAppInfoProperty: () => ({}) };
 
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -45,7 +44,6 @@ describe('LoginComponent', () => {
             getAppAccessToken: () => 'token'
           }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     }).compileComponents();
   }));
@@ -71,7 +69,6 @@ describe('LoginComponent', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
-    component.loginForm.controls.name.setValue('test');
     component.loginForm.controls.email.setValue('test@test.com');
     component.loginForm.controls.password.setValue('test1234');
 

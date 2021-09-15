@@ -1,6 +1,27 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
   "projects": {
     "dbshk-agent": {
       "projectType": "application",
@@ -2412,11 +2433,100 @@
           }
         }
       }
-    }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "style": "scss"
+    },
+    "bdo": {
+      "projectType": "application",
+      "root": "apps/bdo",
+      "sourceRoot": "apps/bdo/src",
+      "prefix": "perxtech",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/bdo",
+            "index": "apps/bdo/src/index.html",
+            "main": "apps/bdo/src/main.ts",
+            "polyfills": "apps/bdo/src/polyfills.ts",
+            "tsConfig": "apps/bdo/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/bdo/src/favicon.ico", "apps/bdo/src/assets"],
+            "styles": ["apps/bdo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "bdo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "bdo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bdo:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/bdo/src/**/*.ts",
+              "apps/bdo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/bdo"],
+          "options": {
+            "jestConfig": "apps/bdo/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/bdo/e2e/cypress.json",
+            "tsConfig": "apps/bdo/e2e/tsconfig.e2e.json",
+            "devServerTarget": "bdo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bdo:serve:production"
+            }
+          }
+        }
+      }
     }
   }
 }

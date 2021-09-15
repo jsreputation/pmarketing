@@ -58,6 +58,7 @@ export class SignupComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
     this.themesService.getThemeSetting().subscribe((theme) => {
       this.theme = theme;
     });

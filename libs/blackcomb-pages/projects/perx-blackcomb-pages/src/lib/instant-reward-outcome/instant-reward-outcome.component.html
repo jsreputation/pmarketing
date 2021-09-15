@@ -1,7 +1,7 @@
 <div class="card-list-container">
   <div class="outcome-container" >
     <ng-container *ngIf="outcomes && outcomes.length > 0; else loadingBlock">
-      <p class="title">{{isActualOutcomeMode ? ('PRIZE_SET.HEADING' | translate) : transaction?.details}}</p>
+      <p class="title">{{isActualOutcomeMode ? 'Congrats! You won this instant reward.' : transaction?.details}}</p>
       <p class="subtitle">{{'PRIZE_SET.SUB_HEADING' | translate}}</p>
       <div *ngFor="let outcome of outcomes" class="outcome-cards">
         <ng-container *ngIf="outcome.campaignPrizeType == outcomeType.reward">

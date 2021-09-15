@@ -50,6 +50,22 @@ export interface IV4InstantOutcome {
   state: InstantOutcomeState;
 }
 
+export interface IV4InstantRewardCampaignDisplayProperties {
+  claim_prize?: {
+    button_text?: string;
+    headline?: string;
+    image?: { value: { filename: string; image_url: string } };
+    sub_headline?: string;
+  };
+  landing_page?: {
+    body_text?: string;
+    description?: string;
+    headline?: string;
+    image?: { type?: string; value?: { filename?: string; image_url?: string } };
+    sub_headline?: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -116,7 +132,8 @@ export class V4InstantOutcomeTransactionService
       ),
       takeWhile(
         (transaction: IInstantOutcomeTransaction) =>
-          transaction.state !== 'completed' && transaction.state !== 'failed',
+          transaction.state !== InstantOutcomeTransactionState.completed && transaction.state !== InstantOutcomeTransactionState.failed
+          && transaction.state !== InstantOutcomeTransactionState.redeemed,
         true
       ),
       takeUntil(timer(10500)),
@@ -126,19 +143,29 @@ export class V4InstantOutcomeTransactionService
     );
   }
 
-  public getInstantOutcomeTransaction(transactionId: number): Observable<IInstantOutcomeTransaction> {
-    return this.http.get<IV4GetInstantRewardResponse>(`${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`)
+  public getInstantOutcomeTransaction(
+    transactionId: number
+  ): Observable<IInstantOutcomeTransaction> {
+    return this.http
+      .get<IV4GetInstantRewardResponse>(
+        `${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`
+      )
       .pipe(
         map((res: IV4GetInstantRewardResponse) => res.data),
         map((outcome: IV4InstantOutcomeTransaction) =>
           V4InstantOutcomeTransactionService.v4InstantOutcomeTransactionToInstantOutcomeTransaction(
             outcome
           )
-        ),
+        )
       );
   }
-  public getInstantOutcomeTransactionOutcomes(transactionId: number): Observable<IInstantOutcome[]> {
-    return this.http.get<IV4GetInstantRewardResponse>(`${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`)
+  public getInstantOutcomeTransactionOutcomes(
+    transactionId: number
+  ): Observable<IInstantOutcome[]> {
+    return this.http
+      .get<IV4GetInstantRewardResponse>(
+        `${this.baseUrl}/v4/instant_outcome_transactions/${transactionId}`
+      )
       .pipe(
         map((res: IV4GetInstantRewardResponse) => res.data),
         map((outcome: IV4InstantOutcomeTransaction) => {
@@ -146,7 +173,7 @@ export class V4InstantOutcomeTransactionService
             outcome
           );
           return instantOutcomeTransaction.outcomes;
-        }),
+        })
       );
   }
 

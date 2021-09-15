@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { IMerchantAdminService, NotificationService, TokenStorage } from '@perxtech/core';
+import { IMerchantAdminService, NotificationService } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,9 +16,6 @@ describe('OrderComponent', () => {
   let fixture: ComponentFixture<OrderComponent>;
   history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
 
-  const tokenStorageStub = {
-    getAppInfoProperty: () => ({merchantUsername: 'Amrutha'})
-  };
   const routerStub = {
     navigate: () => ({}),
     getCurrentNavigation: () => (
@@ -74,7 +71,6 @@ describe('OrderComponent', () => {
             }
           }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub },
       ]
     })
       .compileComponents();

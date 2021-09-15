@@ -1,14 +1,5 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -66,6 +57,13 @@ describe('ChangeStreetAddressComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should not call setCustomProperties if we have void street', fakeAsync(() => {
+    component.streetAddressChangeForm.setValue({ newStreetAddress: null });
+    component.onSubmit();
+    tick(50);
+    expect(profileSpy).not.toHaveBeenCalled();
+  }));
+
   it('should call all submit flow', fakeAsync(() => {
     const locationSpy = jest.spyOn(location, 'back');
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
@@ -73,13 +71,6 @@ describe('ChangeStreetAddressComponent', () => {
     component.onSubmit();
     tick(50);
     expect(locationSpy).toHaveBeenCalled();
-  }));
-
-  it('should not call setCustomProperties if we have void street', fakeAsync(() => {
-    component.streetAddressChangeForm.setValue({ newStreetAddress: null });
-    component.onSubmit();
-    tick(50);
-    expect(profileSpy).not.toHaveBeenCalled();
   }));
 
   it('should handle error', fakeAsync(() => {

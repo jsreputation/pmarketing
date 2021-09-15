@@ -171,7 +171,6 @@ echo "APP=${APP}" >>"${GITHUB_ENV}"
 
 # Set env APP_BASE
 blackcomb_app_base=(
-  bdo
   daiichi-dlvn
   feature-demo
   globeathome

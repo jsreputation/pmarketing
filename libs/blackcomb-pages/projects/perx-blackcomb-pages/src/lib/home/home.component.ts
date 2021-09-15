@@ -1,15 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  combineLatest,
-  EMPTY,
-  forkJoin,
-  iif,
-  Observable,
-  of,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import {
   catchError,
   filter,
@@ -21,7 +12,7 @@ import {
   take,
   takeLast,
   takeUntil,
-  tap,
+  tap
 } from 'rxjs/operators';
 
 import {
@@ -38,11 +29,12 @@ import {
   IFlags,
   IGame,
   IGameService,
-  IInstantOutcome,
   IInstantOutcomeTransaction,
   IInstantOutcomeTransactionService,
   ILoyalty,
-  InstantOutcomeService, IPopupConfig,
+  InstantOutcomeService,
+  InstantOutcomeTransactionState,
+  IPopupConfig,
   IPrice,
   IProfile,
   IQuestService,
@@ -50,7 +42,8 @@ import {
   IRssFeeds,
   IRssFeedsData,
   ITabConfigExtended,
-  ITheme, NotificationService,
+  ITheme,
+  NotificationService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -65,8 +58,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-
-// import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -276,7 +267,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (campaign.type === 'instant') {
+    if (campaign.type === CampaignType.instant) {
       this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
       return;
     }
@@ -339,45 +330,43 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((instantOutcomeTransactions: IInstantOutcomeTransaction[]) => {
         const instantOutcomeTransactionsHaveOutcomes: IInstantOutcomeTransaction[] = instantOutcomeTransactions.filter(
-          (iot) => iot.outcomes.length > 0
+          (iot) => iot.state === InstantOutcomeTransactionState.issued
         );
-        const allInstantOutcomes: IInstantOutcome[] = instantOutcomeTransactionsHaveOutcomes.reduce(
-          (total: IInstantOutcome[], currentValue) => {
-            total = [...total, ...currentValue.outcomes];
-            return total;
-          },
-          []
-        );
-        const firstComefirstServeOutCome:
-          | IInstantOutcome
-          | undefined = allInstantOutcomes.length
-          ? allInstantOutcomes[0]
+        const firstComeFirstServeTransaction:
+          | IInstantOutcomeTransaction
+          | undefined = instantOutcomeTransactionsHaveOutcomes.length
+          ? instantOutcomeTransactionsHaveOutcomes[0]
           : undefined;
-        if (firstComefirstServeOutCome) {
-          const popupImageURL = 'assets/png_icon_prize.svg';
-          const enrollPopUpConf: IPopupConfig = {
-            title: 'Congrats! You earned a prize!',
-            text: 'Claim now before they run out!',
-            buttonTxt: 'Claim prize',
-            imageUrl: popupImageURL,
-            titleBelowImage: true,
-            hideCloseButton: true,
-            afterClosedCallBack: {
-              dialogClosed: (): void => {
-                this.instantOutcomeTransactionService
-                  .claimPrize(firstComefirstServeOutCome.instantOutcomeTransactionId)
-                  .subscribe((res) => {
-                    const outcomeFirst = res.outcomes?.length ? res.outcomes[0] : null;
-                    if (outcomeFirst) {
-                      this.router.navigate([`/instant-reward-outcomes/${outcomeFirst.instantOutcomeTransactionId}`]);
-                    }
-                  }, error => {
-                    console.log('Error when claim prize: ', error);
-                  });
-              },
-            },
-          };
-          this.notificationService.addPopup(enrollPopUpConf);
+        if (firstComeFirstServeTransaction) {
+          this.campaignService.getCampaign(firstComeFirstServeTransaction.campaignId)
+            .subscribe(campaignRes => {
+              const popupImageURL = campaignRes.displayProperties?.claimPrize?.image?.value.imageUrl || 'assets/png_icon_prize.svg';
+              const enrollPopUpConf: IPopupConfig = {
+                title: campaignRes.displayProperties?.claimPrize?.headline || 'Congrats! You earned a prize!',
+                text: campaignRes.displayProperties?.claimPrize?.subHeadline || 'Claim now before they run out!',
+                buttonTxt: campaignRes.displayProperties?.claimPrize?.buttonText || 'CLAIM PRIZE',
+                imageUrl: popupImageURL,
+                titleBelowImage: true,
+                hideCloseButton: true,
+                popupClass: 'custom-popup-class',
+                afterClosedCallBack: {
+                  dialogClosed: (): void => {
+                    this.instantOutcomeTransactionService
+                      .claimPrize(firstComeFirstServeTransaction.id)
+                      .subscribe((res) => {
+                        if (res) {
+                          this.router.navigate([`/instant-reward-outcomes/${firstComeFirstServeTransaction.id}`]);
+                        } else {
+                          console.log('no instantOutcomeTransaction: ', res);
+                        }
+                      }, error => {
+                        console.log('Error when claim prize: ', error);
+                      });
+                  },
+                },
+              };
+              this.notificationService.addPopup(enrollPopUpConf);
+            });
         }
 
       });

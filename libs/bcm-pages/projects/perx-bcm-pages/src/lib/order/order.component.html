@@ -34,30 +34,12 @@
               {{"ORDER_PAGE.DESCRIPTION_IS"|translate}} <strong>required</strong>
             </mat-error>
           </mat-form-field>        
-          <mat-form-field appearance="standard" class="full-width__input input-hint" [ngClass]="{'read-only' : isSummaryActivated}">
-            <mat-label>{{"ORDER_PAGE.AMOUNT_DUE"|translate}}</mat-label>
-            <input matInput placeholder='{{"ORDER_PAGE.AMOUNT_DUE"|translate}}' [readonly]="isSummaryActivated" 
-            formControlName="amountDue" required (change)="updateTotalAmount()">
-            <mat-hint> {{"ORDER_PAGE.AMOUNT_DUE_HINT"|translate}}</mat-hint>
-            <mat-error *ngIf="amountDue && amountDue.hasError('required')">
-              {{"ORDER_PAGE.AMOUNT_DUE_IS"|translate}} <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
           <mat-form-field appearance="standard" class="full-width__input" [ngClass]="{'read-only' : isSummaryActivated}">
-            <mat-label>{{"ORDER_PAGE.DISCOUNT"|translate}}</mat-label>
-            <input matInput placeholder='{{"ORDER_PAGE.DISCOUNT"|translate}}' [readonly]="isSummaryActivated"
-            formControlName="discount" (change)="updateTotalAmount()">
-          </mat-form-field>
-          <mat-form-field appearance="standard" class="full-width__input input-hint" [ngClass]="{'read-only' : isSummaryActivated}">
-            <mat-label>{{"ORDER_PAGE.POINTS_REDEEMED"|translate}}</mat-label>
-            <input matInput placeholder='{{"ORDER_PAGE.POINTS_REDEEMED"|translate}}' [readonly]="isSummaryActivated"
-            formControlName="pointsRedeemed" (change)="updateTotalAmount()">
-            <mat-hint *ngIf="orderForm.value.pointsRedeemed">{{orderForm.value.pointsRedeemed}} point(s) = {{orderForm.value.pointsRedeemed * 10}} in currency</mat-hint>
-          </mat-form-field>
-          <mat-form-field appearance="standard" class="full-width__input read-only input-hint">
-            <mat-label>{{"ORDER_PAGE.AMOUNT_PAID"|translate}}</mat-label>
-            <input matInput placeholder='{{"ORDER_PAGE.AMOUNT_PAID"|translate}}' [readonly]="true" formControlName="amountPaid">
-            <mat-hint>{{"ORDER_PAGE.AMOUNT_PAID_HINT"|translate}}</mat-hint>
+            <mat-label>{{"ORDER_PAGE.AMOUNT"|translate}}</mat-label>
+            <input matInput placeholder='{{"ORDER_PAGE.AMOUNT"|translate}}' [readonly]="isSummaryActivated" formControlName="amountPaid" required>
+            <mat-error *ngIf="amountPaid && amountPaid.hasError('required')">
+              {{"ORDER_PAGE.AMOUNT_IS"|translate}} <strong>required</strong>
+            </mat-error>
           </mat-form-field>
           <div class="btn-container">
             <ng-container *ngIf="!isSummaryActivated; else summaryBlock">
