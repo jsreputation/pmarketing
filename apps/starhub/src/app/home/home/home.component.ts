@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
           .getLoyalties()
           .subscribe((loyalties: ILoyalty[]) => {
             this.loyalty = loyalties.find((item: ILoyalty) => item.name === 'StarHub Post-paid Loyalty');
-            this.starsLoyalty = loyalties.find((item: ILoyalty) => item.name === 'Dev Second Loyalty');
+            this.starsLoyalty = loyalties.find((item: ILoyalty) => item.name === 'Stars loyalty');
           });
         if (this.hubclubCR) {
           this.profileService
