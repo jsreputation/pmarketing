@@ -171,6 +171,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         (gameTransaction: IEngagementTransaction) => {
           this.gameTransaction = gameTransaction;
           this.isGameTransactionSet = of(true);
+          this.startGameAnimation = true;
           if (
             gameTransaction.voucherIds &&
             gameTransaction.voucherIds.length > 0
