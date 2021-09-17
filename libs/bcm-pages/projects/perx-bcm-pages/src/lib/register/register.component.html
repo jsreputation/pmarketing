@@ -2,7 +2,7 @@
   <ng-container *ngIf="!isMerchantNameLoading">
     <div class="main-heading">Welcome, {{merchantProfile?.username}}!</div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="standard" class="full-width__input">
+      <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Password</mat-label>
         <input type="password" matInput placeholder="Password" formControlName="password" required>
         <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
@@ -12,7 +12,7 @@
           Password should be at least 6 characters long
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="standard" class="full-width__input">
+      <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Confirm password</mat-label>
         <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword" required>
         <mat-error *ngIf="loginForm.get('confirmPassword')?.hasError('required')">

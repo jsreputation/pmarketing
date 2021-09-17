@@ -44,11 +44,11 @@
           <div class="btn-container">
             <ng-container *ngIf="!isSummaryActivated; else summaryBlock">
               <button mat-raised-button [disabled]="!payload || !orderForm.valid" (click)="toggleSummary()" class="full-width__button mat-primary">{{"ORDER_PAGE.REVIEW"|translate}}</button>
-              <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">{{"ORDER_PAGE.CANCEL"|translate}}</button>
+              <button mat-stroked-button (click)="onCancel()" class="full-width__button btn-transparent">{{"ORDER_PAGE.CANCEL"|translate}}</button>
             </ng-container>
             <ng-template #summaryBlock>
               <button mat-raised-button [disabled]="!payload && isSummaryActivated" type="submit" class="full-width__button mat-primary">{{"ORDER_PAGE.SUBMIT"|translate}}</button>
-              <button mat-flat-button (click)="toggleSummary()" class="full-width__button btn-transparent">{{"ORDER_PAGE.BACK"|translate}}</button>
+              <button mat-stroked-button (click)="toggleSummary()" class="full-width__button btn-transparent">{{"ORDER_PAGE.BACK"|translate}}</button>
             </ng-template>
           </div>
       </form>          

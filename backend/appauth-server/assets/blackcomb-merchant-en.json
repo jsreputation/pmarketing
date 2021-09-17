@@ -39,6 +39,7 @@
         "GENERIC": "Sorry, something went wrong"
     },
     "FORGET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
         "EMAIL_ADDRESS": "Email Address",
         "EMAIL_ADDRESS_IS": "Email Address is",
         "NEXT": "Next"
