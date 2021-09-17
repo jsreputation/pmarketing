@@ -42,8 +42,10 @@
     bottom: 2rem;
     width: 100%;
     text-align: center;
+    padding: 0 2.5rem;
+    box-sizing: border-box;
     button {
-      color: var(--primary)!important;
+      width: 100%;
     }   
   }
 }

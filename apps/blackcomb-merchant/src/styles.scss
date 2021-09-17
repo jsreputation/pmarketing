@@ -67,6 +67,10 @@ button.mat-stroked-button {
   color: var(--accent) !important;
 }
 
+button:disabled {
+  opacity: 0.45;
+}
+
 .mat-toolbar {
   background-color: transparent !important;
 }
@@ -103,3 +107,16 @@ button.mat-stroked-button {
   font-weight: 900;
   max-width: calc(100% - 1rem) !important;
 } 
+
+.mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: var(--primary)!important;
+  }
+  .mat-form-field-ripple {
+    background-color: var(--primary)!important;
+  }
+}
+
+.mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: rgba(0, 0, 0, 0.12)!important;
+}

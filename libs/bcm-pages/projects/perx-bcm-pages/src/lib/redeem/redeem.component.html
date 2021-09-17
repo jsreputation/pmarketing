@@ -17,7 +17,7 @@
   <div class="btn-container">
     <div class="btn-group-container" *ngIf="!didProceed && payload else proceeded">
       <button mat-raised-button (click)="onProceed()" class="full-width__button mat-primary">{{"REDEEM.PROCEED"|translate}}</button>
-      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
+      <button mat-stroked-button (click)="onClose()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
     </div>
     <ng-template #proceeded>
       <button mat-raised-button (click)="onClose()" class="full-width__button mat-primary">{{"REDEEM.CLOSE"|translate}}</button>
