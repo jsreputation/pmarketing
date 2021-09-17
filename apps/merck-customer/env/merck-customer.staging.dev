@@ -1,3 +1,4 @@
+APIHOST=https://api.perxtech.io
 LOGIN_METHOD=phone
 PRIVACY_POLICY_URL="https://cdn.perxtech.net/content/merck/privacy-policy.html"
 TNC_URL="https://cdn.perxtech.net/content/merck/tnc.html"
