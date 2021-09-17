@@ -31,8 +31,8 @@
       *ngSwitchCase="'plinko'"
       [game]="game"
       [willWin]="willWin"
-      (loaded)="loadPlay()"
-      (broken)=playGameCompleted()>
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
     </perx-blackcomb-pages-plinko>
   </div>
 </div>
