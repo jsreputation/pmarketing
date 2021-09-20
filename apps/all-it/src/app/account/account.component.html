@@ -18,11 +18,6 @@
           <mat-list-item *ngIf="remoteFlags?.showRewardFavButton" routerLink="/favorite-rewards">
             <mat-icon>favorite</mat-icon>&nbsp;&nbsp;{{'ACCOUNT_PAGE.FAVORITE_REWARD' | translate}}
           </mat-list-item>
-          <ng-container *ngIf="aConfig.app === 'abenson'">
-            <mat-list-item [routerLink]="[ 'change-password' ]">Change PIN code</mat-list-item>
-            <mat-list-item [routerLink]="[ '/profile', 'edit-mobile' ]">Change Mobile Number</mat-list-item>
-            <mat-list-item [routerLink]="[ 'support' ]">Customer Support</mat-list-item>
-          </ng-container>
         </mat-nav-list>
       </div>
       <div *ngIf="remoteFlags?.showBadgesButton" class="section badges">
