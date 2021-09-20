@@ -1,3 +1,4 @@
+import { StarsComponent } from './../stars/stars.component';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
@@ -69,7 +70,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, NoRenewaleInNamePipe],
+      declarations: [HomeComponent, StarsComponent, NoRenewaleInNamePipe],
       imports: [
         MatToolbarModule,
         MatTabsModule,
