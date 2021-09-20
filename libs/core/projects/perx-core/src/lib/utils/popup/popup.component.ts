@@ -98,9 +98,9 @@ export class PopupComponent {
     this.dialogRef.close(btnTxt1);
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
-      if (this.data.afterClosedCallBack.onOkFn) {
-        this.data.afterClosedCallBack.onOkFn();
-      }
+    }
+    if (this.data?.afterClosedCallBack?.onOkFn) {
+      this.data.afterClosedCallBack.onOkFn();
     }
   }
 
