@@ -23,14 +23,15 @@ import {
   IFlags,
   BadgeService,
 } from '@perxtech/core';
+import { AccountComponent as BCPAccountComponent} from '@perxtech/blackcomb-pages';
 
 @Component({
-  selector: 'perx-blackcomb-pages-account',
+  selector: 'allit-account',
   templateUrl: './account.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./account.component.scss'],
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent extends BCPAccountComponent implements OnInit {
   public profile$: Observable<IProfile> | null = null;
   public loyalty$: Observable<ILoyalty>;
   public pages!: AccountPageObject[];
@@ -42,18 +43,32 @@ export class AccountComponent implements OnInit {
   public acquiredBadges: Observable<number>;
 
   constructor(
-    public config: Config,
-    protected profileService: ProfileService,
-    protected loyaltyService: LoyaltyService,
-    protected configService: ConfigService,
-    protected translate: TranslateService,
-    protected router: Router,
-    protected authenticationService: AuthenticationService,
-    protected themesService: ThemesService,
-    protected settingsService: SettingsService,
-    protected badgeService: BadgeService,
+     config: Config,
+     profileService: ProfileService,
+     loyaltyService: LoyaltyService,
+     configService: ConfigService,
+     translate: TranslateService,
+     router: Router,
+     authenticationService: AuthenticationService,
+     themesService: ThemesService,
+     settingsService: SettingsService,
+     badgeService: BadgeService,
   ) {
+
+    super(
+      config,
+      profileService,
+      loyaltyService,
+      configService,
+      translate,
+      router,
+      authenticationService,
+      themesService,
+      settingsService,
+      badgeService
+    );
     this.preAuth = config.preAuth || false;
+
   }
 
   public ngOnInit(): void {
