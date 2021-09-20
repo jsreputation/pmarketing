@@ -102,9 +102,6 @@ export class PopupComponent {
 
   public buttonPressed2(): void {
     this.dialogRef.close(false);
-    if (this.data.afterClosedCallBack) {
-      this.data.afterClosedCallBack.dialogClosed();
-    }
   }
 
   public onClose(): void {
