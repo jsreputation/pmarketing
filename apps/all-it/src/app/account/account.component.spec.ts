@@ -1,11 +1,8 @@
 import {
   async,
-  fakeAsync,
   ComponentFixture,
-  TestBed, tick,
+  TestBed
 } from '@angular/core/testing';
-import { Type } from '@angular/core';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -27,8 +24,6 @@ import {
   ThemesService, SettingsService,  BadgeServiceModule,
 } from '@perxtech/core';
 import { AccountComponent } from './account.component';
-import { profile } from '../mock/profile.mock';
-import { pagesObject } from '../mock/pages.mock';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -46,16 +41,14 @@ describe('AccountComponent', () => {
   };
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
-  let router: Router;
-  let auth: AuthenticationService;
   const profileServiceStub: Partial<ProfileService> = {
-    whoAmI: (): Observable<IProfile> => of(profile)
+    whoAmI: (): Observable<IProfile> => of()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
+    getAccountSettings: (): Observable<PagesObject> => of(),
     getRemoteFlagsSettings: () => of()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
@@ -104,36 +97,11 @@ describe('AccountComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
-    router = TestBed.get<Router>(Router as Type<Router>);
-    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should fetch profile', fakeAsync(() => {
-    const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
-    const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
-      of(profile)
-    );
-    tick();
-    component.ngOnInit();
-    expect(profileServiceSpy).toHaveBeenCalled();
-  }));
-
-  it('should fetch pages', fakeAsync(() => {
-    component.ngOnInit();
-    expect(component.pages).toBe(pagesObject.pages);
-  }));
-
-  it('should logout', () => {
-    const routerSpy = spyOn(router, 'navigate');
-    const authSpy = spyOn(auth, 'logout');
-    component.logout();
-    expect(routerSpy).toHaveBeenCalledWith(['/login']);
-    expect(authSpy).toHaveBeenCalled();
   });
 
 });
