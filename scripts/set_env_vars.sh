@@ -31,7 +31,7 @@ staging)
     APIHOST="https://api-globe-superapp.perxtech.io/"
     ;;
   *)
-    APIHOST="https://api.perxtech.net"
+    APIHOST="https://api.perxtech.io"
     ;;
   esac
   ;;
