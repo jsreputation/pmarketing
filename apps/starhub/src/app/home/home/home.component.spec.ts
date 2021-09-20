@@ -176,7 +176,7 @@ describe('HomeComponent', () => {
     component.previousDelta = -1000;
     component.onScrollCall();
     tick(100);
-    expect(component.top).toBe(-170);
+    expect(component.top).toBe(-178);
   }));
 
   it('should redirect to error screen', fakeAsync(() => {
