@@ -67,12 +67,12 @@ export class RegisterComponent implements OnInit {
     this.loginForm = this.fb.group({
       password: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(20)
       ]],
       confirmPassword: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(20)
       ]],
     });
@@ -94,13 +94,15 @@ export class RegisterComponent implements OnInit {
     this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
       () => {
         this.notificationService.addSnack('Your password has been saved. Please login');
-        // this.notificationService.addSnack(message);
         this.router.navigateByUrl('/login');
       },
-      () => {
+      (err) => {
         // service returns success unless http failure
-        this.notificationService.addSnack('Something went wrong');
-        this.router.navigateByUrl('/login');
+        let message = 'Something went wrong';
+        if (err.error) {
+          message = err.error.message;
+        }
+        this.notificationService.addSnack(message);
       }
     );
   }
