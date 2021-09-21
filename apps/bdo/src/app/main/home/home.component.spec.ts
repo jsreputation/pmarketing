@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HomeComponent } from './home.component';
 import { PrimaryCatalogComponent } from './primary-catalog/primary-catalog.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MainRoutingModule } from '../main-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SecondaryCatalogComponent } from './secondary-catalog/secondary-catalog.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -15,7 +15,8 @@ describe('HomeComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         HomeComponent,
-        PrimaryCatalogComponent
+        PrimaryCatalogComponent,
+        SecondaryCatalogComponent
       ],
       imports: [
         MainRoutingModule,
