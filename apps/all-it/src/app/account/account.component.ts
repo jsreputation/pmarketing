@@ -86,7 +86,7 @@ export class AccountComponent extends BCPAccountComponent {
             (loyaltyTransaction: IV4LoyaltyTransaction) => {
               this.notificationService.addPopup({
                 title: 'Success',
-                text: `Thank you! Your membership has been extended using ${Math.abs(loyaltyTransaction.points)} points`
+                text: `Thank you! Your membership has been extended using ${Math.abs(loyaltyTransaction.deducted_points.points)} points`
               });
             },
             () => {
@@ -113,10 +113,15 @@ interface IV4AllItMembershipExtendResponse {
   data: IV4LoyaltyTransaction;
 }
 
-interface IV4LoyaltyTransaction {
+interface IV4PointsTransaction {
   id: number;
   transacted_at: Date;
   properties: ICustomProperties;
   points: number;
   loyalty_program_id: number;
+}
+
+interface IV4LoyaltyTransaction {
+  deducted_points: IV4PointsTransaction;
+  membership_end_date: Date;
 }
