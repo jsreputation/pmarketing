@@ -2546,7 +2546,7 @@
       "projectType": "application",
       "root": "apps/bdo",
       "sourceRoot": "apps/bdo/src",
-      "prefix": "perxtech",
+      "prefix": "bdo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

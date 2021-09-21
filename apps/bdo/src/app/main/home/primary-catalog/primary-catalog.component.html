@@ -1,0 +1,15 @@
+  <ul class="wrapper" #containerCategory>
+    <li class="item" *ngFor="let category of categories">
+      <div class="content-container">
+        <h3 class="title">{{category.title}}</h3>
+        <p class="content" *ngIf="category.content">{{category.content}}</p>
+        <a *ngFor="let subCategory of category.subCategories" [href]="subCategory.link" class="sub-category">{{subCategory.label}}</a>
+      </div>
+      <div class="image">
+        <img [src]="category.image"  [alt]="category.image"/>
+      </div>
+    </li>
+  </ul>
+
+
+
