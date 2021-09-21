@@ -80,8 +80,8 @@ export class AccountComponent extends BCPAccountComponent {
       hideCloseButton: true,
       afterClosedCallBack: {
         dialogClosed: (): void => {
-          forkJoin([ this.loyalty$, this.appConfig$ ]).pipe(
-            switchMap(([ loyalty, appconfig ]) => this.postMembershipExtend(loyalty, appconfig))
+          forkJoin([ this.profile$, this.appConfig$ ]).pipe(
+            switchMap(([ profile, appconfig ]) => this.postMembershipExtend(profile, appconfig))
           ).subscribe(
             (loyaltyTransaction: IV4LoyaltyTransaction) => {
               this.notificationService.addPopup({
@@ -101,15 +101,10 @@ export class AccountComponent extends BCPAccountComponent {
     });
   }
 
-  private postMembershipExtend(loyalty: ILoyalty, appconfig: IConfig<void>): Observable<IV4LoyaltyTransaction>{
+  private postMembershipExtend(profile: IProfile, appconfig: IConfig<void>): Observable<IV4LoyaltyTransaction> {
     return this.http.post(
-      `${appconfig.apiHost}/v4/custom/allit/membership_accounts/extend`,
-      {
-        id: loyalty.id
-      }
-    ).pipe(
-      map( (res: IV4AllItMembershipExtendResponse) => res.data)
-
+      `${appconfig.apiHost}/v4/custom/allit/membership_accounts/${profile.id}/extend`, null).pipe(
+      map((res: IV4AllItMembershipExtendResponse) => res.data)
     );
   }
 }
