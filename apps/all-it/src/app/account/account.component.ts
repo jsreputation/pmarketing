@@ -86,7 +86,7 @@ export class AccountComponent extends BCPAccountComponent {
             (loyaltyTransaction: IV4LoyaltyTransaction) => {
               this.notificationService.addPopup({
                 title: 'Success',
-                text: `Thank you! Your membership has been extended using ${Math.abs(loyaltyTransaction.points)} points`
+                text: `Thank you! Your membership has been extended using ${Math.abs(loyaltyTransaction.deducted_points.points)} points`
               });
             },
             () => {
@@ -103,7 +103,7 @@ export class AccountComponent extends BCPAccountComponent {
 
   private postMembershipExtend(loyalty: ILoyalty, appconfig: IConfig<void>): Observable<IV4LoyaltyTransaction> {
     return this.http.post(
-      `${appconfig.apiHost}/v4/custom/allit/membership_accounts/${loyalty.id}/extend`, null).pipe(
+      `${appconfig.apiHost}/v4/custom/allit/loyalty/${loyalty.id}/extend_membership`, null).pipe(
       map((res: IV4AllItMembershipExtendResponse) => res.data)
     );
   }
@@ -113,10 +113,15 @@ interface IV4AllItMembershipExtendResponse {
   data: IV4LoyaltyTransaction;
 }
 
-interface IV4LoyaltyTransaction {
+interface IV4PointsTransaction {
   id: number;
   transacted_at: Date;
   properties: ICustomProperties;
   points: number;
   loyalty_program_id: number;
+}
+
+interface IV4LoyaltyTransaction {
+  deducted_points: IV4PointsTransaction;
+  membership_end_date: Date;
 }
