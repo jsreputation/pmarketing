@@ -103,7 +103,7 @@ export class AccountComponent extends BCPAccountComponent {
 
   private postMembershipExtend(loyalty: ILoyalty, appconfig: IConfig<void>): Observable<IV4LoyaltyTransaction> {
     return this.http.post(
-      `${appconfig.apiHost}/v4/custom/allit/membership_accounts/${loyalty.id}/extend`, null).pipe(
+      `${appconfig.apiHost}/v4/custom/allit/loyalty/${loyalty.id}/extend_membership`, null).pipe(
       map((res: IV4AllItMembershipExtendResponse) => res.data)
     );
   }
