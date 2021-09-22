@@ -7,7 +7,9 @@
     <div class="membership-tier">{{membershipTierName}}</div>
   </div>
   <div class="right-block">
-    <div class="expiring-point">{{expiringPoints?.point}} stars expiring on {{expiringPoints?.expireDate | date: 'dd MMM yyyy'}}</div>
+    <div class="expiring-point">
+      <span *ngIf="pointsBalance > 0">{{expiringPoints?.points}} stars expiring on {{expiringPoints?.expireDate | date: 'dd MMM yyyy'}}</span>
+    </div>
     <div class="next-tier">{{nextTierPointsDiff}} stars to next level</div>
   </div>
 </div>

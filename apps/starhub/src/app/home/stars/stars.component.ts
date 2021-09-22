@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IExpiringPoints } from '@perxtech/core';
 
 @Component({
   selector: 'app-stars',
@@ -11,7 +12,7 @@ export class StarsComponent implements OnInit {
   @Input()
   public membershipTierName: string;
   @Input()
-  public expiringPoints: any;
+  public expiringPoints: IExpiringPoints;
   @Input()
   public nextTierPointsDiff: string;
 
