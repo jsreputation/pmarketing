@@ -31,6 +31,7 @@ body {
 
 .mat-dialog-container {
   background-color: var(--popup_background_colour) !important;
+  padding: 3.2rem !important;
 }
 
 button {
@@ -78,7 +79,7 @@ button.mat-stroked-button {
 .full-width__input {
   width: 100%;
   display: block;
-}  
+}
 
 .full-width__button {
   width: 100%;
@@ -102,4 +103,4 @@ button.mat-stroked-button {
   margin: .5rem !important;
   font-weight: 900;
   max-width: calc(100% - 1rem) !important;
-} 
+}
