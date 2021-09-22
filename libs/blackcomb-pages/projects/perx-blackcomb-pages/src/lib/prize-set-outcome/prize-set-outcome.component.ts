@@ -40,7 +40,7 @@ export class PrizeSetOutcomeComponent implements OnInit, OnDestroy {
   public outcomes: IPrizeSetItem[] = [];
   public outcomeType: typeof PrizeSetOutcomeType = PrizeSetOutcomeType;
   public isActualOutcomeMode: boolean = false;
-  public repeatGhostCount: number = 3;
+  public repeatGhostCount: number = 1;
   public prizeSet: IPrizeSet;
   private destroy$: Subject<void> = new Subject<void>();
   public prizeSetStatus: string;
