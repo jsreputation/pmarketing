@@ -23,7 +23,7 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
   public outcomes: IInstantOutcome[] = [];
   public outcomeType: typeof InstantOutcomeCampaignPrizeType = InstantOutcomeCampaignPrizeType;
   public isActualOutcomeMode: boolean = false;
-  public repeatGhostCount: number = 3;
+  public repeatGhostCount: number = 1;
   public transaction: IInstantOutcomeTransaction;
   private destroy$: Subject<void> = new Subject<void>();
   public instantRewardStatus: string;
