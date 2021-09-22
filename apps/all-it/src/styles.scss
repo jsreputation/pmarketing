@@ -43,6 +43,11 @@ button.mat-primary {
   color: var(--accent) !important;
 }
 
+.mat-dialog-container {
+  background-color: var(--popup_background_colour) !important;
+  padding: 3.2rem !important;
+}
+
 button.mat-accent {
   background-color: var(--accent) !important;
   color: var(--button_text_color) !important;
