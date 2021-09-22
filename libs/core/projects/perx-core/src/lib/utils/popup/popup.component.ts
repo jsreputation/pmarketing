@@ -16,9 +16,10 @@ export interface IPopupConfig {
   titleBelowImage?: boolean;
   popupClass?: string;
 }
-
+type OnOkFn = () => void;
 export interface PopUpClosedCallBack {
   dialogClosed(): void;
+  onOkFn?: OnOkFn;
 }
 
 /**
@@ -39,7 +40,7 @@ export class PopupComponent {
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
   public ctaButtonClass: string = '';
-  public popupClass: string = '';
+  public popupClass: string = ''; // currently we have `.custom-popup-class`
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -97,6 +98,9 @@ export class PopupComponent {
     this.dialogRef.close(btnTxt1);
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
+    }
+    if (this.data?.afterClosedCallBack?.onOkFn) {
+      this.data.afterClosedCallBack.onOkFn();
     }
   }
 
