@@ -69,7 +69,7 @@
       </div>
     </div>
   </div>
-  <div class="bottom-nav-container mat-elevation-z2">
+  <div class="bottom-nav-container mat-elevation-z2" *ngIf="campaign">
     <button mat-flat-button [ngStyle]="buttonStyle" (click)="next()" *ngIf="isDisplayCtaBtn">{{primaryCtaText}}</button>
     <button mat-stroked-button color="primary" *ngIf="secondaryCtaText" [ngStyle]="buttonStyle" (click)="nextSecondary()">{{secondaryCtaText}}</button>
   </div>
