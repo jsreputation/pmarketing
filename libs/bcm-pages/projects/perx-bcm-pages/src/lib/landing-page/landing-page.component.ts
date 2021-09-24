@@ -13,9 +13,9 @@ export class LandingPageComponent implements OnInit {
   public greeting: string;
 
   constructor(
-    private router: Router,
-    private authService: AuthenticationService,
-    private translateService: TranslateService
+    protected router: Router,
+    protected authService: AuthenticationService,
+    protected translateService: TranslateService
   ) { }
 
   public ngOnInit(): void {

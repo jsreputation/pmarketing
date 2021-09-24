@@ -1,0 +1,32 @@
+<div class="main-container">
+    <mat-tab-group mat-stretch-tabs class="tabs" (selectedTabChange)="onTabChange($event)">
+        <mat-tab [label]="qrCodeTxt">
+         <app-qrscanner [enableScan]="enableScan"></app-qrscanner>
+        </mat-tab>
+        <mat-tab [label]="mobileNumberTxt">
+            <div>
+                <form
+                [formGroup]="identifyUserForm"
+                (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <input
+                    type="number"
+                    matInput
+                    placeholder='{{ "IDENTIFY_USER.MOBILE_NUMBER" | translate }}'
+                    formControlName="mobileNumber"
+                    required>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
+                        {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }} <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <button
+                    mat-raised-button
+                    [disabled]="!identifyUserForm.valid"
+                    class="full-width__button mat-primary">
+                    {{ "IDENTIFY_USER.CONFIRM" | translate }}
+                </button>
+                </form>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>

@@ -21,13 +21,22 @@ import {
   SettingsService,
   ThemesService,
   TokenStorage,
-  UtilsModule
+  UtilsModule,
+  MerchantAdminModule
 } from '@perxtech/core';
 import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
+import { MerchantQrscannerModule } from '@perxtech/bcm-pages';
+import { MatButtonModule } from '@angular/material/button';
+import { HomeComponent } from './home/home.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const appInit =
   (
@@ -51,7 +60,9 @@ export const appInit =
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    IdentifyCustomerComponent,
+    HomeComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -67,6 +78,14 @@ export const appInit =
     MatIconModule,
     PerxProfileServiceModule.forRoot(),
     InstantOutcomeTransactionServiceModule.forRoot(),
+    MatTabsModule,
+    MatButtonModule,
+    MerchantQrscannerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MerchantAdminModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

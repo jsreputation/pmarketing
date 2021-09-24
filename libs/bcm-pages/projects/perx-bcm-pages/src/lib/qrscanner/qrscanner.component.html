@@ -3,6 +3,7 @@
     <div class="scanner">
       <em></em>
       <zxing-scanner
+        [enable]="startScan"
         (scanSuccess)="scanSuccessHandler($event)"
       ></zxing-scanner>
     </div>

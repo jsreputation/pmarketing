@@ -4,7 +4,7 @@ import {
   MerchantOrderComponent,
   MerchantQrscannerComponent,
   MerchantRedeemComponent,
-  MerchantTransactionHistoryComponent
+  MerchantTransactionHistoryComponent,
 } from '@perxtech/bcm-pages';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +12,7 @@ import { EXTENDED_LOGO_URLS } from './app.constants';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
 
 @Component({
   selector: 'app-root',
@@ -79,7 +80,8 @@ export class AppComponent implements OnInit {
       ref instanceof MerchantTransactionHistoryComponent ||
       ref instanceof MerchantQrscannerComponent ||
       ref instanceof MerchantRedeemComponent ||
-      ref instanceof MerchantOrderComponent;
+      ref instanceof MerchantOrderComponent ||
+      ref instanceof IdentifyCustomerComponent;
 
     this.pageTitle =
       ref instanceof MerchantTransactionHistoryComponent
@@ -90,6 +92,8 @@ export class AppComponent implements OnInit {
         ? 'Redemption'
         : ref instanceof MerchantOrderComponent
         ? 'Create Sales Record'
+        : ref instanceof IdentifyCustomerComponent
+        ? 'Identify Customer'
         : '';
   }
 

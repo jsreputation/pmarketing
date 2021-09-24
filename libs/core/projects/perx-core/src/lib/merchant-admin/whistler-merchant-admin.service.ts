@@ -88,4 +88,9 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
+
+  // @ts-ignore
+  public getCustomerDetails(mobileNumber: number): Observable<IProfile> {
+    throw new Error('Not implement yet');
+  }
 }
