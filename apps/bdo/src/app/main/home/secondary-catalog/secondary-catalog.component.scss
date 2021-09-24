@@ -1,0 +1,36 @@
+@import "../../../../theme/variables";
+
+.secondary-catalog {
+  .catalog-list-container {
+    list-style-type: none;
+    padding: 0 10px 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 120px 120px;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    margin: 0;
+
+    li {
+      color: $near-black;
+      border-radius: 20px;
+      display: flex;
+      align-items: flex-end;
+      padding: 15px;
+      background-color: $light-blue;
+      background-position: right bottom;
+      background-repeat: no-repeat;
+
+      span {
+        height: 40%;
+        font-weight: bold;
+        width: 50%;
+      }
+    }
+  }
+
+  p {
+    margin: 0;
+    padding: 10px 10px;
+  }
+}

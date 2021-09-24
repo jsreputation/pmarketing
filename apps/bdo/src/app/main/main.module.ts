@@ -11,12 +11,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     HomeComponent,
-    PrimaryCatalogComponent
+    PrimaryCatalogComponent,
+    SecondaryCatalogComponent
   ],
   imports: [
     CommonModule,
