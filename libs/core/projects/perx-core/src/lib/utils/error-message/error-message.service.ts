@@ -28,6 +28,7 @@ export class ErrorMessageService {
         - 'User is not a enrolled loyalty member'
         - 'User does not have enough points balance'
         - 'Merchant location is not a part of the reward'
+        - 'Team is already completed'
     Unprocessable Error - 41
         - 'User was not invited'
     UserMembershipExpired - 53
@@ -77,6 +78,8 @@ export class ErrorMessageService {
                     errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
                 } else if (errMessage && errMessage.match(/Invalid invitation code/i)) {
                   errorKey = 'ERRORS.INVALID_INVITE_CODE'
+                } else if (errMessage && errMessage.match(/Team is already completed/i)) {
+                  errorKey = 'ERRORS.TEAM_FULL'
                 }
                 break;
             case 41:
