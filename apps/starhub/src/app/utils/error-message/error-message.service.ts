@@ -27,6 +27,7 @@ export class ErrorMessageService {
         - 'User is not a enrolled loyalty member'
         - 'User does not have enough points balance'
         - 'Merchant location is not a part of the reward'
+        - 'Team is already completed'
     UserMembershipExpired - 53
         - 'Points cannot be issued or deducted as user membership has expired'
     AccessForbidden - 44

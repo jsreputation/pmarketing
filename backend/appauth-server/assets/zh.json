@@ -276,7 +276,8 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
-    "INVALID_INVITE_CODE": "Invalid invite code"
+    "INVALID_INVITE_CODE": "Invalid invite code",
+    "TEAM_FULL": "This team is already full"
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",
