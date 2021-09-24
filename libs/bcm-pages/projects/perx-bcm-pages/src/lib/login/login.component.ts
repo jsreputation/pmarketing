@@ -5,7 +5,7 @@ import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
+  selector: 'perx-bcm-pages-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

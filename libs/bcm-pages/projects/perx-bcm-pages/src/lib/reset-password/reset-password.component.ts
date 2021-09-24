@@ -10,7 +10,7 @@ interface ResetData {
 }
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'perx-bcm-pages-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })

@@ -10,7 +10,7 @@ import { IMerchantAdminService, IMessageResponse, NotificationService } from '@p
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'perx-bcm-pages-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })

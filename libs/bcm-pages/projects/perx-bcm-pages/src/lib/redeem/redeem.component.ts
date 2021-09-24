@@ -23,7 +23,7 @@ interface IPayload {
 }
 
 @Component({
-  selector: 'app-redeem',
+  selector: 'perx-bcm-pages-redeem',
   templateUrl: './redeem.component.html',
   styleUrls: ['./redeem.component.scss']
 })
