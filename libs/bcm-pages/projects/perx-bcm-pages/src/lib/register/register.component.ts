@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-register',
+  selector: 'perx-bcm-pages-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

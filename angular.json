@@ -2520,6 +2520,7 @@
     "bcm-pages": {
       "root": "libs/bcm-pages",
       "sourceRoot": "libs/bcm-pages/projects/perx-bcm-pages/src",
+      "prefix": "perx-bcm-pages",
       "projectType": "library",
       "architect": {
         "lint": {
