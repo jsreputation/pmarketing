@@ -43,6 +43,7 @@ export interface IStarhubConfig {
   showAllSnappingSaturdayItems: boolean;
   mobileIdCR: boolean;
   UXCR: boolean;
+  starsCR: boolean;
 }
 
 
@@ -66,6 +67,7 @@ export class HomeComponent implements OnInit {
   private token: string;
   public game?: IGame;
   public hubclubCR: boolean;
+  public starsCR: boolean;
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
   public uxcr: boolean = false;
@@ -86,6 +88,7 @@ export class HomeComponent implements OnInit {
     this.configService.readAppConfig<IStarhubConfig>().pipe(
       tap((config: IConfig<IStarhubConfig>) => {
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
+        this.starsCR = config.custom ? config.custom.starsCR : false;
         this.appConfig = config;
         this.uxcr = config.custom ? config.custom.UXCR : false;
       }),
