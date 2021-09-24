@@ -1,0 +1,10 @@
+<ul class="tagged-item">
+  <li class="item" *ngFor="let deal of deals" (click)="selectedItem(deal)">
+    <img [src]="deal.image" />
+    <div class="container">
+      <h4 class="title">{{deal.title}}</h4>
+      <p class="description">{{deal.description}}</p>
+      <span class="position" *ngIf="deal?.position"><mat-icon>location_pin</mat-icon>{{deal.position}}</span>
+    </div>
+  </li>
+</ul>

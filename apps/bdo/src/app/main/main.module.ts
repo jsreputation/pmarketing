@@ -1,3 +1,4 @@
+import { TaggedItemComponent } from './home/tagged-item/tagged-item.component';
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -20,6 +21,7 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
     HomeComponent,
     PrimaryCatalogComponent,
     FeatureDealsComponent,
+    TaggedItemComponent,
     SecondaryCatalogComponent
   ],
   imports: [

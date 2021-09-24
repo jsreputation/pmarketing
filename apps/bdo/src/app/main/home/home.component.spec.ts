@@ -7,6 +7,8 @@ import { MainRoutingModule } from '../main-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FeatureDealsComponent } from './featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './secondary-catalog/secondary-catalog.component';
+import { TaggedItemComponent } from './tagged-item/tagged-item.component';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -17,14 +19,16 @@ describe('HomeComponent', () => {
       declarations: [
         HomeComponent,
         PrimaryCatalogComponent,
+        SecondaryCatalogComponent,
         FeatureDealsComponent,
-        SecondaryCatalogComponent
+        TaggedItemComponent
       ],
       imports: [
         MainRoutingModule,
         MatSidenavModule,
         MatCardModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatIconModule
       ]
     })
     .compileComponents();
