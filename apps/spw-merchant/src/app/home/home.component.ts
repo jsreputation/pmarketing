@@ -1,13 +1,13 @@
 import { Component,  } from '@angular/core';
-import { MerchantLandingPageComponent } from '@perxtech/bcm-pages';
 import { AuthenticationService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { MerchantLandingPageComponent } from '@perxtech/bcm-pages';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: '../../../../../libs/bcm-pages/projects/perx-bcm-pages/src/lib/landing-page/landing-page.component.html',
+  styleUrls: ['../../../../../libs/bcm-pages/projects/perx-bcm-pages/src/lib/landing-page/landing-page.component.scss']
 })
 export class HomeComponent extends MerchantLandingPageComponent {
 
