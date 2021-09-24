@@ -430,7 +430,6 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public getCustomerDetails(mobileNumber: number): Observable<IProfile> {
-    // const url = `${this.apiHost}/v4/pos/user_accounts/search`;
     const url = `${this.apiHost}/v4/merchant_admin/user_accounts/search`;
     return this.http.get<IV4ProfileResponse>(url, { params: { phone: `${mobileNumber}` }}).pipe(
       map((res) => V4ProfileService.v4ProfileToProfile(res.data))
