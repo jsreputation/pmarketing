@@ -14,7 +14,7 @@ export interface IPayload {
 
 
 @Component({
-  selector: 'app-order',
+  selector: 'perx-bcm-pages-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })

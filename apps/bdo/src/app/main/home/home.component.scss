@@ -1,0 +1,21 @@
+@import './../../../theme/variables.scss';
+
+.homepage {
+  .header {
+    margin: 12px 0 0 0;
+    padding: 0 10px;
+    color: $main-blue-text;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  .card {
+    font-family: 'Nunito', sans-serif;
+    margin-top: 10px;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 5px 0;
+  }
+}

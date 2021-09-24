@@ -7,7 +7,7 @@ import { IMerchantAdminService, IMerchantTransactionHistory,
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-transaction-history',
+  selector: 'perx-bcm-pages-transaction-history',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.scss']
 })

@@ -2520,6 +2520,7 @@
     "bcm-pages": {
       "root": "libs/bcm-pages",
       "sourceRoot": "libs/bcm-pages/projects/perx-bcm-pages/src",
+      "prefix": "perx-bcm-pages",
       "projectType": "library",
       "architect": {
         "lint": {
@@ -2546,7 +2547,7 @@
       "projectType": "application",
       "root": "apps/bdo",
       "sourceRoot": "apps/bdo/src",
-      "prefix": "perxtech",
+      "prefix": "bdo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

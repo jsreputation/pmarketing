@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 
 @Component({
-  selector: 'app-qrscanner',
+  selector: 'perx-bcm-pages-qrscanner',
   templateUrl: './qrscanner.component.html',
   styleUrls: ['./qrscanner.component.scss']
 })

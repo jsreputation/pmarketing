@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./theme/theme.scss";
+@import "./theme/fonts.scss";
+
+body {
+  margin: 0;
+  font-family: var(--font, 'Nunito', sans-serif);
+  background: $light-grey;
+}
+
+
