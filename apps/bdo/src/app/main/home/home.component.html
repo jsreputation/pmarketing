@@ -4,6 +4,10 @@
     <bdo-primary-catalog [categories]="categories"></bdo-primary-catalog>
   </mat-card>
   <mat-card class="card">
+    <h2 class="header">FEATURED DEALS</h2>
+    <bdo-featured-deals [deals]="featuredDeals" (eventItemClick)="navigateTo($event)"></bdo-featured-deals>
+  </mat-card>
+  <mat-card class="card">
     <h2 class="header">DEALS YOU CAN ENJOY</h2>
     <bdo-secondary-catalog></bdo-secondary-catalog>
   </mat-card>

@@ -1,0 +1,8 @@
+<ul class="wrapper">
+  <li class="item" *ngFor="let featuredDeals of deals" (click)="itemClick(featuredDeals)">
+    <div class="image">
+      <img [src]="featuredDeals.image" />
+    </div>
+    <span class="title">{{featuredDeals.title}}</span>
+  </li>
+</ul>
