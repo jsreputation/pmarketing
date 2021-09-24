@@ -1,13 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import {
+  BadgeService,
+  IBadge,
   IInstantOutcome,
   IInstantOutcomeTransaction,
   IInstantOutcomeTransactionService,
-  ILoyalty, InstantOutcomeCampaignPrizeType, InstantOutcomeTransactionState,
+  ILoyalty,
+  InstantOutcomeCampaignPrizeType,
+  InstantOutcomeTransactionState, IPopupConfig,
   IReward,
-  LoyaltyService,
+  LoyaltyService, NotificationService,
   RewardsService
 } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +27,7 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
   public outcomes: IInstantOutcome[] = [];
   public outcomeType: typeof InstantOutcomeCampaignPrizeType = InstantOutcomeCampaignPrizeType;
   public isActualOutcomeMode: boolean = false;
-  public repeatGhostCount: number = 3;
+  public repeatGhostCount: number = 1;
   public transaction: IInstantOutcomeTransaction;
   private destroy$: Subject<void> = new Subject<void>();
   public instantRewardStatus: string;
@@ -34,7 +38,9 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private rewardsService: RewardsService,
     private instantOutcomeTransactionService: IInstantOutcomeTransactionService,
-    private router: Router
+    private router: Router,
+    private badgeService: BadgeService,
+    private notificationService: NotificationService,
   ) {}
 
   public ngOnInit(): void {
@@ -53,18 +59,21 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
             of([])
           );
         }),
-        switchMap((outcomes) => forkJoin([
-            this.getOutcomes(transactionId),
-            of(outcomes),
-          ])),
+        switchMap((outcomes) =>
+          forkJoin([this.getOutcomes(transactionId), of(outcomes)])
+        ),
         takeUntil(this.destroy$)
       )
       .subscribe(
-        ([outcomes, issuedOutcomes]: [IInstantOutcome[], IInstantOutcome[]]) => {
+        ([outcomes, issuedOutcomes]: [
+          IInstantOutcome[],
+          IInstantOutcome[]
+        ]) => {
           outcomes?.map((outcomeItem) => {
             const issuedOutcome = issuedOutcomes?.find(
               (issuedOutcomeItem) =>
-                issuedOutcomeItem?.campaignPrizeId === outcomeItem.campaignPrizeId
+                issuedOutcomeItem?.campaignPrizeId ===
+                outcomeItem.campaignPrizeId
             );
             if (issuedOutcome) {
               outcomeItem = Object.assign(outcomeItem, issuedOutcome);
@@ -76,6 +85,7 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
   }
 
   public getOutcomes(transactionId: number): Observable<IInstantOutcome[]> {
+    let badgeOutcomes: IInstantOutcome[] = [];
     let rewardOutcomes: IInstantOutcome[] = [];
     let pointOutcomes: IInstantOutcome[] = [];
     let allOutcomes: IInstantOutcome[] = [];
@@ -86,6 +96,11 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
           this.transaction = instantOutcomeTransaction;
           allOutcomes =
             instantOutcomeTransaction && instantOutcomeTransaction.outcomes;
+          badgeOutcomes = allOutcomes.filter(
+            (outcome) =>
+              outcome.campaignPrizeType ===
+              InstantOutcomeCampaignPrizeType.badge
+          );
           rewardOutcomes = allOutcomes.filter(
             (outcome) =>
               outcome.campaignPrizeType ===
@@ -97,6 +112,13 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
               InstantOutcomeCampaignPrizeType.points
           );
           return forkJoin([
+            combineLatest([
+              ...badgeOutcomes.map((outcome) =>
+                this.badgeService
+                  .getBadge(outcome.campaignPrizeId)
+                  .pipe(catchError(() => of([])))
+              ),
+            ]).pipe(startWith([])),
             combineLatest([
               ...rewardOutcomes.map((outcome) =>
                 this.rewardsService
@@ -113,31 +135,40 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
             ]).pipe(startWith([])),
           ]);
         }),
-        switchMap(([rewards, loyalties]: [IReward[], ILoyalty[]]) => {
-          allOutcomes?.map((outcome) => {
-            if (
-              outcome.campaignPrizeType ===
-              InstantOutcomeCampaignPrizeType.reward
-            ) {
-              outcome.rewardDetails =
-                rewards &&
-                rewards.find(
-                  (reward) => reward?.id === outcome.campaignPrizeId
-                );
-            } else if (
-              outcome.campaignPrizeType ===
-              InstantOutcomeCampaignPrizeType.points
-            ) {
-              outcome.loyaltyDetails =
-                loyalties &&
-                loyalties.find(
-                  (loyalty) => loyalty?.id === outcome.campaignPrizeId
-                );
-            }
-          });
-          this.outcomes = allOutcomes;
-          return of(allOutcomes);
-        })
+        switchMap(
+          ([badges, rewards, loyalties]: [IBadge[], IReward[], ILoyalty[]]) => {
+            allOutcomes?.map((outcome) => {
+              if (
+                outcome.campaignPrizeType ===
+                InstantOutcomeCampaignPrizeType.reward
+              ) {
+                outcome.rewardDetails =
+                  rewards &&
+                  rewards.find(
+                    (reward) => reward?.id === outcome.campaignPrizeId
+                  );
+              } else if (
+                outcome.campaignPrizeType ===
+                InstantOutcomeCampaignPrizeType.points
+              ) {
+                outcome.loyaltyDetails =
+                  loyalties &&
+                  loyalties.find(
+                    (loyalty) => loyalty?.id === outcome.campaignPrizeId
+                  );
+              } else if (
+                outcome.campaignPrizeType ===
+                InstantOutcomeCampaignPrizeType.badge
+              ) {
+                outcome.badgeDetails =
+                  badges &&
+                  badges.find((badge) => badge?.id === outcome.campaignPrizeId);
+              }
+            });
+            this.outcomes = allOutcomes;
+            return of(allOutcomes);
+          }
+        )
       );
   }
 
@@ -149,7 +180,8 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((status: string) => {
           this.instantRewardStatus = status;
-          return status === InstantOutcomeTransactionState.completed || status === InstantOutcomeTransactionState.redeemed
+          return status === InstantOutcomeTransactionState.completed ||
+            status === InstantOutcomeTransactionState.redeemed
             ? this.instantOutcomeTransactionService.getInstantOutcomeTransactionOutcomes(
                 transactionId
               )
@@ -159,10 +191,28 @@ export class InstantRewardOutcomeComponent implements OnInit, OnDestroy {
   }
 
   public goToRewardDetails(outcome: IInstantOutcome): void {
-    if (this.isActualOutcomeMode && outcome.actualOutcomeId) {
+    if (
+      this.isActualOutcomeMode &&
+      outcome.actualOutcomeId &&
+      outcome.campaignPrizeType === InstantOutcomeCampaignPrizeType.points
+    ) {
       this.router.navigate(['/voucher-detail', outcome.actualOutcomeId]);
-    } else if (!this.isActualOutcomeMode && outcome.campaignPrizeId) {
+    } else if (
+      !this.isActualOutcomeMode &&
+      outcome.campaignPrizeId &&
+      outcome.campaignPrizeType === InstantOutcomeCampaignPrizeType.reward
+    ) {
       this.router.navigate(['/reward-detail', outcome.campaignPrizeId]);
+    } else if (
+      outcome.campaignPrizeType === InstantOutcomeCampaignPrizeType.badge
+    ) {
+      const popUpConf: IPopupConfig = {
+        title: outcome?.badgeDetails?.title || '',
+        text: outcome?.badgeDetails?.description || '',
+        imageUrl: outcome.badgeDetails?.image?.value?.image_url || '',
+        titleBelowImage: true,
+      };
+      this.notificationService.addPopup(popUpConf);
     }
   }
 

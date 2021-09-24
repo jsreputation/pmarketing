@@ -327,7 +327,8 @@
     "CONTACT_US": "Contact Us",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
-    "BADGES": "My Badges"
+    "BADGES": "My Badges",
+    "RENEW_MEMBERSHIP": "Renew Membership"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",

@@ -347,10 +347,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                 buttonTxt: campaignRes.displayProperties?.claimPrize?.buttonText || 'CLAIM PRIZE',
                 imageUrl: popupImageURL,
                 titleBelowImage: true,
-                hideCloseButton: true,
-                popupClass: 'custom-popup-class',
                 afterClosedCallBack: {
-                  dialogClosed: (): void => {
+                  dialogClosed: (): void => {},
+                  onOkFn: (): void => {
                     this.instantOutcomeTransactionService
                       .claimPrize(firstComeFirstServeTransaction.id)
                       .subscribe((res) => {
