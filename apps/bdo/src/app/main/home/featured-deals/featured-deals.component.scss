@@ -1,0 +1,50 @@
+@import "../../../../theme/variables";
+
+.wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 85%;
+  grid-gap: 7px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  height: 145px;
+  padding-inline-start: 0 !important;
+  padding-bottom: 5px;
+
+  .item:first-child {
+    margin-left: 20px;
+  }
+
+  .item:last-child {
+    margin-right: 20px;
+  }
+
+  .item {
+    scroll-snap-align: center;
+    border-radius: 15px;
+    height: 100px;
+    list-style-type: none;
+
+    .image {
+      height: 116px;
+      margin-bottom: 8px;
+      border-radius: inherit;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: inherit;
+      }
+    }
+
+    .title {
+      line-height: 22px;
+      color: $near-black;
+      letter-spacing: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}

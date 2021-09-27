@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
     MainComponent,
     HomeComponent,
     PrimaryCatalogComponent,
+    FeatureDealsComponent,
     SecondaryCatalogComponent
   ],
   imports: [
@@ -31,7 +33,6 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
     MatIconModule,
     MatButtonModule
   ],
-  bootstrap: []
+  bootstrap: [],
 })
-export class MainModule {
-}
+export class MainModule {}
