@@ -14,7 +14,7 @@ export class StarsComponent implements OnInit {
   @Input()
   public expiringPoints: IExpiringPoints;
   @Input()
-  public nextTierPointsDiff: string;
+  public nextTierPointsDiff: number;
 
   constructor() { }
 
