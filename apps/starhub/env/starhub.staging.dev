@@ -1,3 +1,4 @@
+APIHOST=https://api.perxtech.io
 PREAUTH=true
 UX_CR=true
 HUBCLUB_CR=true
