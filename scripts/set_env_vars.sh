@@ -23,43 +23,6 @@ else
   exit 1
 fi
 
-# Set env APIHOST
-case ${TARGET_ENV} in
-staging)
-  case ${APP} in
-  globesuperapp)
-    APIHOST="https://api-globe-superapp.perxtech.io/"
-    ;;
-  *)
-    APIHOST="https://api.perxtech.io"
-    ;;
-  esac
-  ;;
-production)
-  case ${APP} in
-  hsbc | hsbc-rewards | hsbc-xmas)
-    APIHOST="https://api-hsbc.perxtech.net"
-    ;;
-  starhub)
-    APIHOST="https://api-starhub.perxtech.net"
-    ;;
-  globesuperapp)
-    APIHOST="https://api-globe-superapp.perxtech.net/"
-    ;;
-  *)
-    APIHOST="https://api.perxtech.net"
-    ;;
-  esac
-  ;;
-*)
-  echo "Error! Unsupported environment"
-  exit 1
-  ;;
-esac
-
-echo APIHOST is ${APIHOST}
-echo "APIHOST=${APIHOST}" >>"${GITHUB_ENV}"
-
 # Set env PREAUTH
 case ${APP} in
 prudential | blackcomb | bpi)
