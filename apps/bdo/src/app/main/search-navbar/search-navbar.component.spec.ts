@@ -1,31 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MainRoutingModule } from './main-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from '../app-routing.module';
 import { APP_BASE_HREF } from '@angular/common';
-import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
+import { SearchNavbarComponent } from './search-navbar.component';
+import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('SearchNavbarComponent', () => {
+  let component: SearchNavbarComponent;
+  let fixture: ComponentFixture<SearchNavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        MainComponent,
-        SearchNavbarComponent
-      ],
+      declarations: [ SearchNavbarComponent ],
       imports: [
         BrowserAnimationsModule,
+        AppRoutingModule,
         MatToolbarModule,
         MatSidenavModule,
-        AppRoutingModule,
-        MainRoutingModule,
         MatExpansionModule
       ],
       providers: [
@@ -39,7 +33,7 @@ describe('MainComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(SearchNavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

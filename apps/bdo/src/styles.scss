@@ -94,3 +94,12 @@ body {
     border-bottom: 4px solid $medium-orange !important;
   }
 }
+
+.search-popup {
+  .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+    height: 100rem;
+    border-top: 8px solid $light-white;
+    background: $white;
+  }
+}
