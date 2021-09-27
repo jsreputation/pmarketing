@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./theme/theme.scss";
-@import "./theme/fonts.scss";
-@import "./theme/variables.scss";
+@import './theme/theme.scss';
+@import './theme/fonts.scss';
+@import './theme/variables.scss';
 
 body {
   margin: 0;
@@ -28,5 +28,33 @@ body {
 
   &--nearby {
     background-color: $purple;
+  }
+}
+
+.tag {
+  text-transform: uppercase;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $white;
+
+  &--nearby {
+    background-color: $purple;
+  }
+
+  &--new {
+    background-color: $green;
+  }
+}
+
+.search-result-tab {
+  .mat-tab-label {
+    height: 46px !important;
+  }
+
+  .mat-tab-label-active {
+    color: $medium-blue;
+    border-bottom: 4px solid $medium-orange !important;
   }
 }
