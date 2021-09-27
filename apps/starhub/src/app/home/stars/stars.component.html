@@ -10,6 +10,6 @@
     <div class="expiring-point">
       <span *ngIf="pointsBalance > 0">{{expiringPoints?.points}} stars expiring on {{expiringPoints?.expireDate | date: 'dd MMM yyyy'}}</span>
     </div>
-    <div class="next-tier">{{nextTierPointsDiff}} stars to next level</div>
+    <div class="next-tier" *ngIf="nextTierPointsDiff > 0">{{nextTierPointsDiff}} stars to next level</div>
   </div>
 </div>
