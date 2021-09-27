@@ -1,2 +1,3 @@
+APIHOST=https://api.perxtech.io
 SOURCETYPE=hsbc-xmas
-PRODUCTION=true 
+PRODUCTION=true
