@@ -2553,7 +2553,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/bdo",
+            "outputPath": "dist/bdo",
             "index": "apps/bdo/src/index.html",
             "main": "apps/bdo/src/main.ts",
             "polyfills": "apps/bdo/src/polyfills.ts",
