@@ -3,7 +3,7 @@
 .homepage {
   .header {
     margin: 12px 0 0 0;
-    padding: 0 10px;
+    padding: 0 20px;
     color: $main-blue-text;
   }
 
@@ -17,6 +17,15 @@
     box-shadow: none;
     border-radius: 0;
     padding: 5px 0;
+
+    .tag {
+      margin-left: 20px;
+    }
+
+    p {
+      padding: 0 20px;
+      font-size: 14px;
+    }
   }
 
   .near-by-title {

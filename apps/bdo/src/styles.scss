@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./theme/theme.scss";
 @import "./theme/fonts.scss";
+@import "./theme/variables.scss";
 
 body {
   margin: 0;
@@ -9,6 +10,23 @@ body {
   color: $dark-grey;
 }
 
+.bg-transparent {
+  background: transparent;
+}
+
 .no-padding {
   padding: 0;
+}
+
+.tag {
+  text-transform: uppercase;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $white;
+
+  &--nearby {
+    background-color: $purple;
+  }
 }

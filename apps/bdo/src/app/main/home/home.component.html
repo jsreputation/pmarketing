@@ -9,7 +9,13 @@
   </mat-card>
   <mat-card class="card">
     <h2 class="header">DEALS YOU CAN ENJOY</h2>
+    <p>Promotions that BDO has in store for you!</p>
     <bdo-secondary-catalog></bdo-secondary-catalog>
+  </mat-card>
+  <mat-card class="card bg-transparent">
+    <span class="tag tag--nearby">nearby</span>
+    <p class="near-by-title">Find deals that are just right around the corner</p>
+    <bdo-tagged-item [deals]="nearBy"></bdo-tagged-item>
   </mat-card>
 </div>
 
