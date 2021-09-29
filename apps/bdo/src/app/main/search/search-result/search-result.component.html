@@ -1,0 +1,41 @@
+<mat-tab-group animationDuration="0ms" mat-stretch-tabs class="search-result-tab">
+  <mat-tab>
+    <ng-template mat-tab-label >
+      <img src="./assets/images/icon-n-catalogue.svg" alt=""/>
+      <span class="label-tab">Catalogue</span>
+    </ng-template>
+    <ng-template mat-tab-label>
+      <img src="./assets/images/icon-n-viewall.svg" alt=""/>
+      <span class="label-tab">List</span>
+    </ng-template>
+    <ul class="search-result-wrapper">
+      <li class="item" *ngFor="let item of result" (click)="selectedItem(item)">
+        <img [src]="item.rewardThumbnail"/>
+        <div class="tag-group">
+          <span class="tag tag--nearby">nearby</span>
+          <span class="tag tag--new">new</span>
+        </div>
+
+        <div class="container">
+          <h4 class="title">{{item.name}}</h4>
+          <p class="description">{{item.description}}</p>
+        </div>
+      </li>
+    </ul>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <img src="./assets/images/icon-n-viewall.svg" alt=""/>
+      <span class="label-tab">List</span>
+    </ng-template>
+    <ul class="search-result-wrapper">
+      <li class="item" *ngFor="let item of result" (click)="selectedItem(item)">
+        <div class="container">
+          <h4 class="title">{{item.name}}</h4>
+          <p class="description">{{item.description}}</p>
+        </div>
+      </li>
+    </ul>
+  </mat-tab>
+</mat-tab-group>

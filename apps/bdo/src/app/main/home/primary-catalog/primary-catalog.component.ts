@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { CategoryModel } from '../../../models/category.model';
-import { ScrollToItemDirective } from '../../../shared/directive/scroll-to-item.directive';
+import { ScrollToItemDirective } from '../../../shared/directives/scroll-to-item.directive';
 
 
 @Component({

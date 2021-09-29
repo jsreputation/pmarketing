@@ -11,9 +11,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
+
+import { MatTabsModule } from '@angular/material/tabs';
+import { SearchHeaderComponent } from './search/search-header/search-header.component';
+import { SearchResultComponent } from './search/search-result/search-result.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +28,10 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
     PrimaryCatalogComponent,
     FeatureDealsComponent,
     TaggedItemComponent,
-    SecondaryCatalogComponent
+    SecondaryCatalogComponent,
+    SearchHeaderComponent,
+    SearchResultComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +42,9 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatTabsModule
   ],
   bootstrap: [],
 })
