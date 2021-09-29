@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, } from '@angular/router';
 import { ProtectedGuard } from 'ngx-auth';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', loadChildren: () => import('./home/home.module').then((mod) => mod.HomeModule) },
+      { path: 'home', component: HomeComponent },
       { path: 'transaction-history',
       loadChildren: () => import('./transaction-history/transaction-history.module').then((mod) => mod.TransactionHistoryModule) },
       { path: 'qrscanner/:path', loadChildren: () => import('./qrscanner/qrscanner.module').then((mod) => mod.QrscannerModule) },
       { path: 'redeem', loadChildren: () => import('./redeem/redeem.module').then((mod) => mod.RedeemModule) },
       { path: 'order', loadChildren: () => import('./order/order.module').then((mod) => mod.OrderModule) },
+      { path: 'identify-user/:path', component: IdentifyCustomerComponent },
     ],
     canActivate: [ProtectedGuard]
   },

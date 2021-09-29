@@ -36,7 +36,8 @@ import {
 } from '../perx-core.models';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
-
+import { IProfile } from '../profile/profile.model';
+import { V4ProfileService, IV4ProfileResponse } from '../profile/v4-profile.service';
 interface IV4MerchantAdminTransaction {
   id: number;
   user_account_id: number;
@@ -425,6 +426,13 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         reset_password_token: resetPasswordInfo.resetPasswordToken,
         password: resetPasswordInfo.password,
       }
+    );
+  }
+
+  public getCustomerDetails(mobileNumber: number): Observable<IProfile> {
+    const url = `${this.apiHost}/v4/merchant_admin/user_accounts/search`;
+    return this.http.get<IV4ProfileResponse>(url, { params: { phone: `${mobileNumber}` }}).pipe(
+      map((res) => V4ProfileService.v4ProfileToProfile(res.data))
     );
   }
 }

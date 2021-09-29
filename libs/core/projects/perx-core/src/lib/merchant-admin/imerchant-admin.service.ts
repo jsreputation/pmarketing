@@ -10,7 +10,7 @@ import {
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IMessageResponse } from '../perx-core.models';
-
+import { IProfile } from '../profile/profile.model';
 export abstract class IMerchantAdminService {
   public abstract createTransaction(
     userId: number,
@@ -62,4 +62,6 @@ export abstract class IMerchantAdminService {
   public abstract resetPassword(
     resetPasswordInfo: IResetPasswordData,
   ): Observable<IMessageResponse>;
+
+  public abstract getCustomerDetails(mobileNumber: number): Observable<IProfile>;
 }
