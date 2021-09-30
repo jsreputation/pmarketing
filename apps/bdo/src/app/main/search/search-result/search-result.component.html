@@ -9,18 +9,8 @@
       <span class="label-tab">List</span>
     </ng-template>
     <ul class="search-result-wrapper">
-      <li class="item" *ngFor="let item of result" (click)="selectedItem(item)">
-        <img [src]="item.rewardThumbnail"/>
-        <div class="tag-group">
-          <span class="tag tag--nearby">nearby</span>
-          <span class="tag tag--new">new</span>
-        </div>
-
-        <div class="container">
-          <h4 class="title">{{item.name}}</h4>
-          <p class="description">{{item.description}}</p>
-        </div>
-      </li>
+      <bdo-large-list-item *ngFor="let item of result" [reward]="item">
+      </bdo-large-list-item>
     </ul>
   </mat-tab>
   <mat-tab>

@@ -22,6 +22,7 @@ import { SearchHeaderComponent } from './search/search-header/search-header.comp
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
 
+
 @NgModule({
   declarations: [
     MainComponent,
