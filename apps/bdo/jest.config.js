@@ -15,6 +15,11 @@ module.exports = {
       },
     },
   },
+  roots: ['src'],
+  resolver: '@nrwl/jest/plugins/resolver',
+  transform: {
+    '^.+\.(ts|js|html)$': 'ts-jest'
+  },
   coverageDirectory: '../../coverage/apps/bdo',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
