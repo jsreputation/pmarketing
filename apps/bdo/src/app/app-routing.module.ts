@@ -11,6 +11,11 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
     canActivate: [PublicGuard]
   },
+  {
+    path: 'signup',
+    loadChildren: () => import('./sign-up/sign-up.module').then((mod) => mod.SignUpModule),
+    canActivate: [PublicGuard]
+  },
 ];
 
 @NgModule({

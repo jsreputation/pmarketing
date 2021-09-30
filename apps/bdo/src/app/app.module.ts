@@ -6,10 +6,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import {
-  AuthenticationModule, AuthenticationService,
-  ConfigModule, ConfigService, IConfig, LanguageInterceptor, LanguageService, LocaleIdFactory, LoyaltyModule,
+  AuthenticationModule,
+  AuthenticationService, CampaignServiceModule as PerxSvcCampaignModule,
+  ConfigModule,
+  ConfigService,
+  GameModule as PerxGameModule, GameServiceModule as PerxSvcGameModule,
+  IConfig,
+  LanguageInterceptor,
+  LanguageService,
+  LocaleIdFactory,
+  LoyaltyModule, OutcomeModule,
   ProfileModule,
-  ProfileServiceModule as PerxProfileServiceModule, ThemesService, TokenStorage
+  ProfileServiceModule as PerxProfileServiceModule, RewardsModule,
+  ThemesService,
+  TokenStorage, VouchersModule
 } from '@perxtech/core';
 import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
@@ -50,6 +60,15 @@ export const setLanguage = (
         useClass: LanguageService
       }
     }),
+
+    // todo: remove after sign up dependencies fixed
+    OutcomeModule,
+    PerxGameModule,
+    PerxSvcCampaignModule.forRoot(),
+    PerxSvcGameModule.forRoot(),
+    RewardsModule.forRoot(),
+    VouchersModule,
+
     // angular provided modules
     BrowserModule,
     BrowserAnimationsModule,
