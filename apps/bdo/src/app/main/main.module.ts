@@ -11,10 +11,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
+import { SharedModule } from '../shared/shared.module';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
@@ -44,7 +45,8 @@ import { SearchComponent } from './search/search.component';
     MatIconModule,
     MatButtonModule,
     MatExpansionModule,
-    MatTabsModule
+    MatTabsModule,
+    SharedModule
   ],
   bootstrap: [],
 })

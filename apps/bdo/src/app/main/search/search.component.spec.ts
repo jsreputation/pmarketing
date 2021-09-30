@@ -7,6 +7,7 @@ import { MainRoutingModule } from '../main-routing.module';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -14,11 +15,16 @@ describe('SearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchComponent, SearchResultComponent, SearchHeaderComponent],
+      declarations: [
+        SearchComponent,
+        SearchResultComponent,
+        SearchHeaderComponent,
+      ],
       imports: [
         BrowserAnimationsModule,
         RouterModule.forRoot([]),
         MainRoutingModule,
+        SharedModule,
         MatTabsModule
       ],
       providers: [{provide: APP_BASE_HREF, useValue: '/'}]
