@@ -21,6 +21,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
+import { DealLandingComponent } from './deal-landing/deal-landing.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SearchComponent } from './search/search.component';
     SecondaryCatalogComponent,
     SearchHeaderComponent,
     SearchResultComponent,
-    SearchComponent
+    SearchComponent,
+    DealLandingComponent
   ],
   imports: [
     CommonModule,

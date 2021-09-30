@@ -1,0 +1,72 @@
+@import '../../../theme/variables';
+
+.deal-landing {
+  .header {
+    margin: 12px 0 0 0;
+    padding: 0 20px;
+    color: $main-blue-text;
+  }
+
+  .card {
+    font-family: 'Nunito', sans-serif;
+    margin-top: 10px;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 5px 0;
+
+    h2 {
+        margin: 16px 0;
+    }
+
+    h2.header {
+      font-size: 14px;
+    }
+
+    &.detail {
+      margin-top: 0;
+      padding-top: 0;
+      scroll-snap-align: center;
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+      list-style-type: none;
+
+      p {
+        margin: 0;
+        padding-bottom: 16px;
+
+        .tag {
+          margin-left: 20px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+
+        .mat-icon {
+          color: $medium-blue;
+          margin-left: 5px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 128px;
+        object-fit: cover;
+      }
+
+      .container {
+        padding: 0 16px 16px 16px;
+
+        .description {
+          padding: 0;
+          margin: 0;
+          font-size: 12px;
+          color: $light-black;
+        }
+      }
+    }
+  }
+}
