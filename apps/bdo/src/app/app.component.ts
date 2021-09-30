@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   $loading: Observable<boolean> = of(true).pipe(delay(500));
 
   public preAuth: boolean;
-  public translationLoaded: boolean = false;
+  public translationLoaded = false;
 
   constructor(
     private notificationService: NotificationService,
