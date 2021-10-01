@@ -18,7 +18,7 @@ describe('SearchComponent', () => {
       declarations: [
         SearchComponent,
         SearchResultComponent,
-        SearchHeaderComponent,
+        SearchHeaderComponent
       ],
       imports: [
         BrowserAnimationsModule,

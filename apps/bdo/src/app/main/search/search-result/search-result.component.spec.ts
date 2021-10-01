@@ -3,6 +3,7 @@ import { MainRoutingModule } from '../../main-routing.module';
 import { SearchResultComponent } from './search-result.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from '../../../shared/shared.module';
 
 describe('SearchResultComponent', () => {
   let component: SearchResultComponent;
@@ -16,6 +17,7 @@ describe('SearchResultComponent', () => {
       imports: [
         BrowserAnimationsModule,
         MainRoutingModule,
+        SharedModule,
         MatTabsModule
       ],
     }).compileComponents();
