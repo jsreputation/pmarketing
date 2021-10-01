@@ -16,13 +16,18 @@ import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
+import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 
-
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [
     MainComponent,
@@ -35,7 +40,9 @@ import { DealLandingComponent } from './deal-landing/deal-landing.component';
     SearchHeaderComponent,
     SearchResultComponent,
     SearchComponent,
-    DealLandingComponent
+    FilterComponent,
+    DealLandingComponent,
+    CheckboxGroupComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +56,12 @@ import { DealLandingComponent } from './deal-landing/deal-landing.component';
     MatButtonModule,
     MatTabsModule,
     MatExpansionModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   bootstrap: [],
 })
