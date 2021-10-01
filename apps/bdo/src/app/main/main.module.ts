@@ -1,3 +1,4 @@
+import { MatTabsModule } from '@angular/material/tabs';
 import { TaggedItemComponent } from './home/tagged-item/tagged-item.component';
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
@@ -15,9 +16,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
+import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { SharedModule } from '../shared/shared.module';
-
-import { MatTabsModule } from '@angular/material/tabs';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
@@ -27,6 +27,8 @@ import { SearchComponent } from './search/search.component';
     MainComponent,
     HomeComponent,
     PrimaryCatalogComponent,
+    SecondaryCatalogComponent,
+    SearchNavbarComponent,
     FeatureDealsComponent,
     TaggedItemComponent,
     SecondaryCatalogComponent,
@@ -44,6 +46,7 @@ import { SearchComponent } from './search/search.component';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    MatTabsModule,
     MatExpansionModule,
     MatTabsModule,
     SharedModule
