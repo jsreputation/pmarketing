@@ -1,0 +1,24 @@
+<div class="deal-landing">
+    <mat-card class="card no-padding detail">
+        <img [src]="dealDetail.image" />
+        <div class="container">
+            <h2 class="title">{{dealDetail.title}}</h2>
+            <p>
+                <span class="tag tag--nearby">nearby</span>
+            </p>
+            <p>
+                <mat-icon>location_pin</mat-icon>
+                <mat-icon>share</mat-icon>
+                <mat-icon>call</mat-icon>
+            </p>
+            <p class="description">{{dealDetail.description}}</p>
+        </div>
+    </mat-card>
+    <mat-card class="card">
+        <h2 class="header">SIMILAR DEALS</h2>
+        <bdo-tagged-item [deals]="similarDeals"></bdo-tagged-item>
+    </mat-card>
+</div>
+
+
+
