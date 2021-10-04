@@ -1,9 +1,12 @@
 <mat-toolbar color="primary" class="main-navbar">
- <img src="assets/images/logo-bdodeals.svg" alt="BDO deals logo"/>
+  <div class="logo">
+    <img src="assets/images/logo-bdodeals.svg" alt="BDO deals logo"/>
+  </div>
   <!-- <span class="example-spacer"></span> -->
   <!-- <button mat-icon-button class="example-icon" (click)="sidenav.toggle()" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button> -->
+  <bdo-search-navbar></bdo-search-navbar>
 </mat-toolbar>
 <mat-sidenav-container fxFlexFill class="main-navbar-content">
   <mat-sidenav class="side-nav" position="end" color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
@@ -13,6 +16,7 @@
     </div>
   </mat-sidenav>
 </mat-sidenav-container>
+
 <div class="main-content">
   <router-outlet></router-outlet>
 </div>

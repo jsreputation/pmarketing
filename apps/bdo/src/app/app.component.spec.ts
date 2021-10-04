@@ -4,6 +4,20 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_BASE_HREF } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AuthenticationService, ConfigService, ThemesService, TokenStorage } from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EventEmitter } from "@angular/core";
+import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
+
+const authServiceStub: Partial<AuthenticationService> = {};
+const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
+const tokenStorageStub: Partial<TokenStorage> = {
+  getAppInfoProperty: () => undefined,
+  setAppInfoProperty: () => { }
+};
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -11,13 +25,35 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         AppRoutingModule,
-        MatProgressSpinnerModule
+        MatDialogModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule,
       ],
       providers: [
         {
           provide: APP_BASE_HREF,
           useValue : '/'
-        }
+        },
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        },
+        {
+          provide: TranslateService,
+          useValue: {
+            getTranslation: () => of(),
+            onLangChange: new EventEmitter<LangChangeEvent>()
+          }
+        },
+        {
+          provide: ConfigService,
+          useValue: {
+            readAppConfig: () => of()
+          }
+        },
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub },
+
       ],
       declarations: [AppComponent],
     }).compileComponents();

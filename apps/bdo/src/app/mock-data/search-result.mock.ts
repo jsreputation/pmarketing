@@ -12,7 +12,21 @@ export const SEARCH_RESULT: IReward[] = [
     validFrom: new Date(),
     rewardBanner: '',
     loyalty: [],
-    termsAndConditions: ''
+    termsAndConditions: '',
+    categoryTags: [
+      {
+        id: 1,
+        title: 'nearby'
+      },
+      {
+        id: 2,
+        title: 'new'
+      },
+      {
+        id: 3,
+        title: 'other'
+      }
+    ],
   },
   {
     id: 2,
@@ -25,6 +39,12 @@ export const SEARCH_RESULT: IReward[] = [
     validFrom: new Date(),
     rewardBanner: '',
     loyalty: [],
-    termsAndConditions: ''
+    termsAndConditions: '',
+    categoryTags: [
+      {
+        id: 2,
+        title: 'new'
+      }
+    ],
   },
 ];

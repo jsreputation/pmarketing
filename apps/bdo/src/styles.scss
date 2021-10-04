@@ -3,9 +3,45 @@
 @import './theme/fonts.scss';
 @import './theme/variables.scss';
 
+:root {
+  --font: Roboto;
+  --logo: "";
+  --title: "";
+  --accent: #96289a;
+  --primary: #147dd3;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
+  --header_color: #147dd3;
+  --background: #fafafa;
+  --font_color: #333;
+  --disabled_text_color: #aaaaaa;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font);
+  font-style: normal;
+  background-color: #fafafa;
+}
+
+html,
 body {
+  height: 100%;
   margin: 0;
   font-family: var(--font, 'Nunito', sans-serif);
+  background-color: var(--background);
+  color: var(--font_color);
+}
+
+
+.content-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+body {
   background: $light-grey;
   color: $dark-grey;
 }
@@ -25,6 +61,7 @@ body {
   font-size: 12px;
   font-weight: bold;
   color: $white;
+  background: $dark-grey;
 
   &--nearby {
     background-color: $purple;
@@ -56,5 +93,14 @@ body {
   .mat-tab-label-active {
     color: $medium-blue;
     border-bottom: 4px solid $medium-orange !important;
+  }
+}
+
+.search-popup {
+  .mat-expansion-panel-body {
+    padding: 0 16px 16px;
+    height: 100rem;
+    border-top: 8px solid $light-white;
+    background: $white;
   }
 }

@@ -1,0 +1,26 @@
+<mat-accordion class="search-popup">
+  <mat-expansion-panel class="search-mat-panel" hideToggle [expanded]='isExpanded' disabled>
+    <mat-expansion-panel-header class="search-mat-panel-header">
+      <div class="search-wrapper">
+        <input type="text" class="input-search" [placeholder]="placeholder" (focus)="isExpanded=true" (keyup)="searchValueChange($event)" [value]="valueSearch">
+        <img class="search-icon" [src]="'./assets/images/'+icon" alt="search-outline" (click)="valueSearch && clearValueSearch($event)"/>
+      </div>
+      <div class="recommend" *ngIf="recomendedList.length">
+        <ul>
+          <li *ngFor="let item of recomendedList" (click)="search(item)">
+            {{item}}
+          </li>
+        </ul>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="trending">
+      <h5>Trending</h5>
+      <div class="content">
+        <span *ngFor="let item of listTrending">
+          {{item}}
+        </span>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
