@@ -1,5 +1,4 @@
 import { MatTabsModule } from '@angular/material/tabs';
-import { TaggedItemComponent } from './home/tagged-item/tagged-item.component';
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -32,7 +31,6 @@ import { DealLandingComponent } from './deal-landing/deal-landing.component';
     SecondaryCatalogComponent,
     SearchNavbarComponent,
     FeatureDealsComponent,
-    TaggedItemComponent,
     SecondaryCatalogComponent,
     SearchHeaderComponent,
     SearchResultComponent,
@@ -51,7 +49,6 @@ import { DealLandingComponent } from './deal-landing/deal-landing.component';
     MatButtonModule,
     MatTabsModule,
     MatExpansionModule,
-    MatTabsModule,
     SharedModule
   ],
   bootstrap: [],
