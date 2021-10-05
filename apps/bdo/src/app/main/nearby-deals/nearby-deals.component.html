@@ -1,0 +1,38 @@
+<div class="nearby-deals-wrapper">
+  <div class="filter-wrapper">
+    <span class="tag tag--nearby"> Nearby</span>
+    <div class="group-filter">
+      <img src="./assets/images/icon-filter.svg" alt=""/>
+      <span>Filters</span>
+    </div>
+  </div>
+  <h4 class="header">Check out exciting specials near you!</h4>
+  <div class="content-wrapper">
+    <mat-tab-group animationDuration="0ms" [disablePagination]="true" mat-stretch-tabs class="nearby-result-tab">
+      <mat-tab>
+        <ng-template mat-tab-label >
+          <img src="./assets/images/icon-location.svg" alt=""/>
+          <span class="label-tab">Map</span>
+        </ng-template>
+        <div class="content-wrapper">
+          <bdo-map></bdo-map>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label >
+          <img src="./assets/images/icon-n-catalogue.svg" alt=""/>
+          <span class="label-tab">Catalogue</span>
+        </ng-template>
+        <div class="content-wrapper">
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img src="./assets/images/icon-n-viewall.svg" alt=""/>
+          <span class="label-tab">List</span>
+        </ng-template>
+        <div class="content-wrapper">
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+</div>
