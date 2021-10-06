@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'treat-welcome',
+  selector: 'bdo-treat-welcome',
   templateUrl: './treat-welcome.component.html',
   styleUrls: ['./treat-welcome.component.scss']
 })
@@ -11,5 +11,5 @@ export class TreatWelcomeComponent {
   ]
   constructor() {
    }
-  
+
 }
