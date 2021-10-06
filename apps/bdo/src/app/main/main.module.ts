@@ -22,6 +22,7 @@ import { SearchHeaderComponent } from './search/search-header/search-header.comp
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
+import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { DealLandingComponent } from './deal-landing/deal-landing.component';
     SearchHeaderComponent,
     SearchResultComponent,
     SearchComponent,
-    DealLandingComponent
+    DealLandingComponent,
+    TreatWelcomeComponent,
   ],
   imports: [
     CommonModule,
