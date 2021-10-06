@@ -1,0 +1,96 @@
+.treat-welcome {
+    padding: 0 20px;
+    --margin-bottom: 15px;
+    font-size: 12px;
+
+    .title {
+        margin-bottom: var(--margin-bottom);
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    .div-popular {
+        margin-bottom: var(--margin-bottom);
+
+        .tag--popular {
+            background-color: #FC0472;
+            width: fit-content;
+        }
+    }
+
+    .treat-icon {
+        color: #78B4EB;
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: var(--margin-bottom);
+
+        span {
+
+            color: #2E2E2E;
+            font-size: 15px;
+        }
+
+        span:not(:last-child) {
+            margin-bottom: var(--margin-bottom);
+        }
+    }
+
+    .btn-Enroll {
+        width: 100%;
+        background-color: #0072D8;
+        color: #fff;
+    }
+
+    .title-deal {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .description-deal {
+        display: grid;
+        grid-auto-flow: column;
+        grid-gap: var(--margin-bottom);
+
+        .ordinal-number {
+            button {
+                border-radius: 8px;
+                background-color: #FDB913;
+                border: 1px solid #FDB913;
+                color: #fff;
+                height: fit-content;
+            }
+        }
+
+        .content {
+            h3 {
+                margin: 0px;
+            }
+        }
+    }
+
+    .note {
+        font-size: 13px;
+    }
+    .panel{
+        box-shadow: none;
+        background-color: unset;
+        color: inherit;
+        .header{
+            padding-left: 0px;
+            color: #0072D8;
+            font-weight: 600;
+            .mat-expansion-indicator::after{
+                color: #0072D8 !important;
+            }
+            &:hover{
+                background-color: unset;
+            }
+            ::ng-deep.mat-expansion-indicator::after{
+                color: #0072D8;
+            }
+        }
+    }
+}

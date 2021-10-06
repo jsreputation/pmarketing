@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
+import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'search/:text', component: SearchComponent},
-      { path: 'deal-welcome/:rid', component: DealLandingComponent}
+      { path: 'deal-welcome/:rid', component: DealLandingComponent},
+      { path: 'treat-welcome/:id', component: TreatWelcomeComponent},
     ]
   }
 ];

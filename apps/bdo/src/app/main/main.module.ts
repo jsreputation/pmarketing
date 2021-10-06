@@ -23,6 +23,7 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
 import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
+import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 
 import { MatRadioModule } from '@angular/material/radio';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -40,8 +41,9 @@ import {MatChipsModule} from '@angular/material/chips';
     SearchHeaderComponent,
     SearchResultComponent,
     SearchComponent,
-    FilterComponent,
     DealLandingComponent,
+    TreatWelcomeComponent,
+    FilterComponent,
     CheckboxGroupComponent
   ],
   imports: [
