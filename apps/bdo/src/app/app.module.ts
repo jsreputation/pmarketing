@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 import {
   AuthenticationModule,
   AuthenticationService, CampaignServiceModule as PerxSvcCampaignModule,
@@ -77,6 +79,8 @@ export const setLanguage = (
 
     // Material Modules
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatSnackBarModule,
 
     // app modules

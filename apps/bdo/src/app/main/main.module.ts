@@ -1,5 +1,4 @@
 import { MatTabsModule } from '@angular/material/tabs';
-import { TaggedItemComponent } from './home/tagged-item/tagged-item.component';
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -17,14 +16,19 @@ import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
+import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 
-
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [
     MainComponent,
@@ -33,13 +37,14 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
     SecondaryCatalogComponent,
     SearchNavbarComponent,
     FeatureDealsComponent,
-    TaggedItemComponent,
     SecondaryCatalogComponent,
     SearchHeaderComponent,
     SearchResultComponent,
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
+    FilterComponent,
+    CheckboxGroupComponent
   ],
   imports: [
     CommonModule,
@@ -53,8 +58,12 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
     MatButtonModule,
     MatTabsModule,
     MatExpansionModule,
-    MatTabsModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   bootstrap: [],
 })
