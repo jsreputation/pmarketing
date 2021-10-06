@@ -5,8 +5,8 @@
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
+  --logo: '';
+  --title: '';
   --accent: #96289a;
   --primary: #147dd3;
   --button_text_color: #fff;
@@ -32,7 +32,6 @@ body {
   background-color: var(--background);
   color: var(--font_color);
 }
-
 
 .content-container {
   margin: 0 auto;
@@ -102,5 +101,56 @@ body {
     height: 100rem;
     border-top: 8px solid $light-white;
     background: $white;
+  }
+}
+
+.filter-wrapper {
+  .categories-wrapper {
+    .travel-entertaiment .mat-expansion-panel-header:not([class*='mat-expanded']) {
+      border-bottom: none;
+    }
+  }
+
+  .categories-wrapper,
+  .tags-wrapper,
+  .location-wrapper {
+    .mat-expansion-panel-header {
+      .mat-expansion-indicator::after {
+        border-color: #0072d8 !important;
+        border-width: 0 3px 3px 0 !important;
+        vertical-align: super !important;
+        padding: 5px;
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 !important;
+    }
+  }
+
+  .tags-wrapper {
+    .mat-chip-list-wrapper {
+      margin: 12px 0;
+    }
+  }
+
+  .location-wrapper {
+    .location-checkbox-wrapper {
+      .checkbox-item {
+        .mat-expansion-panel-header {
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+.checkbox-group-wrapper {
+  .mat-expansion-panel-header {
+    border-top: 1px solid $grey-white;
+  }
+
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none !important;
   }
 }
