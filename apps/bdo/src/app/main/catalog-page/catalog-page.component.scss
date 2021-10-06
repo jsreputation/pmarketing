@@ -1,0 +1,79 @@
+.catalog-page {
+    padding: 10px 0;
+    --margin-bottom: 15px;
+    --background-white: #fff;
+    font-size: 13px;
+
+    .debit-card {
+        display: flex;
+        background-color: var(--background-white);
+        padding: 0 10px;
+        flex-direction: column;
+
+        .title {
+            display: flex;
+            h4 {
+                flex: 1;
+                color: #004EA8;
+            }
+
+            .filter {
+                flex: 1;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                span {
+                    font-weight: 500;
+                    color: #0072D8;
+                }
+            }
+        }
+
+        .looking-for {
+            p{
+                color: #4B4B4B;
+                font-weight: 600;
+                font-size: 13px;
+            }
+            .action {
+                display: flex;
+                justify-content: space-between;
+                overflow-x: auto;
+                padding: 0  var( --margin-bottom) var( --margin-bottom);
+                .card{
+                    display: flex;
+                    flex-direction: column;
+                    width: 25%;
+                    align-content: space-between;
+                    align-items: center;
+                    img{
+                        margin-bottom: 5px;
+                        width: 50px;
+                    }
+                    label{
+                        text-align: center;
+                        color: #0072D8;
+                        font-weight: 600;
+                    }
+                }
+                // div:not(:last-child){
+                //     padding-right: 10px;
+                // }
+                
+            }
+        }
+    }
+
+    .card-type{
+        display: flex;
+        background-color: var(--background-white);
+        padding: 0 10px;
+        flex-direction: column;
+        p{
+            color: #4B4B4B;
+            font-weight: 600;
+            font-size: 13px;
+        }
+    }
+}

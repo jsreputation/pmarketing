@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
+import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'search/:text', component: SearchComponent},
       { path: 'deal-welcome/:rid', component: DealLandingComponent},
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent},
+      { path: 'catalog-page/:id', component: CatalogPageComponent},
     ]
   }
 ];

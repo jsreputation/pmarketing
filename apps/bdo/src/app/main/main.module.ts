@@ -23,6 +23,7 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
 import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
+import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
+    CatalogPageComponent
   ],
   imports: [
     CommonModule,
