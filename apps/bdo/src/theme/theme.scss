@@ -13,7 +13,7 @@ $main-blue: map-merge(
 );
 
 $bbo-app-primary: mat-palette($main-blue);
-$bdo-app-accent: mat-palette($mat-lime, A200, A100, A400);
+$bdo-app-accent: mat-palette($mat-blue, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $bdo-app-warn: mat-palette($mat-red);

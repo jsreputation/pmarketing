@@ -36,7 +36,7 @@ export class SearchNavbarComponent {
 
   }
   
-  searchValueChange(event: any) {
+  searchValueChange(event) {
     const value = event.target.value;
     this.valueSearch = value;
     if (!value) {
@@ -54,7 +54,7 @@ export class SearchNavbarComponent {
     }
   }
 
-  clearValueSearch(event: any) {
+  clearValueSearch(event) {
     this.valueSearch = '';
     this.recomendedList = [];
     this.icon = 'search-outline.svg';
