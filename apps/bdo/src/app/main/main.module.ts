@@ -25,7 +25,7 @@ import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
-import { TreatEnrollPage } from './treat-enroll-page/treat-enroll-page.component';
+import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
 import {MatChipsModule} from '@angular/material/chips';
@@ -43,7 +43,7 @@ import {MatChipsModule} from '@angular/material/chips';
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
-    TreatEnrollPage,
+    TreatEnrollPageComponent,
     FilterComponent,
     CheckboxGroupComponent
   ],
