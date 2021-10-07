@@ -24,7 +24,7 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
 import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
-import { TreatsErrorPage } from './treats-error-page/treats-error-page.component';
+import { TreatEnrollPage } from './treat-enroll-page/treat-enroll-page.component';
 
 
 @NgModule({
@@ -42,7 +42,7 @@ import { TreatsErrorPage } from './treats-error-page/treats-error-page.component
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
-    TreatsErrorPage
+    TreatEnrollPage
   ],
   imports: [
     CommonModule,
