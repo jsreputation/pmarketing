@@ -18,7 +18,9 @@ import {
   // MerchantTransactionDetailType,
   IMerchantPurchaseTransactionHistory,
   IMerchantRewardTransactionHistory,
-  IResetPasswordData
+  IResetPasswordData,
+  IMerchantInvoice,
+  MerchantTransactionItemType
 } from './models/merchants-admin.model';
 
 import {
@@ -38,6 +40,11 @@ import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { IProfile } from '../profile/profile.model';
 import { V4ProfileService, IV4ProfileResponse } from '../profile/v4-profile.service';
+import { V4PosService, IV4PosLoyaltyTransactionResponse } from '../pos/v4-pos.service';
+import { IPosLoyaltyTransaction } from '../pos/models/pos.model';
+import { V4LoyaltyService, IV4GetLoyaltiesResponse, IV4Loyalty } from '../loyalty/v4-loyalty.service';
+import { ILoyalty } from '../loyalty/models/loyalty.model';
+
 interface IV4MerchantAdminTransaction {
   id: number;
   user_account_id: number;
@@ -91,6 +98,12 @@ interface IV4RedeemVoucherResponse {
 
 interface IV4MerchantUserInvitationResponse {
   data: IV4MerchantProfile;
+}
+
+interface IV4RevertPointsResponse {
+  data: {
+    id: number;
+  };
 }
 
 interface IV4MerchantAccount {
@@ -152,6 +165,19 @@ interface IV4MerchantRewardTransactionHistory {
   voucher_code: string;
 }
 
+interface IV4MerchantInvoice {
+  id: number;
+  collected_amount: number;
+  description: string;
+  invoice_items: IV4MerchantInvoiceItems[];
+}
+
+interface IV4MerchantInvoiceItems {
+  id?: number;
+  item_id: number;
+  item_type: string;
+}
+
 // interface IV4MerchantTransactionHistory {
 //   id: number;
 //   name: string;
@@ -173,6 +199,12 @@ interface IV4MerchantTransactionHistoryResponse {
 interface IV4MerchantRewardHistoryResponse {
   data: IV4MerchantRewardTransactionHistory[];
 }
+
+interface IV4MerchantInvoiceResponse {
+  data: IV4MerchantInvoice;
+}
+
+const DEFAULT_PAGE_COUNT: number = 10;
 
 @Injectable({
   providedIn: 'root'
@@ -204,6 +236,10 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       merchant_username: string;
       pharmacy: string;
       product: string;
+      description: string;
+      merchant_properties: {
+        name: string;
+      }
     };
     return {
       id: transactionHistory.id,
@@ -214,7 +250,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       transactionRef: transactionHistory.transaction_reference,
       price: transactionHistory.amount,
       currency: transactionHistory.currency,
-      pointsIssued: transactionHistory.points_earned
+      pointsIssued: transactionHistory.points_earned,
+      description: oc(purchaseProperties).description(),
+      merchantName: oc(purchaseProperties).merchant_properties()?.name
     };
   }
 
@@ -243,6 +281,24 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       createdAt: new Date(transaction.created_at),
       properties: transaction.properties,
       transactionReference: transaction.transaction_reference
+    };
+  }
+
+  public static v4InvoiceToInvoice(invoice: IV4MerchantInvoice): IMerchantInvoice {
+
+    const loyaltyItem =  invoice?.invoice_items.find((item: IV4MerchantInvoiceItems) =>
+     item.item_type === MerchantTransactionItemType.point);
+    const voucherItem =  invoice?.invoice_items.find((item: IV4MerchantInvoiceItems) =>
+     item.item_type === MerchantTransactionItemType.reward);
+    const transaction = invoice?.invoice_items.find((item: IV4MerchantInvoiceItems) =>
+     item.item_type === MerchantTransactionItemType.transaction);
+
+    return {
+      id: invoice.id,
+      description: invoice.description,
+      pointId: loyaltyItem ? loyaltyItem.item_id : null,
+      voucherId: voucherItem ? voucherItem.item_id : null,
+      transactionId: transaction ? transaction.item_id : null
     };
   }
 
@@ -282,7 +338,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     type: string,
     reference: string,
     pharmacy: string,
-    productName: string
+    productName: string,
+    merchantName?: string,
+    description?: string
   ): Observable<IMerchantAdminTransaction> {
     const url = `${this.apiHost}/v4/merchant_admin/transactions`;
     const body = {
@@ -293,9 +351,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         amount,
         currency,
         properties: {
-          merchant_username: merchantUsername,
-          pharmacy,
-          product: productName
+          ...(merchantUsername && { merchant_username: merchantUsername }),
+          ... (pharmacy && { pharmacy }),
+          ...(productName && {product: productName}),
+          // ...(merchantName && { merchant_name: merchantName }),
+          ...(merchantName && { merchant_properties: { name: merchantName }}),
+          ...(description && { description })
         }
       }
     };
@@ -306,10 +367,15 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   }
 
-  public redeemVoucher(id: number): Observable<IVoucher> {
+  public redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher> {
     const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
-
-    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
+    let body;
+    if (reserve) {
+      body = {
+        confirm: false
+      };
+    }
+    return this.http.put<IV4RedeemVoucherResponse>(url, (body ? body : null )).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
   }
@@ -322,6 +388,77 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
+  }
+
+  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+
+    const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/revert_redemption`;
+
+    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
+      map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
+    );
+  }
+
+  public reservePoints(points: number, loyaltyProgramId: number, userId: string ): Observable<IPosLoyaltyTransaction> {
+    const headers = new HttpHeaders().set('user-id', userId);
+    const url = `${this.apiHost}/v4/merchant_admin/loyalty_transactions/reserve`;
+    const body = {
+      amount_to_deduct: points,
+      loyalty_program_id: loyaltyProgramId
+    };
+    return this.http.post<IV4PosLoyaltyTransactionResponse>(url, body, {headers}).pipe(
+      map((res) => V4PosService.v4PosTransactionToPosTransaction(res.data))
+    );
+  }
+
+  public revertPoints(id: number, userId: string): Observable<number> {
+    const headers = new HttpHeaders().set('user-id', userId);
+    const url = `${this.apiHost}/v4/merchant_admin/loyalty_transactions/${id}/revert_redemption`;
+
+    return this.http.put<IV4RevertPointsResponse>(url, null, {headers}).pipe(
+      map((res) => res.data.id)
+    );
+  }
+
+  public createInvoice(
+    userId: string,
+    amount: number,
+    description: string,
+    voucherId: number,
+    pointsId: number
+  ): Observable<IMerchantInvoice> {
+
+    const headers = new HttpHeaders().set('user-id', userId);
+    const url = `${this.apiHost}/v4/merchant_admin/invoices`;
+    const usedItems: IV4MerchantInvoiceItems[] = [];
+
+    if (voucherId) {
+      usedItems.push({
+        item_id: voucherId,
+        item_type: MerchantTransactionItemType.reward
+      });
+    }
+
+    if (pointsId) {
+      usedItems.push({
+        item_id: pointsId,
+        item_type: MerchantTransactionItemType.point
+      });
+    }
+
+    const body = {
+      collected_amount: amount,
+      description,
+      used_items: usedItems,
+      /* properties: {
+        ...( merchantName && {merchant_name: merchantName })
+      },*/
+    };
+
+    return this.http.post<IV4MerchantInvoiceResponse>(url, body, {headers}).pipe(
+      map((res) => V4MerchantAdminService.v4InvoiceToInvoice(res.data))
+    );
+
   }
 
   public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
@@ -429,10 +566,36 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public getCustomerDetails(mobileNumber: number): Observable<IProfile> {
+  public getCustomerDetails(mobileNumber: number, identifier: string): Observable<IProfile> {
+    let params;
+    if (mobileNumber) {
+      params = { phone: `${mobileNumber}` };
+    } else if (identifier) {
+      params = { identifier: `${identifier}` };
+    }
     const url = `${this.apiHost}/v4/merchant_admin/user_accounts/search`;
-    return this.http.get<IV4ProfileResponse>(url, { params: { phone: `${mobileNumber}` }}).pipe(
+    return this.http.get<IV4ProfileResponse>(url, { params }).pipe(
       map((res) => V4ProfileService.v4ProfileToProfile(res.data))
+    );
+  }
+
+  public getCustomerLoyalties(userId: string, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT,
+                              locale: string = 'en'): Observable<ILoyalty[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale).set('user-id', userId);
+    return this.http.get<IV4GetLoyaltiesResponse>(
+      `${this.apiHost}/v4/merchant_admin/loyalty`,
+      {
+        headers,
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }
+    ).pipe(
+      map((res: IV4GetLoyaltiesResponse) => res.data),
+      map((loyalties: IV4Loyalty[]) => loyalties.map(
+        (loyalty: IV4Loyalty) => V4LoyaltyService.v4LoyaltyToLoyalty(loyalty)
+      ))
     );
   }
 }

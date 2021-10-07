@@ -78,7 +78,7 @@ interface IV4LoyaltyTiers {
   custom_fields?: ICustomProperties[];
 }
 
-interface IV4Loyalty {
+export interface IV4Loyalty {
   id: number;
   name: string;
   description: string;
@@ -113,7 +113,7 @@ interface IV4ExchangeRate {
   source_stored_value_campaign_name: string;
 }
 
-interface IV4GetLoyaltiesResponse {
+export interface IV4GetLoyaltiesResponse {
   data: IV4Loyalty[];
   meta?: IV4Meta;
 }
@@ -562,4 +562,5 @@ export class V4LoyaltyService extends LoyaltyService {
     return this.http.post<IV4PointTransferResponse>(`${this.apiHost}/v4/points_transfer`, payload).pipe(
       map((res: IV4PointTransferResponse) => res.data));
   }
+
 }

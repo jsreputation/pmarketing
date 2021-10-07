@@ -10,11 +10,13 @@ import {
   IMerchantProfile, IMerchantRewardTransactionHistory,
   IMerchantTransactionHistory,
   IResetPasswordData,
+  IMerchantInvoice
 } from './models/merchants-admin.model';
 import { IMerchantAdminService } from './imerchant-admin.service';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IMessageResponse } from '../perx-core.models';
+import { IPosLoyaltyTransaction } from '../pos/models/pos.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,19 +38,44 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
     // @ts-ignore
     pharmacy: string,
     // @ts-ignore
-    productName: string
+    productName: string,
+     // @ts-ignore
+    merchantName?: string,
+     // @ts-ignore
+    description?: string
   ): Observable<IMerchantAdminTransaction> {
     throw new Error('createTransaction Method not implemented.');
   }
 
   // @ts-ignore
-  public redeemVoucher(id: number): Observable<IVoucher> {
+  public redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher> {
     throw new Error('redeemVoucher Method not implemented.');
   }
 
   // @ts-ignore
   public issueVoucher(id: number, userId: string): Observable<IVoucher> {
     throw new Error('issueVoucher Method not implemented.');
+  }
+
+  // @ts-ignore
+  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+    throw new Error('revertVoucherRedemption Method not implemented.');
+  }
+
+  // @ts-ignore
+  public reservePoints(points: number, loyaltyProgramId: number, userId: string ): Observable<IPosLoyaltyTransaction> {
+    throw new Error('reservePoints Method not implemented.');
+  }
+
+  // @ts-ignore
+  public revertPoints(id: number, userId: string): Observable<number> {
+    throw new Error('revertPoints Method not implemented.');
+  }
+
+  // @ts-ignore
+  public createInvoice(userId: string, amount: number, description: string, voucherId: number, pointsId: number
+  ): Observable<IMerchantInvoice> {
+    throw new Error('createInvoice Method not implemented.');
   }
 
   // @ts-ignore
@@ -90,7 +117,12 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public getCustomerDetails(mobileNumber: number): Observable<IProfile> {
+  public getCustomerDetails(mobileNumber: number, identifier: string): Observable<IProfile> {
     throw new Error('Not implement yet');
+  }
+
+  // @ts-ignore
+  public getCustomerLoyalties(userId: string, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
+    throw new Error('Not implemented.');
   }
 }

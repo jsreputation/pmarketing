@@ -6,7 +6,7 @@ import {
   FormGroup,
   AbstractControl
 } from '@angular/forms';
-import { IMerchantAdminService, NotificationService } from '@perxtech/core';
+import { IMerchantAdminService, NotificationService, IProfile } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -58,11 +58,15 @@ export class IdentifyCustomerComponent implements OnInit {
   public onSubmit(): void {
     const mobileNumber: number = this.identifyUserForm.get('mobileNumber').value;
 
-    this.merchantAdminService.getCustomerDetails(mobileNumber).subscribe(
-      (customer) => {
+    this.merchantAdminService.getCustomerDetails(mobileNumber, null).subscribe(
+      (customer: IProfile) => {
+        const data = JSON.stringify({
+          id: customer.id,
+          verifiedUser: customer
+        });
         const navigationExtras: NavigationExtras = {
               state: {
-                customer
+                data
               }
             };
         this.router.navigate([`${this.path}`], navigationExtras);

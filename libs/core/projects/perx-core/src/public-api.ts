@@ -27,7 +27,8 @@ export { MacaronService } from './lib/macaron/macaron.service';
 export {
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  IMerchantInvoice
 } from './lib/merchant-admin/models/merchants-admin.model';
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
@@ -393,6 +394,7 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
  */
 export { PosModule } from './lib/pos/pos.module';
 export { PosService } from './lib/pos/pos.service';
+export { IPosLoyaltyTransaction } from './lib/pos/models/pos.model';
 
 /**
  * Transactions

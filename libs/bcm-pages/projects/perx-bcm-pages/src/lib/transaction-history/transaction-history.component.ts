@@ -54,9 +54,9 @@ export class TransactionHistoryComponent implements OnInit {
     this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
     this.initTranslate();
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      of(`${tr.pharmacyName}`);
+      of(`${tr.merchantName}`);
     this.salesDescFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      of(`${tr.productName}`);
+      of(`${tr.description}`);
     this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       of(`${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`);
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>

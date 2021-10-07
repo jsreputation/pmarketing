@@ -6,11 +6,14 @@ import {
   IMerchantRewardTransactionHistory,
   IMerchantTransactionHistory,
   IResetPasswordData,
+  IMerchantInvoice,
 } from './models/merchants-admin.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IMessageResponse } from '../perx-core.models';
 import { IProfile } from '../profile/profile.model';
+import { IPosLoyaltyTransaction } from '../pos/models/pos.model';
+import { ILoyalty } from '../loyalty/models/loyalty.model';
 export abstract class IMerchantAdminService {
   public abstract createTransaction(
     userId: number,
@@ -21,19 +24,35 @@ export abstract class IMerchantAdminService {
     reference: string,
     pharmacy: string,
     productName: string,
+    merchantName?: string,
+    description?: string
   ): Observable<IMerchantAdminTransaction>;
 
-  public abstract redeemVoucher(id: number): Observable<IVoucher>;
+  public abstract redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher>;
 
   public abstract issueVoucher(
     id: number,
     userId?: string,
   ): Observable<IVoucher>;
 
+  public abstract revertVoucherRedemption(id: number): Observable<IVoucher>;
+
   public abstract validateInvite(
     token: string,
     clientId: string,
   ): Observable<IMerchantProfile>;
+
+  public abstract reservePoints(points: number, loyaltyProgramId: number, userId: string ): Observable<IPosLoyaltyTransaction>;
+
+  public abstract revertPoints(id: number, userId: string): Observable<number>;
+
+  public abstract createInvoice(
+    userId: string,
+    amount: number,
+    description: string,
+    voucherId: number,
+    pointsId: number
+  ): Observable<IMerchantInvoice>;
 
   public abstract setupNewMerchantsPassword(
     token: string,
@@ -63,5 +82,8 @@ export abstract class IMerchantAdminService {
     resetPasswordInfo: IResetPasswordData,
   ): Observable<IMessageResponse>;
 
-  public abstract getCustomerDetails(mobileNumber: number): Observable<IProfile>;
+  public abstract getCustomerDetails(mobileNumber: number, identifier: string): Observable<IProfile>;
+
+  public abstract getCustomerLoyalties(userId: string, page?: number, pageSize?: number, locale?: string): Observable<ILoyalty[]>;
+
 }
