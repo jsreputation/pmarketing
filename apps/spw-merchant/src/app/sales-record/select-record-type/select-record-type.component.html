@@ -1,19 +1,19 @@
 <div class="container">
     <div *ngIf="user" class="customer-info">
-        <p class="heading">{{"RECORD_TYPE_PAGE.PROFILE"|translate}}</p>
+        <h2>{{"RECORD_TYPE_PAGE.PROFILE"|translate}}</h2>
         <div class="user-details">
             <p>{{ user.firstName }} {{ user.lastName }}</p>
             <small>ID: {{ user.identifier }}</small>
         </div>
         <small *ngIf="user?.customProperties?.phone">{{"RECORD_TYPE_PAGE.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
     </div>  
-    <p class="heading">{{"RECORD_TYPE_PAGE.SALES_RECORD_TITLE"|translate}}</p>        
-    <a (click)="goToNextPage()">
+    <h1>{{"RECORD_TYPE_PAGE.SALES_RECORD_TITLE"|translate}}</h1>        
+    <div (click)="goToNextPage()">
         <div class="icon-container">
-            <img src="../../assets/sales-record.png"/>    
+            <img src="assets/sales-record.png"/>    
             <span>{{"RECORD_TYPE_PAGE.SALES_RECORD"|translate}}</span>
         </div>
-    </a> 
+    </div> 
     <div class="btn-bottom-fixed">
         <button mat-stroked-button class="full-width__button btn-transparent" (click)="onCancel()">{{"RECORD_TYPE_PAGE.CANCEL"|translate}}</button>  
     </div>          

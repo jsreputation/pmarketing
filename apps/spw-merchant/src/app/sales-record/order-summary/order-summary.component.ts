@@ -15,8 +15,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   constructor(private orderService: OrderService) {
     this.orderService.getScannedUser$.subscribe((userDetails: IProfile) => {
       this.user = userDetails;
-      this.isPreActivatedUser = this.user.customProperties?.state &&
-        this.user.customProperties?.state === 'preactivated' ? true : false;
+      this.isPreActivatedUser = this.user?.customProperties?.state === 'preactivated';
     });
 
     this.orderService.getInvoice$.subscribe((invoice: IMerchantInvoice) => {

@@ -1,6 +1,6 @@
 <div class="main-container" *ngIf="invoice">
     <div class="header-details">
-        <p class="sales-title">{{"ORDER_SUMMARY.SALES_RECORD_TITLE"|translate}}</p>
+        <h3>{{"ORDER_SUMMARY.SALES_RECORD_TITLE"|translate}}</h3>
         <h1>{{"ORDER_SUMMARY.SALES_RECORD_SUBTITLE"|translate}}</h1>      
         <div class="invoice-barcode" *ngIf="invoice?.transactionId">
             <p class="sales-id">{{"ORDER_SUMMARY.SALES_RECORD_ID"|translate}} {{invoice.transactionId}}</p>
@@ -12,8 +12,8 @@
     </div>
     <div class="summary-details">
         <div *ngIf="user" class="customer-info">
-            <p class="heading">{{"ORDER_SUMMARY.SUMMARY"|translate}}</p>
-            <p class="heading">{{"ORDER_SUMMARY.CUSTOMER"|translate}}</p>
+            <h2>{{"ORDER_SUMMARY.SUMMARY"|translate}}</h2>
+            <h3>{{"ORDER_SUMMARY.CUSTOMER"|translate}}</h3>
             <div class="user-details">
                 <p>{{ user.firstName}} {{ user.lastName}}</p>
                 <small>ID: {{ user.identifier }}</small>
@@ -23,7 +23,7 @@
         <hr/>
         <ng-container *ngIf="!isPreActivatedUser">
             <ng-container *ngIf="invoice.voucherId">
-                <p>{{"ORDER_SUMMARY.VOUCHER_APPLIED"|translate}}</p>
+                <h3>{{"ORDER_SUMMARY.VOUCHER_APPLIED"|translate}}</h3>
                 <div class="voucher-bg">
                     <img src="../../assets/voucher-bg.png"/>
                     <div class="voucher-title">
@@ -31,13 +31,13 @@
                     </div>
                 </div>
             </ng-container>
-            <p>{{"ORDER_SUMMARY.POINTS_PAID"|translate}}</p>
-            <small>{{invoice.pointsPaid}}</small>
+            <h3>{{"ORDER_SUMMARY.POINTS_PAID"|translate}}</h3>
+            <small>{{invoice.pointsPaid ? invoice.pointsPaid : '0'}}</small>
         <hr/>
         </ng-container>
-        <p>{{"ORDER_SUMMARY.AMOUNT"|translate}}</p>
+        <h3>{{"ORDER_SUMMARY.AMOUNT"|translate}}</h3>
         <small>{{invoice.collectedAmount}}</small>
-        <p>{{"ORDER_SUMMARY.RECEIPT"|translate}}</p>
+        <h3>{{"ORDER_SUMMARY.RECEIPT"|translate}}</h3>
         <small>{{invoice.description}}</small>
     </div>
 </div>

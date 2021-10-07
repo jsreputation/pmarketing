@@ -35,8 +35,7 @@ export class CreateRecordComponent implements OnInit {
                private errorMessageService: ErrorMessageService, ) {
     this.orderService.getScannedUser$.subscribe((userDetails: IProfile) => {
       this.userDetails = userDetails;
-      this.isPreActivatedUser = this.userDetails.customProperties?.state &&
-          this.userDetails.customProperties?.state === 'preactivated' ? true : false;
+      this.isPreActivatedUser = this.userDetails?.customProperties?.state === 'preactivated';
     });
 
     this.orderService.getReservedVoucher$.subscribe((voucher: Voucher) => {

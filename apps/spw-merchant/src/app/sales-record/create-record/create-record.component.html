@@ -2,14 +2,13 @@
     <div class="voucher-details" *ngIf="!isPreActivatedUser">
         <p>{{"CREATE_ORDER_PAGE.VOUCHER_APPLIED"|translate}}</p>
         <div class="voucher-bg" *ngIf="reservedVoucher; else noVoucherBlock">
-            <img src="../../assets/voucher-barcode-bg.png"/>
-            <div class="voucher-code" *ngIf="reservedVoucher?.code">
-                <p class="voucher-title">{{reservedVoucher?.reward?.name}}</p>
+            <img src="assets/voucher-barcode-bg.png"/>
+            <div class="voucher-code" *ngIf="reservedVoucher?.reward">
+                <p class="voucher-title">{{reservedVoucher.reward?.name}}</p>
                 <hr/>
                 <ngx-barcode6
-                    [bc-value]="reservedVoucher.code" [bc-background]="barcodeBgColor"
-                    [bc-display-value]="true"
-                    [bc-font-size]="13" [bc-height]="32"
+                    [bc-value]="reservedVoucher.reward?.name" [bc-background]="barcodeBgColor"
+                    [bc-height]="32" [bc-width]="1"
                 ></ngx-barcode6>
             </div>
         </div>
@@ -20,7 +19,7 @@
         <small>{{this.reservedPoints?.points ? -(this.reservedPoints?.points) : '0'}}</small>
     </div>
     <div class="instruction-cont">
-        <p class="heading">{{"CREATE_ORDER_PAGE.INSTRUCTIONS"|translate}}</p>
+        <h1>{{"CREATE_ORDER_PAGE.INSTRUCTIONS"|translate}}</h1>
         <ol>
             <li *ngIf="!isPreActivatedUser"><p>{{"CREATE_ORDER_PAGE.INSTRUCTION_1"|translate}}</p></li>
             <li><p>{{"CREATE_ORDER_PAGE.INSTRUCTION_2"|translate}}</p></li>

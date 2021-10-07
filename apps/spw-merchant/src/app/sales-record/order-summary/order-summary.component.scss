@@ -5,23 +5,30 @@
     height: 100%;
   }
 
+  h1 {
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 3rem;
+  }
+  h2 {
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+  }
+  h3 {
+    font-weight: 900;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    margin-bottom: 0!important;
+  }
+
   .header-details {
     padding: 0 2.5rem 2.5rem;
     background: white;
-    .sales-title {
-      font-weight: 900;
-      font-size: 1.6rem;
-      line-height: 1.9rem;
+    h3 {
       color: #6A6A73;
-      p {
-        margin: 0;
-      }
     }
-    h1 {
-      font-weight: 900;
-      font-size: 2.6rem;
-      line-height: 3.1rem;
-    }
+
     .sales-id {
       font-weight: normal;
       font-size: 1.2rem;
@@ -43,13 +50,10 @@
     align-items: start;
     background: #202C46;
     color: #FFFFFF;
-    .heading {
-      margin-bottom: 2rem;
-    }
     p {
         font-weight: 900;
-        font-size: 1.8rem;
-        line-height: 2.2rem;     
+        font-size: 1.6rem;
+        line-height: 1.9rem;     
         margin: 1rem 0 0 0;
     }
     small {
@@ -60,7 +64,7 @@
     hr {
       border: 1px solid #4E6A94;
       width: 100%;
-      margin: 2rem 0;
+      margin: 2rem 0 1rem 0;
     }
 }
 
@@ -70,6 +74,9 @@
   flex-direction: column;
   align-items: start;
   width: 100%;
+  small {
+    font-size: 1.4em;
+  }
 
   .user-details {
     display: flex;
@@ -77,7 +84,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 1rem;
+    padding: 2rem 0 .5rem 0;
     p {
         margin: 0;
         text-align: start;

@@ -62,8 +62,7 @@ export class ReserveOrderItemsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.userDetails?.customProperties?.state &&
-      this.userDetails.customProperties?.state === 'preactivated') {
+    if (this.userDetails?.customProperties?.state === 'preactivated') {
         this.router.navigate(['/select-record-type']);
     }
     const scannedQrCode = history.state.data;
@@ -75,7 +74,7 @@ export class ReserveOrderItemsComponent implements OnInit {
         if (!voucherId) {
           this.notificationService.addPopup(this.invalidCodePopup);
         } else {
-          this.redeemVoucher(+voucherId);
+          this.redeemVoucher(Number(voucherId));
         }
       } catch (error) {
         this.notificationService.addPopup(this.invalidCodePopup);

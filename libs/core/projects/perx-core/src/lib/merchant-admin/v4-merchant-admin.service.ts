@@ -252,8 +252,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       price: transactionHistory.amount,
       currency: transactionHistory.currency,
       pointsIssued: transactionHistory.points_earned,
-      description: oc(purchaseProperties).description(),
-      merchantName: oc(purchaseProperties).merchant_properties()?.name
+      description: purchaseProperties?.description,
+      merchantName: purchaseProperties?.merchant_properties?.name
     };
   }
 
