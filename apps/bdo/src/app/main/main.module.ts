@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
@@ -24,9 +25,8 @@ import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
-
+import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
 import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
@@ -43,6 +43,7 @@ import {MatChipsModule} from '@angular/material/chips';
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
+    TreatEnrollPageComponent,
     FilterComponent,
     CheckboxGroupComponent
   ],
@@ -58,6 +59,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatButtonModule,
     MatTabsModule,
     MatExpansionModule,
+    MatTabsModule,
+    MatCheckboxModule,
     SharedModule,
     MatRadioModule,
     MatCheckboxModule,
