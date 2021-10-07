@@ -52,7 +52,7 @@ export class SelectRecordTypeComponent implements OnInit {
               this.notificationService.addPopup(this.userNotFoundPopup);
               this.router.navigate(['/home']);
             });
-        }       
+        }
       } catch (error) {
         this.router.navigate(['/home']);
         this.notificationService.addPopup(this.invalidCodePopup);

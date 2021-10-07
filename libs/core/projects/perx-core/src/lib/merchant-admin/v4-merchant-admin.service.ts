@@ -44,6 +44,7 @@ import { V4PosService, IV4PosLoyaltyTransactionResponse } from '../pos/v4-pos.se
 import { IPosLoyaltyTransaction } from '../pos/models/pos.model';
 import { V4LoyaltyService, IV4GetLoyaltiesResponse, IV4Loyalty } from '../loyalty/v4-loyalty.service';
 import { ILoyalty } from '../loyalty/models/loyalty.model';
+import { Cacheable } from 'ngx-cacheable';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -579,6 +580,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
+  @Cacheable({
+    maxAge: 300000
+  })
   public getCustomerLoyalties(userId: string, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT,
                               locale: string = 'en'): Observable<ILoyalty[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale).set('user-id', userId);

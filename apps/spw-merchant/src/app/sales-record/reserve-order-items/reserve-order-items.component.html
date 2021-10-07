@@ -14,7 +14,8 @@
         <p class="heading">{{"ORDER_RESERVE_PAGE.PAY_BY_COINS"|translate}}</p>
         <mat-form-field appearance="fill">
             <mat-icon matSuffix *ngIf="loyaltyPoints" (click)="revertPoints()">close</mat-icon>
-            <input matInput type="number" [(ngModel)]="loyaltyPoints" (ngModelChange)="loyaltyInputError=null"  placeholder='{{"ORDER_RESERVE_PAGE.COINS_PAID"|translate}}' class="full-width__input" >
+            <mat-label>{{"ORDER_RESERVE_PAGE.COINS_PAID"|translate}}</mat-label>
+            <input matInput type="number" [(ngModel)]="loyaltyPoints" (ngModelChange)="loyaltyInputError=null" class="full-width__input" >
         </mat-form-field>
         <div *ngIf="loyaltyInputError" class="mat-error">
             {{loyaltyInputError}}

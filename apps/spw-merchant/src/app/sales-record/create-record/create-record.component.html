@@ -29,17 +29,16 @@
     <form class="order-form" [formGroup]="orderForm" (ngSubmit)="onCreateRecord()">
         <mat-form-field appearance="fill" class="full-width__input">
             <mat-label>{{"CREATE_ORDER_PAGE.AMOUNT"|translate}}</mat-label>
-            <input matInput placeholder='{{"CREATE_ORDER_PAGE.AMOUNT"|translate}}' formControlName="netAmount" required>
+            <input matInput formControlName="netAmount" required>
             <mat-error *ngIf="netAmount && netAmount.hasError('required')">
-                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}} <strong>required</strong>
+                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}}
             </mat-error>
             </mat-form-field>
         <mat-form-field appearance="fill" class="full-width__input">
             <mat-label>{{"CREATE_ORDER_PAGE.RECEIPT"|translate}}</mat-label>
-            <input matInput placeholder='{{"CREATE_ORDER_PAGE.RECEIPT"|translate}}'
-            formControlName="receipt" required>
+            <input matInput formControlName="receipt" required>
             <mat-error *ngIf="receipt && receipt.hasError('required')">
-                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}} <strong>required</strong>
+                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}}
             </mat-error>
         </mat-form-field> 
         <div class="btn-bottom-fixed">                      
