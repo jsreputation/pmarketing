@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LIST_SIMILAR_DEALS } from '../../mock-data/similar-deals.mock';
 @Component({
   selector: 'bdo-treat-enroll-success-page',
