@@ -1,0 +1,88 @@
+.treat-error {
+    color: #2E2E2E;
+    padding:20px;
+    --margin-bottom: 15px;
+    font-size: 12px;
+    background-color: #fff;
+    height: 100vh;
+    h4{
+        margin: 0;
+        margin-bottom: var(--margin-bottom);
+        color: #0072D8;
+    }
+    h2{
+        
+    }
+    .navigate-promotion {
+        color: #0072D8;
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--margin-bottom);
+    }
+
+    .reminder {
+        .title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: var(--margin-bottom);
+        }
+
+        &-content {
+            div {
+                margin-bottom: var(--margin-bottom);
+            }
+        }
+    }
+
+    .promoID {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: var(--margin-bottom);
+        .title{
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .input-promo {
+            border: 1px solid #C2C2C1;
+            border-radius: 8px;
+            padding: 10px;
+            max-width:  355px;
+            margin: 5px 0px;
+        }
+        .input-promo:active{
+            border: 1px solid #99C1E7;
+        }
+        .input-promo:focus-visible {
+            outline: 1px solid #99C1E7;
+          }
+        .note{
+            font-size: 11px;
+            color: #707070;
+        }
+       
+    }
+    .confirm-term{
+        display: flex;
+        &-content{
+            &-link{
+                color: #0072D8;
+                
+            }
+            &-link:hover{
+                border-bottom:1px solid #0072D8;
+               
+            }
+        }
+    }
+    .enroll{
+     margin-top: 10vh;
+        &-button{
+            width: 100%;
+            max-width: 328px;
+            color: white;
+            background-color: #0072D8;
+            border-radius: 12px;
+            height: 48px;
+        }
+    }
+}

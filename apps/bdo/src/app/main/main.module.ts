@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
@@ -56,6 +57,7 @@ import { TreatsErrorPage } from './treats-error-page/treats-error-page.component
     MatTabsModule,
     MatExpansionModule,
     MatTabsModule,
+    MatCheckboxModule,
     SharedModule
   ],
   bootstrap: [],
