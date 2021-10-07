@@ -41,17 +41,18 @@ export class SelectRecordTypeComponent implements OnInit {
         this.payload = JSON.parse(scannedQrCode);
         if (this.payload.verifiedUser) {
           this.user = this.payload.verifiedUser;
+          this.orderService.setScannedUser(this.user);
         } else {
           this.merchantAdminService.getCustomerDetails(null, this.payload?.identifier).subscribe(
             (userDetails: IProfile) => {
               this.user = userDetails;
+              this.orderService.setScannedUser(this.user);
             },
             () => {
               this.notificationService.addPopup(this.userNotFoundPopup);
               this.router.navigate(['/home']);
             });
-        }
-        this.orderService.setScannedUser(this.user);
+        }       
       } catch (error) {
         this.router.navigate(['/home']);
         this.notificationService.addPopup(this.invalidCodePopup);
