@@ -6,6 +6,7 @@ import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
+import { TreatEnrollSuccessPageComponent } from './treat-enroll-success-page/treat-enroll-success-page.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
       { path: 'search/:text', component: SearchComponent},
       { path: 'deal-welcome/:rid', component: DealLandingComponent},
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent},
-      {path: 'treat-enroll/:id',component:TreatEnrollPageComponent}
+      {path: 'treat-enroll/:id',component:TreatEnrollPageComponent},
+      {path: 'treat-enroll-success',component:TreatEnrollSuccessPageComponent}
     ]
   }
 ];
