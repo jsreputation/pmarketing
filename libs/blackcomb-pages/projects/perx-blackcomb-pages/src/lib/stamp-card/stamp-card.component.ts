@@ -42,6 +42,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   private idN: number;
   private destroy$: Subject<void> = new Subject();
   public showPrizeSetOutcome: boolean = false;
+  public showPointsHistory: boolean = false;
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -71,6 +72,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+        this.showPointsHistory = !!config.showPointTransfer;
       }
     );
 
@@ -302,7 +304,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
         } else if (voucherId) {
           data.url = `/voucher-detail/${voucherId}`;
         } else if (pointsOutcomes && pointsOutcomes?.length > 0) {
-          data.url = '/points/history';
+          data.url = this.showPointsHistory ? '/points/history' : '/home';
           data.text = pointsOutcomeTxt; //todo: there's no public API for stored value transactions
         } else {
           data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
