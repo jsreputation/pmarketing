@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService, IConfig, ITheme, NotificationService, ThemesService } from '@perxtech/core';
+import { ConfigService, IConfig, ITheme, NotificationService, ThemesService, PopupComponent } from '@perxtech/core';
 import {
-  MerchantOrderComponent,
   MerchantQrscannerComponent,
   MerchantRedeemComponent,
   MerchantTransactionHistoryComponent,
@@ -13,6 +12,11 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
+import { ReserveOrderItemsComponent } from './sales-record/reserve-order-items/reserve-order-items.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateRecordComponent } from './sales-record/create-record/create-record.component';
+import { SelectRecordTypeComponent } from './sales-record/select-record-type/select-record-type.component';
+import { OrderSummaryComponent } from './sales-record/order-summary/order-summary.component';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +30,7 @@ export class AppComponent implements OnInit {
   public isStandardLogoMode: boolean = false;
   public showPageTitle: boolean = false;
   public pageTitle: string = '';
-
+  public goBackUrl: string = null;
 
   constructor(
     private configService: ConfigService,
@@ -36,6 +40,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private location: Location,
     private translateService: TranslateService,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -65,6 +70,10 @@ export class AppComponent implements OnInit {
       }
     });
 
+    this.notificationService.$popup.subscribe(data => {
+      this.dialog.open(PopupComponent, { data });
+    });
+
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
@@ -80,8 +89,11 @@ export class AppComponent implements OnInit {
       ref instanceof MerchantTransactionHistoryComponent ||
       ref instanceof MerchantQrscannerComponent ||
       ref instanceof MerchantRedeemComponent ||
-      ref instanceof MerchantOrderComponent ||
-      ref instanceof IdentifyCustomerComponent;
+      ref instanceof ReserveOrderItemsComponent ||
+      ref instanceof IdentifyCustomerComponent ||
+      ref instanceof CreateRecordComponent ||
+      ref instanceof SelectRecordTypeComponent ||
+      ref instanceof OrderSummaryComponent;
 
     this.pageTitle =
       ref instanceof MerchantTransactionHistoryComponent
@@ -90,11 +102,25 @@ export class AppComponent implements OnInit {
         ? 'Scan QR'
         : ref instanceof MerchantRedeemComponent
         ? 'Redemption'
-        : ref instanceof MerchantOrderComponent
+        : ref instanceof ReserveOrderItemsComponent
         ? 'Create Sales Record'
         : ref instanceof IdentifyCustomerComponent
         ? 'Identify Customer'
+        : ref instanceof CreateRecordComponent
+        ? 'Create Sales Record'
         : '';
+
+    this.goBackUrl = ref instanceof IdentifyCustomerComponent
+      ? 'home'
+      : ref instanceof SelectRecordTypeComponent
+      ? 'home'
+      : ref instanceof ReserveOrderItemsComponent
+      ? 'select-record-type'
+      : ref instanceof CreateRecordComponent
+      ? 'reserve-order-items'
+      : ref instanceof OrderSummaryComponent
+      ? 'home'
+      : null;
   }
 
   private initLogoMode(url: string): void {
@@ -102,7 +128,11 @@ export class AppComponent implements OnInit {
   }
 
   public backArrowClick(): void {
-    this.location.back();
+    if (this.goBackUrl) {
+      this.router.navigate([`${this.goBackUrl}`]);
+    } else {
+      this.location.back();
+    }
   }
 
 }

@@ -93,7 +93,7 @@ export class OrderComponent implements OnInit {
 
           return this.merchantAdminService.createTransaction(
               this.payload?.id, '', amount, '',
-              'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
+              'purchase', `${dateStamp}-${this.payload.id}`, '', '', merchantName,
               description);
         }))
       .subscribe(() => {
