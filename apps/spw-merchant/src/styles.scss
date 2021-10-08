@@ -1,7 +1,7 @@
 @import "./custom-theme.scss";
 
 :root {
-  --font: Roboto;
+  --font: "Lato";
   --logo: "";
   --title: "";
   --accent: #96289a;
@@ -16,7 +16,7 @@
 
 html {
   font-size: 62.5%;
-  font-family: var(--font);
+  font-family: var(--font, "Lato");
   font-style: normal;
   background-color: #fafafa;
 }
