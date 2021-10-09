@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { LIST_SIMILAR_DEALS } from '../../mock-data/similar-deals.mock';
 @Component({
-  selector: 'bdo-treat-enroll-success-page',
-  templateUrl: './treat-enroll-success-page.component.html',
-  styleUrls: ['./treat-enroll-success-page.component.scss']
+  selector: 'bdo-treat-enroll-complete-page',
+  templateUrl: './treat-enroll-complete-page.component.html',
+  styleUrls: ['./treat-enroll-complete-page.component.scss']
 })
-export class TreatEnrollSuccessPageComponent {
+export class TreatEnrollCompletePageComponent  {
   similarDeals = LIST_SIMILAR_DEALS;
   dealDetail = {
     id: 1,

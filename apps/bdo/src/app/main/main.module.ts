@@ -29,7 +29,7 @@ import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.
 import { MatRadioModule } from '@angular/material/radio';
 import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
 import {MatChipsModule} from '@angular/material/chips';
-import { TreatEnrollSuccessPageComponent } from './treat-enroll-success-page/treat-enroll-success-page.component';
+import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 @NgModule({
   declarations: [
     MainComponent,
@@ -47,7 +47,7 @@ import { TreatEnrollSuccessPageComponent } from './treat-enroll-success-page/tre
     TreatEnrollPageComponent,
     FilterComponent,
     CheckboxGroupComponent,
-    TreatEnrollSuccessPageComponent
+    TreatEnrollCompletePageComponent
   ],
   imports: [
     CommonModule,
