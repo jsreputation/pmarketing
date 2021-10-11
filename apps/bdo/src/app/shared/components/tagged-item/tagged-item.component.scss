@@ -58,3 +58,21 @@
     }
   }
 }
+
+@media screen and (min-width: 768px) {
+  .tagged-item {
+    grid-auto-columns: minmax(300px, 400px);
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .tagged-item {
+    grid-auto-columns: minmax(300px, 400px);
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .tagged-item {
+    grid-auto-columns: minmax(300px, 400px);
+  }
+}
