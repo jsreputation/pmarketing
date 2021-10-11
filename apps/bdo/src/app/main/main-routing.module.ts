@@ -19,7 +19,6 @@ const routes: Routes = [
       { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
-      { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'nearby-deals', component: NearbyDealsComponent },
     ],
   },
