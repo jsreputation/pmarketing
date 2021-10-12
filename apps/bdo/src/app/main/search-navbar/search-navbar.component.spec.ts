@@ -7,6 +7,8 @@ import { APP_BASE_HREF } from '@angular/common';
 import { SearchNavbarComponent } from './search-navbar.component';
 import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ConfigModule, RewardsModule } from '@perxtech/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SearchNavbarComponent', () => {
   let component: SearchNavbarComponent;
@@ -20,7 +22,10 @@ describe('SearchNavbarComponent', () => {
         AppRoutingModule,
         MatToolbarModule,
         MatSidenavModule,
-        MatExpansionModule
+        MatExpansionModule,
+        HttpClientModule,
+        ConfigModule.forRoot({}),
+        RewardsModule.forRoot()
       ],
       providers: [
         {

@@ -1,50 +1,37 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ISearchHistory, RewardsService } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-search-navbar',
   templateUrl: './search-navbar.component.html',
   styleUrls: ['./search-navbar.component.scss'],
 })
-export class SearchNavbarComponent {
-  placeholder = 'Search Deals';
-  icon = 'search-outline.svg';
-  isExpanded = false;
-  recomendedList: string[] = [];
-  valueSearch = '';
-  listTrending = [
-    'lazada',
-    'sale',
-    'grafood',
-    'zalora',
-    'rebate',
-    'landers',
-    'shopee',
-    'grad',
-    '10% off',
-    'voucher',
-    'dine in',
-    'tv',
-  ];
-  recommendedSearchValue = [
-    'Buffet 50% Off',
-    'Buffet 101',
-    '25% Off Lunch Buffet',
-    'Japanese Buffet',
-  ];
-  constructor(private route: Router) {
-
+export class SearchNavbarComponent implements OnInit{
+  public isSearching = false;
+  public isExpanded = false;
+  public searchValue = '';
+  public trendingList: string[] = [];
+  public filteredSearchHistories: string[] = [];
+  public searchHistories: string[] = [];
+  constructor(private route: Router, private rewardsService: RewardsService) { }
+  
+  ngOnInit(): void {
+    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[])=>{
+      this.searchHistories = searchHistory.map(item=> item.value);
+      this.filteredSearchHistories = this.searchHistories;
+    });
   }
   
   searchValueChange(event) {
     const value = event.target.value;
-    this.valueSearch = value;
+    this.searchValue = value;
     if (!value) {
-      this.icon = 'search-outline.svg';
-      this.recomendedList = [];
+      this.isSearching = false;
+      this.filteredSearchHistories = this.searchHistories;
     } else {
-      this.icon = 'close.svg';
-      this.recomendedList = this.recommendedSearchValue.filter((item) =>
+      this.isSearching = true;
+      this.filteredSearchHistories = this.searchHistories.filter((item) =>
         item.toLocaleLowerCase().includes(value.toLocaleLowerCase())
       );
     }
@@ -54,16 +41,17 @@ export class SearchNavbarComponent {
     }
   }
 
-  clearValueSearch(event) {
-    this.valueSearch = '';
-    this.recomendedList = [];
-    this.icon = 'search-outline.svg';
+  clearSearchValue(event) {
+    this.searchValue = '';
+    this.filteredSearchHistories = this.searchHistories;
+    this.isSearching = false;
     event.stopPropagation();
   }
 
   search(value: string) {
-    this.valueSearch = value;
+    this.searchValue = value;
     this.isExpanded = false;
-    this.route.navigate([`search/${this.valueSearch}`]);
+    this.isSearching = true;
+    this.route.navigate([`search/${this.searchValue}`]);
   }
 }

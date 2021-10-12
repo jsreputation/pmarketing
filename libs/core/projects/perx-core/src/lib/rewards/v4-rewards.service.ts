@@ -8,7 +8,7 @@ import { oc } from 'ts-optchain';
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
-import { ICatalog, ICategoryTags, IPrice, IReward, Sort } from './models/reward.model';
+import { ICatalog, ICategoryTags, IPrice, IReward, ISearchHistory, Sort } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
@@ -99,6 +99,14 @@ interface IV4Price {
   currency_code?: string;
   points?: number;
   identifier?: string;
+}
+
+export interface IV4SearchHistory {
+  value: string;
+}
+
+interface IV4GetSearchHistoryResponse {
+  data: IV4SearchHistory[];
 }
 
 interface IV4GetRewardsResponse {
@@ -317,6 +325,12 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
+  public static v4SearchHistoryToSearchHistory(searchHistory: IV4SearchHistory): ISearchHistory {
+    return {
+      ...searchHistory
+    };
+  }
+
   public getAllFavoriteRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
     return this.getAllRewards(tags, categories, locale, true);
   }
@@ -524,6 +538,16 @@ export class V4RewardsService extends RewardsService {
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
       ))
     );
+  }
+
+  public getSearchHistory(): Observable<ISearchHistory[]> {
+    return this.http.get<IV4GetSearchHistoryResponse>(`${this.apiHost}/v4/search/history`)
+      .pipe(
+        map((res: IV4GetSearchHistoryResponse) => res.data),
+        map((searchHistories: IV4SearchHistory[]) =>  searchHistories.map(
+          (searchHistory: IV4SearchHistory) => V4RewardsService.v4SearchHistoryToSearchHistory(searchHistory)
+        ))
+      );
   }
 
   public searchRewards(text: string, locale= "en"): Observable<IReward[]> {

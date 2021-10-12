@@ -273,6 +273,11 @@ export class WhistlerRewardsService implements RewardsService {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
+  public getSearchHistory(): Observable<IV4SearchHistory[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
   public searchRewards(text: string, locale?: string): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
