@@ -1,5 +1,4 @@
-import { MatTabsModule } from '@angular/material/tabs';
-import { TaggedItemComponent } from './home/tagged-item/tagged-item.component';
+
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
 import { MainRoutingModule } from './main-routing.module';
@@ -13,19 +12,27 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { SearchHeaderComponent } from './search/search-header/search-header.component';
-import { SearchResultComponent } from './search/search-result/search-result.component';
 import { SearchComponent } from './search/search.component';
+import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
-
-
+import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
+import {MatChipsModule} from '@angular/material/chips';
+import { CategoryComponent } from './catalog-page/category/category.component';
+import { SortComponent } from './catalog-page/sort/sort.component';
+import { EverydayComponent } from './catalog-page/every-day/every-day.component';
 @NgModule({
   declarations: [
     MainComponent,
@@ -34,14 +41,18 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
     SecondaryCatalogComponent,
     SearchNavbarComponent,
     FeatureDealsComponent,
-    TaggedItemComponent,
     SecondaryCatalogComponent,
     SearchHeaderComponent,
-    SearchResultComponent,
     SearchComponent,
     DealLandingComponent,
     TreatWelcomeComponent,
-    CatalogPageComponent
+    CatalogPageComponent,
+    TreatEnrollPageComponent,
+    FilterComponent,
+    CheckboxGroupComponent,
+    CategoryComponent,
+    SortComponent,
+    EverydayComponent
   ],
   imports: [
     CommonModule,
@@ -53,10 +64,15 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    MatTabsModule,
     MatExpansionModule,
-    MatTabsModule,
-    SharedModule
+    MatCheckboxModule,
+    SharedModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule
   ],
   bootstrap: [],
 })

@@ -3,6 +3,11 @@ import { RouterModule, Routes, } from '@angular/router';
 import { ProtectedGuard } from 'ngx-auth';
 import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
 import { HomeComponent } from './home/home.component';
+import { ReserveOrderItemsComponent } from './sales-record/reserve-order-items/reserve-order-items.component';
+import { SelectRecordTypeComponent } from './sales-record/select-record-type/select-record-type.component';
+import { CreateRecordComponent } from './sales-record/create-record/create-record.component';
+import { OrderSummaryComponent } from './sales-record/order-summary/order-summary.component';
+import { OrderGuard } from './order.guard';
 
 const routes: Routes = [
   {
@@ -14,8 +19,11 @@ const routes: Routes = [
       loadChildren: () => import('./transaction-history/transaction-history.module').then((mod) => mod.TransactionHistoryModule) },
       { path: 'qrscanner/:path', loadChildren: () => import('./qrscanner/qrscanner.module').then((mod) => mod.QrscannerModule) },
       { path: 'redeem', loadChildren: () => import('./redeem/redeem.module').then((mod) => mod.RedeemModule) },
-      { path: 'order', loadChildren: () => import('./order/order.module').then((mod) => mod.OrderModule) },
+      { path: 'reserve-order-items', component: ReserveOrderItemsComponent, canActivate: [OrderGuard] },
       { path: 'identify-user/:path', component: IdentifyCustomerComponent },
+      { path : 'select-record-type', component: SelectRecordTypeComponent},
+      { path: 'create-order', component: CreateRecordComponent, canActivate: [OrderGuard] },
+      { path: 'order-summary', component: OrderSummaryComponent, canActivate: [OrderGuard]}
     ],
     canActivate: [ProtectedGuard]
   },

@@ -42,6 +42,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   private idN: number;
   private destroy$: Subject<void> = new Subject();
   public showPrizeSetOutcome: boolean = false;
+  public showPointsHistory: boolean = false;
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -71,6 +72,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
+        this.showPointsHistory = !!config.showPointTransfer;
       }
     );
 
@@ -260,6 +262,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
     const badgeOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.badge
       || outcome.state !== 'failed');
 
+    const pointsOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.points
+      || outcome.state !== 'failed');
+
     if ((stamp.vouchers && stamp.vouchers.length > 0) ||
       (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
 
@@ -276,10 +281,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
       forkJoin([
         this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
         this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
+        this.translate.get('STAMP_CAMPAIGN.POINTS_POPUP_TEXT'),
         this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
         this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
       ]).subscribe(translations => {
-        const [title, text, buttonTxt, prizeSetBtnTxt] = translations;
+        const [title, text, pointsOutcomeTxt, buttonTxt, prizeSetBtnTxt] = translations;
         const data: IRewardPopupConfig = {
           title,
           text,
@@ -297,6 +303,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
           data.buttonTxt = prizeSetBtnTxt;
         } else if (voucherId) {
           data.url = `/voucher-detail/${voucherId}`;
+        } else if (pointsOutcomes && pointsOutcomes?.length > 0) {
+          data.url = this.showPointsHistory ? '/points/history' : '/home';
+          data.text = pointsOutcomeTxt; //todo: there's no public API for stored value transactions
         } else {
           data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
         }

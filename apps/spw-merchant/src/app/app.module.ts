@@ -22,7 +22,9 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  MerchantAdminModule
+  MerchantAdminModule,
+  RewardsModule,
+  LoyaltyModule
 } from '@perxtech/core';
 import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
@@ -37,6 +39,13 @@ import { HomeComponent } from './home/home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReserveOrderItemsComponent } from './sales-record/reserve-order-items/reserve-order-items.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SelectRecordTypeComponent } from './sales-record/select-record-type/select-record-type.component';
+import { CreateRecordComponent } from './sales-record/create-record/create-record.component';
+import { NgxBarcode6Module } from 'ngx-barcode6';
+import { OrderSummaryComponent } from './sales-record/order-summary/order-summary.component';
 
 export const appInit =
   (
@@ -62,7 +71,11 @@ export const appInit =
     AppComponent,
     HeaderComponent,
     IdentifyCustomerComponent,
-    HomeComponent
+    HomeComponent,
+    ReserveOrderItemsComponent,
+    SelectRecordTypeComponent,
+    CreateRecordComponent,
+    OrderSummaryComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -86,6 +99,11 @@ export const appInit =
     FormsModule,
     ReactiveFormsModule,
     MerchantAdminModule,
+    RewardsModule.forRoot(),
+    ZXingScannerModule,
+    MatDialogModule,
+    NgxBarcode6Module,
+    LoyaltyModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

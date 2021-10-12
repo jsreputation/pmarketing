@@ -11,6 +11,7 @@
   padding-inline-start: 0 !important;
   margin: 10px 0 0 0;
   padding-bottom: 10px;
+  height: 190px;
 
   .item:first-child {
     margin-left: 20px;
@@ -25,27 +26,19 @@
     flex-direction: row;
     scroll-snap-align: center;
     border-radius: 8px;
+
     height: 180px;
     list-style-type: none;
     background: $light-blue 0% 0% no-repeat padding-box;
+    background-position: right bottom;
 
-    .image {
-      border-radius: 0 8px 8px;
-      flex: 1;
-
-      img {
-        border-radius: inherit;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-      }
-    }
+    background-repeat: no-repeat;
 
     .content-container {
       display: flex;
       flex-direction: column;
-      padding: 20px 10px;
+      flex: 1;
+      padding: 20px 10px 0px 10px;
 
       .title {
         margin: 0;

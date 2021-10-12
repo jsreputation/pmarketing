@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
@@ -19,6 +20,7 @@ describe('AppComponent', () => {
           MatSnackBarModule,
           MatToolbarModule,
           MatIconModule,
+          MatDialogModule,
           TranslateModule.forRoot()
       ],
       declarations: [

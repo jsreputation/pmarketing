@@ -1,0 +1,18 @@
+<div class="category">
+    <div class="title">
+        <h3>{{title}}</h3>
+        <div class="filter">
+            <img src="../../../assets/images/icon-n-filter.svg" alt="">
+            <span>
+                Filters
+            </span>
+        </div>
+    </div>
+
+    <div class="icon-category">
+        <div class="action" *ngFor="let item of dataSource" (click)="execCallBack(item.callBack)">
+            <img [src]="item.linkImage" alt="" class="img-category">
+            <label>{{item.name}}</label>
+        </div>
+    </div>
+</div>

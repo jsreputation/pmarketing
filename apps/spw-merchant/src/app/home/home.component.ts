@@ -20,7 +20,7 @@ export class HomeComponent extends MerchantLandingPageComponent {
    }
 
   public onSalesScan(): void {
-    this.router.navigate(['/identify-user/order']);
+    this.router.navigate(['/identify-user/select-record-type']);
   }
 
 }

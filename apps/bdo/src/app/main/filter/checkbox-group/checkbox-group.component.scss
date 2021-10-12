@@ -1,0 +1,28 @@
+@import './../../../../theme/variables.scss';
+
+.checkbox-group-wrapper {
+  .mat-expansion-panel-header {
+    padding: 0 5px 0 0;
+    border-radius: 0;
+    height: 35px;
+    margin: 5px;
+  }
+
+  .mat-checkbox-inner-container {
+    padding-left: 20px;
+  }
+
+  ul {
+    margin: 0 16px;
+    padding-inline-start: 0;
+    list-style: none;
+
+    li {
+      margin: 10px 0 10px 20px;
+    }
+  }
+
+  .title {
+    color: $near-black;
+  }
+}

@@ -1,58 +1,13 @@
 <div class="catalog-page">
-    <div class="debit-card">
-        <div class="title">
-            <h4>DEBIT CARD</h4>
-            <div class="filter">
-                <img src="../../../assets/images/icon-n-filter.svg" alt="">
-                <span>
-                    Filters
-                </span>
-            </div>
-        </div>
-
-        <div class="looking-for">
-            <p>What are you looking for?</p>
-            <div class="action">
-                <div class="card">
-                    <img src="../../../assets/images/creditcards-enclosed-filled-fullcolor.svg" alt="">
-                    <label>Card Exclusives</label>
-                </div>
-                <div class="card">  
-                    <img src="../../../assets/images/grocery-enclosed-outline-fullcolor.svg" alt="">
-                    <label>Essentials</label>
-                </div>
-                <div class="card"> 
-                    <img src="../../../assets/images/installment-enclosed-outline-fullcolor.svg" alt="">
-                    <label>Installment</label>
-                </div>
-                <div class="card"> 
-                    <img src="../../../assets/images/pay_bills-enclosed-outline-fullcolor.svg" alt="">
-                    <label>Shop</label>
-                </div> 
-            </div>
-        </div>
+    <div class="every-day">
+        <bdo-every-day [title]="'Every day'" [description]="'A short description here'"></bdo-every-day>
     </div>
-    <div class="card-type">
-        <p>Card Types</p>
-        <div class="content">
-            <div>
-                <img src="../../../assets/images/Scheme-Mastercard.svg" alt="">
-            </div>
-            <div>
-                <img src="../../../assets/images/Scheme-Visa.png" alt="">
-            </div>
-            <div>
-                <img src="../../../assets/images/Scheme-Amex.png" alt="">
-            </div>
-            <div>
-                <img src="../../../assets/images/Scheme-JCB.png" alt="">
-            </div>
-            <div>
-                <img src="../../../assets/images/Scheme-UnionPay.svg" alt="">
-            </div>
-            <div>
-                <img src="../../../assets/images/Scheme-DinersClub.svg" alt="">
-            </div>
-        </div>
+    
+    <div class="category">
+       <bdo-category [title]="'Categories'" [dataSource]="lstCategory"></bdo-category>
+    </div>
+
+    <div class="sort">
+        <bdo-sort></bdo-sort>
     </div>
 </div>
