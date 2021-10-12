@@ -4,6 +4,7 @@
       <em></em>
       <zxing-scanner
         [enable]="startScan"
+        [formats]="allowedFormats"
         (scanSuccess)="scanSuccessHandler($event)"
       ></zxing-scanner>
     </div>

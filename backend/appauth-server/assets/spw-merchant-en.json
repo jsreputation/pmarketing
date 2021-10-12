@@ -39,6 +39,7 @@
         "GENERIC": "Sorry, something went wrong"
     },
     "FORGET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
         "EMAIL_ADDRESS": "Email Address",
         "EMAIL_ADDRESS_IS": "Email Address is",
         "NEXT": "Next"
@@ -50,18 +51,48 @@
         "CONFIRM_PASSWORD": "Confirm new password",
         "SUBMIT_BUTTON": "Update password"
     },
-    "ORDER_PAGE": {
-        "SALES_RECORD": "Sales Record",
-        "DESCRIPTION": "Description",
-        "DESCRIPTION_IS": "Description is",
-        "AMOUNT": "Amount",
-        "AMOUNT_IS": "Amount is",
-        "TRANSACTION_DATE": "Transaction date",
-        "TIME": "Time",
-        "REVIEW": "Review",
+    "RECORD_TYPE_PAGE": {
+        "SALES_RECORD": "Create Sales Record",
+        "SALES_RECORD_TITLE": "Select a Record to create:",
         "CANCEL": "Cancel",
-        "SUBMIT": "Submit",
-        "BACK": "Back"
+        "PROFILE": "Profile detected",
+        "MOBILE_NUMBER": "Mobile Number"
+    },
+    "ORDER_RESERVE_PAGE": {    
+        "BACK": "Back",
+        "CONTINUE": "Continue",
+        "APPLY_VOUCHER": "Apply Voucher",
+        "REMOVE_VOUCHER": "Remove Voucher",      
+        "PAY_BY_COINS": "Pay by VizCoins",
+        "COINS_PAID": "VizCoins paid",       
+        "SCAN_BARCODE": "SCAN VOUCHER BARCODE",
+        "INSUFFICIENT_COIN_MSG": "Customer’s VizCoin balance is insufficient",
+        "VOUCHER_REDEEM_SUCCESS_MSG": "Voucher has been applied"
+    },
+    "CREATE_ORDER_PAGE": {
+        "CREATE_RECORD": "Create Record",
+        "BACK": "Back",
+        "VOUCHER_APPLIED": "Voucher applied",
+        "POINTS_PAID": "VizCoins paid",
+        "INSTRUCTIONS": "Instructions",
+        "INSTRUCTION_1": "Input the voucher you applied or VizCoins paid on your POS to calculate the net amount after discount.",
+        "INSTRUCTION_2": "Enter the net amount and receipt ID from your POS system below",
+        "RECEIPT": "Receipt ID",
+        "AMOUNT": "Net Amount",
+        "AMOUNT_IS": "Amount is",
+        "INPUT_ERR_MSG": "This field is required"
+    },
+    "ORDER_SUMMARY": {
+        "SALES_RECORD_TITLE": "Sales Record created!",
+        "SALES_RECORD_SUBTITLE": "Submit record to your POS by scanning the code below:",
+        "SALES_RECORD_ID": "Sales Record ID:",
+        "SUMMARY": "Summary",
+        "CUSTOMER": "Customer",
+        "MOBILE_NUMBER": "Mobile Number",
+        "VOUCHER_APPLIED": "Voucher applied",
+        "POINTS_PAID": "VizCoins paid",
+        "RECEIPT": "Receipt ID",
+        "AMOUNT": "Amount after discount"
     },
     "IDENTIFY_USER": {
         "BY_QR_SCAN": "By QR Scan",

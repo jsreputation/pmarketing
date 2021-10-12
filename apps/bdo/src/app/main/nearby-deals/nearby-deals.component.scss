@@ -1,0 +1,43 @@
+@import '../../../theme/variables.scss';
+
+.nearby-deals-wrapper {
+  .filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 20px;
+
+    .group-filter {
+      display: flex;
+      align-items: center;
+
+      span {
+        color: $medium-blue;
+        margin-left: 4px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .header {
+    color: $main-blue-text;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 20px;
+    letter-spacing: 0;
+    margin: 0;
+  }
+
+  .content-wrapper {
+    overflow: hidden;
+    height: calc(100vh - 200px);
+
+    .nearby-result-tab {
+      .label-tab {
+        margin-left: 4px;
+        color: $medium-blue;
+      }
+    }
+  }
+}

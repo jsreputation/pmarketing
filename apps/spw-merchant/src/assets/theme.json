@@ -1,7 +1,7 @@
 {
   "name": "Light",
   "properties": {
-    "--font": "Roboto",
+    "--font": "Lato",
     "--logo": "assets/header_logo.png",
     "--title": "Siam Piwat Merchant Merchant",
     "--accent": "#FFCC00",

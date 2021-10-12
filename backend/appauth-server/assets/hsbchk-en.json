@@ -336,6 +336,7 @@
     "STAMP_CARD_UPDATED": "Stamp card updated",
     "CARD_COMPLETED": "Stamp card completed by your team-mate!",
     "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "POINTS_POPUP_TEXT": "You have gained points!",
     "REWARD_POPUP_TITLE": "Congratulations!",
     "REWARD_POPUP_TEXT": "Here is a reward for you.",
     "REWARD_POPUP_BUTTON_TEXT": "View Reward",

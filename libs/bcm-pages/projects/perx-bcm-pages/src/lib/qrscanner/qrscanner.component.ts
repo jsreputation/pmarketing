@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-
+import { BarcodeFormat } from '@zxing/library';
+import {Location} from '@angular/common';
 @Component({
   selector: 'perx-bcm-pages-qrscanner',
   templateUrl: './qrscanner.component.html',
@@ -8,6 +9,8 @@ import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 })
 export class QrscannerComponent implements OnInit, OnChanges {
   private path: string;
+  public allowedFormats: BarcodeFormat[] = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13,
+    BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX];
 
   @Input()
   public enableScan: boolean = true;
@@ -16,6 +19,7 @@ export class QrscannerComponent implements OnInit, OnChanges {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location
   ) { }
 
   public ngOnInit(): void {
@@ -44,7 +48,7 @@ export class QrscannerComponent implements OnInit, OnChanges {
   }
 
   public onCancel(): void {
-    this.router.navigate(['/home']);
+   this.location.back();
   }
 
 }
