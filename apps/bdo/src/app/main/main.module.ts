@@ -24,6 +24,8 @@ import { SearchResultComponent } from './search/search-result/search-result.comp
 import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
+import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
+import { MapComponent } from './nearby-deals/map/map.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
@@ -42,6 +44,8 @@ import {MatChipsModule} from '@angular/material/chips';
     SearchResultComponent,
     SearchComponent,
     DealLandingComponent,
+    NearbyDealsComponent,
+    MapComponent,
     TreatWelcomeComponent,
     TreatEnrollPageComponent,
     FilterComponent,
@@ -60,8 +64,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTabsModule,
     MatExpansionModule,
     MatTabsModule,
-    MatCheckboxModule,
     SharedModule,
+    MatCheckboxModule,
     MatRadioModule,
     MatCheckboxModule,
     MatChipsModule,
