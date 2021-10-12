@@ -101,6 +101,10 @@ interface IV4Price {
   identifier?: string;
 }
 
+export interface IV4TrendingSearches {
+  value: string;
+}
+
 export interface IV4SearchHistory {
   value: string;
 }
@@ -523,6 +527,12 @@ export class V4RewardsService extends RewardsService {
       );
     }
     return EMPTY;
+  }
+  public getTrendingSearches(): Observable<IV4TrendingSearches[]> {
+    return this.http.get<IV4GetTrendingSearches>(`${this.apiHost}/v4/search/trending`)
+    .pipe(
+      map((res: IV4GetTrendingSearches) => res.data)
+    );
   }
   public getRewardsRelated(rewardId: number): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

@@ -1,6 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ISearchHistory, RewardsService } from '@perxtech/core';
+import { RewardsService } from '@perxtech/core';
+import { IV4SearchHistory, IV4TrendingSearches } from 'libs/core/projects/perx-core/src/lib/rewards/v4-rewards.service';
 
 @Component({
   selector: 'bdo-search-navbar',
@@ -21,6 +23,13 @@ export class SearchNavbarComponent implements OnInit{
       this.searchHistories = searchHistory.map(item=> item.value);
       this.filteredSearchHistories = this.searchHistories;
     });
+  }
+  
+  ngOnInit(): void {
+
+    this.rewardsService.getTrendingSearches().subscribe((searchHistory:IV4TrendingSearches[])=>{
+      this.trendingList = searchHistory.map(item=> item.value);
+    })
   }
   
   searchValueChange(event) {
