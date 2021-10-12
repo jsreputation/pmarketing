@@ -29,21 +29,25 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs/operators';
 
-export const setLanguage = (
-  translateService: TranslateService,
-  configService: ConfigService,
-  authService: AuthenticationService,
-  themesService: ThemesService) =>
-  () => new Promise((resolve) => {
+export const appInit =
+  (
+    translateService: TranslateService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    themesService: ThemesService
+  ) => () => new Promise((resolve) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      authService.saveUserAccessToken(token);
+    }
+
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      // for currentLang registering to determine lang ver of url navigation on content.component
-      tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting()),
+      switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
-
 
 @NgModule({
   declarations: [ AppComponent ],
@@ -90,7 +94,7 @@ export const setLanguage = (
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: setLanguage,
+      useFactory: appInit,
       deps: [ TranslateService, ConfigService, AuthenticationService, ThemesService ], multi: true
     },
     {
