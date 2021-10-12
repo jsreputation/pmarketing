@@ -84,7 +84,7 @@ body {
   }
 }
 
-.search-result-tab {
+.search-result-tab, .nearby-deals-wrapper {
   .mat-tab-label {
     height: 46px !important;
   }
@@ -164,5 +164,19 @@ body {
   }
   .mat-form-field-underline {
     display: none;
+  }
+}
+
+.nearby-card-wrapper {
+  .tagged-item {
+    padding-bottom: 0 !important;
+
+    .item {
+      img {
+        height: 96px !important;
+      }
+
+      background: #fff;
+    }
   }
 }

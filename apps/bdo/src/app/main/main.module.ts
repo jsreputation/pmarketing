@@ -24,6 +24,8 @@ import { SearchHeaderComponent } from './search/search-header/search-header.comp
 import { SearchComponent } from './search/search.component';
 import { FilterComponent } from './filter/filter.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
+import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
+import { MapComponent } from './nearby-deals/map/map.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
@@ -45,6 +47,8 @@ import { EverydayComponent } from './catalog-page/every-day/every-day.component'
     SearchHeaderComponent,
     SearchComponent,
     DealLandingComponent,
+    NearbyDealsComponent,
+    MapComponent,
     TreatWelcomeComponent,
     CatalogPageComponent,
     TreatEnrollPageComponent,
@@ -67,6 +71,7 @@ import { EverydayComponent } from './catalog-page/every-day/every-day.component'
     MatExpansionModule,
     MatCheckboxModule,
     SharedModule,
+    MatCheckboxModule,
     MatRadioModule,
     MatCheckboxModule,
     MatChipsModule,

@@ -3,7 +3,7 @@
     <img [src]="deal.image" />
     <div class="container">
       <h4 class="title">{{deal.title}}</h4>
-      <p class="description">{{deal.description}}</p>
+      <p class="description" *ngIf="deal?.description">{{deal.description}}</p>
       <span class="position" *ngIf="deal?.position"><mat-icon>location_pin</mat-icon>{{deal.position}}</span>
     </div>
   </li>
