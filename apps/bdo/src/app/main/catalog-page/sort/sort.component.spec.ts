@@ -2,10 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { SortComponent } from './sort.component';
 import {MatSelectModule} from '@angular/material/select';
-import { MatExpansionModule } from '@angular/material/expansion';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('SortComponent', () => {
   let component: SortComponent;
@@ -19,9 +15,6 @@ describe('SortComponent', () => {
       imports: [
         MatSelectModule,
         BrowserAnimationsModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatExpansionModule,
       ],
       providers: [
         {
