@@ -68,6 +68,7 @@ export interface IFlags {
   /*Game disable CTA on complete popup and post navigation*/
   disablePostGameNav?: boolean;
   chromeless?: boolean;
+  showAdditionalDetailsOnVoucherQR?: boolean;
 }
 
 export interface IRssFeeds {

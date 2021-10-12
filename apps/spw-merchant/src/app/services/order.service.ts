@@ -3,11 +3,9 @@ import { Injectable } from '@angular/core';
 import { Voucher, IPosLoyaltyTransaction, IProfile, IMerchantInvoice } from '@perxtech/core';
 
 export interface IQrPayload {
-  name: string;
-  id: number;
-  rewardId?: number;
+  name?: string;
+  id?: number;
   identifier?: string;
-  phone?: string;
   voucherId?: string;
   verifiedUser?: IProfile;
 }
