@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchHeaderComponent } from './search-header/search-header.component';
-import { SearchResultComponent } from '../../shared/search-result/search-result.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 import { SearchComponent } from './search.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MainRoutingModule } from '../main-routing.module';
