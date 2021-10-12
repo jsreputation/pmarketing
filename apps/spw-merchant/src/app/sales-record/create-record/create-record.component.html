@@ -3,11 +3,11 @@
         <p>{{"CREATE_ORDER_PAGE.VOUCHER_APPLIED"|translate}}</p>
         <div class="voucher-bg" *ngIf="reservedVoucher; else noVoucherBlock">
             <img src="assets/voucher-barcode-bg.png"/>
-            <div class="voucher-code" *ngIf="reservedVoucher?.reward">
+            <div class="voucher-code" *ngIf="reservedVoucher">
                 <p class="voucher-title">{{reservedVoucher.reward?.name}}</p>
                 <hr/>
                 <ngx-barcode6
-                    [bc-value]="reservedVoucher.reward?.name" [bc-background]="barcodeBgColor"
+                    [bc-value]="reservedVoucher.code" [bc-background]="barcodeBgColor"
                     [bc-height]="32" [bc-width]="1"
                 ></ngx-barcode6>
             </div>
