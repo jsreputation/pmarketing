@@ -394,8 +394,10 @@ export class V4CampaignService implements ICampaignService {
             subHeading: {
               text: lp.sub_headline ? lp.sub_headline : '',
             },
-            backgroundUrl:
-              lp.image?.type === 'image' ? lp.image?.value?.image_url : '',
+            media: {
+              bannerImage:
+                lp.image?.type === 'image' ? lp.image?.value?.image_url : '',
+            }
           },
         };
       }
