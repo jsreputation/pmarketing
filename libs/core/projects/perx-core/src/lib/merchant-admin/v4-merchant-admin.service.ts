@@ -238,9 +238,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       pharmacy: string;
       product: string;
       description: string;
-      merchant_properties: {
-        name: string;
-      }
+      merchant_name: string;
     };
     return {
       id: transactionHistory.id,
@@ -253,7 +251,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       currency: transactionHistory.currency,
       pointsIssued: transactionHistory.points_earned,
       description: purchaseProperties?.description,
-      merchantName: purchaseProperties?.merchant_properties?.name
+      merchantName: purchaseProperties?.merchant_name
     };
   }
 
@@ -355,8 +353,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
           ...(merchantUsername && { merchant_username: merchantUsername }),
           ... (pharmacy && { pharmacy }),
           ...(productName && {product: productName}),
-          // ...(merchantName && { merchant_name: merchantName }),
-          ...(merchantName && { merchant_properties: { name: merchantName }}),
+          ...(merchantName && { merchant_name: merchantName }),
           ...(description && { description })
         }
       }
@@ -450,10 +447,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     const body = {
       collected_amount: amount,
       description,
-      used_items: usedItems,
-      /* properties: {
-        ...( merchantName && {merchant_name: merchantName })
-      },*/
+      used_items: usedItems
     };
 
     return this.http.post<IV4MerchantInvoiceResponse>(url, body, {headers}).pipe(

@@ -70,7 +70,7 @@ export interface IMerchantRewardTransactionHistory {
 }
 
 export interface IMerchantCustomProperties {
-  [key: string]: string | number | boolean | { [key: string]: string };
+  [key: string]: string | number | boolean;
 }
 
 export interface IMerchantTransactionHistory {
