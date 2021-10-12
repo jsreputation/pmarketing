@@ -1,7 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SEARCH_RESULT } from '../../mock-data/search-result.mock';
-import { IReward } from '@perxtech/core';
+import { IReward, RewardsService } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-search',
@@ -11,12 +10,14 @@ import { IReward } from '@perxtech/core';
 
 export class SearchComponent implements OnInit {
   searchValue = '';
-  searchResult: IReward[] = SEARCH_RESULT;
-  constructor(private activeRoute: ActivatedRoute) {}
+  constructor(private activeRoute: ActivatedRoute, private rewardsService: RewardsService) {}
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((param) => {
       this.searchValue = param.text;
+      this.rewardsService.searchRewards(this.searchValue).subscribe(rewards=>{
+        this.searchResult = rewards;
+      })
     });
   }
 }

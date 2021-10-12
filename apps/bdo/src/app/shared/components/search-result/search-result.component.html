@@ -1,12 +1,8 @@
 <mat-tab-group animationDuration="0ms" mat-stretch-tabs class="search-result-tab">
   <mat-tab>
-    <ng-template mat-tab-label >
-      <img src="./assets/images/icon-n-catalogue.svg" alt=""/>
-      <span class="label-tab">Catalogue</span>
-    </ng-template>
     <ng-template mat-tab-label>
-      <img src="./assets/images/icon-n-viewall.svg" alt=""/>
-      <span class="label-tab">List</span>
+      <img src="./assets/images/icon-n-catalogue.svg" alt="" />
+      <span class="label-tab">Catalogue</span>
     </ng-template>
     <ul class="search-result-wrapper">
       <bdo-large-list-item *ngFor="let item of result" [reward]="item">
@@ -15,7 +11,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <img src="./assets/images/icon-n-viewall.svg" alt=""/>
+      <img src="./assets/images/icon-n-viewall.svg" alt="" />
       <span class="label-tab">List</span>
     </ng-template>
     <ul class="search-result-wrapper">

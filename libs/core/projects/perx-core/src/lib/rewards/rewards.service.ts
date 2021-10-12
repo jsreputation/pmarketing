@@ -41,4 +41,7 @@ export abstract class RewardsService {
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
+
+  public abstract searchRewards(text: string, locale?: string): Observable<IReward[]>;
+
 }
