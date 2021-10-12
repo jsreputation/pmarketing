@@ -1,0 +1,109 @@
+@import '../../../theme/variables';
+$margin-bottom:15px;
+$font-weight:bold;
+
+.treat-enroll-success-page {
+    color: $near-black;
+    font-size: 12px;
+
+    .enroll-success {
+        background-color: $white;
+        margin-bottom: $margin-bottom;
+
+        padding: 20px;
+        text-align: center;
+
+        .icon-success {
+            margin-bottom: $margin-bottom;
+        }
+
+        .enrolled {
+            font-size: 23px;
+            font-weight: $font-weight;
+            margin-bottom: $margin-bottom;
+        }
+
+        .promo {
+            font-size: 13px;
+        }
+
+        .promo-content {
+            font-size: 14px;
+            font-weight: $font-weight;
+            margin-bottom: $margin-bottom;
+        }
+
+        .number {
+            padding: $margin-bottom;
+            border: 1px solid $light-blue;
+            background-color: $light-blue;
+            border-radius: 8px;
+            margin-bottom: $margin-bottom;
+            &-title {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+
+            &-content {
+                font-size: 23px;
+                font-weight: $font-weight;
+            }
+        }
+
+        .share {
+            color: $medium-blue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            margin-bottom: $margin-bottom;
+            font-weight: $font-weight;
+
+            &-icon {
+                margin-right: 5px;
+            }
+        }
+
+        .note {
+            text-align: left;
+        }
+    }
+
+    .similar-deal {
+        color: $medium-blue;
+        text-align: left;
+        background-color: $white;
+        padding: 20px;
+        &-content {
+            margin-left: -20px;
+        }
+    }
+    .refer{
+        display: flex;
+        background-image: url('/assets/images/Rectangle 20371.svg');
+        &-content{
+            color:  $white;
+            width: 70%;
+            padding: 20px;
+            &-title{
+                font-size: 15px;
+                margin-bottom: $margin-bottom;
+                font-weight: $font-weight;
+            }
+            &-note{
+                margin-bottom: $margin-bottom;
+            }
+            &-button{
+                border-radius: 8px;
+                background:$white;
+                color: $medium-blue;
+                font-weight: $font-weight;
+            }
+        }
+    }
+    .footer{
+        color: $light-black;
+        padding: $margin-bottom;
+        text-align: center;
+    }
+}
