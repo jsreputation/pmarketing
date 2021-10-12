@@ -9,4 +9,7 @@ import { filterModel } from '../../../models/filter.model';
 export class CategoryComponent {
     @Input() title: string;
     @Input() dataSource: filterModel[] =[];
+    execCallBack(callBack: () => void) {
+        callBack();
+    }
 }
