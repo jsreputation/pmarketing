@@ -61,7 +61,6 @@ export class IdentifyCustomerComponent implements OnInit {
     this.merchantAdminService.getCustomerDetails(mobileNumber, null).subscribe(
       (customer: IProfile) => {
         const data = JSON.stringify({
-          id: customer.id,
           verifiedUser: customer
         });
         const navigationExtras: NavigationExtras = {

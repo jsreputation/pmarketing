@@ -63,3 +63,7 @@ hr {
     object-fit: cover;
   }
 }
+
+button:disabled {
+  opacity: 0.45;
+}
