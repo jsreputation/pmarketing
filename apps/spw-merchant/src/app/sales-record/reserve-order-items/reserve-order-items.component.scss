@@ -44,3 +44,13 @@
 .apply-voucher-cont {
   margin-top: 2rem;
 }
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::ng-deep {
+  .mat-form-field-suffix {
+    align-self: center;
+  }
+}
