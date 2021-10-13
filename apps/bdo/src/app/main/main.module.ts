@@ -1,4 +1,4 @@
-import { RewardsModule } from './../../../../../libs/core/projects/perx-core/src/lib/rewards/rewards.module';
+
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
@@ -37,7 +37,9 @@ import { SearchNotResultComponent } from './search/search-not-result/search-not-
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { RewardsModule } from '@perxtech/core';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
+
 @NgModule({
   declarations: [
     MainComponent,

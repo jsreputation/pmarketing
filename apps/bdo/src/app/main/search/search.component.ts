@@ -9,7 +9,8 @@ import { IReward, RewardsService } from '@perxtech/core';
 })
 
 export class SearchComponent implements OnInit {
-  searchValue = '';
+  public searchValue = '';
+  public searchResult: IReward[] = [];
   constructor(private activeRoute: ActivatedRoute, private rewardsService: RewardsService) {}
 
   ngOnInit(): void {
