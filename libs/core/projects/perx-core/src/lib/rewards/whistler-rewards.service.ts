@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable, Subject, ReplaySubject, AsyncSubject } from 'rxjs';
-import { IReward, ICatalog, IPrice } from './models/reward.model';
+import { IReward, ICatalog, IPrice, ICategoryFilter } from './models/reward.model';
 import { Config } from '../config/config';
 import { map, tap, distinctUntilChanged, take } from 'rxjs/operators';
 
@@ -268,6 +268,12 @@ export class WhistlerRewardsService implements RewardsService {
   public unfavoriteReward(rewardId: number): Observable<IReward> {
     throw new Error('Method not implemented.');
   }
+
+  // @ts-ignore
+  public getCategoriesFilter(): Observable<ICategoryFilter[]> {
+    throw new Error('Method not implemented.');
+  }
+
   // @ts-ignore
   public getTrending(): Observable<IV4Trending[]> {
     throw new Error('Method not implemented.');
@@ -277,6 +283,7 @@ export class WhistlerRewardsService implements RewardsService {
   public getRewardsRelated(rewardId: number): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
+
   // @ts-ignore
   public getSearchHistory(): Observable<IV4SearchHistory[]> {
     throw new Error('Method not implemented.');

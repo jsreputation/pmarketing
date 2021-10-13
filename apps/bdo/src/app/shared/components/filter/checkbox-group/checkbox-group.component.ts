@@ -1,3 +1,4 @@
+
 import { AfterViewInit, Component, forwardRef } from '@angular/core';
 
 import {
@@ -8,7 +9,8 @@ import {
   FormGroup,
   FormControl,
 } from '@angular/forms';
-import { CheckboxModel } from '../../../models/checkbox.model';
+import { CheckboxModel } from '../../../../models/checkbox.model';
+
 @Component({
   selector: 'bdo-checkbox-group',
   templateUrl: './checkbox-group.component.html',
@@ -54,7 +56,7 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
 
   writeValue(obj): void {
     this.dataSource = obj;
-    this.hiddenToggle = !this.dataSource.children;
+    this.hiddenToggle = !this.dataSource.children || !this.dataSource.children.length;
     this.formArray = new FormArray([]);
     this.dataSource.children && this.dataSource.children.forEach((control) => {
       this.formArray.push(

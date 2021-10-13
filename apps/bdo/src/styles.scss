@@ -129,12 +129,19 @@ body {
   }
 
   .tags-wrapper {
+    .mat-expansion-panel-body {
+      line-height: 40px;
+      padding: 14px 0 !important;
+    }
     .mat-chip-list-wrapper {
       margin: 12px 0;
     }
   }
 
   .location-wrapper {
+    .inline-checkbox-group {
+      border-bottom: none !important;
+    }
     .location-checkbox-wrapper {
       .checkbox-item {
         .mat-expansion-panel-header {

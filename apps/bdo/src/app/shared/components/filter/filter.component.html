@@ -1,4 +1,4 @@
-<form [formGroup]="filterForm" class="filter-wrapper" *ngIf="filterForm">
+<form [formGroup]="filterForm" class="filter-wrapper" *ngIf="filterForm && filterSource">
   <h3 class="header">Account Type</h3>
     <ul formArrayName="accountTypes" class="inline-checkbox-group">
       <li *ngFor="let item of filterSource.accountTypes; let idx= index;">

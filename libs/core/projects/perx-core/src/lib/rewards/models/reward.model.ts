@@ -55,6 +55,7 @@ export interface ICatalog {
   rewards?: IReward[];
 }
 
+
 export interface IPrice {
   id?: number;
   rewardCampaignId?: number;
@@ -95,6 +96,14 @@ export interface ILoyaltyTierInfo {
   loyaltyPointsRequiredForRedemption: number;
   sneakPeek: boolean;
 }
+
+export interface ICategoryFilter {
+  id: number;
+  title: string;
+  description: string;
+  children?: ICategoryFilter[];
+}
+
 
 export interface ITrending {
   value: string;
