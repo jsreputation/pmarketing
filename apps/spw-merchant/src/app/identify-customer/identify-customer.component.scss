@@ -19,6 +19,10 @@ form{
   height: 100%;
 }
 
+button:disabled {
+  opacity: 0.45;
+}
+
 
 
 ::ng-deep {
