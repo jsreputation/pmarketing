@@ -1,7 +1,16 @@
 <mat-toolbar color="primary" class="main-navbar">
-  <div class="logo">
-    <img src="assets/images/logo-bdodeals.svg" alt="BDO deals logo"/>
-  </div>
+  <ng-container *ngIf="isHome; then logo else backButton">
+  </ng-container>
+  <ng-template #logo>
+    <div class="logo">
+      <img src="assets/images/logo-bdodeals.svg" alt="BDO deals logo"/>
+    </div>
+  </ng-template>
+  <ng-template #backButton>
+    <div class="logo">
+      <button mat-button color="primary" class="back-button" (click)="back()"><mat-icon>chevron_left</mat-icon> Back</button>
+    </div>
+  </ng-template>
   <!-- <span class="example-spacer"></span> -->
   <!-- <button mat-icon-button class="example-icon" (click)="sidenav.toggle()" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
