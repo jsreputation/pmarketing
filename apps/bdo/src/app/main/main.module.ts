@@ -12,7 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
@@ -31,11 +31,14 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
+import { SearchNotResultComponent } from './search/search-not-result/search-not-result.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { RewardsModule } from '@perxtech/core';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -55,6 +58,7 @@ import { CategoryHeaderComponent } from './catalog-page/category-header/category
     TreatEnrollPageComponent,
     FilterComponent,
     CheckboxGroupComponent,
+    SearchNotResultComponent,
     CategoryComponent,
     SortComponent,
     CategoryHeaderComponent,
@@ -79,6 +83,7 @@ import { CategoryHeaderComponent } from './catalog-page/category-header/category
     MatChipsModule,
     ReactiveFormsModule,
     FormsModule,
+    RewardsModule,
     MatSelectModule
   ],
   bootstrap: [],

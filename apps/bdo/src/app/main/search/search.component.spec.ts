@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
+import { RewardsModule, RewardsService } from '@perxtech/core';
+import { SearchNotResultComponent } from './search-not-result/search-not-result.component';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -18,16 +20,21 @@ describe('SearchComponent', () => {
       declarations: [
         SearchComponent,
         SearchResultComponent,
-        SearchHeaderComponent
+        SearchHeaderComponent,
+        SearchNotResultComponent
       ],
       imports: [
         BrowserAnimationsModule,
         RouterModule.forRoot([]),
         MainRoutingModule,
         SharedModule,
-        MatTabsModule
+        MatTabsModule,
+        RewardsModule
       ],
-      providers: [{provide: APP_BASE_HREF, useValue: '/'}]
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'},
+        RewardsService
+      ]
     }).compileComponents();
   });
 

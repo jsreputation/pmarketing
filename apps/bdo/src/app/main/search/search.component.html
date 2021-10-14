@@ -1,4 +1,9 @@
 <div class="search-result">
   <bdo-search-header [keyWord]="searchValue"></bdo-search-header>
-  <bdo-search-result [result]="searchResult"></bdo-search-result>
+  <ng-container *ngIf="searchResult && searchResult.length; else noResult">
+    <bdo-search-result [result]="searchResult"></bdo-search-result>
+  </ng-container>
+  <ng-template #noResult>
+    <bdo-search-not-result></bdo-search-not-result>
+  </ng-template>
 </div>
