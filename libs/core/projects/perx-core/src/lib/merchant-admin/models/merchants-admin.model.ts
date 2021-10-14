@@ -67,6 +67,7 @@ export interface IMerchantRewardTransactionHistory {
   userAccount: string;
   customerName: string;
   rewardName: string;
+  redemptionDate?: Date;
 }
 
 export interface IMerchantCustomProperties {

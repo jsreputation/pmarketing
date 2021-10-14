@@ -88,9 +88,6 @@
             &:hover{
                 background-color: unset;
             }
-            ::ng-deep.mat-expansion-indicator::after{
-                color: #0072D8;
-            }
         }
     }
 }

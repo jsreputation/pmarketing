@@ -11,3 +11,5 @@ export interface CategoryModel {
   content: string;
   subCategories: SubCategory[];
 }
+
+

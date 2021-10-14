@@ -62,7 +62,7 @@ export class TransactionHistoryComponent implements OnInit {
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${tr.rewardName}`);
     this.redemptionsSubTitleFn = (tr: IMerchantRewardTransactionHistory) =>
-      of(`${this.datePipe.transform(tr.issuedDate, 'dd/MM/yyyy')}`);
+      of(`${this.datePipe.transform(tr.redemptionDate, 'dd/MM/yyyy')}`);
     this.redemptionsPriceLabelFn = (tr: IMerchantRewardTransactionHistory) =>
       of(`${tr.customerName}`);
     this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase - 1, this.pageSizePurchase).subscribe(
