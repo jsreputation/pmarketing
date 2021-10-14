@@ -34,6 +34,7 @@ export interface IReward {
     cardLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
   };
+  images?:Image[];
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
 }
@@ -94,4 +95,8 @@ export interface ILoyaltyTierInfo {
   loyaltyName: string;
   loyaltyPointsRequiredForRedemption: number;
   sneakPeek: boolean;
+}
+export interface Image {
+ type:string;
+ url:string
 }

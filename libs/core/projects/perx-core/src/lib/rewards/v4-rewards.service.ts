@@ -61,6 +61,7 @@ interface IV4CustomField {
   card_link: string;
 }
 
+
 export interface IV4Reward {
   id: number;
   name: string;
@@ -158,6 +159,7 @@ interface IV4LoyaltyTierInfo {
   providedIn: 'root'
 })
 export class V4RewardsService extends RewardsService {
+
   private apiHost: string;
 
   constructor(
@@ -258,6 +260,7 @@ export class V4RewardsService extends RewardsService {
       } : undefined,
       operatingHours,
       isOperating: reward.operating_now,
+      images:reward.images
     };
   }
 
@@ -384,7 +387,15 @@ export class V4RewardsService extends RewardsService {
         ))
       );
   }
-
+  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }) .pipe(
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
+    );
+  }
   public getReward(id: number, userId: string = '', locale: string = 'en'): Observable<IReward> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
       .set('user-id', userId)
@@ -515,4 +526,6 @@ export class V4RewardsService extends RewardsService {
     }
     return EMPTY;
   }
+  
+
 }

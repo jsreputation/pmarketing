@@ -32,6 +32,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { RewardsModule } from '@perxtech/core';
 @NgModule({
   declarations: [
     MainComponent,
@@ -72,7 +73,8 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     MatCheckboxModule,
     MatChipsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RewardsModule
   ],
   bootstrap: [],
 })

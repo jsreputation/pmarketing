@@ -32,6 +32,7 @@ export class WhistlerRewardsService implements RewardsService {
   constructor(private http: HttpClient, private config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
+  
 
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
     switch (rt) {
@@ -264,6 +265,11 @@ export class WhistlerRewardsService implements RewardsService {
 
   // @ts-ignore
   public unfavoriteReward(rewardId: number): Observable<IReward> {
+    throw new Error('Method not implemented.');
+  }
+
+  //@ts-ignore
+  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
 }

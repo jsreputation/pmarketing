@@ -41,4 +41,6 @@ export abstract class RewardsService {
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
+
+  public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
 }
