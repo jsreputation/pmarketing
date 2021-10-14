@@ -5,10 +5,10 @@ import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchNotResultComponent } from './search-not-result.component';
-import { SearchResultComponent } from '../search-result/search-result.component';
 import { SearchHeaderComponent } from '../search-header/search-header.component';
 import { MainRoutingModule } from '../../main-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
+import { SearchResultComponent } from '../../../shared/components/search-result/search-result.component';
 
 describe('SearchNotResultComponent', () => {
   let component: SearchNotResultComponent;
