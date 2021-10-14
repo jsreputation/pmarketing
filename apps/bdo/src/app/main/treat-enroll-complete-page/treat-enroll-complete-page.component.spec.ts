@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page.component';
+import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 
 describe('TreatEnrollCompletePageComponent', () => {
   let component: TreatEnrollCompletePageComponent;

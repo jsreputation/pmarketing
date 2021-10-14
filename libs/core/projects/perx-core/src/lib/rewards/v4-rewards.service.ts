@@ -525,4 +525,16 @@ export class V4RewardsService extends RewardsService {
       ))
     );
   }
+
+  public searchRewards(text: string, locale= "en"): Observable<IReward[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
+      .pipe(
+        map((res: IV4GetRewardsResponse) => res.data),
+        map((rewards: IV4Reward[]) => rewards.map(
+          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+        ))
+      );
+  }
+
 }
