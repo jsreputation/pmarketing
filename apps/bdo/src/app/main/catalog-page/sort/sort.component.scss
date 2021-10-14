@@ -1,0 +1,14 @@
+@import "../../../../theme/variables";
+.sort{
+    background-color: $white;
+    padding: 10px 16px;
+    .title{
+        display: flex;
+        align-items: center;
+        .sort-label{
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    }
+}

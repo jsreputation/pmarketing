@@ -1,0 +1,29 @@
+@import "../../../../theme/variables";
+.category{
+    background-color: $white;
+    padding: 10px 16px;
+    .title{
+        display: flex;
+        justify-content: space-between;
+        .filter{
+            display: flex;
+            align-items: center;
+            color: $medium-blue;
+        }
+    }
+    .icon-category{
+        display: flex;
+        .action{
+            .img-category{
+                margin-bottom: 15px;
+                width: 64px;
+            }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 15px;
+            color: $medium-blue;
+            font-weight: bold;
+        }
+    }
+}

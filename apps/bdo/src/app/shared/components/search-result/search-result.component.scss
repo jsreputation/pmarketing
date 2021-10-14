@@ -10,7 +10,7 @@
     overflow-y: auto;
     padding-inline-start: 0 !important;
     margin: 0;
-
+    height: calc(100vh - 195px);
     .item {
       border-radius: 12px;
       box-shadow: 0 0 16px $medium-black;

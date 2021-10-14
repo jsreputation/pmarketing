@@ -6,6 +6,7 @@ import { SearchComponent } from './search/search.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
+import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby-deals', component: NearbyDealsComponent },
+      { path: 'catalog-page/:id', component: CatalogPageComponent},
       {path: 'treat-enroll/:id/complete',component:TreatEnrollCompletePageComponent}
     ],
   },
