@@ -96,7 +96,10 @@ export interface ILoyaltyTierInfo {
   sneakPeek: boolean;
 }
 
-export interface ISearchHistory {
+export interface ITrending {
   value: string;
 }
 
+export interface ISearchHistory {
+  value: string;
+}
