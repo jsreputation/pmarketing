@@ -263,7 +263,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       issuedDate: transaction.issued_date,
       userAccount: transaction.merchant_name,
       customerName: transaction.customer_name,
-      rewardName: transaction.reward_name
+      rewardName: transaction.reward_name,
+      redemptionDate: transaction.redemption_date
     };
   }
 
