@@ -34,8 +34,8 @@ import { CheckboxGroupComponent } from './filter/checkbox-group/checkbox-group.c
 import {MatChipsModule} from '@angular/material/chips';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
-import { EverydayComponent } from './catalog-page/every-day/every-day.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
 @NgModule({
   declarations: [
     MainComponent,
@@ -57,7 +57,7 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     CheckboxGroupComponent,
     CategoryComponent,
     SortComponent,
-    EverydayComponent,
+    CategoryHeaderComponent,
     TreatEnrollCompletePageComponent
   ],
   imports: [

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
-import { EverydayComponent } from './every-day.component';
+import { CategoryHeaderComponent } from './category-header.component';
 describe('SortComponent', () => {
-  let component: EverydayComponent;
-  let fixture: ComponentFixture<EverydayComponent>;
+  let component: CategoryHeaderComponent;
+  let fixture: ComponentFixture<CategoryHeaderComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        EverydayComponent
+        CategoryHeaderComponent
       ],
       imports: [
       ],
@@ -22,7 +22,7 @@ describe('SortComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EverydayComponent);
+    fixture = TestBed.createComponent(CategoryHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
