@@ -9,6 +9,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -26,7 +27,8 @@ describe('MainComponent', () => {
         MatSidenavModule,
         AppRoutingModule,
         MainRoutingModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatIconModule
       ],
       providers: [
         {

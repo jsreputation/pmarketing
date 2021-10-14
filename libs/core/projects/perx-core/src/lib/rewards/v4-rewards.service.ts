@@ -259,8 +259,7 @@ export class V4RewardsService extends RewardsService {
         cardLink: reward.custom_fields.card_link
       } : undefined,
       operatingHours,
-      isOperating: reward.operating_now,
-      images:reward.images
+      isOperating: reward.operating_now
     };
   }
 
@@ -386,15 +385,6 @@ export class V4RewardsService extends RewardsService {
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
       );
-  }
-  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }) .pipe(
-      map((res: IV4GetRewardsResponse) => res.data),
-      map((rewards: IV4Reward[]) => rewards.map(
-        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-      ))
-    );
   }
   public getReward(id: number, userId: string = '', locale: string = 'en'): Observable<IReward> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
@@ -526,6 +516,13 @@ export class V4RewardsService extends RewardsService {
     }
     return EMPTY;
   }
-  
-
+  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }) .pipe(
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page.component';
 
@@ -8,7 +9,7 @@ describe('TreatEnrollCompletePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreatEnrollCompletePageComponent ]
+      declarations: [ TreatEnrollCompletePageComponent,TaggedItemComponent ]
     })
     .compileComponents();
   });
