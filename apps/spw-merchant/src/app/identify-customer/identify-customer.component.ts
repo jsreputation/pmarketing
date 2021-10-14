@@ -51,7 +51,7 @@ export class IdentifyCustomerComponent implements OnInit {
 
   private initForm(): void {
     this.identifyUserForm = this.fb.group({
-      mobileNumber: ['', Validators.required],
+      mobileNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
   }
 

@@ -11,12 +11,14 @@
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>{{"IDENTIFY_USER.MOBILE_NUMBER"|translate}}</mat-label>
                     <input
-                    type="number"
                     matInput
                     formControlName="mobileNumber"
                     required>
                     <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
                         {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }} <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
+                        Please enter a valid number 
                     </mat-error>
                 </mat-form-field>
                 <button
