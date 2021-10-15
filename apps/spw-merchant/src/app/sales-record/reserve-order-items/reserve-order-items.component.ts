@@ -81,9 +81,10 @@ export class ReserveOrderItemsComponent implements OnInit {
       }
     }
 
-    this.merchantAdminService.getCustomerLoyalties(this.userDetails?.identifier, 1, 1).subscribe(
+    this.merchantAdminService.getCustomerLoyalties(this.userDetails?.identifier).subscribe(
       (loyalties: ILoyalty[]) => {
-        this.loyaltyProgramId = loyalties[0]?.id;
+        const loyalty = loyalties.find((item: ILoyalty) => item.name === 'VizCoin Program');
+        this.loyaltyProgramId = loyalty?.id;
       }
     );
   }
