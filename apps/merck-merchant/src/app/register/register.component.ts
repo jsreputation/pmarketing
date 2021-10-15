@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   public isMerchantNameLoading: boolean;
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
-  private clientId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,14 +34,12 @@ export class RegisterComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const param = location.search;
       const notSaveToken: string | null = new URLSearchParams(param).get('invitation_token');
-      const notSaveClientId: string | null = new URLSearchParams(param).get('client_id');
-      if (!notSaveToken || !notSaveClientId) {
+      if (!notSaveToken) {
         return;
       }
       this.invitationToken = notSaveToken;
-      this.clientId = notSaveClientId;
       this.configService.readAppConfig().pipe(
-        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken, this.clientId))
+        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken))
       ).subscribe(
         (profile: IMerchantProfile) => {
           this.merchantProfile = profile;
@@ -91,7 +88,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
+    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, password).subscribe(
       (message: string) => {
         // this.notificationService.addSnack('Your password has been saved. Please login');
         this.notificationService.addSnack(message);

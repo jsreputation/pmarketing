@@ -457,28 +457,25 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   }
 
-  public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
+  public validateInvite(token: string): Observable<IMerchantProfile> {
     const params = new HttpParams()
       .set('invitation_token', token)
-      .set('client_id', clientId);
-
-    const url = `${this.apiHost}/v4/merchant_user_account_invitations/accept`;
+    const url = `${this.merchantEndPoint}/merchant_user_account_invitations/accept`;
 
     return this.http.get<IV4MerchantUserInvitationResponse>(url, { params }).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
     );
   }
 
-  public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
+  public setupNewMerchantsPassword(token: string, password: string): Observable<string> {
 
     const body = {
       invitation_token: token,
-      client_id: clientId,
       password,
       password_confirmation: password,
     };
 
-    const url = `${this.apiHost}/v4/merchant_user_account_invitations`;
+    const url = `${this.merchantEndPoint}/merchant_user_account_invitations`;
 
     return this.http.put(url, body).pipe(
       // response is always HTTP 200 in this format regardless if it is a error or success and backend should resolve this
