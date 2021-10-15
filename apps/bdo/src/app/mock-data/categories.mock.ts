@@ -5,7 +5,7 @@ export const LIST_CATEGORY = [
         title:'BDO Rewards',
         content:'',
         subCategories:[{
-            link:'#',
+            link:'/catalog-page/1',
             label:'Emerald '
         },
         {
