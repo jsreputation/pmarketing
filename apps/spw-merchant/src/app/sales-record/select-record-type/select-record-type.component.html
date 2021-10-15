@@ -3,9 +3,9 @@
         <h2>{{"RECORD_TYPE_PAGE.PROFILE"|translate}}</h2>
         <div class="user-details">
             <p>{{ user.firstName }} {{ user.lastName }}</p>
-            <small>ID: {{ user.identifier }}</small>
-        </div>
-        <small *ngIf="user?.customProperties?.phone">{{"RECORD_TYPE_PAGE.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
+            <small>Customer ID: {{ user.identifier }}</small>
+            <small *ngIf="user?.customProperties?.phone">{{"RECORD_TYPE_PAGE.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
+        </div>     
     </div>  
     <h1>{{"RECORD_TYPE_PAGE.SALES_RECORD_TITLE"|translate}}</h1>        
     <div (click)="goToNextPage()">
