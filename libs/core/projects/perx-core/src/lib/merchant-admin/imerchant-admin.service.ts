@@ -53,7 +53,6 @@ export abstract class IMerchantAdminService {
 
   public abstract setupNewMerchantsPassword(
     token: string,
-    clientId: string,
     password: string,
   ): Observable<string>;
 

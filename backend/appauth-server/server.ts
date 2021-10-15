@@ -14,7 +14,7 @@ import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
-import { merchantAcceptInvitation, merchantForgotPassword } from './ctrl/merchantAdmin';
+import { merchantAcceptInvitation, merchantForgotPassword, merchantInvitedSetPassword } from './ctrl/merchantAdmin';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './utils/autoGenerateTenantToken';
 
@@ -54,6 +54,7 @@ app.post(`${BASE_HREF}themes`, themes(getTokens));
 // the way this query performs the API call is the v4 way forward and will be moved to the core service.
 app.post(`${BASE_HREF}v4/merchant_admin/forgot_password`, merchantForgotPassword(getTokens));
 app.get(`${BASE_HREF}v4/merchant_admin/merchant_user_account_invitations/accept`, merchantAcceptInvitation(getTokens));
+app.put(`${BASE_HREF}v4/merchant_admin/merchant_user_account_invitations`, merchantInvitedSetPassword(getTokens));
 
 app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 

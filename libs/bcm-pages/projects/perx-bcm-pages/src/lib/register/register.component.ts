@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   public isMerchantNameLoading: boolean;
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
-  private clientId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -89,7 +88,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
+    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, password).subscribe(
       () => {
         this.notificationService.addSnack('Your password has been saved. Please login');
         this.router.navigateByUrl('/login');
