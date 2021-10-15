@@ -4,7 +4,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { Deal } from '../../../models/deal.model';
+import { IReward } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-tagged-item',
@@ -12,10 +12,11 @@ import { Deal } from '../../../models/deal.model';
   styleUrls: ['./tagged-item.component.scss'],
 })
 export class TaggedItemComponent {
-  @Input() deals: Deal[] = [];
-  @Output() eventItemClick: EventEmitter<Deal> = new EventEmitter<Deal>();
-
-  selectedItem(item:Deal) {
+  @Input() deals: IReward[] = [];
+  @Output() eventItemClick: EventEmitter<IReward> = new EventEmitter<IReward>();
+  urlImageDefault  = "assets/images/light-gray-color-default-image.png"
+  selectedItem(item:IReward) {
     this.eventItemClick.emit(item);
   }
+  
 }

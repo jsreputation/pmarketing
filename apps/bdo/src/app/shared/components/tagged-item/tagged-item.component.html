@@ -1,9 +1,9 @@
 <ul class="tagged-item">
   <li class="item" *ngFor="let deal of deals" (click)="selectedItem(deal)">
-    <img [src]="deal.image" />
+    <img [src]="deal.rewardThumbnail ? deal.rewardThumbnail:urlImageDefault" />
     <div class="container">
-      <h4 class="title">{{deal.title}}</h4>
-      <p class="description" *ngIf="deal?.description">{{deal.description}}</p>
+      <h4 class="title">{{deal.name}}</h4>
+      <p class="description" *ngIf="deal?.description"[innerHtml]="deal.description"></p>
       <span class="position" *ngIf="deal?.position"><mat-icon>location_pin</mat-icon>{{deal.position}}</span>
     </div>
   </li>

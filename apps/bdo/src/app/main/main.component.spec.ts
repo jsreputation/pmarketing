@@ -9,6 +9,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SearchNotResultComponent } from './search/search-not-result/search-not-result.component';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -27,7 +28,8 @@ describe('MainComponent', () => {
         MatSidenavModule,
         AppRoutingModule,
         MainRoutingModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatIconModule
       ],
       providers: [
         {
