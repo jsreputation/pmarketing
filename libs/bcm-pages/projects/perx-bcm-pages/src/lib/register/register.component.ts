@@ -35,14 +35,12 @@ export class RegisterComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const param = location.search;
       const notSaveToken: string | null = new URLSearchParams(param).get('invitation_token');
-      const notSaveClientId: string | null = new URLSearchParams(param).get('client_id');
-      if (!notSaveToken || !notSaveClientId) {
+      if (!notSaveToken) {
         return;
       }
       this.invitationToken = notSaveToken;
-      this.clientId = notSaveClientId;
       this.configService.readAppConfig().pipe(
-        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken, this.clientId))
+        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken))
       ).subscribe(
         (profile: IMerchantProfile) => {
           this.merchantProfile = profile;

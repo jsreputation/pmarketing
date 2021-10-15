@@ -457,12 +457,10 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   }
 
-  public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
+  public validateInvite(token: string): Observable<IMerchantProfile> {
     const params = new HttpParams()
       .set('invitation_token', token)
-      .set('client_id', clientId);
-
-    const url = `${this.apiHost}/v4/merchant_user_account_invitations/accept`;
+    const url = `${this.merchantEndPoint}/merchant_user_account_invitations/accept`;
 
     return this.http.get<IV4MerchantUserInvitationResponse>(url, { params }).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))

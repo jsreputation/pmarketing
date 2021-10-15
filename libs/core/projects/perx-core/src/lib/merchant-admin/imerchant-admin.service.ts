@@ -37,10 +37,7 @@ export abstract class IMerchantAdminService {
 
   public abstract revertVoucherRedemption(id: number): Observable<IVoucher>;
 
-  public abstract validateInvite(
-    token: string,
-    clientId: string,
-  ): Observable<IMerchantProfile>;
+  public abstract validateInvite(token: string): Observable<IMerchantProfile>;
 
   public abstract reservePoints(points: number, loyaltyProgramId: number, userId: string ): Observable<IPosLoyaltyTransaction>;
 

@@ -79,7 +79,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
+  public validateInvite(token: string): Observable<IMerchantProfile> {
     throw new Error('validateInvite Method not implemented.');
   }
 
