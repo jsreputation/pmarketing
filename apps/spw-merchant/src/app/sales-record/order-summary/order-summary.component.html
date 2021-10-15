@@ -6,7 +6,7 @@
             <p class="sales-id">{{"ORDER_SUMMARY.SALES_RECORD_ID"|translate}} {{invoice.transactionId}}</p>
             <ngx-barcode6
             [bc-value]="invoice.transactionId"
-            [bc-font-size]="13" [bc-height]="32" [bc-width]="4"
+            [bc-font-size]="13" [bc-height]="70" [bc-width]="4"
             ></ngx-barcode6>
         </div>
     </div>
@@ -16,9 +16,9 @@
             <h3>{{"ORDER_SUMMARY.CUSTOMER"|translate}}</h3>
             <div class="user-details">
                 <p>{{ user.firstName}} {{ user.lastName}}</p>
-                <small>ID: {{ user.identifier }}</small>
-            </div>
-            <small *ngIf="user.customProperties?.phone">{{"ORDER_SUMMARY.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
+                <small>Customer ID: {{ user.identifier }}</small>
+                <small *ngIf="user.customProperties?.phone">{{"ORDER_SUMMARY.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
+            </div>          
         </div>  
         <hr/>
         <ng-container *ngIf="!isPreActivatedUser">
@@ -39,5 +39,6 @@
         <small>{{invoice.collectedAmount}}</small>
         <h3>{{"ORDER_SUMMARY.RECEIPT"|translate}}</h3>
         <small>{{invoice.description}}</small>
+        <button mat-raised-button (click)="onClose()" class="full-width__button mat-primary">Close</button>
     </div>
 </div>
