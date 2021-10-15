@@ -34,4 +34,16 @@
     letter-spacing: 0px;
     padding: 0 16px;
   }
+  .nearby{
+    display: flex;
+    justify-content: space-between;
+    .navigate-nearby{
+      font-size: 14px;
+      margin: 2.5px 0;
+      color: $medium-blue;
+      margin-right: 20px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
 }

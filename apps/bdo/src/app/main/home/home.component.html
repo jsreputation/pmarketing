@@ -13,7 +13,11 @@
     <bdo-secondary-catalog></bdo-secondary-catalog>
   </mat-card>
   <mat-card class="card bg-transparent">
-    <span class="tag tag--nearby">nearby</span>
+    <div class="nearby">
+      <span class="tag tag--nearby">nearby</span>
+      <a class="navigate-nearby" href="/nearby-deals">View All</a>
+    </div>
+   
     <p class="near-by-title">Find deals that are just right around the corner</p>
     <bdo-tagged-item [deals]="nearBy"></bdo-tagged-item>
   </mat-card>
