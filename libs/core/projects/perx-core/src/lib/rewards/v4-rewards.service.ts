@@ -125,6 +125,12 @@ interface IV4GetRewardsResponse {
   data: IV4Reward[];
 }
 
+interface IV4GetSearchRewardsResponse {
+  data: {
+    rewards: IV4Reward[]
+  };
+}
+
 interface IV4GetRewardResponse {
   data: IV4Reward;
 }
@@ -718,9 +724,9 @@ export class V4RewardsService extends RewardsService {
 
   public searchRewards(text: string, locale = 'en'): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
+    return this.http.get<IV4GetSearchRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
       .pipe(
-        map((res: IV4GetRewardsResponse) => res.data),
+        map((res: IV4GetSearchRewardsResponse) => res.data.rewards),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))

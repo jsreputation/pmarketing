@@ -9,7 +9,7 @@ import { CheckboxGroupComponent } from './components/filter/checkbox-group/check
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { FilterService } from './services/filter.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
@@ -39,6 +39,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SearchResultComponent,
     MatTabsModule
   ],
-  providers: [],
+    providers: [FilterService],
 })
 export class SharedModule {}

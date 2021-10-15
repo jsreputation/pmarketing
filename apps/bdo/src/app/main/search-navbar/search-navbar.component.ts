@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
 
@@ -58,6 +58,7 @@ export class SearchNavbarComponent implements OnInit{
     this.searchValue = value;
     this.isExpanded = false;
     this.isSearching = true;
-    this.route.navigate([`search/${this.searchValue}`]);
+    const queryParams: Params = {search_by: 'string', text:this.valueSearch };
+    this.route.navigate([`search`], {queryParams:queryParams});
   }
 }

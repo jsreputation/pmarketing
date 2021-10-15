@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchHeaderComponent } from './search-header/search-header.component';
 import { SearchResultComponent } from '../../shared/components/search-result/search-result.component';
-import { SearchComponent } from './search.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MainRoutingModule } from '../main-routing.module';
 import { RouterModule } from '@angular/router';
@@ -10,15 +9,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { RewardsModule, RewardsService } from '@perxtech/core';
 import { SearchNotResultComponent } from './search-not-result/search-not-result.component';
+import { FilterResultComponent } from './filter-result.component';
 
-describe('SearchComponent', () => {
-  let component: SearchComponent;
-  let fixture: ComponentFixture<SearchComponent>;
+describe('FilterResultComponent', () => {
+  let component: FilterResultComponent;
+  let fixture: ComponentFixture<FilterResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        SearchComponent,
+        FilterResultComponent,
         SearchResultComponent,
         SearchHeaderComponent,
         SearchNotResultComponent
@@ -39,7 +39,7 @@ describe('SearchComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchComponent);
+    fixture = TestBed.createComponent(FilterResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
