@@ -325,12 +325,6 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public static v4SearchHistoryToSearchHistory(searchHistory: IV4SearchHistory): ISearchHistory {
-    return {
-      ...searchHistory
-    };
-  }
-
   public getAllFavoriteRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
     return this.getAllRewards(tags, categories, locale, true);
   }
@@ -545,7 +539,7 @@ export class V4RewardsService extends RewardsService {
       .pipe(
         map((res: IV4GetSearchHistoryResponse) => res.data),
         map((searchHistories: IV4SearchHistory[]) =>  searchHistories.map(
-          (searchHistory: IV4SearchHistory) => V4RewardsService.v4SearchHistoryToSearchHistory(searchHistory)
+          (searchHistory: IV4SearchHistory) => ({ ...searchHistory })
         ))
       );
   }

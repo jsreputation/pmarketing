@@ -10,10 +10,10 @@ describe('TreatEnrollCompletePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreatEnrollCompletePageComponent,TaggedItemComponent ]
-      ],
+      declarations: [ TreatEnrollCompletePageComponent,TaggedItemComponent ],
       imports: [
         SharedModule
+      ]
     })
     .compileComponents();
   });
