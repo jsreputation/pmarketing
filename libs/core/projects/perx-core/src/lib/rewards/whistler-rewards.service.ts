@@ -20,6 +20,7 @@ import {
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../perx-core.models';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { IV4Trending } from './v4-rewards.service';
 
 @Injectable({
   providedIn: 'root'
@@ -265,6 +266,10 @@ export class WhistlerRewardsService implements RewardsService {
 
   // @ts-ignore
   public unfavoriteReward(rewardId: number): Observable<IReward> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getTrending(): Observable<IV4Trending[]> {
     throw new Error('Method not implemented.');
   }
 

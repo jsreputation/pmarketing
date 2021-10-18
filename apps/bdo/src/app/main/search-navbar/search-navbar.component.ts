@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ISearchHistory, RewardsService } from '@perxtech/core';
+import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-search-navbar',
@@ -21,8 +21,14 @@ export class SearchNavbarComponent implements OnInit{
       this.searchHistories = searchHistory.map(item=> item.value);
       this.filteredSearchHistories = this.searchHistories;
     });
+
+    this.rewardsService
+    .getTrending()
+    .subscribe((searchHistory: ITrending[]) => {
+      this.trendingList = searchHistory.map((item) => item.value);
+    });
   }
-  
+
   searchValueChange(event) {
     const value = event.target.value;
     this.searchValue = value;
@@ -36,7 +42,7 @@ export class SearchNavbarComponent implements OnInit{
       );
     }
 
-    if(value && event.code === 'Enter') {
+    if (value && event.code === 'Enter') {
       this.search(value);
     }
   }
