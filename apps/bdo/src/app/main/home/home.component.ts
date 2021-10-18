@@ -3,7 +3,7 @@ import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { LIST_FEATURED_DEALS } from './../../mock-data/featured-deals.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { IReward, RewardsService } from '@perxtech/core';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 
 @Component({
   selector: 'bdo-home',
@@ -14,6 +14,9 @@ export class HomeComponent {
   categories = LIST_CATEGORY;
   nearBy: IReward[] = [];
   featuredDeals = LIST_FEATURED_DEALS;
+  whatsNew: IReward[] = [];
+  popular: IReward[] = [];
+
   requestPageSize = 10;
   tag = {
     new: 'new',
@@ -21,7 +24,28 @@ export class HomeComponent {
     nearby: 'nearby',
     featured: 'featured',
   };
-  constructor(private route: Router, private rewardService: RewardsService) {}
+  requestPageSize = 10;
+  constructor(private rewardsService: RewardsService, private route: Router) {}
+  ngOnInit(): void {
+    this.rewardsService
+      .getRewards(
+        1,
+        this.requestPageSize,
+        ['new']
+      )
+      .subscribe((newRewards) => {
+        this.whatsNew = newRewards;
+      });
+    this.rewardsService
+      .getRewards(
+        1,
+        this.requestPageSize,
+        ['popular']
+      )
+      .subscribe((popularRewards) => {
+        this.popular = popularRewards;
+      });
+  }
 
   ngOnInit(): void {
     this.rewardService
@@ -32,5 +56,10 @@ export class HomeComponent {
   }
   navigateTo(_selectedItem: FeaturedDeals) {
     this.route.navigate([`deal-welcome/${_selectedItem.id}`]);
+  }
+
+  navigateToSearchResult(tag: string) {
+    const queryParams: Params = { tags: tag };
+    this.route.navigate([`result`], {queryParams: queryParams});
   }
 }

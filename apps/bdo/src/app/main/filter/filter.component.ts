@@ -1,32 +1,48 @@
-
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
-import { FILTER_DATA } from '../../mock-data/filter-data.mock';
 import { FilterService } from '../../shared/services/filter.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FILTER_DATA } from '../../mock-data/filter-data.mock';
+import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'bdo-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss'],
+  styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent {
-  filterForm: FormGroup;
-  filterSource;
+export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
+  public filterForm: FormGroup;
+  public filterValue;
 
-  constructor(private fb: FormBuilder, private filterService: FilterService) {
-    this.filterSource = this.filterService.getFilterValue;
-    this.renderForm();
+  constructor(private fb: FormBuilder,
+              public filterService: FilterService,
+              public dialogRef: MatDialogRef<FilterComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    super();
+  }
+
+
+  ngOnInit(): void {
+    this.filterService.setValue({ searchValue: '', ...FILTER_DATA });
+    this.filterService.filterValue$
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(value => {
+        this.filterValue = value;
+        this.renderForm();
+      });
   }
 
   applyFilterClick() {
-    this.filterService.setFilterValue({searchValue:'',...this.filterForm.value});
+    this.dialogRef.close(this.filterValue);
   }
 
   resetFilterClick() {
-    this.filterService.initialFilterValue();
-    this.renderForm();
+    this.filterService.setValue({ searchValue: '', ...FILTER_DATA });
   }
-
 
   chipClick(index: number) {
     const value = (this.filterForm.get('tags') as FormArray).controls[index].value;
@@ -40,10 +56,10 @@ export class FilterComponent {
 
   private renderForm() {
     this.filterForm = this.fb.group({
-      accountTypes: new FormArray(this.filterSource.accountTypes.map(item => new FormControl(item.value))),
-      categories: new FormArray((this.filterSource.categories.map(item => new FormControl(item)))),
-      tags: new FormArray((this.filterSource.tags.map(item => new FormControl(item.value)))),
-      locations: new FormArray(this.filterSource.locations.map(item => new FormControl(item)))
+      accountTypes: new FormArray(this.filterValue.accountTypes.map(item => new FormControl(item.value))),
+      categories: new FormArray((this.filterValue.categories.map(item => new FormControl(item)))),
+      tags: new FormArray((this.filterValue.tags.map(item => new FormControl(item.value)))),
+      locations: new FormArray(this.filterValue.locations.map(item => new FormControl(item)))
     });
   }
 }

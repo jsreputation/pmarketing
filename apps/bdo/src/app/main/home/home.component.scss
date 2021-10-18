@@ -5,6 +5,9 @@
     margin: 12px 0 0 0;
     padding: 0 20px;
     color: $main-blue-text;
+    font-size: 14px;
+    
+    font-weight: bold;
   }
 
   h2 {
@@ -25,6 +28,46 @@
     p {
       padding: 0 20px;
       font-size: 14px;
+    }
+
+    .tagged-header-wrapper {
+      display: flex;
+      flex-direction: column;
+    
+      padding: 0 16px;
+      .filter-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        .filter-value {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          .filter-tag {
+            padding: 0px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            line-height: 32px;
+      
+            margin: 3px;
+            height: 32px;
+          }
+        }
+        .action {
+          color:$medium-blue;
+          font-size: 14px;
+          font-weight: bold;
+          min-width: 55px;
+          cursor: pointer;
+        }
+      } 
+      
+      .description {
+        color: #2E2E2E;
+        font-size: 14px;
+        line-height: 20px;
+      }
     }
 
     .no-item {

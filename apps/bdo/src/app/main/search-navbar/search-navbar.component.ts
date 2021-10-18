@@ -1,20 +1,27 @@
 import { Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
+import { FilterService } from '../../shared/services/filter.service';
+import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 
 @Component({
   selector: 'bdo-search-navbar',
   templateUrl: './search-navbar.component.html',
   styleUrls: ['./search-navbar.component.scss'],
 })
-export class SearchNavbarComponent implements OnInit{
+export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public isSearching = false;
   public isExpanded = false;
   public searchValue = '';
   public trendingList: string[] = [];
   public filteredSearchHistories: string[] = [];
   public searchHistories: string[] = [];
-  constructor(private route: Router, private rewardsService: RewardsService) { }
+  constructor(private route: Router,
+              public router: Router,
+              private rewardsService: RewardsService,
+              private filterService: FilterService) {
+    super();
+  }
   
   ngOnInit(): void {
     this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[])=>{
@@ -27,16 +34,20 @@ export class SearchNavbarComponent implements OnInit{
     .subscribe((searchHistory: ITrending[]) => {
       this.trendingList = searchHistory.map((item) => item.value);
     });
+
+    this.filterService
+      .filterValue$.subscribe(filter => {
+        this.searchValue = filter.searchValue;
+    });
+
   }
 
   searchValueChange(event) {
     const value = event.target.value;
     this.searchValue = value;
     if (!value) {
-      this.isSearching = false;
       this.filteredSearchHistories = this.searchHistories;
     } else {
-      this.isSearching = true;
       this.filteredSearchHistories = this.searchHistories.filter((item) =>
         item.toLocaleLowerCase().includes(value.toLocaleLowerCase())
       );
@@ -58,7 +69,19 @@ export class SearchNavbarComponent implements OnInit{
     this.searchValue = value;
     this.isExpanded = false;
     this.isSearching = true;
-    const queryParams: Params = {search_by: 'string', text:this.valueSearch };
-    this.route.navigate([`search`], {queryParams:queryParams});
+    const queryParams: Params = { search: this.searchValue };
+    this.route.navigate([`result`], { queryParams:queryParams });
+  }
+
+  navigateToSearchPage() {
+    this.route.navigate([`search`]);
+  }
+
+  isSearchPage() {
+    return ['/search', '/result'].includes(this.router.url);
+  }
+
+  onBlur() {
+    this.isExpanded = false;
   }
 }

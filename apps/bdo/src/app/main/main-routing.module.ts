@@ -10,6 +10,7 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { FilterComponent } from './filter/filter.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'search', component: FilterResultComponent },
+      { path: 'search', component: SearchComponent },
+      { path: 'result', component: FilterResultComponent },
       { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },

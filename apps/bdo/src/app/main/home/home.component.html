@@ -26,7 +26,32 @@
      
    
   </mat-card>
+  <mat-card class="card" *ngIf="whatsNew.length">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--new selected">What's new</span>
+        </div>
+        <span class="action" (click)="navigateToSearchResult('new')">
+          View All
+        </span>
+      </div>
+      <p class="description">Learn more about our newest deals for you!</p>
+    </div>
+    <bdo-tagged-item [deals]="whatsNew"></bdo-tagged-item>
+  </mat-card>
+  <mat-card class="card" *ngIf="popular.length">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--popular selected">Popular</span>
+        </div>
+        <span class="action" (click)="navigateToSearchResult('popular')">
+          View All
+        </span>
+      </div>
+      <p class="description">Avail of these promos that are popular with others</p>
+    </div>
+    <bdo-tagged-item [deals]="popular"></bdo-tagged-item>
+  </mat-card>
 </div>
-
-
-

@@ -11,13 +11,12 @@ import { SearchResultComponent } from './components/search-result/search-result.
 import { MatTabsModule } from '@angular/material/tabs';
 import { FilterService } from './services/filter.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
 @NgModule({
   declarations: [
     ListItemComponent,
     LargeListItemComponent,
     TaggedItemComponent,
-    FilterComponent,
+    SearchResultComponent,
     SearchResultComponent,
     CheckboxGroupComponent
   ],
@@ -39,6 +38,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SearchResultComponent,
     MatTabsModule
   ],
-    providers: [FilterService],
+  providers: [FilterService],
 })
 export class SharedModule {}

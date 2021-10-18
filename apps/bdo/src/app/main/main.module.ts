@@ -34,7 +34,9 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     CategoryComponent,
     SortComponent,
     CategoryHeaderComponent,
-    TreatEnrollCompletePageComponent
+    TreatEnrollCompletePageComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -75,11 +78,16 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     MatCheckboxModule,
     MatRadioModule,
     MatChipsModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     RewardsModule,
     MatSelectModule
   ],
   bootstrap: [],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ]
 })
 export class MainModule {}

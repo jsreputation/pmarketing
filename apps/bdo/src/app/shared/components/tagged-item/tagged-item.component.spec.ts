@@ -1,7 +1,7 @@
+import { rewards } from './../../../../../../../libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/mock/rewards.mock';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaggedItemComponent } from './tagged-item.component';
 import { By } from '@angular/platform-browser';
-import { LIST_NEAR_BY } from '../../../mock-data/near-by.mock';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('TaggedItemComponent', () => {
@@ -27,9 +27,9 @@ describe('TaggedItemComponent', () => {
   });
 
   it('should display a list of input elements', () => {
-    component.deals = LIST_NEAR_BY;
+    component.deals = rewards;
     fixture.detectChanges();
     const elements = fixture.debugElement.queryAll(By.css('.item'));
-    expect(elements.length).toEqual(LIST_NEAR_BY.length);
+    expect(elements.length).toEqual(rewards.length);
   });
 });

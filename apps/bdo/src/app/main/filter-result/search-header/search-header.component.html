@@ -1,14 +1,11 @@
 <div class="search-header-container">
   <div class="header-wrapper">
     <h3>Search Results </h3>
-    <div class="filter" (click)="navigateToFilterPage()">
+    <button mat-button class="filter" (click)="filter()">
       <img src="assets/images/icon-n-filter.svg" alt="">
-      <span>
-        Filters
-      </span>
-    </div>
+      <span>Filters</span>
+    </button>
   </div>
-
   <span class="title">You searched for:</span><br />
   <span class="keyword">{{keyWord}}</span>
 </div>

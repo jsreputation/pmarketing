@@ -1,0 +1,33 @@
+@import '../../../theme/variables.scss';
+
+.search-page-container {
+  background: $white;
+  padding: 0 10px;
+  margin-top: 10px;
+  height: 100vh;
+  display: flex;
+
+  .trending {
+    h5 {
+      color: $dark-grey;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .content {
+      text-align: left;
+      white-space: normal;
+
+      span {
+        background-color: $light-blue;
+        font-size: 14px;
+        color: $near-black;
+        line-height: 19px;
+        padding: 7px 10px;
+        border-radius: 8px;
+        margin: 4px;
+        display: inline-block;
+      }
+    }
+  }
+}

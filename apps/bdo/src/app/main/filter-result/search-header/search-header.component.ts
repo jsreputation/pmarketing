@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'bdo-search-header',
@@ -8,8 +7,8 @@ import { Router } from '@angular/router';
 })
 export class SearchHeaderComponent {
   @Input() keyWord = '';
-  constructor(private route: Router) {}
-  navigateToFilterPage() {
-    this.route.navigate(['/filter']);
+  @Output() loadFilter: EventEmitter<any> = new EventEmitter();
+  filter() {
+    this.loadFilter.emit();
   }
 }

@@ -2,6 +2,7 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
+import { FilterService } from '../../shared/services/filter.service';
 
 @Component({
   selector: 'bdo-filter-result',
@@ -13,19 +14,28 @@ export class FilterResultComponent implements OnInit {
   public searchResult: IReward[] = [];
   constructor(
     private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private filterService: FilterService
   ) {}
 
   ngOnInit(): void {
     this.activeRoute.queryParams
-      .pipe(switchMap((param) => {
-        if(param.hasOwnProperty("search_by") && param.search_by === 'string'){
-          this.searchValue = param.text;
-          return this.rewardsService.searchRewards(param.text);
+      .pipe(switchMap((params) => {
+        this.filterService.setParams((params));
+        if (params['search']) {
+          this.searchValue = params['search'];
+          return this.rewardsService.searchRewards(params['search']);
         }
       }))
       .subscribe((rewards) => {
         this.searchResult = rewards;
       });
+  }
+
+  onLoadFilter() {
+    this.filterService.showFilterDialog((value) => {
+      console.log('apply filter here');
+      console.log(value);
+    });
   }
 }

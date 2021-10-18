@@ -8,11 +8,12 @@ import { AppRoutingModule } from '../app-routing.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SearchNotResultComponent } from './filter-result/search-not-result/search-not-result.component';
+import { MatIconModule } from '@angular/material/icon';
 import { ConfigModule, RewardsService, RewardsModule } from '@perxtech/core';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import { SearchNotResultComponent } from './search/search-not-result/search-not-result.component';
 
 export class MockRewardService {
   getTrending() {
@@ -41,6 +42,7 @@ describe('MainComponent', () => {
         AppRoutingModule,
         MainRoutingModule,
         MatExpansionModule,
+        MatIconModule,
         RewardsModule,
         HttpClientModule,
         MatIconModule,

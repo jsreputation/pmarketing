@@ -1,6 +1,15 @@
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { SortComponent } from './sort/sort.component';
+import { CategoryComponent } from './category/category.component';
+import { CategoryHeaderComponent } from './category-header/category-header.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import { CatalogPageComponent } from './catalog-page.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SearchResultComponent } from '../../shared/components/search-result/search-result.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryHeaderComponent } from './category-header/category-header.component';
 import { SortComponent } from './sort/sort.component';
 import { CategoryComponent } from './category/category.component';
@@ -16,12 +25,14 @@ import { ListItemComponent} from '../../shared/components/list-item/list-item.co
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
   let fixture: ComponentFixture<CatalogPageComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         CatalogPageComponent,
         CategoryHeaderComponent,
+        CategoryComponent,
+        SortComponent,
+        SearchResultComponent,
         SortComponent,
         CategoryComponent,
         SearchResultComponent,
@@ -30,9 +41,9 @@ describe('CatalogPageComponent', () => {
         ListItemComponent
       ],
       imports: [
-        MatSelectModule,
-        BrowserAnimationsModule,
         MatFormFieldModule,
+        MatSelectModule,
+        MatOptionModule,
         FormsModule,
         MatTabsModule
       ],
