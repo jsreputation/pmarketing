@@ -8,7 +8,9 @@ import { AppRoutingModule } from '../app-routing.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ConfigModule, RewardsModule } from '@perxtech/core';
 import { SearchNotResultComponent } from './search/search-not-result/search-not-result.component';
+import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 
 describe('MainComponent', () => {
@@ -29,7 +31,11 @@ describe('MainComponent', () => {
         AppRoutingModule,
         MainRoutingModule,
         MatExpansionModule,
-        MatIconModule
+        HttpClientModule,
+        MatIconModule,
+        MatIconModule,
+        ConfigModule.forRoot({}),
+        RewardsModule.forRoot()
       ],
       providers: [
         {

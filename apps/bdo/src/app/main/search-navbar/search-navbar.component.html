@@ -2,12 +2,12 @@
   <mat-expansion-panel class="search-mat-panel" hideToggle [expanded]='isExpanded' disabled>
     <mat-expansion-panel-header class="search-mat-panel-header">
       <div class="search-wrapper">
-        <input type="text" class="input-search" [placeholder]="placeholder" (focus)="isExpanded=true" (keyup)="searchValueChange($event)" [value]="valueSearch">
-        <img class="search-icon" [src]="'./assets/images/'+icon" alt="search-outline" (click)="valueSearch && clearValueSearch($event)"/>
+        <input type="text" class="input-search" placeholder="Search deals" (focus)="isExpanded=true" (keyup)="searchValueChange($event)" [value]="searchValue">
+        <img class="search-icon" [src]=" isSearching ? 'assets/images/close.svg' : 'assets/images/search-outline.svg'" (click)="searchValue && clearSearchValue($event)"/>
       </div>
-      <div class="recommend" *ngIf="recomendedList.length">
+      <div class="recommend" *ngIf="filteredSearchHistories.length">
         <ul>
-          <li *ngFor="let item of recomendedList" (click)="search(item)">
+          <li *ngFor="let item of filteredSearchHistories" (click)="search(item)">
             {{item}}
           </li>
         </ul>
@@ -16,7 +16,7 @@
     <div class="trending">
       <h5>Trending</h5>
       <div class="content">
-        <span *ngFor="let item of listTrending">
+        <span *ngFor="let item of trendingList">
           {{item}}
         </span>
       </div>

@@ -95,3 +95,8 @@ export interface ILoyaltyTierInfo {
   loyaltyPointsRequiredForRedemption: number;
   sneakPeek: boolean;
 }
+
+export interface ISearchHistory {
+  value: string;
+}
+

@@ -214,6 +214,7 @@ export {
   IPrice,
   IRewardState,
   ILoyaltyTierInfo,
+  ISearchHistory,
   Sort
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
