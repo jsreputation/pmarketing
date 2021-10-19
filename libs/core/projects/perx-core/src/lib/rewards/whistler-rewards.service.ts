@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable, Subject, ReplaySubject, AsyncSubject } from 'rxjs';
-import { IReward, ICatalog, IPrice, ICategoryFilter } from './models/reward.model';
+import { IReward, ICatalog, IPrice, ICategoryTags } from './models/reward.model';
 import { Config } from '../config/config';
 import { map, tap, distinctUntilChanged, take } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ export class WhistlerRewardsService implements RewardsService {
   constructor(private http: HttpClient, private config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
-  
+
 
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
     switch (rt) {
@@ -270,7 +270,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public getCategoriesFilter(): Observable<ICategoryFilter[]> {
+  public getAllCategories(): Observable<ICategoryTags[]> {
     throw new Error('Method not implemented.');
   }
 

@@ -68,7 +68,9 @@ export interface IPrice {
 export interface ICategoryTags {
   id: number;
   title: string;
+  description?: string;
   parent?: any;
+  children?: ICategoryTags[];
 }
 
 export interface IRewardParams {
@@ -96,14 +98,6 @@ export interface ILoyaltyTierInfo {
   loyaltyPointsRequiredForRedemption: number;
   sneakPeek: boolean;
 }
-
-export interface ICategoryFilter {
-  id: number;
-  title: string;
-  description: string;
-  children?: ICategoryFilter[];
-}
-
 
 export interface ITrending {
   value: string;

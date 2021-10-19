@@ -10,7 +10,6 @@ import { IWRewardDisplayProperties } from '@perxtech/whistler';
 import { RewardsService } from './rewards.service';
 import {
   ICatalog,
-  ICategoryFilter,
   ICategoryTags,
   IPrice,
   IReward,
@@ -176,8 +175,8 @@ interface IV4LoyaltyTierInfo {
   sneak_peek: boolean;
 }
 
-interface IV4GetCategoriesFilterResponse {
-  data: ICategoryFilter[];
+interface IV4GetAllCategoriesResponse {
+  data: ICategoryTags[];
 }
 
 interface IV4SearchHistory {
@@ -497,7 +496,6 @@ export class V4RewardsService extends RewardsService {
   ): Observable<IReward> {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('Content-Type', 'application/json')
       .set('user-id', userId)
       .set('Accept-Language', locale);
     return this.http
@@ -675,10 +673,10 @@ export class V4RewardsService extends RewardsService {
     return EMPTY;
   }
 
-  public getCategoriesFilter(): Observable<ICategoryFilter[]> {
+  public getAllCategories(): Observable<ICategoryTags[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http
-      .get<IV4GetCategoriesFilterResponse>(`${this.apiHost}/v4/categories`, {
+      .get<IV4GetAllCategoriesResponse>(`${this.apiHost}/v4/categories`, {
         headers,
       })
       .pipe(
@@ -727,5 +725,4 @@ export class V4RewardsService extends RewardsService {
         ))
       );
   }
-
 }

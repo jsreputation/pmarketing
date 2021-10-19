@@ -10,7 +10,7 @@ import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 class MockRewardService {
-  getCategoriesFilter() {
+  getAllCategories() {
     return of();
   }
 }

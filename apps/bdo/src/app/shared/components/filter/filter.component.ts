@@ -15,7 +15,7 @@ export class FilterComponent {
   @Output() applyButtonClick= new EventEmitter();
   @Output() resetButtonClick= new EventEmitter();
   constructor(private fb: FormBuilder, private rewardsService: RewardsService) {
-    this.rewardsService.getCategoriesFilter().subscribe((categories)=>{
+    this.rewardsService.getAllCategories().subscribe((categories)=>{
       this.filterSource.categories = this.getCategoriesFilterSource(categories).map(item=> {
         return {
           name: item.title,
