@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { LIST_FEATURED_DEALS } from './../../mock-data/featured-deals.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
@@ -10,7 +10,7 @@ import { Params, Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   categories = LIST_CATEGORY;
   nearBy: IReward[] = [];
   featuredDeals = LIST_FEATURED_DEALS;
