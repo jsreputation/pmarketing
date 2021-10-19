@@ -1,11 +1,10 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { rewards } from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/mock/rewards.mock';
 import { map } from 'rxjs/operators';
-
-import { LIST_NEAR_BY } from '../../../mock-data/near-by.mock';
 import { of } from 'rxjs';
 import { LOCATIONS } from '../../../mock-data/location.mock';
-
+import { TaggedItemComponent } from './../../../shared/components/tagged-item/tagged-item.component';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { IReward } from '@perxtech/core';
 export interface IPosition {
   lng: number;
   lat: number;
@@ -19,6 +18,8 @@ export interface IPosition {
 export class MapComponent implements OnInit {
   @Input() reward: IReward;
   @ViewChild('gmap') public gmapElement: ElementRef;
+  @ViewChild('taggedItem') public taggedItem: TaggedItemComponent;
+
   public map: google.maps.Map;
   public key = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
 
@@ -26,8 +27,7 @@ export class MapComponent implements OnInit {
   public currentPosition: IPosition;
   public rad = 10000;
 
-  nearBy = LIST_NEAR_BY.map(item=> {return {...item, description:''}});
-
+  nearBy = rewards.map(item=> {return {...item, description:''}});
   constructor() {
     this.currentPosition = {
       lat: 1.391649,
@@ -71,7 +71,10 @@ export class MapComponent implements OnInit {
           });
 
           marker.addListener('click', () => {
-            console.log('Selected', location.id);
+            if (this.taggedItem) {
+              const itemIndex = this.taggedItem.deals.findIndex(deals=>{ return deals.id === location.id});
+              this.taggedItem.goToItemIndex(itemIndex ? itemIndex : 0);
+            }
           });
           marker.setIcon('assets/images/marker.svg');
           return marker;
