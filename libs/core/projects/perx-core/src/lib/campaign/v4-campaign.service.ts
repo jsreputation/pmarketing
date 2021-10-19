@@ -224,6 +224,13 @@ export class V4CampaignService implements ICampaignService {
             tnc: {
               text: lp.tnc ? lp.tnc[lang].text : '',
             },
+            additionalSections: lp?.additional_sections.map(item => {
+              return {
+                headerText: item.header_text,
+                bodyText: item.body_text
+              }
+
+            })
           },
         };
         let youtubeUrl = oc(lp).media.youtube() || null;
@@ -235,7 +242,7 @@ export class V4CampaignService implements ICampaignService {
         }
         if (lp.media?.banner_image) {
           // @ts-ignore
-          displayProperties.landingPage.media = {...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url}
+          displayProperties.landingPage.media = { ...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url }
         }
       }
     }
@@ -524,7 +531,36 @@ export class V4CampaignService implements ICampaignService {
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map((resp) => resp.data),
+        map(() => {
+          return  {
+            id: 1,
+            name: "test",
+            description: "test",
+            state: "active",
+            begins_at: "null",
+            enrolled: true,
+            campaign_type: "give_reward",
+            images: [{
+              type: "string",
+              url: "string",
+            }],
+            favourite: true,
+            custom_fields: "null",
+            category_tags: ["null"],
+            tags: ["null"],
+            referral_code: "nul",
+            display_properties:{
+              landing_page: {
+                additional_sections: [
+                  {
+                    header_text: 'Test header',
+                    body_text: 'Test body',
+                  }
+                ],
+              }
+            }
+          }as IV4Campaign
+        }),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
@@ -534,7 +570,6 @@ export class V4CampaignService implements ICampaignService {
         })
       ));
   }
-
   public getVoucherLeftCount(
     campaignId: number
   ): Observable<{ count: number; campaignId: number }> {

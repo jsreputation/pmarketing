@@ -49,7 +49,10 @@ export interface IV4InstantOutcome {
   instant_outcome_transaction_id: number;
   state: InstantOutcomeState;
 }
-
+export interface AdditionalSection{
+  header_text: String,
+  body_text: String,
+}
 export interface IV4InstantRewardCampaignDisplayProperties {
   claim_prize?: {
     button_text?: string;
@@ -63,6 +66,7 @@ export interface IV4InstantRewardCampaignDisplayProperties {
     headline?: string;
     image?: { type?: string; value?: { filename?: string; image_url?: string } };
     sub_headline?: string;
+    additional_sections?:AdditionalSection[],
   };
 }
 

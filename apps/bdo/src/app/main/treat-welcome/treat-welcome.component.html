@@ -54,14 +54,14 @@
             </ng-template>
         </mat-expansion-panel>
     </mat-accordion> -->
-    <mat-accordion class="location-wrapper">
-        <mat-expansion-panel class="panel">
+    <mat-accordion class="location-wrapper" *ngIf="campaign ">
+        <mat-expansion-panel class="panel" *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
           <mat-expansion-panel-header  class="header">
-            Promo Mechanics
+           {{item.headerText}}
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            Some deferred content
+            {{item.bodyText}}
         </ng-template>
         </mat-expansion-panel>
       </mat-accordion>
-</div>
+</div> 

@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './treat-enroll-page.component.html',
   styleUrls: ['./treat-enroll-page.component.scss']
 })
-export class TreatEnrollPageComponent {
+export class TreatEnrollPageComponent  {
  
 }
