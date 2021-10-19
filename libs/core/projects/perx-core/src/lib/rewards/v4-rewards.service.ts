@@ -127,7 +127,10 @@ interface IV4GetRewardsResponse {
 
 interface IV4GetSearchRewardsResponse {
   data: {
-    rewards: IV4Reward[]
+    rewards: {
+      reward: IV4Reward,
+      score: number;
+    }[]
   };
 }
 
@@ -726,7 +729,7 @@ export class V4RewardsService extends RewardsService {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetSearchRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
       .pipe(
-        map((res: IV4GetSearchRewardsResponse) => res.data.rewards),
+        map((res: IV4GetSearchRewardsResponse) => res.data.rewards.map(item => item.reward)),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))

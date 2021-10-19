@@ -28,6 +28,7 @@ export class FilterResultComponent implements OnInit {
         }
       }))
       .subscribe((rewards) => {
+        console.log(rewards);
         this.searchResult = rewards;
       });
   }
