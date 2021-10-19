@@ -9,7 +9,20 @@ import { FeatureDealsComponent } from './featured-deals/featured-deals.component
 import { SecondaryCatalogComponent } from './secondary-catalog/secondary-catalog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { RewardsService } from '@perxtech/core';
+class MockRouter {
+  navigate() {
 
+  }
+}
+
+class MockRewardService {
+  getRewards() {
+    return of();
+  }
+}
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -29,7 +42,10 @@ describe('HomeComponent', () => {
         MatCardModule,
         MatToolbarModule,
         MatIconModule
-      ]
+      ],
+      providers:[
+        {provide:Router, useClass: MockRouter},
+        {provide:RewardsService, useClass: MockRewardService}]
     })
     .compileComponents();
   });

@@ -48,6 +48,10 @@
       margin: 10px 0;
       font-size: 12px;
       color: $light-black;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
 
     .position {

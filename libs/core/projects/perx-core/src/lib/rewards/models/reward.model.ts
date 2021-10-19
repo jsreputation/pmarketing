@@ -36,6 +36,7 @@ export interface IReward {
   };
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
+  tags?:{id:number, name:string}[];
 }
 
 export interface IRewardState {
