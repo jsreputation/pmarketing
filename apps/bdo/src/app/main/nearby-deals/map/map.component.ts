@@ -1,10 +1,10 @@
-import { rewards } from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/mock/rewards.mock';
 import { map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { LOCATIONS } from '../../../mock-data/location.mock';
 import { TaggedItemComponent } from './../../../shared/components/tagged-item/tagged-item.component';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { IReward } from '@perxtech/core';
+import { LIST_NEAR_BY } from '../../../mock-data/near-by.mock';
 export interface IPosition {
   lng: number;
   lat: number;
@@ -27,7 +27,7 @@ export class MapComponent implements OnInit {
   public currentPosition: IPosition;
   public rad = 10000;
 
-  nearBy = rewards.map(item=> {return {...item, description:''}});
+  nearBy = LIST_NEAR_BY.map(item=> {return {...item, description:''}});
   constructor() {
     this.currentPosition = {
       lat: 1.391649,
