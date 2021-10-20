@@ -2,7 +2,7 @@
   <div mat-dialog-content>
     <h3 class='header'>Account Type</h3>
     <ul formArrayName='accountTypes' class='inline-checkbox-group'>
-      <li *ngFor='let item of filterValue.accountTypes; let idx= index;'>
+      <li *ngFor='let item of filterSource.accountTypes; let idx= index;'>
         <mat-checkbox
           [formControlName]='idx'>
           <span class='title'>{{item.name}}</span>
@@ -17,7 +17,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div formArrayName='categories'>
-          <ng-container *ngFor='let item of filterValue.categories;
+          <ng-container *ngFor='let item of filterSource.categories;
           let idx= index;'>
             <bdo-checkbox-group [formControlName]='idx'>
             </bdo-checkbox-group>
@@ -33,7 +33,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-chip-list class='tags-chip' cdkDropList cdkDropListOrientation='horizontal' formArrayName='tags'>
-          <mat-chip (click)='chipClick(idx)' *ngFor='let chip of filterValue.tags; let idx= index;' class='filter-tag'
+          <mat-chip (click)='chipClick(idx)' *ngFor='let chip of filterSource.tags; let idx= index;' class='filter-tag'
                     [class]="'filter-tag--'+ chip.name.toLowerCase()"
                     [ngClass]="{'selected': checkCurrentValue(idx)}">
             {{chip.name}}
@@ -49,7 +49,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <ul formArrayName='locations' class='inline-checkbox-group'>
-          <li *ngFor='let item of filterValue.locations; let idx= index;'>
+          <li *ngFor='let item of filterSource.locations; let idx= index;'>
             <mat-checkbox
               [formControlName]='idx'>
               <span class='title'>{{item.name}}</span>

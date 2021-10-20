@@ -12,10 +12,11 @@ import { Params, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit{
   categories = LIST_CATEGORY;
-  nearBy: IReward[] = [];
   featuredDeals = LIST_FEATURED_DEALS;
-  whatsNew: IReward[] = [];
-  popular: IReward[] = [];
+
+  nearByDeals: IReward[] = [];
+  whatsNewDeals: IReward[] = [];
+  popularDeals: IReward[] = [];
 
   requestPageSize = 10;
   tag = {
@@ -24,34 +25,23 @@ export class HomeComponent implements OnInit{
     nearby: 'nearby',
     featured: 'featured',
   };
-  requestPageSize = 10;
   constructor(private rewardsService: RewardsService, private route: Router) {}
-  ngOnInit(): void {
-    this.rewardsService
-      .getRewards(
-        1,
-        this.requestPageSize,
-        ['new']
-      )
-      .subscribe((newRewards) => {
-        this.whatsNew = newRewards;
-      });
-    this.rewardsService
-      .getRewards(
-        1,
-        this.requestPageSize,
-        ['popular']
-      )
-      .subscribe((popularRewards) => {
-        this.popular = popularRewards;
-      });
-  }
 
   ngOnInit(): void {
-    this.rewardService
+    this.rewardsService
       .getRewards(1, this.requestPageSize,[this.tag.nearby])
       .subscribe((nearBy: IReward[]) => {
-        this.nearBy = nearBy;
+        this.nearByDeals = nearBy;
+      });
+    this.rewardsService
+      .getRewards(1, this.requestPageSize,[this.tag.new])
+      .subscribe((newRewards: IReward[]) => {
+        this.whatsNewDeals = newRewards;
+      });
+    this.rewardsService
+      .getRewards(1, this.requestPageSize,[this.tag.popular])
+      .subscribe((popularRewards: IReward[]) => {
+        this.popularDeals = popularRewards;
       });
   }
   navigateTo(_selectedItem: FeaturedDeals) {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IFilterModel } from '../models/filter.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FilterComponent } from '../../main/filter/filter.component';
 import { BehaviorSubject } from 'rxjs';
+import { FilterComponent } from '../components/filter/filter.component';
 
 const initValue: IFilterModel = {
   searchValue: '',
