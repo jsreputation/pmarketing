@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import { SubCategory } from '../../models/category.model';
 import { filterModel } from '../../models/filter.model';
 
 @Component({
@@ -7,6 +8,14 @@ import { filterModel } from '../../models/filter.model';
   styleUrls: ['./catalog-page.component.scss']
 })
 export class CatalogPageComponent {
+  categoryCode: string;
+  subCategoryCodeSelected:SubCategory[];
+ 
+  ngOnInit(): void {
+     this.categoryCode = history.state.categoryCode;
+     this.subCategoryCodeSelected = history.state.subCategoried;
+  }
+  
   lstCategory: filterModel[] = [
     {
       name: "Essentials",

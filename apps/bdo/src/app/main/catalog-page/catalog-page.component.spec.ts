@@ -12,11 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LargeListItemComponent } from '../../shared/components/large-list-item/large-list-item.component';
-import { ListItemComponent} from '../../shared/components/list-item/list-item.component'
+import { ListItemComponent} from '../../shared/components/list-item/list-item.component';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
   let fixture: ComponentFixture<CatalogPageComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -34,7 +34,8 @@ describe('CatalogPageComponent', () => {
         BrowserAnimationsModule,
         MatFormFieldModule,
         FormsModule,
-        MatTabsModule
+        MatTabsModule,
+        RouterTestingModule
       ],
       providers: [
         {
@@ -45,11 +46,13 @@ describe('CatalogPageComponent', () => {
     })
     .compileComponents();
   });
-
+  
   beforeEach(() => {
+    window.history.pushState({ categoryCode: 'cardExclusives',subCategoryCodeSelected:[]}, '', '');
     fixture = TestBed.createComponent(CatalogPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    
   });
 
   it('should create', () => {

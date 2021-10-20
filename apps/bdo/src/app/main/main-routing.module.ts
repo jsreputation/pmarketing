@@ -22,8 +22,9 @@ const routes: Routes = [
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby-deals', component: NearbyDealsComponent },
-      { path: 'catalog-page/:id', component: CatalogPageComponent},
-      {path: 'treat-enroll/:id/complete',component:TreatEnrollCompletePageComponent}
+      { path: 'catalog-page', component: CatalogPageComponent},
+      {path: 'treat-enroll/:id/complete',component:TreatEnrollCompletePageComponent
+      }
     ],
   },
 ];

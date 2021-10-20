@@ -1,10 +1,10 @@
 <div class="catalog-page">
-    <div class="every-day">
+    <!-- <div class="every-day">
         <bdo-category-header [title]="'Every day'" [description]="'A short description here'"></bdo-category-header>
     </div>
-    
+     -->
     <div class="category">
-       <bdo-category [title]="'Categories'" [dataSource]="lstCategory"></bdo-category>
+       <bdo-category [categoryCode]="categoryCode" [subCategoryCodeSelected]="subCategoryCodeSelected"></bdo-category>
     </div>
 
     <div class="sort">
