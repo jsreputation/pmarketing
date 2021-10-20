@@ -26,6 +26,14 @@ const routes: Routes = [
       { path: 'history', loadChildren: () => import('../history/history.module').then((mod) => mod.HistoryModule) },
       { path: 'pi', loadChildren: () => import('../pi/pi.module').then((mod) => mod.PiModule) },
       {
+        path: "progress-campaigns",
+        loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then((mod) => mod.ProgressCampaignHomeModule)
+      },
+      {
+        path: "progress/:id",
+        loadChildren: () => import('../progress-campaign/progress-campaign.module').then((mod) => mod.ProgressCampaignModule)
+      },
+      {
         path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then((mod) => mod.RedeemModule),
       },
       {

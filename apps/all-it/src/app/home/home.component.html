@@ -32,7 +32,13 @@
     <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div *ngIf="!restrictedView">
-  <!-- Stamp card campaigns-->
+    <!-- progress bar campaigns-->
+    <div class="campaigns" *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
+      <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
+      <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
+      </perx-blackcomb-pages-campaigns-collection>
+    </div>
+    <!-- Stamp card campaigns-->
     <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
       <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
