@@ -13,6 +13,20 @@ import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { LIST_NEAR_BY } from '../../mock-data/near-by.mock';
 import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { RewardsService } from '@perxtech/core';
+class MockRouter {
+  navigate() {
+
+  }
+}
+
+class MockRewardService {
+  getRewards() {
+    return of();
+  }
+}
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -32,8 +46,12 @@ describe('HomeComponent', () => {
         MatCardModule,
         MatToolbarModule,
         MatIconModule,
-        RouterTestingModule
-      ]
+        RouterTestingModule,
+        MatIconModule
+      ],
+      providers:[
+        {provide:Router, useClass: MockRouter},
+        {provide:RewardsService, useClass: MockRewardService}]
     })
     .compileComponents();
   });
