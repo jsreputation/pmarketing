@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
   AuthenticationService,
+  BadgeServiceModule,
   CampaignModule as PerxCampaignModule,
   CampaignServiceModule as PerxCampaignServiceModule,
   ConfigModule,
@@ -123,6 +124,7 @@ registerLocaleData(localeENMY);
     MatButtonModule,
     MatSnackBarModule,
     PerxQuestModule.forRoot(),
+    BadgeServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     PerxTransactionsServiceModule.forRoot(),
     RewardsModule.forRoot(),

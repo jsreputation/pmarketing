@@ -14,6 +14,10 @@ const routes: Routes = [
         path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
       },
       {
+        path: "badges",
+        loadChildren: () => import('../badges/badges.module').then(m => m.BadgesModule)
+      },
+      {
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
