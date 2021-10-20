@@ -6,16 +6,17 @@
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  height: 104px;
+  padding: 0;
 
   .logo {
     min-height: 64px;
     display: flex;
     width: 100%;
     flex-direction: row;
-
+    padding-left: 20px;
     justify-content: flex-start;
     align-items: center;
+    background: $main-blue;
     img {
       cursor: pointer;
     }
@@ -43,4 +44,38 @@
 .side-nav {
   position: fixed;
   margin-top: 56px;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background: $white;
+  display: flex;
+  padding: 0 10px;
+  justify-content: center;
+  box-sizing: border-box;
+  align-items: center;
+
+  .input-search {
+    height: inherit;
+    width: calc(100% - 24px);
+    outline-color: transparent;
+    border: none;
+    background: transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:focus-visible {
+      box-sizing: border-box;
+      padding: 0 10px;
+      outline: none;
+    }
+  }
+
+
+  .search-icon {
+    width: 24px;
+    height: 24px;
+  }
 }

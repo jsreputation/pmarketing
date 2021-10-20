@@ -1,3 +1,4 @@
+import { RewardsService } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PrimaryCatalogComponent } from './primary-catalog/primary-catalog.component';
@@ -11,17 +12,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { RewardsService } from '@perxtech/core';
-class MockRouter {
-  navigate() {
-
-  }
+class MockRewardsService {
+ getRewards() {
+   return of();
+ }
 }
-
-class MockRewardService {
-  getRewards() {
-    return of();
-  }
+class MockRouter {
+  navigate() {}
 }
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -43,9 +40,8 @@ describe('HomeComponent', () => {
         MatToolbarModule,
         MatIconModule
       ],
-      providers:[
-        {provide:Router, useClass: MockRouter},
-        {provide:RewardsService, useClass: MockRewardService}]
+      providers:[{provide: RewardsService, useClass: MockRewardsService},
+        {provide: Router, useClass: MockRouter}]
     })
     .compileComponents();
   });

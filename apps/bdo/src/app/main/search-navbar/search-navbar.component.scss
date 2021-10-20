@@ -19,36 +19,6 @@
     margin: 0;
     padding: 0 16px;
     background: $white;
-
-    .recommend {
-      position: absolute;
-      z-index: 999999;
-      background: $white;
-      left: 0;
-      top: 42px;
-      width: 100%;
-      border-top: 8px solid $light-white;
-      box-shadow: 1px 5px 16px $medium-black;
-
-      ul {
-        list-style: none;
-        padding-inline-start: 0;
-        margin-block-start: 0;
-        margin-block-end: 0;
-
-        li {
-          height: 40px;
-          padding: 0 16px;
-          line-height: 40px;
-          color: $near-black;
-          font-weight: bold;
-        }
-
-        li:hover {
-          background: $light-grey;
-        }
-      }
-    }
   }
 
   .search-wrapper {
@@ -94,6 +64,31 @@
         border-radius: 8px;
         margin: 4px;
         display: inline-block;
+      }
+    }
+  }
+
+  .recommend {
+    background: $white;
+    border-bottom: 2px solid $light-white;
+    box-shadow: 1px 5px 16px $medium-black;
+
+    ul {
+      list-style: none;
+      padding-inline-start: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
+
+      li {
+        height: 40px;
+        padding: 0 16px;
+        line-height: 40px;
+        color: $near-black;
+        font-weight: bold;
+      }
+
+      li:hover {
+        background: $light-grey;
       }
     }
   }

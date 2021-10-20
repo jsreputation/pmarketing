@@ -19,8 +19,8 @@ import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-ca
 import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { SearchHeaderComponent } from './search/search-header/search-header.component';
-import { SearchComponent } from './search/search.component';
+import { SearchHeaderComponent } from './result/search-header/search-header.component';
+import { ResultComponent } from './result/result.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
 import { MapComponent } from './nearby-deals/map/map.component';
@@ -28,13 +28,15 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
+import { NoResultComponent } from './result/no-result/no-result.component';
 import { RewardsModule } from '@perxtech/core';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
-import { SearchNotResultComponent } from './search/search-not-result/search-not-result.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -46,18 +48,19 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     FeatureDealsComponent,
     SecondaryCatalogComponent,
     SearchHeaderComponent,
-    SearchComponent,
+    ResultComponent,
     DealLandingComponent,
     NearbyDealsComponent,
     MapComponent,
     TreatWelcomeComponent,
     TreatEnrollPageComponent,
     CatalogPageComponent,
-    SearchNotResultComponent,
+    NoResultComponent,
     CategoryComponent,
     SortComponent,
     CategoryHeaderComponent,
-    TreatEnrollCompletePageComponent
+    TreatEnrollCompletePageComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -75,11 +78,16 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
     MatCheckboxModule,
     MatRadioModule,
     MatChipsModule,
+    MatDialogModule,
     ReactiveFormsModule,
     FormsModule,
     RewardsModule,
     MatSelectModule
   ],
   bootstrap: [],
+  providers: [
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ]
 })
 export class MainModule {}

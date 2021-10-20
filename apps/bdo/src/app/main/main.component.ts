@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { FilterService } from '../shared/services/filter.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'bdo-main',
@@ -10,8 +11,10 @@ import { Router } from '@angular/router';
 export class MainComponent implements OnInit{
     public isHome = true;
     public navigated = false;
-    constructor(private location: Location,
-                private router: Router) {}
+    constructor(
+        private location: Location,
+        private filterService: FilterService,
+        private router: Router) {}
 
     ngOnInit(): void {
         this.isHome = this.router.url === '/home';
@@ -21,7 +24,16 @@ export class MainComponent implements OnInit{
         });
     }
 
+    navigateToSearch() {
+        this.router.navigate(['/search']);
+    }
+
     back() {
+        if (this.filterService.isOpen()) {
+            this.filterService.closeFilter();
+            return;
+        }
+
         if (this.navigated) {
             this.location.back();
         } else {

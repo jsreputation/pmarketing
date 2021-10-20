@@ -97,14 +97,13 @@ body {
 
 .search-popup {
   .mat-expansion-panel-body {
-    padding: 0 16px 16px;
-    height: 100rem;
+    padding: 0;
     border-top: 8px solid $light-white;
     background: $white;
   }
 }
 
-.filter-wrapper, .treat-welcome  {
+.filter-wrapper, .treat-welcome {
   .categories-wrapper {
     .travel-entertaiment .mat-expansion-panel-header:not([class*='mat-expanded']) {
       border-bottom: none;
@@ -113,7 +112,7 @@ body {
 
   .categories-wrapper,
   .tags-wrapper,
-  .location-wrapper  {
+  .location-wrapper {
     .mat-expansion-panel-header {
       .mat-expansion-indicator::after {
         border-color: #0072d8 !important;
@@ -133,6 +132,7 @@ body {
       line-height: 40px;
       padding: 14px 0 !important;
     }
+
     .mat-chip-list-wrapper {
       margin: 12px 0;
     }
@@ -142,6 +142,7 @@ body {
     .inline-checkbox-group {
       border-bottom: none !important;
     }
+
     .location-checkbox-wrapper {
       .checkbox-item {
         .mat-expansion-panel-header {
@@ -161,14 +162,29 @@ body {
     box-shadow: none !important;
   }
 }
-.catalog-page{
-  .mat-form-field-infix{
-    padding:0px;
+
+.filter-form {
+  .mat-expansion-panel-body {
+    padding: 0;
   }
-  .mat-select-value,.mat-select-arrow{
+
+  .tags-wrapper {
+    .mat-expansion-panel-body {
+      padding: 10px;
+    }
+  }
+}
+
+.catalog-page {
+  .mat-form-field-infix {
+    padding: 0;
+  }
+
+  .mat-select-value, .mat-select-arrow {
     color: $medium-blue;
     font-size: 14px;
   }
+
   .mat-form-field-underline {
     display: none;
   }
@@ -185,5 +201,78 @@ body {
 
       background: #fff;
     }
+  }
+}
+
+.filter-dialog-container {
+  height: calc(100vh - 100px);
+  margin-top: 106px !important;
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
+.tagged-header-wrapper {
+  .filter-tag {
+    border-radius: 12px;
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: $white;
+    min-height: 25px;
+    text-transform: uppercase;
+    border: 1px solid $grey;
+
+    &.selected {
+      background-color: $grey;
+      color: $white;
+    }
+
+    &--popular {
+      border: 1px solid $pink;
+      color: $pink;
+
+      &.selected {
+        background-color: $pink;
+        color: $white;
+      }
+    }
+
+    &--new {
+      border: 1px solid $teal;
+      color: $teal;
+
+      &.selected {
+        background-color: $teal;
+        color: $white;
+      }
+    }
+
+    &--nearby {
+      border: 1px solid $purple;
+      color: $purple;
+
+      &.selected {
+        background-color: $purple;
+        color: $white;
+      }
+    }
+
+    &--featured {
+      border: 1px solid $medium-orange;
+      color: $medium-orange;
+
+      &.selected {
+        background-color: $medium-orange;
+        color: $white;
+      }
+    }
+  }
+}
+
+.tags-chip {
+  .mat-chip-list-wrapper {
+    padding: 10px;
   }
 }

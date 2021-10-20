@@ -10,7 +10,7 @@ import { IReward } from '@perxtech/core';
 export class LargeListItemComponent {
   @Input() reward: IReward;
   @Output() itemSelected: EventEmitter<IReward> = new EventEmitter<IReward>();
-
+  public defaultImageUrl  = "assets/images/light-gray-color-default-image.png";
   selectItem(item: IReward) {
     this.itemSelected.emit(item);
   }
