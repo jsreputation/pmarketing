@@ -1,39 +1,25 @@
 import { Injectable, } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, } from '@angular/common/http';
 
-import {
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  concatAll,
-  map,
-  mergeMap,
-  reduce
-} from 'rxjs/operators';
+import { Observable, of, } from 'rxjs';
+import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import { LoyaltyService } from './loyalty.service';
 import {
+  IExchangerate,
   IGameTransactionHistory,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
+  IPointTransfer,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  TransactionDetailType,
   IStampTransactionHistory,
-  IExchangerate,
-  IPointTransfer
+  TransactionDetailType
 } from './models/loyalty.model';
 
-import {
-  IV4Reward,
-  IV4Tag
-} from '../rewards/v4-rewards.service';
+import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
@@ -376,6 +362,14 @@ export class V4LoyaltyService extends LoyaltyService {
             stampCampaignName: stampDetails.campaign.name
           };
           break;
+        case TransactionDetailType.dashboard:
+          // assume it is a customer service action from dashboard
+          data = {
+            id: transactionHistory.id,
+            properties: {
+              productName: 'Customer Service Transaction'
+            }
+          };
       }
       // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
@@ -387,7 +381,7 @@ export class V4LoyaltyService extends LoyaltyService {
 
       data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
     } else {
-      // assume it is a customer service action from dashboard
+      // make it the same as TransactionDetailType.dashboard
       data = {
         id: transactionHistory.id
       };
