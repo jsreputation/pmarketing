@@ -29,7 +29,7 @@ export class DealLandingComponent implements OnInit {
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
         this.similarDeals = similarDeals;
-        this.dealDetail.tags.some(item=>{
+        this.dealDetail.tags.forEach(item=>{
           const tag = TAGS.find(tag=> tag.name.toLowerCase() === item.name.toLowerCase());
           if(tag) {
             this.tags.push(tag);

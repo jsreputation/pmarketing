@@ -18,9 +18,9 @@
       <a class="navigate-nearby" href="/nearby-deals">View All</a>
     </div>
     <p class="near-by-title">Find deals that are just right around the corner</p>
-    <bdo-tagged-item *ngIf="nearBy.length; else showMessage" [deals]="nearBy" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <bdo-tagged-item *ngIf="nearBy.length; else noResultMessage" [deals]="nearBy" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
  
-    <ng-template #showMessage>
+    <ng-template #noResultMessage>
       <p class="no-item">No nearby deals</p>
     </ng-template>
      
