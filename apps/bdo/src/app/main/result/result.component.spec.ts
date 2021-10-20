@@ -8,20 +8,20 @@ import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
 import { RewardsModule, RewardsService } from '@perxtech/core';
-import { SearchNotResultComponent } from './search-not-result/search-not-result.component';
-import { FilterResultComponent } from './filter-result.component';
+import { NoResultComponent } from './no-result/no-result.component';
+import { ResultComponent } from './result.component';
 
-describe('FilterResultComponent', () => {
-  let component: FilterResultComponent;
-  let fixture: ComponentFixture<FilterResultComponent>;
+describe('ResultComponent', () => {
+  let component: ResultComponent;
+  let fixture: ComponentFixture<ResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        FilterResultComponent,
+        ResultComponent,
         SearchResultComponent,
         SearchHeaderComponent,
-        SearchNotResultComponent
+        NoResultComponent
       ],
       imports: [
         BrowserAnimationsModule,
@@ -39,7 +39,7 @@ describe('FilterResultComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FilterResultComponent);
+    fixture = TestBed.createComponent(ResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

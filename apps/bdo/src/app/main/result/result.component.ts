@@ -5,11 +5,11 @@ import { IReward, RewardsService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
 
 @Component({
-  selector: 'bdo-filter-result',
-  templateUrl: './filter-result.component.html',
-  styleUrls: ['./filter-result.component.scss'],
+  selector: 'bdo-result',
+  templateUrl: './result.component.html',
+  styleUrls: ['./result.component.scss'],
 })
-export class FilterResultComponent implements OnInit {
+export class ResultComponent implements OnInit {
   public searchValue = '';
   public searchResult: IReward[] = [];
   constructor(
@@ -24,19 +24,11 @@ export class FilterResultComponent implements OnInit {
         this.filterService.setParams((params));
         if (params['search']) {
           this.searchValue = params['search'];
-          return this.rewardsService.searchRewards(params['search']);
         }
+        return this.rewardsService.searchRewards(this.searchValue, params['tags']);
       }))
       .subscribe((rewards) => {
-        console.log(rewards);
         this.searchResult = rewards;
       });
-  }
-
-  onLoadFilter() {
-    this.filterService.showFilterDialog((value) => {
-      console.log('apply filter here');
-      console.log(value);
-    });
   }
 }

@@ -1,23 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTabsModule } from '@angular/material/tabs';
-;
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SearchNotResultComponent } from './search-not-result.component';
+import { NoResultComponent } from './no-result.component';
 import { SearchHeaderComponent } from '../search-header/search-header.component';
 import { MainRoutingModule } from '../../main-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { SearchResultComponent } from '../../../shared/components/search-result/search-result.component';
 
-describe('SearchNotResultComponent', () => {
-  let component: SearchNotResultComponent;
-  let fixture: ComponentFixture<SearchNotResultComponent>;
+describe('NoResultComponent', () => {
+  let component: NoResultComponent;
+  let fixture: ComponentFixture<NoResultComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        SearchNotResultComponent,
+        NoResultComponent,
         SearchResultComponent,
         SearchHeaderComponent
       ],
@@ -33,7 +32,7 @@ describe('SearchNotResultComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchNotResultComponent);
+    fixture = TestBed.createComponent(NoResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

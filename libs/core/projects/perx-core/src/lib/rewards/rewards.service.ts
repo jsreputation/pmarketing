@@ -58,6 +58,6 @@ export abstract class RewardsService {
 
   public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
 
-  public abstract searchRewards(text: string, locale?: string): Observable<IReward[]>;
+  public abstract searchRewards(text: string, tags?: string, locale?: string): Observable<IReward[]>;
 
 }

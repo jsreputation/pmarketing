@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main.component';
 import { HomeComponent } from './home/home.component';
-import { FilterResultComponent } from './filter-result/filter-result.component';
+import { ResultComponent } from './result/result.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'search', component: SearchComponent },
-      { path: 'result', component: FilterResultComponent },
+      { path: 'result', component: ResultComponent },
       { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
