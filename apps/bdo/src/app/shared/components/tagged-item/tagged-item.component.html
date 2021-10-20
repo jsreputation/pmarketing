@@ -1,4 +1,4 @@
-<ul class="tagged-item">
+<ul class="tagged-item" #taggetContainer>
   <li class="item" *ngFor="let deal of deals" (click)="selectedItem(deal)">
     <img [src]="deal.rewardThumbnail ? deal.rewardThumbnail:urlImageDefault" />
     <div class="container">
