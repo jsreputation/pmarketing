@@ -56,6 +56,7 @@ export interface ICatalog {
   rewards?: IReward[];
 }
 
+
 export interface IPrice {
   id?: number;
   rewardCampaignId?: number;
@@ -68,7 +69,9 @@ export interface IPrice {
 export interface ICategoryTags {
   id: number;
   title: string;
+  description?: string;
   parent?: any;
+  children?: ICategoryTags[];
 }
 
 export interface IRewardParams {

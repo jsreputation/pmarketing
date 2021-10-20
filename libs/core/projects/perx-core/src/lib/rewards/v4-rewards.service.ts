@@ -13,8 +13,9 @@ import {
   ICategoryTags,
   IPrice,
   IReward,
-  Sort,
-  ITrending, ISearchHistory
+  ISearchHistory,
+  ITrending,
+  Sort
 } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
@@ -174,6 +175,10 @@ interface IV4LoyaltyTierInfo {
   sneak_peek: boolean;
 }
 
+interface IV4GetAllCategoriesResponse {
+  data: ICategoryTags[];
+}
+
 interface IV4SearchHistory {
   value: string;
 }
@@ -190,12 +195,6 @@ export class V4RewardsService extends RewardsService {
     this.configService.readAppConfig().subscribe((config: IConfig<void>) => {
       this.apiHost = config.apiHost as string;
     });
-  }
-
-  public static v4TrendingToTrending(trending: IV4Trending): ITrending {
-    return {
-      ...trending,
-    };
   }
 
   public static v4RewardToReward(
@@ -675,19 +674,31 @@ export class V4RewardsService extends RewardsService {
     return EMPTY;
   }
 
+  public getAllCategories(): Observable<ICategoryTags[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http
+      .get<IV4GetAllCategoriesResponse>(`${this.apiHost}/v4/categories`, {
+        headers,
+      })
+      .pipe(
+        map((res) => res.data)
+      );
+  }
+
   public getTrending(): Observable<ITrending[]> {
     return this.http
       .get<IV4GetTrendingResponse>(`${this.apiHost}/v4/search/trending`)
       .pipe(
         map((res) => res.data),
         map((res: IV4Trending[]) =>
-          res.map((item) => V4RewardsService.v4TrendingToTrending(item))
-        )
+          res.map((item) => ({ ...item })
+          ))
       );
   }
+
   public getRewardsRelated(rewardId: number): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }) .pipe(
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }).pipe(
       map((res: IV4GetRewardsResponse) => res.data),
       map((rewards: IV4Reward[]) => rewards.map(
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
@@ -699,13 +710,13 @@ export class V4RewardsService extends RewardsService {
     return this.http.get<IV4GetSearchHistoryResponse>(`${this.apiHost}/v4/search/history`)
       .pipe(
         map((res: IV4GetSearchHistoryResponse) => res.data),
-        map((searchHistories: IV4SearchHistory[]) =>  searchHistories.map(
+        map((searchHistories: IV4SearchHistory[]) => searchHistories.map(
           (searchHistory: IV4SearchHistory) => ({ ...searchHistory })
         ))
       );
   }
 
-  public searchRewards(text: string, locale= "en"): Observable<IReward[]> {
+  public searchRewards(text: string, locale = 'en'): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
       .pipe(
@@ -715,5 +726,4 @@ export class V4RewardsService extends RewardsService {
         ))
       );
   }
-
 }

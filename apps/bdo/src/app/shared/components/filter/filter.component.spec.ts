@@ -1,3 +1,4 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterComponent } from './filter.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -5,7 +6,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckboxGroupComponent } from './checkbox-group/checkbox-group.component';
+import { RewardsModule, RewardsService } from '@perxtech/core';
+import { of } from 'rxjs';
 
+class MockRewardService {
+  getAllCategories() {
+    return of();
+  }
+}
 describe('FilterComponent', () => {
   let component: FilterComponent;
   let fixture: ComponentFixture<FilterComponent>;
@@ -21,8 +29,10 @@ describe('FilterComponent', () => {
         MatExpansionModule,
         MatCheckboxModule,
         ReactiveFormsModule,
-        FormsModule
-      ]
+        FormsModule,
+        RewardsModule
+      ],
+      providers: [{provide:RewardsService, useClass:MockRewardService}]
     })
     .compileComponents();
   });

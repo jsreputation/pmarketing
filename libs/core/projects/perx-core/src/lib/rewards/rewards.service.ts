@@ -1,4 +1,12 @@
-import { IReward, ICatalog, IPrice, Sort, ITrending, ISearchHistory } from './models/reward.model';
+import {
+  IReward,
+  ICatalog,
+  IPrice,
+  Sort,
+  ISearchHistory,
+  ITrending,
+  ICategoryTags
+} from './models/reward.model';
 import { Observable } from 'rxjs';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
@@ -41,13 +49,15 @@ export abstract class RewardsService {
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
-  
+
+  public abstract getAllCategories(): Observable<ICategoryTags[]>;
+
   public abstract getTrending(): Observable<ITrending[]>;
 
   public abstract getSearchHistory(): Observable<ISearchHistory[]>;
 
   public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
-  
+
   public abstract searchRewards(text: string, locale?: string): Observable<IReward[]>;
 
 }

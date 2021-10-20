@@ -1,4 +1,4 @@
-@import './../../../theme/variables.scss';
+@import '../../../../theme/variables.scss';
 
 .filter-wrapper {
   padding: 16px;
@@ -58,10 +58,11 @@
         padding: 5px 10px;
         font-size: 12px;
         background-color: $white;
+
         min-height: 25px;
         text-transform: uppercase;
         border: 1px solid $grey;
-
+        margin: 5px;
         &.selected {
           background-color: $grey;
           color: $white;
