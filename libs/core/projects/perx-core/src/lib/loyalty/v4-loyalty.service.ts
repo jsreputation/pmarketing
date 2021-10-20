@@ -370,6 +370,15 @@ export class V4LoyaltyService extends LoyaltyService {
               productName: 'Customer Service Transaction'
             }
           };
+          break;
+        case TransactionDetailType.user:
+          data = {
+            id: transactionHistory.id,
+            properties: {
+              productName: 'Membership Extended' // todo: when more use-cases arise for user initiated txn's, identify using unique properties
+            }
+          };
+          break;
       }
       // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
