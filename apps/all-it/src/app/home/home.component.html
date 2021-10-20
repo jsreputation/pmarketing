@@ -69,6 +69,13 @@
         (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
     </div>
+    <!-- Quest campaigns-->
+    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
+      <div class="title" *ngIf="(questCampaigns$ | async)?.length > 0" translate>HOME.QUEST_CAMPAIGNS</div>
+      <perx-blackcomb-pages-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
+      </perx-blackcomb-pages-campaigns-collection>
+    </div>
+
     <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
       <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
       </perx-core-rewards-list-tabbed>

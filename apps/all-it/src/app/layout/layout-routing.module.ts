@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('../qr/qr.module').then((mod) => mod.QRModule)
       },
       {
+        path: "quest/:id",
+        loadChildren: () => import('../quest/quest.module').then((mod) => mod.QuestModule)
+      },
+      {
         path: 'account',
         loadChildren: () => import('../account/account.module').then((mod) => mod.AccountModule)
       },
