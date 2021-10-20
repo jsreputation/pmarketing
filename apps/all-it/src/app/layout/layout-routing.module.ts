@@ -28,6 +28,18 @@ const routes: Routes = [
         loadChildren: () => import('../voucher-detail/voucher-detail.module').then((mod) => mod.VoucherDetailModule)
       },
       { path: 'history', loadChildren: () => import('../history/history.module').then((mod) => mod.HistoryModule) },
+      {
+        path: "leaderboard/:id",
+        loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule)
+      },
+      {
+        path: "leaderboards",
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule)
+      },
+      {
+        path: "leaderboards/:id",
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule)
+      },
       { path: 'pi', loadChildren: () => import('../pi/pi.module').then((mod) => mod.PiModule) },
       {
         path: "progress-campaigns",
