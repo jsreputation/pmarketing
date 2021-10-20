@@ -321,7 +321,8 @@ export class V4RewardsService extends RewardsService {
           }
         : undefined,
       operatingHours,
-      isOperating: reward.operating_now
+      isOperating: reward.operating_now,
+      tags: reward?.tags
     };
   }
 
