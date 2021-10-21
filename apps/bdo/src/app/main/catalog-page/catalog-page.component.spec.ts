@@ -9,6 +9,7 @@ import { CatalogPageComponent } from './catalog-page.component';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { LargeListItemComponent } from '../../shared/components/large-list-item/large-list-item.component';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ListItemComponent} from '../../shared/components/list-item/list-item.component'
 import { SearchResultComponent } from '../../shared/components/search-result/search-result.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -41,6 +42,7 @@ describe('CatalogPageComponent', () => {
         MatOptionModule,
         FormsModule,
         MatTabsModule,
+        RouterTestingModule,
         MatDialogModule
       ],
       providers: [
@@ -55,11 +57,13 @@ describe('CatalogPageComponent', () => {
     })
     .compileComponents();
   });
-
+  
   beforeEach(() => {
+    window.history.pushState({ categoryCode: 'cardExclusives',subCategoryCodeSelected:[]}, '', '');
     fixture = TestBed.createComponent(CatalogPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    
   });
 
   it('should create', () => {

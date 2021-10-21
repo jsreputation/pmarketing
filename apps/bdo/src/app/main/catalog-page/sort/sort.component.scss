@@ -1,10 +1,10 @@
 @import "../../../../theme/variables";
 .sort{
     background-color: $white;
-    padding: 10px 16px;
+    padding: 16px;
     .title{
         display: flex;
-        align-items: center;
+        align-content: flex-start;
         .sort-label{
             font-size: 14px;
             font-weight: bold;

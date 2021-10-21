@@ -162,7 +162,6 @@ body {
     box-shadow: none !important;
   }
 }
-
 .filter-form {
   .mat-expansion-panel-body {
     padding: 0;
@@ -178,6 +177,7 @@ body {
 .catalog-page {
   .mat-form-field-infix {
     padding: 0;
+    border: none;
   }
 
   .mat-select-value, .mat-select-arrow {

@@ -3,7 +3,9 @@
       <div class="content-container">
         <h3 class="title">{{category.title}}</h3>
         <p class="content" *ngIf="category.content">{{category.content}}</p>
-        <a *ngFor="let subCategory of category.subCategories" [href]="subCategory.link" class="sub-category">{{subCategory.label}}</a>
+        <a *ngFor="let subCategory of category.subCategories" 
+        (click)="navigateToCatalog(category,subCategory)"
+         class="sub-category">{{subCategory.label}}</a>
       </div>
     </li>
   </ul>

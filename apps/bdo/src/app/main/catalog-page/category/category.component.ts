@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { filterModel } from '../../../models/filter.model';
+
+import { LIST_CATALOG_CATEGORIES } from '../../../mock-data/catalog-category';
+import { CategoryModel, CategoryModelSelected, SubCategory } from '../../../models/category.model';
+
+import { Component, Input,OnInit } from '@angular/core';
 import { FilterService } from '../../../shared/services/filter.service';
 
 @Component({
@@ -7,18 +10,40 @@ import { FilterService } from '../../../shared/services/filter.service';
     templateUrl: './category.component.html',
     styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent {
-    @Input() title: string;
-    @Input() dataSource: filterModel[] =[];
+export class CategoryComponent implements OnInit {
 
+    @Input() categoryCode = "";
+    @Input() subCategoryCodeSelected: SubCategory[] =[];
+    lstAllCatalogCategory = LIST_CATALOG_CATEGORIES;
+    categorySelected: CategoryModelSelected = {};
+    category: CategoryModel= {};
     constructor(public filterService: FilterService) {
     }
-
-    execCallBack(callBack: () => void) {
-        callBack();
+    ngOnInit(): void {
+        const index = this.lstAllCatalogCategory.findIndex(item => item.code == this.categoryCode);
+        if (index > -1) {
+            this.categorySelected  = {...this.lstAllCatalogCategory[index]};
+            this.categorySelected.subCategories = this.categorySelected.subCategories.map(element=>{
+                const indexSub =this.subCategoryCodeSelected.findIndex(subCode => subCode.code == element.code);
+                element.selected = false;
+                element.cardType?.map(item=>{
+                    item.selected = false;
+                })
+                if(indexSub > -1){
+                    element.selected = true;
+                }
+                return element;
+            })
+        }
     }
-
     filter() {
         this.filterService.showFilterDialog();
+    }
+    selectSubCategory(item:SubCategory){
+        if(!item.selected){
+            item.cardType?.map(item=>{
+                item.selected= false;
+            })
+        }
     }
 }

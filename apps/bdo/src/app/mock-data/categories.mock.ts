@@ -3,44 +3,49 @@ export const LIST_CATEGORY = [
         id:1,
         image:'./assets/images/img-bdorewards.svg',
         title:'BDO Rewards',
-        content:'',
+        code:'bdoRewards',
         subCategories:[{
-            link:'/catalog-page/1',
-            label:'Emerald '
+            label:'Emerald ',
+            code:"emerald",
         },
         {
-            link:'#',
-            label:'Sapphire'
+            label:'Sapphire',
+            code:"sapphire",
         },
         {
-            link:'#',
-            label:'Diamond'
+            link:'/catalog-page',
+            label:'Diamond',
+            code:"diamond",
         }]
     },
     {
         id:2,
         image:'./assets/images/img-creditcard.svg',
         title:'Credit Card',
-        content:'',
+        code:'creditCard',
         subCategories:[{
             link:'#',
-            label:'Card Exclusives'
+            label:'Card Exclusives',
+            code:"cardExclusives",
         },
         {
             link:'#',
-            label:'Essentials'
+            label:'Essentials',
+            code:"essentials",
         },
         {
             link:'#',
-            label:'Installment'
+            label:'Installment',
+            code:"installment",
         },
         {
             link:'#',
-            label:'Shop'
+            label:'Shop',
+            code:"shop",
         },
         {
             link:'#',
-            label:'More'
+            label:'More',
         }]
     },
     {
@@ -48,21 +53,26 @@ export const LIST_CATEGORY = [
         image:'./assets/images/img-debitcard.svg',
         title:'Debit Card',
         content:'',
+        code:'debitCard',
         subCategories:[{
             link:'#',
-            label:'Card Exclusives'
+            label:'Card Exclusives',
+            code:"cardExclusives",
         },
         {
             link:'#',
-            label:'Essentials'
+            label:'Essentials',
+            code:"essentials",
         },
         {
             link:'#',
-            label:'Shop'
+            label:'Shop',
+            code:"shop",
         },
         {
             link:'#',
-            label:'Dine'
+            label:'Dine',
+            code:"dine",
         },
         {
             link:'#',
