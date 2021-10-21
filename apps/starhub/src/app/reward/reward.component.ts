@@ -107,17 +107,12 @@ export class RewardComponent implements OnInit {
                 if (response.status === 401) {
                   this.router.navigate([ '/error' ]);
                 } else if (response.status === 429) {
+                  this.notificationService.addSnack(message);
                   const retryAfter = response.headers.get('retry-after');
-                  if (retryAfter) {
-                    const retryAfterTime = parseInt(retryAfter, 10)  * 1000;
-                    setTimeout(() => {
-                        this.loadingSubmit = false;
-                        this.isButtonEnable = true;
-                      }, retryAfterTime);
-                  } else {
-                    this.loadingSubmit = false;
-                    this.isButtonEnable = true;
-                  }
+                  const retryAfterTime = retryAfter ? parseInt(retryAfter, 10)  * 1000 : 3000;
+                  setTimeout(() => {
+                      this.save();
+                  }, retryAfterTime);
                 } else {
                   if (response.error.code === 4103) { // rewards run out due to reward limits
                     this.loadingSubmit = false;
