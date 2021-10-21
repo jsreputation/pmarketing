@@ -6,7 +6,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CheckboxGroupComponent } from './checkbox-group/checkbox-group.component';
-import { RewardsModule, RewardsService } from '@perxtech/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RewardsService } from '@perxtech/core';
+import { FilterService } from '../../services/filter.service';
 import { of } from 'rxjs';
 
 class MockRewardService {
@@ -30,9 +32,14 @@ describe('FilterComponent', () => {
         MatCheckboxModule,
         ReactiveFormsModule,
         FormsModule,
-        RewardsModule
+        MatDialogModule
       ],
-      providers: [{provide:RewardsService, useClass:MockRewardService}]
+      providers: [
+        FilterService,
+      	{ provide: RewardsService, useClass:MockRewardService},
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     })
     .compileComponents();
   });

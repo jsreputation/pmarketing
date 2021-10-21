@@ -1,3 +1,4 @@
+import { RewardsService } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PrimaryCatalogComponent } from './primary-catalog/primary-catalog.component';
@@ -15,17 +16,13 @@ import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { RewardsService } from '@perxtech/core';
-class MockRouter {
-  navigate() {
-
-  }
+class MockRewardsService {
+ getRewards() {
+   return of();
+ }
 }
-
-class MockRewardService {
-  getRewards() {
-    return of();
-  }
+class MockRouter {
+  navigate() {}
 }
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -49,9 +46,8 @@ describe('HomeComponent', () => {
         RouterTestingModule,
         MatIconModule
       ],
-      providers:[
-        {provide:Router, useClass: MockRouter},
-        {provide:RewardsService, useClass: MockRewardService}]
+      providers:[{provide: RewardsService, useClass: MockRewardsService},
+        {provide: Router, useClass: MockRouter}]
     })
     .compileComponents();
   });
@@ -60,7 +56,7 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     component.categories = LIST_CATEGORY;
-    component.nearBy = LIST_NEAR_BY;
+    component.nearByDeals = LIST_NEAR_BY;
     component.featuredDeals = LIST_FEATURED_DEALS;
     fixture.detectChanges();
   });

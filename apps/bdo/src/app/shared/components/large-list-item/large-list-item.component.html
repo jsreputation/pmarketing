@@ -1,5 +1,5 @@
 <li class="item" (click)="selectItem(reward)" *ngIf="reward">
-  <img [src]="reward.rewardThumbnail" [attr.alt]="reward.name"/>
+  <img [src]="reward.rewardThumbnail ? reward.rewardThumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
   <div class="tag-group">
     <span *ngFor="let tag of reward.categoryTags" class="tag" [ngClass]="'tag--' + tag.title">
       {{ tag.title }}

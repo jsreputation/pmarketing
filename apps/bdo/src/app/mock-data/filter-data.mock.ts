@@ -1,7 +1,7 @@
 export const FILTER_DATA = {
   accountTypes: [
     { name: 'Credit Card', value: true },
-    { name: 'Debit Card', value: false }
+    { name: 'Debit Card', value: true }
   ],
   categories: [
     {
@@ -9,7 +9,7 @@ export const FILTER_DATA = {
       value: true,
       children: [
         { name: 'Mastercard', value: true },
-        { name: 'Visa', value: false }
+        { name: 'Visa', value: true }
       ],
     },
     {
@@ -28,15 +28,15 @@ export const FILTER_DATA = {
     },
     {
       name: 'deals',
-      value: false
+      value: true
     },
     {
       name: 'new',
-      value: false
+      value: true
     },
     {
       name: 'popular',
-      value: false
+      value: true
     }
   ],
   locations: [

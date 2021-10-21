@@ -6,10 +6,12 @@
   grid-auto-columns: 85%;
   grid-gap: 15px;
   overflow-x: auto;
+  
   scroll-snap-type: x mandatory;
   scroll-snap-stop: always;
   padding-bottom: 15px;
   padding-inline-start: 0;
+  scroll-behavior: smooth;
 }
 
 .item {

@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+
 import { LIST_CATALOG_CATEGORIES } from '../../../mock-data/catalog-category';
 import { CategoryModel, CategoryModelSelected, SubCategory } from '../../../models/category.model';
 
+import { Component, Input,OnInit } from '@angular/core';
+import { FilterService } from '../../../shared/services/filter.service';
 
 @Component({
     selector: 'bdo-category',
@@ -15,9 +17,9 @@ export class CategoryComponent implements OnInit {
     lstAllCatalogCategory = LIST_CATALOG_CATEGORIES;
     categorySelected: CategoryModelSelected = {};
     category: CategoryModel= {};
-    
+    constructor(public filterService: FilterService) {
+    }
     ngOnInit(): void {
-        
         const index = this.lstAllCatalogCategory.findIndex(item => item.code == this.categoryCode);
         if (index > -1) {
             this.categorySelected  = {...this.lstAllCatalogCategory[index]};
@@ -34,8 +36,14 @@ export class CategoryComponent implements OnInit {
             })
         }
     }
-    execCallBack(callBack: () => void) {
-        callBack();
+    filter() {
+        this.filterService.showFilterDialog();
     }
-    
+    selectSubCategory(item:SubCategory){
+        if(!item.selected){
+            item.cardType?.map(item=>{
+                item.selected= false;
+            })
+        }
+    }
 }

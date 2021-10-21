@@ -4,22 +4,24 @@ import { ListItemComponent } from './components/list-item/list-item.component';
 import { LargeListItemComponent } from './components/large-list-item/large-list-item.component';
 import { TaggedItemComponent } from './components/tagged-item/tagged-item.component';
 import { MatIconModule } from '@angular/material/icon';
-import { FilterComponent } from './components/filter/filter.component';
-import { CheckboxGroupComponent } from './components/filter/checkbox-group/checkbox-group.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { FilterService } from './services/filter.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CheckboxGroupComponent } from './components/filter/checkbox-group/checkbox-group.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   declarations: [
     ListItemComponent,
     LargeListItemComponent,
     TaggedItemComponent,
-    FilterComponent,
     SearchResultComponent,
-    CheckboxGroupComponent
+    SearchResultComponent,
+    CheckboxGroupComponent,
+    FilterComponent
   ],
   imports: [
     CommonModule,
@@ -28,17 +30,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     FormsModule,
     MatExpansionModule,
-    MatCheckboxModule],
+    MatCheckboxModule
+  ],
   exports: [
     ListItemComponent, 
     LargeListItemComponent, 
-    TaggedItemComponent, 
-    FilterComponent, 
+    TaggedItemComponent,
+    FilterComponent,
     CheckboxGroupComponent,
     TaggedItemComponent,
     SearchResultComponent,
     MatTabsModule
   ],
-  providers: [],
+  providers: [FilterService],
 })
 export class SharedModule {}

@@ -5,5 +5,9 @@ export interface  IOptionsModel {
 }
 
 export interface IFilterModel {
-  [type:string]: IOptionsModel[];
+  searchValue:string;
+  accountTypes: IOptionsModel[];
+  categories: IOptionsModel[];
+  tags: IOptionsModel[];
+  locations: IOptionsModel[];
 }

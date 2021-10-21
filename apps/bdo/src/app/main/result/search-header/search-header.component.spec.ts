@@ -5,7 +5,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_BASE_HREF } from '@angular/common';
 import { SearchHeaderComponent } from './search-header.component';
-
+import { Router } from '@angular/router';
+class MockRouter {
+  navigate() {}
+}
 describe('SearchHeaderComponent', () => {
   let component: SearchHeaderComponent;
   let fixture: ComponentFixture<SearchHeaderComponent>;
@@ -22,7 +25,8 @@ describe('SearchHeaderComponent', () => {
         {
           provide: APP_BASE_HREF,
           useValue : '/'
-        }
+        },
+        {provide: Router, useClass: MockRouter}
       ]
     })
     .compileComponents();

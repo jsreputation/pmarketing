@@ -4,20 +4,21 @@
             <h3>{{categorySelected.title}}</h3>
         </div>
         <div class="filter">
-            <img src="assets/images/icon-n-filter.svg" alt="">
-            <span>
-                Filters
-            </span>
+            <button mat-button class="filter" (click)="filter()">
+                <img src="assets/images/icon-n-filter.svg" alt="">
+                <span>
+                    Filters
+                </span>
+            </button>
         </div>
     </div>
     <div class="looking-for">
         <h4>What are you looking for?</h4>
         <div class="icon-category">
             <div class="action" *ngFor="let item of categorySelected.subCategories; let i = index"
-                (click)="item.selected = !item.selected">
-                <img [src]="item.linkImage" alt="" class="img-category" *ngIf="!item.selected">
-                <img [src]="item.linkImageSelected" alt="" class="img-category"
-                    *ngIf="item.selected">
+                (click)="item.selected = !item.selected;selectSubCategory(item)" >
+                <img [src]="item.linkImage" alt="" class="img-category" *ngIf="!item.selected" >
+                <img [src]="item.linkImageSelected" alt="" class="img-category" *ngIf="item.selected">
                 <label class="category-name">{{item.label}}</label>
             </div>
         </div>
@@ -26,9 +27,10 @@
         <div class="card-type" *ngIf="!!item.cardType && item.selected">
             <h4>Card Types</h4>
             <div class="card-type-content">
-                <div class="card-type-content-action" *ngFor="let element of item.cardType; let i = index" (click)="categorySelected.subCategories[j].cardType[i].selected=!categorySelected.subCategories[j].cardType[i].selected">
+                <div class="card-type-content-action" *ngFor="let element of item.cardType; let i = index"
+                    (click)="categorySelected.subCategories[j].cardType[i].selected=!categorySelected.subCategories[j].cardType[i].selected">
                     <img [src]="element.linkImage" alt="" class="img-category" *ngIf="!element.selected">
-                    <img [src]="element.linkImageSelected" alt="" class="img-category"*ngIf="element.selected">
+                    <img [src]="element.linkImageSelected" alt="" class="img-category" *ngIf="element.selected">
                 </div>
             </div>
 

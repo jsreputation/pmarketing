@@ -5,6 +5,8 @@
     margin: 12px 0 0 0;
     padding: 0 20px;
     color: $main-blue-text;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   h2 {
@@ -27,6 +29,48 @@
       font-size: 14px;
     }
 
+    .tagged-header-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 0 16px;
+
+      .filter-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .filter-value {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .filter-tag {
+            padding: 0 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            line-height: 32px;
+            margin: 3px;
+            height: 32px;
+          }
+        }
+
+        .action {
+          color: $medium-blue;
+          font-size: 14px;
+          font-weight: bold;
+          min-width: 55px;
+          cursor: pointer;
+        }
+      }
+
+      .description {
+        color: $near-black;
+        font-size: 14px;
+        line-height: 20px;
+      }
+    }
+
     .no-item {
       font-size: 12px;
       margin: auto;
@@ -37,14 +81,16 @@
 
   .near-by-title {
     font-size: 14px;
-    color: #4B4B4B;
-    letter-spacing: 0px;
+    color: $dark-grey;
+    letter-spacing: 0;
     padding: 0 16px;
   }
-  .nearby{
+
+  .nearby {
     display: flex;
     justify-content: space-between;
-    .navigate-nearby{
+
+    .navigate-nearby {
       font-size: 14px;
       margin: 2.5px 0;
       color: $medium-blue;

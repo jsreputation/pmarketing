@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef} from '@angular/core';
 
 @Directive()
 export class ScrollToItemDirective {
@@ -6,7 +6,7 @@ export class ScrollToItemDirective {
 
   goToItem(index: number, viewChild: ElementRef): void {
     const widthItem = document.querySelector('.item') as HTMLElement;
-    const position = index * (this.GAP_ITEM + widthItem.offsetWidth);
-    viewChild.nativeElement.scrollLeft += position;
+    const position = index * (this.GAP_ITEM + widthItem?.offsetWidth);
+    viewChild.nativeElement.scrollLeft = position;
   }
 }
