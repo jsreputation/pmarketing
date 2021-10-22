@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { forkJoin, Observable } from 'rxjs';
@@ -31,7 +31,7 @@ import { map, switchMap } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./account.component.scss'],
 })
-export class AccountComponent extends BCPAccountComponent {
+export class AccountComponent extends BCPAccountComponent implements OnInit {
   public profile$: Observable<IProfile> | null = null;
   public loyalty$: Observable<ILoyalty>;
   public pages!: AccountPageObject[];
@@ -41,6 +41,7 @@ export class AccountComponent extends BCPAccountComponent {
   public memberFn: (membershipTierName: string) => Observable<string>;
   public remoteFlags: IFlags;
   public acquiredBadges: Observable<number>;
+  public isPremiumMember: boolean = false;
 
   constructor(
      config: Config,
@@ -69,6 +70,15 @@ export class AccountComponent extends BCPAccountComponent {
       badgeService
     );
     this.preAuth = config.preAuth || false;
+  }
+
+  public ngOnInit(): void {
+    super.ngOnInit();
+    this.loyalty$.subscribe((loyalty: ILoyalty) => {
+      if (loyalty && loyalty.tiers) {
+        this.isPremiumMember = loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
+      }
+    })
   }
 
   public confirmRenewalPopup() {

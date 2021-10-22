@@ -92,6 +92,10 @@ const appConfigFile = `{
   "showReferralDetails": ${process.env.SHOW_REFERRAL_DETAILS ? process.env.SHOW_REFERRAL_DETAILS : false},
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : true},
   "showStampCampaignsOnHomePage" : ${process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE : true},
+  "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE : false},
+  "showProgressBarCampaignsOnHomePage" : ${process.env.SHOW_PROGRESSBAR_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_PROGRESSBAR_CAMPAIGNS_ON_HOMEPAGE : false},
+  "enableLeaderBoard": ${process.env.ENABLE_LEADER_BOARD ? process.env.ENABLE_LEADER_BOARD : false},
+  "showLeaderboardLinkOnHomePage": ${process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE ? process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE : false},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
     "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/home'}",
