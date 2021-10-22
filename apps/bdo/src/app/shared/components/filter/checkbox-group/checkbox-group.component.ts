@@ -1,4 +1,3 @@
-
 import { AfterViewInit, Component, forwardRef } from '@angular/core';
 
 import {

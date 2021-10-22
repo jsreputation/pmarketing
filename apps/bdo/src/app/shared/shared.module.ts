@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CheckboxGroupComponent } from './components/filter/checkbox-group/checkbox-group.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FilterComponent } from './components/filter/filter.component';
     ReactiveFormsModule,
     FormsModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    RouterModule
   ],
   exports: [
     ListItemComponent, 

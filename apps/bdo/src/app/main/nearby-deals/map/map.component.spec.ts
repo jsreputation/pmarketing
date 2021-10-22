@@ -8,10 +8,16 @@ import { APP_BASE_HREF } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../../shared/components/tagged-item/tagged-item.component';
+import { IVoucherService, RewardsService } from '@perxtech/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
+  const rewardsServiceStub: Partial<RewardsService> = {
+  };
+  const vouchersServiceStub: Partial<IVoucherService> = {
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -25,12 +31,19 @@ describe('MapComponent', () => {
         MatSidenavModule,
         MatExpansionModule,
         MatTabsModule,
-        MatIconModule
+        MatIconModule,
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         {
           provide: APP_BASE_HREF,
           useValue : '/'
+        },
+        {
+          provide: RewardsService, useValue:rewardsServiceStub
+        },
+        {
+          provide: IVoucherService, useValue:vouchersServiceStub
         }
       ]
     })

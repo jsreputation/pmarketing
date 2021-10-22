@@ -10,6 +10,8 @@ import { SearchResultComponent } from '../../../shared/components/search-result/
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TaggedItemComponent } from '../../../shared/components/tagged-item/tagged-item.component';
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+
 describe('SortComponent', () => {
   let component: SortComponent;
   let fixture: ComponentFixture<SortComponent>;
@@ -31,6 +33,7 @@ describe('SortComponent', () => {
         MatFormFieldModule,
         MatTabsModule,
         FormsModule,
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         {

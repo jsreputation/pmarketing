@@ -82,6 +82,10 @@ body {
   &--new {
     background-color: $green;
   }
+
+  &--popular {
+    background-color: $pink;
+  }
 }
 
 .search-result-tab, .nearby-deals-wrapper {
@@ -196,7 +200,7 @@ body {
 
     .item {
       img {
-        height: 96px !important;
+        height: 180px !important;
       }
 
       background: #fff;
@@ -274,5 +278,11 @@ body {
 .tags-chip {
   .mat-chip-list-wrapper {
     padding: 10px;
+  }
+}
+
+.nearby-deals-wrapper {
+  .mat-tab-body-wrapper {
+    height: calc(100vh - 270px);
   }
 }
