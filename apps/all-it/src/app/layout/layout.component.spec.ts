@@ -7,7 +7,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ThemesService, ConfigModule, ConfigService, ITheme, SettingsService } from '@perxtech/core';
+import {
+  ThemesService,
+  ConfigModule,
+  ConfigService,
+  ITheme,
+  SettingsService,
+  LoyaltyService,
+} from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +30,6 @@ describe('LayoutComponent', () => {
 
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
-  let location: Location;
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
@@ -40,6 +46,10 @@ describe('LayoutComponent', () => {
   const activatedRouteStub: Partial<ActivatedRoute> = {
     data: of(),
     queryParams: of({ params: { flags: 'chromeless' } })
+  };
+
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: () => of()
   };
 
   beforeEach(async(() => {
@@ -74,6 +84,7 @@ describe('LayoutComponent', () => {
           provide: ActivatedRoute,
           useValue: activatedRouteStub
         },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
         Title
       ]
     }).compileComponents();
@@ -88,12 +99,5 @@ describe('LayoutComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should location back', () => {
-    component.backArrowIcon = 'back';
-    spyOn(location, 'back');
-    component.backArrowClick();
-    expect(location.back).toHaveBeenCalled();
   });
 });
