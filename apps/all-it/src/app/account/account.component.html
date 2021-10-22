@@ -23,7 +23,7 @@
           </mat-list-item>
         </mat-nav-list>
       </div>
-      <div *ngIf="remoteFlags?.showBadgesButton" class="section badges">
+      <div *ngIf="remoteFlags?.showBadgesButton && !isPremiumMember" class="section badges">
         <mat-nav-list>
           <mat-list-item routerLink="/badges">
             {{'ACCOUNT_PAGE.BADGES' | translate}}
