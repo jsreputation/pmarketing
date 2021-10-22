@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from './layout.component';
 import { WalletGuard } from '../wallet.guard';
 
 const routes: Routes = [
