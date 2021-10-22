@@ -65,7 +65,10 @@
         </div>
       </a>
       <a matRipple [routerLink]="[ '/leaderboards' ]"  [ngClass]="{'active': isLeaderboardPage}"
-         *ngIf="(appRemoteFlags?.showLeaderboard && appRemoteFlags?.showLeaderboardLinkOnHomePage) || (appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage)">
+         *ngIf="
+         !isPremiumMember && (
+         (appRemoteFlags?.showLeaderboard && appRemoteFlags?.showLeaderboardLinkOnHomePage) ||
+         (appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage))">
         <div class="nav-item">
           <mat-icon aria-hidden="false" class="material-icons-outlined">emoji_events</mat-icon>
           <span translate>NAVIGATION.LEADER_BOARD</span>
