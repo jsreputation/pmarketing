@@ -59,6 +59,11 @@ export class HomeComponent implements OnInit {
     this.route.navigate([`deal-welcome/${_selectedItem.id}`]);
   }
 
+  navigateToCatalog(tag: string, type:string) {
+    const queryParams: Params = { type: type ,tags: tag };
+    this.route.navigate([`catalog-page`], {queryParams: queryParams});
+  }
+
   navigateToCatalog(tag:string) {
     const queryParams: Params = { type: this.catalogConfiguation.tags.type ,tags: tag };
     this.route.navigate([`catalog-page`], {queryParams: queryParams});
