@@ -531,36 +531,7 @@ export class V4CampaignService implements ICampaignService {
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map(() => {
-          return  {
-            id: 1,
-            name: "test",
-            description: "test",
-            state: "active",
-            begins_at: "null",
-            enrolled: true,
-            campaign_type: "give_reward",
-            images: [{
-              type: "string",
-              url: "string",
-            }],
-            favourite: true,
-            custom_fields: "null",
-            category_tags: ["null"],
-            tags: ["null"],
-            referral_code: "nul",
-            display_properties:{
-              landing_page: {
-                additional_sections: [
-                  {
-                    header_text: 'Test header',
-                    body_text: 'Test body',
-                  }
-                ],
-              }
-            }
-          }as IV4Campaign
-        }),
+        map((res) =>res.data),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
