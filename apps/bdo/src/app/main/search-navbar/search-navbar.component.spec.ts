@@ -19,6 +19,7 @@ export class MockRewardService {
     return of();
   }
 }
+
 describe('SearchNavbarComponent', () => {
   let component: SearchNavbarComponent;
   let fixture: ComponentFixture<SearchNavbarComponent>;

@@ -5,7 +5,9 @@ export const enum TransactionDetailType {
   'transaction' = 'Transaction',
   'reward' = 'Reward::Transaction',
   'game' = 'GameTransaction',
-  'stamp' = 'StampTransaction'
+  'stamp' = 'StampTransaction',
+  'dashboard' = 'DeviseUser',
+  'user' = 'User::Account'
 }
 
 export interface IExpiringPoints {

@@ -7,3 +7,7 @@ CONTACTUSURL=https://cdn.perxtech.io/content/all-it/contact-us.html
 TNCURL=https://cdn.perxtech.io/content/all-it/tnc.html
 SHOW_QUIZ_ON_HOMEPAGE=true
 SHOW_CAMPAIGN_LANDING_PAGE=true
+SHOW_PROGRESSBAR_CAMPAIGNS_ON_HOMEPAGE=true
+SHOW_LEADERBOARD_LINK_ON_HOME_PAGE=true
+ENABLE_LEADER_BOARD=true
+SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE=true

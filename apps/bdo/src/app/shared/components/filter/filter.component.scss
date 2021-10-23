@@ -1,0 +1,134 @@
+@import '../../../../theme/variables.scss';
+
+.filter-form {
+  padding: 16px;
+  background: $white;
+
+  .header {
+    font-size: 16px;
+    line-height: 20px;
+    color: $main-blue;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .inline-checkbox-group {
+    padding-inline-start: 0;
+    list-style: none;
+    border-bottom: 2px solid $grey-white;
+    display: flex;
+
+    li {
+      width: 50%;
+      margin: 16px 0;
+
+      .title {
+        color: $near-black;
+        font-size: 16px;
+      }
+    }
+
+    li:last-child {
+      margin-bottom: 14px;
+    }
+  }
+
+  .categories-wrapper,
+  .tags-wrapper,
+  .location-wrapper {
+    .mat-expansion-panel-header {
+      padding: 0 5px 0 0;
+      border-radius: 0;
+      height: 32px;
+      margin-top: 14px;
+    }
+
+    .mat-expansion-panel {
+      box-shadow: none;
+      border-bottom: 2px solid $grey-white;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  .tags-wrapper {
+    .tags-chip {
+      .filter-tag {
+        border-radius: 12px;
+        padding: 5px 10px;
+        font-size: 12px;
+        background-color: $white;
+
+        min-height: 25px;
+        text-transform: uppercase;
+        border: 1px solid $grey;
+        margin: 5px;
+        &.selected {
+          background-color: $grey;
+          color: $white;
+        }
+
+        &--popular {
+          border: 1px solid $pink;
+          color: $pink;
+
+          &.selected {
+            background-color: $pink;
+            color: $white;
+          }
+        }
+
+        &--new {
+          border: 1px solid $teal;
+          color: $teal;
+
+          &.selected {
+            background-color: $teal;
+            color: $white;
+          }
+        }
+
+        &--nearby {
+          border: 1px solid $purple;
+          color: $purple;
+
+          &.selected {
+            background-color: $purple;
+            color: $white;
+          }
+        }
+
+        &--featured {
+          border: 1px solid $medium-orange;
+          color: $medium-orange;
+
+          &.selected {
+            background-color: $medium-orange;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+
+  .button {
+    width: 100%;
+    height: 48px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 12px;
+    margin: 10px 0;
+
+    &.button-apply-filter {
+      background-color: $main-blue;
+      color: $white;
+      border: none;
+    }
+
+    &.button-reset-filter {
+      background-color: $white;
+      color: $main-blue;
+      border: 2px solid $main-blue;
+    }
+  }
+}

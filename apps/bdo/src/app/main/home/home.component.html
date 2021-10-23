@@ -13,15 +13,49 @@
     <bdo-secondary-catalog></bdo-secondary-catalog>
   </mat-card>
   <mat-card class="card bg-transparent">
-    <div class="nearby">
-      <span class="tag tag--nearby">nearby</span>
-      <a class="navigate-nearby" href="/nearby-deals">View All</a>
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--nearby selected">Nearby</span>
+        </div>
+        <span class="action" (click)="navigateToSearchResult('nearby')">
+          View All
+        </span>
+      </div>
+      <p class="description">Find deals that are just right around the corner</p>
     </div>
-   
-    <p class="near-by-title">Find deals that are just right around the corner</p>
-    <bdo-tagged-item [deals]="nearBy"></bdo-tagged-item>
+    <bdo-tagged-item *ngIf="nearByDeals.length; else noResultMessage" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+  </mat-card>
+  <mat-card class="card bg-transparent">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--new selected">What's new</span>
+        </div>
+        <span class="action" (click)="navigateToSearchResult('new')">
+          View All
+        </span>
+      </div>
+      <p class="description">Learn more about our newest deals for you!</p>
+    </div>
+    <bdo-tagged-item *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+  </mat-card>
+  <mat-card class="card bg-transparent">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--popular selected">Popular</span>
+        </div>
+        <span class="action" (click)="navigateToSearchResult('popular')">
+          View All
+        </span>
+      </div>
+      <p class="description">Avail of these promos that are popular with others</p>
+    </div>
+    <bdo-tagged-item *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
   </mat-card>
 </div>
 
-
-
+<ng-template #noResultMessage>
+  <p class="no-item">No result</p>
+</ng-template>
