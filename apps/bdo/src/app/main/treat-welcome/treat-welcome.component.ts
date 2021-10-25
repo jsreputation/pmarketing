@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign, ICampaignRule, ICampaignService } from '@perxtech/core';
 import { combineLatest } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'bdo-treat-welcome',
@@ -17,14 +18,15 @@ export class TreatWelcomeComponent implements OnInit {
     private activeRoute: ActivatedRoute
   ) {}
   ngOnInit() {
-    this.activeRoute.params.subscribe((param) => {
-      combineLatest([
+    this.activeRoute.params
+      .pipe(switchMap((param) => combineLatest(
         this.campaignService.getCampaign(param.id),
         this.campaignService.getCampaignsRules(param.id),
-      ]).subscribe(([campaign, campaignRule]) => {
+      ))).subscribe(([campaign, campaignRule]) => {
         this.lstCampaignRule = campaignRule
         this.campaign = campaign;
+        console.log( this.lstCampaignRule);
+        console.log( this.campaign)
       });
-    });
   }
 }
