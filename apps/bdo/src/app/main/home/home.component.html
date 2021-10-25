@@ -32,7 +32,7 @@
         <div class="filter-value">
           <span class="filter-tag filter-tag--new selected">What's new</span>
         </div>
-        <span class="action" (click)="navigateToSearchResult('new')">
+        <span class="action" (click)="navigateToCatalog(catalogConfiguation.tags.subCategory.new)">
           View All
         </span>
       </div>
@@ -46,7 +46,7 @@
         <div class="filter-value">
           <span class="filter-tag filter-tag--popular selected">Popular</span>
         </div>
-        <span class="action" (click)="navigateToSearchResult('popular')">
+        <span class="action" (click)="navigateToCatalog(catalogConfiguation.tags.subCategory.popular)">
           View All
         </span>
       </div>

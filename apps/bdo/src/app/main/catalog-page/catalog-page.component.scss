@@ -1,9 +1,17 @@
-.catalog-page{
-    font-size: 14px;
-    .every-day{
-        margin: 10px 0;
-    }
-    .category{
-        margin-bottom: 10px;
-    }
+@import "../../../theme/variables";
+
+.catalog-page {
+  font-size: 14px;
+
+  .every-day {
+    margin: 10px 0;
+  }
+
+  .category {
+    margin-bottom: 10px;
+  }
+
+  .filter-result {
+    background: $white;
+  }
 }

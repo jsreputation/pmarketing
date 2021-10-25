@@ -17,9 +17,15 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RewardsService } from '@perxtech/core';
+import { of } from 'rxjs';
+
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
   let fixture: ComponentFixture<CatalogPageComponent>;
+  const rewardsServiceStub: Partial<RewardsService> = {
+    getRewards: () => of()
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -51,6 +57,7 @@ describe('CatalogPageComponent', () => {
           useValue : '/'
         },
         FilterService,
+        { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
       ]
