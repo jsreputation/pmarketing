@@ -25,7 +25,11 @@ export interface CampaignLandingPage {
   backgroundUrl?: string;
   tnc?: { text: string };
 }
-
+export interface ICampaignRule {
+  id:number,
+  name:string,
+  state:string,
+}
 export interface ClaimPrizeProperties {
   buttonText: string;
   headline: string;
