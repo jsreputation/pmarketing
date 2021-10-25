@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LIST_CATEGORY } from '../../mock-data/categories.mock';
-import { LIST_FEATURED_DEALS } from './../../mock-data/featured-deals.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
@@ -12,7 +11,7 @@ import { Params, Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit{
   categories = LIST_CATEGORY;
-  featuredDeals = LIST_FEATURED_DEALS;
+  featuredDeals:IReward[] = [];
 
   nearByDeals: IReward[] = [];
   whatsNewDeals: IReward[] = [];
@@ -42,6 +41,11 @@ export class HomeComponent implements OnInit{
       .getRewards(1, this.requestPageSize,[this.tag.popular])
       .subscribe((popularRewards: IReward[]) => {
         this.popularDeals = popularRewards;
+      });
+      this.rewardsService
+      .getFeatureDeal()
+      .subscribe((featuredDeals: IReward[]) => {
+        this.featuredDeals = featuredDeals;
       });
   }
   navigateTo(_selectedItem: FeaturedDeals) {
