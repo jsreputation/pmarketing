@@ -623,7 +623,6 @@ export class V4CampaignService implements ICampaignService {
   public static v4CampaignRuleToCampaignRule(
     campaignRule: IV4CampaignRule
   ): ICampaignRule {
-    console.log("v4CampaignRuleToCampaignRule", campaignRule)
     return {
       id: campaignRule.id,
       state: campaignRule.state,
