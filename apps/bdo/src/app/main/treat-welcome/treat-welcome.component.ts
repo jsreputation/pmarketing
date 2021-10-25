@@ -25,8 +25,6 @@ export class TreatWelcomeComponent implements OnInit {
       ))).subscribe(([campaign, campaignRule]) => {
         this.lstCampaignRule = campaignRule
         this.campaign = campaign;
-        console.log( this.lstCampaignRule);
-        console.log( this.campaign)
       });
   }
 }
