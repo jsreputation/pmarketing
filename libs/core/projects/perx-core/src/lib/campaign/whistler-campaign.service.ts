@@ -163,5 +163,5 @@ export class WhistlerCampaignService implements ICampaignService {
   public enrolIntoCampaign(campaignId: number): Observable<boolean> {
     throw new Error('Method not implemented.');
   };
-
+  
 }
