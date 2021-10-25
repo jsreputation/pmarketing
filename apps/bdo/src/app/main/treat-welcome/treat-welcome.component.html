@@ -54,7 +54,7 @@
             </ng-template>
         </mat-expansion-panel>
     </mat-accordion> -->
-    <mat-accordion class="location-wrapper" *ngIf="campaign ">
+    <mat-accordion class="location-wrapper" *ngIf="campaign">
         <mat-expansion-panel class="panel" *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
           <mat-expansion-panel-header  class="header">
            {{item.headerText}}
