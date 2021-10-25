@@ -37,6 +37,7 @@ import { CategoryHeaderComponent } from './catalog-page/category-header/category
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { SearchComponent } from './search/search.component';
+import { FooterComponent } from './home/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { SearchComponent } from './search/search.component';
     SortComponent,
     CategoryHeaderComponent,
     TreatEnrollCompletePageComponent,
-    SearchComponent
+    SearchComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

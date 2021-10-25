@@ -54,6 +54,7 @@
     </div>
     <bdo-tagged-item *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
   </mat-card>
+  <bdo-footer></bdo-footer>
 </div>
 
 <ng-template #noResultMessage>
