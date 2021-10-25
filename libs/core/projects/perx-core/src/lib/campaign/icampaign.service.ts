@@ -15,7 +15,7 @@ export abstract class ICampaignService {
   public abstract getCampaign(id: number): Observable<ICampaign>;
   public abstract getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }>;
   public abstract applyReferral(referralCode: string): Observable<IReferral>; // response WIP
-  public abstract clearCampaignCache(): void ;
+  public abstract clearCampaignCache(): void;
   public abstract getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]>;
   public abstract enrolIntoCampaign(campaignId: number): Observable<boolean>;
   public abstract  getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>;

@@ -235,6 +235,13 @@ export class V4CampaignService implements ICampaignService {
             tnc: {
               text: lp.tnc ? lp.tnc[lang].text : '',
             },
+            additionalSections: lp?.additional_sections?.map(item => {
+              return {
+                headerText: item.header_text,
+                bodyText: item.body_text
+              }
+
+            })
           },
         };
         let youtubeUrl = oc(lp).media.youtube() || null;
@@ -546,7 +553,7 @@ export class V4CampaignService implements ICampaignService {
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map((resp) => resp.data),
+        map((res) =>res.data),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
@@ -556,8 +563,6 @@ export class V4CampaignService implements ICampaignService {
         })
       ));
   }
-
-
   public getVoucherLeftCount(
     campaignId: number
   ): Observable<{ count: number; campaignId: number }> {

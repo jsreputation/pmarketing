@@ -7,6 +7,4 @@ import { Component} from '@angular/core';
   styleUrls: ['./treat-enroll-page.component.scss']
 })
 export class TreatEnrollPageComponent{
- 
-
 }

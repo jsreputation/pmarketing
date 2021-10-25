@@ -13,7 +13,10 @@ export interface CampaignDisplayProperties {
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
 }
-
+export interface AdditionalSection{
+  headerText: String,
+  bodyText: String,
+}
 export interface CampaignLandingPage {
   body?: { text: string };
   media?: { youtube?: string; bannerImage?: string};
@@ -24,6 +27,7 @@ export interface CampaignLandingPage {
   subHeading?: { text: string };
   backgroundUrl?: string;
   tnc?: { text: string };
+  additionalSections?: AdditionalSection[];
 }
 export interface ICampaignRule {
   id:number,
