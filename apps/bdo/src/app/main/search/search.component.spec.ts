@@ -3,13 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { of } from 'rxjs';
 import { RewardsService } from '@perxtech/core';
-
-describe('SearchComponent', () => {
-  class MockRewardService {
-    getTrending() {
-      return of();
-    }
+import { Router } from '@angular/router';
+class MockRewardService {
+  getTrending() {
+    return of();
   }
+}
+
+class MockRouter {
+  navigate(){
+    
+  }
+}
+describe('SearchComponent', () => {
 
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
@@ -19,7 +25,8 @@ describe('SearchComponent', () => {
       declarations: [ SearchComponent ],
       providers:
       [
-        { provide: RewardsService, useClass: MockRewardService }
+        { provide: RewardsService, useClass: MockRewardService },
+        { provide: Router, useClass: MockRouter }
       ]
     })
     .compileComponents();
