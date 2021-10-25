@@ -29,7 +29,11 @@ export interface CampaignLandingPage {
   tnc?: { text: string };
   additionalSections?: AdditionalSection[];
 }
-
+export interface ICampaignRule {
+  id:number,
+  name:string,
+  state:string,
+}
 export interface ClaimPrizeProperties {
   buttonText: string;
   headline: string;

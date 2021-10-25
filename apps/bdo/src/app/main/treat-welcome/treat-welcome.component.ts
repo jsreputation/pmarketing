@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaign, ICampaignService } from '@perxtech/core';
+import { ICampaign, ICampaignRule, ICampaignService } from '@perxtech/core';
+import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -11,15 +12,19 @@ import { switchMap } from 'rxjs/operators';
 export class TreatWelcomeComponent implements OnInit {
   lstDeal = [1, 2, 3, 4];
   campaign: ICampaign;
+  lstCampaignRule: ICampaignRule[];
   constructor(
     private campaignService: ICampaignService,
     private activeRoute: ActivatedRoute
   ) {}
   ngOnInit() {
     this.activeRoute.params
-      .pipe(switchMap((param) => this.campaignService.getCampaign(param.id)))
-      .subscribe((item) => {
-        this.campaign = item;
+      .pipe(switchMap((param) => combineLatest(
+        this.campaignService.getCampaign(param.id),
+        this.campaignService.getCampaignsRules(param.id),
+      ))).subscribe(([campaign, campaignRule]) => {
+        this.lstCampaignRule = campaignRule
+        this.campaign = campaign;
       });
   }
 }

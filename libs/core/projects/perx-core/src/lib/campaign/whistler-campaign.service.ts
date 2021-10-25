@@ -13,7 +13,7 @@ import {
   WEngagementType,
 } from '@perxtech/whistler';
 
-import { CampaignState, CampaignType, ICampaign, ICampaignOutcome, IReferral } from './models/campaign.model';
+import { CampaignState, CampaignType, ICampaign, ICampaignOutcome, ICampaignRule, IReferral } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
@@ -163,5 +163,8 @@ export class WhistlerCampaignService implements ICampaignService {
   public enrolIntoCampaign(campaignId: number): Observable<boolean> {
     throw new Error('Method not implemented.');
   };
-  
+  // @ts-ignore
+  public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>{
+    throw new Error('Method not implemented.');
+  }
 }
