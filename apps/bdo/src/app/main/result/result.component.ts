@@ -12,6 +12,7 @@ import { FilterService } from '../../shared/services/filter.service';
 export class ResultComponent implements OnInit {
   public searchValue = '';
   public searchResult: IReward[] = [];
+  public isLoaded = true;
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
@@ -29,6 +30,7 @@ export class ResultComponent implements OnInit {
       }))
       .subscribe((rewards) => {
         this.searchResult = rewards;
+        this.isLoaded = false;
       });
   }
 }

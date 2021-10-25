@@ -2,7 +2,7 @@
   <div class="trending">
     <h5>Trending</h5>
     <div class="content">
-        <span *ngFor="let item of trendingList">
+        <span *ngFor="let item of trendingList" (click)="onClick(item)">
           {{item}}
         </span>
     </div>
