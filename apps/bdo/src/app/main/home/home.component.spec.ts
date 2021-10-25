@@ -16,6 +16,7 @@ import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { FooterComponent } from './footer/footer.component';
 class MockRewardsService {
  getRewards() {
    return of();
@@ -35,7 +36,8 @@ describe('HomeComponent', () => {
         PrimaryCatalogComponent,
         SecondaryCatalogComponent,
         FeatureDealsComponent,
-        TaggedItemComponent
+        TaggedItemComponent,
+        FooterComponent
       ],
       imports: [
         MainRoutingModule,
