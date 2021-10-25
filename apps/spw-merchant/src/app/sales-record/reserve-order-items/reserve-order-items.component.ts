@@ -174,5 +174,13 @@ export class ReserveOrderItemsComponent implements OnInit {
     }
   }
 
+  public onPointInputChange(): void {
+    if (this.loyaltyPoints < 0 || (this.loyaltyPoints && !Number.isInteger(this.loyaltyPoints))) {
+      this.loyaltyInputError = 'Please enter a valid number';
+      return;
+    }
+    this.loyaltyInputError = null;
+  }
+
 }
 
