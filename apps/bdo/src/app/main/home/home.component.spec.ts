@@ -17,12 +17,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 class MockRewardsService {
- getRewards() {
-   return of();
- }
+  getRewards() {
+    return of();
+  }
+  getFeatureDeal() {
+    return of();
+  }
 }
 class MockRouter {
-  navigate() {}
+  navigate() { }
 }
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -46,10 +49,10 @@ describe('HomeComponent', () => {
         RouterTestingModule,
         MatIconModule
       ],
-      providers:[{provide: RewardsService, useClass: MockRewardsService},
-        {provide: Router, useClass: MockRouter}]
+      providers: [{ provide: RewardsService, useClass: MockRewardsService },
+      { provide: Router, useClass: MockRouter }]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
