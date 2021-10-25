@@ -27,7 +27,7 @@ export interface CampaignLandingPage {
   subHeading?: { text: string };
   backgroundUrl?: string;
   tnc?: { text: string };
-  additionalSections?:AdditionalSection[]
+  additionalSections?: AdditionalSection[];
 }
 
 export interface ClaimPrizeProperties {

@@ -76,7 +76,7 @@ interface IV4StampCard {
   display_properties: StampCampaignDisplayProperties
   stamps?: IV4Stamp[];
 }
-export interface AdditionalSection {
+export interface IV4AdditionalSection  {
   header_text: string,
   body_text: string,
 }
@@ -96,7 +96,7 @@ export interface StampCampaignDisplayProperties {
     button_text2?: { en: { text: string } };
     tnc?: { en: { text: string } };
     sub_heading?: string;
-    additional_sections: AdditionalSection[];
+    additional_sections?: IV4AdditionalSection [];
   };
   button_text?: string;
   cols?: number;

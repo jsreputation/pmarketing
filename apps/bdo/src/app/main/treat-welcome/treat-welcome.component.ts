@@ -17,7 +17,7 @@ export class TreatWelcomeComponent implements OnInit{
   }
   ngOnInit(){
     this.activeRoute.params.subscribe((param) => {
-      this.getCampaign(Number(param.id));
+      this.getCampaign(param.id);
     });
     
   }
