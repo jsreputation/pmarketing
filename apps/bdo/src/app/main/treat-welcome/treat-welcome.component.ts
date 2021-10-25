@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign, ICampaignService } from '@perxtech/core';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'bdo-treat-welcome',
@@ -16,16 +17,9 @@ export class TreatWelcomeComponent implements OnInit{
 
   }
   ngOnInit(){
-    this.activeRoute.params.subscribe((param) => {
-      this.getCampaign(param.id);
-    });
-    
-  }
-  getCampaign(campaignID:number){
-    this.campaignService.getCampaign(campaignID).subscribe(item=>{
+    this.activeRoute.params.pipe(switchMap((param) => this.campaignService.getCampaign(param.id))).subscribe( item=>{
       this.campaign = item;
-      console.log( this.campaign)
-    })
-    
+    });
   }
+  
 }
