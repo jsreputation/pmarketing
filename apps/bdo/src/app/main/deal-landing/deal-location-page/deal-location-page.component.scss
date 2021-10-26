@@ -3,37 +3,43 @@ $margin-bottom:15px;
 $font-weight:bold;
 
 .deal-location {
-    padding: 20px 15px;
+    min-height: 100vh;
+    .body {
+        padding: 20px 15px;
 
-    .title {
-        color: $medium-blue;
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    .content {
-        display: flex;
-        align-items: center;
-        background-color: $white;
-        box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        padding: 20px;
-        opacity: 1;
-        margin-bottom: 15px;
-
-        .text {
-            font-size: 14px;
-            color: $dark-grey;
-            line-height: 1.7em;
+        .title {
+            color: $medium-blue;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .icon-call{
-            span{
-                background-color: $medium-orange;
+
+        .content {
+            display: flex;
+            align-items: center;
+            background-color: $white;
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            opacity: 1;
+            margin-bottom: 15px;
+
+            .text {
+                font-size: 14px;
+                color: $dark-grey;
+                line-height: 1.7em;
+            }
+
+            .icon-call {
+                span {
+                    background-color: $medium-orange;
+                }
             }
         }
     }
-
-    
-
+    .footer{
+        position: relative;
+        left: 0;
+        bottom: 0;
+    }
 }

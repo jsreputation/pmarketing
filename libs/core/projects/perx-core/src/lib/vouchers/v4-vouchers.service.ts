@@ -194,7 +194,8 @@ export class V4VouchersService implements IVoucherService {
       id: v.id,
       name: v.name,
       latitude: v.latitude,
-      longitude: v.longitude
+      longitude: v.longitude,
+      phoneNumber:v.phone_number
     };
   }
 
