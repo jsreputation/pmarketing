@@ -1,0 +1,39 @@
+@import '../../../../theme/variables';
+$margin-bottom:15px;
+$font-weight:bold;
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    .refer {
+        display: flex;
+        background-image: url('/assets/images/Rectangle 20371.svg');
+        &-content {
+            color: $white;
+            width: 70%;
+            padding: 20px;
+
+            &-title {
+                font-size: 15px;
+                margin-bottom: $margin-bottom;
+                font-weight: $font-weight;
+            }
+
+            &-note {
+                margin-bottom: $margin-bottom;
+            }
+
+            &-button {
+                border-radius: 8px;
+                background: $white;
+                color: $medium-blue;
+                font-weight: $font-weight;
+            }
+        }
+    }
+    .footer-info {
+        color: $light-black;
+        padding: $margin-bottom;
+        text-align: center;
+    }
+}
