@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
         this.popularDeals = popularRewards;
       });
     this.rewardsService
-      .getFeatureDeal()
+    .getRewards(1, this.requestPageSize, [this.tag.featured])
       .subscribe((featuredDeals: IReward[]) => {
         this.featuredDeals = featuredDeals;
       });

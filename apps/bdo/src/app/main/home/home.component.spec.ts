@@ -20,9 +20,6 @@ class MockRewardsService {
   getRewards() {
     return of();
   }
-  getFeatureDeal() {
-    return of();
-  }
 }
 class MockRouter {
   navigate() { }
