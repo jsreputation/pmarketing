@@ -5,7 +5,10 @@ $font-weight:bold;
 .treat-enroll-success-page {
     color: $near-black;
     font-size: 12px;
-
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .enroll-success {
         background-color: $white;
         margin-bottom: $margin-bottom;
@@ -79,8 +82,6 @@ $font-weight:bold;
         }
     }
     .footer{
-        position: absolute;
-        left: 0;
-        bottom: 0;
+       
     }
 }

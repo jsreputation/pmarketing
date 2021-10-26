@@ -3,7 +3,10 @@ $margin-bottom:15px;
 $font-weight:bold;
 
 .deal-location {
-    min-height: 100vh;
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .body {
         padding: 20px 15px;
 
@@ -37,9 +40,9 @@ $font-weight:bold;
             }
         }
     }
-    .footer{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-    }
+    // .footer{
+    //     position: absolute;
+    //     left: 0;
+    //     bottom: 0;
+    // }
 }
