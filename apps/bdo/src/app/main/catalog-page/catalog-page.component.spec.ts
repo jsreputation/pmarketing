@@ -19,18 +19,18 @@ import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
-export class MockRewardService {
-  getTrending() {
-    return of();
-  }
 
-  getSearchHistory() {
-    return of();
-  }
-}
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
   let fixture: ComponentFixture<CatalogPageComponent>;
+  const rewardsServiceBdo: Partial<RewardsService> = {
+    getTrending() {
+      return of();
+    },
+    getSearchHistory() {
+      return of();
+    }
+  };
   const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of()
   };
@@ -68,7 +68,7 @@ describe('CatalogPageComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: RewardsService, useClass: MockRewardService }
+        { provide: RewardsService, useValue:rewardsServiceBdo }
       ]
     })
     .compileComponents();

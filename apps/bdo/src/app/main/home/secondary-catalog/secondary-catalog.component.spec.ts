@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SecondaryCatalogComponent } from './secondary-catalog.component';
-class MockRouter {
-  navigate() {}
-}
+
 describe('SecondaryCatalogComponent', () => {
   let component: SecondaryCatalogComponent;
   let fixture: ComponentFixture<SecondaryCatalogComponent>;
-
+  const routerBdo: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ SecondaryCatalogComponent ],
-       providers:[ {provide: Router, useClass: MockRouter}]
+       providers:[ {provide: Router, useValue:routerBdo}]
     })
     .compileComponents();
   });
