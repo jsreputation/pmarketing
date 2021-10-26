@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
-import { FeaturedDeals } from '../../../models/featured-deals.models';
+import { IReward } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-featured-deals',
@@ -7,10 +7,11 @@ import { FeaturedDeals } from '../../../models/featured-deals.models';
   styleUrls: ['./featured-deals.component.scss']
 })
 export class FeatureDealsComponent {
-  @Input() deals: FeaturedDeals[] = [];
-  @Output() eventItemClick: EventEmitter<FeaturedDeals> = new EventEmitter<FeaturedDeals>();
+  urlImageDefault= "assets/images/light-gray-color-default-image.png"
+  @Input() deals: IReward[] = [];
+  @Output() eventItemClick: EventEmitter<IReward> = new EventEmitter<IReward>();
  
-  itemClick(featureDealsItem:FeaturedDeals){
+  itemClick(featureDealsItem:IReward){
     this.eventItemClick.emit(featureDealsItem);
   }
 }
