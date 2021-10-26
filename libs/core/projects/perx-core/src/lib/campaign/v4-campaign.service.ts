@@ -15,6 +15,7 @@ import {
   IBadgeOutcome,
   ICampaign,
   ICampaignOutcome,
+  ICampaignRule,
   IPointsOutcome,
   IReferral,
 } from './models/campaign.model';
@@ -112,7 +113,12 @@ export interface IV4CampaignResponse {
     count: number;
   };
 }
-
+export interface IV4CampaignRuleResponse {
+  data: IV4CampaignRule[];
+  meta: {
+    count: number;
+  };
+}
 interface IV4CampaignsResponse {
   data: IV4Campaign[];
   meta: {
@@ -150,6 +156,11 @@ export interface IV4CampaignOutcomeItem {
   id: number;
   name: string;
   type: CampaignOutcomeType;
+}
+export interface IV4CampaignRule {
+  id: number,
+  name: string,
+  state: string,
 }
 export interface IV4PointsOutcome {
   id: number;
@@ -224,6 +235,13 @@ export class V4CampaignService implements ICampaignService {
             tnc: {
               text: lp.tnc ? lp.tnc[lang].text : '',
             },
+            additionalSections: lp?.additional_sections?.map(item => {
+              return {
+                headerText: item.header_text,
+                bodyText: item.body_text
+              }
+
+            })
           },
         };
         let youtubeUrl = oc(lp).media.youtube() || null;
@@ -235,7 +253,7 @@ export class V4CampaignService implements ICampaignService {
         }
         if (lp.media?.banner_image) {
           // @ts-ignore
-          displayProperties.landingPage.media = {...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url}
+          displayProperties.landingPage.media = { ...displayProperties.landingPage.media, bannerImage: lp.media.banner_image.value.image_url }
         }
       }
     }
@@ -506,7 +524,18 @@ export class V4CampaignService implements ICampaignService {
         )
       );
   }
-
+  public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]> {
+    return this.http
+      .get<IV4CampaignRuleResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/rules`,)
+      .pipe(
+        map((resp) => resp.data),
+        map((campaigns: ICampaignRule[]) =>
+          campaigns.map((campaign) =>
+            V4CampaignService.v4CampaignRuleToCampaignRule(campaign)
+          )
+        )
+      );
+  }
   // if need be call method here to clear campaignsCache
   public clearCampaignCache(): void {
     campaignsCacheBuster.next(true);
@@ -524,7 +553,7 @@ export class V4CampaignService implements ICampaignService {
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map((resp) => resp.data),
+        map((res) =>res.data),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
@@ -534,7 +563,6 @@ export class V4CampaignService implements ICampaignService {
         })
       ));
   }
-
   public getVoucherLeftCount(
     campaignId: number
   ): Observable<{ count: number; campaignId: number }> {
@@ -596,6 +624,15 @@ export class V4CampaignService implements ICampaignService {
           error.status === 404 ? of(false) : throwError(error)
         )
       );
+  }
+  public static v4CampaignRuleToCampaignRule(
+    campaignRule: IV4CampaignRule
+  ): ICampaignRule {
+    return {
+      id: campaignRule.id,
+      state: campaignRule.state,
+      name: campaignRule.name
+    }
   }
 
   public static v4CampaignOutcomeToCampaignOutcome(

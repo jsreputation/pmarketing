@@ -9,9 +9,7 @@
         <mat-icon class="treat-icon">call</mat-icon>
     </p>
     <div class="description">
-        <span> Get a P100 eGC for every minimum spend of P3,000 anywhere </span>
-        <span>Get a P500 eGC for every minimum spend of P15,000 anywhere</span>
-        <span>Get a P1,000 eGC for every minimum spend of P30,000 anywhere</span>
+        <span *ngFor="let item of lstCampaignRule"> {{item.name}} </span>
     </div>
     <button mat-stroked-button color="primary" class="btn-Enroll">Enroll Now</button>
     <p class="title-deal">To get up to P5,000 worth of eGCs</p>
@@ -54,14 +52,14 @@
             </ng-template>
         </mat-expansion-panel>
     </mat-accordion> -->
-    <mat-accordion class="location-wrapper">
-        <mat-expansion-panel class="panel">
+    <mat-accordion class="location-wrapper" *ngIf="campaign">
+        <mat-expansion-panel class="panel" *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
           <mat-expansion-panel-header  class="header">
-            Promo Mechanics
+           {{item.headerText}}
           </mat-expansion-panel-header>
           <ng-template matExpansionPanelContent>
-            Some deferred content
+            {{item.bodyText}}
         </ng-template>
         </mat-expansion-panel>
       </mat-accordion>
-</div>
+</div> 

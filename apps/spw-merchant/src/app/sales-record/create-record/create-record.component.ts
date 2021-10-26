@@ -62,7 +62,7 @@ export class CreateRecordComponent implements OnInit {
   private initForm(): void {
     this.orderForm = this.fb.group({
       receipt: ['', Validators.required],
-      netAmount: ['', Validators.required]
+      netAmount: ['', [ Validators.required, Validators.pattern('^[0-9/.]*$') ]]
     });
   }
 

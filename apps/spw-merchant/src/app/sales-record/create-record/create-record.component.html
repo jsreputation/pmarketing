@@ -32,6 +32,9 @@
             <mat-error *ngIf="netAmount && netAmount.hasError('required')">
                 {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}}
             </mat-error>
+            <mat-error *ngIf="netAmount && netAmount.hasError('pattern')">
+                Please enter a valid amount 
+            </mat-error>
             </mat-form-field>
         <mat-form-field appearance="fill" class="full-width__input">
             <mat-label>{{"CREATE_ORDER_PAGE.RECEIPT"|translate}}</mat-label>

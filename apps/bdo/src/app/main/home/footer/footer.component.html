@@ -1,0 +1,23 @@
+<div class="home-footer-wrapper">
+  <div class="banner">
+    <ul>
+      <li class="item">
+        <div class="content-group" [style.background-image]="'url('+selectedItem.image+')'">
+          <h3 class="header">{{selectedItem?.header}}</h3>
+          <p class="content" [innerHTML]="selectedItem?.description"></p>
+          <span class="btn" (click)="onClick(selectedItem);">{{selectedItem?.buttonName}}</span>
+        </div>
+      </li>
+    </ul>
+    <div class="pagination">
+      <div *ngFor="let banner of banners;let ind = index;" [ngClass]="{'circle--active': (ind === activeNumber)}"
+        class="circle" (click)="onCircleClick(ind)"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>
+      BDO Unibank is supervised by the Bangko Sentral ng Pilipinas with contact number (02) 8708-7087 and with email
+      address consumeraffairs@bsp.gov.ph
+    </p>
+  </div>
+</div>
