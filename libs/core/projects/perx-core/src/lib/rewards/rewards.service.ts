@@ -45,7 +45,7 @@ export abstract class RewardsService {
   public abstract getCategories(): Observable<ITabConfigExtended[]>;
 
   public abstract nearMe(rad?: number, lat?: number, lng?: number): Observable<IReward[]>;
-
+  
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
