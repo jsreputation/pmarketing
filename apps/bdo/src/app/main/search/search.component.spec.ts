@@ -4,15 +4,14 @@ import { SearchComponent } from './search.component';
 import { of } from 'rxjs';
 import { RewardsService } from '@perxtech/core';
 import { Router } from '@angular/router';
-import { rewards } from './../../../../../starhub/src/app/rewards.mock';
 
 describe('SearchComponent', () => {
 
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
   const rewardsServiceBdo: Partial<RewardsService> = {
-    getRewards: () => of(rewards),
-    getTrending: () => of([])
+    getRewards: () => of(),
+    getTrending: () => of()
   };
 
   const routerBdo: Partial<Router> = {
