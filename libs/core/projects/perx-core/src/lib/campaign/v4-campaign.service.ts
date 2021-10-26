@@ -625,6 +625,20 @@ export class V4CampaignService implements ICampaignService {
         )
       );
   }
+  public campaignEnrollmentSuccess(id:number,promoID:string): Observable<boolean>{
+    return this.http
+    .post(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, {
+      promo_id: promoID,
+    })
+    .pipe(
+      map((response: HttpResponse<any>) =>
+        response.status === 200 ? true : false
+      ),
+      catchError((error: HttpErrorResponse) =>
+        error.status === 403 ? of(false) : throwError(error)
+      )
+    );
+  }
   public static v4CampaignRuleToCampaignRule(
     campaignRule: IV4CampaignRule
   ): ICampaignRule {
