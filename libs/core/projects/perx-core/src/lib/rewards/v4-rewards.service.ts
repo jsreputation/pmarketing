@@ -633,11 +633,24 @@ export class V4RewardsService extends RewardsService {
   public nearMe(
     rad: number = 20,
     lat: number,
-    lng: number
+    lng: number,
+    page?: number,
+    pageSize?: number,
+    tags?: string[] | null,
   ): Observable<IReward[]> {
+    let params = new HttpParams()
+    if(page) {
+      params= params.set('page', page.toString());
+    }
+    if(pageSize) {
+      params= params.set('size', pageSize.toString());
+    }
+    if (tags) {
+      params = params.set('tags', tags.join());
+    }
     return this.http
       .get<IV4GetRewardsResponse>(
-        `${this.apiHost}/v4/rewards?radius=${rad}&lat=${lat}&lng=${lng}`
+        `${this.apiHost}/v4/rewards?radius=${rad}&lat=${lat}&lng=${lng}`,{ params }
       )
       .pipe(
         map((res: IV4GetRewardsResponse) => res.data),

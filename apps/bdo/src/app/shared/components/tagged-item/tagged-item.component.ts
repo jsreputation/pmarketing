@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { IReward } from '@perxtech/core';
 import { ScrollToItemDirective } from '../../directives/scroll-to-item.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bdo-tagged-item',
@@ -20,7 +21,11 @@ export class TaggedItemComponent extends ScrollToItemDirective{
   @ViewChild("taggetContainer") public taggetContainer: ElementRef;
   urlImageDefault  = "assets/images/light-gray-color-default-image.png"
 
+  constructor(private router: Router) {
+    super();
+  }
   selectedItem(item:IReward) {
+    this.router.navigate(['/deal-welcome', item.id]);
     this.eventItemClick.emit(item);
   }
   

@@ -5,7 +5,7 @@
       <span class="label-tab">Catalogue</span>
     </ng-template>
     <ul class="search-result-wrapper">
-      <bdo-large-list-item *ngFor="let item of result" [reward]="item">
+      <bdo-large-list-item *ngFor="let item of result" [reward]="item" (click)="selectedItem(item)">
       </bdo-large-list-item>
     </ul>
   </mat-tab>

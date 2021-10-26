@@ -8,4 +8,5 @@ import { IReward } from '@perxtech/core';
 })
 export class ListItemComponent {
   @Input() reward: IReward;
+  @Input() url: string[];
 }

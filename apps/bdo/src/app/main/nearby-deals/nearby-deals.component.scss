@@ -1,5 +1,4 @@
 @import '../../../theme/variables.scss';
-
 .nearby-deals-wrapper {
   .filter-wrapper {
     display: flex;
@@ -30,14 +29,24 @@
   }
 
   .content-wrapper {
-    overflow: hidden;
-    height: calc(100vh - 200px);
-
+    padding-inline-start: 0 !important;
+    margin: 0;
+    height: calc(100vh - 218px);
+    overflow: auto;
     .nearby-result-tab {
       .label-tab {
         margin-left: 4px;
         color: $medium-blue;
       }
+    }
+
+    .tab-content {
+      padding-inline-start: 0 !important;
+      margin: 0;
+    }
+
+    .no-result {
+      text-align: center;
     }
   }
 }

@@ -9,6 +9,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NearbyDealsComponent } from './nearby-deals.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
+import { IVoucherService, RewardsService } from '@perxtech/core';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+class MockRewardsService {
+  nearMe() {
+    return of([]);
+  }
+}
+class MockIVoucherService {
+
+}
 
 describe('NearbyDealsComponent', () => {
   let component: NearbyDealsComponent;
@@ -23,6 +34,7 @@ describe('NearbyDealsComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([]),
         MatToolbarModule,
         MatSidenavModule,
         MatExpansionModule,
@@ -33,7 +45,13 @@ describe('NearbyDealsComponent', () => {
         {
           provide: APP_BASE_HREF,
           useValue : '/'
+        }, {
+          provide: RewardsService, useClass:MockRewardsService
+        },
+        {
+          provide: IVoucherService, useClass:MockIVoucherService
         }
+        
       ]
     })
     .compileComponents();

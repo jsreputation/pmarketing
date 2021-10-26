@@ -24,11 +24,16 @@ export class HomeComponent implements OnInit {
     nearby: 'nearby',
     featured: 'featured',
   };
-  constructor(private rewardsService: RewardsService, private route: Router) { }
 
+  private rad = 10000;
+  currentPosition = {
+    lat: 14.560446,
+    lng: 121.017646,
+  };
+  constructor(private rewardsService: RewardsService, private route: Router) {}
   ngOnInit(): void {
     this.rewardsService
-      .getRewards(1, this.requestPageSize, [this.tag.nearby])
+      .nearMe(this.rad,this.currentPosition.lat,this.currentPosition.lng, 1, this.requestPageSize)
       .subscribe((nearBy: IReward[]) => {
         this.nearByDeals = nearBy;
       });
@@ -55,5 +60,9 @@ export class HomeComponent implements OnInit {
   navigateToSearchResult(tag: string) {
     const queryParams: Params = { tags: tag };
     this.route.navigate([`result`], { queryParams: queryParams });
+  }
+
+  navigateToNearByDeals() {
+    this.route.navigate([`nearby`]);
   }
 }
