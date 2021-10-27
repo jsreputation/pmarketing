@@ -9,6 +9,8 @@ import { ITrending, RewardsService } from '@perxtech/core';
 })
 export class SearchComponent implements OnInit{
   public trendingList: string[] = [];
+  public searchHistories: string[] = [];
+
   constructor(private rewardsService: RewardsService, private route:Router) { }
 
   ngOnInit(): void {
@@ -17,6 +19,9 @@ export class SearchComponent implements OnInit{
       .subscribe((searchHistory: ITrending[]) => {
         this.trendingList = searchHistory.filter(trending=>trending.value.trim()).map((item) => item.value);
       });
+    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[])=>{
+      this.searchHistories = searchHistory.map(item=> item.value);
+    });
   }
 
   onClick(trending:string) {
