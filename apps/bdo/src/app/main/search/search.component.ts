@@ -23,8 +23,8 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  public onClick(trending: string): void {
-    const queryParams: Params = { search: trending };
+  public onClick(searchString: string): void {
+    const queryParams: Params = { search: searchString };
     this.route.navigate([ `result` ], { queryParams: queryParams });
   }
 }
