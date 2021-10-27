@@ -5,10 +5,10 @@
         </div>
         <div class="content" *ngFor="let item of lstVoucherLocation">
             <div class="text">
-                Crowne Plaza Manila Galleria Ortigas Ave., Corner Asian Development Bank
+                {{item.name}}
             </div>
-            <div class="icon-call" *ngIf="item.phoneNumber">
-                <img src="assets/images/icon-ua-contact.svg" alt="">
+            <div class="icon-call">
+                <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
             </div>
         </div>
     </div>

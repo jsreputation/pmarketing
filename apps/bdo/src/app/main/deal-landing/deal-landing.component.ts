@@ -24,7 +24,6 @@ export class DealLandingComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.activeRoute.params.subscribe((param) => {
-
       combineLatest([
         this.rewardService.getReward(param.rid),
         this.rewardService.getRewardsRelated(param.rid),
@@ -41,6 +40,6 @@ export class DealLandingComponent implements OnInit {
     });
   }
   navigateLocationPage(){
-    this.route.navigate([`deal-welcome/location/${this.dealDetail.id}`]);
+    this.route.navigate([`deal-welcome/${this.dealDetail.id}/location`]);
   }
 }
