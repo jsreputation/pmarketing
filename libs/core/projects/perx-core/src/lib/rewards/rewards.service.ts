@@ -6,6 +6,7 @@ import {
   ISearchHistory,
   ITrending,
   ICategoryTags,
+  ISearchSuggestion
 } from './models/reward.model';
 import { Observable } from 'rxjs';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
@@ -68,7 +69,7 @@ export abstract class RewardsService {
     pageSize?: number,
     tags?: string[] | null,
   ): Observable<IReward[]>;
-  
+
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
@@ -78,6 +79,8 @@ export abstract class RewardsService {
   public abstract getTrending(): Observable<ITrending[]>;
 
   public abstract getSearchHistory(): Observable<ISearchHistory[]>;
+
+  public abstract getSearchSuggestion(query: string): Observable<ISearchSuggestion[]>;
 
   public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
 

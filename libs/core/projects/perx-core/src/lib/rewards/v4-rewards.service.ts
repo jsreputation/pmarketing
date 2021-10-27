@@ -15,6 +15,7 @@ import {
   IReward,
   ISearchHistory,
   ITrending,
+  ISearchSuggestion,
   Sort
 } from './models/reward.model';
 
@@ -190,6 +191,10 @@ interface IV4GetAllCategoriesResponse {
 
 interface IV4SearchHistory {
   value: string;
+}
+
+interface IV4GetSearchSuggestionResponse {
+  data: ISearchSuggestion[];
 }
 
 @Injectable({
@@ -735,6 +740,13 @@ export class V4RewardsService extends RewardsService {
         map((searchHistories: IV4SearchHistory[]) => searchHistories.map(
           (searchHistory: IV4SearchHistory) => ({ ...searchHistory })
         ))
+      );
+  }
+
+  public getSearchSuggestion(query: string): Observable<ISearchSuggestion[]> {
+    return this.http.get<IV4GetSearchSuggestionResponse>(`${this.apiHost}/v4/search/suggestion?search_string=${query}`)
+      .pipe(
+        map((res: IV4GetSearchSuggestionResponse) => res.data)
       );
   }
 
