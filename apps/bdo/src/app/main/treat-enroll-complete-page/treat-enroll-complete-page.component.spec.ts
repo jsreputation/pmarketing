@@ -21,8 +21,10 @@ describe('TreatEnrollCompletePageComponent', () => {
   });
 
   beforeEach(() => {
+    window.history.pushState({ promoId: '123'}, '', '');
     fixture = TestBed.createComponent(TreatEnrollCompletePageComponent);
     component = fixture.componentInstance;
+    component.promoId="123"
     fixture.detectChanges();
   });
 
