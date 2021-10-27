@@ -15,7 +15,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public isExpanded = false;
   public searchValue = '';
   public searchSuggestion: string[] = [];
-  public searchEvent$: BehaviorSubject<string> = new BehaviorSubject();
+  public searchEvent$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(private route: Router,
               public router: Router,
