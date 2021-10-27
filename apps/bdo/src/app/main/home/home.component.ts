@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
         this.nearByDeals = nearBy;
       });
     this.rewardsService
-      .getRewards(1, this.requestPageSize, [this.tag.new])
+      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined, 'id')
       .subscribe((newRewards: IReward[]) => {
         this.whatsNewDeals = newRewards;
       });
