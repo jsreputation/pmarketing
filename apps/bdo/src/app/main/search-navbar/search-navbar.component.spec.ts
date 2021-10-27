@@ -10,15 +10,9 @@ import { AppRoutingModule } from '../../app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { of } from 'rxjs';
 
-export class MockRewardService {
-  getTrending() {
-    return of();
-  }
-
-  getSearchHistory() {
-    return of();
-  }
-}
+const rewardServiceStub: Partial<RewardsService> = {
+  getSearchSuggestion: () => of(),
+};
 
 describe('SearchNavbarComponent', () => {
   let component: SearchNavbarComponent;
@@ -38,7 +32,7 @@ describe('SearchNavbarComponent', () => {
         RewardsModule.forRoot()
       ],
       providers: [
-        { provide: RewardsService, useClass: MockRewardService },
+        { provide: RewardsService, useValue: rewardServiceStub },
         {
           provide: APP_BASE_HREF,
           useValue: '/',
