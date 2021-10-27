@@ -634,7 +634,7 @@ export class V4CampaignService implements ICampaignService {
     })
     .pipe(
       map((response: HttpResponse<any>) =>
-     { console.log("response",response)
+     { 
      return response.status === 200 ? true : false}
       ),
       catchError((error: HttpErrorResponse) =>
