@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable, Subject, ReplaySubject, AsyncSubject } from 'rxjs';
-import { IReward, ICatalog, IPrice, ICategoryTags } from './models/reward.model';
+import { IReward, ICatalog, IPrice, ICategoryTags, ISearchSuggestion } from './models/reward.model';
 import { Config } from '../config/config';
 import { map, tap, distinctUntilChanged, take } from 'rxjs/operators';
 
@@ -285,6 +285,11 @@ export class WhistlerRewardsService implements RewardsService {
 
   // @ts-ignore
   public getSearchHistory(): Observable<IV4SearchHistory[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getSearchSuggestion(query: string): Observable<ISearchSuggestion[]> {
     throw new Error('Method not implemented.');
   }
 
