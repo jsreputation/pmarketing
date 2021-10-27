@@ -8,7 +8,7 @@ import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configurat
 @Component({
   selector: 'bdo-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: [ './home.component.scss' ],
 })
 export class HomeComponent implements OnInit {
   categories = LIST_CATEGORY;
@@ -32,10 +32,13 @@ export class HomeComponent implements OnInit {
     lat: 14.560446,
     lng: 121.017646,
   };
-  constructor(private rewardsService: RewardsService, private route: Router) {}
+
+  constructor(private rewardsService: RewardsService, private route: Router) {
+  }
+
   ngOnInit(): void {
     this.rewardsService
-      .nearMe(this.rad,this.currentPosition.lat,this.currentPosition.lng, 1, this.requestPageSize)
+      .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, 1, this.requestPageSize)
       .subscribe((nearBy: IReward[]) => {
         this.nearByDeals = nearBy;
       });
@@ -45,31 +48,32 @@ export class HomeComponent implements OnInit {
         this.whatsNewDeals = newRewards;
       });
     this.rewardsService
-      .getRewards(1, this.requestPageSize, [this.tag.popular])
+      .getRewards(1, this.requestPageSize, [ this.tag.popular ])
       .subscribe((popularRewards: IReward[]) => {
         this.popularDeals = popularRewards;
       });
     this.rewardsService
-    .getRewards(1, this.requestPageSize, [this.tag.featured])
+      .getRewards(1, this.requestPageSize, [ this.tag.featured ])
       .subscribe((featuredDeals: IReward[]) => {
         this.featuredDeals = featuredDeals;
       });
   }
+
   navigateTo(_selectedItem: FeaturedDeals) {
-    this.route.navigate([`deal-welcome/${_selectedItem.id}`]);
+    this.route.navigate([ `deal-welcome/${_selectedItem.id}` ]);
   }
 
-  navigateToCatalog(tag:string) {
-    const queryParams: Params = { type: this.catalogConfiguation.tags.type ,tags: tag };
-    this.route.navigate([`catalog-page`], {queryParams: queryParams});
+  navigateToCatalog(tag: string) {
+    const queryParams: Params = { type: this.catalogConfiguation.tags.type, tags: tag };
+    this.route.navigate([ `catalog-page` ], { queryParams: queryParams });
   }
 
   navigateToSearchResult(tag: string) {
     const queryParams: Params = { tags: tag };
-    this.route.navigate([`result`], { queryParams: queryParams });
+    this.route.navigate([ `result` ], { queryParams: queryParams });
   }
 
   navigateToNearByDeals() {
-    this.route.navigate([`nearby`]);
+    this.route.navigate([ `nearby` ]);
   }
 }
