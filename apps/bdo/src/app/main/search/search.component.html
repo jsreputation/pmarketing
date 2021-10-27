@@ -1,5 +1,5 @@
 <div class="search-page-container">
-  <div class="history" *ngIf="showHistory">
+  <div class="pill-section" *ngIf="showHistory">
     <h5>History</h5>
     <div class="content">
         <span *ngFor="let historyItem of searchHistories" (click)="onClick(historyItem)">
@@ -7,7 +7,7 @@
         </span>
     </div>
   </div>
-  <div class="trending">
+  <div class="pill-section">
     <h5>Trending</h5>
     <div class="content">
         <span *ngFor="let item of trendingList" (click)="onClick(item)">
