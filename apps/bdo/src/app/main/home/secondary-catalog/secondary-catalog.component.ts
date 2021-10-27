@@ -8,11 +8,12 @@ import { CATALOG_CONFIGURATION } from '../../constant/catalog-configuration';
   styleUrls: ['./secondary-catalog.component.scss']
 })
 export class SecondaryCatalogComponent {
-  catalogConfiguation = CATALOG_CONFIGURATION;
+  catalogConfiguration = CATALOG_CONFIGURATION;
+  dealsCategory = CATALOG_CONFIGURATION.deals.subCategory;
   constructor(private route: Router) {}
 
   navigateToCatalog(tag: string) {
-    const queryParams: Params = { type: this.catalogConfiguation.deals.type ,tags: tag };
+    const queryParams: Params = { type: this.catalogConfiguration.deals.type ,tags: tag };
     this.route.navigate([`catalog-page`], {queryParams: queryParams});
   }
 }

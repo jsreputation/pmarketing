@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IReward, RewardsService } from '@perxtech/core';
-import { switchMap } from 'rxjs/operators';
 import { SubCategory } from '../../models/category.model';
 import { filterModel } from '../../models/filter.model';
 import { FilterService } from '../../shared/services/filter.service';
 import { CATALOG_CONFIGURATION } from '../constant/catalog-configuration';
 import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { IReward, RewardsService } from '@perxtech/core';
-import { FilterService } from '../../shared/services/filter.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -23,23 +19,7 @@ export class CatalogPageComponent implements OnInit {
   requestPageSize = 5;
   filterResult$: Observable<IReward[]> = null;
   isLoaded = false;
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService,
-    private filterService: FilterService
-  ) {}
-  ngOnInit(): void {
-
-    this.categoryCode = history.state.categoryCode;
-    this.subCategoryCodeSelected = history.state.subCategoried;
-
-    this.activeRoute.queryParams
-      .subscribe((params) => {
-        this.isLoaded = true;
-        this.filterService.setParams((params));
-        this.filterResult$ = this.rewardsService
-          .getRewards(1, this.requestPageSize, [params.tags]);
-      });
+  catalogConfiguation = CATALOG_CONFIGURATION;
   lstCategory: filterModel[] = [
     {
       name: 'Essentials',
@@ -54,37 +34,45 @@ export class CatalogPageComponent implements OnInit {
       linkImage: 'assets/images/entertainment-enclosed-outline-fullcolor.svg',
     },
   ];
+
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
     private filterService: FilterService
   ) {}
   ngOnInit(): void {
+
     this.categoryCode = history.state.categoryCode;
     this.subCategoryCodeSelected = history.state.subCategoried;
-    switchMap;
+
     this.activeRoute.queryParams
-      .pipe(
-        switchMap((params) => {
-          this.filterService.setParams(params);
-          switch (params['type']) {
-            case this.catalogConfiguation.tags.type: {
-              return this.rewardsService.getRewards(1, this.requestPageSize, [
-                params['tags'],
-              ]);
-            }
-            case this.catalogConfiguation.deals.type: {
-              console.log(params['tags']);
-              return of([]);
-            }
-            case this.catalogConfiguation.category.type: {
-              return of([]);
-            }
+      .subscribe((params) => {
+        this.isLoaded = true;
+        this.filterService.setParams((params));
+
+        switch (params['type']) {
+          case this.catalogConfiguation.tags.type: {
+            this.filterResult$ = this.rewardsService.getRewards(1, this.requestPageSize, [
+              params['tags'],
+            ]);
+            break;
           }
-        })
-      )
-      .subscribe((rewards: IReward[]) => {
-        this.rewards = rewards;
+          case this.catalogConfiguation.deals.type: {
+            this.filterResult$ = this.rewardsService.getRewards(1, this.requestPageSize, [
+              params['tags'],
+            ]);
+            break;
+          }
+          case this.catalogConfiguation.category.type: {
+            this.filterResult$ = of([]);
+            break;
+          }
+        }
+
       });
+
+    this.categoryCode = history.state.categoryCode;
+    this.subCategoryCodeSelected = history.state.subCategoried;
+
   }
 }

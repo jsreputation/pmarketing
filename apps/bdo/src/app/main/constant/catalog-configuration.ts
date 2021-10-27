@@ -9,7 +9,10 @@ export const CATALOG_CONFIGURATION = {
   deals: {
     type: 'deals',
     subCategory: {
-      spend: 'spend-everywhere',
+      spend: 'spend',
+      redeem: 'redeem',
+      online: 'online',
+      rewards: 'rewards'
     }
   },
   category: {
