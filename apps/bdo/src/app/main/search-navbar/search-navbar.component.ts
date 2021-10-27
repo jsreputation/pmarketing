@@ -1,6 +1,6 @@
 import { Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { RewardsService } from '@perxtech/core';
+import { ISearchSuggestion, RewardsService } from '@perxtech/core';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';

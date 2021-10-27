@@ -114,6 +114,6 @@ export enum SearchSuggestionType {
 }
 
 export interface ISearchSuggestion {
-  type: SuggestionType;
+  type: SearchSuggestionType;
   value: string;
 }
