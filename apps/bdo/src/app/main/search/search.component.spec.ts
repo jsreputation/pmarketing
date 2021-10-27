@@ -11,7 +11,11 @@ describe('SearchComponent', () => {
   let fixture: ComponentFixture<SearchComponent>;
   const rewardsServiceBdo: Partial<RewardsService> = {
     getRewards: () => of(),
-    getTrending: () => of()
+    getTrending: () => of(),
+    getSearchHistory: () => of()
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
   };
 
   const routerBdo: Partial<Router> = {
@@ -22,6 +26,7 @@ describe('SearchComponent', () => {
       declarations: [ SearchComponent ],
       providers:
       [
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: RewardsService, useValue: rewardsServiceBdo},
         { provide: Router, useValue:routerBdo}
       ]
