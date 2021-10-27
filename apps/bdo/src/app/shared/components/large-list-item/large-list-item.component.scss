@@ -7,6 +7,10 @@
   margin: 16px;
   background: $white 0 0 no-repeat padding-box;
 
+  a {
+    text-decoration: none;
+  }
+
   .tag-group {
     .tag {
       top: -13px;
@@ -42,6 +46,11 @@
       margin: 10px 0;
       font-size: 12px;
       color: $light-black;
+
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
   }
 }

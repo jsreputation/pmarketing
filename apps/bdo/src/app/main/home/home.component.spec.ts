@@ -17,18 +17,22 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { FooterComponent } from './footer/footer.component';
-class MockRewardsService {
-  getRewards() {
-    return of();
-  }
-}
-class MockRouter {
-  navigate() { }
-}
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-
+  const rewardsServiceBdo: Partial<RewardsService> = {
+    getRewards() {
+      return of();
+    },
+    nearMe() {
+     return of([]);
+   }
+  };
+ 
+  const routerBdo: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -48,8 +52,8 @@ describe('HomeComponent', () => {
         RouterTestingModule,
         MatIconModule
       ],
-      providers: [{ provide: RewardsService, useClass: MockRewardsService },
-      { provide: Router, useClass: MockRouter }]
+      providers:[{provide: RewardsService, useValue:rewardsServiceBdo},
+        {provide: Router, useValue:routerBdo}]
     })
       .compileComponents();
   });

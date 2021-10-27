@@ -2,7 +2,7 @@
   <div class="filter-wrapper">
     <span class="tag tag--nearby"> Nearby</span>
     <div class="group-filter">
-      <img src="assets/images/icon-filter.svg"/>
+      <img src="assets/images/icon-filter.svg" />
       <span>Filters</span>
     </div>
   </div>
@@ -10,29 +10,42 @@
   <div class="content-wrapper">
     <mat-tab-group animationDuration="0ms" [disablePagination]="true" mat-stretch-tabs class="nearby-result-tab">
       <mat-tab>
-        <ng-template mat-tab-label >
-          <img src="assets/images/icon-location.svg"/>
+        <ng-template mat-tab-label>
+          <img src="assets/images/icon-location.svg" />
           <span class="label-tab">Map</span>
         </ng-template>
-        <div class="content-wrapper">
-          <bdo-map></bdo-map>
-        </div>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label >
-          <img src="assets/images/icon-n-catalogue.svg"/>
-          <span class="label-tab">Catalogue</span>
-        </ng-template>
-        <div class="content-wrapper">
+        <div class="content-wrapper map-content">
+          <bdo-map *ngIf="rewards && rewards.length" [rewards]="rewards" [currentPosition]="currentPosition"></bdo-map>
         </div>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <img src="assets/images/icon-n-viewall.svg"/>
+          <img src="assets/images/icon-n-catalogue.svg" />
+          <span class="label-tab">Catalogue</span>
+        </ng-template>
+        <ul class="tab-content">
+          <ng-container *ngIf="rewards && rewards.length; else noResult">
+            <bdo-large-list-item *ngFor="let item of rewards" [url]="['/deal-welcome', item.id.toString()]" [reward]="item" (click)="selectedItem(item)">
+            </bdo-large-list-item>
+          </ng-container>
+          <ng-template #noResult>
+            <p class="no-result">No result</p>
+          </ng-template>
+        </ul>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img src="assets/images/icon-n-viewall.svg" />
           <span class="label-tab">List</span>
         </ng-template>
-        <div class="content-wrapper">
-        </div>
+        <ul class="tab-content">
+          <ng-container *ngIf="rewards && rewards.length; else noResult">
+            <bdo-list-item *ngFor="let item of rewards"  [url]="['/deal-welcome', item.id.toString()]" (click)="selectedItem(item)" [reward]="item"></bdo-list-item>
+          </ng-container>
+          <ng-template #noResult>
+           <p class="no-result">No result</p> 
+          </ng-template>
+        </ul>
       </mat-tab>
     </mat-tab-group>
-</div>
+  </div>

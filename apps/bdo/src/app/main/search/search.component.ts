@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Params, Router } from '@angular/router';
 import { ITrending, RewardsService } from '@perxtech/core';
 
 @Component({
@@ -8,7 +9,7 @@ import { ITrending, RewardsService } from '@perxtech/core';
 })
 export class SearchComponent implements OnInit{
   public trendingList: string[] = [];
-  constructor(private rewardsService: RewardsService) { }
+  constructor(private rewardsService: RewardsService, private route:Router) { }
 
   ngOnInit(): void {
     this.rewardsService
@@ -16,5 +17,10 @@ export class SearchComponent implements OnInit{
       .subscribe((searchHistory: ITrending[]) => {
         this.trendingList = searchHistory.filter(trending=>trending.value.trim()).map((item) => item.value);
       });
+  }
+
+  onClick(trending:string) {
+    const queryParams: Params = { search: trending };
+    this.route.navigate([`result`], { queryParams:queryParams });
   }
 }
