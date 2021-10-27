@@ -9,7 +9,7 @@ describe('SearchComponent', () => {
 
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
-  const rewardsServiceBdo: Partial<RewardsService> = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of(),
     getTrending: () => of(),
     getSearchHistory: () => of()
@@ -25,13 +25,13 @@ describe('SearchComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ SearchComponent ],
       providers:
-      [
-        { provide: ConfigService, useValue: configServiceStub },
-        { provide: RewardsService, useValue: rewardsServiceBdo},
-        { provide: Router, useValue:routerBdo}
-      ]
+        [
+          { provide: ConfigService, useValue: configServiceStub },
+          { provide: RewardsService, useValue: rewardsServiceStub },
+          { provide: Router, useValue: routerBdo }
+        ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
