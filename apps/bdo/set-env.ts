@@ -220,6 +220,9 @@ const appConfigFile = `{
     process.env.ENABLE_POINT_TRANSFER ? process.env.ENABLE_POINT_TRANSFER : false
   },
   "custom": {
+    "hideSearchHistory": "${
+      process.env.HIDE_SEARCH_HISTORY ? process.env.HIDE_SEARCH_HISTORY : true
+    }",
     "stampsType": "${
       process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'
     }",

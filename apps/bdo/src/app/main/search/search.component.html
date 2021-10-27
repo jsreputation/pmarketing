@@ -1,5 +1,5 @@
 <div class="search-page-container">
-  <div class="history">
+  <div class="history" *ngIf="showHistory">
     <h5>History</h5>
     <div class="content">
         <span *ngFor="let historyItem of searchHistories" (click)="onClick(historyItem)">
