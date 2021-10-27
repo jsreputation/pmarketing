@@ -17,9 +17,9 @@
       </ng-template>
 
     </mat-expansion-panel-header>
-      <div class="recommend" *ngIf="filteredSearchHistories.length">
+      <div class="recommend" *ngIf="searchSuggestion.length">
         <ul>
-          <li *ngFor="let item of filteredSearchHistories" (click)="search(item)">
+          <li *ngFor="let item of searchSuggestion" (click)="search(item)">
             {{item}}
           </li>
         </ul>

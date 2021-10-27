@@ -14,8 +14,8 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public isExpanded = false;
   public searchValue = '';
   public trendingList: string[] = [];
-  public filteredSearchHistories: string[] = [];
-  public searchHistories: string[] = [];
+  public searchSuggestion: string[] = [];
+
   constructor(private route: Router,
               public router: Router,
               private rewardsService: RewardsService,
@@ -24,10 +24,6 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   }
   
   ngOnInit(): void {
-    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[])=>{
-      this.searchHistories = searchHistory.map(item=> item.value);
-      this.filteredSearchHistories = this.searchHistories;
-    });
 
     this.rewardsService
     .getTrending()
@@ -46,11 +42,12 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
     const value = event.target.value;
     this.searchValue = value;
     if (!value) {
-      this.filteredSearchHistories = this.searchHistories;
+      this.isExpanded = false;
     } else {
-      this.filteredSearchHistories = this.searchHistories.filter((item) =>
-        item.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-      );
+      this.rewardsService.getSearchSuggestion(value).subscribe((searchSuggestion: ISearchSuggestion[])=>{
+        console.log(searchSuggestion);
+        this.searchSuggestion = searchSuggestion.map(item=> item.value); // extract only the values, type not of concern
+      });
     }
 
     if (value && event.code === 'Enter') {
@@ -60,7 +57,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
 
   clearSearchValue(event) {
     this.searchValue = '';
-    this.filteredSearchHistories = this.searchHistories;
+    this.searchSuggestion = [];
     this.isSearching = false;
     event.stopPropagation();
   }
