@@ -1,7 +1,6 @@
 import { Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
-import { FilterService } from '../../shared/services/filter.service';
+import { RewardsService } from '@perxtech/core';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 import { switchMap, debounceTime } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
@@ -15,30 +14,16 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public isSearching = false;
   public isExpanded = false;
   public searchValue = '';
-  public trendingList: string[] = [];
   public searchSuggestion: string[] = [];
   public searchEvent$: BehaviorSubject<string> = new BehaviorSubject();
 
   constructor(private route: Router,
               public router: Router,
-              private rewardsService: RewardsService,
-              private filterService: FilterService) {
+              private rewardsService: RewardsService) {
     super();
   }
   
   ngOnInit(): void {
-
-    this.rewardsService
-    .getTrending()
-    .subscribe((searchHistory: ITrending[]) => {
-      this.trendingList = searchHistory.map((item) => item.value);
-    });
-
-    this.filterService
-      .filterValue$.subscribe(filter => {
-        this.searchValue = filter.searchValue;
-    });
-
     this.searchEvent$.pipe(
       debounceTime(500),
       switchMap((searchQuery: string) => this.rewardsService.getSearchSuggestion(searchQuery))
