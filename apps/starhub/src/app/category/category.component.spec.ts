@@ -36,10 +36,12 @@ import { GhostCardComponent } from '../ghosts/card-ghost.component';
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
+
   const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of(rewards),
     getCatalog: () => of(catalogs[0])
   };
+
   const activatedRouteStub = {
     snapshot: {
       queryParamMap: {

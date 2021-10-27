@@ -3,6 +3,7 @@ import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
+import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration';
 
 @Component({
   selector: 'bdo-home',
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
     nearby: 'nearby',
     featured: 'featured',
   };
+  catalogConfiguation = CATALOG_CONFIGURATION;
 
   private rad = 10000;
   currentPosition = {
@@ -55,6 +57,11 @@ export class HomeComponent implements OnInit {
   }
   navigateTo(_selectedItem: FeaturedDeals) {
     this.route.navigate([`deal-welcome/${_selectedItem.id}`]);
+  }
+
+  navigateToCatalog(tag:string) {
+    const queryParams: Params = { type: this.catalogConfiguation.tags.type ,tags: tag };
+    this.route.navigate([`catalog-page`], {queryParams: queryParams});
   }
 
   navigateToSearchResult(tag: string) {
