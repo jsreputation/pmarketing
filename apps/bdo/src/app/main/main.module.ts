@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import {MatBadgeModule} from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
@@ -44,6 +45,7 @@ import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,7 @@ import { MatInputModule } from '@angular/material/input';
     TreatEnrollCompletePageComponent,
     SearchComponent,
     FooterComponent,
+    DealLocationPageComponent
   ],
   imports: [
     CommonModule,
@@ -94,6 +97,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     RewardsModule,
     MatSelectModule,
+    MatBadgeModule
   ],
   bootstrap: [],
   providers: [

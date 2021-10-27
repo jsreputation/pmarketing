@@ -12,6 +12,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CheckboxGroupComponent } from './components/filter/checkbox-group/checkbox-group.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { FooterReferComponent } from './components/footer-refer/footer-refer.component';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -22,7 +24,8 @@ import { RouterModule } from '@angular/router';
     SearchResultComponent,
     SearchResultComponent,
     CheckboxGroupComponent,
-    FilterComponent
+    FilterComponent,
+    FooterReferComponent,
   ],
   imports: [
     CommonModule,
@@ -32,17 +35,19 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatExpansionModule,
     MatCheckboxModule,
-    RouterModule
+    MatButtonModule,
+    RouterModule,
   ],
   exports: [
-    ListItemComponent, 
-    LargeListItemComponent, 
+    ListItemComponent,
+    LargeListItemComponent,
     TaggedItemComponent,
     FilterComponent,
     CheckboxGroupComponent,
     TaggedItemComponent,
     SearchResultComponent,
-    MatTabsModule
+    MatTabsModule,
+    FooterReferComponent,
   ],
   providers: [FilterService],
 })

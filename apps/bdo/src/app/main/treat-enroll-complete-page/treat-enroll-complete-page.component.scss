@@ -5,7 +5,10 @@ $font-weight:bold;
 .treat-enroll-success-page {
     color: $near-black;
     font-size: 12px;
-
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .enroll-success {
         background-color: $white;
         margin-bottom: $margin-bottom;
@@ -79,32 +82,7 @@ $font-weight:bold;
             margin-left: -20px;
         }
     }
-    .refer{
-        display: flex;
-        background-image: url('/assets/images/Rectangle 20371.svg');
-        &-content{
-            color:  $white;
-            width: 70%;
-            padding: 20px;
-            &-title{
-                font-size: 15px;
-                margin-bottom: $margin-bottom;
-                font-weight: $font-weight;
-            }
-            &-note{
-                margin-bottom: $margin-bottom;
-            }
-            &-button{
-                border-radius: 8px;
-                background:$white;
-                color: $medium-blue;
-                font-weight: $font-weight;
-            }
-        }
-    }
     .footer{
-        color: $light-black;
-        padding: $margin-bottom;
-        text-align: center;
+       
     }
 }
