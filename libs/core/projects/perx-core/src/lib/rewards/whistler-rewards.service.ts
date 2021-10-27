@@ -250,10 +250,9 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public nearMe(rad: number, lat: number, lng: number): Observable<IReward[]> {
+  public nearMe(rad: number, lat: number, lng: number,page?: number, pageSize?: number, tags?: string[] | null,): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
-
    // @ts-ignore
    public getAllFavoriteRewards(): Observable<IReward[]> {
     throw new Error('Method not implemented.');
@@ -293,5 +292,4 @@ export class WhistlerRewardsService implements RewardsService {
   public searchRewards(text: string, locale?: string): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
-
 }

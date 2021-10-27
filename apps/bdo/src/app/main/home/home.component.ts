@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LIST_CATEGORY } from '../../mock-data/categories.mock';
-import { LIST_FEATURED_DEALS } from './../../mock-data/featured-deals.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
@@ -10,9 +9,9 @@ import { Params, Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   categories = LIST_CATEGORY;
-  featuredDeals = LIST_FEATURED_DEALS;
+  featuredDeals: IReward[] = [];
 
   nearByDeals: IReward[] = [];
   whatsNewDeals: IReward[] = [];
@@ -25,23 +24,33 @@ export class HomeComponent implements OnInit{
     nearby: 'nearby',
     featured: 'featured',
   };
-  constructor(private rewardsService: RewardsService, private route: Router) {}
 
+  private rad = 10000;
+  currentPosition = {
+    lat: 14.560446,
+    lng: 121.017646,
+  };
+  constructor(private rewardsService: RewardsService, private route: Router) {}
   ngOnInit(): void {
     this.rewardsService
-      .getRewards(1, this.requestPageSize,[this.tag.nearby])
+      .nearMe(this.rad,this.currentPosition.lat,this.currentPosition.lng, 1, this.requestPageSize)
       .subscribe((nearBy: IReward[]) => {
         this.nearByDeals = nearBy;
       });
     this.rewardsService
-      .getRewards(1, this.requestPageSize,[this.tag.new])
+      .getRewards(1, this.requestPageSize, [this.tag.new])
       .subscribe((newRewards: IReward[]) => {
         this.whatsNewDeals = newRewards;
       });
     this.rewardsService
-      .getRewards(1, this.requestPageSize,[this.tag.popular])
+      .getRewards(1, this.requestPageSize, [this.tag.popular])
       .subscribe((popularRewards: IReward[]) => {
         this.popularDeals = popularRewards;
+      });
+    this.rewardsService
+    .getRewards(1, this.requestPageSize, [this.tag.featured])
+      .subscribe((featuredDeals: IReward[]) => {
+        this.featuredDeals = featuredDeals;
       });
   }
   navigateTo(_selectedItem: FeaturedDeals) {
@@ -50,6 +59,10 @@ export class HomeComponent implements OnInit{
 
   navigateToSearchResult(tag: string) {
     const queryParams: Params = { tags: tag };
-    this.route.navigate([`result`], {queryParams: queryParams});
+    this.route.navigate([`result`], { queryParams: queryParams });
+  }
+
+  navigateToNearByDeals() {
+    this.route.navigate([`nearby`]);
   }
 }
