@@ -629,10 +629,13 @@ export class V4CampaignService implements ICampaignService {
     return this.http
     .post(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, {
       promo_id: promoID,
+    },{
+      observe: 'response',
     })
     .pipe(
       map((response: HttpResponse<any>) =>
-        response.status === 200 ? true : false
+     { console.log("response",response)
+     return response.status === 200 ? true : false}
       ),
       catchError((error: HttpErrorResponse) =>
         error.status === 403 ? of(false) : throwError(error)

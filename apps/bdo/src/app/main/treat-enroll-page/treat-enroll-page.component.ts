@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { switchMap } from 'rxjs/operators';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ICampaignService, NotificationService } from '@perxtech/core';
 
 @Component({
   selector: 'bdo-treat-enroll-page',
@@ -9,16 +9,41 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./treat-enroll-page.component.scss'],
 })
 export class TreatEnrollPageComponent {
-  campaignID: number;
+  campaignId: number;
+  enrollForm: FormGroup ;
   constructor(
-    // private campaignService: ICampaignService,
-    private activeRoute: ActivatedRoute
+    private campaignService: ICampaignService,
+    private activeRoute: ActivatedRoute,
+    private route: Router,
+    private notificationService: NotificationService
   ) {}
   ngOnInit() {
-    this.activeRoute.params.pipe(
-      switchMap((param) => this.campaignID = param.id)
-    );
-    console.log(this.campaignID)
+    this.activeRoute.params.subscribe((item) => {
+      this.campaignId = item.id;
+    });
+    this.initForm();
   }
-
+  public initForm(): void {
+    this.enrollForm = new FormGroup({
+      promoId: new FormControl('', [Validators.required]),
+    });
+  }
+  enroll() {
+    if (this.enrollForm.valid) {
+      this.campaignService
+        .campaignEnrollmentSuccess(this.campaignId, this.enrollForm.get('promoId').value)
+        .subscribe((item) => {
+          console.log(item);
+          if (item) {
+            this.route.navigate([`treat-enroll/${this.campaignId}/complete`],{ state:{promoId:this.enrollForm.get('promoId').value}});
+          } else {
+            this.notificationService.addSnack('Could not enrol in campaign');
+          }
+        });
+    } else {
+      Object.keys(this.enrollForm.controls).forEach((controlName) =>
+        this.enrollForm.controls[controlName].markAsTouched()
+      );
+    }
+  }
 }

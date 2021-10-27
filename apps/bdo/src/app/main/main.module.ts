@@ -34,10 +34,16 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './home/footer/footer.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -62,12 +68,14 @@ import { FooterComponent } from './home/footer/footer.component';
     CategoryHeaderComponent,
     TreatEnrollCompletePageComponent,
     SearchComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     InfiniteScrollModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -82,14 +90,15 @@ import { FooterComponent } from './home/footer/footer.component';
     MatChipsModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatFormFieldModule ,
     FormsModule,
     RewardsModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   bootstrap: [],
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
-  ]
+  ],
 })
 export class MainModule {}
