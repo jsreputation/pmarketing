@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
+import { switchMap, debounceTime } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'bdo-search-navbar',
@@ -15,6 +17,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public searchValue = '';
   public trendingList: string[] = [];
   public searchSuggestion: string[] = [];
+  public searchEvent$: BehaviorSubject<string> = new BehaviorSubject();
 
   constructor(private route: Router,
               public router: Router,
@@ -36,6 +39,12 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
         this.searchValue = filter.searchValue;
     });
 
+    this.searchEvent$.pipe(
+      debounceTime(500),
+      switchMap((searchQuery: string) => this.rewardsService.getSearchSuggestion(searchQuery))
+    ).subscribe((searchSuggestion: ISearchSuggestion[])=>{
+      this.searchSuggestion = searchSuggestion.map(item=> item.value); // extract only the values, type not of concern
+    });
   }
 
   searchValueChange(event) {
@@ -44,9 +53,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
     if (!value) {
       this.isExpanded = false;
     } else {
-      this.rewardsService.getSearchSuggestion(value).subscribe((searchSuggestion: ISearchSuggestion[])=>{
-        this.searchSuggestion = searchSuggestion.map(item=> item.value); // extract only the values, type not of concern
-      });
+      this.searchEvent$.next(value);
     }
 
     if (value && event.code === 'Enter') {
