@@ -35,10 +35,16 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
 import { CategoryHeaderComponent } from './catalog-page/category-header/category-header.component';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './home/footer/footer.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
 
 @NgModule({
@@ -71,6 +77,8 @@ import { DealLocationPageComponent } from './deal-landing/deal-location-page/dea
     CommonModule,
     MainRoutingModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     InfiniteScrollModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -85,6 +93,7 @@ import { DealLocationPageComponent } from './deal-landing/deal-location-page/dea
     MatChipsModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatFormFieldModule ,
     FormsModule,
     RewardsModule,
     MatSelectModule,
@@ -94,6 +103,6 @@ import { DealLocationPageComponent } from './deal-landing/deal-location-page/dea
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
-  ]
+  ],
 })
 export class MainModule {}

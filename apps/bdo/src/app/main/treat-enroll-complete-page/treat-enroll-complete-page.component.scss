@@ -50,6 +50,7 @@ $font-weight:bold;
             &-content {
                 font-size: 23px;
                 font-weight: $font-weight;
+                word-wrap: break-word;
             }
         }
 

@@ -6,7 +6,7 @@
         Shop. Choose. Redeem.
     </h2>
     <div class="navigate-promotion">
-        <mat-icon>keyboard_arrow_left</mat-icon>   Go to Promotion Details
+        <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
     </div>
     <div class="reminder">
         <div class="title">
@@ -14,26 +14,33 @@
         </div>
         <div class="reminder-content">
             <div>1. Enrollment for this Promo is until March 31, 2021.</div>
-            <div>2. Cardholders will receive the eGC via SMS to the mobile number registered in the BDO system on or before April 26, 2021.</div>
+            <div>2. Cardholders will receive the eGC via SMS to the mobile number registered in the BDO system on or
+                before April 26, 2021.</div>
             <div>3. All items marked with asterisks (*) are mandatory fields. </div>
-             
+
         </div>
-        
+
     </div>
-    <div class="promoID">
-        <div  class="title">
+    <div class="promoID" [formGroup]="enrollForm">
+        <div class="title">
             Promo ID
         </div>
-        <input type="text" class="input-promo" placeholder="e.g. MMSP000001" >
+        <input type="text" class="input-promo" placeholder="e.g. MMSP000001" formControlName="promoId"> 
+        <mat-error *ngIf="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required')">
+            Promo ID is <strong>required</strong>
+          </mat-error>
         <div class="note">Sent to your registered mobile number via BDO Deals Viber/SMS</div>
     </div>
     <div class="confirm-term">
         <input type="checkbox" class="checkbox">
         <div class="confirm-term-content">
-            I hereby agree to be bound by the Shop. Choose. Redeem. <a class="confirm-term-content-link">Terms and Conditions</a>. I further agree to maintain my BDO Credit Card account current and in good credit standing. I also acknowledge that by choosing to redeem other offers before the awarding of the eGC, I will not be eligible to avail myself of this Promo.
+            I hereby agree to be bound by the Shop. Choose. Redeem. <a class="confirm-term-content-link">Terms and
+                Conditions</a>. I further agree to maintain my BDO Credit Card account current and in good credit
+            standing. I also acknowledge that by choosing to redeem other offers before the awarding of the eGC, I will
+            not be eligible to avail myself of this Promo.
         </div>
     </div>
     <div class="enroll">
-        <button mat-stroked-button color="primary" class="enroll-button">Enroll Now</button>
+        <button mat-stroked-button color="primary" class="enroll-button" (click)="enroll()">Enroll Now</button>
     </div>
 </div>
