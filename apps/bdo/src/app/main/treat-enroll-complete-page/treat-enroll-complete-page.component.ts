@@ -15,6 +15,6 @@ export class TreatEnrollCompletePageComponent  {
     description: 'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
   };
   ngOnInit(){
-    this.promoId = history.state.promoId
+    this.promoId = history.state.promoId;
   }
 }

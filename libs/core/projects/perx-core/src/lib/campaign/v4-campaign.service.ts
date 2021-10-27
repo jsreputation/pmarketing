@@ -625,7 +625,7 @@ export class V4CampaignService implements ICampaignService {
         )
       );
   }
-  public campaignEnrollmentSuccess(id:number,promoID:string): Observable<boolean>{
+  public bdoCampaignEnrol(id:number,promoID:string): Observable<boolean>{
     return this.http
     .post(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, {
       promo_id: promoID,

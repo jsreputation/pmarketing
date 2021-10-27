@@ -31,9 +31,8 @@ export class TreatEnrollPageComponent {
   enroll() {
     if (this.enrollForm.valid) {
       this.campaignService
-        .campaignEnrollmentSuccess(this.campaignId, this.enrollForm.get('promoId').value)
+        .bdoCampaignEnrol(this.campaignId, this.enrollForm.get('promoId').value)
         .subscribe((item) => {
-          console.log(item);
           if (item) {
             this.route.navigate([`treat-enroll/${this.campaignId}/complete`],{ state:{promoId:this.enrollForm.get('promoId').value}});
           } else {
