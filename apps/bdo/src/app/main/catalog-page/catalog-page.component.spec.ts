@@ -23,6 +23,14 @@ import { of } from 'rxjs';
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
   let fixture: ComponentFixture<CatalogPageComponent>;
+  const rewardsServiceBdo: Partial<RewardsService> = {
+    getTrending() {
+      return of();
+    },
+    getSearchHistory() {
+      return of();
+    }
+  };
   const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of()
   };
@@ -60,6 +68,7 @@ describe('CatalogPageComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: RewardsService, useValue:rewardsServiceBdo }
       ]
     })
     .compileComponents();

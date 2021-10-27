@@ -3,8 +3,8 @@
     <img [src]="dealDetail?.rewardThumbnail" />
     <div class="container">
       <h2 class="title">{{dealDetail?.name}}</h2>
-      <p>
-        <span *ngFor="let tag of tags" class="tag tag--{{tag.className}}">{{tag.name}}</span>
+      <p *ngIf="dealDetail?.tags">
+        <span *ngFor="let tag of dealDetail?.tags" class="tag tag--{{tag.name}}">{{tag.name}}</span>
       </p>
       <p>
         <mat-icon (click)="navigateLocationPage()">location_pin</mat-icon>
