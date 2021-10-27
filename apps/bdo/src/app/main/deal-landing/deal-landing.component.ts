@@ -1,6 +1,6 @@
 import { TAGS } from './../../shared/constant';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IReward, RewardsService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest } from 'rxjs';
@@ -19,7 +19,8 @@ export class DealLandingComponent implements OnInit {
   }
   constructor(
     private rewardService: RewardsService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private route: Router
   ) {}
   ngOnInit(): void {
     this.activeRoute.params.subscribe((param) => {
@@ -37,5 +38,8 @@ export class DealLandingComponent implements OnInit {
         });
       });
     });
+  }
+  navigateLocationPage(){
+    this.route.navigate([`deal-welcome/${this.dealDetail.id}/location`]);
   }
 }

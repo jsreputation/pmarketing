@@ -1,0 +1,18 @@
+<div class="deal-location">
+    <div class="body">
+        <div class="title">
+            Location
+        </div>
+        <div class="content" *ngFor="let item of lstVoucherLocation">
+            <div class="text">
+                {{item.name}}
+            </div>
+            <div class="icon-call">
+                <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <bdo-footer-refer></bdo-footer-refer>
+    </div>
+</div>

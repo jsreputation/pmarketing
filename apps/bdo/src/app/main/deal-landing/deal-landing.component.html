@@ -7,7 +7,7 @@
         <span *ngFor="let tag of tags" class="tag tag--{{tag.className}}">{{tag.name}}</span>
       </p>
       <p>
-        <mat-icon>location_pin</mat-icon>
+        <mat-icon (click)="navigateLocationPage()">location_pin</mat-icon>
         <mat-icon>share</mat-icon>
         <mat-icon>call</mat-icon>
       </p>
