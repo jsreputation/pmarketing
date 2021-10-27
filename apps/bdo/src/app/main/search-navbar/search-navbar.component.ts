@@ -45,7 +45,6 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
       this.isExpanded = false;
     } else {
       this.rewardsService.getSearchSuggestion(value).subscribe((searchSuggestion: ISearchSuggestion[])=>{
-        console.log(searchSuggestion);
         this.searchSuggestion = searchSuggestion.map(item=> item.value); // extract only the values, type not of concern
       });
     }
