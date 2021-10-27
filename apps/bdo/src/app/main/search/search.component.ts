@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router } from '@angular/router';
-import { ITrending, RewardsService, ConfigService } from '@perxtech/core';
+import { IConfig, ITrending, ISearchHistory, RewardsService, ConfigService } from '@perxtech/core';
 
 interface IBDOConfig {
-  hideSearchHistory: boolean;
+  showSearchHistory: boolean;
 }
 
 @Component({
@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig<IBDOConfig>().subscribe((config: IConfig<IBDOConfig>) => {
-      this.showHistory = config.custom!.hideSearchHistory;
+      this.showHistory = config.custom!.showSearchHistory;
     });
 
 
