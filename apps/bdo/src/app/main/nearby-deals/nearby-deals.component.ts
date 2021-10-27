@@ -25,6 +25,11 @@ export class NearbyDealsComponent {
     this.getRewardNearBy(this.rad,this.currentPosition.lat, this.currentPosition.lng).subscribe(rewards=>{
       this.rewards = rewards;
     });
+    this.getPosition().subscribe(pos => {
+      console.log(pos);
+      console.log(pos.coords.latitude);
+      console.log(pos.coords.longitude);
+   });
   }
 
   selectedItem(item: IReward) {
@@ -38,4 +43,13 @@ export class NearbyDealsComponent {
   ): Observable<IReward[]> {
     return this.rewardService.nearMe(rad, lat, lng);
   }
+  getPosition(): Observable<any> {
+    return Observable.create(observer => {
+      window.navigator.geolocation.getCurrentPosition(position => {
+        observer.next(position);
+        observer.complete();
+      },
+        error => observer.error(error));
+    });
+}
 }
