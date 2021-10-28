@@ -1,26 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router } from '@angular/router';
-import { ITrending, RewardsService } from '@perxtech/core';
+import { IConfig, ITrending, ISearchHistory, RewardsService, ConfigService } from '@perxtech/core';
+
+interface IBDOConfig {
+  showSearchHistory: boolean;
+}
 
 @Component({
   selector: 'bdo-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: [ './search.component.scss' ]
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit {
   public trendingList: string[] = [];
-  constructor(private rewardsService: RewardsService, private route:Router) { }
+  public searchHistories: string[] = [];
+  public showHistory = false;
 
-  ngOnInit(): void {
-    this.rewardsService
-      .getTrending()
-      .subscribe((searchHistory: ITrending[]) => {
-        this.trendingList = searchHistory.filter(trending=>trending.value.trim()).map((item) => item.value);
-      });
+  constructor(
+    private rewardsService: RewardsService,
+    private configService: ConfigService,
+    private route: Router) {
   }
 
-  onClick(trending:string) {
-    const queryParams: Params = { search: trending };
-    this.route.navigate([`result`], { queryParams:queryParams });
+  public ngOnInit(): void {
+    this.configService.readAppConfig<IBDOConfig>().subscribe((config: IConfig<IBDOConfig>) => {
+      this.showHistory = config.custom!.showSearchHistory;
+    });
+
+
+      this.rewardsService.getTrending().subscribe((searchHistory: ITrending[]) => {
+      this.trendingList = searchHistory.filter(trending => trending.value.trim()).map((item) => item.value);
+    });
+    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[]) => {
+      this.searchHistories = searchHistory.map(item => item.value);
+    });
+  }
+
+  public onClick(searchString: string): void {
+    const queryParams: Params = { search: searchString };
+    this.route.navigate([ `result` ], { queryParams: queryParams });
   }
 }

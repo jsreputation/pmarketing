@@ -625,6 +625,23 @@ export class V4CampaignService implements ICampaignService {
         )
       );
   }
+  public bdoCampaignEnrol(id:number,promoID:string): Observable<boolean>{
+    return this.http
+    .post(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, {
+      promo_id: promoID,
+    },{
+      observe: 'response',
+    })
+    .pipe(
+      map((response: HttpResponse<any>) =>
+     { 
+     return response.status === 200 ? true : false}
+      ),
+      catchError((error: HttpErrorResponse) =>
+        error.status === 403 ? of(false) : throwError(error)
+      )
+    );
+  }
   public static v4CampaignRuleToCampaignRule(
     campaignRule: IV4CampaignRule
   ): ICampaignRule {

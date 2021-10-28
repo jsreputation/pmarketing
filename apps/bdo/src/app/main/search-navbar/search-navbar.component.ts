@@ -1,8 +1,9 @@
 import { Params, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ISearchHistory, ITrending, RewardsService } from '@perxtech/core';
-import { FilterService } from '../../shared/services/filter.service';
+import { ISearchSuggestion, RewardsService } from '@perxtech/core';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
+import { switchMap, debounceTime } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'bdo-search-navbar',
@@ -13,44 +14,31 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   public isSearching = false;
   public isExpanded = false;
   public searchValue = '';
-  public trendingList: string[] = [];
-  public filteredSearchHistories: string[] = [];
-  public searchHistories: string[] = [];
+  public searchSuggestion: string[] = [];
+  public searchEvent$: BehaviorSubject<string> = new BehaviorSubject('');
+
   constructor(private route: Router,
               public router: Router,
-              private rewardsService: RewardsService,
-              private filterService: FilterService) {
+              private rewardsService: RewardsService) {
     super();
   }
   
   ngOnInit(): void {
-    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[])=>{
-      this.searchHistories = searchHistory.map(item=> item.value);
-      this.filteredSearchHistories = this.searchHistories;
+    this.searchEvent$.pipe(
+      debounceTime(500),
+      switchMap((searchQuery: string) => this.rewardsService.getSearchSuggestion(searchQuery))
+    ).subscribe((searchSuggestion: ISearchSuggestion[])=>{
+      this.searchSuggestion = searchSuggestion.map(item=> item.value); // extract only the values, type not of concern
     });
-
-    this.rewardsService
-    .getTrending()
-    .subscribe((searchHistory: ITrending[]) => {
-      this.trendingList = searchHistory.map((item) => item.value);
-    });
-
-    this.filterService
-      .filterValue$.subscribe(filter => {
-        this.searchValue = filter.searchValue;
-    });
-
   }
 
   searchValueChange(event) {
     const value = event.target.value;
     this.searchValue = value;
     if (!value) {
-      this.filteredSearchHistories = this.searchHistories;
+      this.isExpanded = false;
     } else {
-      this.filteredSearchHistories = this.searchHistories.filter((item) =>
-        item.toLocaleLowerCase().includes(value.toLocaleLowerCase())
-      );
+      this.searchEvent$.next(value);
     }
 
     if (value && event.code === 'Enter') {
@@ -60,7 +48,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
 
   clearSearchValue(event) {
     this.searchValue = '';
-    this.filteredSearchHistories = this.searchHistories;
+    this.searchSuggestion = [];
     this.isSearching = false;
     event.stopPropagation();
   }

@@ -33,7 +33,6 @@
             }
         }
     }
-
     .promoID {
         display: flex;
         flex-direction: column;
@@ -59,18 +58,15 @@
             font-size: 11px;
             color: #707070;
         }
-       
     }
     .confirm-term{
         display: flex;
         &-content{
             &-link{
                 color: #0072D8;
-                
             }
             &-link:hover{
                 border-bottom:1px solid #0072D8;
-               
             }
         }
     }

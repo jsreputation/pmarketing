@@ -107,3 +107,13 @@ export interface ITrending {
 export interface ISearchHistory {
   value: string;
 }
+
+export enum SearchSuggestionType {
+  reward = 'reward',
+  merchant = 'merchant'
+}
+
+export interface ISearchSuggestion {
+  type: SearchSuggestionType;
+  value: string;
+}
