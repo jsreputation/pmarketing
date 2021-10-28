@@ -9,6 +9,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class DealLocationPageComponent {
   lstVoucherLocation: IVoucherLocation[];
+  urlGoogleMap: string="";
   constructor(
     private voucherService: IVoucherService,
     private activeRoute: ActivatedRoute
@@ -21,5 +22,8 @@ export class DealLocationPageComponent {
       .subscribe((item) => {
         this.lstVoucherLocation = item;
       });
+  }
+  navigateGoogleMaps(lat,lng){
+    window.open(`https://maps.google.com/?q=${lat},${lng}`, '_system');
   }
 }
