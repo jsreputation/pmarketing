@@ -9,7 +9,6 @@ import { switchMap } from 'rxjs/operators';
 })
 export class DealLocationPageComponent {
   lstVoucherLocation: IVoucherLocation[];
-  urlGoogleMap: string="";
   constructor(
     private voucherService: IVoucherService,
     private activeRoute: ActivatedRoute
