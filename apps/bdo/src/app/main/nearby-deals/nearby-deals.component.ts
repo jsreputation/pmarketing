@@ -28,7 +28,6 @@ export class NearbyDealsComponent {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         };
-        console.log(this.currentPosition)
         this.rewardService
           .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng)
           .subscribe((rewards) => {
