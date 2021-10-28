@@ -77,7 +77,17 @@ export class LeaderboardPageComponent {
         })
       ).subscribe((miniRank: UserRanking | undefined) => {
         if (miniRank) {
-          miniRank.rank = miniRank.rank ? miniRank.rank : this.undefinedRankText;
+          if (miniRank.rank && this.leaderBoardSettings?.podiums?.length > 0) {
+            for (const podium of this.leaderBoardSettings.podiums) {
+              if (miniRank.rank >= podium.positionStart && miniRank.rank <= podium.positionEnd) {
+                miniRank.rank = podium.displayProperties?.rankName ?
+                                `${miniRank.rank} - ${podium.displayProperties.rankName}` : miniRank.rank;
+                break;
+              }
+            }
+          } else {
+            miniRank.rank = miniRank.rank ? miniRank.rank : this.undefinedRankText;
+          }
           this.userRankData = miniRank;
         }
       });
