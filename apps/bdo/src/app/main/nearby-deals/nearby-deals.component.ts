@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
-import { Observable } from 'rxjs';
 import { IPosition } from './map/map.component';
 @Component({
   selector: 'bdo-nearby-deals',
