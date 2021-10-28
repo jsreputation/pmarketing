@@ -2,54 +2,39 @@ import { Component } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { IPosition } from './map/map.component';
-
 @Component({
   selector: 'bdo-nearby-deals',
   templateUrl: './nearby-deals.component.html',
-  styleUrls: ['./nearby-deals.component.scss']
+  styleUrls: ['./nearby-deals.component.scss'],
 })
 export class NearbyDealsComponent {
-  public rewards:IReward[];
+  public rewards: IReward[];
   public rad = 10000;
   public currentPosition: IPosition;
-  constructor(
-    private rewardService: RewardsService
-  ) {
-    this.currentPosition = {
-      lat: 14.560446,
-      lng: 121.017646,
-    };
-  }
+  constructor(private rewardService: RewardsService) {}
 
   ngOnInit(): void {
-    this.getRewardNearBy(this.rad,this.currentPosition.lat, this.currentPosition.lng).subscribe(rewards=>{
-      this.rewards = rewards;
-    });
-    this.getPosition().subscribe(pos => {
-      console.log(pos);
-      console.log(pos.coords.latitude);
-      console.log(pos.coords.longitude);
-   });
+    this.getRewardNearBy()
   }
 
   selectedItem(item: IReward) {
     console.log(item);
   }
 
-  getRewardNearBy(
-    rad: number,
-    lat?: number,
-    lng?: number
-  ): Observable<IReward[]> {
-    return this.rewardService.nearMe(rad, lat, lng);
+  getRewardNearBy() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        console.log(this.currentPosition)
+        this.rewardService
+          .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng)
+          .subscribe((rewards) => {
+            this.rewards = rewards;
+          });
+      });
+    }
   }
-  getPosition(): Observable<any> {
-    return Observable.create(observer => {
-      window.navigator.geolocation.getCurrentPosition(position => {
-        observer.next(position);
-        observer.complete();
-      },
-        error => observer.error(error));
-    });
-}
 }
