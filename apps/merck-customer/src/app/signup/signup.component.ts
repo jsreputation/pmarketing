@@ -65,21 +65,21 @@ export class SignupComponent implements OnInit, PageAppearence {
     });
 
     this.route.queryParams.subscribe((params: Params) => {
-      const phNumberParam: string = params.phone;
+      const phoneParam: string = params.phone;
       let countryCode, mobileNo;
-      if (phNumberParam) {
-        if (phNumberParam.startsWith('852')) {
+      if (phoneParam) {
+        if (phoneParam.startsWith('852')) {
           countryCode = '852';
-          mobileNo = phNumberParam.substring(3);
-        } else if (phNumberParam.startsWith('853')) {
+          mobileNo = phoneParam.substring(3);
+        } else if (phoneParam.startsWith('853')) {
           countryCode = '853';
-          mobileNo = phNumberParam.substring(3);
-        } else if (phNumberParam.startsWith('86')) {
+          mobileNo = phoneParam.substring(3);
+        } else if (phoneParam.startsWith('86')) {
           countryCode = '86';
-          mobileNo = phNumberParam.substring(2);
-        } else if (phNumberParam.startsWith('65')) {
+          mobileNo = phoneParam.substring(2);
+        } else if (phoneParam.startsWith('65')) {
           countryCode = '65';
-          mobileNo = phNumberParam.substring(2);
+          mobileNo = phoneParam.substring(2);
         }
         this.signupForm.controls.countryCode.setValue(countryCode);
         this.signupForm.controls.mobileNo.setValue(mobileNo);
