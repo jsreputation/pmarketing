@@ -41,7 +41,6 @@ import {
 } from '@angular/material/dialog';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { SearchComponent } from './search/search.component';
-import { FooterComponent } from './home/footer/footer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
@@ -70,8 +69,7 @@ import { MapComponent } from './nearby-deals/map/map.component';
     CategoryHeaderComponent,
     TreatEnrollCompletePageComponent,
     SearchComponent,
-    FooterComponent,
-    DealLocationPageComponent,
+    DealLocationPageComponent
   ],
   imports: [
     CommonModule,
