@@ -111,8 +111,8 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
     const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => card.type);
     const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
     let tagsParams = null;
-    if (cardTypes.length) {
-      tagsParams = cardTypes.length === FILTER_DATA.cardType.length ? null : cardTypes;
+    if (cardTypes.length !== FILTER_DATA.cardType.length) {
+      tagsParams = cardTypes;
     } else {
       tagsParams = tags.length === FILTER_DATA.tags.length ? null : tags;
     }
