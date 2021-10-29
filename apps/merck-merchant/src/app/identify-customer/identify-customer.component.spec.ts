@@ -14,8 +14,10 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { IMerchantAdminService } from '@perxtech/core';
+import { IMerchantAdminService, ThemesService } from '@perxtech/core';
 import { MerchantQrscannerModule } from '@perxtech/bcm-pages';
+import { HeaderComponent } from '../header/header.component';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('IdentifyCustomerComponent', () => {
   let component: IdentifyCustomerComponent;
@@ -25,11 +27,14 @@ describe('IdentifyCustomerComponent', () => {
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     getCustomerDetails: () => of()
   };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async () => {
     params = new Subject<Params>();
     await TestBed.configureTestingModule({
-      declarations: [ IdentifyCustomerComponent ],
+      declarations: [ IdentifyCustomerComponent, HeaderComponent ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -40,11 +45,13 @@ describe('IdentifyCustomerComponent', () => {
         BrowserAnimationsModule,
         MatTabsModule,
         MerchantQrscannerModule,
+        MatIconModule,
         TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: {params} },
         { provide: Router, useValue: routerStub },
-        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub }
+        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
     .compileComponents();

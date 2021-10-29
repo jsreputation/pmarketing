@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit {
   public selectedProducts: IProduct[] = [];
   public totalPoints: number;
   public language: string;
-  public user: IProfile;
+  public userId: number;
 
   constructor(
     private router: Router,
@@ -56,20 +56,9 @@ export class OrderComponent implements OnInit {
       try {
         this.payload = JSON.parse(scannedQrCode);
         if (this.payload.verifiedUser) {
-          this.user = this.payload.verifiedUser;
+          this.userId = this.payload.verifiedUser.id ? this.payload.verifiedUser.id : 0;
         } else {
-          if (!this.payload.identifier) {
-            this.notificationService.addSnack('Invalid Merck QR Code');
-            return;
-          }
-          this.merchantAdminService.getCustomerDetails(0, this.payload.identifier).subscribe(
-            (userDetails: IProfile) => {
-              this.user = userDetails;
-            },
-            () => {
-              this.notificationService.addSnack('User not found');
-              this.router.navigate(['/home']);
-            });
+          this.userId = this.payload.id;
         }
       } catch (error) {
         this.notificationService.addSnack('Invalid Merck QR Code');
@@ -116,13 +105,16 @@ export class OrderComponent implements OnInit {
           if (!merchantName) {
             return throwError({ message: 'merchant name is required' });
           }
+          if (!this.userId) {
+            return throwError({ message: 'user id is required' });
+          }
           return from(this.selectedProducts).pipe(
             mergeMap((product: IProduct) => {
               const partDataRequests: Observable<IMerchantAdminTransaction>[] = [];
               if (product.quantity) {
                 for (let i = 0; i < product.quantity; i++) {
                   partDataRequests.push(this.merchantAdminService.createTransaction(
-                    this.user.id ? this.user.id : 0 , merchantUsername, product.price, product.currency,
+                    this.userId , merchantUsername, product.price, product.currency,
                     'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
                     `${product.name} ${product.description}`));
                 }

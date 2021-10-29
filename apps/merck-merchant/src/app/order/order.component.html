@@ -3,8 +3,8 @@
 <div class="container">
   <div *ngIf="rewards" class="main">
     <div *ngIf="payload" class="customer-info">
-      <p>{{ payload.name }}</p>
-      <small>{{ payload.id }}</small>
+      <p>{{ payload.verifiedUser ? payload.verifiedUser.lastName: payload.name }}</p>
+      <small>{{ payload.verifiedUser ? payload.verifiedUser.id : payload.id }}</small>
     </div>
     <div class="rewards">
       <mat-divider></mat-divider>
