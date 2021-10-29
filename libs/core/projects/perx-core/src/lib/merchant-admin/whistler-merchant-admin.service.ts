@@ -125,4 +125,9 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   public getCustomerLoyalties(userId: string, page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ILoyalty[]> {
     throw new Error('Not implemented.');
   }
+
+  // @ts-ignore
+  public signUpNewUser(mobileNumber: string): Observable<IProfile> {
+    throw new Error('Not implemented.');
+  }
 }

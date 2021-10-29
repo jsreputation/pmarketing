@@ -82,4 +82,6 @@ export abstract class IMerchantAdminService {
 
   public abstract getCustomerLoyalties(userId: string, page?: number, pageSize?: number, locale?: string): Observable<ILoyalty[]>;
 
+  public abstract signUpNewUser(mobileNumber: string): Observable<IProfile>;
+
 }

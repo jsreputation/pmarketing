@@ -55,6 +55,7 @@ import { TransactionHistoryPipe } from './transaction-history/transaction-histor
 import { switchMap, tap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatCardModule } from '@angular/material/card';
+import { UserSignupComponent } from './user-signup/user-signup.component';
 
 export const appInit =
   (
@@ -93,7 +94,8 @@ export const appInit =
     RegisterComponent,
     TransactionHistoryComponent,
     TransactionPipe,
-    TransactionHistoryPipe
+    TransactionHistoryPipe,
+    UserSignupComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
