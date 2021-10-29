@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ICampaign,
-  ICampaignService,
+  ICampaignService
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
 @Component({
