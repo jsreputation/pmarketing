@@ -9,5 +9,6 @@ export interface  IOptionsModel {
 export interface IFilterModel {
   categories: IOptionsModel[];
   tags: IOptionsModel[];
+  cardType: IOptionsModel[];
   locations: IOptionsModel[];
 }

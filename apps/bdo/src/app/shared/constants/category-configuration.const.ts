@@ -180,4 +180,22 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
       },
     ]
   },
+  {
+    key:"online-exclusive",
+    name:"Online Exclusive",
+    children:[
+    ]
+  },
+  {
+    key:"spend-anywhere",
+    name:"Spend Anywhere",
+    children:[
+    ]
+  },
+  {
+    key:"shop-choose-redeem",
+    name:"Shop.Choose.Redeem",
+    children:[
+    ]
+  }
 ]

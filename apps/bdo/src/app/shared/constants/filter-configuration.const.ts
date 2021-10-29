@@ -37,6 +37,24 @@ export const FILTER_DATA: IFilterModel = {
         { name: 'Emerald',type:'sapphire' },
         { name: 'Diamond',type:'diamond' }
       ],
+    },
+    {
+      name: 'Spend Anywhere',
+      type:'spend-anywhere',
+      children: [
+      ],
+    },
+    {
+      name: 'Shop.Choose.Redeem',
+      type: 'shop-choose-redeem',
+      children: [
+      ],
+    },
+    {
+      name: 'Online Exclusive',
+      type: 'online-exclusive',
+      children: [
+      ],
     }
   ],
   tags: [
@@ -66,5 +84,32 @@ export const FILTER_DATA: IFilterModel = {
       name: 'Health & Wellness',
       type: 'heath-n-wellness',
     },
+  ],
+  // These one section does not display on filter dialog
+  cardType: [
+    {
+      name: 'Mastercard',
+      type: 'master'
+    },
+    {
+      name: 'Visa',
+      type: 'visa',
+    },
+    {
+      name: 'American Express',
+      type: 'american-express'
+    },
+    {
+      name: 'JCB',
+      type: 'jcb'
+    },
+    {
+      name: 'Union Pay',
+      type: 'union-pay'
+    },
+    {
+      name: 'Diners Club',
+      type: 'diners-club'
+    }
   ]
 }

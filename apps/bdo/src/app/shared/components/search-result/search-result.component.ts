@@ -8,7 +8,6 @@ import { IListItemModel } from '../../models/list-item.model';
 })
 export class SearchResultComponent {
   @Input() result: IListItemModel[] = [];
-
   selectedItem(item: IListItemModel) {
     console.log(item);
   }

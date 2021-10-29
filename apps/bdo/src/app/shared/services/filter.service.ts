@@ -8,6 +8,7 @@ const initValue: IFilterModel = {
   categories: [],
   tags: [],
   locations: [],
+  cardType: []
 };
 
 @Injectable({

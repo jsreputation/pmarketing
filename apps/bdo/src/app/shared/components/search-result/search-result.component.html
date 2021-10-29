@@ -4,19 +4,25 @@
       <img src="assets/images/icon-n-catalogue.svg" />
       <span class="label-tab">Catalogue</span>
     </ng-template>
-    <ul class="search-result-wrapper">
-      <bdo-large-list-item *ngFor="let item of result" [reward]="item" (click)="selectedItem(item)">
+    <ul class="search-result-wrapper" *ngIf="result?.length">
+      <bdo-large-list-item *ngFor="let item of result" [reward]="item" [url]="['/deal-welcome', item.id.toString()]" (click)="selectedItem(item)">
       </bdo-large-list-item>
     </ul>
+    <p class="no-result" *ngIf="!result?.length">
+      No result
+    </p>
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
       <img src="assets/images/icon-n-viewall.svg" />
       <span class="label-tab">List</span>
     </ng-template>
-    <ul class="search-result-wrapper">
-      <bdo-list-item *ngFor="let item of result" (click)="selectedItem(item)" [reward]="item">
+    <ul class="search-result-wrapper" *ngIf="result?.length">
+      <bdo-list-item *ngFor="let item of result" (click)="selectedItem(item)" [url]="['/deal-welcome', item.id.toString()]" [reward]="item">
       </bdo-list-item>
     </ul>
+    <p class="no-result" *ngIf="!result?.length">
+      No result
+    </p>
   </mat-tab>
 </mat-tab-group>

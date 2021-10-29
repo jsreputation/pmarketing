@@ -1,5 +1,5 @@
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaignService, RewardsService } from '@perxtech/core';
@@ -8,6 +8,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utili
   templateUrl: './catalog-page.component.html',
   styleUrls: ['./catalog-page.component.scss'],
 })
-export class CatalogPageComponent implements OnInit {
+export class CatalogPageComponent extends SelfDestruct implements OnInit {
   categoryCode: string;
   requestPageSize = 100;
   filterResult$: Observable<IListItemModel[]> = null;
@@ -28,15 +29,19 @@ export class CatalogPageComponent implements OnInit {
     private filterService: FilterService,
     private campaignsService: ICampaignService
   ) {
+    super();
   }
 
   ngOnInit(): void {
-    this.activeRoute.queryParams.subscribe((params) => {
-      this.filterService.setValue(this.mapQueryParamsToFilterObject(FILTER_DATA, params));
-      this.categoryCode = params.type;
+    this.activeRoute.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        this.filterService.setValue(this.mapQueryParamsToFilterObject(FILTER_DATA, params));
+        this.categoryCode = params.type;
     });
     this.filterResult$ = this.filterService.filterValue$
       .pipe(
+        takeUntil(this.destroy$),
         switchMap((filterValue: IFilterModel) => {
           const queryObject = this.buildParams(filterValue);
           Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
@@ -66,13 +71,9 @@ export class CatalogPageComponent implements OnInit {
   }
 
   buildParams(filterValue: IFilterModel) {
-    const selectedCategory = filterValue.categories.find(item => item.selected);
-    const categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.type);
-    const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
-
     return {
-      tags: tags.length === FILTER_DATA.tags.length ? null : tags,
-      categories: categories.length === FILTER_DATA.categories.length ? null : categories
+      tags: this.handleTags(filterValue),
+      categories: this.handleCategory(filterValue)
     };
   }
 
@@ -96,9 +97,39 @@ export class CatalogPageComponent implements OnInit {
       tags: filterValue.tags.map(item => !queryParams.tags || this.equalOrIncludes(item.type, queryParams.tags) ? {
         ...item,
         selected: true
-      } : item)
+      } : item),
+      cardType: filterValue.cardType.map(item => !queryParams.cardType || this.equalOrIncludes(item.type, queryParams.cardType) ? {
+        ...item,
+        selected: true
+      } : item),
     };
+
     return filterValue;
+  }
+
+  handleTags(filterValue: IFilterModel) {
+    const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => card.type);
+    const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
+    let tagsParams = null;
+    if (cardTypes.length) {
+      tagsParams = cardTypes.length === FILTER_DATA.cardType.length ? null : cardTypes;
+    } else {
+      tagsParams = tags.length === FILTER_DATA.tags.length ? null : tags;
+    }
+    return tagsParams;
+  }
+
+  handleCategory(filterValue: IFilterModel) {
+    let categories = [];
+    const selectedSpecialCategories = filterValue.categories.filter(item => item.selected
+    && ['spend-anywhere', 'shop-choose-redeem', 'online-exclusive'].includes(item.type));
+    if (selectedSpecialCategories.length) {
+      return selectedSpecialCategories.map(item => item.type);
+    } else {
+      const selectedCategory = filterValue.categories.find(item => item.selected);
+      categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.type);
+      return categories.length === selectedCategory.children.length ? null : categories;
+    }
   }
 
   private equalOrIncludes(type, values) {
