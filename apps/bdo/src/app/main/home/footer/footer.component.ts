@@ -10,13 +10,13 @@ export class FooterComponent implements OnInit {
   public activeNumber = 0;
   public selectedItem:BannerModel;
   public banners:BannerModel[]= [
-    {
-      id:1,
-      header:"Refer a friend to get treats",
-      description:"Already a card holder? Refer friends now and get rewarded with treats!",
-      buttonName:"Refer Now",
-      image:"assets/images/img-ad-gift.png"
-    },
+    // {
+    //   id:1,
+    //   header:"Refer a friend to get treats",
+    //   description:"Already a card holder? Refer friends now and get rewarded with treats!",
+    //   buttonName:"Refer Now",
+    //   image:"assets/images/img-ad-gift.png"
+    // },
     {
       id:2,
       header:"Apply for a BDO Credit Card",
