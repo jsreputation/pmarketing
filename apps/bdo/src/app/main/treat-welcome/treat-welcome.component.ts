@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ICampaign,
   ICampaignService,
-  IReward,
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
 @Component({
@@ -12,10 +11,8 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./treat-welcome.component.scss'],
 })
 export class TreatWelcomeComponent implements OnInit {
-  lstDeal = [1, 2, 3, 4];
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
   campaign: ICampaign;
-  public rewards: IReward[];
   constructor(
     private campaignService: ICampaignService,
     private activeRoute: ActivatedRoute,
