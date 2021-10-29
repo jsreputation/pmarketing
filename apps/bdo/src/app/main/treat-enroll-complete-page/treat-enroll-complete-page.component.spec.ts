@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page.component';
 import { SharedModule } from '../../shared/shared.module';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
-import { FooterReferComponent } from '../../shared/components/footer-refer/footer-refer.component';
 import { RouterTestingModule } from "@angular/router/testing";
 
 describe('TreatEnrollCompletePageComponent', () => {
@@ -12,7 +11,7 @@ describe('TreatEnrollCompletePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TreatEnrollCompletePageComponent,TaggedItemComponent,FooterReferComponent],
+      declarations: [ TreatEnrollCompletePageComponent,TaggedItemComponent],
       imports: [
         SharedModule,
         RouterTestingModule.withRoutes([]),
