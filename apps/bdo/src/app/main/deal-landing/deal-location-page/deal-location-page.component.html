@@ -3,7 +3,7 @@
         <div class="title">
             Location
         </div>
-        <div class="content" *ngFor="let item of lstVoucherLocation">
+        <div class="content" *ngFor="let item of lstVoucherLocation" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
             <div class="text">
                 {{item.name}}
             </div>

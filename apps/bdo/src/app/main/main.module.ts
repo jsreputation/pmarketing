@@ -45,7 +45,6 @@ import { FooterComponent } from './home/footer/footer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
-import { TreatMapComponent } from './treat-welcome/map/map.component';
 import { MapComponent } from './nearby-deals/map/map.component';
 
 @NgModule({
@@ -73,7 +72,6 @@ import { MapComponent } from './nearby-deals/map/map.component';
     SearchComponent,
     FooterComponent,
     DealLocationPageComponent,
-    TreatMapComponent,
   ],
   imports: [
     CommonModule,

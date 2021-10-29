@@ -20,7 +20,6 @@ class MockRewardsService {
 class MockIVoucherService {
 
 }
-
 describe('NearbyDealsComponent', () => {
   let component: NearbyDealsComponent;
   let fixture: ComponentFixture<NearbyDealsComponent>;
@@ -51,7 +50,6 @@ describe('NearbyDealsComponent', () => {
         {
           provide: IVoucherService, useClass:MockIVoucherService
         }
-        
       ]
     })
     .compileComponents();
