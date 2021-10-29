@@ -38,10 +38,6 @@ export class FooterComponent implements OnInit {
     this.selectedItem = this.banners[this.activeNumber];
   }
 
-  public onClick(banner:BannerModel) {
-    console.log(banner);
-  }
-
   public onCircleClick(index:number) {
     this.activeNumber = index;
     this.selectedItem = this.banners[this.activeNumber];

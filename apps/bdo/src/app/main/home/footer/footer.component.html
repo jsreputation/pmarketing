@@ -5,7 +5,7 @@
         <div class="content-group" [style.background-image]="'url('+selectedItem.image+')'">
           <h3 class="header">{{selectedItem?.header}}</h3>
           <p class="content" [innerHTML]="selectedItem?.description"></p>
-          <span class="btn" (click)="onClick(selectedItem);">{{selectedItem?.buttonName}}</span>
+          <a class="btn" [href]="selectedItem.link" target="_blank">{{selectedItem?.buttonName}}</a>
         </div>
       </li>
     </ul>
