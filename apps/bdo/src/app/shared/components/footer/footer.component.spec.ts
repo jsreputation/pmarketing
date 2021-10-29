@@ -2,13 +2,13 @@ import { RewardsService } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MainRoutingModule } from '../../main-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../../shared/components/tagged-item/tagged-item.component';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { FooterComponent } from './footer.component';
+import { RouterTestingModule } from '@angular/router/testing';
 class MockRewardsService {
  getRewards() {
    return of();
@@ -28,7 +28,7 @@ describe('FooterComponent', () => {
         TaggedItemComponent
       ],
       imports: [
-        MainRoutingModule,
+        RouterTestingModule,
         MatSidenavModule,
         MatCardModule,
         MatToolbarModule,

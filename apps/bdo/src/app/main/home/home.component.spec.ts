@@ -16,7 +16,6 @@ import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { FooterComponent } from './footer/footer.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -41,7 +40,6 @@ describe('HomeComponent', () => {
         SecondaryCatalogComponent,
         FeatureDealsComponent,
         TaggedItemComponent,
-        FooterComponent
       ],
       imports: [
         MainRoutingModule,
