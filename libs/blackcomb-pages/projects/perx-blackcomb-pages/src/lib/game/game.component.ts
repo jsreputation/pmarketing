@@ -400,8 +400,30 @@ export class GameComponent implements OnInit, OnDestroy {
         }
         this.checkFailureOrSuccess();
       }),
-      catchError((err: HttpErrorResponse) => {
-        this.popupData = this.noRewardsPopUp;
+      catchError((err: { errorState: string } | HttpErrorResponse) => {
+        if (!(err instanceof HttpErrorResponse) && err.errorState) {
+          this.popupData = {
+            title: 'Sorry!',
+            text: err.errorState,
+            buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+            imageUrl: '',
+          };
+        } else if (
+          err instanceof HttpErrorResponse &&
+          err.error
+        ) {
+          this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+            .subscribe((errorMessage) => {
+              this.popupData = {
+                title: 'Sorry!',
+                text: errorMessage,
+                buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                imageUrl: '',
+              };
+            });
+        } else {
+          this.popupData = this.noRewardsPopUp;
+        }
         throw err;
       })
     );
@@ -454,8 +476,30 @@ export class GameComponent implements OnInit, OnDestroy {
             }
           }
         }),
-        catchError((err: HttpErrorResponse) => {
-          this.popupData = this.noRewardsPopUp;
+        catchError((err: { errorState: string } | HttpErrorResponse) => {
+          if (!(err instanceof HttpErrorResponse) && err.errorState) {
+            this.popupData = {
+              title: 'Sorry!',
+              text: err.errorState,
+              buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+              imageUrl: '',
+            };
+          } else if (
+            err instanceof HttpErrorResponse &&
+            err.error
+          ) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((errorMessage) => {
+                this.popupData = {
+                  title: 'Sorry!',
+                  text: errorMessage,
+                  buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                  imageUrl: '',
+                };
+              });
+          } else {
+            this.popupData = this.noRewardsPopUp;
+          }
           throw err;
         })
       );
