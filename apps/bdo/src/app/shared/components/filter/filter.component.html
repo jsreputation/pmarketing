@@ -1,6 +1,14 @@
 <form [formGroup]='filterForm' class='filter-form' *ngIf='filterForm'>
   <div mat-dialog-content>
-    <h3 class='header'>Account Type</h3>
+    <!-- <h3 class='header'>Account Type</h3>
+    <ul formArrayName='accountTypes' class='inline-checkbox-group'>
+      <li *ngFor='let item of filterSource.accountTypes; let idx= index;'>
+        <mat-checkbox
+          [formControlName]='idx'>
+          <span class='title'>{{item.name}}</span>
+        </mat-checkbox>
+      </li>
+    </ul> -->
     <mat-accordion class='categories-wrapper'>
       <mat-expansion-panel [expanded]='true'>
         <mat-expansion-panel-header>
@@ -11,7 +19,7 @@
         <div formArrayName='categories'>
           <ng-container *ngFor='let item of filterSource.categories;
           let idx= index;'>
-            <bdo-checkbox-group [formControlName]='idx'>
+            <bdo-checkbox-group [formControlName]='idx' >
             </bdo-checkbox-group>
           </ng-container>
         </div>

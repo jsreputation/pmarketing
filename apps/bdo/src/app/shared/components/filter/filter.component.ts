@@ -5,68 +5,67 @@ import { takeUntil } from 'rxjs/operators';
 import { SelfDestruct } from '../../utilities/self-destruct.component';
 import { IFilterModel } from '../../models/filter.model';
 import { FilterService } from '../../services/filter.service';
+import { FILTER_DATA } from '../../constants/filter-configuration.const';
+import { CATALOG_CONFIGURATION } from '../../constants/catalog-configuration.const';
 
 @Component({
   selector: 'bdo-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
   public filterForm: FormGroup;
-  filterSource: IFilterModel
-
-  constructor(private fb: FormBuilder,
-              //private rewardsService: RewardsService,
-              public filterService: FilterService,
-              public dialogRef: MatDialogRef<FilterComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any
+  filterSource: IFilterModel;
+  catalogConfiguration = CATALOG_CONFIGURATION;
+  constructor(
+    private fb: FormBuilder,
+    public filterService: FilterService,
+    public dialogRef: MatDialogRef<FilterComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     super();
-    // this.rewardsService.getAllCategories().subscribe((categories)=>{
-    //   this.filterSource.categories = this.getCategoriesFilterSource(categories).map(item=> {
-    //     return {
-    //       name: item.title,
-    //       value: true,
-    //       children: item.child.map(childItem=> { return {name: childItem.title, value: true}})
-    //     }
-    //   });
-    //   this.renderForm();
-    // });
   }
 
-
   ngOnInit(): void {
-    //this.filterService.setValue({ searchValue: '', ...FILTER_DATA });
     this.filterService.filterValue$
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(value => {
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
         this.filterSource = value;
         this.renderForm();
       });
   }
 
-  getCategoriesFilterSource(categories:any[]) {
-    const  parentCategories = categories.filter(item=> item.parent === null);
-    const childCategories = categories.filter(item=> item.parent !== null);
-    return parentCategories.map(parentItem=>{
-      return { ...parentItem, child:childCategories.filter(item=> item.parent.id === parentItem.id)};
-    })
+  getCategoriesFilterSource(categories: any[]) {
+    const parentCategories = categories.filter((item) => item.parent === null);
+    const childCategories = categories.filter((item) => item.parent !== null);
+    return parentCategories.map((parentItem) => {
+      return {
+        ...parentItem,
+        child: childCategories.filter(
+          (item) => item.parent.id === parentItem.id
+        ),
+      };
+    });
   }
 
   applyFilterClick() {
-    this.dialogRef.close(this.filterSource);
+    const formValue = this.filterForm.value;
+    formValue.tags = this.filterSource.tags;
+    this.dialogRef.close(formValue);
   }
 
   resetFilterClick() {
-    //this.filterService.setValue({ searchValue: '', ...FILTER_DATA });
+    this.filterService.setValue(FILTER_DATA);
   }
 
   chipClick(index: number) {
-    const value = (this.filterForm.get('tags') as FormArray).controls[index].value;
+    const value = (this.filterForm.get('tags') as FormArray).controls[index]
+      .value;
     (this.filterForm.get('tags') as FormArray).controls[index].setValue(!value);
     (this.filterForm.get('tags') as FormArray).updateValueAndValidity();
+    this.filterSource.tags = this.filterSource.tags.map(
+      (item, idx) => index === idx ? { ...item, selected: !value} : item
+    )
   }
 
   checkCurrentValue(index: number) {
@@ -75,10 +74,15 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
 
   private renderForm() {
     this.filterForm = this.fb.group({
-      //accountTypes: new FormArray(this.filterSource.accountTypes.map(item => new FormControl(item.value))),
-      categories: new FormArray((this.filterSource.categories.map(item => new FormControl(item)))),
-      tags: new FormArray((this.filterSource.tags.map(item => new FormControl(item.selected)))),
-      locations: new FormArray(this.filterSource.locations.map(item => new FormControl(item)))
+      categories: new FormArray(
+        this.filterSource.categories.map((item) => new FormControl(item))
+      ),
+      tags: new FormArray(
+        this.filterSource.tags.map((item) => new FormControl(item.selected))
+      ),
+      locations: new FormArray(
+        this.filterSource.locations.map((item) => new FormControl(item))
+      ),
     });
   }
 }

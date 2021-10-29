@@ -38,9 +38,11 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
       const value: CheckboxModel = {
         name: this.dataSource.name,
         selected: output.category,
+        type: this.dataSource.type,
         children: output.children.map((value, index) => ({
             name: this.dataSource.children[index].name,
-            value: value
+            type: this.dataSource.children[index].type,
+            selected: value
         }))
       };
       this.onChange(value);
