@@ -18,18 +18,20 @@ export class FooterComponent implements OnInit {
     //   image:"assets/images/img-ad-gift.png"
     // },
     {
-      id:2,
-      header:"Apply for a BDO Credit Card",
-      description:"Already a card holder? Refer your friends now and get rewarded!",
-      buttonName:"Apply Now",
-      image:"assets/images/img-ad-creditcards.png"
+      id: 2,
+      header: 'Apply for a BDO Credit Card',
+      description: 'Already a card holder? Refer your friends now and get rewarded!',
+      buttonName: 'Apply Now',
+      image: 'assets/images/img-ad-creditcards.png',
+      link: 'https://www.bdo.com.ph/personal/credit-cards/right-card-for-you'
     },
     {
-      id:3,
-      header:"Open a BDO account",
-      description:"Open an account and enjoy awesome deals and treats.",
-      buttonName:"Apply Now",
-      image:"assets/images/img-ad-debitcard.png"
+      id: 3,
+      header: 'Open a BDO account',
+      description: 'Open an account and enjoy awesome deals and treats.',
+      buttonName: 'Apply Now',
+      image: 'assets/images/img-ad-debitcard.png',
+      link: 'https://www.bdo.com.ph/personal/accounts'
     }
   ]
   ngOnInit(): void {
