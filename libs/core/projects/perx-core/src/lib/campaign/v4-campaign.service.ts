@@ -464,7 +464,6 @@ export class V4CampaignService implements ICampaignService {
         formattedOffset: campaign.operating_hour.formatted_offset,
       };
     }
-
     return {
       id: campaign.id,
       name: campaign.name,
@@ -486,6 +485,7 @@ export class V4CampaignService implements ICampaignService {
       teamSize: campaign.team_size,
       displayProperties,
       customFields,
+      categoryTags: campaign.category_tags
     };
   }
 

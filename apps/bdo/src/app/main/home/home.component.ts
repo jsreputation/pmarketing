@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
-import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration';
+import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
+import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../shared/constants/home-category-configuration.const';
 
 @Component({
   selector: 'bdo-home',
@@ -11,7 +11,8 @@ import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configurat
   styleUrls: [ './home.component.scss' ],
 })
 export class HomeComponent implements OnInit {
-  categories = LIST_CATEGORY;
+  categories = HOME_LIST_CATEGORY_CONFIGURATIONS;
+  catalogConfiguration = CATALOG_CONFIGURATION;
   featuredDeals: IReward[] = [];
 
   nearByDeals: IReward[] = [];
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
     nearby: 'nearby',
     featured: 'featured',
   };
-  catalogConfiguation = CATALOG_CONFIGURATION;
+
 
   private rad = 10000;
   currentPosition = {
@@ -63,8 +64,8 @@ export class HomeComponent implements OnInit {
     this.route.navigate([ `deal-welcome/${_selectedItem.id}` ]);
   }
 
-  navigateToCatalog(tag: string) {
-    const queryParams: Params = { type: this.catalogConfiguation.tags.type, tags: tag };
+  navigateToCatalog(type:string, tag:string) {
+    const queryParams: Params = { type: type , tags: tag };
     this.route.navigate([ `catalog-page` ], { queryParams: queryParams });
   }
 

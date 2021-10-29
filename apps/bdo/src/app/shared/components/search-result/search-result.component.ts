@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { IListItemModel } from '../../models/list-item.model';
 
 @Component({
   selector: 'bdo-search-result',
@@ -7,9 +7,8 @@ import { IReward } from '@perxtech/core';
   styleUrls: ['./search-result.component.scss'],
 })
 export class SearchResultComponent {
-  @Input() result: IReward[] = [];
-
-  selectedItem(item: IReward) {
+  @Input() result: IListItemModel[] = [];
+  selectedItem(item: IListItemModel) {
     console.log(item);
   }
 }

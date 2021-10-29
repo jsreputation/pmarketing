@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { IListItemModel } from '../../models/list-item.model';
 
 
 @Component({
@@ -8,11 +8,11 @@ import { IReward } from '@perxtech/core';
   styleUrls: ['./large-list-item.component.scss']
 })
 export class LargeListItemComponent {
-  @Input() reward: IReward;
-  @Output() itemSelected: EventEmitter<IReward> = new EventEmitter<IReward>();
+  @Input() reward: IListItemModel;
+  @Output() itemSelected: EventEmitter<IListItemModel> = new EventEmitter<IListItemModel>();
   @Input() url: string[];
   public defaultImageUrl  = "assets/images/light-gray-color-default-image.png";
-  selectItem(item: IReward) {
+  selectItem(item: IListItemModel) {
     this.itemSelected.emit(item);
   }
 }

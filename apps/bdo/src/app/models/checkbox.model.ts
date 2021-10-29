@@ -1,5 +1,6 @@
 export interface CheckboxModel {
   name: string;
-  value: boolean;
+  selected: boolean;
+  type?:string;
   children?: CheckboxModel[];
 }
