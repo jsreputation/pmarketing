@@ -87,6 +87,16 @@ export class ErrorMessageService {
                     errorKey = 'ERRORS.NOT_INVITED';
                 }
                 break;
+            case 13:
+                if (errMessage && errMessage.match(/reservation expired/i)) {
+                  errorKey = 'ERRORS.RESERVATION_EXPIRED';
+                }
+                break;
+            case 7:
+                if (errMessage && errMessage.match(/transition/i)) {
+                  errorKey = 'ERRORS.STATE_TRANSITION_FAILED';
+                }
+                break;
             case 0:
             default:
                 // Sorry, something went wrong
