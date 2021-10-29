@@ -10,7 +10,6 @@ import { FeatureDealsComponent } from './featured-deals/featured-deals.component
 import { SecondaryCatalogComponent } from './secondary-catalog/secondary-catalog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
-import { LIST_CATEGORY } from '../../mock-data/categories.mock';
 import { LIST_NEAR_BY } from '../../mock-data/near-by.mock';
 import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -61,7 +60,7 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    component.categories = LIST_CATEGORY;
+    component.categories = [];
     component.nearByDeals = LIST_NEAR_BY;
     component.featuredDeals = LIST_FEATURED_DEALS;
     fixture.detectChanges();

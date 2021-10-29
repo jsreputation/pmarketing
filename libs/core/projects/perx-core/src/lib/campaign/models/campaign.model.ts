@@ -1,7 +1,7 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
-
+import { ICategoryTags } from "@perxtech/core";
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
   informationCollectionSetting?: WInformationCollectionSettingType;
@@ -150,6 +150,7 @@ export interface ICampaign {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   teamSize?: number;
+  categoryTags?:ICategoryTags[];
 }
 
 export enum CommChannel {

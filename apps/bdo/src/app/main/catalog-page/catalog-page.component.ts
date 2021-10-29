@@ -1,12 +1,14 @@
+import { IListItemModel } from '../../shared/models/list-item.model';
+import { map, switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IReward, RewardsService } from '@perxtech/core';
-import { SubCategory } from '../../models/category.model';
-import { filterModel } from '../../models/filter.model';
+import { ICampaignService, RewardsService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
-import { CATALOG_CONFIGURATION } from '../constant/catalog-configuration';
-import { of } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { IFilterModel } from '../../shared/models/filter.model';
+import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
+import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+
 
 @Component({
   selector: 'bdo-catalog-page',
@@ -15,64 +17,94 @@ import { Observable } from 'rxjs';
 })
 export class CatalogPageComponent implements OnInit {
   categoryCode: string;
-  subCategoryCodeSelected: SubCategory[];
-  requestPageSize = 5;
-  filterResult$: Observable<IReward[]> = null;
+  requestPageSize = 100;
+  filterResult$: Observable<IListItemModel[]> = null;
   isLoaded = false;
-  catalogConfiguation = CATALOG_CONFIGURATION;
-  lstCategory: filterModel[] = [
-    {
-      name: 'Essentials',
-      linkImage: 'assets/images/grocery-enclosed-outline-fullcolor.svg',
-    },
-    {
-      name: 'Pay Bills',
-      linkImage: 'assets/images/pay_bills-enclosed-outline-fullcolor.svg',
-    },
-    {
-      name: 'Entertainment',
-      linkImage: 'assets/images/entertainment-enclosed-outline-fullcolor.svg',
-    },
-  ];
+  pageNumber = 1;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
-    private filterService: FilterService
-  ) {}
+    private filterService: FilterService,
+    private campaignsService: ICampaignService
+  ) {
+  }
+
   ngOnInit(): void {
+    this.activeRoute.queryParams.subscribe((params) => {
+      this.filterService.setValue(this.mapQueryParamsToFilterObject(FILTER_DATA, params));
+      this.categoryCode = params.type;
+    });
+    this.filterResult$ = this.filterService.filterValue$
+      .pipe(
+        switchMap((filterValue: IFilterModel) => {
+          const queryObject = this.buildParams(filterValue);
+          Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
+          const campaignsParams = {
+            page: this.pageNumber,
+            size: this.requestPageSize,
+            tags: queryObject.tags,
+            categories: queryObject.categories
+          };
+          Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
+          return forkJoin([
+            this.rewardsService.getRewards(
+              this.pageNumber,
+              this.requestPageSize,
+              queryObject.tags,
+              queryObject.categories
+            ),
+            this.campaignsService.getCampaigns(campaignsParams),
+          ]);
+        }),
+        map(([rewards, campaigns]) => {
+          const listItem = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards));
+          return listItem.sort(function(firstItem, secondItem) {
+            return new Date(secondItem.createdAt).getTime() - new Date(firstItem.createdAt).getTime();
+          });
+        }));
+  }
 
-    this.categoryCode = history.state.categoryCode;
-    this.subCategoryCodeSelected = history.state.subCategoried;
+  buildParams(filterValue: IFilterModel) {
+    const selectedCategory = filterValue.categories.find(item => item.selected);
+    const categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.type);
+    const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
 
-    this.activeRoute.queryParams
-      .subscribe((params) => {
-        this.isLoaded = true;
-        this.filterService.setParams((params));
+    return {
+      tags: tags.length === FILTER_DATA.tags.length ? null : tags,
+      categories: categories.length === FILTER_DATA.categories.length ? null : categories
+    };
+  }
 
-        switch (params['type']) {
-          case this.catalogConfiguation.tags.type: {
-            this.filterResult$ = this.rewardsService.getRewards(1, this.requestPageSize, [
-              params['tags'],
-            ]);
-            break;
-          }
-          case this.catalogConfiguation.deals.type: {
-            this.filterResult$ = this.rewardsService.getRewards(1, this.requestPageSize, [
-              params['tags'],
-            ]);
-            break;
-          }
-          case this.catalogConfiguation.category.type: {
-            this.filterResult$ = of([]);
-            break;
-          }
-        }
+  public mapQueryParamsToFilterObject(filterValue: IFilterModel, queryParams) {
+    filterValue = {
+      ...filterValue,
+      categories: filterValue.categories.map(cate =>
+        cate.type === queryParams.type || !queryParams.type ?
+          {
+            ...cate,
+            selected: true,
+            children: cate.children ? cate.children.map(sub =>
+              !queryParams.category || this.equalOrIncludes(sub.type, queryParams.category) ?
+                {
+                  ...sub,
+                  selected: true
+                } : sub
+            ) : []
+          } : cate
+      ),
+      tags: filterValue.tags.map(item => !queryParams.tags || this.equalOrIncludes(item.type, queryParams.tags) ? {
+        ...item,
+        selected: true
+      } : item)
+    };
+    return filterValue;
+  }
 
-      });
-
-    this.categoryCode = history.state.categoryCode;
-    this.subCategoryCodeSelected = history.state.subCategoried;
-
+  private equalOrIncludes(type, values) {
+    if (Array.isArray(values)) {
+      return values.includes(type);
+    }
+    return values === type;
   }
 }

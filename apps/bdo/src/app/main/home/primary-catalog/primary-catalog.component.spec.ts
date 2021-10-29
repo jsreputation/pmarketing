@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PrimaryCatalogComponent } from './primary-catalog.component';
-import { LIST_CATEGORY } from '../../../mock-data/categories.mock';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../../shared/constants/home-category-configuration.const';
+
 describe('PrimaryCatalogComponent', () => {
   let component: PrimaryCatalogComponent;
   let fixture: ComponentFixture<PrimaryCatalogComponent>;
@@ -18,7 +19,7 @@ describe('PrimaryCatalogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PrimaryCatalogComponent);
     component = fixture.componentInstance;
-    component.categories = LIST_CATEGORY;
+    component.categories = HOME_LIST_CATEGORY_CONFIGURATIONS;
     fixture.detectChanges();
   });
 
@@ -27,9 +28,9 @@ describe('PrimaryCatalogComponent', () => {
   });
 
   it('should display a list of input elements', () => {
-    component.categories = LIST_CATEGORY;
+    component.categories = HOME_LIST_CATEGORY_CONFIGURATIONS;
     fixture.detectChanges();
     const elements = fixture.debugElement.queryAll(By.css('.item'));
-    expect(elements.length).toEqual(LIST_CATEGORY.length);
+    expect(elements.length).toEqual(HOME_LIST_CATEGORY_CONFIGURATIONS.length);
   });
 });
