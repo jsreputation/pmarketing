@@ -1,34 +1,21 @@
-import { map, mergeAll, mergeMap, toArray } from 'rxjs/operators';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { IReward, IVoucherLocation, IVoucherService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
-import { TaggedItemComponent } from './../../../shared/components/tagged-item/tagged-item.component';
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  IReward,
-  IVoucherLocation,
-  IVoucherService
-} from '@perxtech/core';
+import { map, mergeAll, mergeMap,toArray } from 'rxjs/operators';
 import { IRewardLocationModel } from '../../../models/reward-locations.model';
 export interface IPosition {
   lng: number;
   lat: number;
 }
-
 @Component({
-  selector: 'bdo-map',
+  selector: 'bdo-treat-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class TreatMapComponent implements OnInit {
   @Input() rewards: IReward[] = [];
   @Input() currentPosition: IPosition;
-  @ViewChild('gmap') public gmapElement: ElementRef;
-  @ViewChild('taggedItem') public taggedItem: TaggedItemComponent;
+@ViewChild("gmap") public gmapElement: ElementRef;
   public map: google.maps.Map;
   public key = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
 
@@ -65,7 +52,6 @@ export class MapComponent implements OnInit {
       this.drawCurrentLocation();
     });
   }
-
   getRewardNearBy(): Observable<IRewardLocationModel[]> {
     return of(this.rewards).pipe(
       mergeAll(),
@@ -79,7 +65,6 @@ export class MapComponent implements OnInit {
       toArray()
     );
   }
-
   private updateMarkers(): void {
     of(this.locations)
       .pipe(
@@ -98,24 +83,23 @@ export class MapComponent implements OnInit {
             }),
           });
 
-          marker.addListener('click', () => {
-            if (this.taggedItem) {
-              const itemIndex = this.rewardLocations.findIndex((item) => {
-                return (
-                  item.locations.findIndex((loca) => loca.id === location.id) >=
-                  0
-                );
-              });
-              this.taggedItem.goToItemIndex(itemIndex ? itemIndex : 0);
-            }
-          });
+          // marker.addListener('click', () => {
+          //   if (this.taggedItem) {
+          //     const itemIndex = this.rewardLocations.findIndex((item) => {
+          //       return (
+          //         item.locations.findIndex((loca) => loca.id === location.id) >=
+          //         0
+          //       );
+          //     });
+          //     this.taggedItem.goToItemIndex(itemIndex ? itemIndex : 0);
+          //   }
+          // });
           marker.setIcon('assets/images/marker.svg');
           return marker;
         });
         this.renderMarkers();
       });
   }
-
   private drawCurrentLocation(): void {
     const marker = new google.maps.Marker({
       position: new google.maps.LatLng(this.currentPosition),
@@ -131,7 +115,6 @@ export class MapComponent implements OnInit {
     });
     this.map.setCenter(this.currentPosition);
   }
-
   public renderMarkers(): void {
     this.markersArray.forEach((marker: google.maps.Marker) => {
       marker.setMap(this.map);
@@ -139,7 +122,10 @@ export class MapComponent implements OnInit {
   }
 
   private loadScript(): Promise<void> {
+    console.log("undefined",typeof google)
+
     if (typeof google !== 'undefined' && typeof google.maps !== 'undefined') {
+     
       return Promise.resolve();
     }
     const body: HTMLBodyElement = document.body as HTMLBodyElement;
@@ -160,7 +146,6 @@ export class MapComponent implements OnInit {
     body.appendChild(script);
     return loadingPromise;
   }
-
   private isValidLocation(location) {
     const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
     const lng =

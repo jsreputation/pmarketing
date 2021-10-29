@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
 import { FeatureDealsComponent } from './home/featured-deals/featured-deals.component';
 import { SecondaryCatalogComponent } from './home/secondary-catalog/secondary-catalog.component';
@@ -24,7 +24,6 @@ import { SearchHeaderComponent } from './result/search-header/search-header.comp
 import { ResultComponent } from './result/result.component';
 import { DealLandingComponent } from './deal-landing/deal-landing.component';
 import { NearbyDealsComponent } from './nearby-deals/nearby-deals.component';
-import { MapComponent } from './nearby-deals/map/map.component';
 import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
@@ -46,6 +45,8 @@ import { FooterComponent } from './home/footer/footer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
+import { TreatMapComponent } from './treat-welcome/map/map.component';
+import { MapComponent } from './nearby-deals/map/map.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { DealLocationPageComponent } from './deal-landing/deal-location-page/dea
     TreatEnrollCompletePageComponent,
     SearchComponent,
     FooterComponent,
-    DealLocationPageComponent
+    DealLocationPageComponent,
+    TreatMapComponent,
   ],
   imports: [
     CommonModule,
@@ -93,11 +95,12 @@ import { DealLocationPageComponent } from './deal-landing/deal-location-page/dea
     MatChipsModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatFormFieldModule ,
+    MatFormFieldModule,
     FormsModule,
     RewardsModule,
     MatSelectModule,
-    MatBadgeModule
+    MatBadgeModule,
+    
   ],
   bootstrap: [],
   providers: [
