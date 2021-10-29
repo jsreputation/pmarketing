@@ -1,0 +1,24 @@
+
+.main-container {
+  overflow: hidden;
+  padding-top: 7rem;
+}
+
+.tab-container {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+::ng-deep {
+  .transaction-point {
+    color: #ddac27 !important;
+  }
+
+  .mat-tab-group {
+    height: 100%;
+  }
+
+  .mat-tab-label-active {
+    color: #0f69af;
+  }
+}
