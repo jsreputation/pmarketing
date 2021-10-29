@@ -34,7 +34,6 @@ export class MapComponent implements OnInit {
 
   public markersArray: google.maps.Marker[] = [];
   public rad = 10000;
-
   nearbyRewards: IReward[] = [];
   locations: IVoucherLocation[] = [];
   rewardLocations: IRewardLocationModel[] = [];
