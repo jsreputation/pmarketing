@@ -3,6 +3,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { CategoryComponent } from './category.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FilterService } from '../../../shared/services/filter.service';
+import { RouterTestingModule } from '@angular/router/testing';
 describe('SortComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
@@ -12,7 +13,8 @@ describe('SortComponent', () => {
         CategoryComponent
       ],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        RouterTestingModule
       ],
       providers: [
         {

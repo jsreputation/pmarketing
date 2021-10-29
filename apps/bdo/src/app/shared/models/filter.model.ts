@@ -1,13 +1,14 @@
 export interface  IOptionsModel {
   name: string;
-  value: boolean;
+  selected?: boolean;
+  type:string;
+  cardType?:string;
   children?: IOptionsModel[];
 }
 
 export interface IFilterModel {
-  searchValue:string;
-  accountTypes: IOptionsModel[];
   categories: IOptionsModel[];
   tags: IOptionsModel[];
+  cardType: IOptionsModel[];
   locations: IOptionsModel[];
 }

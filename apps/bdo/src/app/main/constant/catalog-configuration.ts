@@ -9,10 +9,10 @@ export const CATALOG_CONFIGURATION = {
   deals: {
     type: 'deals',
     subCategory: {
-      spend: 'spend',
-      redeem: 'redeem',
-      online: 'online',
-      rewards: 'rewards'
+      spend: 'spend-anywhere',
+      redeem: 'shop-choose-redeem',
+      online: 'online-exclusive',
+      rewards: 'bdo-rewards'
     }
   },
   category: {

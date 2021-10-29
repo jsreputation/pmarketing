@@ -13,7 +13,7 @@ export class SecondaryCatalogComponent {
   constructor(private route: Router) {}
 
   navigateToCatalog(tag: string) {
-    const queryParams: Params = { type: this.catalogConfiguration.deals.type ,tags: tag };
-    this.route.navigate([`catalog-page`], {queryParams: queryParams});
+    const queryParams: Params = { type: tag };
+    this.route.navigate([`catalog-page`], { queryParams: queryParams });
   }
 }

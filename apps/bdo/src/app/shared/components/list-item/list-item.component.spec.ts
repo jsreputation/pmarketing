@@ -26,14 +26,12 @@ describe('ListItemComponent', () => {
   it('should create', () => {
     component.reward = {
       id: 1,
-      name: 'Testing Component',
-      description: 'This is reward description',
-      subtitle: '',
-      termsAndConditions: '',
-      loyalty: [],
-      rewardBanner: '',
-      validFrom: new Date(),
-      validTo: new Date()
+      thumbnail: './assets/images/Group_10985@2x.png',
+      name: '40% OFF at New World Makati Hotel',
+      description:
+        'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
+      categoryTags: [],
+      createdAt: new Date()
     };
     fixture.detectChanges();
     expect(component).toBeTruthy();

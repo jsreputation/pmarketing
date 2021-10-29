@@ -37,7 +37,7 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
     this.formGroup && this.formGroup.valueChanges.subscribe((output: any) => {
       const value: CheckboxModel = {
         name: this.dataSource.name,
-        value: output.category,
+        selected: output.category,
         children: output.children.map((value, index) => ({
             name: this.dataSource.children[index].name,
             value: value
@@ -59,11 +59,11 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
     this.formArray = new FormArray([]);
     this.dataSource.children && this.dataSource.children.forEach((control) => {
       this.formArray.push(
-        new FormControl(control.value)
+        new FormControl(control.selected)
       );
     });
     this.formGroup = this.fb.group({
-      category: [this.dataSource.value],
+      category: [this.dataSource.selected],
       children: this.formArray,
     });
   }
