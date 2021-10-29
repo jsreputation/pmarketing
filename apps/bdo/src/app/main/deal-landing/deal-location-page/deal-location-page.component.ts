@@ -22,4 +22,7 @@ export class DealLocationPageComponent {
         this.lstVoucherLocation = item;
       });
   }
+  navigateGoogleMaps(lat,lng){
+    window.open(`https://maps.google.com/?q=${lat},${lng}`, '_system');
+  }
 }
