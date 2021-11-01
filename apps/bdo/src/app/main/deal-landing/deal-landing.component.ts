@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IReward, NotificationService, RewardsService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
@@ -14,7 +15,9 @@ export class DealLandingComponent implements OnInit {
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public teamCodeShareText: string;
+  public shareTitle:string;
   public shareText: string;
+  public shareUrl = `${window.location.protocol}//${window.location.host}`;
   navigateTo(_selectedItem: FeaturedDeals) {
     throw new Error('not implemented');
   }
@@ -23,8 +26,10 @@ export class DealLandingComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private route: Router,
     private notificationService: NotificationService,
+    private translate: TranslateService
   ) {}
   ngOnInit(): void {
+    this.initTranslate();
     this.activeRoute.params.subscribe((param) => {
       combineLatest([
         this.rewardService.getReward(param.rid),
@@ -32,8 +37,6 @@ export class DealLandingComponent implements OnInit {
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
         this.similarDeals = similarDeals;
-          // this.shareText = dealDetail.displayProperties?.inviteMessage?.description || '';
-          // this.teamCodeShareText = dealDetail.displayProperties?.inviteMessage?.codeBlurb || '';
       });
     });
   }
@@ -43,12 +46,10 @@ export class DealLandingComponent implements OnInit {
   shareDeal(){
     if (navigator.share) {
       const data = {
-        text: `${this.shareText}\n${this.teamCodeShareText}`,
+        text: `${this.shareUrl}/deal-welcome/${this.dealDetail.id}`,
       };
-      // @ts-ignore
       (navigator as any)
         .share(data)
-        .then(() => { })
         .catch(() => {
           console.log('failed to use share, falling back to clipboard');
           this.copy();
@@ -60,8 +61,26 @@ export class DealLandingComponent implements OnInit {
   }
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.dealDetail.name}`)
+      .writeText(`${this.shareText}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
+  }
+  private initTranslate(): void {
+    this.translate
+      .get([
+        'DEAL_LANDING_PAGE.SHARE_COPY_TITLE',
+        'DEAL_LANDING_PAGE.SHARE_COPY_TXT',
+        'DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD',
+        'DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT',
+      ])
+      .subscribe((res: any) => {
+        this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE']
+        this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'].replace(
+          '{{url}}',
+          this.shareUrl
+        );
+        this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = res['DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT'];
+      });
   }
 }
