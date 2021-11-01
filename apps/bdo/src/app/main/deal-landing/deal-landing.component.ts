@@ -17,7 +17,7 @@ export class DealLandingComponent implements OnInit {
   public teamCodeShareText: string;
   public shareTitle:string;
   public shareText: string;
-  public shareUrl = `${window.location.protocol}//${window.location.host}`;
+  public shareUrl = `${window.location.protocol}//${window.location.host}/deal-welcome/`;
   navigateTo(_selectedItem: FeaturedDeals) {
     throw new Error('not implemented');
   }
@@ -37,6 +37,7 @@ export class DealLandingComponent implements OnInit {
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
         this.similarDeals = similarDeals;
+        this.shareUrl += dealDetail.id
       });
     });
   }
@@ -46,7 +47,7 @@ export class DealLandingComponent implements OnInit {
   shareDeal(){
     if (navigator.share) {
       const data = {
-        text: `${this.shareUrl}/deal-welcome/${this.dealDetail.id}`,
+        text: this.shareText,
       };
       (navigator as any)
         .share(data)
@@ -74,11 +75,11 @@ export class DealLandingComponent implements OnInit {
         'DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT',
       ])
       .subscribe((res: any) => {
-        this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE']
-        this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'].replace(
+        this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE'].replace(
           '{{url}}',
           this.shareUrl
         );
+        this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'];
         this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
