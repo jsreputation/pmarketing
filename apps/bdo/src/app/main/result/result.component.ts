@@ -13,6 +13,8 @@ export class ResultComponent implements OnInit {
   public searchValue = '';
   public searchResult: IListItemModel[] = [];
   public isLoaded = true;
+  private pageNumber = 1;
+  private requestPageSize = 100;
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService
@@ -24,17 +26,22 @@ export class ResultComponent implements OnInit {
         if (params['search']) {
           this.searchValue = params['search'];
         }
-        return this.rewardsService.searchRewards(this.searchValue, params['tags']);
+        return this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']);
       }))
       .subscribe((rewards) => {
-        this.searchResult = rewards.map(item => ({
-          id: item.id,
-          thumbnail: item.rewardThumbnail,
-          name: item.name,
-          categoryTags: item.categoryTags,
-          createdAt: item.validFrom,
-          description: item.description
-        }));
+        this.searchResult = rewards.map(item => {
+          return {
+            id: item.id,
+            thumbnail: item.rewardThumbnail,
+            name: item.name,
+            categoryTags: item.categoryTags,
+            createdAt: item.validFrom,
+            description: item.description
+          } as IListItemModel;
+        })
+        .sort((firstReward,secondReward)=> {
+          return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+        });
         this.isLoaded = false;
       });
   }

@@ -86,7 +86,10 @@ export abstract class RewardsService {
 
   public abstract searchRewards(
     text: string,
+    page: number, 
+    pageSize: number,
     tags?: string,
     locale?: string
   ): Observable<IReward[]>;
+
 }

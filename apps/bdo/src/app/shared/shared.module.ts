@@ -15,6 +15,7 @@ import { FilterComponent } from './components/filter/filter.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { GhostsModule } from './../../../../starhub/src/app/ghosts/ghosts.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { RouterModule } from '@angular/router';
     MatCheckboxModule,
     MatButtonModule,
     RouterModule,
+    GhostsModule
   ],
   exports: [
     ListItemComponent,

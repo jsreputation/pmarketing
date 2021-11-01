@@ -1,3 +1,4 @@
+import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { SortComponent } from './sort/sort.component';
@@ -19,6 +20,7 @@ import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ICampaignService, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { GhostCardComponent } from 'apps/starhub/src/app/ghosts/card-ghost.component';
 
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;
@@ -50,7 +52,8 @@ describe('CatalogPageComponent', () => {
         SearchResultComponent,
         TaggedItemComponent,
         LargeListItemComponent,
-        ListItemComponent
+        ListItemComponent,
+        GhostCardComponent
       ],
       imports: [
         BrowserAnimationsModule,
@@ -60,7 +63,8 @@ describe('CatalogPageComponent', () => {
         FormsModule,
         MatTabsModule,
         RouterTestingModule,
-        MatDialogModule
+        MatDialogModule,
+        MatCardModule
       ],
       providers: [
         {
