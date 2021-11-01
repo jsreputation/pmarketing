@@ -1,23 +1,31 @@
-<mat-tab-group animationDuration="0ms" mat-stretch-tabs class="search-result-tab">
+<mat-tab-group animationDuration='0ms' mat-stretch-tabs class='search-result-tab'>
   <mat-tab>
     <ng-template mat-tab-label>
-      <img src="assets/images/icon-n-catalogue.svg" />
-      <span class="label-tab">Catalogue</span>
+      <img src='assets/images/icon-n-catalogue.svg' />
+      <span class='label-tab'>Catalogue</span>
     </ng-template>
-    <ul class="search-result-wrapper">
-      <ghost-cards *ngIf="isLoaded" [@fadeOut]="!ghostRewards.length" [ghosts]="ghostRewards"></ghost-cards>
-      <bdo-large-list-item *ngFor="let item of result" [reward]="item" [url]="['/deal-welcome', item.id.toString()]" (click)="selectedItem(item)">
+
+    <div class='ghost-card' *ngIf='!isLoaded'>
+      <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
+    </div>
+    <ul class='search-result-wrapper'>
+      <bdo-large-list-item *ngFor='let item of result' [reward]='item' [url]="['/deal-welcome', item.id.toString()]"
+                           (click)='selectedItem(item)'>
       </bdo-large-list-item>
     </ul>
+
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <img src="assets/images/icon-n-viewall.svg" />
-      <span class="label-tab">List</span>
+      <img src='assets/images/icon-n-viewall.svg' />
+      <span class='label-tab'>List</span>
     </ng-template>
-    <ul class="search-result-wrapper">
-      <ghost-cards *ngIf="isLoaded" [@fadeOut]="!ghostRewards.length" [ghosts]="ghostRewards"></ghost-cards>
-      <bdo-list-item *ngFor="let item of result" (click)="selectedItem(item)" [url]="['/deal-welcome', item.id.toString()]" [reward]="item">
+    <div class='ghost-card' *ngIf='!isLoaded'>
+      <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
+    </div>
+    <ul class='search-result-wrapper'>
+      <bdo-list-item *ngFor='let item of result' (click)='selectedItem(item)'
+                     [url]="['/deal-welcome', item.id.toString()]" [reward]='item'>
       </bdo-list-item>
     </ul>
   </mat-tab>

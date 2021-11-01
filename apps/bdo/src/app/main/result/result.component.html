@@ -1,5 +1,5 @@
 <div class="search-result">
   <bdo-search-header [keyWord]="searchValue"></bdo-search-header>
-  <bdo-search-result *ngIf="isLoaded || searchResult && searchResult.length"  [isLoaded]="isLoaded" [result]="searchResult"></bdo-search-result>
+  <bdo-search-result [isLoaded]="isLoaded" [result]="searchResult"></bdo-search-result>
   <bdo-no-result *ngIf="!isLoaded && searchResult && !searchResult.length;"></bdo-no-result>
 </div>

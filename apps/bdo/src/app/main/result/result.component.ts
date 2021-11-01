@@ -12,7 +12,7 @@ import { IListItemModel } from '../../shared/models/list-item.model';
 export class ResultComponent implements OnInit {
   public searchValue = '';
   public searchResult: IListItemModel[] = [];
-  public isLoaded = true;
+  public isLoaded = false;
   private pageNumber = 1;
   private requestPageSize = 100;
   constructor(
@@ -29,6 +29,7 @@ export class ResultComponent implements OnInit {
         return this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']);
       }))
       .subscribe((rewards) => {
+        this.isLoaded = false;
         this.searchResult = rewards.map(item => {
           return {
             id: item.id,
@@ -42,7 +43,7 @@ export class ResultComponent implements OnInit {
         .sort((firstReward,secondReward)=> {
           return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
         });
-        this.isLoaded = false;
+        this.isLoaded = true;
       });
   }
 }

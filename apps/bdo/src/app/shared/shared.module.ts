@@ -15,7 +15,8 @@ import { FilterComponent } from './components/filter/filter.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { GhostsModule } from './../../../../starhub/src/app/ghosts/ghosts.module';
+import { GhostCardComponent } from './components/ghosts/card-ghost.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { GhostsModule } from './../../../../starhub/src/app/ghosts/ghosts.module
     CheckboxGroupComponent,
     FilterComponent,
     FooterComponent,
+    GhostCardComponent
   ],
   imports: [
     CommonModule,
@@ -34,11 +36,11 @@ import { GhostsModule } from './../../../../starhub/src/app/ghosts/ghosts.module
     MatTabsModule,
     ReactiveFormsModule,
     FormsModule,
+    MatCardModule,
     MatExpansionModule,
     MatCheckboxModule,
     MatButtonModule,
-    RouterModule,
-    GhostsModule
+    RouterModule
   ],
   exports: [
     ListItemComponent,

@@ -14,7 +14,7 @@ import { fadeIn, fadeOut } from '../../../../../../starhub/src/app/utils/fade-an
 })
 export class SearchResultComponent {
   @Input() result: IListItemModel[] = [];
-  @Input() isLoaded= true;
+  @Input() isLoaded = false;
   public ghostRewards= new Array(1);
   selectedItem(item: IListItemModel) {
     console.log(item);
