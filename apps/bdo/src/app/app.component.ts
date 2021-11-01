@@ -99,10 +99,10 @@ export class AppComponent implements OnInit {
         filter((event: Event) => event instanceof NavigationEnd),
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
-      .subscribe(url => this.initBackArrow(url));
+      .subscribe(url => this.initFooter(url));
   }
 
-  private initBackArrow(url: string): void {
+  private initFooter(url: string): void {
     this.showFooter = FOOTER_URLS.some(test => url.endsWith(test) || url.startsWith(test));
   }
 }
