@@ -1,5 +1,5 @@
   <ul class="wrapper" #containerCategory>
-    <li class="item" *ngFor="let category of categories" [style.background-image]="'url('+category.imageLink+')'">
+    <li class="item" (click)="navigateToCatalog(category.key)" *ngFor="let category of categories" [style.background-image]="'url('+category.imageLink+')'">
       <div class="content-container">
         <h3 class="title">{{category.name}}</h3>
 <!--        <p class="content" *ngIf="category.content">{{category.content}}</p>-->
