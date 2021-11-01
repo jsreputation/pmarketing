@@ -103,6 +103,6 @@ export class AppComponent implements OnInit {
   }
 
   private initFooter(url: string): void {
-    this.showFooter = FOOTER_URLS.some(test => url.endsWith(test) || url.startsWith(test));
+    this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
   }
 }
