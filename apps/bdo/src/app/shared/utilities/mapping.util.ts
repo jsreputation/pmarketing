@@ -8,7 +8,7 @@ export function mapRewardsToListItem(rewards: IReward[]): IListItemModel[] {
       thumbnail: reward.rewardThumbnail,
       categoryTags: reward.categoryTags,
       name: reward.name,
-      description: reward.description,
+      description: reward.subtitle,
       createdAt: reward.validFrom,
     };
   });
@@ -21,7 +21,7 @@ export function mapCampaignsToListItem(campaigns: ICampaign[]): IListItemModel[]
       thumbnail: campaign.thumbnailUrl,
       categoryTags: campaign.categoryTags,
       name: campaign.name,
-      description: campaign.description,
+      description: campaign.displayProperties?.landingPage?.subHeading?.text? campaign.displayProperties.landingPage.subHeading.text:"",
       createdAt: campaign.beginsAt,
     };
   });
