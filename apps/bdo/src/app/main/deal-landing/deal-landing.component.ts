@@ -29,7 +29,6 @@ export class DealLandingComponent implements OnInit {
     private translate: TranslateService
   ) {}
   ngOnInit(): void {
-    this.initTranslate();
     this.activeRoute.params.subscribe((param) => {
       combineLatest([
         this.rewardService.getReward(param.rid),
@@ -37,7 +36,7 @@ export class DealLandingComponent implements OnInit {
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
         this.similarDeals = similarDeals;
-        this.shareUrl += dealDetail.id
+        this.shareUrl.concat(dealDetail.id.toString());
       });
     });
   }
@@ -45,9 +44,10 @@ export class DealLandingComponent implements OnInit {
     this.route.navigate([`deal-welcome/${this.dealDetail.id}/location`]);
   }
   shareDeal(){
+    this.initTranslate();
     if (navigator.share) {
       const data = {
-        text: this.shareText,
+        text:`${this.shareTitle}. ${this.shareText}` ,
       };
       (navigator as any)
         .share(data)
@@ -77,7 +77,7 @@ export class DealLandingComponent implements OnInit {
       .subscribe((res: any) => {
         this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE'].replace(
           '{{url}}',
-          this.shareUrl
+          this.shareUrl.concat(this.dealDetail.id.toString())
         );
         this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'];
         this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
