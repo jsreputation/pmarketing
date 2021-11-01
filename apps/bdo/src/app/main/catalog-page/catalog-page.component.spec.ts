@@ -20,7 +20,7 @@ import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ICampaignService, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
-import { GhostCardComponent } from 'apps/starhub/src/app/ghosts/card-ghost.component';
+import { GhostCardComponent } from '../../shared/components/ghosts/card-ghost.component';
 
 describe('CatalogPageComponent', () => {
   let component: CatalogPageComponent;

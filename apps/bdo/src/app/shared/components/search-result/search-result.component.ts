@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { IListItemModel } from '../../models/list-item.model';
 import { trigger } from '@angular/animations';
-import { fadeIn, fadeOut } from '../../../../../../starhub/src/app/utils/fade-animations';
+import { fadeIn, fadeOut } from '../../utilities/fade-animations';
 
 @Component({
   selector: 'bdo-search-result',
