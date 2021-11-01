@@ -7,5 +7,6 @@ export interface IListItemModel {
   name:string;
   description:string;
   createdAt: Date | string;
+  documentType?: string;
   position?: string;
 } 

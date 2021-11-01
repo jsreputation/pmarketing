@@ -6,7 +6,7 @@ import { RouterTestingModule } from "@angular/router/testing";
 describe('ListItemComponent', () => {
   let component: ListItemComponent;
   let fixture: ComponentFixture<ListItemComponent>;
-
+ 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ListItemComponent ],

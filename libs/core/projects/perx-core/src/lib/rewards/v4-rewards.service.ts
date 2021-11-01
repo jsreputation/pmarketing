@@ -130,6 +130,7 @@ interface IV4GetRewardsResponse {
 interface IV4GetSearchRewardsResponse {
   data: {
     rewards: {
+      document_type?: string,
       reward: IV4Reward,
       score: number;
     }[]
@@ -760,7 +761,11 @@ export class V4RewardsService extends RewardsService {
     .set('size', pageSize.toString());
     return this.http.get<IV4GetSearchRewardsResponse>(endpoint, { headers, params })
       .pipe(
-        map((res: IV4GetSearchRewardsResponse) => res.data.rewards.map(item => item.reward)),
+        map((res: IV4GetSearchRewardsResponse) => 
+        res.data.rewards.map((item) => {
+          return { document_type: item.document_type, ...item.reward };
+        })
+        ),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
