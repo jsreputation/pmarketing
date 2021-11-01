@@ -13,7 +13,6 @@ import { Event, NavigationEnd, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { FOOTER_URLS } from './app.constants';
 
 @Component({
   selector: 'bdo-root',
