@@ -1,4 +1,4 @@
-PREAUTH=false
+PREAUTH=true
 APIHOST=https://api.perxtech.io
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true
