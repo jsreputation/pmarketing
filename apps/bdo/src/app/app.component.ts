@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import {
+  AuthenticationService,
   ConfigService, IConfig, IPopupConfig,
   ITheme,
   NotificationService, PopupComponent,
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
+    private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private router: Router,
     private snack: MatSnackBar,
@@ -74,6 +76,7 @@ export class AppComponent implements OnInit {
       .subscribe((res: ITheme) => {
         const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
         this.titleService.setTitle(title);
+        this.authenticate();
       });
 
     this.notificationService.$popup
@@ -103,5 +106,11 @@ export class AppComponent implements OnInit {
 
   private initFooter(url: string): void {
     this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
+  }
+
+  private authenticate(): void {
+    if (this.preAuth) {
+      this.authenticationService.autoLogin().subscribe();
+    }
   }
 }
