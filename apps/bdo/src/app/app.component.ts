@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import {  filter, map, switchMap, tap } from 'rxjs/operators';
 import {
   AuthenticationService,
   ConfigService, IConfig, IPopupConfig,
@@ -22,7 +22,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
   title = 'bdo';
-  $loading: Observable<boolean> = of(true).pipe(delay(500));
+  $loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public preAuth: boolean;
   public translationLoaded = false;
@@ -110,7 +110,9 @@ export class AppComponent implements OnInit {
 
   private authenticate(): void {
     if (this.preAuth) {
-      this.authenticationService.autoLogin().subscribe();
+      this.authenticationService.autoLogin().subscribe(
+        () => this.$loading.next(true)
+      );
     }
   }
 }
