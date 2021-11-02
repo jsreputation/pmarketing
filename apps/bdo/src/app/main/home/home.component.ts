@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   popularDeals: IReward[] = [];
 
   requestPageSize = 10;
+  requestPageSizeForWhatsNew = 5;
   tag = {
     new: 'new',
     popular: 'popular',
@@ -44,9 +45,12 @@ export class HomeComponent implements OnInit {
         this.nearByDeals = nearBy;
       });
     this.rewardsService
-      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined, 'id')
+      .getRewards(1, this.requestPageSizeForWhatsNew, undefined, undefined, undefined, undefined, undefined)
       .subscribe((newRewards: IReward[]) => {
-        this.whatsNewDeals = newRewards;
+        this.whatsNewDeals = newRewards.sort((firstReward, secondReward)=>{
+          return new Date(secondReward.validFrom).getTime() - new Date(firstReward.validFrom).getTime();
+        });
+        console.log(this.whatsNewDeals)
       });
     this.rewardsService
       .getRewards(1, this.requestPageSize, [ this.tag.popular ])
