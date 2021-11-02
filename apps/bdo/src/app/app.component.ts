@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, iif, of } from 'rxjs';
 import {  filter, map, switchMap, tap } from 'rxjs/operators';
 import {
   AuthenticationService,
@@ -111,8 +111,18 @@ export class AppComponent implements OnInit {
 
   private authenticate(): void {
     if (this.preAuth) {
-      this.authenticationService.autoLogin().subscribe(
-        () => this.$loading.next(true)
+      this.authenticationService.isAuthorized().pipe(
+        switchMap((isAuthed: boolean) =>
+          iif(
+            () => isAuthed && !(window as any).primaryIdentifier,
+            of({}),
+            this.authenticationService.autoLogin()
+          ))
+      ).subscribe(
+        () => {
+          this.$loading.next(true);
+        },
+      (err) => of(err)
       );
     } else { // don't need to perform auto login
       this.$loading.next(true);
