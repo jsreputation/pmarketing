@@ -47,7 +47,9 @@ export class DealLandingComponent implements OnInit {
     this.initTranslate();
     if (navigator.share) {
       const data = {
-        text:`${this.shareTitle}. ${this.shareText}` ,
+        url:this.shareUrl,
+        text:this.shareText,
+        title:this.shareTitle
       };
       (navigator as any)
         .share(data)
@@ -67,6 +69,7 @@ export class DealLandingComponent implements OnInit {
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
   private initTranslate(): void {
+    this.shareUrl = this.shareUrl.concat(this.dealDetail.id.toString())
     this.translate
       .get([
         'DEAL_LANDING_PAGE.SHARE_COPY_TITLE',
@@ -77,7 +80,7 @@ export class DealLandingComponent implements OnInit {
       .subscribe((res: any) => {
         this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE'].replace(
           '{{url}}',
-          this.shareUrl.concat(this.dealDetail.id.toString())
+          this.shareUrl
         );
         this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'];
         this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
