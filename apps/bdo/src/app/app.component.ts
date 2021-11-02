@@ -60,6 +60,9 @@ export class AppComponent implements OnInit {
         }),
         tap((config: IConfig<ITheme>) => {
           this.preAuth = config.preAuth as boolean;
+
+          // sets the identifier if app module has already picked it up
+          this.storage.setAppInfoProperty((window as any).primaryIdentifier, 'identifier');
         }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
         tap(() => {
