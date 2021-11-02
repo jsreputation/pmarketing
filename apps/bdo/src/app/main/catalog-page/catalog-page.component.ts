@@ -43,6 +43,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((filterValue: IFilterModel) => {
+          this.isLoaded = false;
           const queryObject = this.buildParams(filterValue);
           Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
           const campaignsParams = {
@@ -63,11 +64,13 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
           ]);
         }),
         map(([rewards, campaigns]) => {
+          this.isLoaded = true;
           const listItem = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards));
           return listItem.sort(function(firstItem, secondItem) {
             return new Date(secondItem.createdAt).getTime() - new Date(firstItem.createdAt).getTime();
           });
         }));
+
   }
 
   buildParams(filterValue: IFilterModel) {

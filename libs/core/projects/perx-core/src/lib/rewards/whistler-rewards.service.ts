@@ -294,7 +294,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public searchRewards(text: string, locale?: string): Observable<IReward[]> {
+  public searchRewards(text: string, page: number, pageSize: number, locale?: string): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
 }

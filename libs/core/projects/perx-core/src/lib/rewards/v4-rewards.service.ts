@@ -750,10 +750,13 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public searchRewards(text: string, tags?: string, locale= "en"): Observable<IReward[]> {
+  public searchRewards(text: string,page: number, pageSize: number, tags?: string, locale= "en"): Observable<IReward[]> {
     const endpoint = tags ? `${this.apiHost}/v4/search?search_string=${text}&tags=${tags}` : `${this.apiHost}/v4/search?search_string=${text}`;
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4GetSearchRewardsResponse>(endpoint, { headers })
+    let params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', pageSize.toString());
+    return this.http.get<IV4GetSearchRewardsResponse>(endpoint, { headers, params })
       .pipe(
         map((res: IV4GetSearchRewardsResponse) => res.data.rewards.map(item => item.reward)),
         map((rewards: IV4Reward[]) => rewards.map(

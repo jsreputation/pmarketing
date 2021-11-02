@@ -15,6 +15,8 @@ import { FilterComponent } from './components/filter/filter.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { GhostCardComponent } from './components/ghosts/card-ghost.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { RouterModule } from '@angular/router';
     CheckboxGroupComponent,
     FilterComponent,
     FooterComponent,
+    GhostCardComponent
   ],
   imports: [
     CommonModule,
@@ -33,10 +36,11 @@ import { RouterModule } from '@angular/router';
     MatTabsModule,
     ReactiveFormsModule,
     FormsModule,
+    MatCardModule,
     MatExpansionModule,
     MatCheckboxModule,
     MatButtonModule,
-    RouterModule,
+    RouterModule
   ],
   exports: [
     ListItemComponent,
