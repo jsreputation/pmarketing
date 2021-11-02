@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PublicGuard } from 'ngx-auth';
+import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 
 const routes: Routes = [
   {
     path: '', loadChildren: () => import('./main/main.module').then(mod => mod.MainModule),
+    canActivate: [ProtectedGuard]
   },
   {
     path: 'login',

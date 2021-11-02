@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, iif, of } from 'rxjs';
+import {  filter, map, switchMap, tap } from 'rxjs/operators';
 import {
+  AuthenticationService,
   ConfigService, IConfig, IPopupConfig,
   ITheme,
   NotificationService, PopupComponent,
@@ -21,7 +22,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit {
   title = 'bdo';
-  $loading: Observable<boolean> = of(true).pipe(delay(500));
+  $loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public preAuth: boolean;
   public translationLoaded = false;
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
+    private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private router: Router,
     private snack: MatSnackBar,
@@ -56,24 +58,29 @@ export class AppComponent implements OnInit {
         tap((conf) => {
           this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
         }),
-        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
-        switchMap(() =>
-          // getTranslation fetches the translation and registers the language
-          // for when default lang is not 'en'
-          // only after fetching the translations do you .use() it
-          this.translate.getTranslation('en')
-        ),
         tap((config: IConfig<ITheme>) => {
-          // this.translate.getLangs() to get langs avail, in future pass array of langs
-          // loop thru each lang string and .getTranslation it
-          this.translationLoaded = true;
           this.preAuth = config.preAuth as boolean;
+
+          // sets the identifier if app module has already picked it up
+          this.storage.setAppInfoProperty((window as any).primaryIdentifier, 'identifier');
         }),
+        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
+        tap(() => {
+            // getTranslation fetches the translation and registers the language
+            // for when default lang is not 'en'
+            // only after fetching the translations do you .use() it
+            this.translate.getTranslation('en');
+            // this.translate.getLangs() to get langs avail, in future pass array of langs
+            // loop thru each lang string and .getTranslation it
+            this.translationLoaded = true;
+          }
+        ),
         switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       )
       .subscribe((res: ITheme) => {
         const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
         this.titleService.setTitle(title);
+        this.authenticate();
       });
 
     this.notificationService.$popup
@@ -103,5 +110,25 @@ export class AppComponent implements OnInit {
 
   private initFooter(url: string): void {
     this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
+  }
+
+  private authenticate(): void {
+    if (this.preAuth) {
+      this.authenticationService.isAuthorized().pipe(
+        switchMap((isAuthed: boolean) =>
+          iif(
+            () => isAuthed && !(window as any).primaryIdentifier,
+            of({}),
+            this.authenticationService.autoLogin()
+          ))
+      ).subscribe(
+        () => {
+          this.$loading.next(true);
+        },
+      (err) => of(err)
+      );
+    } else { // don't need to perform auto login
+      this.$loading.next(true);
+    }
   }
 }
