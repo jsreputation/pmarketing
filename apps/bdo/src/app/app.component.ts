@@ -58,19 +58,20 @@ export class AppComponent implements OnInit {
         tap((conf) => {
           this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
         }),
-        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
-        switchMap(() =>
-          // getTranslation fetches the translation and registers the language
-          // for when default lang is not 'en'
-          // only after fetching the translations do you .use() it
-          this.translate.getTranslation('en')
-        ),
         tap((config: IConfig<ITheme>) => {
-          // this.translate.getLangs() to get langs avail, in future pass array of langs
-          // loop thru each lang string and .getTranslation it
-          this.translationLoaded = true;
           this.preAuth = config.preAuth as boolean;
         }),
+        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
+        tap(() => {
+            // getTranslation fetches the translation and registers the language
+            // for when default lang is not 'en'
+            // only after fetching the translations do you .use() it
+            this.translate.getTranslation('en');
+            // this.translate.getLangs() to get langs avail, in future pass array of langs
+            // loop thru each lang string and .getTranslation it
+            this.translationLoaded = true;
+          }
+        ),
         switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       )
       .subscribe((res: ITheme) => {
