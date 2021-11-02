@@ -37,6 +37,7 @@ export interface IReward {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   tags?:{id:number, name:string}[];
+  distance?: {value?:number, unitOfMeasure?:string}
 }
 
 export interface IRewardState {

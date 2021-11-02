@@ -7,4 +7,5 @@ export interface IListItemModel {
   name:string;
   description:string;
   createdAt: Date | string;
+  position?: string;
 } 

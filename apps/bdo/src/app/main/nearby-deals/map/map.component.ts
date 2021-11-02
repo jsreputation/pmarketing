@@ -14,6 +14,8 @@ import {
   IVoucherService
 } from '@perxtech/core';
 import { IRewardLocationModel } from '../../../models/reward-locations.model';
+import { IListItemModel } from '../../../shared/models/list-item.model';
+import { mapRewardsToListItem } from '../../../shared/utilities/mapping.util';
 export interface IPosition {
   lng: number;
   lat: number;
@@ -34,7 +36,7 @@ export class MapComponent implements OnInit {
 
   public markersArray: google.maps.Marker[] = [];
   public rad = 10000;
-  nearbyRewards: IReward[] = [];
+  nearbyRewards: IListItemModel[] = [];
   locations: IVoucherLocation[] = [];
   rewardLocations: IRewardLocationModel[] = [];
   constructor(private vouchersService: IVoucherService) {}
@@ -53,9 +55,9 @@ export class MapComponent implements OnInit {
       this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
       this.getRewardNearBy().subscribe((rewardLocations) => {
         this.rewardLocations = rewardLocations;
-        this.nearbyRewards = rewardLocations.map((item) => {
+        this.nearbyRewards = mapRewardsToListItem(rewardLocations.map((item) => {
           return { ...item.reward, description: '' };
-        });
+        }));
         rewardLocations.map((item) => {
           this.locations = this.locations.concat(item.locations);
         });

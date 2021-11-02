@@ -1,4 +1,4 @@
-import { RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PrimaryCatalogComponent } from './primary-catalog/primary-catalog.component';
@@ -15,6 +15,7 @@ import { LIST_FEATURED_DEALS } from '../../mock-data/featured-deals.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -26,6 +27,11 @@ describe('HomeComponent', () => {
     nearMe() {
      return of([]);
    }
+  };
+
+  const campaignServiceBdo: Partial<ICampaignService> = {
+    getCampaigns: () => of(),
+    getCampaign: () => of(),
   };
  
   const routerBdo: Partial<Router> = {
@@ -50,7 +56,8 @@ describe('HomeComponent', () => {
         MatIconModule
       ],
       providers:[{provide: RewardsService, useValue:rewardsServiceBdo},
-        {provide: Router, useValue:routerBdo}]
+        {provide: Router, useValue:routerBdo},
+        {provide: ICampaignService, useValue:campaignServiceBdo}]
     })
       .compileComponents();
   });
@@ -59,7 +66,7 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     component.categories = [];
-    component.nearByDeals = LIST_NEAR_BY;
+    component.nearByDeals = mapRewardsToListItem(LIST_NEAR_BY);
     component.featuredDeals = LIST_FEATURED_DEALS;
     fixture.detectChanges();
   });
