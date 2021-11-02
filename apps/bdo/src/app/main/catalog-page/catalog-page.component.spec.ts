@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('CatalogPageComponent', () => {
@@ -33,6 +33,9 @@ describe('CatalogPageComponent', () => {
   };
   const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of()
+  };
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaigns: () => of()
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -66,6 +69,7 @@ describe('CatalogPageComponent', () => {
         },
         FilterService,
         { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: RewardsService, useValue:rewardsServiceBdo }

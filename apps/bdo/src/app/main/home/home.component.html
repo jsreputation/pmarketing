@@ -32,7 +32,7 @@
         <div class="filter-value">
           <span class="filter-tag filter-tag--new selected">What's new</span>
         </div>
-        <span class="action" (click)="navigateToCatalog(catalogConfiguation.tags.subCategory.new)">
+        <span class="action" (click)="navigateToCatalog(catalogConfiguration.bdo.type, catalogConfiguration.bdo.tags[0])">
           View All
         </span>
       </div>
@@ -46,7 +46,7 @@
         <div class="filter-value">
           <span class="filter-tag filter-tag--popular selected">Popular</span>
         </div>
-        <span class="action" (click)="navigateToCatalog(catalogConfiguation.tags.subCategory.popular)">
+        <span class="action" (click)="navigateToCatalog(catalogConfiguration.bdo.type, catalogConfiguration.bdo.tags[1])">
           View All
         </span>
       </div>
@@ -54,7 +54,6 @@
     </div>
     <bdo-tagged-item *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
   </mat-card>
-  <bdo-footer></bdo-footer>
 </div>
 
 <ng-template #noResultMessage>

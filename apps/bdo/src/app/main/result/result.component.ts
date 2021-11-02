@@ -1,8 +1,8 @@
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perxtech/core';
-import { FilterService } from '../../shared/services/filter.service';
+import { RewardsService } from '@perxtech/core';
+import { IListItemModel } from '../../shared/models/list-item.model';
 
 @Component({
   selector: 'bdo-result',
@@ -11,25 +11,30 @@ import { FilterService } from '../../shared/services/filter.service';
 })
 export class ResultComponent implements OnInit {
   public searchValue = '';
-  public searchResult: IReward[] = [];
+  public searchResult: IListItemModel[] = [];
   public isLoaded = true;
   constructor(
     private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService,
-    private filterService: FilterService
+    private rewardsService: RewardsService
   ) {}
 
   ngOnInit(): void {
     this.activeRoute.queryParams
       .pipe(switchMap((params) => {
-        this.filterService.setParams((params));
         if (params['search']) {
           this.searchValue = params['search'];
         }
         return this.rewardsService.searchRewards(this.searchValue, params['tags']);
       }))
       .subscribe((rewards) => {
-        this.searchResult = rewards;
+        this.searchResult = rewards.map(item => ({
+          id: item.id,
+          thumbnail: item.rewardThumbnail,
+          name: item.name,
+          categoryTags: item.categoryTags,
+          createdAt: item.validFrom,
+          description: item.description
+        }));
         this.isLoaded = false;
       });
   }

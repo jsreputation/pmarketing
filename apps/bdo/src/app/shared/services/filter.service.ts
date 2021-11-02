@@ -5,62 +5,39 @@ import { BehaviorSubject } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 
 const initValue: IFilterModel = {
-  searchValue: '',
-  accountTypes: [],
   categories: [],
   tags: [],
-  locations: []
+  locations: [],
+  cardType: []
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FilterService {
-  public filterValue$: BehaviorSubject<IFilterModel> = new BehaviorSubject<IFilterModel>(initValue);
-  private queryParams: any;
+  public filterValue$: BehaviorSubject<IFilterModel> = new BehaviorSubject<IFilterModel>(
+    initValue
+  );
   private filterDialogRef: MatDialogRef<FilterComponent>;
+  constructor(public dialog: MatDialog) {}
 
-  constructor(public dialog: MatDialog) {
-  }
-  
   public setValue(filterValue: IFilterModel) {
-    const value = this.mapQueryParamsToFilterObject(filterValue);
-    this.filterValue$.next(value);
-  }
-
-  public setParams(params: any) {
-    this.queryParams = params;
-  }
-
-  public mapQueryParamsToFilterObject(filterValue: IFilterModel) {
-    if (filterValue && this.queryParams) {
-      Object.keys(filterValue)
-        .forEach(key => {
-          if (this.queryParams[key]) {
-            filterValue[key] = filterValue[key].map(item => ({
-              ...item,
-              value: this.queryParams[key] === item.name || (Array.isArray(this.queryParams[key]) && this.queryParams[key].includes(item))
-            }));
-          }
-        });
-    }
-    return filterValue;
+    this.filterValue$.next(filterValue);
   }
 
   public showFilterDialog(onCloseCallback?: (result) => void) {
     this.filterDialogRef = this.dialog.open(FilterComponent, {
       panelClass: 'filter-dialog-container',
       position: { top: '0' },
-      data: {}
+      data: {},
     });
 
-
-      this.filterDialogRef.afterClosed().subscribe(result => {
-        this.filterDialogRef = undefined;
-        if (onCloseCallback) {
-          onCloseCallback(result);
-        }
-      });
+    this.filterDialogRef.afterClosed().subscribe((result) => {
+      this.filterDialogRef = undefined;
+      if (onCloseCallback) {
+        onCloseCallback(result);
+      }
+    });
   }
 
   public isOpen() {

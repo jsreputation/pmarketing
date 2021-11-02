@@ -3,7 +3,7 @@
         <div class="title">
             Location
         </div>
-        <div class="content" *ngFor="let item of lstVoucherLocation">
+        <div class="content" *ngFor="let item of lstVoucherLocation" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
             <div class="text">
                 {{item.name}}
             </div>
@@ -11,8 +11,5 @@
                 <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
             </div>
         </div>
-    </div>
-    <div class="footer">
-        <bdo-footer-refer></bdo-footer-refer>
     </div>
 </div>

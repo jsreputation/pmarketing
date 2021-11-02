@@ -1,65 +1,34 @@
+<div class="thumbnail">
+    <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
+        [attr.alt]="campaign?.name" />
+</div>
 <div class="treat-welcome">
-    <p class="title">Shop. Choose. Redeem.</p>
+    <p class="title">{{campaign?.name}}</p>
     <div class="div-popular">
         <div class="tag tag--nearby tag--popular">Popular</div>
     </div>
     <p>
-        <mat-icon class="treat-icon">location_pin</mat-icon>
-        <mat-icon class="treat-icon">share</mat-icon>
-        <mat-icon class="treat-icon">call</mat-icon>
+        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon">
+        <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon">
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon">
     </p>
-    <div class="description">
-        <span *ngFor="let item of lstCampaignRule"> {{item.name}} </span>
-    </div>
-    <button mat-stroked-button color="primary" class="btn-Enroll">Enroll Now</button>
-    <p class="title-deal">To get up to P5,000 worth of eGCs</p>
-    <div class="description-deal" *ngFor="let item of lstDeal">
-        <div class="ordinal-number">
-            <button>
-                {{item}}
-            </button>
-
-        </div>
-        <div class="content">
-            <h3>Shop Anywhere</h3>
-            <p>
-                Spend a minimum of PHP3,000 (USD60) / PHP15,000 (USD 300) / PHP30,000 (USD600) ONLINE or IN-STORE with
-                your BDO Credit Card from January 15 - March 31, 2021.
-            </p>
+    <div class="description" [innerHTML]="campaign?.description"></div>
+    <div class="additionalSections" *ngIf="campaign?.displayProperties?.landingPage">
+        <div *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
+            <mat-accordion class="location-wrapper">
+                <mat-expansion-panel class="panel">
+                    <mat-expansion-panel-header class="header">
+                        {{item.headerText}}
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent>
+                        {{item.bodyText}}
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
     </div>
-    <div class="note">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eu ipsum sed turpis suscipit sollicitudin.
-        Morbi consequat diam sed sem bibendum porta. Maecenas hendrerit dictum ligula at rhoncus. Ut volutpat ligula
-        eget neque blandit consectetur. Ut congue nunc ante, sit amet volutpat diam maximus in. Maecenas diam eros,
-        consequat ut venenatis mollis, sollicitudin eleifend nulla. Curabitur ut orci eget nibh lacinia interdum non sit
-        amet augue. Proin vel dapibus ipsum. Suspendisse diam urna, tincidunt sed pretium sit amet, porta ac ante.
-        Phasellus non justo vel ex vehicula ornare id non dolor. Donec vestibulum, velit sit amet congue pharetra, mi
-        risus ullamcorper nisl, vel semper ipsum nisi id sem. Aliquam erat volutpat. Fusce in magna viverra mi pretium
-        luctus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc nibh felis, fringilla et interdum ut,
-        tempus id ligula. Etiam aliquet eu diam ac faucibus. Phasellus dapibus enim vitae urna ultricies suscipit. Orci
-        varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc dictum risus vel luctus
-        ornare.
-    </div>
-    <!-- <mat-accordion class="location-wrapper">
-        <mat-expansion-panel class="panel">
-            <mat-expansion-panel-header class="header">
-                Promo Mechanics
-            </mat-expansion-panel-header>
-    
-            <ng-template matExpansionPanelContent>
-                Some deferred content
-            </ng-template>
-        </mat-expansion-panel>
-    </mat-accordion> -->
-    <mat-accordion class="location-wrapper" *ngIf="campaign">
-        <mat-expansion-panel class="panel" *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
-          <mat-expansion-panel-header  class="header">
-           {{item.headerText}}
-          </mat-expansion-panel-header>
-          <ng-template matExpansionPanelContent>
-            {{item.bodyText}}
-        </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-</div> 
+</div>
+<div class="btn-enroll-treat">
+    <button mat-stroked-button color="primary" class="btn-enroll-treat_action" (click)="navigateEnrollPage()">Enroll
+        Now</button>
+</div>

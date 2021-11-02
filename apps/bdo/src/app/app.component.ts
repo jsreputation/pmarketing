@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay, switchMap, tap } from 'rxjs/operators';
+import { delay, filter, map, switchMap, tap } from 'rxjs/operators';
 import {
   ConfigService, IConfig, IPopupConfig,
   ITheme,
@@ -9,7 +9,7 @@ import {
   TokenStorage
 } from '@perxtech/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Event, NavigationEnd, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
 
   public preAuth: boolean;
   public translationLoaded = false;
+  public showFooter = false;
 
   constructor(
     private notificationService: NotificationService,
@@ -92,5 +93,15 @@ export class AppComponent implements OnInit {
         },
         (err) => console.error(err)
       );
+    this.router.events
+      .pipe(
+        filter((event: Event) => event instanceof NavigationEnd),
+        map((event: NavigationEnd) => event.urlAfterRedirects)
+      )
+      .subscribe(url => this.initFooter(url));
+  }
+
+  private initFooter(url: string): void {
+    this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
   }
 }

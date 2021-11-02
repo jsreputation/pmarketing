@@ -1,6 +1,6 @@
 <li class="item" (click)="selectItem(reward)" *ngIf="reward">
   <a [routerLink]="url">
-    <img [src]="reward.rewardThumbnail ? reward.rewardThumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
+    <img [src]="reward.thumbnail ? reward.thumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
     <div class="tag-group">
     <ng-container *ngFor="let tag of reward.categoryTags, let idx = index">
       <span class="tag" [ngClass]="'tag--' + tag.title" *ngIf="idx < 2">

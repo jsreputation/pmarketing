@@ -8,6 +8,8 @@ export interface ICampaignFilterOptions {
   gameType?: GameType;
   tagged_with?: string;
   size?: number;
+  tags?: string[];
+  categories?: string[];
 }
 
 export abstract class ICampaignService {

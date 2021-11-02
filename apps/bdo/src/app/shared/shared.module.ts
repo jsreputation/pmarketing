@@ -12,7 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CheckboxGroupComponent } from './components/filter/checkbox-group/checkbox-group.component';
 import { FilterComponent } from './components/filter/filter.component';
-import { FooterReferComponent } from './components/footer-refer/footer-refer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
     SearchResultComponent,
     CheckboxGroupComponent,
     FilterComponent,
-    FooterReferComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +47,7 @@ import { RouterModule } from '@angular/router';
     TaggedItemComponent,
     SearchResultComponent,
     MatTabsModule,
-    FooterReferComponent,
+    FooterComponent,
   ],
   providers: [FilterService],
 })

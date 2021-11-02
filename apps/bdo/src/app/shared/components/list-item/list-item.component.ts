@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { IListItemModel } from '../../models/list-item.model';
 
 @Component({
   selector: 'bdo-list-item',
@@ -7,6 +7,6 @@ import { IReward } from '@perxtech/core';
   styleUrls: ['./list-item.component.scss']
 })
 export class ListItemComponent {
-  @Input() reward: IReward;
+  @Input() reward: IListItemModel;
   @Input() url: string[];
 }

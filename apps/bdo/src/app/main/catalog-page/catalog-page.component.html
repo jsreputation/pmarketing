@@ -4,12 +4,12 @@
     </div>
      -->
     <div class="category">
-       <bdo-category [categoryCode]="categoryCode" [subCategoryCodeSelected]="subCategoryCodeSelected"></bdo-category>
+       <bdo-category [categoryCode]="categoryCode"></bdo-category>
     </div>
 
-    <div class="sort">
-        <bdo-sort></bdo-sort>
-    </div>
+<!--    <div class="sort">-->
+<!--        <bdo-sort></bdo-sort>-->
+<!--    </div>-->
     <div class="filter-result">
         <bdo-search-result [result]="filterResult$ | async"></bdo-search-result>
     </div>
