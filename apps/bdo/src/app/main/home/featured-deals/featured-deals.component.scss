@@ -8,7 +8,7 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-snap-stop: always;
-  height: 145px;
+  // height: 150px;
   padding-inline-start: 0 !important;
   padding-bottom: 5px;
 
@@ -22,21 +22,18 @@
 
   .item {
     scroll-snap-align: center;
-    border-radius: 15px;
-    height: 100px;
+    height: 165px;
     list-style-type: none;
-
+    overflow-y: hidden;
     .image {
       height: 116px;
       margin-bottom: 8px;
-      border-radius: inherit;
+      border-radius: 16px;
 
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: inherit;
-      }
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-size: 105% 110%;
     }
 
     .title {
