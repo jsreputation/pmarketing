@@ -114,6 +114,8 @@ export class AppComponent implements OnInit {
       this.authenticationService.autoLogin().subscribe(
         () => this.$loading.next(true)
       );
+    } else { // don't need to perform auto login
+      this.$loading.next(true);
     }
   }
 }
