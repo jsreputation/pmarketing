@@ -22,7 +22,6 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
   filterResult$: Observable<IListItemModel[]> = null;
   isLoaded = false;
   pageNumber = 1;
-
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,

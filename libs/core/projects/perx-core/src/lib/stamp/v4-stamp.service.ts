@@ -97,6 +97,7 @@ export interface StampCampaignDisplayProperties {
     tnc?: { en: { text: string } };
     sub_heading?: string;
     additional_sections?: IV4AdditionalSection [];
+    sub_headline?:string;
   };
   button_text?: string;
   cols?: number;
