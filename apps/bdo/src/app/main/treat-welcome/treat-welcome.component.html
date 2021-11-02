@@ -12,7 +12,7 @@
         <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon">
         <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon">
     </p>
-    <div class="description" [innerHTML]="campaign?.description"></div>
+    <div class="description" *ngIf="campaign?.description != null" [innerHTML]="campaign?.description"></div>
     <div class="additionalSections" *ngIf="campaign?.displayProperties?.landingPage">
         <div *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
             <mat-accordion class="location-wrapper">
@@ -21,7 +21,7 @@
                         {{item.headerText}}
                     </mat-expansion-panel-header>
                     <ng-template matExpansionPanelContent>
-                        {{item.bodyText}}
+                      <p [innerHTML]="item.bodyText"></p>
                     </ng-template>
                 </mat-expansion-panel>
             </mat-accordion>
