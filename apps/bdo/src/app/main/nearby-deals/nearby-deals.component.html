@@ -15,7 +15,7 @@
           <span class="label-tab">Map</span>
         </ng-template>
         <div class="content-wrapper map-content">
-          <bdo-map [rewards]="rewards" [currentPosition]="currentPosition"></bdo-map>
+          <bdo-map *ngIf="currentPosition" [rewards]="rewards" [currentPosition]="currentPosition"></bdo-map>
         </div>
       </mat-tab>
       <mat-tab>

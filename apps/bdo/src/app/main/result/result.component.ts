@@ -12,7 +12,9 @@ import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 export class ResultComponent implements OnInit {
   public searchValue = '';
   public searchResult: IListItemModel[] = [];
-  public isLoaded = true;
+  public isLoaded = false;
+  private pageNumber = 1;
+  private requestPageSize = 100;
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService
@@ -24,11 +26,24 @@ export class ResultComponent implements OnInit {
         if (params['search']) {
           this.searchValue = params['search'];
         }
-        return this.rewardsService.searchRewards(this.searchValue, params['tags']);
+        return this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']);
       }))
       .subscribe((rewards) => {
-        this.searchResult = mapRewardsToListItem(rewards);
         this.isLoaded = false;
+        this.searchResult = rewards.map(item => {
+          return {
+            id: item.id,
+            thumbnail: item.rewardThumbnail,
+            name: item.name,
+            categoryTags: item.categoryTags,
+            createdAt: item.validFrom,
+            description: item.description
+          } as IListItemModel;
+        })
+        .sort((firstReward,secondReward)=> {
+          return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+        });
+        this.isLoaded = true;
       });
   }
 }

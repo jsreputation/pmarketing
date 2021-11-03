@@ -45,6 +45,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
 import { MapComponent } from './nearby-deals/map/map.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { MapComponent } from './nearby-deals/map/map.component';
     RewardsModule,
     MatSelectModule,
     MatBadgeModule,
+    TranslateModule.forChild()
     
   ],
   bootstrap: [],

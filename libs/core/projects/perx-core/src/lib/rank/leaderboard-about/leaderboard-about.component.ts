@@ -41,7 +41,7 @@ export class LeaderboardAboutComponent implements OnInit {
   }
 
   private getRankName(name: string | null, index: number): string {
-    return name ? `${name} ${this.prizesTxt}:` : `${this.rankTxt} ${index + 1} ${this.prizesTxt}:`;
+    return name ? `${name}` : `${this.rankTxt} ${index + 1}`;
   }
 
   private prepPodiums(): void {
