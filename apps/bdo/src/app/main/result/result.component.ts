@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { RewardsService } from '@perxtech/core';
 import { IListItemModel } from '../../shared/models/list-item.model';
-
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 @Component({
   selector: 'bdo-result',
   templateUrl: './result.component.html',
@@ -30,17 +30,7 @@ export class ResultComponent implements OnInit {
       }))
       .subscribe((rewards) => {
         this.isLoaded = false;
-        this.searchResult = rewards.map(item => {
-          return {
-            id: item.id,
-            thumbnail: item.rewardThumbnail,
-            name: item.name,
-            categoryTags: item.categoryTags,
-            createdAt: item.validFrom,
-            description: item.description
-          } as IListItemModel;
-        })
-        .sort((firstReward,secondReward)=> {
+        this.searchResult = mapRewardsToListItem(rewards).sort((firstReward,secondReward)=> {
           return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
         });
         this.isLoaded = true;

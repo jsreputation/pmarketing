@@ -235,6 +235,7 @@ export class V4CampaignService implements ICampaignService {
             tnc: {
               text: lp.tnc ? lp.tnc[lang].text : '',
             },
+            subHeadline:lp.sub_headline?lp.sub_headline:'',
             additionalSections: lp?.additional_sections?.map(item => {
               return {
                 headerText: item.header_text,

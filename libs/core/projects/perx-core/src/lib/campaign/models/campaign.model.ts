@@ -28,6 +28,7 @@ export interface CampaignLandingPage {
   backgroundUrl?: string;
   tnc?: { text: string };
   additionalSections?: AdditionalSection[];
+  subHeadline?:string;
 }
 export interface ICampaignRule {
   id:number,
