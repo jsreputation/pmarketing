@@ -42,7 +42,6 @@ export const appInit =
     if (token) {
       authService.saveUserAccessToken(token);
     }
-    (window as any).primaryIdentifier = urlParams.get('pi');
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),

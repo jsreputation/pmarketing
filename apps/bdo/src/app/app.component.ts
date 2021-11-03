@@ -59,8 +59,9 @@ export class AppComponent implements OnInit {
         }
         this.preAuth = config.preAuth as boolean;
         // sets the identifier if app module has already picked it up
-        console.log(config);
         this.storage.setAppInfoProperty(config.custom.pi, 'identifier');
+        (window as any).primaryIdentifier = config.custom.pi;
+
       }),
       switchMap(() => this.config.readAppConfig<ITheme>()), // typecast to theme
       tap((conf) => {
