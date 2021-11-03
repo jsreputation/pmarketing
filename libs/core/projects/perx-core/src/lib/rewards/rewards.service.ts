@@ -86,7 +86,7 @@ export abstract class RewardsService {
 
   public abstract searchRewards(
     text: string,
-    page: number, 
+    page: number,
     pageSize: number,
     tags?: string,
     locale?: string
