@@ -38,7 +38,6 @@ export interface IReward {
   isOperating?: boolean;
   tags?:{id:number, name:string}[];
   distance?: {value?:number, unitOfMeasure?:string};
-  documentType?:string;
 }
 
 export interface IRewardState {
