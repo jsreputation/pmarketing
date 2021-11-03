@@ -46,7 +46,7 @@ export abstract class IMerchantAdminService {
   public abstract createInvoice(
     userId: string,
     amount: number,
-    description: string,
+    receiptIdentifier: string,
     voucherId: number,
     pointsId: number
   ): Observable<IMerchantInvoice>;
