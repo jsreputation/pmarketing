@@ -77,7 +77,8 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
           this.formGroup.controls.category.setValue(false, { emitEvent: false });
         }
         if (value) {
-          this.formGroup.controls.category.setValue(true, { emitEvent: true });
+          this.formGroup.controls.category.setValue(true, { emitEvent: false });
+          this.updateCheckBoxValue.emit(value);
         }
       })
     })
