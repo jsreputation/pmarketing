@@ -15,6 +15,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 
+interface IBdoConfig {
+  pi: string;
+}
+
 @Component({
   selector: 'bdo-root',
   templateUrl: './app.component.html',
@@ -48,40 +52,38 @@ export class AppComponent implements OnInit {
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
       tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
     ).subscribe();
-    this.config.readAppConfig<ITheme>()
-      .pipe(
-        tap((config: IConfig<ITheme>) => {
-          if (config.appVersion) {
-            (window as any).PERX_APP_VERSION = config.appVersion;
-          }
-        }),
-        tap((conf) => {
-          this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
-        }),
-        tap((config: IConfig<ITheme>) => {
-          this.preAuth = config.preAuth as boolean;
-
-          // sets the identifier if app module has already picked it up
-          this.storage.setAppInfoProperty((window as any).primaryIdentifier, 'identifier');
-        }),
-        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
-        tap(() => {
-            // getTranslation fetches the translation and registers the language
-            // for when default lang is not 'en'
-            // only after fetching the translations do you .use() it
-            this.translate.getTranslation('en');
-            // this.translate.getLangs() to get langs avail, in future pass array of langs
-            // loop thru each lang string and .getTranslation it
-            this.translationLoaded = true;
-          }
-        ),
-        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
-      )
-      .subscribe((res: ITheme) => {
-        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
-        this.titleService.setTitle(title);
-        this.authenticate();
-      });
+    this.config.readAppConfig<IBdoConfig>().pipe(
+      tap((config: IConfig<IBdoConfig>) => {
+        if (config.appVersion) {
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
+        this.preAuth = config.preAuth as boolean;
+        // sets the identifier if app module has already picked it up
+        console.log(config);
+        this.storage.setAppInfoProperty(config.custom.pi, 'identifier');
+      }),
+      switchMap(() => this.config.readAppConfig<ITheme>()), // typecast to theme
+      tap((conf) => {
+        this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+      }),
+      // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
+      tap(() => {
+          // getTranslation fetches the translation and registers the language
+          // for when default lang is not 'en'
+          // only after fetching the translations do you .use() it
+          this.translate.getTranslation('en');
+          // this.translate.getLangs() to get langs avail, in future pass array of langs
+          // loop thru each lang string and .getTranslation it
+          this.translationLoaded = true;
+        }
+      ),
+      switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+    )
+    .subscribe((res: ITheme) => {
+      const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+      this.titleService.setTitle(title);
+      this.authenticate();
+    });
 
     this.notificationService.$popup
       .subscribe(
