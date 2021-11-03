@@ -85,4 +85,16 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
       ),
     });
   }
+
+  public selectCategory(value, idx) {
+    const formArray = (this.filterForm.controls.categories as FormArray).controls;
+    formArray.forEach((item, index) => {
+      if (index != idx && value) {
+        item.setValue({ ...item.value,
+          selected: false,
+          children: item.value.children.map(child => ({ ...child, selected: false }))
+        }, { emitEvent: false });
+      }
+    })
+  }
 }

@@ -19,7 +19,7 @@
         <div formArrayName='categories'>
           <ng-container *ngFor='let item of filterSource.categories;
           let idx= index;'>
-            <bdo-checkbox-group [formControlName]='idx' >
+            <bdo-checkbox-group [formControlName]='idx' (updateCheckBoxValue)="selectCategory($event, idx)">
             </bdo-checkbox-group>
           </ng-container>
         </div>
