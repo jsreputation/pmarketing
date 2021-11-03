@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
-import { IReward, RewardsService } from '@perxtech/core';
+import { ICampaignService, IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
 import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
 import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../shared/constants/home-category-configuration.const';
+import { IListItemModel } from '../../shared/models/list-item.model';
+import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'bdo-home',
@@ -15,11 +18,12 @@ export class HomeComponent implements OnInit {
   catalogConfiguration = CATALOG_CONFIGURATION;
   featuredDeals: IReward[] = [];
 
-  nearByDeals: IReward[] = [];
-  whatsNewDeals: IReward[] = [];
-  popularDeals: IReward[] = [];
+  nearByDeals: IListItemModel[] = [];
+  whatsNewDeals: IListItemModel[] = [];
+  popularDeals: IListItemModel[] = [];
 
   requestPageSize = 10;
+  requestPageSizeForWhatsNew = 5;
   tag = {
     new: 'new',
     popular: 'popular',
@@ -34,25 +38,34 @@ export class HomeComponent implements OnInit {
     lng: 121.017646,
   };
 
-  constructor(private rewardsService: RewardsService, private route: Router) {
+  constructor(private rewardsService: RewardsService, private route: Router, private campaignService: ICampaignService) {
   }
 
   ngOnInit(): void {
     this.rewardsService
       .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, 1, this.requestPageSize)
       .subscribe((nearBy: IReward[]) => {
-        this.nearByDeals = nearBy;
+        this.nearByDeals = mapRewardsToListItem(nearBy);
       });
-    this.rewardsService
-      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined, 'id')
-      .subscribe((newRewards: IReward[]) => {
-        this.whatsNewDeals = newRewards;
-      });
-    this.rewardsService
-      .getRewards(1, this.requestPageSize, [ this.tag.popular ])
-      .subscribe((popularRewards: IReward[]) => {
-        this.popularDeals = popularRewards;
-      });
+
+    forkJoin(
+      [this.rewardsService
+      .getRewards(1, this.requestPageSizeForWhatsNew, undefined, undefined, undefined, undefined, undefined),
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSizeForWhatsNew})
+    ]).subscribe(([rewards, campaigns])=>{
+      this.whatsNewDeals = mapRewardsToListItem(rewards).concat(mapCampaignsToListItem(campaigns)).sort((firstReward, secondReward)=>{
+        return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+      })
+    });
+
+    forkJoin(
+      [this.rewardsService
+      .getRewards(1, this.requestPageSize, [ this.tag.popular ]),
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ]})
+    ]).subscribe(([popularRewards, popularCampaigns])=>{
+      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns));
+    });
+    
     this.rewardsService
       .getRewards(1, this.requestPageSize, [ this.tag.featured ])
       .subscribe((featuredDeals: IReward[]) => {

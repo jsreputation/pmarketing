@@ -3,14 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IReward, NotificationService, RewardsService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest } from 'rxjs';
+import { IListItemModel } from '../../shared/models/list-item.model';
 import { TranslateService } from '@ngx-translate/core';
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
   styleUrls: ['./deal-landing.component.scss'],
 })
 export class DealLandingComponent implements OnInit {
-  similarDeals: IReward[];
+  similarDeals: IListItemModel[];
   dealDetail: IReward;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
@@ -35,7 +37,7 @@ export class DealLandingComponent implements OnInit {
         this.rewardService.getRewardsRelated(param.rid),
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
-        this.similarDeals = similarDeals;
+        this.similarDeals = mapRewardsToListItem(similarDeals);
         this.shareUrl.concat(dealDetail.id.toString());
       });
     });

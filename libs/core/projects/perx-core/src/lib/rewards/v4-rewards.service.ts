@@ -99,6 +99,7 @@ export interface IV4Reward {
   referee_balance_to_next_reward?: number;
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
+  distance?: {value:number, unit_of_measure:string};
 }
 
 interface IV4Price {
@@ -335,7 +336,8 @@ export class V4RewardsService extends RewardsService {
         : undefined,
       operatingHours,
       isOperating: reward.operating_now,
-      tags: reward?.tags
+      tags: reward?.tags,
+      distance: {value:reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure}
     };
   }
 

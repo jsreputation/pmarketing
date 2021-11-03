@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
 import { IPosition } from './map/map.component';
 @Component({
@@ -6,7 +6,7 @@ import { IPosition } from './map/map.component';
   templateUrl: './nearby-deals.component.html',
   styleUrls: ['./nearby-deals.component.scss'],
 })
-export class NearbyDealsComponent {
+export class NearbyDealsComponent implements OnInit{
   public rewards: IReward[];
   public rad = 10000;
   public currentPosition: IPosition;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICampaignService, NotificationService } from '@perxtech/core';
@@ -8,7 +8,7 @@ import { ICampaignService, NotificationService } from '@perxtech/core';
   templateUrl: './treat-enroll-page.component.html',
   styleUrls: ['./treat-enroll-page.component.scss'],
 })
-export class TreatEnrollPageComponent {
+export class TreatEnrollPageComponent implements  OnInit{
   campaignId: number;
   enrollForm: FormGroup ;
   constructor(

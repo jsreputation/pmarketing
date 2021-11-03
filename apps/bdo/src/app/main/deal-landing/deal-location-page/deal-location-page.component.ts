@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IVoucherLocation, IVoucherService } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './deal-location-page.component.html',
   styleUrls: ['./deal-location-page.component.scss'],
 })
-export class DealLocationPageComponent {
+export class DealLocationPageComponent implements OnInit{
   lstVoucherLocation: IVoucherLocation[];
   constructor(
     private voucherService: IVoucherService,

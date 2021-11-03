@@ -10,6 +10,7 @@ export function mapRewardsToListItem(rewards: IReward[]): IListItemModel[] {
       name: reward.name,
       description: reward.subtitle,
       createdAt: reward.validFrom,
+      position: reward?.distance?.value ? `${reward.distance.value} ${reward?.distance?.unitOfMeasure}` : ''
     };
   });
 }
