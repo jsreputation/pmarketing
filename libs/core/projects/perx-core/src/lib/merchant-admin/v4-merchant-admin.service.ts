@@ -422,7 +422,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public createInvoice(
     userId: string,
     amount: number,
-    description: string,
+    receiptIdentifier: string,
     voucherId: number,
     pointsId: number
   ): Observable<IMerchantInvoice> {
@@ -447,7 +447,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
     const body = {
       collected_amount: amount,
-      description,
+      transaction_properties: {
+        original_receipt_number: receiptIdentifier
+      },
       used_items: usedItems
     };
 
