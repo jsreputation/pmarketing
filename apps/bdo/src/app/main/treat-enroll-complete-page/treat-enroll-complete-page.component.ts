@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LIST_SIMILAR_DEALS } from '../../mock-data/similar-deals.mock';
 @Component({
   selector: 'bdo-treat-enroll-complete-page',
   templateUrl: './treat-enroll-complete-page.component.html',
   styleUrls: ['./treat-enroll-complete-page.component.scss']
 })
-export class TreatEnrollCompletePageComponent  {
+export class TreatEnrollCompletePageComponent implements OnInit{
   similarDeals = LIST_SIMILAR_DEALS;
   promoId:string;
   dealDetail = {
