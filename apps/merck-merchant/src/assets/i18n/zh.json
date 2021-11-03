@@ -57,5 +57,12 @@
   },
   "ERRORS": {
     "NOT_ENOUGH_POINTS": "用戶積分不足"
+  },
+  "IDENTIFY_USER": {
+    "BY_QR_SCAN": "By QR Scan",
+    "BY_MOBILE_NUMBER": "By Mobile Number",
+    "MOBILE_NUMBER": "Enter customer mobile number",
+    "MOBILE_NUMBER_IS": "Mobile number is",
+    "CONFIRM": "Confirm"
   }
 }

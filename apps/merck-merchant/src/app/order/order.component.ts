@@ -6,7 +6,8 @@ import {
   IMerchantAdminTransaction,
   IMerchantProfile,
   NotificationService,
-  TokenStorage
+  TokenStorage,
+  IProfile
 } from '@perxtech/core';
 import { forkJoin, from, Observable, throwError } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
@@ -17,6 +18,7 @@ export interface IPayload {
   id: number;
   rewardId?: number;
   identifier?: string;
+  verifiedUser?: IProfile;
 }
 
 interface Product {
@@ -36,6 +38,7 @@ export class OrderComponent implements OnInit {
   public selectedProducts: IProduct[] = [];
   public totalPoints: number;
   public language: string;
+  public userId: number;
 
   constructor(
     private router: Router,
@@ -52,6 +55,11 @@ export class OrderComponent implements OnInit {
     if (scannedQrCode) {
       try {
         this.payload = JSON.parse(scannedQrCode);
+        if (this.payload.verifiedUser) {
+          this.userId = this.payload.verifiedUser.id ? this.payload.verifiedUser.id : 0;
+        } else {
+          this.userId = this.payload.id;
+        }
       } catch (error) {
         this.notificationService.addSnack('Invalid Merck QR Code');
       }
@@ -97,13 +105,16 @@ export class OrderComponent implements OnInit {
           if (!merchantName) {
             return throwError({ message: 'merchant name is required' });
           }
+          if (!this.userId) {
+            return throwError({ message: 'user id is required' });
+          }
           return from(this.selectedProducts).pipe(
             mergeMap((product: IProduct) => {
               const partDataRequests: Observable<IMerchantAdminTransaction>[] = [];
               if (product.quantity) {
                 for (let i = 0; i < product.quantity; i++) {
                   partDataRequests.push(this.merchantAdminService.createTransaction(
-                    this.payload.id, merchantUsername, product.price, product.currency,
+                    this.userId , merchantUsername, product.price, product.currency,
                     'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
                     `${product.name} ${product.description}`));
                 }
