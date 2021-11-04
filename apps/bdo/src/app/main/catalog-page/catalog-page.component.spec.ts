@@ -31,6 +31,9 @@ describe('CatalogPageComponent', () => {
     },
     getSearchHistory() {
       return of();
+    },
+    getAllCategories() {
+      return of();
     }
   };
   const rewardsServiceStub: Partial<RewardsService> = {

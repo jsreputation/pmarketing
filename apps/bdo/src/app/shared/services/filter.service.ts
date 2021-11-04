@@ -4,19 +4,12 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 
-const initValue: IFilterModel = {
-  categories: [],
-  tags: [],
-  locations: [],
-  cardType: []
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
   public filterValue$: BehaviorSubject<IFilterModel> = new BehaviorSubject<IFilterModel>(
-    initValue
+    null
   );
   private filterDialogRef: MatDialogRef<FilterComponent>;
   constructor(public dialog: MatDialog) {}

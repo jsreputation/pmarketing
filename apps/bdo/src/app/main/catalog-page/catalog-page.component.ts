@@ -1,14 +1,15 @@
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaignService, RewardsService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, combineLatest } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
+import { buildParams, mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
 
 
 @Component({
@@ -32,18 +33,32 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeRoute.queryParams
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((params) => {
-        this.filterService.setValue(this.mapQueryParamsToFilterObject(FILTER_DATA, params));
-        this.categoryCode = params.type;
-    });
+    combineLatest([
+      this.activeRoute.queryParams,
+      this.rewardsService.getAllCategories(),
+    ]).subscribe(([params, categories]) => {
+      const filterData = FILTER_DATA;
+      filterData.categories = filterData.categories
+        .map(item => ({
+          ...item,
+          id: categories.find(c => c.title === item.name)?.id,
+          children: item.children.filter(item => categories.find(t => t.title === item.name))
+        }))
+        .filter(item => item.id);
+      filterData.type = params.type;
+      this.categoryCode = params.type;
+      this.filterService.setValue(mapQueryParamsToFilterObject(filterData, params));
+    })
+
     this.filterResult$ = this.filterService.filterValue$
       .pipe(
         takeUntil(this.destroy$),
         switchMap((filterValue: IFilterModel) => {
+          if (!filterValue) {
+            return [];
+          }
           this.isLoaded = false;
-          const queryObject = this.buildParams(filterValue);
+          const queryObject = buildParams(filterValue);
           Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
           const campaignsParams = {
             page: this.pageNumber,
@@ -62,6 +77,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             this.campaignsService.getCampaigns(campaignsParams),
           ]);
         }),
+        filter(value => value.length),
         map(([rewards, campaigns]) => {
           this.isLoaded = true;
           const listItem = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards));
@@ -69,75 +85,5 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             return new Date(secondItem.createdAt).getTime() - new Date(firstItem.createdAt).getTime();
           });
         }));
-
-  }
-
-  buildParams(filterValue: IFilterModel) {
-    return {
-      tags: this.handleTags(filterValue),
-      categories: this.handleCategory(filterValue)
-    };
-  }
-
-  public mapQueryParamsToFilterObject(filterValue: IFilterModel, queryParams) {
-    filterValue = {
-      ...filterValue,
-      categories: filterValue.categories.map(cate =>
-        cate.type === queryParams.type || !queryParams.type ?
-          {
-            ...cate,
-            selected: true,
-            children: cate.children ? cate.children.map(sub =>
-              !queryParams.category || this.equalOrIncludes(sub.type, queryParams.category) ?
-                {
-                  ...sub,
-                  selected: true
-                } : sub
-            ) : []
-          } : cate
-      ),
-      tags: filterValue.tags.map(item => !queryParams.tags || this.equalOrIncludes(item.type, queryParams.tags) ? {
-        ...item,
-        selected: true
-      } : item),
-      cardType: filterValue.cardType.map(item => !queryParams.cardType || this.equalOrIncludes(item.type, queryParams.cardType) ? {
-        ...item,
-        selected: true
-      } : item),
-    };
-
-    return filterValue;
-  }
-
-  handleTags(filterValue: IFilterModel) {
-    const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => `cardtype-${card.type}`);
-    const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
-    let tagsParams = null;
-    if (cardTypes.length !== FILTER_DATA.cardType.length) {
-      tagsParams = cardTypes;
-    } else {
-      tagsParams = tags.length === FILTER_DATA.tags.length ? null : tags;
-    }
-    return tagsParams;
-  }
-
-  handleCategory(filterValue: IFilterModel) {
-    let categories = [];
-    const selectedSpecialCategories = filterValue.categories.filter(item => item.selected
-    && ['spend-anywhere', 'shop-choose-redeem', 'online-exclusive'].includes(item.type));
-    if (selectedSpecialCategories.length) {
-      return selectedSpecialCategories.map(item => item.type);
-    } else {
-      const selectedCategory = filterValue.categories.find(item => item.selected);
-      categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.type);
-      return categories.length === selectedCategory.children.length ? null : categories;
-    }
-  }
-
-  private equalOrIncludes(type, values) {
-    if (Array.isArray(values)) {
-      return values.includes(type);
-    }
-    return values === type;
   }
 }

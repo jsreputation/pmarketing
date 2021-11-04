@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FilterService } from '../../../shared/services/filter.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ItemModel } from '../../../shared/models/item.model';
 import { CATEGORY_CONFIGURATIONS } from '../../../shared/constants/category-configuration.const';
 
@@ -16,31 +16,35 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     public filterService: FilterService,
-    private route: Router,
-    private activeRouter: ActivatedRoute
+    private route: Router
   ) {}
 
   ngOnInit(): void {
-    this.activeRouter.queryParams.subscribe(params => {
-      this.category = CATEGORY_CONFIGURATIONS.find(item => item.key === params.type);
-      this.category = {
-        ...this.category,
-        children: this.category.children.map(sub =>
-          params.category && this.equalOrIncludes(sub.key, params.category) ?
-            {
+    this.filterService.filterValue$.subscribe(filterValue => {
+      if (filterValue) {
+        this.category = CATEGORY_CONFIGURATIONS.find(item => item.key === filterValue.type);
+        const selectedFilterCategory = filterValue.categories.find(item => item.selected);
+        this.category = {
+          ...this.category,
+          children: this.category.children
+            .filter(sub => selectedFilterCategory.children.find(item => item.name === sub.name))
+            .map(sub =>
+              ({
               ...sub,
-              selected: true,
-              children: sub.children ? sub.children.map(card =>
-                params.cardType && this.equalOrIncludes(card.key, params.cardType) ?
-                  {
-                    ...card,
-                    selected: true
-                  } : card
-              ) : []
-            } : sub
-        )
-      };
-      this.selectedSubcategory = this.category.children.find(item => item.selected);
+                selected: selectedFilterCategory.children.some(item => !item.selected) || selectedFilterCategory.children.length == 1 ?
+                  selectedFilterCategory.children.find(item => item.name === sub.name)?.selected : false,
+                children: sub.children ? sub.children.map(card =>
+                  filterValue.cardType.some(item => !item.selected) || filterValue.cardType.length == 1 ?
+                    {
+                      ...card,
+                      selected: filterValue.cardType.find(item => item.type === card.key)?.selected
+                    } : card
+                ) : []
+              })
+            )
+        };
+        this.selectedSubcategory = this.category.children.find(item => item.selected);
+      }
     })
   }
 
@@ -81,16 +85,9 @@ export class CategoryComponent implements OnInit {
 
     const queryParams = {
       type: parentCategory?.type,
-      category: childCategories?.length === parentCategory.children.length ? null : childCategories,
+      category: parentCategory?.children && childCategories?.length === parentCategory.children.length ? null : childCategories,
       tags: tags.length === filterValue.tags.length ? null : tags
     };
     this.route.navigate(['catalog-page'], { queryParams: queryParams });
-  }
-
-  private equalOrIncludes(type, values) {
-    if (Array.isArray(values)) {
-      return values.includes(type);
-    }
-    return values === type;
   }
 }
