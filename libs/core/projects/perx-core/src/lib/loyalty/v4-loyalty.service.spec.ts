@@ -5,10 +5,12 @@ import { V4LoyaltyService } from './v4-loyalty.service';
 
 import { ConfigModule } from '../config/config.module';
 import { TransactionDetailType } from './models/loyalty.model';
-import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
+import { IV4Reward } from '../rewards/v4-rewards.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ICustomProperties } from '../profile/profile.model';
+import { ITag } from '../merchants/models/merchants.model';
+
 interface IV4PointHistory {
   id: number;
   identifier?: string;
@@ -51,7 +53,7 @@ interface IV4RewardTransactionHistory {
   };
   reward: IV4Reward;
   redemption_location?: string;
-  tags?: IV4Tag[];
+  tags?: ITag[];
 }
 interface IV4PurchaseTransactionHistory {
   id: number;
