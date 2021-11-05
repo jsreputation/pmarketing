@@ -1,3 +1,4 @@
+<ng-container *ngIf="campaign">
 <div class="thumbnail">
     <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
         [attr.alt]="campaign?.name" />
@@ -36,3 +37,4 @@
     <button mat-stroked-button color="primary" class="btn-enroll-treat_action" (click)="navigateEnrollPage()">Enroll
         Now</button>
 </div>
+</ng-container>
