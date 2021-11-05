@@ -4,8 +4,12 @@
 </div>
 <div class="treat-welcome">
     <p class="title">{{campaign?.name}}</p>
-    <div class="div-popular">
-        <div class="tag tag--nearby tag--popular">Popular</div>
+    <div class="tag-group">
+        <ng-container *ngFor="let tag of campaign.tags">
+            <span class="tag" [ngClass]="'tag--' + tag.name">
+            {{ tag.name }}
+            </span>
+        </ng-container>
     </div>
     <p>
         <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon">
