@@ -73,8 +73,12 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  navigateTo(_selectedItem: FeaturedDeals) {
-    this.route.navigate([ `deal-welcome/${_selectedItem.id}` ]);
+  navigateTo(_selectedItem: IListItemModel) {
+    if (_selectedItem.documentType === 'reward'){
+      this.route.navigate([ `deal-welcome/${_selectedItem.id}` ]);
+    } else if (_selectedItem.documentType === 'campaign'){
+      this.route.navigate([ `treat-welcome/${_selectedItem.id}` ]);
+    }
   }
 
   navigateToCatalog(type:string, tag:string) {
