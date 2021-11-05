@@ -644,6 +644,7 @@ export class V4RewardsService extends RewardsService {
     page?: number,
     pageSize?: number,
     tags?: string[] | null,
+    categories?: string[] | null,
   ): Observable<IReward[]> {
     let params = new HttpParams()
     if(page) {
@@ -654,6 +655,9 @@ export class V4RewardsService extends RewardsService {
     }
     if (tags) {
       params = params.set('tags', tags.join());
+    }
+    if (categories) {
+      params = params.set('categories', categories.join());
     }
     return this.http
       .get<IV4GetRewardsResponse>(

@@ -68,7 +68,8 @@ export abstract class RewardsService {
     page?: number,
     pageSize?: number,
     tags?: string[] | null,
-  ): Observable<IReward[]>;
+    categories?: string[],
+): Observable<IReward[]>;
 
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
