@@ -1,9 +1,13 @@
 <div class="nearby-deals-wrapper">
   <div class="filter-wrapper">
-    <span class="tag tag--nearby"> Nearby</span>
+    <div class="tag-group">
+      <span class="tag tag--nearby"> Nearby</span>
+    </div>
     <div class="group-filter">
-      <img src="assets/images/icon-filter.svg" />
-      <span>Filters</span>
+      <button mat-button class="filter" (click)="filter()">
+        <img src="assets/images/icon-filter.svg" />
+        <span>Filters</span>
+      </button>
     </div>
   </div>
   <h4 class="header">Check out exciting specials near you!</h4>

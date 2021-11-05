@@ -17,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { GhostCardComponent } from './components/ghosts/card-ghost.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MatCardModule } from '@angular/material/card';
     MatExpansionModule,
     MatCheckboxModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatChipsModule
   ],
   exports: [
     ListItemComponent,

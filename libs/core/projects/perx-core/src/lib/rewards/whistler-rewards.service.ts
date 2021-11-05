@@ -250,7 +250,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public nearMe(rad: number, lat: number, lng: number,page?: number, pageSize?: number, tags?: string[] | null,): Observable<IReward[]> {
+  public nearMe(rad: number, lat: number, lng: number,page?: number, pageSize?: number, tags?: string[] | string, categories?: string[] | string): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
    // @ts-ignore

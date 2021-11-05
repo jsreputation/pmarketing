@@ -6,6 +6,14 @@
     justify-content: space-between;
     padding: 16px 20px;
 
+    .tag-group {
+      .tag {
+        position: relative;
+        top: 13px; //todo: remove magic number and style the container properly
+        margin: 5px;
+      }
+    }
+
     .group-filter {
       display: flex;
       align-items: center;
