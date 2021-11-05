@@ -643,8 +643,8 @@ export class V4RewardsService extends RewardsService {
     lng: number,
     page?: number,
     pageSize?: number,
-    tags?: string[] | null,
-    categories?: string[] | null,
+    tags?: string[] | string,
+    categories?: string[] | string,
   ): Observable<IReward[]> {
     let params = new HttpParams()
     if(page) {
@@ -654,10 +654,10 @@ export class V4RewardsService extends RewardsService {
       params= params.set('size', pageSize.toString());
     }
     if (tags) {
-      params = params.set('tags', tags.join());
+      params = params.set('tags', Array.isArray(tags) ? tags.join() : tags);
     }
     if (categories) {
-      params = params.set('categories', categories.join());
+      params = params.set('categories', Array.isArray(categories) ? categories.join(): categories);
     }
     return this.http
       .get<IV4GetRewardsResponse>(
