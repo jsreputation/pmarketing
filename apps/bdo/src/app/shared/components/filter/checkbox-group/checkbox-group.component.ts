@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, forwardRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, forwardRef, Output } from '@angular/core';
 
 import {
   ControlValueAccessor,
@@ -23,6 +23,7 @@ import { CheckboxModel } from '../../../../models/checkbox.model';
   ],
 })
 export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewInit{
+  @Output() updateCheckBoxValue: EventEmitter<any> = new EventEmitter();
   formGroup: FormGroup;
   dataSource: CheckboxModel;
   formArray: FormArray = new FormArray([]);
@@ -50,7 +51,7 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
 
     this.formGroup && this.formGroup.controls.category.valueChanges.subscribe((output) => {
       this.formArray.controls.forEach((item) => {
-        item.setValue(output);
+        item.setValue(output, { emitEvent: false });
       })
     });
   }
@@ -64,9 +65,29 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
         new FormControl(control.selected)
       );
     });
+
     this.formGroup = this.fb.group({
       category: [this.dataSource.selected],
       children: this.formArray,
+    });
+
+    this.formArray.controls.forEach(control => {
+      control.valueChanges.subscribe(value => {
+        if (!value && !this.formArray.controls.some(val => val.value)) {
+          this.formGroup.controls.category.setValue(false, { emitEvent: false });
+        }
+        if (value) {
+          this.formGroup.controls.category.setValue(true, { emitEvent: false });
+          this.updateCheckBoxValue.emit(value);
+        }
+      })
+    })
+
+    this.formGroup.controls.category.valueChanges.subscribe(value => {
+      this.updateCheckBoxValue.emit(value);
+      this.formArray.controls.forEach(control => {
+        control.setValue(value, { emitEvent: false });
+      })
     });
   }
 

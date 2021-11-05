@@ -81,7 +81,7 @@ export class CategoryComponent implements OnInit {
 
     const queryParams = {
       type: parentCategory?.type,
-      category: childCategories.length === filterValue.categories.length ? null : childCategories,
+      category: childCategories?.length === parentCategory.children.length ? null : childCategories,
       tags: tags.length === filterValue.tags.length ? null : tags
     };
     this.route.navigate(['catalog-page'], { queryParams: queryParams });
