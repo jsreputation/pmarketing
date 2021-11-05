@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
 import { IPosition } from './map/map.component';
+import { FilterService } from '../../shared/services/filter.service';
 @Component({
   selector: 'bdo-nearby-deals',
   templateUrl: './nearby-deals.component.html',
@@ -10,7 +11,11 @@ export class NearbyDealsComponent implements OnInit{
   public rewards: IReward[];
   public rad = 10000;
   public currentPosition: IPosition;
-  constructor(private rewardService: RewardsService) {}
+
+  constructor(
+    public filterService: FilterService,
+    private rewardService: RewardsService
+  ) {}
 
   ngOnInit(): void {
     this.getRewardNearBy()
@@ -34,5 +39,13 @@ export class NearbyDealsComponent implements OnInit{
           });
       });
     }
+  }
+
+  filter() {
+    this.filterService.showFilterDialog(value => {
+      if (value) {
+        console.log(value);
+      }
+    });
   }
 }
