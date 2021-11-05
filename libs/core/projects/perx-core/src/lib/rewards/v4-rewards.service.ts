@@ -25,11 +25,7 @@ import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { CampaignType } from '../campaign/models/campaign.model';
 import { IV4OperatingHours } from '../campaign/v4-campaign.service';
-
-export interface IV4Tag {
-  id: number;
-  name: string;
-}
+import { ITag } from '../merchants/models/merchants.model';
 
 interface IV4Image {
   type: string;
@@ -87,7 +83,7 @@ export interface IV4Reward {
   merchant_website?: string;
   terms_and_conditions?: string;
   steps_to_redeem?: string;
-  tags?: IV4Tag[];
+  tags?: ITag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
   selling_from?: string;
