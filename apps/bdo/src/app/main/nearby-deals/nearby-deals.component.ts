@@ -46,7 +46,15 @@ export class NearbyDealsComponent implements OnInit{
   filter() {
     this.filterService.showFilterDialog(value => {
       if (value) {
-        console.log(value);
+        const parentCategory = value.categories.find(item => item.selected);
+        const childCategories = parentCategory?.children.filter(item => item.selected).map(sub => sub.type);
+        const tags = value.tags.filter(tag => tag.selected).map(item => item.type);
+        const categories = parentCategory?.children && childCategories?.length === parentCategory.children.length ? null : childCategories;
+
+        this.rewardService.nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, null, null, tags, categories)
+          .subscribe((rewards) => {
+          this.rewards = rewards;
+        });
       }
     });
   }
