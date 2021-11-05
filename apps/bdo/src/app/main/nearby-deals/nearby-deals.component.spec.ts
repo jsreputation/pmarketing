@@ -9,14 +9,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NearbyDealsComponent } from './nearby-deals.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
-import { IVoucherService, RewardsService } from '@perxtech/core';
-import { of } from 'rxjs';
+import { ICategoryTags, IVoucherService, RewardsService } from '@perxtech/core';
+import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-class MockRewardsService {
-  nearMe() {
-    return of([]);
-  }
-}
+import { MatDialogModule } from '@angular/material/dialog';
+
+const rewardServiceStub: Partial<RewardsService> = {
+  nearMe: () => of([]),
+  getAllCategories: (): Observable<ICategoryTags[]> => of([])
+};
+
 class MockIVoucherService {
 
 }
@@ -38,14 +40,15 @@ describe('NearbyDealsComponent', () => {
         MatSidenavModule,
         MatExpansionModule,
         MatTabsModule,
-        MatIconModule
+        MatIconModule,
+        MatDialogModule
       ],
       providers: [
         {
           provide: APP_BASE_HREF,
           useValue : '/'
         }, {
-          provide: RewardsService, useClass:MockRewardsService
+          provide: RewardsService, useValue: rewardServiceStub
         },
         {
           provide: IVoucherService, useClass:MockIVoucherService
