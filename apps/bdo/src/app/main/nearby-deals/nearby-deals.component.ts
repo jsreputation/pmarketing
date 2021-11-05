@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IReward, RewardsService } from '@perxtech/core';
 import { IPosition } from './map/map.component';
 import { FilterService } from '../../shared/services/filter.service';
+import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 @Component({
   selector: 'bdo-nearby-deals',
   templateUrl: './nearby-deals.component.html',
@@ -18,6 +19,7 @@ export class NearbyDealsComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.filterService.setValue(FILTER_DATA);
     this.getRewardNearBy()
   }
 
