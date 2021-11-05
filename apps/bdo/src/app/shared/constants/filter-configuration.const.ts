@@ -1,6 +1,7 @@
 import { IFilterModel } from '../models/filter.model';
 
 export const FILTER_DATA: IFilterModel = {
+  type: '',
   categories: [
     {
       name: 'Credit Card',
@@ -33,8 +34,8 @@ export const FILTER_DATA: IFilterModel = {
       name: 'BDO Rewards',
       type:'bdo-rewards',
       children: [
-        { name: 'Sapphire',type:'emerald' },
-        { name: 'Emerald',type:'sapphire' },
+        { name: 'Sapphire',type:'sapphire' },
+        { name: 'Emerald',type:'emerald' },
         { name: 'Diamond',type:'diamond' }
       ],
     },
