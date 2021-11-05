@@ -1,4 +1,4 @@
-import { ICategoryTags } from "@perxtech/core";
+import { ICategoryTags, ITag } from '@perxtech/core';
 
 export interface IListItemModel {
   id?:number;
@@ -9,4 +9,5 @@ export interface IListItemModel {
   createdAt: Date | string;
   documentType?: string;
   position?: string;
+  tags: ITag[];
 } 

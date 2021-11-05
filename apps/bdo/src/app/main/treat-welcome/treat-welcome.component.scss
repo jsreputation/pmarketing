@@ -24,11 +24,11 @@
         font-weight: 500;
     }
 
-    .div-popular {
+    .tag-group {
         margin-bottom: var(--margin-bottom);
 
-        .tag--popular {
-            background-color: #FC0472;
+        .tag {
+            position: relative;
             width: fit-content;
         }
     }

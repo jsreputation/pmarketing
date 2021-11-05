@@ -30,7 +30,8 @@ describe('LargeListItemComponent', () => {
       description:
         'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
       categoryTags: [],
-      createdAt: new Date()
+      createdAt: new Date(),
+      tags: []
     };
     fixture.detectChanges();
     expect(component).toBeTruthy();
@@ -45,7 +46,8 @@ describe('LargeListItemComponent', () => {
       description:
         'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
       categoryTags: [],
-      createdAt: new Date()
+      createdAt: new Date(),
+      tags: []
     };
     fixture.detectChanges();
     const element = fixture.nativeElement.querySelector('.item');

@@ -19,7 +19,7 @@ import {
   TransactionDetailType
 } from './models/loyalty.model';
 
-import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
+import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
@@ -29,6 +29,7 @@ import {
   V4TransactionsService
 } from '../transactions/transaction-service/v4-transactions.service';
 import { IV4Campaign, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { ITag } from '../merchants/models/merchants.model';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -60,7 +61,7 @@ interface IV4LoyaltyTiers {
   multiplier_point?: number;
   multiplier_points_to_currency_rate?: number;
   images?: IV4Image[];
-  tags?: IV4Tag[];
+  tags?: ITag[];
   custom_fields?: ICustomProperties[];
 }
 
@@ -143,7 +144,7 @@ interface IV4RewardTransactionHistory {
   };
   reward: IV4Reward;
   redemption_location?: string;
-  tags?: IV4Tag[];
+  tags?: ITag[];
 }
 
 interface IV4PurchaseTransactionHistory {

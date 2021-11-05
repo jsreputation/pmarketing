@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IListItemModel } from '../../models/list-item.model';
+import { FILTER_DATA } from '../../constants/filter-configuration.const';
+import { ITag } from '@perxtech/core';
 
 
 @Component({
@@ -14,5 +16,9 @@ export class LargeListItemComponent {
   public defaultImageUrl  = "assets/images/light-gray-color-default-image.png";
   selectItem(item: IListItemModel) {
     this.itemSelected.emit(item);
+  }
+
+  public existsInFilters(tag: ITag): boolean {
+    return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
 }

@@ -41,6 +41,7 @@ import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-campaign.service';
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
+import { ITag } from '../merchants/models/merchants.model';
 
 interface IV4Image {
   type: string;
@@ -90,7 +91,7 @@ export interface IV4Campaign {
   favourite: boolean;
   custom_fields: any;
   category_tags: any[];
-  tags: any[];
+  tags: ITag[];
   state: CampaignState;
   rewards?: IV4Reward[];
   display_properties?: DisplayProperties | null;
@@ -486,7 +487,8 @@ export class V4CampaignService implements ICampaignService {
       teamSize: campaign.team_size,
       displayProperties,
       customFields,
-      categoryTags: campaign.category_tags
+      categoryTags: campaign.category_tags,
+      tags: campaign.tags
     };
   }
 
@@ -635,7 +637,7 @@ export class V4CampaignService implements ICampaignService {
     })
     .pipe(
       map((response: HttpResponse<any>) =>
-     { 
+     {
      return response.status === 200 ? true : false}
       ),
       catchError((error: HttpErrorResponse) =>

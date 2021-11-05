@@ -11,6 +11,7 @@ export interface IMerchant {
 export interface ITag {
   id: number;
   name: string;
+  description?: string;
 }
 
 export interface IImage {
