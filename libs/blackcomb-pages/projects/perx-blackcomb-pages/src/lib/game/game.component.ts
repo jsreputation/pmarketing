@@ -268,18 +268,18 @@ export class GameComponent implements OnInit, OnDestroy {
               imageUrl: '',
             };
           } else if (
-            err instanceof HttpErrorResponse &&
-            err.error
-          ) {
-            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
-            .subscribe((errorMessage) => {
-              this.popupData = {
-                title: 'Sorry!',
-                text: errorMessage,
-                buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
-                imageUrl: '',
-              };
-            });
+            err instanceof HttpErrorResponse) {
+            if (err.error) {
+              this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
+                .subscribe((errorMessage) => {
+                  this.popupData = {
+                    title: 'Sorry!',
+                    text: errorMessage,
+                    buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                    imageUrl: '',
+                  };
+                });
+            }
           } else {
             this.popupData = this.noRewardsPopUp;
           }
@@ -409,18 +409,18 @@ export class GameComponent implements OnInit, OnDestroy {
             imageUrl: '',
           };
         } else if (
-          err instanceof HttpErrorResponse &&
-          err.error
-        ) {
-          this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
-            .subscribe((errorMessage) => {
-              this.popupData = {
-                title: 'Sorry!',
-                text: errorMessage,
-                buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
-                imageUrl: '',
-              };
-            });
+          err instanceof HttpErrorResponse) {
+          if (err.error) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
+              .subscribe((errorMessage) => {
+                this.popupData = {
+                  title: 'Sorry!',
+                  text: errorMessage,
+                  buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                  imageUrl: '',
+                };
+              });
+          }
         } else {
           this.popupData = this.noRewardsPopUp;
         }
@@ -484,19 +484,19 @@ export class GameComponent implements OnInit, OnDestroy {
               buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
               imageUrl: '',
             };
-          } else if (
-            err instanceof HttpErrorResponse &&
-            err.error
-          ) {
-            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
-              .subscribe((errorMessage) => {
-                this.popupData = {
-                  title: 'Sorry!',
-                  text: errorMessage,
-                  buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
-                  imageUrl: '',
-                };
-              });
+          }  else if (
+            err instanceof HttpErrorResponse) {
+            if (err.error) {
+              this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
+                .subscribe((errorMessage) => {
+                  this.popupData = {
+                    title: 'Sorry!',
+                    text: errorMessage,
+                    buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+                    imageUrl: '',
+                  };
+                });
+            }
           } else {
             this.popupData = this.noRewardsPopUp;
           }
