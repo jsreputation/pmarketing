@@ -24,6 +24,7 @@ export function mapCampaignsToListItem(campaigns: ICampaign[]): IListItemModel[]
       categoryTags: campaign.categoryTags,
       name: campaign.name,
       description: campaign.displayProperties?.landingPage?.subHeadline,
+      documentType: 'campaign',
       createdAt: campaign.beginsAt,
     };
   });

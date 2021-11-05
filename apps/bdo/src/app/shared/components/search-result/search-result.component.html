@@ -9,7 +9,7 @@
       <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
     </div>
     <ul class='search-result-wrapper'>
-      <bdo-large-list-item *ngFor='let item of result' [reward]='item' [url]="['/deal-welcome', item.id.toString()]"
+      <bdo-large-list-item *ngFor='let item of result' [reward]='item'
                            (click)='selectedItem(item)'>
       </bdo-large-list-item>
     </ul>
@@ -24,8 +24,7 @@
       <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
     </div>
     <ul class='search-result-wrapper'>
-      <bdo-list-item *ngFor='let item of result' (click)='selectedItem(item)'
-                     [url]="['/deal-welcome', item.id.toString()]" [reward]='item'>
+      <bdo-list-item *ngFor='let item of result' (click)='selectedItem(item)' [reward]='item'>
       </bdo-list-item>
     </ul>
   </mat-tab>
