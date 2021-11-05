@@ -48,12 +48,6 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
       };
       this.onChange(value);
     });
-
-    this.formGroup && this.formGroup.controls.category.valueChanges.subscribe((output) => {
-      this.formArray.controls.forEach((item) => {
-        item.setValue(output, { emitEvent: false });
-      })
-    });
   }
 
   writeValue(obj): void {
@@ -77,6 +71,10 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
           this.formGroup.controls.category.setValue(false, { emitEvent: false });
         }
         if (value) {
+          const otherSubCategoryControls = this.formArray.controls.filter(item => item !== control);
+          otherSubCategoryControls.forEach(item => {
+            item.setValue(false, { emitEvent: false })
+          });
           this.formGroup.controls.category.setValue(true, { emitEvent: false });
           this.updateCheckBoxValue.emit(value);
         }
@@ -85,9 +83,11 @@ export class CheckboxGroupComponent implements ControlValueAccessor, AfterViewIn
 
     this.formGroup.controls.category.valueChanges.subscribe(value => {
       this.updateCheckBoxValue.emit(value);
-      this.formArray.controls.forEach(control => {
-        control.setValue(value, { emitEvent: false });
-      })
+      if (!value) {
+        this.formArray.controls.forEach((item) => {
+          item.setValue(value, { emitEvent: false });
+        })
+      }
     });
   }
 
