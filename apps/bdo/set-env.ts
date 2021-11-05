@@ -220,6 +220,9 @@ const appConfigFile = `{
     process.env.ENABLE_POINT_TRANSFER ? process.env.ENABLE_POINT_TRANSFER : false
   },
   "custom": {
+    "pi": "${
+      process.env.ANON_ID ? process.env.ANON_ID : ''
+    }",
     "showSearchHistory": ${
       process.env.SHOW_SEARCH_HISTORY ? process.env.SHOW_SEARCH_HISTORY : false
     },
