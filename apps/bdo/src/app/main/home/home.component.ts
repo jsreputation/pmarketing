@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FeaturedDeals } from '../../models/featured-deals.models';
 import { ICampaignService, IReward, RewardsService } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
 import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
