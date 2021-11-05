@@ -1,5 +1,6 @@
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 import { IOperatingHours } from '../../campaign/models/campaign.model';
+import { ITag } from '../../merchants/models/merchants.model';
 
 export interface IReward {
   id: number;
@@ -36,7 +37,7 @@ export interface IReward {
   };
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
-  tags?:{id:number, name:string}[];
+  tags?: ITag[];
   distance?: {value?:number, unitOfMeasure?:string};
 }
 

@@ -2,6 +2,8 @@ import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
 import { ICategoryTags } from "@perxtech/core";
+import { ITag } from '../../merchants/models/merchants.model';
+
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
   informationCollectionSetting?: WInformationCollectionSettingType;
@@ -152,6 +154,7 @@ export interface ICampaign {
   isOperating?: boolean;
   teamSize?: number;
   categoryTags?:ICategoryTags[];
+  tags?: ITag[]
 }
 
 export enum CommChannel {
