@@ -34,7 +34,7 @@ export class DealLandingComponent implements OnInit {
     this.activeRoute.params.subscribe((param) => {
       combineLatest([
         this.rewardService.getReward(param.rid),
-        this.rewardService.getRewardsRelated(param.rid),
+        this.rewardService.getRewardsRelated(param.rid, 5),
       ]).subscribe(([dealDetail, similarDeals]) => {
         this.dealDetail = dealDetail;
         this.similarDeals = mapRewardsToListItem(similarDeals);

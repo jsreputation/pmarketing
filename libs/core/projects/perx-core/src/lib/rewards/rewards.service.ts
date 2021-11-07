@@ -83,7 +83,7 @@ export abstract class RewardsService {
 
   public abstract getSearchSuggestion(query: string): Observable<ISearchSuggestion[]>;
 
-  public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
+  public abstract getRewardsRelated(rewardId: number, pageSize?: number): Observable<IReward[]>;
 
   public abstract searchRewards(
     text: string,
