@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse, } from '@angular/common/http';
 import { EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -175,6 +170,11 @@ export interface IV4BadgeOutcome {
   outcome_type: OutcomeType.badge;
   badge_id: number;
   state: 'issued' | 'unissued';
+}
+
+export interface IV4AdditionalSection {
+  header_text: String,
+  body_text: String,
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -442,6 +442,9 @@ export class V4CampaignService implements ICampaignService {
       }
     }
 
+    if (campaign.campaign_type === CampaignType.rulegroup) {
+
+    }
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
     if (campaign.campaign_config) {

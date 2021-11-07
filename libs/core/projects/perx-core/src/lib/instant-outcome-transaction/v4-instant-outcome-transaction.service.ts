@@ -20,6 +20,7 @@ import {
   InstantOutcomeState,
   InstantOutcomeTransactionState,
 } from './models/instant-outcome-transaction.model';
+import { IV4AdditionalSection } from '../campaign/v4-campaign.service';
 
 export interface IV4InstantOutcomeTransaction {
   id: number;
@@ -49,10 +50,7 @@ export interface IV4InstantOutcome {
   instant_outcome_transaction_id: number;
   state: InstantOutcomeState;
 }
-export interface IV4AdditionalSection {
-  header_text: String,
-  body_text: String,
-}
+
 export interface IV4InstantRewardCampaignDisplayProperties {
   claim_prize?: {
     button_text?: string;
