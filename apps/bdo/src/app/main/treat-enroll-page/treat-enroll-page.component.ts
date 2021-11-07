@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ICampaignService, NotificationService } from '@perxtech/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ICampaign, ICampaignService, NotificationService } from '@perxtech/core';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'bdo-treat-enroll-page',
@@ -9,7 +10,7 @@ import { ICampaignService, NotificationService } from '@perxtech/core';
   styleUrls: ['./treat-enroll-page.component.scss'],
 })
 export class TreatEnrollPageComponent implements  OnInit{
-  campaignId: number;
+  public campaign: ICampaign;
   enrollForm: FormGroup ;
   constructor(
     private campaignService: ICampaignService,
@@ -18,9 +19,13 @@ export class TreatEnrollPageComponent implements  OnInit{
     private notificationService: NotificationService
   ) {}
   ngOnInit() {
-    this.activeRoute.params.subscribe((item) => {
-      this.campaignId = item.id;
-    });
+    this.activeRoute.params.pipe(
+      switchMap((item: Params) => this.campaignService.getCampaign(item.id))
+    ).subscribe(
+      (campaign: ICampaign) => {
+        this.campaign = campaign;
+      }
+    );
     this.initForm();
   }
   public initForm(): void {
@@ -31,10 +36,10 @@ export class TreatEnrollPageComponent implements  OnInit{
   enroll() {
     if (this.enrollForm.valid) {
       this.campaignService
-        .bdoCampaignEnrol(this.campaignId, this.enrollForm.get('promoId').value)
+        .bdoCampaignEnrol(this.campaign.id, this.enrollForm.get('promoId').value)
         .subscribe((item) => {
           if (item) {
-            this.route.navigate([`treat-enroll/${this.campaignId}/complete`],{ state:{promoId:this.enrollForm.get('promoId').value}});
+            this.route.navigate([`treat-enroll/${this.campaign.id}/complete`],{ state:{promoId:this.enrollForm.get('promoId').value}});
           } else {
             this.notificationService.addSnack('Could not enrol in campaign');
           }
