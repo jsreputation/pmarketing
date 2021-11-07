@@ -177,6 +177,20 @@ export interface IV4AdditionalSection {
   body_text: String,
 }
 
+interface IV4RuleGroupCampaignDisplayProperties {
+  landing_page?: {
+    body_text?: string;
+    description?: string;
+    headline?: string;
+    image?: { type?: string; value?: { filename?: string; image_url?: string } };
+    sub_headline?: string;
+    additional_sections?: IV4AdditionalSection[];
+  };
+  enrolment_page?: {
+    body_text?: string;
+  };
+}
+
 const campaignsCacheBuster: Subject<boolean> = new Subject();
 
 @Injectable({ providedIn: 'root' })
@@ -443,7 +457,41 @@ export class V4CampaignService implements ICampaignService {
     }
 
     if (campaign.campaign_type === CampaignType.rulegroup) {
+      console.log('mapping rule gorup');
+      const landingPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.landing_page;
+      const enrolmentPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.enrolment_page;
+      if (landingPage) {
+        displayProperties = {
+          landingPage: {
+            body: {
+              text: landingPage.body_text ? landingPage.body_text : '',
+            },
+            heading: {
+              text: landingPage.headline ? landingPage.headline : '',
+            },
+            description: {
+              text: landingPage.description ? landingPage.description : '',
+            },
+            subHeading: {
+              text: landingPage.sub_headline ? landingPage.sub_headline : '',
+            },
+            media: {
+              bannerImage:
+                landingPage.image?.type === 'image' ? landingPage.image?.value?.image_url : '',
+            }
+          },
+        };
+      }
 
+      if (enrolmentPage) {
+        displayProperties = displayProperties ? displayProperties : {};
+        displayProperties = {
+          ...displayProperties,
+          enrolmentPage: {
+            body: enrolmentPage.body_text
+          }
+        }
+      }
     }
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];

@@ -14,6 +14,7 @@ export interface CampaignDisplayProperties {
   progressDetails?: ProgressProperties;
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
+  enrolmentPage?: EnrolmentProperties;
 }
 export interface AdditionalSection{
   headerText: String,
@@ -47,6 +48,10 @@ export interface ClaimPrizeProperties {
     }
   };
   subHeadline: string;
+}
+
+export interface EnrolmentProperties {
+  body?: string;
 }
 
 export interface QuestProperties {
@@ -110,7 +115,7 @@ export enum CampaignType {
   quest = 'quest',
   progress = 'progress',
   instant = 'instant_outcome',
-  rulegroup = 'ruleGroup'
+  rulegroup = 'rule_group'
 }
 
 export enum CampaignState {
