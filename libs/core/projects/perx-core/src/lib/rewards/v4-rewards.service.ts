@@ -725,9 +725,11 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
-  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
+  public getRewardsRelated(rewardId: number, pageSize: number = 10): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }).pipe(
+    let params = new HttpParams()
+      .set('size', pageSize.toString());
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers, params }).pipe(
       map((res: IV4GetRewardsResponse) => res.data),
       map((rewards: IV4Reward[]) => rewards.map(
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
