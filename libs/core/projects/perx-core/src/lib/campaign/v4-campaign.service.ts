@@ -457,7 +457,6 @@ export class V4CampaignService implements ICampaignService {
     }
 
     if (campaign.campaign_type === CampaignType.rulegroup) {
-      console.log('mapping rule gorup');
       const landingPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.landing_page;
       const enrolmentPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.enrolment_page;
       if (landingPage) {
