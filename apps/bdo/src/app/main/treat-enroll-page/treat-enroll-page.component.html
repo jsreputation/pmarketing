@@ -1,26 +1,13 @@
-<div class="treat-error">
+<ng-container *ngIf="campaign">
+<div class="treat-container">
     <h4>
         ENROL
     </h4>
-    <h2>
-        Shop. Choose. Redeem.
-    </h2>
+    <h2>{{campaign.name}}</h2>
     <div class="navigate-promotion">
         <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
     </div>
-    <div class="reminder">
-        <div class="title">
-            Enrollment Reminders:
-        </div>
-        <div class="reminder-content">
-            <div>1. Enrollment for this Promo is until March 31, 2021.</div>
-            <div>2. Cardholders will receive the eGC via SMS to the mobile number registered in the BDO system on or
-                before April 26, 2021.</div>
-            <div>3. All items marked with asterisks (*) are mandatory fields. </div>
-
-        </div>
-
-    </div>
+    <div class="reminder" [innerHTML]="campaign.displayProperties.enrolmentPage.body"></div>
     <div class="promoID" [formGroup]="enrollForm">
         <div class="title">
             Promo ID
@@ -44,3 +31,4 @@
         <button mat-stroked-button color="primary" class="enroll-button" (click)="enroll()">Enroll Now</button>
     </div>
 </div>
+</ng-container>

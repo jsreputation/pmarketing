@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse, } from '@angular/common/http';
 import { EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -175,6 +170,25 @@ export interface IV4BadgeOutcome {
   outcome_type: OutcomeType.badge;
   badge_id: number;
   state: 'issued' | 'unissued';
+}
+
+export interface IV4AdditionalSection {
+  header_text: String,
+  body_text: String,
+}
+
+interface IV4RuleGroupCampaignDisplayProperties {
+  landing_page?: {
+    body_text?: string;
+    description?: string;
+    headline?: string;
+    image?: { type?: string; value?: { filename?: string; image_url?: string } };
+    sub_headline?: string;
+    additional_sections?: IV4AdditionalSection[];
+  };
+  enrolment_page?: {
+    body_text?: string;
+  };
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -442,6 +456,42 @@ export class V4CampaignService implements ICampaignService {
       }
     }
 
+    if (campaign.campaign_type === CampaignType.rulegroup) {
+      const landingPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.landing_page;
+      const enrolmentPage = (dp as IV4RuleGroupCampaignDisplayProperties)?.enrolment_page;
+      if (landingPage) {
+        displayProperties = {
+          landingPage: {
+            body: {
+              text: landingPage.body_text ? landingPage.body_text : '',
+            },
+            heading: {
+              text: landingPage.headline ? landingPage.headline : '',
+            },
+            description: {
+              text: landingPage.description ? landingPage.description : '',
+            },
+            subHeading: {
+              text: landingPage.sub_headline ? landingPage.sub_headline : '',
+            },
+            media: {
+              bannerImage:
+                landingPage.image?.type === 'image' ? landingPage.image?.value?.image_url : '',
+            }
+          },
+        };
+      }
+
+      if (enrolmentPage) {
+        displayProperties = displayProperties ? displayProperties : {};
+        displayProperties = {
+          ...displayProperties,
+          enrolmentPage: {
+            body: enrolmentPage.body_text
+          }
+        }
+      }
+    }
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
     if (campaign.campaign_config) {

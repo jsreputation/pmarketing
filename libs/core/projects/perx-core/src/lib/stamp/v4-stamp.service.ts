@@ -14,7 +14,7 @@ import {  CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/model
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
-import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
+import { IV4AdditionalSection, IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -76,10 +76,7 @@ interface IV4StampCard {
   display_properties: StampCampaignDisplayProperties
   stamps?: IV4Stamp[];
 }
-export interface IV4AdditionalSection  {
-  header_text: string,
-  body_text: string,
-}
+
 export interface StampCampaignDisplayProperties {
   landing_page?: {
     header?: {
