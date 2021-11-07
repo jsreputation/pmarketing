@@ -7,17 +7,20 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'bdo-treat-enroll-page',
   templateUrl: './treat-enroll-page.component.html',
-  styleUrls: ['./treat-enroll-page.component.scss'],
+  styleUrls: [ './treat-enroll-page.component.scss' ],
 })
-export class TreatEnrollPageComponent implements  OnInit{
+export class TreatEnrollPageComponent implements OnInit {
   public campaign: ICampaign;
-  enrollForm: FormGroup ;
+  enrollForm: FormGroup;
+
   constructor(
     private campaignService: ICampaignService,
     private activeRoute: ActivatedRoute,
     private route: Router,
     private notificationService: NotificationService
-  ) {}
+  ) {
+  }
+
   ngOnInit() {
     this.activeRoute.params.pipe(
       switchMap((item: Params) => this.campaignService.getCampaign(item.id))
@@ -28,18 +31,20 @@ export class TreatEnrollPageComponent implements  OnInit{
     );
     this.initForm();
   }
+
   public initForm(): void {
     this.enrollForm = new FormGroup({
-      promoId: new FormControl('', [Validators.required]),
+      promoId: new FormControl('', [ Validators.required ]),
     });
   }
+
   enroll() {
     if (this.enrollForm.valid) {
       this.campaignService
         .bdoCampaignEnrol(this.campaign.id, this.enrollForm.get('promoId').value)
         .subscribe((item) => {
           if (item) {
-            this.route.navigate([`treat-enroll/${this.campaign.id}/complete`],{ state:{promoId:this.enrollForm.get('promoId').value}});
+            this.route.navigate([ `treat-enroll/${this.campaign.id}/complete` ], { state: { promoId: this.enrollForm.get('promoId').value } });
           } else {
             this.notificationService.addSnack('Could not enrol in campaign');
           }
