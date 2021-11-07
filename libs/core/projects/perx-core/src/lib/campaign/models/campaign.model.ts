@@ -109,7 +109,8 @@ export enum CampaignType {
   invite = 'invite',
   quest = 'quest',
   progress = 'progress',
-  instant = 'instant_outcome'
+  instant = 'instant_outcome',
+  rulegroup = 'ruleGroup'
 }
 
 export enum CampaignState {
