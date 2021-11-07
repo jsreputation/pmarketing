@@ -4,9 +4,9 @@
         ENROL
     </h4>
     <h2>{{campaign.name}}</h2>
-    <div class="navigate-promotion">
+    <a class="navigate-promotion" routerLink="/treat-welcome/{{campaign.id}}">
         <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
-    </div>
+    </a>
     <div class="reminder" [innerHTML]="campaign.displayProperties.enrolmentPage.body"></div>
     <div class="promoID" [formGroup]="enrollForm">
         <div class="title">
