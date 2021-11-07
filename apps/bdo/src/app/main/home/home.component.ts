@@ -21,8 +21,7 @@ export class HomeComponent implements OnInit {
   whatsNewDeals: IListItemModel[] = [];
   popularDeals: IListItemModel[] = [];
 
-  requestPageSize = 10;
-  requestPageSizeForWhatsNew = 5;
+  requestPageSize = 5;
   tag = {
     new: 'new',
     popular: 'popular',
@@ -44,17 +43,17 @@ export class HomeComponent implements OnInit {
     this.rewardsService
       .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, 1, this.requestPageSize)
       .subscribe((nearBy: IReward[]) => {
-        this.nearByDeals = mapRewardsToListItem(nearBy);
+        this.nearByDeals = mapRewardsToListItem(nearBy).slice(0, 5);
       });
 
     forkJoin(
       [this.rewardsService
-      .getRewards(1, this.requestPageSizeForWhatsNew, undefined, undefined, undefined, undefined, undefined),
-      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSizeForWhatsNew})
+      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined),
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize})
     ]).subscribe(([rewards, campaigns])=>{
       this.whatsNewDeals = mapRewardsToListItem(rewards).concat(mapCampaignsToListItem(campaigns)).sort((firstReward, secondReward)=>{
         return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
-      })
+      }).slice(0, 5);
     });
 
     forkJoin(
@@ -62,7 +61,7 @@ export class HomeComponent implements OnInit {
       .getRewards(1, this.requestPageSize, [ this.tag.popular ]),
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ]})
     ]).subscribe(([popularRewards, popularCampaigns])=>{
-      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns));
+      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).slice(0, 5);
     });
     
     this.rewardsService
