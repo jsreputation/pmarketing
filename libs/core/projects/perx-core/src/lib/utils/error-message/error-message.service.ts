@@ -112,6 +112,22 @@ export class ErrorMessageService {
         errorKey = 'ERRORS.RESERVATION_EXPIRED';
       }
     }
+
+    if (errorHttpStatus === 404) {
+      switch (errorCode) {
+        case 45:
+          if (errMessage?.match(/promo_id/i))
+          {
+            // bdo promo_id does not exist
+            errorKey = 'ERRORS.BDO_PROMO_ID_INVALID';
+          }
+          break;
+        default:
+          // Sorry, something went wrong
+          errorKey = 'ERRORS.GENERIC';
+          break;
+      }
+    }
     return this.translateService.get(errorKey);
   }
 }
