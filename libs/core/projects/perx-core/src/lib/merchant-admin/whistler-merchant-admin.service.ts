@@ -58,7 +58,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+  public revertVoucherRedemption(id: number, userId: string): Observable<IVoucher> {
     throw new Error('revertVoucherRedemption Method not implemented.');
   }
 

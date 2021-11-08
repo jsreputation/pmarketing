@@ -126,7 +126,8 @@ export class ReserveOrderItemsComponent implements OnInit {
   }
 
   public removeVoucher(voucherId: number): void {
-    this.merchantAdminService.revertVoucherRedemption(voucherId).subscribe(
+    const userId = this.userDetails.identifier ? this.userDetails.identifier : '';
+    this.merchantAdminService.revertVoucherRedemption(voucherId, userId).subscribe(
       () => {
         this.voucher = null;
         this.orderService.setReservedVoucher(null);
