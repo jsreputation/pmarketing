@@ -7,9 +7,18 @@ import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../shared/shared.module';
-import { RewardsModule, RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsModule, RewardsService } from '@perxtech/core';
 import { NoResultComponent } from './no-result/no-result.component';
 import { ResultComponent } from './result.component';
+import { of } from 'rxjs';
+
+const rewardServiceStub: Partial<RewardsService> = {
+  searchRewards: () => of()
+};
+
+const campaignServiceStub: Partial<ICampaignService> = {
+  searchCampaigns: () => of(),
+};
 
 describe('ResultComponent', () => {
   let component: ResultComponent;
@@ -33,7 +42,9 @@ describe('ResultComponent', () => {
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
-        RewardsService
+        { provide: RewardsService, useValue: rewardServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+
       ]
     }).compileComponents();
   });

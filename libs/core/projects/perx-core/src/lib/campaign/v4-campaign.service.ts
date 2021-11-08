@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse, } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { EMPTY, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -189,6 +189,15 @@ interface IV4RuleGroupCampaignDisplayProperties {
   enrolment_page?: {
     body_text?: string;
   };
+}
+
+interface IV4GetSearchCampaignsResponse {
+  data: {
+    campaigns: {
+      campaign: IV4Campaign,
+      score: number
+    }[]
+  }
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -695,6 +704,26 @@ export class V4CampaignService implements ICampaignService {
       )
     );
   }
+
+  public searchCampaigns(text: string, page?: number, pageSize?: number, locale = 'en'): Observable<ICampaign[]> {
+    const endpoint = `${this.baseUrl}/v4/campaigns/search?search_string=${text}`;
+    const headers = new HttpHeaders().set('Accept-Language', locale);
+    let params = new HttpParams();
+    if (page) {
+      params = params.set('page', page.toString());
+    }
+    if (pageSize) {
+      params = params.set('size', pageSize.toString());
+    }
+    return this.http.get<IV4GetSearchCampaignsResponse>(endpoint, { headers, params })
+      .pipe(
+        map((res: IV4GetSearchCampaignsResponse) => res.data.campaigns.map(item => item.campaign)),
+        map((campaign: IV4Campaign[]) => campaign.map(
+          (campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign)
+        ))
+      );
+  }
+
   public static v4CampaignRuleToCampaignRule(
     campaignRule: IV4CampaignRule
   ): ICampaignRule {
