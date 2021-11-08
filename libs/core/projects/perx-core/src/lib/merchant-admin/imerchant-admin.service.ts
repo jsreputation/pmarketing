@@ -28,7 +28,7 @@ export abstract class IMerchantAdminService {
     description?: string
   ): Observable<IMerchantAdminTransaction>;
 
-  public abstract redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher>;
+  public abstract redeemVoucher(id: number, userId: string, reserve?: boolean): Observable<IVoucher>;
 
   public abstract issueVoucher(
     id: number,

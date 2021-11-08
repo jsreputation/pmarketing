@@ -71,13 +71,15 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
+    const userId: string = this.payload.identifier ? this.payload.identifier : '';
     if (!this.payload.rewardId) {
       throw new Error('reward id is required');
     }
+
     this.merchantService.issueVoucher(this.payload.rewardId, this.payload.identifier)
       .pipe(
         // flatMap((voucher: Voucher) => this.rewardsService.getRewardPricesOptions(voucher.rewardId)),
-        flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
+        flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id, userId))
       )
       .subscribe(
         () => this.notificationService.addSnack(this.transactionCompleteTxt),

@@ -198,7 +198,7 @@ describe('V4MerchantsService', () => {
   it('redeemVoucher', fakeAsync(inject([HttpClient], (http: HttpClient) => {
     const spy = jest.spyOn(V4MerchantAdminService, 'v4VoucherToVoucher');
     jest.spyOn(http, 'put').mockReturnValue(of({ data: merchantAdminVoucherRaw }));
-    service.redeemVoucher(1).subscribe(() => { });
+    service.redeemVoucher(1, '667118723-1632332407').subscribe(() => { });
     tick();
     expect(spy).toHaveBeenCalled();
   })));
