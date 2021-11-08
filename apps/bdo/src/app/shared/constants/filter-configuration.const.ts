@@ -68,7 +68,7 @@ export const FILTER_DATA: IFilterModel = {
       type: 'deals',
     },
     {
-      name: 'new',
+      name: 'featured',
       type: 'featured',
     },
     {
