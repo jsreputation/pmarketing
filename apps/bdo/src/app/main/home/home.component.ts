@@ -31,20 +31,30 @@ export class HomeComponent implements OnInit {
 
 
   private rad = 10000;
-  currentPosition = {
-    lat: 14.560446,
-    lng: 121.017646,
+  public currentPosition: {
+    lat: number;
+    lng: number;
+    // lat: 14.560446,
+    // lng: 121.017646,
   };
 
   constructor(private rewardsService: RewardsService, private route: Router, private campaignService: ICampaignService) {
   }
 
   ngOnInit(): void {
-    this.rewardsService
-      .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, 1, this.requestPageSize)
-      .subscribe((nearBy: IReward[]) => {
-        this.nearByDeals = mapRewardsToListItem(nearBy).slice(0, 5);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
+        this.rewardsService
+          .nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, 1, this.requestPageSize)
+          .subscribe((nearBy: IReward[]) => {
+            this.nearByDeals = mapRewardsToListItem(nearBy).slice(0, 5);
+          });
       });
+    }
 
     forkJoin(
       [this.rewardsService
