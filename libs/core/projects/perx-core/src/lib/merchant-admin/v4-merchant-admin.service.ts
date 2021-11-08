@@ -366,7 +366,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   }
 
-  public redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher> {
+  public redeemVoucher(id: number, userId: string, reserve?: boolean): Observable<IVoucher> {
+    const headers = new HttpHeaders().set('user-id', userId);
     const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
     let body;
     if (reserve) {
@@ -374,7 +375,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         confirm: false
       };
     }
-    return this.http.put<IV4RedeemVoucherResponse>(url, (body ? body : null )).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, (body ? body : null ), { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
   }

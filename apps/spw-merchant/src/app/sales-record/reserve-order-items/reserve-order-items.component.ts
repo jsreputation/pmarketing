@@ -33,9 +33,14 @@ export class ReserveOrderItemsComponent implements OnInit {
     text: 'The code was not recognized',
     buttonTxt: 'Ok',
   };
-  public invalidVoucherPopup: IPopupConfig = {
+  public invalidStateVoucherPopup: IPopupConfig = {
     title: 'Invalid Voucher',
     text: 'The voucher is not valid anymore',
+    buttonTxt: 'Ok',
+  };
+  public invalidVoucherPopup: IPopupConfig = {
+    title: 'Invalid Voucher',
+    text: 'The voucher code is invalid',
     buttonTxt: 'Ok',
   };
 
@@ -137,14 +142,18 @@ export class ReserveOrderItemsComponent implements OnInit {
   }
 
   public redeemVoucher(voucherId: number): void {
-    this.merchantAdminService.redeemVoucher(voucherId, true).subscribe(
+    this.merchantAdminService.redeemVoucher(voucherId, this.userDetails?.identifier, true).subscribe(
       (voucher: Voucher) => {
         this.voucher = voucher;
         this.orderService.setReservedVoucher(voucher);
         this.notificationService.addSnack('Voucher has been applied');
       },
-      () => {
-        this.notificationService.addPopup(this.invalidVoucherPopup);
+      (err) => {
+        if (err?.error?.code === 405) {
+          this.notificationService.addPopup(this.invalidStateVoucherPopup);
+        } else {
+          this.notificationService.addPopup(this.invalidVoucherPopup);
+        }
       }
     );
   }
