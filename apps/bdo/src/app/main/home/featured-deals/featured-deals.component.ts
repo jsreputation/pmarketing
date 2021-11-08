@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { IReward } from '@perxtech/core';
+import { mapRewardsToListItem } from '../../../shared/utilities/mapping.util';
+import { IListItemModel } from '../../../shared/models/list-item.model';
 
 @Component({
   selector: 'bdo-featured-deals',
@@ -9,9 +11,9 @@ import { IReward } from '@perxtech/core';
 export class FeatureDealsComponent {
   urlImageDefault= "assets/images/light-gray-color-default-image.png"
   @Input() deals: IReward[] = [];
-  @Output() eventItemClick: EventEmitter<IReward> = new EventEmitter<IReward>();
+  @Output() eventItemClick: EventEmitter<IListItemModel> = new EventEmitter<IListItemModel>();
  
   itemClick(featureDealsItem:IReward){
-    this.eventItemClick.emit(featureDealsItem);
+    this.eventItemClick.emit(mapRewardsToListItem([featureDealsItem])[0]);
   }
 }
