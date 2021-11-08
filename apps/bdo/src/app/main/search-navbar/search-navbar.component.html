@@ -5,7 +5,13 @@
       </ng-container>
       <ng-template #searchPageInput>
         <div class="search-wrapper">
-          <input type="text" class="input-search" placeholder="Search deals" (keydown)="$event.stopPropagation()" (focus)="isExpanded=true" (keyup)="searchValueChange($event)" (blur)="onBlur()" [value]="searchValue">
+          <input type="text" class="input-search" placeholder="Search deals"
+                 (keydown)="$event.stopPropagation()"
+                 (focus)="isExpanded=true"
+                 (keyup)="searchValueChange($event)"
+                 (keyup.enter)="search(searchValue)"
+                 (blur)="onBlur()"
+                 [value]="searchValue">
           <img class="search-icon" [src]=" isSearching ? 'assets/images/close.svg' : 'assets/images/search-outline.svg'" (click)="searchValue && clearSearchValue($event)"/>
         </div>
       </ng-template>
