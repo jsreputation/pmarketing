@@ -41,10 +41,6 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
     } else {
       this.searchEvent$.next(value);
     }
-
-    if (value && event.code === 'Enter') {
-      this.search(value);
-    }
   }
 
   clearSearchValue(event) {
