@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { IMerchantAdminService } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -38,7 +39,8 @@ describe('TransactionHistoryComponent', () => {
         MatTabsModule,
         LoyaltyModule,
         LoyaltyModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: Location, useValue: locationStub },
