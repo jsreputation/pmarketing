@@ -35,7 +35,7 @@ export abstract class IMerchantAdminService {
     userId?: string,
   ): Observable<IVoucher>;
 
-  public abstract revertVoucherRedemption(id: number): Observable<IVoucher>;
+  public abstract revertVoucherRedemption(id: number, userId: string): Observable<IVoucher>;
 
   public abstract validateInvite(token: string): Observable<IMerchantProfile>;
 

@@ -86,7 +86,8 @@ export class RedeemComponent implements OnInit {
 
   public onCancel(): void {
     if (this.voucherReserved) {
-      this.merchantService.revertVoucherRedemption(this.voucherReserved.id).subscribe(
+      const userId: string = this.payload.identifier ? this.payload.identifier : '';
+      this.merchantService.revertVoucherRedemption(this.voucherReserved.id, userId).subscribe(
         () => {
           this.voucherReserved = null;
         },

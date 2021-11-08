@@ -390,11 +390,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+  public revertVoucherRedemption(id: number, userId: string): Observable<IVoucher> {
 
+    const headers = new HttpHeaders().set('user-id', userId);
     const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/revert_redemption`;
 
-    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
   }
