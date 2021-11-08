@@ -4,7 +4,8 @@ import { MerchantTransactionHistoryComponent, MerchantTransactionHistoryModule }
 
 const routes: Routes = [{
   path: '',
-  component: MerchantTransactionHistoryComponent
+  component: MerchantTransactionHistoryComponent,
+  data: { hideDescription: true }
 }];
 
 @NgModule({
