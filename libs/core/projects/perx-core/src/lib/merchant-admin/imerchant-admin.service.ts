@@ -70,6 +70,8 @@ export abstract class IMerchantAdminService {
     page?: number,
     pageSize?: number,
     locale?: string,
+    sortBy?: string,
+    orderBy?: string
   ): Observable<IMerchantRewardTransactionHistory[]>;
 
   public abstract forgotPassword(email: string): Observable<IMessageResponse>;

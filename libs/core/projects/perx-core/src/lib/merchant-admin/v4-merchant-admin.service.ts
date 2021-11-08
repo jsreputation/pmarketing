@@ -526,7 +526,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public getRewardTransactionHistory(
     page: number = 1,
     pageSize: number = 10,
-    locale: string = 'en'
+    locale: string = 'en',
+    sortBy: string = 'redemption_date',
+    orderBy: string = 'desc',
   ): Observable<IMerchantRewardTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     const url = `${this.apiHost}/v4/merchant_admin/reward_transactions?state=redeemed`;
@@ -536,7 +538,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         headers,
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          sort_by: `${sortBy}`,
+          order_by: `${orderBy}`
         }
       }
     ).pipe(
