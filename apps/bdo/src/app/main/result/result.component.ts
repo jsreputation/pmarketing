@@ -1,9 +1,10 @@
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService } from '@perxtech/core';
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'bdo-result',
   templateUrl: './result.component.html',
@@ -14,10 +15,11 @@ export class ResultComponent implements OnInit {
   public searchResult: IListItemModel[] = [];
   public isLoaded = false;
   private pageNumber = 1;
-  private requestPageSize = 100;
+  private requestPageSize = 10;
   constructor(
     private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService
+    private rewardsService: RewardsService,
+    private campaignService: ICampaignService
   ) {}
 
   ngOnInit(): void {
@@ -26,11 +28,17 @@ export class ResultComponent implements OnInit {
         if (params['search']) {
           this.searchValue = params['search'];
         }
-        return this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']);
+        return forkJoin(
+          this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']),
+          this.campaignService.searchCampaigns(this.searchValue, this.pageNumber, this.requestPageSize)
+          );
       }))
-      .subscribe((rewards) => {
+      .subscribe((
+        [ rewards, campaigns ]
+      ) => {
         this.isLoaded = false;
-        this.searchResult = mapRewardsToListItem(rewards).sort((firstReward,secondReward)=> {
+        this.searchResult = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards))
+          .sort((firstReward,secondReward)=> {
           return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
         });
         this.isLoaded = true;
