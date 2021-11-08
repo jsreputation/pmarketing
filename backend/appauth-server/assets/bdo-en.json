@@ -420,7 +420,8 @@
     "INVALID_INVITE_CODE": "Invalid invite code",
     "TEAM_FULL": "This team is already full",
     "RESERVATION_EXPIRED": "Your game session has expired, please try again",
-    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again"
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "BDO_PROMO_ID_INVALID": "The PromoID you entered was not found or not eligible"
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",
