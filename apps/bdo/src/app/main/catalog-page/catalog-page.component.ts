@@ -39,11 +39,17 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
     ]).subscribe(([params, categories]) => {
       const filterData = FILTER_DATA;
       filterData.categories = filterData.categories
-        .map(item => ({
-          ...item,
-          id: categories.find(c => c.title === item.name)?.id,
-          children: item.children.filter(item => categories.find(t => t.title === item.name))
-        }))
+        .map(item => {
+          const categoryWithId = categories.find(c => c.title === item.name && !c.parent);
+          return {
+            ...item,
+            id: categoryWithId?.id,
+            children: item.children.filter(item =>
+              categories.find(t => t.title === item.name && categoryWithId?.id && t.parent.id === categoryWithId?.id)
+            )
+              .map(child => ({ ...child, id: categories.find(t => t.title === child.name).id }))
+          };
+        })
         .filter(item => item.id);
       filterData.type = params.type;
       this.categoryCode = params.type;
@@ -64,7 +70,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             page: this.pageNumber,
             size: this.requestPageSize,
             tags: queryObject.tags,
-            categories: queryObject.categories
+            categoryIds: queryObject.categoryIds
           };
           Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
           return forkJoin([
@@ -72,7 +78,12 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
               this.pageNumber,
               this.requestPageSize,
               queryObject.tags,
-              queryObject.categories
+              null,
+              'en',
+              null,
+              null,
+              null,
+              queryObject.categoryIds
             ),
             this.campaignsService.getCampaigns(campaignsParams),
           ]);

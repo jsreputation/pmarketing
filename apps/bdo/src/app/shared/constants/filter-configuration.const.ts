@@ -46,14 +46,14 @@ export const FILTER_DATA: IFilterModel = {
       ],
     },
     {
-      name: 'Shop.Choose.Redeem',
+      name: 'Shop. Choose. Redeem',
       type: 'shop-choose-redeem',
       children: [
       ],
     },
     {
-      name: 'Online Exclusive',
-      type: 'online-exclusive',
+      name: 'Online Exclusives',
+      type: 'online-exclusives',
       children: [
       ],
     }

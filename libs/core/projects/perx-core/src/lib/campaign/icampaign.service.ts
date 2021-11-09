@@ -10,6 +10,7 @@ export interface ICampaignFilterOptions {
   size?: number;
   tags?: string[];
   categories?: string[];
+  categoryIds?: string[];
 }
 
 export abstract class ICampaignService {

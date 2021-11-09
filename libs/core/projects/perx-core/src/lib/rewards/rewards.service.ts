@@ -33,7 +33,8 @@ export abstract class RewardsService {
     locale?: string | null,
     filterFavorites?: boolean,
     order?: Sort,
-    sortBy?: string | null
+    sortBy?: string | null,
+    categoryIds?: number[] | null,
   ): Observable<IReward[]>;
 
   public abstract getReward(

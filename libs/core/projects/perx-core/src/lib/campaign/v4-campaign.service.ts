@@ -569,6 +569,10 @@ export class V4CampaignService implements ICampaignService {
             if (filterOptions.gameType !== GameType.unknown) {
               params = params.set('game_type', filterOptions.gameType || '');
             }
+          } else if (key === 'categoryIds') {
+            if (filterOptions.categoryIds) {
+              params = params.set('category_ids', filterOptions.categoryIds.join() || '');
+            }
           } else {
             params = params.set(key, filterOptions[key]);
           }

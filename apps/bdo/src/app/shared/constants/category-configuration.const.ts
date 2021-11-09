@@ -181,8 +181,8 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
     ]
   },
   {
-    key:"online-exclusive",
-    name:"Online Exclusive",
+    key:"online-exclusives",
+    name:"Online Exclusives",
     children:[
     ]
   },
@@ -194,7 +194,7 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
   },
   {
     key:"shop-choose-redeem",
-    name:"Shop.Choose.Redeem",
+    name:"Shop. Choose. Redeem",
     children:[
     ]
   }
