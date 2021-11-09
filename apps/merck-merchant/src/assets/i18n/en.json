@@ -60,7 +60,7 @@
     "NOT_ENOUGH_POINTS": "User does not have enough points balance"
   },
   "USER_SIGN_UP_PAGE": {
-    "USER_SIGN_UP": "User Sign up",
+    "USER_SIGN_UP": "Sign up a user",
     "MOBILE_NO": "Mobile No.",
     "MOBILE_NO_IS": "Mobile No. is required",
     "MOBILE_NO_INVALID": "Please enter a valid mobile number",

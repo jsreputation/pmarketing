@@ -60,11 +60,11 @@
     "NOT_ENOUGH_POINTS": "用戶積分不足"
   },
   "USER_SIGN_UP_PAGE": {
-    "USER_SIGN_UP": "User Sign up",
+    "USER_SIGN_UP": "註冊一個新用戶",
     "MOBILE_NO": "手機號碼",
     "MOBILE_NO_IS": "請輸入手機號碼",
     "MOBILE_NO_INVALID": "請輸入有效手機號碼",
-    "SUBMIT_BUTTON": "Submit",
+    "SUBMIT_BUTTON": "遞交",
     "COUNTRY_HONGKONG": "香港",
     "COUNTRY_CHINA": "澳门",
     "COUNTRY_MACAU": "中国",

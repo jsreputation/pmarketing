@@ -52,6 +52,7 @@ export class UserSignupComponent implements OnInit {
     const codeAndMobile = countryCode + mobileNumber;
     const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
     this.merchantAdminService.signUpNewUser(cleanedMobileNo).subscribe(() => {
+      this.notificationService.addSnack('User signed up successfully');
       this.router.navigate(['/home']);
     }, err => {
       this.notificationService.addSnack(err?.error?.message);

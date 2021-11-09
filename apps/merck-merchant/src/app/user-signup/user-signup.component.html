@@ -27,7 +27,7 @@
         <mat-label translate>{{ 'USER_SIGN_UP_PAGE.MOBILE_NO' | translate}}</mat-label>
         <input
           matInput
-          placeholder="'Phone Number'"
+          placeholder='{{"USER_SIGN_UP_PAGE.MOBILE_NO"|translate}}'
           formControlName="mobileNumber"
           required>
         <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
