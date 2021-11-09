@@ -464,7 +464,8 @@ export class V4RewardsService extends RewardsService {
     locale: string = 'en',
     filterFavorites?: boolean,
     sort?: Sort,
-    sortBy?: string | null
+    sortBy?: string | null,
+    categoryIds?: number[] | null,
   ): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
@@ -486,6 +487,10 @@ export class V4RewardsService extends RewardsService {
       // order & sort_by required. supported fields: id, ends_at, begins_at, state, name
       params = params.set('order', sort);
       params = params.set('sort_by', sortBy);
+    }
+
+    if (categoryIds) {
+      params = params.set('category_ids', categoryIds.join());
     }
 
     return this.http

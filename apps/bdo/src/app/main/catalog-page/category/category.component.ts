@@ -26,7 +26,7 @@ export class CategoryComponent implements OnInit {
         const selectedFilterCategory = filterValue.categories.find(item => item.selected);
         this.category = {
           ...this.category,
-          children: this.category.children ? this.category.children
+          children: this.category?.children ? this.category.children
             .filter(sub => selectedFilterCategory.children.find(item => item.name === sub.name))
             .map(sub =>
               ({

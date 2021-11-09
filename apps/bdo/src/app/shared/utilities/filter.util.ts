@@ -4,7 +4,7 @@ import { FILTER_DATA } from '../constants/filter-configuration.const';
 export function buildParams(filterValue: IFilterModel) {
   return {
     tags: handleTags(filterValue),
-    categories: handleCategory(filterValue)
+    categoryIds: handleCategory(filterValue)
   };
 }
 
@@ -54,10 +54,10 @@ function handleCategory(filterValue: IFilterModel) {
   const selectedSpecialCategories = filterValue.categories.filter(item => item.selected
     && ['spend-anywhere', 'shop-choose-redeem', 'online-exclusive'].includes(item.type));
   if (selectedSpecialCategories.length) {
-    return selectedSpecialCategories.map(item => item.type);
+    return selectedSpecialCategories.map(item => item.id);
   } else {
     const selectedCategory = filterValue.categories.find(item => item.selected);
-    categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.type);
+    categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.id);
     return categories.length === selectedCategory.children.length ? null : categories;
   }
 }
