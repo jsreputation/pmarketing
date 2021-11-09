@@ -156,7 +156,13 @@ body {
     }
   }
 }
-
+.inline-checkbox-group {
+  .checkbox-group-wrapper {
+    .mat-expansion-panel-header {
+      border-top: 0;
+    }
+  }
+}
 .checkbox-group-wrapper {
   .mat-expansion-panel-header {
     border-top: 1px solid $grey-white;

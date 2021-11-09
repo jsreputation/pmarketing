@@ -61,11 +61,12 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
   chipClick(index: number) {
     const value = (this.filterForm.get('tags') as FormArray).controls[index]
       .value;
-    (this.filterForm.get('tags') as FormArray).controls[index].setValue(!value);
+      this.filterSource.tags = this.filterSource.tags.map(
+        (item, idx) => index === idx ? { ...item, selected: !value} : { ...item, selected: false}
+      );
+    (this.filterForm.get('tags') as FormArray).setValue([...this.filterSource.tags.map(tag=>tag.selected)]);
     (this.filterForm.get('tags') as FormArray).updateValueAndValidity();
-    this.filterSource.tags = this.filterSource.tags.map(
-      (item, idx) => index === idx ? { ...item, selected: !value} : item
-    )
+    
   }
 
   checkCurrentValue(index: number) {
@@ -96,5 +97,13 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
         }, { emitEvent: false });
       }
     })
+  }
+
+  public locationClick(value:any, index:number){
+      this.filterSource.locations = this.filterSource.locations.map(
+        (item, idx) => index === idx ? { ...item, selected: value} : { ...item, selected: false}
+      );
+    (this.filterForm.get('locations') as FormArray).setValue([...this.filterSource.locations]);
+    (this.filterForm.get('locations') as FormArray).updateValueAndValidity();
   }
 }
