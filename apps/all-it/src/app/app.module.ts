@@ -64,6 +64,7 @@ import { SignupModule } from './signup/signup.module';
 import * as Sentry from '@sentry/browser';
 import { registerLocaleData } from '@angular/common';
 import localeENMY from '@angular/common/locales/en-MY';
+import localesEnMyExtra from '@angular/common/locales/extra/en-MY';
 
 Sentry.init({
   dsn: 'https://813ab4ad94c94d5eb4370961b9e31e81@o225970.ingest.sentry.io/5276501'
@@ -92,7 +93,7 @@ export const setLanguage = (
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
-registerLocaleData(localeENMY);
+registerLocaleData(localeENMY, 'en', localesEnMyExtra);
 
 @NgModule({
   declarations: [AppComponent],
