@@ -30,6 +30,10 @@ export {
   IMerchantRewardTransactionHistory,
   IMerchantInvoice
 } from './lib/merchant-admin/models/merchants-admin.model';
+export {
+  ITag,
+  IMerchant
+} from './lib/merchants/models/merchants.model'
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
@@ -86,7 +90,8 @@ export {
   CampaignOutcomeType,
   IOperatingHours,
   IBadgeOutcome,
-  TeamsProperties
+  TeamsProperties,
+  ICampaignRule
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -216,6 +221,7 @@ export {
   ILoyaltyTierInfo,
   Sort,
   ISearchHistory,
+  ISearchSuggestion,
   ITrending
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
@@ -279,7 +285,6 @@ export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
 export { LocationsMapComponent } from './lib/location/locations-map/locations-map.component';
-export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
 export { filterDuplicateLocations } from './lib/location/filter-duplicate-locations';

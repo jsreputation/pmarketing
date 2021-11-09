@@ -1,12 +1,29 @@
-import { IReward, ICatalog, IPrice, Sort, ITrending, ISearchHistory } from './models/reward.model';
+import {
+  IReward,
+  ICatalog,
+  IPrice,
+  Sort,
+  ISearchHistory,
+  ITrending,
+  ICategoryTags,
+  ISearchSuggestion
+} from './models/reward.model';
 import { Observable } from 'rxjs';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 export abstract class RewardsService {
-  public abstract getAllRewards(tags?: string[] | null, categories?: string[], locale?: string): Observable<IReward[]>;
+  public abstract getAllRewards(
+    tags?: string[] | null,
+    categories?: string[],
+    locale?: string
+  ): Observable<IReward[]>;
 
   public abstract getAllFavoriteRewards(
-    tags?: string[] | null, categories?: string[], locale?: string, filterFavorites?: boolean): Observable<IReward[]>;
+    tags?: string[] | null,
+    categories?: string[],
+    locale?: string,
+    filterFavorites?: boolean
+  ): Observable<IReward[]>;
 
   public abstract getRewards(
     page: number,
@@ -17,11 +34,19 @@ export abstract class RewardsService {
     filterFavorites?: boolean,
     order?: Sort,
     sortBy?: string | null,
+    categoryIds?: number[] | null,
   ): Observable<IReward[]>;
 
-  public abstract getReward(id: number, userId?: string, locale?: string): Observable<IReward>;
+  public abstract getReward(
+    id: number,
+    userId?: string,
+    locale?: string
+  ): Observable<IReward>;
 
-  public abstract getRewardPricesOptions(id: number, locale?: string): Observable<IPrice[]>;
+  public abstract getRewardPricesOptions(
+    id: number,
+    locale?: string
+  ): Observable<IPrice[]>;
 
   public abstract getAllCatalogs(locale?: string): Observable<ICatalog[]>;
 
@@ -32,22 +57,41 @@ export abstract class RewardsService {
     pageSize?: number,
     locale?: string,
     order?: Sort,
-    sortBy?: string | null): Observable<ICatalog[]>;
+    sortBy?: string | null
+  ): Observable<ICatalog[]>;
 
   public abstract getCategories(): Observable<ITabConfigExtended[]>;
 
-  public abstract nearMe(rad?: number, lat?: number, lng?: number): Observable<IReward[]>;
+  public abstract nearMe(
+    rad?: number,
+    lat?: number,
+    lng?: number,
+    page?: number,
+    pageSize?: number,
+    tags?: string[] | string,
+    categories?: string[] | string,
+): Observable<IReward[]>;
 
   public abstract favoriteReward(rewardId: number): Observable<IReward>;
 
   public abstract unfavoriteReward(rewardId: number): Observable<IReward>;
-  
+
+  public abstract getAllCategories(): Observable<ICategoryTags[]>;
+
   public abstract getTrending(): Observable<ITrending[]>;
 
   public abstract getSearchHistory(): Observable<ISearchHistory[]>;
 
-  public abstract getRewardsRelated(rewardId: number): Observable<IReward[]>;
-  
-  public abstract searchRewards(text: string, locale?: string): Observable<IReward[]>;
+  public abstract getSearchSuggestion(query: string): Observable<ISearchSuggestion[]>;
+
+  public abstract getRewardsRelated(rewardId: number, pageSize?: number): Observable<IReward[]>;
+
+  public abstract searchRewards(
+    text: string,
+    page: number,
+    pageSize: number,
+    tags?: string,
+    locale?: string
+  ): Observable<IReward[]>;
 
 }

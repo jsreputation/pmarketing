@@ -366,7 +366,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   }
 
-  public redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher> {
+  public redeemVoucher(id: number, userId: string, reserve?: boolean): Observable<IVoucher> {
+    const headers = new HttpHeaders().set('user-id', userId);
     const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
     let body;
     if (reserve) {
@@ -374,7 +375,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         confirm: false
       };
     }
-    return this.http.put<IV4RedeemVoucherResponse>(url, (body ? body : null )).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, (body ? body : null ), { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
   }
@@ -389,11 +390,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+  public revertVoucherRedemption(id: number, userId: string): Observable<IVoucher> {
 
+    const headers = new HttpHeaders().set('user-id', userId);
     const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/revert_redemption`;
 
-    return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
+    return this.http.put<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
     );
   }
@@ -422,7 +424,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public createInvoice(
     userId: string,
     amount: number,
-    description: string,
+    receiptIdentifier: string,
     voucherId: number,
     pointsId: number
   ): Observable<IMerchantInvoice> {
@@ -447,7 +449,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
     const body = {
       collected_amount: amount,
-      description,
+      transaction_properties: {
+        original_receipt_number: receiptIdentifier
+      },
       used_items: usedItems
     };
 
@@ -522,7 +526,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public getRewardTransactionHistory(
     page: number = 1,
     pageSize: number = 10,
-    locale: string = 'en'
+    locale: string = 'en',
+    sortBy: string = 'redemption_date',
+    orderBy: string = 'desc',
   ): Observable<IMerchantRewardTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     const url = `${this.apiHost}/v4/merchant_admin/reward_transactions?state=redeemed`;
@@ -532,7 +538,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         headers,
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          sort_by: `${sortBy}`,
+          order_by: `${orderBy}`
         }
       }
     ).pipe(

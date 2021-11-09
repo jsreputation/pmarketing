@@ -1,5 +1,6 @@
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 import { IOperatingHours } from '../../campaign/models/campaign.model';
+import { ITag } from '../../merchants/models/merchants.model';
 
 export interface IReward {
   id: number;
@@ -36,6 +37,8 @@ export interface IReward {
   };
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
+  tags?: ITag[];
+  distance?: {value?:number, unitOfMeasure?:string};
 }
 
 export interface IRewardState {
@@ -55,6 +58,7 @@ export interface ICatalog {
   rewards?: IReward[];
 }
 
+
 export interface IPrice {
   id?: number;
   rewardCampaignId?: number;
@@ -67,7 +71,9 @@ export interface IPrice {
 export interface ICategoryTags {
   id: number;
   title: string;
+  description?: string;
   parent?: any;
+  children?: ICategoryTags[];
 }
 
 export interface IRewardParams {
@@ -101,5 +107,15 @@ export interface ITrending {
 }
 
 export interface ISearchHistory {
+  value: string;
+}
+
+export enum SearchSuggestionType {
+  reward = 'reward',
+  merchant = 'merchant'
+}
+
+export interface ISearchSuggestion {
+  type: SearchSuggestionType;
   value: string;
 }

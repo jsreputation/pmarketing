@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LargeListItemComponent } from './large-list-item.component';
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('LargeListItemComponent', () => {
   let component: LargeListItemComponent;
@@ -7,7 +8,10 @@ describe('LargeListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LargeListItemComponent ]
+      declarations: [ LargeListItemComponent ],
+      imports:[
+        RouterTestingModule.withRoutes([]),
+      ]
     })
     .compileComponents();
   });
@@ -21,30 +25,13 @@ describe('LargeListItemComponent', () => {
   it('should create', () => {
     component.reward = {
       id: 1,
-      rewardThumbnail: './assets/images/Group_10985@2x.png',
+      thumbnail: './assets/images/Group_10985@2x.png',
       name: '40% OFF at New World Makati Hotel',
       description:
         'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
-      subtitle: '',
-      validTo: new Date(),
-      validFrom: new Date(),
-      rewardBanner: '',
-      loyalty: [],
-      termsAndConditions: '',
-      categoryTags: [
-        {
-          id: 1,
-          title: 'nearby'
-        },
-        {
-          id: 2,
-          title: 'new'
-        },
-        {
-          id: 3,
-          title: 'other'
-        }
-      ],
+      categoryTags: [],
+      createdAt: new Date(),
+      tags: []
     };
     fixture.detectChanges();
     expect(component).toBeTruthy();
@@ -54,30 +41,13 @@ describe('LargeListItemComponent', () => {
     spyOn(component, 'selectItem')
     component.reward = {
       id: 1,
-      rewardThumbnail: './assets/images/Group_10985@2x.png',
+      thumbnail: './assets/images/Group_10985@2x.png',
       name: '40% OFF at New World Makati Hotel',
       description:
         'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
-      subtitle: '',
-      validTo: new Date(),
-      validFrom: new Date(),
-      rewardBanner: '',
-      loyalty: [],
-      termsAndConditions: '',
-      categoryTags: [
-        {
-          id: 1,
-          title: 'nearby'
-        },
-        {
-          id: 2,
-          title: 'new'
-        },
-        {
-          id: 3,
-          title: 'other'
-        }
-      ],
+      categoryTags: [],
+      createdAt: new Date(),
+      tags: []
     };
     fixture.detectChanges();
     const element = fixture.nativeElement.querySelector('.item');

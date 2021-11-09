@@ -45,6 +45,8 @@ export type UserRanking = {
 export type Podium = {
   id: number;
   outcomes: LeaderboardOutcome[];
+  positionStart: number
+  positionEnd: number;
   displayProperties: {
     rankName: string;
     rankIcon: {

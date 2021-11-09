@@ -15,7 +15,7 @@
         <mat-form-field appearance="fill">
             <mat-icon matSuffix *ngIf="loyaltyPoints" (click)="revertPoints()">close</mat-icon>
             <mat-label>{{"ORDER_RESERVE_PAGE.COINS_PAID"|translate}}</mat-label>
-            <input matInput type="number" [(ngModel)]="loyaltyPoints" (ngModelChange)="loyaltyInputError=null" class="full-width__input" >
+            <input matInput type="number" [(ngModel)]="loyaltyPoints" (ngModelChange)="onPointInputChange()" class="full-width__input" >
         </mat-form-field>
         <div *ngIf="loyaltyInputError" class="mat-error">
             {{loyaltyInputError}}

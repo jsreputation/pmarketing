@@ -36,6 +36,7 @@ export interface IV4TeamsDisplayProperties {
         button_text_secondary?: string;
       },
       image: Asset;
+      sub_headline?:string;
     },
     join_page: {
       description: string;
@@ -44,6 +45,7 @@ export interface IV4TeamsDisplayProperties {
       description: string;
       code_blurb: string;
     }
+   
   }
 };
 

@@ -1,11 +1,18 @@
 @import '../../../theme/variables.scss';
-
 .nearby-deals-wrapper {
   .filter-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 16px 20px;
+
+    .tag-group {
+      .tag {
+        position: relative;
+        top: 13px; //todo: remove magic number and style the container properly
+        margin: 5px;
+      }
+    }
 
     .group-filter {
       display: flex;
@@ -30,14 +37,24 @@
   }
 
   .content-wrapper {
-    overflow: hidden;
-    height: calc(100vh - 200px);
-
+    padding-inline-start: 0 !important;
+    margin: 0;
+    height: calc(100vh - 218px);
+    overflow: auto;
     .nearby-result-tab {
       .label-tab {
         margin-left: 4px;
         color: $medium-blue;
       }
+    }
+
+    .tab-content {
+      padding-inline-start: 0 !important;
+      margin: 0;
+    }
+
+    .no-result {
+      text-align: center;
     }
   }
 }

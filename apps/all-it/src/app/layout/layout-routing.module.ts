@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from './layout.component';
 import { WalletGuard } from '../wallet.guard';
 
 const routes: Routes = [
@@ -14,6 +14,10 @@ const routes: Routes = [
         path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
       },
       {
+        path: "badges",
+        loadChildren: () => import('../badges/badges.module').then(m => m.BadgesModule)
+      },
+      {
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
@@ -24,13 +28,37 @@ const routes: Routes = [
         loadChildren: () => import('../voucher-detail/voucher-detail.module').then((mod) => mod.VoucherDetailModule)
       },
       { path: 'history', loadChildren: () => import('../history/history.module').then((mod) => mod.HistoryModule) },
+      {
+        path: "leaderboard/:id",
+        loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule)
+      },
+      {
+        path: "leaderboards",
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule)
+      },
+      {
+        path: "leaderboards/:id",
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule)
+      },
       { path: 'pi', loadChildren: () => import('../pi/pi.module').then((mod) => mod.PiModule) },
+      {
+        path: "progress-campaigns",
+        loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then((mod) => mod.ProgressCampaignHomeModule)
+      },
+      {
+        path: "progress/:id",
+        loadChildren: () => import('../progress-campaign/progress-campaign.module').then((mod) => mod.ProgressCampaignModule)
+      },
       {
         path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then((mod) => mod.RedeemModule),
       },
       {
         path: 'qr',
         loadChildren: () => import('../qr/qr.module').then((mod) => mod.QRModule)
+      },
+      {
+        path: "quest/:id",
+        loadChildren: () => import('../quest/quest.module').then((mod) => mod.QuestModule)
       },
       {
         path: 'account',

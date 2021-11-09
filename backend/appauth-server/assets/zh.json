@@ -278,7 +278,9 @@
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
     "INVALID_INVITE_CODE": "Invalid invite code",
-    "TEAM_FULL": "This team is already full"
+    "TEAM_FULL": "This team is already full",
+    "RESERVATION_EXPIRED": "Your game session has expired, please try again",
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again"
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",

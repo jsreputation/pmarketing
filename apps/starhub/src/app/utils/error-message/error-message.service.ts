@@ -76,6 +76,10 @@ export class ErrorMessageService {
                 errorMessage = 'Not enough points balance';
               }
               break;
+            case 429:
+                // API error: 'too many people. please wait'
+                errorMessage = 'Still trying, please wait';
+                break;
             default:
                 errorMessage = 'Something went wrong';
                 break;

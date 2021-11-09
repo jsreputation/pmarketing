@@ -1,9 +1,11 @@
   <ul class="wrapper" #containerCategory>
-    <li class="item" *ngFor="let category of categories" [style.background-image]="'url('+category.image+')'">
+    <li class="item" (click)="navigateToCatalog(category.key)" *ngFor="let category of categories" [style.background-image]="'url('+category.imageLink+')'">
       <div class="content-container">
-        <h3 class="title">{{category.title}}</h3>
-        <p class="content" *ngIf="category.content">{{category.content}}</p>
-        <a *ngFor="let subCategory of category.subCategories" [href]="subCategory.link" class="sub-category">{{subCategory.label}}</a>
+        <h3 class="title">{{category.name}}</h3>
+<!--        <p class="content" *ngIf="category.content">{{category.content}}</p>-->
+        <a *ngFor="let subCategory of category.children"
+        (click)="navigateToCatalog(category.key)"
+         class="sub-category">{{subCategory.name}}</a>
       </div>
     </li>
   </ul>

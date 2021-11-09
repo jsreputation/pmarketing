@@ -1,24 +1,25 @@
 <div class="deal-landing">
-    <mat-card class="card no-padding detail">
-        <img [src]="dealDetail.image" />
-        <div class="container">
-            <h2 class="title">{{dealDetail.title}}</h2>
-            <p>
-                <span class="tag tag--nearby">nearby</span>
-            </p>
-            <p>
-                <mat-icon>location_pin</mat-icon>
-                <mat-icon>share</mat-icon>
-                <mat-icon>call</mat-icon>
-            </p>
-            <p class="description">{{dealDetail.description}}</p>
-        </div>
-    </mat-card>
-    <mat-card class="card">
-        <h2 class="header">SIMILAR DEALS</h2>
-        <bdo-tagged-item [deals]="similarDeals"></bdo-tagged-item>
-    </mat-card>
+  <mat-card class="card no-padding detail">
+    <img [src]="dealDetail?.rewardBanner" />
+    <div class="container">
+      <h2 class="title">{{dealDetail?.name}}</h2>
+      <p *ngIf="dealDetail?.tags">
+        <ng-container *ngFor="let tag of dealDetail?.tags">
+          <span class="tag tag--{{tag.name}}" *ngIf="existsInFilters(tag)">{{tag.name}}</span>
+        </ng-container>
+
+      </p>
+      <p>
+        <mat-icon (click)="navigateLocationPage()">location_pin</mat-icon>
+        <mat-icon (click)="shareDeal()">share</mat-icon>
+        <mat-icon (click)="navigateLocationPage()">call</mat-icon>
+      </p>
+      <div class="description" [innerHTML]="dealDetail?.description"></div>
+      <div class="description" [innerHTML]="dealDetail?.termsAndConditions"></div>
+    </div>
+  </mat-card>
+  <mat-card class="card">
+    <h2 class="header">SIMILAR DEALS</h2>
+    <bdo-tagged-item [deals]="similarDeals"></bdo-tagged-item>
+  </mat-card>
 </div>
-
-
-

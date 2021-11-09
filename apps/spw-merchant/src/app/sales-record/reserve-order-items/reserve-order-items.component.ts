@@ -33,9 +33,14 @@ export class ReserveOrderItemsComponent implements OnInit {
     text: 'The code was not recognized',
     buttonTxt: 'Ok',
   };
-  public invalidVoucherPopup: IPopupConfig = {
+  public invalidStateVoucherPopup: IPopupConfig = {
     title: 'Invalid Voucher',
     text: 'The voucher is not valid anymore',
+    buttonTxt: 'Ok',
+  };
+  public invalidVoucherPopup: IPopupConfig = {
+    title: 'Invalid Voucher',
+    text: 'The voucher code is invalid',
     buttonTxt: 'Ok',
   };
 
@@ -121,7 +126,8 @@ export class ReserveOrderItemsComponent implements OnInit {
   }
 
   public removeVoucher(voucherId: number): void {
-    this.merchantAdminService.revertVoucherRedemption(voucherId).subscribe(
+    const userId = this.userDetails.identifier ? this.userDetails.identifier : '';
+    this.merchantAdminService.revertVoucherRedemption(voucherId, userId).subscribe(
       () => {
         this.voucher = null;
         this.orderService.setReservedVoucher(null);
@@ -137,14 +143,18 @@ export class ReserveOrderItemsComponent implements OnInit {
   }
 
   public redeemVoucher(voucherId: number): void {
-    this.merchantAdminService.redeemVoucher(voucherId, true).subscribe(
+    this.merchantAdminService.redeemVoucher(voucherId, this.userDetails?.identifier, true).subscribe(
       (voucher: Voucher) => {
         this.voucher = voucher;
         this.orderService.setReservedVoucher(voucher);
         this.notificationService.addSnack('Voucher has been applied');
       },
-      () => {
-        this.notificationService.addPopup(this.invalidVoucherPopup);
+      (err) => {
+        if (err?.error?.code === 405) {
+          this.notificationService.addPopup(this.invalidStateVoucherPopup);
+        } else {
+          this.notificationService.addPopup(this.invalidVoucherPopup);
+        }
       }
     );
   }
@@ -172,6 +182,14 @@ export class ReserveOrderItemsComponent implements OnInit {
     } else {
       this.loyaltyPoints = 0;
     }
+  }
+
+  public onPointInputChange(): void {
+    if (this.loyaltyPoints < 0 || (this.loyaltyPoints && !Number.isInteger(this.loyaltyPoints))) {
+      this.loyaltyInputError = 'Please enter a valid number';
+      return;
+    }
+    this.loyaltyInputError = null;
   }
 
 }

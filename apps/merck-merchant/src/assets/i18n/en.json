@@ -69,5 +69,12 @@
     "COUNTRY_MACAU": "Macau",
     "COUNTRY_CHINA": "China",
     "COUNTRY_SINGAPORE": "Singapore"
+  },
+  "IDENTIFY_USER": {
+    "BY_QR_SCAN": "By QR Scan",
+    "BY_MOBILE_NUMBER": "By Mobile Number",
+    "MOBILE_NUMBER": "Enter customer mobile number",
+    "MOBILE_NUMBER_IS": "Mobile number is",
+    "CONFIRM": "Confirm"
   }
 }

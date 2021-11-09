@@ -5,6 +5,7 @@ import { Observable, of, forkJoin } from 'rxjs';
 import { IMerchantAdminService, IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory, IMerchantRewardTransactionHistory, ConfigService} from '@perxtech/core';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'perx-bcm-pages-transaction-history',
@@ -30,6 +31,7 @@ export class TransactionHistoryComponent implements OnInit {
   private pageSizeReward: number = 10;
   private complitePaginationReward: boolean = false;
   private currentSelectedLanguage: string = 'en';
+  public hideDescription: boolean = false;
 
   constructor(
     private location: Location,
@@ -37,6 +39,7 @@ export class TransactionHistoryComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
     private translate: TranslateService,
     protected configService: ConfigService,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
@@ -48,6 +51,11 @@ export class TransactionHistoryComponent implements OnInit {
           console.error(error);
         }
       );
+    this.route.data.subscribe((dataObj) => {
+      if (dataObj.hideDescription) {
+        this.hideDescription = dataObj.hideDescription;
+      }
+    });
   }
 
   private initComponent(): void {
@@ -56,7 +64,7 @@ export class TransactionHistoryComponent implements OnInit {
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       of(`${tr.merchantName}`);
     this.salesDescFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      of(`${tr.description}`);
+      of(`${!this.hideDescription ? tr.description : ''}`);
     this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       of(`${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`);
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>

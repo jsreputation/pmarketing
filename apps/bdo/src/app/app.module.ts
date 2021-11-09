@@ -28,6 +28,7 @@ import { environment } from '../environments/environment';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs/operators';
+import { SharedModule } from './shared/shared.module';
 
 export const appInit =
   (
@@ -90,7 +91,8 @@ export const appInit =
     MatSnackBarModule,
 
     // app modules
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   bootstrap: [ AppComponent ],
   providers: [

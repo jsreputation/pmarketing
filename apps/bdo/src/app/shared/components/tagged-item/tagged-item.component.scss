@@ -6,10 +6,13 @@
   grid-auto-columns: 85%;
   grid-gap: 15px;
   overflow-x: auto;
+  padding-top: 15px;
   scroll-snap-type: x mandatory;
   scroll-snap-stop: always;
   padding-bottom: 15px;
   padding-inline-start: 0;
+  scroll-behavior: smooth;
+  margin: 0;
 }
 
 .item {
@@ -48,6 +51,10 @@
       margin: 10px 0;
       font-size: 12px;
       color: $light-black;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
     }
 
     .position {

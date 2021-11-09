@@ -13,8 +13,10 @@ import {
   ICategoryTags,
   IPrice,
   IReward,
-  Sort,
-  ITrending, ISearchHistory
+  ISearchHistory,
+  ITrending,
+  ISearchSuggestion,
+  Sort
 } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
@@ -23,11 +25,7 @@ import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { CampaignType } from '../campaign/models/campaign.model';
 import { IV4OperatingHours } from '../campaign/v4-campaign.service';
-
-export interface IV4Tag {
-  id: number;
-  name: string;
-}
+import { ITag } from '../merchants/models/merchants.model';
 
 interface IV4Image {
   type: string;
@@ -85,7 +83,7 @@ export interface IV4Reward {
   merchant_website?: string;
   terms_and_conditions?: string;
   steps_to_redeem?: string;
-  tags?: IV4Tag[];
+  tags?: ITag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
   selling_from?: string;
@@ -97,6 +95,7 @@ export interface IV4Reward {
   referee_balance_to_next_reward?: number;
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
+  distance?: {value:number, unit_of_measure:string};
 }
 
 interface IV4Price {
@@ -122,6 +121,15 @@ interface IV4GetSearchHistoryResponse {
 
 interface IV4GetRewardsResponse {
   data: IV4Reward[];
+}
+
+interface IV4GetSearchRewardsResponse {
+  data: {
+    rewards: {
+      reward: IV4Reward,
+      score: number;
+    }[]
+  };
 }
 
 interface IV4GetRewardResponse {
@@ -174,8 +182,16 @@ interface IV4LoyaltyTierInfo {
   sneak_peek: boolean;
 }
 
+interface IV4GetAllCategoriesResponse {
+  data: ICategoryTags[];
+}
+
 interface IV4SearchHistory {
   value: string;
+}
+
+interface IV4GetSearchSuggestionResponse {
+  data: ISearchSuggestion[];
 }
 
 @Injectable({
@@ -190,12 +206,6 @@ export class V4RewardsService extends RewardsService {
     this.configService.readAppConfig().subscribe((config: IConfig<void>) => {
       this.apiHost = config.apiHost as string;
     });
-  }
-
-  public static v4TrendingToTrending(trending: IV4Trending): ITrending {
-    return {
-      ...trending,
-    };
   }
 
   public static v4RewardToReward(
@@ -321,7 +331,9 @@ export class V4RewardsService extends RewardsService {
           }
         : undefined,
       operatingHours,
-      isOperating: reward.operating_now
+      isOperating: reward.operating_now,
+      tags: reward?.tags,
+      distance: {value:reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure}
     };
   }
 
@@ -452,7 +464,8 @@ export class V4RewardsService extends RewardsService {
     locale: string = 'en',
     filterFavorites?: boolean,
     sort?: Sort,
-    sortBy?: string | null
+    sortBy?: string | null,
+    categoryIds?: number[] | null,
   ): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
@@ -474,6 +487,10 @@ export class V4RewardsService extends RewardsService {
       // order & sort_by required. supported fields: id, ends_at, begins_at, state, name
       params = params.set('order', sort);
       params = params.set('sort_by', sortBy);
+    }
+
+    if (categoryIds) {
+      params = params.set('category_ids', categoryIds.join());
     }
 
     return this.http
@@ -624,11 +641,28 @@ export class V4RewardsService extends RewardsService {
   public nearMe(
     rad: number = 20,
     lat: number,
-    lng: number
+    lng: number,
+    page?: number,
+    pageSize?: number,
+    tags?: string[] | string,
+    categories?: string[] | string,
   ): Observable<IReward[]> {
+    let params = new HttpParams()
+    if(page) {
+      params= params.set('page', page.toString());
+    }
+    if(pageSize) {
+      params= params.set('size', pageSize.toString());
+    }
+    if (tags) {
+      params = params.set('tags', Array.isArray(tags) ? tags.join() : tags);
+    }
+    if (categories) {
+      params = params.set('categories', Array.isArray(categories) ? categories.join(): categories);
+    }
     return this.http
       .get<IV4GetRewardsResponse>(
-        `${this.apiHost}/v4/rewards?radius=${rad}&lat=${lat}&lng=${lng}`
+        `${this.apiHost}/v4/rewards?radius=${rad}&lat=${lat}&lng=${lng}`,{ params }
       )
       .pipe(
         map((res: IV4GetRewardsResponse) => res.data),
@@ -674,19 +708,33 @@ export class V4RewardsService extends RewardsService {
     return EMPTY;
   }
 
+  public getAllCategories(): Observable<ICategoryTags[]> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http
+      .get<IV4GetAllCategoriesResponse>(`${this.apiHost}/v4/categories`, {
+        headers,
+      })
+      .pipe(
+        map((res) => res.data)
+      );
+  }
+
   public getTrending(): Observable<ITrending[]> {
     return this.http
       .get<IV4GetTrendingResponse>(`${this.apiHost}/v4/search/trending`)
       .pipe(
         map((res) => res.data),
         map((res: IV4Trending[]) =>
-          res.map((item) => V4RewardsService.v4TrendingToTrending(item))
-        )
+          res.map((item) => ({ ...item })
+          ))
       );
   }
-  public getRewardsRelated(rewardId: number): Observable<IReward[]> {
+
+  public getRewardsRelated(rewardId: number, pageSize: number = 10): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers: headers }) .pipe(
+    let params = new HttpParams()
+      .set('size', pageSize.toString());
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/${rewardId}/related`, { headers, params }).pipe(
       map((res: IV4GetRewardsResponse) => res.data),
       map((rewards: IV4Reward[]) => rewards.map(
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
@@ -698,21 +746,31 @@ export class V4RewardsService extends RewardsService {
     return this.http.get<IV4GetSearchHistoryResponse>(`${this.apiHost}/v4/search/history`)
       .pipe(
         map((res: IV4GetSearchHistoryResponse) => res.data),
-        map((searchHistories: IV4SearchHistory[]) =>  searchHistories.map(
+        map((searchHistories: IV4SearchHistory[]) => searchHistories.map(
           (searchHistory: IV4SearchHistory) => ({ ...searchHistory })
         ))
       );
   }
 
-  public searchRewards(text: string, locale= "en"): Observable<IReward[]> {
-    const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/search?search_string=${text}`, { headers })
+  public getSearchSuggestion(query: string): Observable<ISearchSuggestion[]> {
+    return this.http.get<IV4GetSearchSuggestionResponse>(`${this.apiHost}/v4/search/suggestion?search_string=${query}`)
       .pipe(
-        map((res: IV4GetRewardsResponse) => res.data),
+        map((res: IV4GetSearchSuggestionResponse) => res.data)
+      );
+  }
+
+  public searchRewards(text: string,page: number, pageSize: number, tags?: string, locale= "en"): Observable<IReward[]> {
+    const endpoint = tags ? `${this.apiHost}/v4/search?search_string=${text}&tags=${tags}` : `${this.apiHost}/v4/search?search_string=${text}`;
+    const headers = new HttpHeaders().set('Accept-Language', locale);
+    let params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', pageSize.toString());
+    return this.http.get<IV4GetSearchRewardsResponse>(endpoint, { headers, params })
+      .pipe(
+        map((res: IV4GetSearchRewardsResponse) => res.data.rewards.map(item => item.reward)),
         map((rewards: IV4Reward[]) => rewards.map(
           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
       );
   }
-
 }

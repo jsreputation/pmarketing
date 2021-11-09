@@ -48,7 +48,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher> {
+  public redeemVoucher(id: number, userId: string, reserve?: boolean): Observable<IVoucher> {
     throw new Error('redeemVoucher Method not implemented.');
   }
 
@@ -58,7 +58,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public revertVoucherRedemption(id: number): Observable<IVoucher> {
+  public revertVoucherRedemption(id: number, userId: string): Observable<IVoucher> {
     throw new Error('revertVoucherRedemption Method not implemented.');
   }
 
@@ -73,7 +73,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public createInvoice(userId: string, amount: number, description: string, voucherId: number, pointsId: number
+  public createInvoice(userId: string, amount: number, receiptIdentifier: string, voucherId: number, pointsId: number
   ): Observable<IMerchantInvoice> {
     throw new Error('createInvoice Method not implemented.');
   }
@@ -101,8 +101,11 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
     throw new Error('getTransactionHistory Method not implemented.');
   }
 
-  // @ts-ignore
-  public getRewardTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantRewardTransactionHistory[]> {
+  public getRewardTransactionHistory(
+    // @ts-ignore
+    page?: number, pageSize?: number, locale?: string,
+    // @ts-ignore
+    sortBy?: string, orderBy?: string): Observable<IMerchantRewardTransactionHistory[]> {
     throw new Error('getRewardTransactionHistory Method not implemented.');
   }
 

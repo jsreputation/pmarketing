@@ -1,18 +1,34 @@
-<div class="category">
+<div class="category" *ngIf="category">
     <div class="title">
-        <h3>{{title}}</h3>
+        <div class="title-content">
+            <h3>{{category.name}}</h3>
+        </div>
         <div class="filter">
-            <img src="assets/images/icon-n-filter.svg" alt="">
-            <span>
-                Filters
-            </span>
+            <button mat-button class="filter" (click)="filter()">
+                <img src="assets/images/icon-n-filter.svg" alt="">
+                <span>
+                    Filters
+                </span>
+            </button>
         </div>
     </div>
+    <div class="looking-for">
+        <h4>What are you looking for?</h4>
+        <div class="icon-category">
+            <div class="action" *ngFor="let item of category.children; let i = index"
+                (click)="selectSubcategory(item)" >
+                <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category">
+                <label class="category-name">{{ item.name }}</label>
+            </div>
+        </div>
+    </div>
+        <div class="card-type" *ngIf="selectedSubcategory && selectedSubcategory?.children?.length">
+            <h4>Card Types</h4>
+            <div class="card-type-content">
+                <div class="card-type-content-action" *ngFor="let item of selectedSubcategory.children; let i = index" (click)="selectSubcategoryChildren(item)">
+                    <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category">
+                </div>
+            </div>
 
-    <div class="icon-category">
-        <div class="action" *ngFor="let item of dataSource" (click)="execCallBack(item.callBack)">
-            <img [src]="item.linkImage" alt="" class="img-category">
-            <label class="category-name">{{item.name}}</label>
         </div>
-    </div>
 </div>

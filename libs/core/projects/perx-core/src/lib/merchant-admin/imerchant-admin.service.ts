@@ -28,14 +28,14 @@ export abstract class IMerchantAdminService {
     description?: string
   ): Observable<IMerchantAdminTransaction>;
 
-  public abstract redeemVoucher(id: number, reserve?: boolean): Observable<IVoucher>;
+  public abstract redeemVoucher(id: number, userId: string, reserve?: boolean): Observable<IVoucher>;
 
   public abstract issueVoucher(
     id: number,
     userId?: string,
   ): Observable<IVoucher>;
 
-  public abstract revertVoucherRedemption(id: number): Observable<IVoucher>;
+  public abstract revertVoucherRedemption(id: number, userId: string): Observable<IVoucher>;
 
   public abstract validateInvite(token: string): Observable<IMerchantProfile>;
 
@@ -46,7 +46,7 @@ export abstract class IMerchantAdminService {
   public abstract createInvoice(
     userId: string,
     amount: number,
-    description: string,
+    receiptIdentifier: string,
     voucherId: number,
     pointsId: number
   ): Observable<IMerchantInvoice>;
@@ -70,6 +70,8 @@ export abstract class IMerchantAdminService {
     page?: number,
     pageSize?: number,
     locale?: string,
+    sortBy?: string,
+    orderBy?: string
   ): Observable<IMerchantRewardTransactionHistory[]>;
 
   public abstract forgotPassword(email: string): Observable<IMessageResponse>;

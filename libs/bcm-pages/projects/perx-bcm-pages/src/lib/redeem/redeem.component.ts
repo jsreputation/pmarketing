@@ -49,7 +49,7 @@ export class RedeemComponent implements OnInit {
         const parsedQrCode = JSON.parse(scannedQrCode);
         this.payload = parsedQrCode;
         forkJoin([
-        this.merchantService.redeemVoucher(parsedQrCode?.voucherId, true).
+        this.merchantService.redeemVoucher(parsedQrCode?.voucherId, parsedQrCode?.identifier, true).
         pipe(catchError((err) => {
           this.errMessage = 'Invalid Voucher';
           throw err;
@@ -86,7 +86,8 @@ export class RedeemComponent implements OnInit {
 
   public onCancel(): void {
     if (this.voucherReserved) {
-      this.merchantService.revertVoucherRedemption(this.voucherReserved.id).subscribe(
+      const userId: string = this.payload.identifier ? this.payload.identifier : '';
+      this.merchantService.revertVoucherRedemption(this.voucherReserved.id, userId).subscribe(
         () => {
           this.voucherReserved = null;
         },
@@ -103,10 +104,11 @@ export class RedeemComponent implements OnInit {
 
   public onProceed(): void {
     this.didProceed = true;
+    const userId: string = this.payload.identifier ? this.payload.identifier : '';
     if (!this.payload.voucherId) {
       throw new Error('voucher id is required');
     }
-    this.merchantService.redeemVoucher(this.payload.voucherId)
+    this.merchantService.redeemVoucher(this.payload.voucherId, userId)
       .subscribe(() => {
         this.notificationService.addSnack(this.transactionCompleteTxt);
       },

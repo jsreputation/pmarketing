@@ -14,6 +14,7 @@ import { RedeemComponent } from './redeem/redeem.component';
 import { RegisterComponent } from './register/register.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'order', component: OrderComponent },
       { path: 'redeem', component: RedeemComponent },
       { path: 'transaction-history', component: TransactionHistoryComponent },
-      { path: 'user-signup', component: UserSignupComponent }
+      { path: 'user-signup', component: UserSignupComponent },
+      { path: 'identify-user/:path', component: IdentifyCustomerComponent }
     ],
     canActivate: [ProtectedGuard]
   },

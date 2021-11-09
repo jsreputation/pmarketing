@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { IListItemModel } from '../../models/list-item.model';
+import { FILTER_DATA } from '../../constants/filter-configuration.const';
+import { ITag } from '@perxtech/core';
 
 
 @Component({
@@ -8,10 +10,15 @@ import { IReward } from '@perxtech/core';
   styleUrls: ['./large-list-item.component.scss']
 })
 export class LargeListItemComponent {
-  @Input() reward: IReward;
-  @Output() itemSelected: EventEmitter<IReward> = new EventEmitter<IReward>();
-
-  selectItem(item: IReward) {
+  @Input() reward: IListItemModel;
+  @Output() itemSelected: EventEmitter<IListItemModel> = new EventEmitter<IListItemModel>();
+  @Input() url: string[];
+  public defaultImageUrl  = "assets/images/light-gray-color-default-image.png";
+  selectItem(item: IListItemModel) {
     this.itemSelected.emit(item);
+  }
+
+  public existsInFilters(tag: ITag): boolean {
+    return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
 }

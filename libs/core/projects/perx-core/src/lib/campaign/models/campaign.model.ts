@@ -1,6 +1,8 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
+import { ICategoryTags } from "@perxtech/core";
+import { ITag } from '../../merchants/models/merchants.model';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -12,8 +14,12 @@ export interface CampaignDisplayProperties {
   progressDetails?: ProgressProperties;
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
+  enrolmentPage?: EnrolmentProperties;
 }
-
+export interface AdditionalSection{
+  headerText: String,
+  bodyText: String,
+}
 export interface CampaignLandingPage {
   body?: { text: string };
   media?: { youtube?: string; bannerImage?: string};
@@ -24,8 +30,14 @@ export interface CampaignLandingPage {
   subHeading?: { text: string };
   backgroundUrl?: string;
   tnc?: { text: string };
+  additionalSections?: AdditionalSection[];
+  subHeadline?:string;
 }
-
+export interface ICampaignRule {
+  id:number,
+  name:string,
+  state:string,
+}
 export interface ClaimPrizeProperties {
   buttonText: string;
   headline: string;
@@ -36,6 +48,10 @@ export interface ClaimPrizeProperties {
     }
   };
   subHeadline: string;
+}
+
+export interface EnrolmentProperties {
+  body?: string;
 }
 
 export interface QuestProperties {
@@ -98,7 +114,8 @@ export enum CampaignType {
   invite = 'invite',
   quest = 'quest',
   progress = 'progress',
-  instant = 'instant_outcome'
+  instant = 'instant_outcome',
+  rulegroup = 'rule_group'
 }
 
 export enum CampaignState {
@@ -142,6 +159,8 @@ export interface ICampaign {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   teamSize?: number;
+  categoryTags?:ICategoryTags[];
+  tags?: ITag[]
 }
 
 export enum CommChannel {

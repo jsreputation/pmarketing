@@ -1,39 +1,25 @@
 import { Injectable, } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, } from '@angular/common/http';
 
-import {
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  concatAll,
-  map,
-  mergeMap,
-  reduce
-} from 'rxjs/operators';
+import { Observable, of, } from 'rxjs';
+import { concatAll, map, mergeMap, reduce } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import { LoyaltyService } from './loyalty.service';
 import {
+  IExchangerate,
   IGameTransactionHistory,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
+  IPointTransfer,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  TransactionDetailType,
   IStampTransactionHistory,
-  IExchangerate,
-  IPointTransfer
+  TransactionDetailType
 } from './models/loyalty.model';
 
-import {
-  IV4Reward,
-  IV4Tag
-} from '../rewards/v4-rewards.service';
+import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
@@ -43,6 +29,7 @@ import {
   V4TransactionsService
 } from '../transactions/transaction-service/v4-transactions.service';
 import { IV4Campaign, IV4PointsOutcome } from '../campaign/v4-campaign.service';
+import { ITag } from '../merchants/models/merchants.model';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -74,7 +61,7 @@ interface IV4LoyaltyTiers {
   multiplier_point?: number;
   multiplier_points_to_currency_rate?: number;
   images?: IV4Image[];
-  tags?: IV4Tag[];
+  tags?: ITag[];
   custom_fields?: ICustomProperties[];
 }
 
@@ -157,7 +144,7 @@ interface IV4RewardTransactionHistory {
   };
   reward: IV4Reward;
   redemption_location?: string;
-  tags?: IV4Tag[];
+  tags?: ITag[];
 }
 
 interface IV4PurchaseTransactionHistory {
@@ -376,6 +363,23 @@ export class V4LoyaltyService extends LoyaltyService {
             stampCampaignName: stampDetails.campaign.name
           };
           break;
+        case TransactionDetailType.dashboard:
+          // assume it is a customer service action from dashboard
+          data = {
+            id: transactionHistory.id,
+            properties: {
+              productName: 'Customer Service Transaction'
+            }
+          };
+          break;
+        case TransactionDetailType.user:
+          data = {
+            id: transactionHistory.id,
+            properties: {
+              productName: 'Membership Extended' // todo: when more use-cases arise for user initiated txn's, identify using unique properties
+            }
+          };
+          break;
       }
       // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
@@ -387,7 +391,7 @@ export class V4LoyaltyService extends LoyaltyService {
 
       data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
     } else {
-      // assume it is a customer service action from dashboard
+      // make it the same as TransactionDetailType.dashboard
       data = {
         id: transactionHistory.id
       };

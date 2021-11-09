@@ -1,24 +1,43 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perxtech/core';
+import { Params, Router } from '@angular/router';
+import { IConfig, ITrending, ISearchHistory, RewardsService, ConfigService } from '@perxtech/core';
+
+interface IBDOConfig {
+  showSearchHistory: boolean;
+}
 
 @Component({
   selector: 'bdo-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
+  styleUrls: [ './search.component.scss' ]
 })
-
 export class SearchComponent implements OnInit {
-  public searchValue = '';
-  public searchResult: IReward[] = [];
-  constructor(private activeRoute: ActivatedRoute, private rewardsService: RewardsService) {}
+  public trendingList: string[] = [];
+  public searchHistories: string[] = [];
+  public showHistory = false;
 
-  ngOnInit(): void {
-    this.activeRoute.params.subscribe((param) => {
-      this.searchValue = param.text;
-      this.rewardsService.searchRewards(this.searchValue).subscribe(rewards=>{
-        this.searchResult = rewards;
-      })
+  constructor(
+    private rewardsService: RewardsService,
+    private configService: ConfigService,
+    private route: Router) {
+  }
+
+  public ngOnInit(): void {
+    this.configService.readAppConfig<IBDOConfig>().subscribe((config: IConfig<IBDOConfig>) => {
+      this.showHistory = config.custom!.showSearchHistory;
     });
+
+
+      this.rewardsService.getTrending().subscribe((searchHistory: ITrending[]) => {
+      this.trendingList = searchHistory.filter(trending => trending.value.trim()).map((item) => item.value);
+    });
+    this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[]) => {
+      this.searchHistories = searchHistory.map(item => item.value);
+    });
+  }
+
+  public onClick(searchString: string): void {
+    const queryParams: Params = { search: searchString };
+    this.route.navigate([ `result` ], { queryParams: queryParams });
   }
 }

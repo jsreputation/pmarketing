@@ -108,7 +108,11 @@ export class V4AuthenticationService
     if (this.preauth && this.retries < this.maxRetries) {
       this.retries++;
       this.autoLogin().subscribe(
-        () => console.log('finished refresh token'),
+        () => {
+          console.log('finished refresh token');
+          this.retries = 0;
+          location.reload();
+        },
         () => {
           this.logout();
           this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
@@ -188,7 +192,7 @@ export class V4AuthenticationService
   }
 
   public autoLogin(): Observable<void> {
-    const user = (window as any).primaryIdentifier;
+    const user = (window as any).primaryIdentifier || this.tokenStorage.getAppInfoProperty('identifier') || '';
     return this.authenticateUserWithPI(user).pipe(
       tap((res: IWLoginResponse) => {
         const userBearer = res && res.bearer_token;

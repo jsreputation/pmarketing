@@ -1,12 +1,16 @@
 <li class="item" (click)="selectItem(reward)" *ngIf="reward">
-  <img [src]="reward.rewardThumbnail" [attr.alt]="reward.name"/>
-  <div class="tag-group">
-    <span *ngFor="let tag of reward.categoryTags" class="tag" [ngClass]="'tag--' + tag.title">
-      {{ tag.title }}
-    </span>
-  </div>
-  <div class="container">
-    <h4 class="title">{{reward.name}}</h4>
-    <p class="description">{{reward.description}}</p>
-  </div>
+  <a [routerLink]="url">
+    <img [src]="reward.thumbnail ? reward.thumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
+    <div class="tag-group">
+    <ng-container *ngFor="let tag of reward.tags">
+      <span class="tag" [ngClass]="'tag--' + tag.name" *ngIf="existsInFilters(tag)">
+        {{ tag.name }}
+      </span>
+    </ng-container>
+    </div>
+    <div class="container">
+      <h4 class="title">{{reward.name}}</h4>
+      <p class="description" [innerHTML]="reward.description"></p>
+    </div>
+  </a>
 </li>

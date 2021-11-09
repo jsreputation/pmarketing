@@ -1,14 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListItemComponent } from './list-item.component';
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe('ListItemComponent', () => {
   let component: ListItemComponent;
   let fixture: ComponentFixture<ListItemComponent>;
-
+ 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListItemComponent ]
+      declarations: [ ListItemComponent ],
+      imports:[
+        RouterTestingModule.withRoutes([]),
+      ]
     })
     .compileComponents();
   });
@@ -22,14 +26,13 @@ describe('ListItemComponent', () => {
   it('should create', () => {
     component.reward = {
       id: 1,
-      name: 'Testing Component',
-      description: 'This is reward description',
-      subtitle: '',
-      termsAndConditions: '',
-      loyalty: [],
-      rewardBanner: '',
-      validFrom: new Date(),
-      validTo: new Date()
+      thumbnail: './assets/images/Group_10985@2x.png',
+      name: '40% OFF at New World Makati Hotel',
+      description:
+        'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
+      categoryTags: [],
+      createdAt: new Date(),
+      tags: []
     };
     fixture.detectChanges();
     expect(component).toBeTruthy();

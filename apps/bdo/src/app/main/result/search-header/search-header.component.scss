@@ -1,0 +1,41 @@
+@import '../../../../theme/variables.scss';
+
+.search-header-container {
+  border-top: 8px solid $light-white;
+  .header-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    h3 {
+      font-size: 20px;
+      color: $main-blue-text;
+    }
+    .filter {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        color: $medium-blue;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+  
+
+  .title {
+    color: $dark-grey;
+    font-size: 14px;
+    margin-left: 16px;
+  }
+
+  .keyword {
+    margin-left: 16px;
+    color: $dark-grey;
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
