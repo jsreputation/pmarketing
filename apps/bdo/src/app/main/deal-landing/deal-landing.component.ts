@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IReward, NotificationService, RewardsService } from '@perxtech/core';
+import { IReward, ITag, NotificationService, RewardsService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { TranslateService } from '@ngx-translate/core';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
@@ -88,5 +89,9 @@ export class DealLandingComponent implements OnInit {
         this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
+  }
+
+  public existsInFilters(tag: ITag): boolean {
+    return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
 }
