@@ -46,6 +46,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
 import { MapComponent } from './nearby-deals/map/map.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -97,8 +98,9 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardsModule,
     MatSelectModule,
     MatBadgeModule,
-    TranslateModule.forChild()
-    
+    TranslateModule.forChild(),
+    MatRippleModule
+
   ],
   bootstrap: [],
   providers: [
