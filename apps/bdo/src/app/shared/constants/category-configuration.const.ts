@@ -36,7 +36,7 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLinkSelected:"assets/images/creditcards-enclosed-filled-fullcolor.svg",
         children: [
           {
-            key:"master",
+            key:"mastercard",
             name:"Mastercard",
             imageLink:"assets/images/mc-default.svg",
             imageLinkSelected:"assets/images/mc-selected.svg",
@@ -61,7 +61,6 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLink:"assets/images/shop-enclosed-outline-fullcolor.svg",
         imageLinkSelected:"assets/images/shop-enclosed-filled-fullcolor.svg"
       },
-
       {
         key:"dine",
         name:"Dine",
@@ -99,7 +98,7 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLinkSelected:"assets/images/creditcards-enclosed-filled-fullcolor.svg",
         children: [
           {
-            key:"master",
+            key:"mastercard",
             name:"Mastercard",
             imageLink:"assets/images/mc-default.svg",
             imageLinkSelected:"assets/images/mc-selected.svg",
@@ -111,7 +110,7 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
             imageLinkSelected:"assets/images/visa-selected.png",
           },
           {
-            key:"american-express",
+            key:"amex",
             name:"American Express",
             imageLink:"assets/images/amex-default.png",
             imageLinkSelected:"assets/images/amex-selected.png",
@@ -123,13 +122,13 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
             imageLinkSelected:"assets/images/jcb-selected.png",
           },
           {
-            key:"union-pay",
+            key:"unionpay",
             name:"Union Pay",
             imageLink:"assets/images/unionpay-default.svg",
             imageLinkSelected:"assets/images/unionpay-selected.svg",
           },
           {
-            key:"diners-club",
+            key:"diners",
             name:"Diners Club",
             imageLink:"assets/images/dinersclub-default.svg",
             imageLinkSelected:"assets/images/dinersclub-selected.svg",
