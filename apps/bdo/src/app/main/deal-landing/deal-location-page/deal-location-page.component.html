@@ -3,9 +3,11 @@
         <div class="title">
             Location
         </div>
-        <div class="content" *ngFor="let item of lstVoucherLocation" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
-            <div class="text">
-                {{item.name}}
+        <div class="content" *ngFor="let item of lstVoucherLocation">
+            <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
+                <div class="text">
+                    {{item.name}}
+                </div>
             </div>
             <div class="icon-call">
                 <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
