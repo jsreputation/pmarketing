@@ -90,7 +90,7 @@ export const FILTER_DATA: IFilterModel = {
   cardType: [
     {
       name: 'Mastercard',
-      type: 'master'
+      type: 'mastercard'
     },
     {
       name: 'Visa',
@@ -98,7 +98,7 @@ export const FILTER_DATA: IFilterModel = {
     },
     {
       name: 'American Express',
-      type: 'american-express'
+      type: 'amex'
     },
     {
       name: 'JCB',
@@ -106,11 +106,11 @@ export const FILTER_DATA: IFilterModel = {
     },
     {
       name: 'Union Pay',
-      type: 'union-pay'
+      type: 'unionpay'
     },
     {
       name: 'Diners Club',
-      type: 'diners-club'
+      type: 'diners'
     }
   ]
 }
