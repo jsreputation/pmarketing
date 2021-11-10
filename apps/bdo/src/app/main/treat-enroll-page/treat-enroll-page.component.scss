@@ -62,12 +62,20 @@
     }
     .confirm-term{
         display: flex;
+        flex-direction: row;
+
+        .tnc-container {
+            display: flex;
+            flex-direction: column;
+        }
+
         &-content{
             &-link{
                 color: #0072D8;
             }
             &-link:hover{
                 border-bottom:1px solid #0072D8;
+                cursor: pointer;
             }
         }
     }
