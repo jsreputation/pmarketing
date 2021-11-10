@@ -9,14 +9,14 @@
                 <form
                 [formGroup]="identifyUserForm"
                 (ngSubmit)="onSubmit()">
-                <mat-form-field appearance="fill" class="full-width__input">
+                <mat-form-field class="full-width__input">
                     <mat-label>{{"IDENTIFY_USER.MOBILE_NUMBER"|translate}}</mat-label>
                     <input
                     matInput
                     formControlName="mobileNumber"
                     required>
                     <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
-                        {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }} <strong>required</strong>
+                        {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }}
                     </mat-error>
                     <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
                         Please enter a valid number 
