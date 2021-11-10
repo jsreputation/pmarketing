@@ -77,7 +77,6 @@ import { MatRippleModule } from '@angular/material/core';
     CommonModule,
     MainRoutingModule,
     MatCardModule,
-    MatFormFieldModule,
     MatInputModule,
     InfiniteScrollModule,
     MatToolbarModule,

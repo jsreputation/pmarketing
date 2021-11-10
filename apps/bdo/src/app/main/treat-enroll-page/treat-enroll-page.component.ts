@@ -36,6 +36,7 @@ export class TreatEnrollPageComponent implements OnInit {
   public initForm(): void {
     this.enrollForm = new FormGroup({
       promoId: new FormControl('', [ Validators.required ]),
+      tnc: new FormControl(false, [ Validators.requiredTrue ]),
     });
   }
 
