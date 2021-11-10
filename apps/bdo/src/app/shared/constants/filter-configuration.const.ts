@@ -78,13 +78,25 @@ export const FILTER_DATA: IFilterModel = {
   ],
   locations: [
     {
-      name: 'Travel & Entertainment',
-      type: 'travel-n-entertainment',
+      name: 'NCR',
+      type: 'ncr',
     },
     {
-      name: 'Health & Wellness',
-      type: 'heath-n-wellness',
+      name: 'Mindanao',
+      type: 'mindanao',
     },
+    {
+      name: 'Luzon',
+      type: 'luzon',
+    },
+    {
+      name: 'Overseas',
+      type: 'overseas',
+    },
+    {
+      name: 'Visayas',
+      type: 'visayas',
+    }
   ],
   // These one section does not display on filter dialog
   cardType: [

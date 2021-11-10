@@ -16,10 +16,9 @@
     padding-inline-start: 0;
     list-style: none;
     display: flex;
-
+    flex-wrap: wrap;
     li {
       width: 50%;
-      margin: 16px 0;
 
       .title {
         color: $near-black;
