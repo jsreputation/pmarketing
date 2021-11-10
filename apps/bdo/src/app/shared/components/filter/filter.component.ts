@@ -5,6 +5,7 @@ import { IFilterModel } from '../../models/filter.model';
 import { FilterService } from '../../services/filter.service';
 import { FILTER_DATA } from '../../constants/filter-configuration.const';
 import { CATALOG_CONFIGURATION } from '../../constants/catalog-configuration.const';
+import { SPECIAL_CATEGORIES } from '../../utilities/filter.util';
 
 @Component({
   selector: 'bdo-filter',
@@ -67,17 +68,20 @@ export class FilterComponent implements OnInit {
 
   private renderForm() {
     if (this.filterSource) {
-      this.filterForm = this.fb.group({
-        categories: new FormArray(
-          this.filterSource.categories.map((item) => new FormControl(item))
-        ),
-        tags: new FormArray(
-          this.filterSource.tags.map((item) => new FormControl(item.selected))
-        ),
-        locations: new FormArray(
-          this.filterSource.locations.map((item) => new FormControl(item))
-        ),
+      this.filterSource.categories = this.filterSource.categories.filter(category=>{
+        return !SPECIAL_CATEGORIES.includes(category.type);
       });
+        this.filterForm = this.fb.group({
+          categories: new FormArray(
+            this.filterSource.categories.map((item) => new FormControl(item))
+          ),
+          tags: new FormArray(
+            this.filterSource.tags.map((item) => new FormControl(item.selected))
+          ),
+          locations: new FormArray(
+            this.filterSource.locations.map((item) => new FormControl(item))
+          ),
+        });
     }
   }
 
