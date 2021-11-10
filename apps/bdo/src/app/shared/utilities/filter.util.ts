@@ -57,8 +57,9 @@ function handleCategory(filterValue: IFilterModel) {
     return selectedSpecialCategories.map(item => item.id);
   } else {
     const selectedCategory = filterValue.categories.find(item => item.selected);
-    categories = selectedCategory.children.filter(subCategory => subCategory.selected).map(value => value.id);
-    return categories.length === selectedCategory.children.length ? null : categories;
+    const childrenCategory = selectedCategory?.children ? selectedCategory.children : [];
+    categories = childrenCategory.filter(subCategory => subCategory.selected).map(value => value.id);
+    return categories.length === childrenCategory.length ? null : categories;
   }
 }
 

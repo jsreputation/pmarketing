@@ -11,7 +11,7 @@ export const CATALOG_CONFIGURATION = {
     subCategory: {
       spend: 'spend-anywhere',
       redeem: 'shop-choose-redeem',
-      online: 'online-exclusive',
+      online: 'online-exclusives',
       rewards: 'bdo-rewards'
     }
   },
