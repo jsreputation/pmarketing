@@ -1,5 +1,5 @@
 <ng-container *ngIf="campaign">
-<div class="treat-container">
+<div class="treat-container" [formGroup]="enrollForm">
     <h4>
         ENROL
     </h4>
@@ -8,7 +8,7 @@
         <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
     </a>
     <div class="reminder" [innerHTML]="campaign.displayProperties.enrolmentPage.body"></div>
-    <div class="promoID" [formGroup]="enrollForm">
+    <div class="promoID">
         <div class="title">
             Promo ID
         </div>
@@ -19,7 +19,7 @@
         <div class="note">Sent to your registered mobile number via BDO Deals Viber/SMS</div>
     </div>
     <div class="confirm-term">
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" formControlName="tnc">
         <div class="confirm-term-content">
             I hereby agree to be bound by the Shop. Choose. Redeem. <a class="confirm-term-content-link">Terms and
                 Conditions</a>. I further agree to maintain my BDO Credit Card account current and in good credit
