@@ -1,7 +1,7 @@
 import { IFilterModel } from '../models/filter.model';
 import { FILTER_DATA } from '../constants/filter-configuration.const';
 
-const SPECIAL_CATEGORIES = ['spend-anywhere', 'shop-choose-redeem', 'online-exclusives'];
+export const SPECIAL_CATEGORIES = ['spend-anywhere', 'shop-choose-redeem', 'online-exclusives'];
 
 export function buildParams(filterValue: IFilterModel) {
   return {
