@@ -18,6 +18,7 @@ import { RouterModule } from '@angular/router';
 import { GhostCardComponent } from './components/ghosts/card-ghost.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatChipsModule } from '@angular/material/chips';
     CheckboxGroupComponent,
     FilterComponent,
     FooterComponent,
-    GhostCardComponent
+    GhostCardComponent,
+    MeterToKilometerPipe
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { MatChipsModule } from '@angular/material/chips';
     SearchResultComponent,
     MatTabsModule,
     FooterComponent,
+    MeterToKilometerPipe
   ],
   providers: [FilterService],
 })

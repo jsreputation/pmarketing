@@ -11,7 +11,7 @@ export function mapRewardsToListItem(rewards: IReward[]): IListItemModel[] {
       description: reward.subtitle,
       createdAt: reward.validFrom,
       documentType: 'reward',
-      position: reward?.distance?.value ? `${reward.distance.value} ${reward?.distance?.unitOfMeasure}` : '',
+      position: reward?.distance?.value ? reward.distance.value.toString() : '',
       tags: reward.tags
     };
   });
