@@ -20,7 +20,8 @@
     "SALES_SCAN": "Sales Scan",
     "REDEMPTION": "Redemption",
     "TRANSACTION_HISTORY": "Transaction History",
-    "LOGOUT": "Log Out"
+    "LOGOUT": "Log Out",
+    "USER_SIGN_UP":"Sign up a user"
   },
   "FORGET_PW_PAGE": {
     "EMAIL_ADDRESS": "Email Address",
@@ -57,6 +58,17 @@
   },
   "ERRORS": {
     "NOT_ENOUGH_POINTS": "User does not have enough points balance"
+  },
+  "USER_SIGN_UP_PAGE": {
+    "USER_SIGN_UP": "Sign up a user",
+    "MOBILE_NO": "Mobile No.",
+    "MOBILE_NO_IS": "Mobile No. is required",
+    "MOBILE_NO_INVALID": "Please enter a valid mobile number",
+    "SUBMIT_BUTTON": "Submit",
+    "COUNTRY_HONGKONG": "Hong Kong Island",
+    "COUNTRY_MACAU": "Macau",
+    "COUNTRY_CHINA": "China",
+    "COUNTRY_SINGAPORE": "Singapore"
   },
   "IDENTIFY_USER": {
     "BY_QR_SCAN": "By QR Scan",

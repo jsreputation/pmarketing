@@ -602,4 +602,16 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       ))
     );
   }
+
+  public signUpNewUser(mobileNumber: string): Observable<IProfile> {
+
+    const body = {
+      phone: mobileNumber
+    };
+
+    const url = `${this.apiHost}/v4/merchant_admin/user_account_invitations`;
+    return this.http.post<IV4ProfileResponse>(url, body).pipe(
+      map((res) => V4ProfileService.v4ProfileToProfile(res.data))
+    );
+  }
 }

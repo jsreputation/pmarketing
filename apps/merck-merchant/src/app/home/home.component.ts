@@ -36,4 +36,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/transaction-history']);
   }
 
+  public onUserSignUp(): void {
+    this.router.navigate(['/user-signup']);
+  }
+
 }
