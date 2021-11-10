@@ -15,7 +15,16 @@ form {
   padding-top: 4rem;
   .full-width__input {
     width: 100%;
+    margin-bottom: 2rem;
   }
+}
+
+.mat-error {
+  font-size: 1rem!important;
+}
+
+mat-form-field {
+  font-size: 1.4rem!important;
 }
 
 ::ng-deep {
