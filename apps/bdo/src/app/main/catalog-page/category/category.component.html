@@ -4,7 +4,7 @@
             <h3>{{category.name}}</h3>
         </div>
         <div class="filter">
-            <button mat-button class="filter" (click)="filter()">
+            <button mat-button class="filter" (click)="filter()" *ngIf="filterService.currentValue">
                 <img src="assets/images/icon-n-filter.svg" alt="">
                 <span>
                     Filters

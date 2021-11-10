@@ -1,6 +1,8 @@
 import { IFilterModel } from '../models/filter.model';
 import { FILTER_DATA } from '../constants/filter-configuration.const';
 
+const SPECIAL_CATEGORIES = ['spend-anywhere', 'shop-choose-redeem', 'online-exclusives'];
+
 export function buildParams(filterValue: IFilterModel) {
   return {
     tags: handleTags(filterValue),
@@ -52,7 +54,7 @@ function handleTags(filterValue: IFilterModel) {
 function handleCategory(filterValue: IFilterModel) {
   let categories = [];
   const selectedSpecialCategories = filterValue.categories.filter(item => item.selected
-    && ['spend-anywhere', 'shop-choose-redeem', 'online-exclusive'].includes(item.type));
+    && SPECIAL_CATEGORIES.includes(item.type));
   if (selectedSpecialCategories.length) {
     return selectedSpecialCategories.map(item => item.id);
   } else {

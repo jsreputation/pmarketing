@@ -40,14 +40,14 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       const filterData = FILTER_DATA;
       filterData.categories = filterData.categories
         .map(item => {
-          const categoryWithId = categories.find(c => c.title === item.name && !c.parent);
+          const categoryWithId = categories.find(c => c.title.toLowerCase() === item.name.toLowerCase() && !c.parent);
           return {
             ...item,
             id: categoryWithId?.id,
             children: item.children.filter(item =>
-              categories.find(t => t.title === item.name && categoryWithId?.id && t.parent.id === categoryWithId?.id)
+              categories.find(t => t.title.toLowerCase() === item.name.toLowerCase() && categoryWithId?.id && t.parent.id === categoryWithId?.id)
             )
-              .map(child => ({ ...child, id: categories.find(t => t.title === child.name).id }))
+              .map(child => ({ ...child, id: categories.find(t => t.title.toLowerCase() === child.name.toLowerCase()).id }))
           };
         })
         .filter(item => item.id);

@@ -1,8 +1,6 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { takeUntil } from 'rxjs/operators';
-import { SelfDestruct } from '../../utilities/self-destruct.component';
 import { IFilterModel } from '../../models/filter.model';
 import { FilterService } from '../../services/filter.service';
 import { FILTER_DATA } from '../../constants/filter-configuration.const';
@@ -13,7 +11,7 @@ import { CATALOG_CONFIGURATION } from '../../constants/catalog-configuration.con
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
+export class FilterComponent implements OnInit {
   public filterForm: FormGroup;
   filterSource: IFilterModel;
   catalogConfiguration = CATALOG_CONFIGURATION;
@@ -22,17 +20,11 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
     public filterService: FilterService,
     public dialogRef: MatDialogRef<FilterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.filterService.filterValue$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((value) => {
-        this.filterSource = value;
-        this.renderForm();
-      });
+    this.filterSource = this.filterService.currentValue;
+    this.renderForm();
   }
 
   getCategoriesFilterSource(categories: any[]) {
@@ -74,17 +66,19 @@ export class FilterComponent extends SelfDestruct implements OnInit, OnDestroy {
   }
 
   private renderForm() {
-    this.filterForm = this.fb.group({
-      categories: new FormArray(
-        this.filterSource.categories.map((item) => new FormControl(item))
-      ),
-      tags: new FormArray(
-        this.filterSource.tags.map((item) => new FormControl(item.selected))
-      ),
-      locations: new FormArray(
-        this.filterSource.locations.map((item) => new FormControl(item))
-      ),
-    });
+    if (this.filterSource) {
+      this.filterForm = this.fb.group({
+        categories: new FormArray(
+          this.filterSource.categories.map((item) => new FormControl(item))
+        ),
+        tags: new FormArray(
+          this.filterSource.tags.map((item) => new FormControl(item.selected))
+        ),
+        locations: new FormArray(
+          this.filterSource.locations.map((item) => new FormControl(item))
+        ),
+      });
+    }
   }
 
   public selectCategory(value, idx) {

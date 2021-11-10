@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { IFilterModel } from '../models/filter.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilterService {
-  public filterValue$: BehaviorSubject<IFilterModel> = new BehaviorSubject<IFilterModel>(
-    null
-  );
+  public filterValue$: Subject<IFilterModel> = new Subject<IFilterModel>();
+  public currentValue: IFilterModel;
   private filterDialogRef: MatDialogRef<FilterComponent>;
   constructor(public dialog: MatDialog) {}
 
   public setValue(filterValue: IFilterModel) {
+    this.currentValue = filterValue;
     this.filterValue$.next(filterValue);
   }
 
