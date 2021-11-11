@@ -8,6 +8,7 @@ import { LIST_SIMILAR_DEALS } from '../../mock-data/similar-deals.mock';
 export class TreatEnrollCompletePageComponent implements OnInit{
   similarDeals = LIST_SIMILAR_DEALS;
   promoId:string;
+  public promoName: string;
   dealDetail = {
     id: 1,
     image: './assets/images/Group_10985@2x.png',
@@ -16,5 +17,6 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   };
   ngOnInit(){
     this.promoId = history.state.promoId;
+    this.promoName = history.state.promoName;
   }
 }
