@@ -9,6 +9,8 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   similarDeals = LIST_SIMILAR_DEALS;
   promoId:string;
   public promoName: string;
+  public promoTNC: string;
+
   dealDetail = {
     id: 1,
     image: './assets/images/Group_10985@2x.png',
@@ -18,5 +20,6 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   ngOnInit(){
     this.promoId = history.state.promoId;
     this.promoName = history.state.promoName;
+    this.promoTNC = history.state.promoTNC;
   }
 }
