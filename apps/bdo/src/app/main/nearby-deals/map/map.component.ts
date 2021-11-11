@@ -4,9 +4,8 @@ import { TaggedItemComponent } from './../../../shared/components/tagged-item/ta
 import {
   Component,
   ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
+  Input, OnChanges,
+  ViewChild
 } from '@angular/core';
 import {
   IReward,
@@ -26,7 +25,7 @@ export interface IPosition {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnChanges {
   @Input() rewards: IReward[] = [];
   @Input() currentPosition: IPosition;
   @ViewChild('gmap') public gmapElement: ElementRef;
@@ -41,7 +40,7 @@ export class MapComponent implements OnInit {
   rewardLocations: IRewardLocationModel[] = [];
   constructor(private vouchersService: IVoucherService) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.loadScript().then(() => {
       const mapProp: google.maps.MapOptions = {
         center: {
@@ -69,7 +68,7 @@ export class MapComponent implements OnInit {
   }
 
   getRewardNearBy(): Observable<IRewardLocationModel[]> {
-    return of(this.rewards).pipe(
+    return of(this.rewards || []).pipe(
       mergeAll(),
       mergeMap((reward: IReward) => {
         return this.vouchersService.getRewardLocations(reward.id).pipe(
