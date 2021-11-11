@@ -8,5 +8,4 @@ import { IListItemModel } from '../../models/list-item.model';
 })
 export class ListItemComponent {
   @Input() reward: IListItemModel;
-  @Input() url: string[];
 }

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perxtech/core';
+import { RewardsService } from '@perxtech/core';
 import { IPosition } from './map/map.component';
 import { FilterService } from '../../shared/services/filter.service';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
-import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 
 @Component({
   selector: 'bdo-nearby-deals',
@@ -43,12 +43,12 @@ export class NearbyDealsComponent implements OnInit{
         .filter(item => item.id);
       filterData.type = params.type;
       this.filterService.setValue(mapQueryParamsToFilterObject(filterData, this.queryParams));
-      this.getRewardNearBy()
+      this.getRewardNearBy();
     })
   }
 
-  selectedItem(item: IReward) {
-    console.log(item);
+  selectedItem(item: IListItemModel) {
+    this.route.navigate(['deal-welcome', item.id])
   }
 
   getRewardNearBy() {

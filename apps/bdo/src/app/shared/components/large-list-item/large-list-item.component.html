@@ -1,5 +1,4 @@
 <li class="item" (click)="selectItem(reward)" *ngIf="reward">
-  <a [routerLink]="url">
     <img [src]="reward.thumbnail ? reward.thumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
     <div class="tag-group">
     <ng-container *ngFor="let tag of reward.tags">
@@ -12,5 +11,4 @@
       <h4 class="title">{{reward.name}}</h4>
       <p class="description" [innerHTML]="reward.description"></p>
     </div>
-  </a>
 </li>
