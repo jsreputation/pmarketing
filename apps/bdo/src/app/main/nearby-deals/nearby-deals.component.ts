@@ -6,13 +6,16 @@ import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { IListItemModel } from '../../shared/models/list-item.model';
+
 @Component({
   selector: 'bdo-nearby-deals',
   templateUrl: './nearby-deals.component.html',
   styleUrls: ['./nearby-deals.component.scss'],
 })
 export class NearbyDealsComponent implements OnInit{
-  public rewards: IReward[];
+  public rewards: IListItemModel[];
   public rad = 10000;
   public currentPosition: IPosition;
   private queryParams: Params;
@@ -59,7 +62,7 @@ export class NearbyDealsComponent implements OnInit{
           this.queryParams.tags,
           this.queryParams.category?.length > 0 ? this.queryParams.category : this.queryParams.type)
           .subscribe((rewards) => {
-            this.rewards = rewards;
+            this.rewards = mapRewardsToListItem(rewards);
           });
       });
     }
