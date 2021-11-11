@@ -29,7 +29,7 @@
         </ng-template>
         <ul class="tab-content">
           <ng-container *ngIf="rewards && rewards.length; else noResult">
-            <bdo-large-list-item *ngFor="let item of rewards" [url]="['/deal-welcome', item.id.toString()]" [reward]="item" (click)="selectedItem(item)">
+            <bdo-large-list-item *ngFor="let item of rewards" [reward]="item" (click)="selectedItem(item)">
             </bdo-large-list-item>
           </ng-container>
           <ng-template #noResult>
@@ -44,7 +44,7 @@
         </ng-template>
         <ul class="tab-content">
           <ng-container *ngIf="rewards && rewards.length; else noResult">
-            <bdo-list-item *ngFor="let item of rewards"  [url]="['/deal-welcome', item.id.toString()]" (click)="selectedItem(item)" [reward]="item"></bdo-list-item>
+            <bdo-list-item *ngFor="let item of rewards" [reward]="item" (click)="selectedItem(item)"></bdo-list-item>
           </ng-container>
           <ng-template #noResult>
            <p class="no-result">No result</p> 

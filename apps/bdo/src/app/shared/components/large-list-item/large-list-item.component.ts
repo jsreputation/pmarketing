@@ -12,7 +12,6 @@ import { ITag } from '@perxtech/core';
 export class LargeListItemComponent {
   @Input() reward: IListItemModel;
   @Output() itemSelected: EventEmitter<IListItemModel> = new EventEmitter<IListItemModel>();
-  @Input() url: string[];
   public defaultImageUrl  = "assets/images/light-gray-color-default-image.png";
   selectItem(item: IListItemModel) {
     this.itemSelected.emit(item);
