@@ -52,6 +52,8 @@ export class NearbyDealsComponent implements OnInit{
   }
 
   getRewardNearBy() {
+    const locations = this.queryParams?.locations ? [`location-${this.queryParams?.locations}`] : [];
+    const tags  = (this.queryParams?.tags || []).concat(locations);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.currentPosition = {
@@ -59,7 +61,7 @@ export class NearbyDealsComponent implements OnInit{
           lng: position.coords.longitude,
         };
         this.rewardService.nearMe(this.rad, this.currentPosition.lat, this.currentPosition.lng, null, null,
-          this.queryParams.tags,
+          tags,
           this.queryParams.category?.length > 0 ? this.queryParams.category : this.queryParams.type)
           .subscribe((rewards) => {
             this.rewards = mapRewardsToListItem(rewards);
@@ -80,11 +82,13 @@ export class NearbyDealsComponent implements OnInit{
     const parentCategory = filterValue.categories.find(item => item.selected);
     const childCategories = parentCategory?.children.filter(item => item.selected).map(sub => sub.type);
     const tags = filterValue.tags.filter(tag => tag.selected).map(item => item.type);
+    const locations = filterValue.locations.filter(location=> location.selected).map(location=>location.type);
 
     const queryParams = {
       type: parentCategory?.type,
       category: parentCategory?.children && childCategories?.length === parentCategory.children.length ? null : childCategories,
-      tags: tags.length === filterValue.tags.length ? null : tags
+      tags: tags.length === filterValue.tags.length ? null : tags,
+      locations: locations.length === filterValue.locations.length ? null : locations
     };
     this.route.navigate(['nearby'], { queryParams: queryParams });
   }

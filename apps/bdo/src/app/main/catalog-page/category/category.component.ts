@@ -82,11 +82,12 @@ export class CategoryComponent implements OnInit {
     const parentCategory = filterValue.categories.find(item => item.selected);
     const childCategories = parentCategory?.children.filter(item => item.selected).map(sub => sub.type);
     const tags = filterValue.tags.filter(tag => tag.selected).map(item => item.type);
-
+    const locations = filterValue.locations.filter(location => location.selected).map(location => location.type);
     const queryParams = {
       type: parentCategory?.type,
       category: parentCategory?.children && childCategories?.length === parentCategory.children.length ? null : childCategories,
-      tags: tags.length === filterValue.tags.length ? null : tags
+      tags: tags.length === filterValue.tags.length ? null : tags,
+      locations: locations.length === filterValue.locations.length ? null : locations
     };
     this.route.navigate(['catalog-page'], { queryParams: queryParams });
   }

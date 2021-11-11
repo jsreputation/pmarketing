@@ -35,6 +35,10 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
       ...item,
       selected: true
     } : item),
+    locations: filterValue.locations.map(item => !queryParams.locations || equalOrIncludes(item.type, queryParams.locations) ? {
+      ...item,
+      selected: true
+    } : item),
   };
   return filterValue;
 }
@@ -42,13 +46,12 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
 function handleTags(filterValue: IFilterModel) {
   const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => `cardtype-${card.type}`);
   const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
-  let tagsParams = null;
-  if (cardTypes.length !== FILTER_DATA.cardType.length) {
-    tagsParams = cardTypes;
-  } else {
-    tagsParams = tags.length === FILTER_DATA.tags.length ? null : tags;
-  }
-  return tagsParams;
+  const locations = filterValue.locations.filter(location => location.selected).map(location => `location-${location.type}`);
+
+  let tagsParams = locations.length === FILTER_DATA.locations.length ? [] : locations;
+  tagsParams = tagsParams.concat(cardTypes.length !== FILTER_DATA.cardType.length ? cardTypes :[] )
+  .concat(tags.length === FILTER_DATA.tags.length ? [] : tags);
+  return tagsParams.length ? tagsParams : null;
 }
 
 function handleCategory(filterValue: IFilterModel) {
