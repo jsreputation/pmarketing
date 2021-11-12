@@ -96,6 +96,7 @@ export interface IResetPasswordData {
 export interface IMerchantInvoice {
   id: number;
   collectedAmount?: number;
+  identifier?: string;
   description: string;
   voucherId?: number | null;
   voucherName?: string;
