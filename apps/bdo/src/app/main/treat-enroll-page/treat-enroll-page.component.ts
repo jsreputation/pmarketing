@@ -49,8 +49,9 @@ export class TreatEnrollPageComponent implements OnInit {
             if (item) {
               this.route.navigate([ `treat-enroll/${this.campaign.id}/complete` ], 
               { state: { promoId: this.enrollForm.get('promoId').value,
-               promoName: this.campaign.name,
-               promoTNC: this.campaign.customFields?.postEnrolText } });
+               campaignId: this.campaign.id,
+               campaignName: this.campaign.name,
+               tnc: this.campaign.customFields?.postEnrolText } });
             } else {
               this.notificationService.addSnack('Could not enrol in campaign');
             }

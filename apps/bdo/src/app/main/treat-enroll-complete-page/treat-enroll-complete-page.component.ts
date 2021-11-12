@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { LIST_SIMILAR_DEALS } from '../../mock-data/similar-deals.mock';
-import { NotificationService } from '@perxtech/core';
+import { NotificationService, ICampaignService, ICampaign, RewardsService, IReward } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
+import { catchError, switchMap, map } from 'rxjs/operators';
+import { of, combineLatest } from 'rxjs';
+import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { IListItemModel } from '../../shared/models/list-item.model';
+import { Promo } from '../../models/promo.model';
 
 @Component({
   selector: 'bdo-treat-enroll-complete-page',
@@ -9,19 +13,20 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./treat-enroll-complete-page.component.scss']
 })
 export class TreatEnrollCompletePageComponent implements OnInit{
-  similarDeals = LIST_SIMILAR_DEALS;
-  promoId:string;
-  public promoName: string;
-  public promoTNC: string;
+  
+  similarDeals : IListItemModel[] = []
   public shareTitle:string;
   public shareText: string;
   public shareUrl = `${window.location.protocol}//${window.location.host}/treat-welcome/`;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
+  public promo: Promo;
 
   constructor(
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private campaignService: ICampaignService,
+    private rewardService: RewardsService
   ) {}
 
   dealDetail = {
@@ -31,10 +36,26 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     description: 'Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card. Exclusive deals or dining, stays, and more with your BDO Credit or Debit Card.',
   };
   ngOnInit(){
-    this.promoId = history.state.promoId;
-    this.promoName = history.state.promoName;
-    this.promoTNC = history.state.promoTNC;
+    this.promo = history.state;
     this.initTranslate();
+    this.campaignService.getCampaign(this.promo?.campaignId).pipe(
+      switchMap((campaign: ICampaign) => 
+        combineLatest(
+          [...campaign.rewards.map((reward) =>
+            this.rewardService.getRewardsRelated(reward.id, 5).pipe(catchError(() => of([])))
+          )]
+        )),
+        map((rewards: IReward[][]) => [].concat(...(rewards as [])) as IReward[]),
+        map((rewards: IReward[]) => {
+          const ids = rewards.map(o => o.id);
+          const filtered = rewards.filter(({id}, index) => !ids.includes(id, index + 1));
+          return filtered?.slice(0,5);
+        }        
+        )
+      ).subscribe((deals: IReward[]) => {
+        this.similarDeals = mapRewardsToListItem(deals);
+      }
+      );
   }
 
   sharePromo(){
@@ -64,7 +85,7 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   }
 
   private initTranslate(): void {
-    this.shareUrl = this.shareUrl.concat(this.promoId);
+    this.shareUrl = this.shareUrl.concat(this.promo.campaignId?.toString());
     this.translate
       .get([
         'TREAT_PAGE.SHARE_COPY_TITLE',

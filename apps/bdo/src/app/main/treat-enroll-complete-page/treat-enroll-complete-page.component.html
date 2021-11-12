@@ -10,7 +10,7 @@
             Promo:
         </div>
         <div class="promo-content">
-            <p>{{promoName}}</p>
+            <p>{{promo?.campaignName}}</p>
 
         </div>
         <div class="number">
@@ -19,7 +19,7 @@
 
             </div>
             <div class="number-content">
-                <p> {{promoId}}</p>
+                <p> {{promo?.promoId}}</p>
             </div>
         </div>
         <div class="share" (click)="sharePromo()">
@@ -27,11 +27,11 @@
             Share
         </div>
         <div class="note">
-            <p>{{promoTNC}}</p>
+            <p>{{promo.tnc}}</p>
         </div>
     </div>
 
-    <div class="similar-deal">
+    <div class="similar-deal" *ngIf="similarDeals && similarDeals.length > 0">
         <h3 class="header">SIMILAR DEALS</h3>
         <div class="similar-deal-content">
             <bdo-tagged-item [deals]="similarDeals"></bdo-tagged-item>
