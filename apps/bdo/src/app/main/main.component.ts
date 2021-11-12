@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FilterService } from '../shared/services/filter.service';
 import { Location } from '@angular/common';
 
@@ -11,10 +11,13 @@ import { Location } from '@angular/common';
 export class MainComponent implements OnInit{
     public isHome = true;
     public navigated = false;
+    public isLocationLanding = false;
+
     constructor(
         private location: Location,
         private filterService: FilterService,
-        private router: Router) {}
+        private router: Router,
+        private activeRouter: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.isHome = this.router.url === '/home';
@@ -22,6 +25,11 @@ export class MainComponent implements OnInit{
             this.isHome = this.router.url === '/home';
             this.navigated = true;
         });
+
+        this.activeRouter.queryParams.subscribe(()=>{
+            const pattern = /^\/deal-welcome\/[0-9]+\/location\/map/;
+            this.isLocationLanding = pattern.test(this.router.url);
+        })
     }
 
     navigateToSearch() {

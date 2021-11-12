@@ -1,0 +1,12 @@
+@import '../../../theme/variables.scss';
+.location-landing-wrapper {
+  .gmap-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .map {
+      width: 100%;
+      height: calc(100vh - 64px);
+    }
+  }
+}

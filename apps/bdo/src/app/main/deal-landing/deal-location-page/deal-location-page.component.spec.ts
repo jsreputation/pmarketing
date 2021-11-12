@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { DealLocationPageComponent } from './deal-location-page.component';
@@ -13,7 +13,9 @@ class v4VouchersService {
 describe('DealLocationPageComponent', () => {
   let component: DealLocationPageComponent;
   let fixture: ComponentFixture<DealLocationPageComponent>;
-
+  const routerBdo: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DealLocationPageComponent],
@@ -26,6 +28,7 @@ describe('DealLocationPageComponent', () => {
             params: of([{ rid: 123 }]),
           },
         },
+        { provide: Router, useValue: routerBdo },
       ],
     }).compileComponents();
   });
