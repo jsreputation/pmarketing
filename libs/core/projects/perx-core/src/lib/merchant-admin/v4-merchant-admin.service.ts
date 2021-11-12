@@ -449,9 +449,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
     const body = {
       collected_amount: amount,
-      transaction_properties: {
-        original_receipt_number: receiptIdentifier
-      },
+      identifier: receiptIdentifier,
       used_items: usedItems
     };
 
