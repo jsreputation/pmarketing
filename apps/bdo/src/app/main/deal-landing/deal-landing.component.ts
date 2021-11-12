@@ -40,6 +40,7 @@ export class DealLandingComponent implements OnInit {
         this.dealDetail = dealDetail;
         this.similarDeals = mapRewardsToListItem(similarDeals);
         this.shareUrl.concat(dealDetail.id.toString());
+        this.initTranslate();
       });
     });
   }
@@ -47,7 +48,6 @@ export class DealLandingComponent implements OnInit {
     this.route.navigate([`deal-welcome/${this.dealDetail.id}/location`]);
   }
   shareDeal(){
-    this.initTranslate();
     if (navigator.share) {
       const data = {
         url:this.shareUrl,
@@ -67,7 +67,7 @@ export class DealLandingComponent implements OnInit {
   }
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.shareText}`)
+      .writeText(`${this.shareTitle}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
