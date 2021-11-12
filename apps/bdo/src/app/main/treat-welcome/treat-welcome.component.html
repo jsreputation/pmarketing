@@ -1,9 +1,9 @@
-<ng-container *ngIf="campaign">
+<div class="treat-welcome-page" *ngIf="campaign">
 <div class="thumbnail">
     <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
         [attr.alt]="campaign?.name" />
 </div>
-<div class="treat-welcome">
+<div class="treat-welcome-content">
     <p class="title">{{campaign?.name}}</p>
     <div class="tag-group">
         <ng-container *ngFor="let tag of campaign.tags">
@@ -18,10 +18,11 @@
         <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon">
     </p>
     <div class="description" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description"></div>
-    <div class="additionalSections" *ngIf="campaign?.displayProperties?.landingPage">
-        <div *ngFor="let item of campaign.displayProperties.landingPage.additionalSections">
+    <div class="sections" *ngIf="campaign?.displayProperties?.landingPage">
+        <div *ngFor="let item of campaign.displayProperties.landingPage.additionalSections; let idx = index">
             <mat-accordion class="location-wrapper">
-                <mat-expansion-panel class="panel">
+                <mat-expansion-panel class="panel"
+                    [class.panel--no-border]="idx === campaign.displayProperties.landingPage.additionalSections.length - 1">
                     <mat-expansion-panel-header class="header">
                         {{item.headerText}}
                     </mat-expansion-panel-header>
@@ -37,4 +38,4 @@
     <button mat-stroked-button color="primary" class="btn-enroll-treat_action" (click)="navigateEnrollPage()">Enroll
         Now</button>
 </div>
-</ng-container>
+</div>

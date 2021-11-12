@@ -293,3 +293,21 @@ body {
     height: calc(100vh - 270px);
   }
 }
+
+.treat-welcome-page {
+  .treat-welcome-content {
+    .mat-expansion-panel-header {
+      padding: 0 12px !important;
+    }
+    .mat-expansion-panel-body {
+      padding: 0 0 10px 0 !important;
+    }
+
+    .mat-expansion-indicator {
+      transform: scale(1.5, 1) !important;
+      &::after {
+        color: $medium-blue;
+      }
+    }
+  }
+}

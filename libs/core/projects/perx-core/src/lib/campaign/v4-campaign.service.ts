@@ -486,7 +486,13 @@ export class V4CampaignService implements ICampaignService {
             media: {
               bannerImage:
                 landingPage.image?.type === 'image' ? landingPage.image?.value?.image_url : '',
-            }
+            },
+            additionalSections: landingPage?.additional_sections?.map(item => {
+              return {
+                headerText: item.header_text,
+                bodyText: item.body_text
+              };
+            })
           },
         };
       }
