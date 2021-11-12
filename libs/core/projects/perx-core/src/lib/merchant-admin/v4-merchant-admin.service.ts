@@ -168,6 +168,7 @@ interface IV4MerchantRewardTransactionHistory {
 
 interface IV4MerchantInvoice {
   id: number;
+  identifier: string;
   collected_amount: number;
   description: string;
   invoice_items: IV4MerchantInvoiceItems[];
@@ -295,6 +296,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
     return {
       id: invoice.id,
+      identifier: invoice.identifier,
       description: invoice.description,
       pointId: loyaltyItem ? loyaltyItem.item_id : null,
       voucherId: voucherItem ? voucherItem.item_id : null,
