@@ -4,6 +4,8 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page.c
 import { SharedModule } from '../../shared/shared.module';
 import { TaggedItemComponent } from '../../shared/components/tagged-item/tagged-item.component';
 import { RouterTestingModule } from "@angular/router/testing";
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('TreatEnrollCompletePageComponent', () => {
   let component: TreatEnrollCompletePageComponent;
@@ -15,6 +17,9 @@ describe('TreatEnrollCompletePageComponent', () => {
       imports: [
         SharedModule,
         RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: TranslateService, useValue: { get: () => of() } }
       ]
     })
     .compileComponents();

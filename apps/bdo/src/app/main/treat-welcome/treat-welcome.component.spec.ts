@@ -6,6 +6,8 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { TranslateService } from '@ngx-translate/core';
+
 class MockCampaignService {
   getCampaign(id) {
     return of([id]);
@@ -34,6 +36,10 @@ describe('TreatWelcomeComponent', () => {
             params: of({ id: 123 }),
           },
         },
+        { 
+          provide: TranslateService, 
+          useValue: {} 
+        }
       ],
     }).compileComponents();
   });

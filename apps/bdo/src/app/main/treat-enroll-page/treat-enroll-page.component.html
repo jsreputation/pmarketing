@@ -7,7 +7,7 @@
     <a class="navigate-promotion" routerLink="/treat-welcome/{{campaign.id}}">
         <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
     </a>
-    <div class="reminder" [innerHTML]="campaign.displayProperties.enrolmentPage.body"></div>
+    <div class="reminder" [innerHTML]="campaign.displayProperties.enrolmentPage?.body"></div>
     <div class="promoID">
         <div class="title">
             Promo ID
