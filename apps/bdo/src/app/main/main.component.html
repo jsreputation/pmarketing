@@ -15,7 +15,7 @@
 <!--    <input type="text" class="input-search" placeholder="Search deals" (click)="navigateToSearch()">-->
 <!--    <img class="search-icon" src="assets/images/search-outline.svg"/>-->
 <!--  </div>-->
-  <bdo-search-navbar></bdo-search-navbar>
+  <bdo-search-navbar *ngIf="!isLocationLanding"></bdo-search-navbar>
 </mat-toolbar>
 <mat-sidenav-container fxFlexFill class="main-navbar-content">
   <mat-sidenav class="side-nav" position="end" color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
@@ -26,7 +26,7 @@
   </mat-sidenav>
 </mat-sidenav-container>
 
-<div class="main-content">
+<div [ngClass]="{'main-content': !isLocationLanding, 'main-content-exclude-search-navbar': isLocationLanding}">
   <router-outlet></router-outlet>
 </div>
 
