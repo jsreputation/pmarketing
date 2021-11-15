@@ -7,8 +7,8 @@
     <p class="title">{{campaign?.name}}</p>
     <div class="tag-group">
         <ng-container *ngFor="let tag of campaign.tags">
-            <span class="tag" [ngClass]="'tag--' + tag.name">
-            {{ tag.name }}
+            <span class="tag" [ngClass]="'tag--' + tag.description">
+                {{tag.description}}
             </span>
         </ng-container>
     </div>

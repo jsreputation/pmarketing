@@ -26,9 +26,21 @@
     }
 
     .tag-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
       .tag {
         position: relative;
         width: fit-content;
+        margin: 2px;
+      }
+      .tag:first-child {
+        margin-left: 0;
+      }
+
+      .tag:last-child {
+        margin-right: 0;
       }
     }
 
