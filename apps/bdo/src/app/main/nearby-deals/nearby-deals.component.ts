@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RewardsService } from '@perxtech/core';
+import { IReward, RewardsService } from '@perxtech/core';
 import { IPosition } from './map/map.component';
 import { FilterService } from '../../shared/services/filter.service';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
@@ -15,7 +15,8 @@ import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
   styleUrls: ['./nearby-deals.component.scss'],
 })
 export class NearbyDealsComponent implements OnInit{
-  public rewards: IListItemModel[];
+  public rewards: IReward[];
+  public rewardsItemModel: IListItemModel[];
   public rad = 10000;
   public currentPosition: IPosition;
   private queryParams: Params;
@@ -64,7 +65,8 @@ export class NearbyDealsComponent implements OnInit{
           tags,
           this.queryParams.category?.length > 0 ? this.queryParams.category : this.queryParams.type)
           .subscribe((rewards) => {
-            this.rewards = mapRewardsToListItem(rewards);
+            this.rewards = rewards;
+            this.rewardsItemModel = mapRewardsToListItem(rewards);
           });
       });
     }
