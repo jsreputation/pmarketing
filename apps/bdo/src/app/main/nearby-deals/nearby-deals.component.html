@@ -28,7 +28,7 @@
           <span class="label-tab">Catalogue</span>
         </ng-template>
         <ul class="tab-content">
-          <ng-container *ngIf="rewardsItemModel && rewardsItemModel.length; else noResult">
+          <ng-container *ngIf="rewardsItemModel?.length; else noResult">
             <bdo-large-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)">
             </bdo-large-list-item>
           </ng-container>
@@ -43,7 +43,7 @@
           <span class="label-tab">List</span>
         </ng-template>
         <ul class="tab-content">
-          <ng-container *ngIf="rewardsItemModel && rewardsItemModel.length; else noResult">
+          <ng-container *ngIf="rewardsItemModel?.length; else noResult">
             <bdo-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)"></bdo-list-item>
           </ng-container>
           <ng-template #noResult>
