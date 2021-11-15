@@ -9,7 +9,7 @@ export function mapRewardsToListItem(rewards: IReward[]): IListItemModel[] {
       categoryTags: reward.categoryTags,
       name: reward.name,
       description: reward.subtitle,
-      createdAt: reward.validFrom,
+      createdAt: reward.sellingFrom,
       documentType: 'reward',
       position: reward?.distance?.value ? reward.distance.value.toString() : '',
       tags: reward.tags
