@@ -19,10 +19,10 @@
     </p>
     <div class="description" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description"></div>
     <div class="sections" *ngIf="campaign?.displayProperties?.landingPage">
-        <div *ngFor="let item of campaign.displayProperties.landingPage.additionalSections; let idx = index">
+        <div *ngFor="let item of campaign.displayProperties.landingPage?.additionalSections; let idx = index">
             <mat-accordion class="location-wrapper">
                 <mat-expansion-panel class="panel"
-                    [class.panel--no-border]="idx === campaign.displayProperties.landingPage.additionalSections.length - 1">
+                    [class.panel--no-border]="idx === campaign.displayProperties.landingPage.additionalSections?.length - 1">
                     <mat-expansion-panel-header class="header">
                         {{item.headerText}}
                     </mat-expansion-panel-header>
