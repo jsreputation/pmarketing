@@ -93,3 +93,10 @@
     }
   }
 }
+
+@media screen and (min-width: $desktop-width) {
+  .home-footer-wrapper {
+    margin: auto;
+    width: $desktop-width;
+  }
+}

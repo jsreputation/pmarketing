@@ -12,7 +12,7 @@ export class MainComponent implements OnInit{
     public isHome = true;
     public navigated = false;
     public isLocationLanding = false;
-
+    public isNearbyPage = false;
     constructor(
         private location: Location,
         private filterService: FilterService,
@@ -21,6 +21,7 @@ export class MainComponent implements OnInit{
 
     ngOnInit(): void {
         this.isHome = this.router.url === '/home';
+        this.isNearbyPage = this.router.url === '/nearby';
         this.router.events.subscribe(() => {
             this.isHome = this.router.url === '/home';
             this.navigated = true;
