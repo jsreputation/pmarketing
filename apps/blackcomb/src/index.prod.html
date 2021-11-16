@@ -5,7 +5,18 @@
   <meta charset="utf-8">
   <title>&lrm;</title>
   <base href="/">
-
+  <meta http-equiv="Content-Security-Policy"
+        content="
+        default-src 'self' api.perxtech.io api.perxtech.net maps.googleapis.com;
+        img-src * data:;
+        child-src 'none';
+        script-src 'self' 'unsafe-eval' *.googletagmanager.com maps.googleapis.com sentry.io;
+        object-src 'none';
+        font-src fonts.gstatic.com fonts.googleapis.com;
+        style-src 'self' 'unsafe-inline' fonts.googleapis.com api.perxtech.io api.perxtech.net;
+        trusted-types angular;
+        require-trusted-types-for 'script';
+  ">
   <meta name="description" content="Vouchers wallet and loyalties." />
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
