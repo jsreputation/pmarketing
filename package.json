@@ -314,6 +314,6 @@
     "zone.js": "~0.10.2"
   },
   "optionalDependencies": {
-    "canvas": "^2.6.1"
+    "canvas": "2.6.1"
   }
 }
