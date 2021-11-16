@@ -6,7 +6,6 @@ export interface ICampaignFilterOptions {
   type?: CampaignType;
   page?: number;
   gameType?: GameType;
-  tagged_with?: string;
   size?: number;
   tags?: string[];
   categories?: string[];
