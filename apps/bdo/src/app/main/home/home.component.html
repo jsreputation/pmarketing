@@ -12,7 +12,7 @@
     <p>Promotions that BDO has in store for you!</p>
     <bdo-secondary-catalog></bdo-secondary-catalog>
   </mat-card>
-  <mat-card class="card bg-transparent" *ngIf="currentPosition">
+  <mat-card class="card bg-transparent">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">
@@ -24,7 +24,12 @@
       </div>
       <p class="description">Find deals that are just right around the corner</p>
     </div>
-    <bdo-tagged-item *ngIf="nearByDeals.length; else noResultMessage" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <div *ngIf="!currentPosition" class="message-wrapper">
+      <mat-icon aria-hidden="false" class="icon-location">location_on</mat-icon>
+      <p class="message">Enable location to view deals near you</p>
+    </div>
+    <bdo-tagged-item *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <p class="no-item" *ngIf="currentPosition && !nearByDeals.length;">No result</p>
   </mat-card>
   <mat-card class="card bg-transparent">
     <div class="tagged-header-wrapper">
