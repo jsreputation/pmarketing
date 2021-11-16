@@ -1,10 +1,29 @@
-FROM node:lts-alpine as builder
+FROM node:lts-alpine3.13 as init
+
+# install deps for canvas
+RUN apk add --update --no-cache \
+    make \
+    g++ \
+    jpeg-dev \
+    cairo-dev \
+    giflib-dev \
+    pango-dev
+
+WORKDIR /deps
+COPY package.json /deps
+COPY docker-entrypoint.sh /deps
+COPY decorate-angular-cli.js /deps
+COPY yarn.lock /deps
+
+RUN yarn
+RUN npm_config_build_from_source=true yarn add canvas -O -W
+
+FROM node:lts-alpine3.13 as builder
 
 # Run the commands that are least likely to change first to bust the cache at the latest stage possible
-
+COPY --from=init /deps /service
 COPY . /service
 WORKDIR /service
-RUN yarn
 
 ARG basehref='/'
 ARG preauth='false'
@@ -28,7 +47,7 @@ RUN SOURCE_TYPE=${sourcetype} BASE_HREF=${basehref} PREAUTH=${preauth} \
 RUN BASE_HREF=${basehref} yarn build:backend
 
 # Stage 2
-FROM node:lts-alpine
+FROM node:lts-alpine3.13
 
 WORKDIR /service/express
 COPY docker-entrypoint.sh /usr/local/bin/
