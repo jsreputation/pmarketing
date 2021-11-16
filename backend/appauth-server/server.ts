@@ -40,6 +40,51 @@ const IS_WHISTLER: boolean = !!(process.env.IS_WHISTLER && process.env.IS_WHISTL
 const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 
+if (process.env.PRODUCTION) {
+  console.log('production mode ON', appPath);
+  app.set('view engine', 'html');
+  app.set('views', appPath);
+
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
+      'trusted-types': ['angular'],
+      'require-trusted-types-for': ['script']
+    }
+  }));
+
+  // Serve static files from /../../perx-microsite
+  app.use(BASE_HREF, express.static(appPath));
+  app.get('*.*', express.static(appPath, { maxAge: '1y' }));
+
+  // All regular routes use the index.html
+  app.get('*', (req, res) => {
+    res.sendFile(join(appPath, 'index.html'), { req });
+  });
+
+} else {
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'localhost:4000'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
+      'trusted-types': ['angular', 'angular#unsafe-jit'],
+      'require-trusted-types-for': ['script']
+    }
+  }));
+}
+app.use('/assets', express.static('assets'));
+
 app.get('/preauth', preauth(getTokens));
 
 app.post(`${BASE_HREF}v4/oauth/token`, v4Token(getTokens));
@@ -62,48 +107,6 @@ app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
 app.get(`${BASE_HREF}lang`, language());
 
-if (process.env.PRODUCTION) {
-  console.log('production mode ON', appPath);
-  app.set('view engine', 'html');
-  app.set('views', appPath);
-  // Serve static files from /../../perx-microsite
-  app.use(BASE_HREF, express.static(appPath));
-  app.get('*.*', express.static(appPath, { maxAge: '1y' }));
-
-  // All regular routes use the index.html
-  app.get('*', (req, res) => {
-    res.sendFile(join(appPath, 'index.html'), { req });
-  });
-
-  app.use(expressCspHeader({
-    directives: {
-      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com'],
-      'img-src': ['data:', '*'],
-      'child-src': ['none'],
-      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
-      'object-src': [NONE],
-      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
-      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
-      'trusted-types': ['angular'],
-      'require-trusted-types-for': ['script']
-    }
-  }));
-} else {
-  app.use(expressCspHeader({
-    directives: {
-      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'localhost:4000'],
-      'img-src': ['data:', '*'],
-      'child-src': ['none'],
-      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
-      'object-src': [NONE],
-      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
-      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
-      'trusted-types': ['angular', 'angular#unsafe-jit'],
-      'require-trusted-types-for': ['script']
-    }
-  }));
-}
-app.use('/assets', express.static('assets'));
 // app.use(Sentry.Handlers.errorHandler());
 if (IS_WHISTLER) {
   getTokens('').then(() => console.log('Init token list table.'));
