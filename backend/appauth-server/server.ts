@@ -23,6 +23,8 @@ import { getCredential } from './utils/autoGenerateTenantToken';
 const app = express();
 // Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
 // app.use(Sentry.Handlers.requestHandler());
+const { expressCspHeader, NONE, SELF, UNSAFE_EVAL, UNSAFE_INLINE } = require('express-csp-header');
+
 app.use(compression());
 const cors = require('cors');
 app.use(cors());
@@ -72,6 +74,34 @@ if (process.env.PRODUCTION) {
   app.get('*', (req, res) => {
     res.sendFile(join(appPath, 'index.html'), { req });
   });
+
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
+      'trusted-types': ['angular'],
+      'require-trusted-types-for': ['script']
+    }
+  }));
+} else {
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'localhost:4000'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, UNSAFE_EVAL, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, UNSAFE_INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
+      'trusted-types': ['angular', 'angular#unsafe-jit'],
+      'require-trusted-types-for': ['script']
+    }
+  }));
 }
 app.use('/assets', express.static('assets'));
 // app.use(Sentry.Handlers.errorHandler());
