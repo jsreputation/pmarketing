@@ -55,8 +55,7 @@ if (process.env.PRODUCTION) {
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
-      'trusted-types': ['angular'],
-      'require-trusted-types-for': "'script'"
+      'trusted-types': ['angular']
     }
   }));
 
@@ -79,8 +78,7 @@ if (process.env.PRODUCTION) {
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
-      'trusted-types': ['angular', 'angular#unsafe-jit'],
-      'require-trusted-types-for': "'script'"
+      'trusted-types': ['angular', 'angular#unsafe-jit']
     }
   }));
 }
