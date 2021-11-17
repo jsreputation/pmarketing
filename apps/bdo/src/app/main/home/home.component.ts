@@ -71,7 +71,9 @@ export class HomeComponent implements OnInit {
       .getRewards(1, this.requestPageSize, [ this.tag.popular ]),
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ]})
     ]).subscribe(([popularRewards, popularCampaigns])=>{
-      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).slice(0, 5);
+      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).sort((firstReward, secondReward)=>{
+        return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+      }).slice(0, 5);
     });
     
     this.rewardsService
