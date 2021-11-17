@@ -37,7 +37,7 @@ export class MerchantLocationPageComponent implements OnInit {
 
   navigateGoogleMaps(lat, lng) {
     const queryParams: Params = { lat: lat, long: lng };
-    this.router.navigate([`deal-welcome/${this.rid}/location/map`], {
+    this.router.navigate([`treat-welcome/${this.rid}/location/map`], {
       queryParams: queryParams
     });
   }

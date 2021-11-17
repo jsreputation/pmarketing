@@ -28,6 +28,7 @@ const routes: Routes = [
       { path: 'deal-welcome/:rid/location/map', component: LocationLandingComponent },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-welcome/:id/location', component: MerchantLocationPageComponent },
+      { path: 'treat-welcome/:rid/location/map', component: LocationLandingComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby', component: NearbyDealsComponent },
       { path: 'catalog-page', component: CatalogPageComponent },
