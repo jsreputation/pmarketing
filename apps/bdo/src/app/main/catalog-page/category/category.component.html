@@ -1,7 +1,8 @@
 <div class="category" *ngIf="category">
     <div class="title">
         <div class="title-content">
-            <h3>{{category.name}}</h3>
+            <h3 *ngIf="!isTag">{{categoryHeader.displayName}}</h3>
+            <span *ngIf="isTag" class="tag tag--{{categoryHeader.className}}">{{categoryHeader.displayName}}</span>
         </div>
         <div class="filter">
             <button mat-button class="filter" (click)="filter()" *ngIf="filterService.currentValue">
