@@ -1,97 +1,112 @@
+@import '../../../theme/variables.scss';
+
+$margin-bottom: 15px;
+
 .treat-container {
-    color: #2E2E2E;
-    padding:20px;
-    --margin-bottom: 15px;
-    font-size: 12px;
-    background-color: #fff;
-    height: calc( 100vh - 235px);
-    h4{
-        margin: 0;
-        margin-bottom: var(--margin-bottom);
-        color: #0072D8;
-    }
-    h2{
-        
-    }
-    .navigate-promotion {
-        color: #0072D8;
-        display: flex;
-        align-items: center;
-        margin-bottom: var(--margin-bottom);
-        text-decoration: none;
+  margin-top: 10px;
+  color: $near-black;
+  padding: 20px;
+  margin-bottom: $margin-bottom;
+  font-size: 12px;
+  background-color: #fff;
+  min-height: calc(100vh - 235px);
+
+  h4 {
+    margin: 0;
+    margin-bottom: $margin-bottom;
+    color: $medium-blue;
+  }
+
+  .navigate-promotion {
+    color: #0072D8;
+    display: flex;
+    align-items: center;
+    margin-bottom: $margin-bottom;
+    text-decoration: none;
+  }
+
+  .reminder {
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: $margin-bottom;
     }
 
-    .reminder {
-        .title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: var(--margin-bottom);
-        }
-
-        &-content {
-            div {
-                margin-bottom: var(--margin-bottom);
-            }
-        }
+    &-content {
+      div {
+        margin-bottom: $margin-bottom;
+      }
     }
-    .promoID {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: var(--margin-bottom);
-        .title{
-            font-size: 15px;
-            font-weight: 600;
-        }
-        .input-promo {
-            border: 1px solid #C2C2C1;
-            border-radius: 8px;
-            padding: 10px;
-            max-width:  355px;
-            margin: 5px 0px;
-        }
-        .input-promo:active{
-            border: 1px solid #99C1E7;
-        }
-        .input-promo:focus-visible {
-            outline: 1px solid #99C1E7;
-          }
-        .note{
-            font-size: 11px;
-            color: #707070;
-        }
-    }
-    .confirm-term{
-        display: flex;
-        flex-direction: row;
+  }
 
-        .tnc-container {
-            display: flex;
-            flex-direction: column;
-        }
+  .promoID {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $margin-bottom;
 
-        &-content{
-            &-link{
-                color: #0072D8;
-            }
-            &-link:hover{
-                border-bottom:1px solid #0072D8;
-                cursor: pointer;
-            }
-        }
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+    }
 
-        .checkbox {
-            margin-right: 10px;
-        }
+    .input-promo {
+      border: 1px solid $grey-white;
+      border-radius: 8px;
+      padding: 10px;
+      max-width: 355px;
+      margin: 5px 0;
     }
-    .enroll{
-     margin-top: 10vh;
-        &-button{
-            width: 100%;
-            max-width: 328px;
-            color: white;
-            background-color: #0072D8;
-            border-radius: 12px;
-            height: 48px;
-        }
+
+    .input-promo:active {
+      border: 1px solid $extreme-light-blue;
     }
+
+    .input-promo:focus-visible {
+      outline: 1px solid $extreme-light-blue;
+    }
+
+    .note {
+      font-size: 11px;
+      color: $light-black;
+    }
+  }
+
+  .confirm-term {
+    display: flex;
+    flex-direction: row;
+
+    .tnc-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-content {
+      &-link {
+        color: $medium-blue;
+      }
+
+      &-link:hover {
+        border-bottom: 1px solid $medium-blue;
+        cursor: pointer;
+      }
+    }
+
+    .checkbox {
+      margin-right: 10px;
+    }
+  }
+
+  .enroll {
+    margin-top: 10vh;
+    text-align: center;
+
+    &-button {
+      width: 100%;
+      max-width: 328px;
+      color: white;
+      background-color: $medium-blue;
+      border-radius: 12px;
+      height: 48px;
+    }
+  }
 }
