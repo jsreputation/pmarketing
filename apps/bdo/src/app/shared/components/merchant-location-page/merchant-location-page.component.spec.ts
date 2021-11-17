@@ -4,14 +4,12 @@ import { IVoucherService, LocationsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MerchantLocationPageComponent } from './merchant-location-page.component';
 
-class v4VouchersService {
-  getRewardLocations(id) {
-    return of(id);
-  }
-}
+const voucherServiceStub: Partial<IVoucherService> = {
+  getRewardLocations: () => of()
+};
 
 const locationServiceStub: Partial<LocationsService> = {
-  getCampaigns: () => of()
+  getMerchantLocationsFromCampaign: () => of()
 }
 
 describe('DealLocationPageComponent', () => {
@@ -25,11 +23,11 @@ describe('DealLocationPageComponent', () => {
       declarations: [MerchantLocationPageComponent],
       imports: [],
       providers: [
-        { provide: IVoucherService, useClass: v4VouchersService },
+        { provide: IVoucherService, useValue: voucherServiceStub },
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of([{ rid: 123 }]),
+            params: of([{ id: 123 }]),
           },
         },
         { provide: Router, useValue: routerBdo },
