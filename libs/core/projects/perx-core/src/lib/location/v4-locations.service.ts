@@ -21,16 +21,41 @@ import {
   IMerchant,
   IOutlet,
 } from '../merchants/models/merchants.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
+import { IV4MerchantLocation } from '../vouchers/v4-vouchers.service';
+import { V4MerchantsService } from '../merchants/v4-merchants.service';
+import { IMerchantLocation } from '../vouchers/models/voucher.model';
+
+export interface IV4MerchantLocationResponse {
+  data: IV4MerchantLocation[];
+  meta: {
+    count: number;
+    page: number;
+    size: number;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class V4LocationsService extends LocationsService {
 
+  private baseUrl: string;
+
+
   constructor(
-    private merchantsService: IMerchantsService
+    private merchantsService: IMerchantsService,
+    private http: HttpClient,
+    private configService: ConfigService
   ) {
     super();
+    this.configService
+      .readAppConfig()
+      .subscribe(
+        (config: IConfig<any>) => (this.baseUrl = config.apiHost as string)
+      );
   }
 
   public getAllLocations(allMerchants: Observable<IMerchant[]>, tags?: string[]): Observable<ILocation[]> {
@@ -125,6 +150,22 @@ export class V4LocationsService extends LocationsService {
           return merchantOutlets;
         }, []);
       })
+    );
+  }
+
+  public getMerchantLocationsFromCampaign(campaignId: number, page?: number, pageSize?: number): Observable<IMerchantLocation[]> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.set('page', page.toString());
+    }
+    if (pageSize) {
+      params = params.set('size', pageSize.toString());
+    }
+    return this.http.get<IV4MerchantLocationResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/merchant_locations`, { params }).pipe(
+      map((res: IV4MerchantLocationResponse) => res.data),
+      map((locations: IV4MerchantLocation[]) => locations.map(
+        (location: IV4MerchantLocation) => V4MerchantsService.v4MerchantLocationToLocation(location)
+      ))
     );
   }
 
