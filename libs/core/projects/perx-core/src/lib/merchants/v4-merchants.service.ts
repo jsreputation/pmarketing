@@ -8,6 +8,8 @@ import { oc } from 'ts-optchain';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
+import { IV4MerchantLocation } from '../vouchers/v4-vouchers.service';
+import { IMerchantLocation } from '../vouchers/models/voucher.model';
 
 interface IV4GetMerchantsResponse {
   data: IV4Merchant[];
@@ -58,6 +60,21 @@ export class V4MerchantsService implements IMerchantsService {
       (config: IConfig<void>) => {
         this.apiHost = config.apiHost as string;
       });
+  }
+
+  public static v4MerchantLocationToLocation(v: IV4MerchantLocation): IMerchantLocation {
+    return {
+      id: v.id,
+      name: v.name,
+      latitude: v.latitude,
+      longitude: v.longitude,
+      phoneNumber: v.phone_number,
+      address1: v.address1,
+      address2: v.address2,
+      city: v.city,
+      country: v.country,
+      postalCode: v.postal_code
+    };
   }
 
   public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] | null {
