@@ -44,28 +44,27 @@ app.use('/assets', express.static('assets'));
 if (process.env.PRODUCTION) {
   app.use(expressCspHeader({
     directives: {
-      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com'],
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com'],
       'img-src': ['data:', '*'],
       'child-src': ['none'],
-      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com', 'www.google-analytics.com'],
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
-      'trusted-types': ['google-maps-api#html', 'angular']
+      'trusted-types': ['google-maps-api#html', 'goog#html', 'angular']
     }
   }));
-
 } else {
   app.use(expressCspHeader({
     directives: {
-      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'localhost:4000'],
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com', 'localhost:4000'],
       'img-src': ['data:', '*'],
       'child-src': ['none'],
-      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com'],
+      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com', 'www.google-analytics.com'],
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
-      'trusted-types': ['google-maps-api#html', 'angular', 'angular#unsafe-jit']
+      'trusted-types': ['google-maps-api#html', 'goog#html', 'angular', 'angular#unsafe-jit']
     }
   }));
 }
