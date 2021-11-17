@@ -13,6 +13,8 @@ export class CategoryComponent implements OnInit {
   @Input() categoryCode = '';
   category: ItemModel;
   selectedSubcategory: ItemModel;
+  categoryHeader: { displayName:string, className:string };
+  isTag = false;
 
   constructor(
     public filterService: FilterService,
@@ -43,6 +45,13 @@ export class CategoryComponent implements OnInit {
               })
             ) : []
         };
+        if (!this.category.name) {
+          const tagName = filterValue.tags.find(tag=> tag.selected).name;
+          this.isTag = true;
+          this.categoryHeader = { displayName: tagName === 'featured' ? `What's new` : tagName, className: tagName === 'featured' ? 'new' : tagName };
+        } else {
+          this.categoryHeader = { displayName:this.category.name, className:'' };
+        }
         this.selectedSubcategory = this.category.children.find(item => item.selected);
       }
     })
