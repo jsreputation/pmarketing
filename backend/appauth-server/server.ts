@@ -55,7 +55,7 @@ if (process.env.PRODUCTION) {
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
-      'trusted-types': ['angular']
+      'trusted-types': ['google-maps-api#html', 'angular']
     }
   }));
 
@@ -78,7 +78,7 @@ if (process.env.PRODUCTION) {
       'object-src': [NONE],
       'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
       'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
-      'trusted-types': ['angular', 'angular#unsafe-jit']
+      'trusted-types': ['google-maps-api#html', 'angular', 'angular#unsafe-jit']
     }
   }));
 }
