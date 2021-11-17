@@ -3,7 +3,7 @@
         <div class="title">
             Location
         </div>
-        <div class="content" mat-ripple *ngFor="let item of lstVoucherLocation">
+        <div class="content" mat-ripple *ngFor="let item of location">
             <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
                 <div class="text">
                     {{item.name}}

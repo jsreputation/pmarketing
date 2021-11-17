@@ -62,6 +62,10 @@ export class TreatWelcomeComponent implements OnInit {
     }
   }
 
+  public navigateLocationPage(): void {
+    this.route.navigate([`treat-welcome/${this.campaign.id}/location`], { queryParams: { mode: 'campaign'}});
+  }
+
   public copy(): void {
     navigator.clipboard
       .writeText(`${this.shareTitle}`)

@@ -98,9 +98,9 @@ export interface IV4MerchantLocation {
   city: string;
   country: string;
   id: number;
-  latitude: number | null;
-  loc: string | null;
-  longitude: number | null;
+  latitude?: string;
+  loc: string | null | { loc: string; lon: string };
+  longitude?: string;
   name: string;
   phone_number: string;
   postal_code: string;

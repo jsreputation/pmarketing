@@ -19,6 +19,8 @@ import { GhostCardComponent } from './components/ghosts/card-ghost.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
+import { MerchantLocationPageComponent } from './components/merchant-location-page/merchant-location-page.component';
+import { LocationModule, MerchantsModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
     FilterComponent,
     FooterComponent,
     GhostCardComponent,
-    MeterToKilometerPipe
+    MeterToKilometerPipe,
+    MerchantLocationPageComponent
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,8 @@ import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
     MatCheckboxModule,
     MatButtonModule,
     RouterModule,
+    LocationModule,
+    MerchantsModule.forChild(), //required for location module
     MatChipsModule
   ],
   exports: [

@@ -17,7 +17,7 @@ import {
   LanguageInterceptor,
   LanguageService,
   LocaleIdFactory,
-  LoyaltyModule, OutcomeModule,
+  LoyaltyModule, MerchantsModule, OutcomeModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule, RewardsModule,
   ThemesService,
@@ -76,6 +76,7 @@ export const appInit =
     PerxSvcCampaignModule.forRoot(),
     PerxSvcGameModule.forRoot(),
     RewardsModule.forRoot(),
+    MerchantsModule.forRoot(), //required for locations module
     VouchersModule,
 
     // angular provided modules
