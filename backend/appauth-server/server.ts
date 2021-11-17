@@ -42,10 +42,6 @@ app.options('*', cors());
 app.use('/assets', express.static('assets'));
 
 if (process.env.PRODUCTION) {
-  console.log('production mode ON', appPath);
-  app.set('view engine', 'html');
-  app.set('views', appPath);
-
   app.use(expressCspHeader({
     directives: {
       'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com'],
@@ -58,15 +54,6 @@ if (process.env.PRODUCTION) {
       'trusted-types': ['google-maps-api#html', 'angular']
     }
   }));
-
-  // Serve static files from /../../perx-microsite
-  app.use(BASE_HREF, express.static(appPath));
-  app.get('*.*', express.static(appPath, { maxAge: '1y' }));
-
-  // All regular routes use the index.html
-  app.get('*', (req, res) => {
-    res.sendFile(join(appPath, 'index.html'), { req });
-  });
 
 } else {
   app.use(expressCspHeader({
@@ -104,6 +91,21 @@ app.put(`${BASE_HREF}v4/merchant_admin/merchant_user_account_invitations`, merch
 app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
 app.get(`${BASE_HREF}lang`, language());
+
+if (process.env.PRODUCTION) {
+  console.log('production mode ON', appPath);
+  app.set('view engine', 'html');
+  app.set('views', appPath);
+
+  // Serve static files from /../../perx-microsite
+  app.use(BASE_HREF, express.static(appPath));
+  app.get('*.*', express.static(appPath, { maxAge: '1y' }));
+
+  // All regular routes use the index.html
+  app.get('*', (req, res) => {
+    res.sendFile(join(appPath, 'index.html'), { req });
+  });
+}
 
 // app.use(Sentry.Handlers.errorHandler());
 if (IS_WHISTLER) {
