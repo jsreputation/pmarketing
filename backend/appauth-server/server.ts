@@ -41,7 +41,8 @@ const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
 app.use('/assets', express.static('assets'));
 
-if (process.env.PRODUCTION) {
+// verified for BC sites, but unverified against custom microsites, specify feature flag when sure
+if (process.env.PRODUCTION && process.env.CSP_ON) {
   app.use(expressCspHeader({
     directives: {
       'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com'],
@@ -54,7 +55,7 @@ if (process.env.PRODUCTION) {
       'trusted-types': ['google-maps-api#html', 'goog#html', 'angular']
     }
   }));
-} else {
+} else if (process.env.CSP_ON){
   app.use(expressCspHeader({
     directives: {
       'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com', 'localhost:4000'],
