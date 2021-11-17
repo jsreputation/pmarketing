@@ -41,7 +41,7 @@ describe('DealLocationPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MerchantLocationPageComponent);
     component = fixture.componentInstance;
-    component.lstVoucherLocation = [];
+    component.location = [];
     fixture.detectChanges();
   });
 
