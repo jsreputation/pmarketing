@@ -13,9 +13,9 @@
         </ng-container>
     </div>
     <p>
-        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon">
+        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" (click)="navigateLocationPage()">
         <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="sharePromo()">
-        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon">
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" (click)="navigateLocationPage()">
     </p>
     <div class="description" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description"></div>
     <div class="sections" *ngIf="campaign?.displayProperties?.landingPage">
