@@ -86,6 +86,10 @@ body {
   &--popular {
     background-color: $pink;
   }
+
+  &--featured {
+    background-color: $medium-orange;
+  }
 }
 
 .search-result-tab, .nearby-deals-wrapper {
