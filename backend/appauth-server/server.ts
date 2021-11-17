@@ -39,6 +39,7 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 const IS_WHISTLER: boolean = !!(process.env.IS_WHISTLER && process.env.IS_WHISTLER === 'true');
 const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
+app.use('/assets', express.static('assets'));
 
 if (process.env.PRODUCTION) {
   console.log('production mode ON', appPath);
