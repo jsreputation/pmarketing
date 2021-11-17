@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EventEmitter } from "@angular/core";
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
+import { SharedModule } from './shared/shared.module';
 
 const authServiceStub: Partial<AuthenticationService> = {};
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
@@ -28,6 +29,7 @@ describe('AppComponent', () => {
         MatDialogModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
+        SharedModule
       ],
       providers: [
         {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BannerModel } from '../../../models/banner.model';
 
 @Component({
@@ -7,6 +7,7 @@ import { BannerModel } from '../../../models/banner.model';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
+  @Input() isShowCarousel = true;
   public activeNumber = 0;
   public selectedItem:BannerModel;
   public banners:BannerModel[]= [
