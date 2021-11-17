@@ -12,7 +12,6 @@ export class MerchantLocationPageComponent implements OnInit {
   public location: IMerchantLocation[] | IVoucherLocation[];
 
   private rid: number;
-  // private mode: 'campaign' | 'reward';
   constructor(
     private voucherService: IVoucherService,
     private locationsService: LocationsService,
