@@ -12,6 +12,7 @@ import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/t
 import { SearchComponent } from './search/search.component';
 import { DealLocationPageComponent } from './deal-landing/deal-location-page/deal-location-page.component';
 import { LocationLandingComponent } from './location-landing/location-landing.componen';
+import { MerchantLocationPageComponent } from '../shared/components/merchant-location-page/merchant-location-page.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'deal-welcome/:rid/location', component: DealLocationPageComponent },
       { path: 'deal-welcome/:rid/location/map', component: LocationLandingComponent },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
+      { path: 'treat-welcome/:id/location', component: MerchantLocationPageComponent },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby', component: NearbyDealsComponent },
       { path: 'catalog-page', component: CatalogPageComponent },

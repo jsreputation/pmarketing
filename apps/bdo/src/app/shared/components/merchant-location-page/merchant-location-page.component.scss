@@ -1,0 +1,53 @@
+@import '../../../../theme/variables';
+$margin-bottom:15px;
+$font-weight:bold;
+
+.deal-location {
+    min-height: 86vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .body {
+        padding: 20px 15px;
+
+        .title {
+            color: $medium-blue;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: $white;
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            opacity: 1;
+            margin-bottom: 15px;
+            justify-content: space-between;
+
+            .text-container {
+                flex: 1;
+                padding: 20px 0px 20px 20px;
+                cursor: pointer;
+
+                .text {
+                    font-size: 14px;
+                    color: $dark-grey;
+                    line-height: 1.7em;
+                }
+            }
+
+            .icon-call {
+                flex: 0; // don't grow don't shrink
+                padding: 20px 20px 20px 0px;
+
+                span {
+                    background-color: $medium-orange;
+                }
+            }
+        }
+    }
+}
