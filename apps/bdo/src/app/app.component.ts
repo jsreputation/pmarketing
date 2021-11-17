@@ -112,8 +112,7 @@ export class AppComponent implements OnInit {
   }
 
   private initFooter(url: string): void {
-    // this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
-    this.showFooter = true;
+    this.showFooter = !url.match(/(treat-enroll)\/\d+$/gi); // returns null if no match, array if there is.
   }
 
   private authenticate(): void {
