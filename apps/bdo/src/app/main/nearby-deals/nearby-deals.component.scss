@@ -58,3 +58,14 @@
     }
   }
 }
+
+@media screen and (min-width: $desktop-width) {
+  .nearby-deals-wrapper {
+    .content-wrapper {
+      .tab-content {
+        margin: auto;
+        width: $desktop-width;
+      }
+    }
+  }
+}

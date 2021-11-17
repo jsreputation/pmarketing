@@ -85,3 +85,19 @@
     height: 24px;
   }
 }
+
+
+@media screen and (min-width: $desktop-width) {
+  .main-content {
+    margin: auto;
+    width: $desktop-width;
+    margin-top: 96px;
+    padding: 8px 0;
+  }
+
+  .nearby-page {
+    width: 100%;
+    margin-top: 96px;
+    padding: 8px 0;
+  }
+}
