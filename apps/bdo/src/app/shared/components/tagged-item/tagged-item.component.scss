@@ -62,6 +62,10 @@
       color: $light-gray;
       display: flex;
       align-items: center;
+      .icon-location {
+        width: 25px;
+        height: 25px !important;
+      }
     }
   }
 }

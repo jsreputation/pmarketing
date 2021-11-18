@@ -4,7 +4,10 @@
     <div class="container">
       <h4 class="title">{{deal.name}}</h4>
       <p class="description" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
-      <span class="position" *ngIf="deal?.position"><mat-icon>location_pin</mat-icon>{{deal.position | meterToKilometer}} km</span>
+      <span class="position" *ngIf="deal?.position">
+        <img class="icon-location" src="assets/images/icon-location.svg"/>
+        {{deal.position | meterToKilometer}} km
+      </span>
     </div>
   </li>
 </ul>
