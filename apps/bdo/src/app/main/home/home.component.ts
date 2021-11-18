@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
     forkJoin(
       [this.rewardsService
       .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined),
-      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize})
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, sortBy: 'begins_at'})
     ]).subscribe(([rewards, campaigns])=>{
       this.whatsNewDeals = mapRewardsToListItem(rewards).concat(mapCampaignsToListItem(campaigns)).sort((firstReward, secondReward)=>{
         return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     forkJoin(
       [this.rewardsService
       .getRewards(1, this.requestPageSize, [ this.tag.popular ]),
-      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ]})
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ], sortBy: 'begins_at'})
     ]).subscribe(([popularRewards, popularCampaigns])=>{
       this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).sort((firstReward, secondReward)=>{
         return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();

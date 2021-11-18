@@ -10,6 +10,7 @@ export interface ICampaignFilterOptions {
   tags?: string[];
   categories?: string[];
   categoryIds?: string[];
+  sortBy?: string;
 }
 
 export abstract class ICampaignService {

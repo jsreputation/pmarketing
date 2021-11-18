@@ -70,7 +70,8 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             page: this.pageNumber,
             size: this.requestPageSize,
             tags: queryObject.tags,
-            categoryIds: queryObject.categoryIds
+            categoryIds: queryObject.categoryIds,
+            sort_by: 'begins_at'
           };
           Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
           return forkJoin([
