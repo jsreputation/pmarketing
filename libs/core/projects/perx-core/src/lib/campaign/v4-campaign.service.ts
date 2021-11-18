@@ -579,6 +579,8 @@ export class V4CampaignService implements ICampaignService {
             if (filterOptions.categoryIds) {
               params = params.set('category_ids', filterOptions.categoryIds.join() || '');
             }
+          } else if (key === 'sortBy') {
+            params = params.set('sort_by', filterOptions.sortBy || '');
           } else {
             params = params.set(key, filterOptions[key]);
           }
