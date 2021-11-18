@@ -111,7 +111,7 @@ body {
   }
 }
 
-.filter-wrapper, .treat-welcome {
+.filter-wrapper, .treat-welcome, .filter-form {
   .categories-wrapper {
     .travel-entertaiment .mat-expansion-panel-header:not([class*='mat-expanded']) {
       border-bottom: none;
@@ -123,7 +123,7 @@ body {
   .location-wrapper {
     .mat-expansion-panel-header {
       .mat-expansion-indicator::after {
-        border-color: #0072d8 !important;
+        border-color: $medium-blue !important;
         border-width: 0 3px 3px 0 !important;
         vertical-align: super !important;
         padding: 5px;
@@ -214,6 +214,17 @@ body {
       }
 
       background: #fff;
+
+      .container {
+        .title {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          height: 39px;
+        }
+      }
     }
   }
 }

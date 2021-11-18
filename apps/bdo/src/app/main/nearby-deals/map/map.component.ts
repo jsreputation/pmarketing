@@ -55,7 +55,7 @@ export class MapComponent implements OnChanges {
       this.getRewardNearBy().subscribe((rewardLocations) => {
         this.rewardLocations = rewardLocations;
         this.nearbyRewards = mapRewardsToListItem(rewardLocations.map((item) => {
-          return { ...item.reward, description: '' };
+          return { ...item.reward, subtitle: '' };
         }));
         rewardLocations.map((item) => {
           this.locations = this.locations.concat(item.locations);
