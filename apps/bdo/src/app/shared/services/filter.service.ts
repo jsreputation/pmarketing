@@ -38,6 +38,8 @@ export class FilterService {
   }
 
   public closeFilter() {
-    this.filterDialogRef.close();
+    if (this.filterDialogRef) {
+      this.filterDialogRef.close();
+    }
   }
 }
