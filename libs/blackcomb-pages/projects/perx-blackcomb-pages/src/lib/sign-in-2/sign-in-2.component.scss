@@ -54,28 +54,6 @@ button {
 .login-form {
   @include loginCard;
 
-  .mobile-group {
-    display: flex;
-    flex-direction: row;
-
-    .country-code {
-      width: 10rem;
-      margin-right: 1rem;
-
-      .mat-form-field {
-        width: 100%;
-      }
-    }
-
-    .mobile-number {
-      width: 100%;
-
-      .mat-form-field {
-        width: 100%;
-      }
-    }
-  }
-
   .subtitle {
     @include form-subtitle;
   }
