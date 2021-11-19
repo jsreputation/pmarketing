@@ -14,7 +14,8 @@ export const FILTER_DATA: IFilterModel = {
         { name: 'Dine',type:'dine' },
         { name: 'Pay Bills',type:'pay-bills' },
         { name: 'Health & Wellness',type:'health-wellness' },
-        { name: 'Travel & Entertainment',type:'travel-entertaiment'}
+        { name: 'Travel & Entertainment',type:'travel-entertaiment'},
+        { name: 'Explore',type:'explore'}
       ],
     },
     {
@@ -27,7 +28,8 @@ export const FILTER_DATA: IFilterModel = {
         { name: 'Dine',type:'dine' },
         { name: 'Pay Bills',type:'pay-bills' },
         { name: 'Health & Wellness',type:'health-wellness' },
-        { name: 'Travel & Entertainment',type:'travel-entertaiment' }
+        { name: 'Travel & Entertainment',type:'travel-entertaiment' },
+        { name: 'Explore',type:'explore'}
       ],
     },
     {

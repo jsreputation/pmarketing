@@ -85,6 +85,12 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLink:"assets/images/entertainment-enclosed-outline-fullcolor.svg",
         imageLinkSelected:"assets/images/entertainment-enclosed-filled-fullcolor.svg"
       },
+      {
+        key:"explore",
+        name:"Explore",
+        imageLink:"assets/images/explore-default.svg",
+        imageLinkSelected:"assets/images/explore-selected.svg"
+      }
     ]
   },
   {
@@ -177,6 +183,12 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLink:"assets/images/entertainment-enclosed-outline-fullcolor.svg",
         imageLinkSelected:"assets/images/entertainment-enclosed-filled-fullcolor.svg"
       },
+      {
+        key:"explore",
+        name:"Explore",
+        imageLink:"assets/images/explore-default.svg",
+        imageLinkSelected:"assets/images/explore-selected.svg"
+      }
     ]
   },
   {
