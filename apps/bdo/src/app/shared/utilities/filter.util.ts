@@ -14,12 +14,12 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
   filterValue = {
     ...filterValue,
     categories: filterValue.categories.map(cate =>
-      cate.type === queryParams.type || !queryParams.type ?
+      cate.type === queryParams.type ?
         {
           ...cate,
           selected: true,
           children: cate.children ? cate.children.map(sub =>
-            !queryParams.category || equalOrIncludes(sub.type, queryParams.category) ?
+            equalOrIncludes(sub.type, queryParams.category) ?
               {
                 ...sub,
                 selected: true
@@ -64,7 +64,7 @@ function handleCategory(filterValue: IFilterModel) {
     const selectedCategory = filterValue.categories.find(item => item.selected);
     const childrenCategory = selectedCategory?.children ? selectedCategory.children : [];
     categories = childrenCategory.filter(subCategory => subCategory.selected).map(value => value.id);
-    return categories.length === childrenCategory.length ? null : categories;
+    return categories.length === 0 || categories.length === childrenCategory.length ? [selectedCategory?.id] : categories;
   }
 }
 
