@@ -50,6 +50,7 @@ export class CategoryComponent implements OnInit {
           this.isTag = true;
           this.categoryHeader = { displayName: tagName === 'featured' ? `What's new` : tagName, className: tagName === 'featured' ? 'new' : tagName };
         } else {
+          this.isTag = false;
           this.categoryHeader = { displayName:this.category.name, className:'' };
         }
         this.selectedSubcategory = this.category.children.find(item => item.selected);
