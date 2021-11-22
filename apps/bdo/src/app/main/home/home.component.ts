@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaignService, IReward, RewardsService } from '@perxtech/core';
+import { ICampaignService, IReward, RewardsService, Sort } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
 import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
 import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../shared/constants/home-category-configuration.const';
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
 
     forkJoin(
       [this.rewardsService
-      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, undefined),
+      .getRewards(1, this.requestPageSize, undefined, undefined, undefined, undefined, Sort.descending, 'begins_at'),
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, sortBy: 'begins_at'})
     ]).subscribe(([rewards, campaigns])=>{
       this.whatsNewDeals = mapRewardsToListItem(rewards).concat(mapCampaignsToListItem(campaigns)).sort((firstReward, secondReward)=>{
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 
     forkJoin(
       [this.rewardsService
-      .getRewards(1, this.requestPageSize, [ this.tag.popular ]),
+      .getRewards(1, this.requestPageSize, [ this.tag.popular ], undefined, undefined, undefined, Sort.descending, 'begins_at'),
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ], sortBy: 'begins_at'})
     ]).subscribe(([popularRewards, popularCampaigns])=>{
       this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).sort((firstReward, secondReward)=>{
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
     });
     
     this.rewardsService
-      .getRewards(1, this.requestPageSize, [ this.tag.featured ])
+      .getRewards(1, this.requestPageSize, [ this.tag.featured ], undefined, undefined, undefined, Sort.descending, 'begins_at')
       .subscribe((featuredDeals: IReward[]) => {
         this.featuredDeals = featuredDeals;
       });
