@@ -4,6 +4,7 @@ import { SearchComponent } from './search.component';
 import { of } from 'rxjs';
 import { RewardsService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('SearchComponent', () => {
 
@@ -29,7 +30,10 @@ describe('SearchComponent', () => {
           { provide: ConfigService, useValue: configServiceStub },
           { provide: RewardsService, useValue: rewardsServiceStub },
           { provide: Router, useValue: routerBdo }
-        ]
+        ],
+      imports: [
+        MatDialogModule
+      ]
     })
       .compileComponents();
   });
