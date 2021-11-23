@@ -12,6 +12,7 @@ import { switchMap } from 'rxjs/operators';
 export class TreatEnrollPageComponent implements OnInit {
   public campaign: ICampaign;
   enrollForm: FormGroup;
+  defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
 
   constructor(
     private campaignService: ICampaignService,
