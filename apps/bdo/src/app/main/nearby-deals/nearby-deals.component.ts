@@ -17,7 +17,7 @@ import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 export class NearbyDealsComponent implements OnInit{
   public rewards: IReward[];
   public rewardsItemModel: IListItemModel[];
-  public rad = 10000;
+  public rad = 5000;
   public currentPosition: IPosition;
   private queryParams: Params;
 
