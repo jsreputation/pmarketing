@@ -98,6 +98,10 @@
           align-items: center;
           font-size: 10px;
         }
+
+        li::marker {
+          content: "";
+        }
       }
     }
 

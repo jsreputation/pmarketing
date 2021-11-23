@@ -1,4 +1,8 @@
 <ng-container *ngIf="campaign">
+<div class="thumbnail">
+    <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
+        [attr.alt]="campaign?.name" />
+</div>
 <div class="treat-container" [formGroup]="enrollForm">
     <h4>
         ENROLL
