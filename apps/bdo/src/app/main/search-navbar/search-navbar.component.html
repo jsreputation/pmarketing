@@ -12,7 +12,12 @@
                  (keyup.enter)="search(searchValue)"
                  (blur)="onBlur()"
                  [value]="searchValue">
-          <img class="search-icon" [src]=" isSearching ? 'assets/images/close.svg' : 'assets/images/search-outline.svg'" (click)="searchValue && clearSearchValue($event)"/>
+          <ng-container *ngIf="isSearching; else searchBlock">      
+            <img class="search-icon" src="assets/images/close.svg" (click)="searchValue && clearSearchValue($event)"/>
+          </ng-container> 
+          <ng-template #searchBlock>
+            <img class="search-icon" src="assets/images/search-outline.svg" (click)="search(searchValue)"/>
+          </ng-template>
         </div>
       </ng-template>
       <ng-template #searchDefaultInput>
