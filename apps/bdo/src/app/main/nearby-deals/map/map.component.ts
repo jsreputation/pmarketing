@@ -34,7 +34,7 @@ export class MapComponent implements OnChanges {
   public key = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
 
   public markersArray: google.maps.Marker[] = [];
-  public rad = 10000;
+  public rad = 5000;
   nearbyRewards: IListItemModel[] = [];
   locations: IVoucherLocation[] = [];
   rewardLocations: IRewardLocationModel[] = [];
