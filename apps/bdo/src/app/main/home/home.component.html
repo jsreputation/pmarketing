@@ -25,7 +25,7 @@
       <p class="description">Find deals that are just right around the corner</p>
     </div>
     <div *ngIf="!currentPosition" class="message-wrapper">
-      <mat-icon aria-hidden="false" class="icon-location">location_on</mat-icon>
+      <mat-icon aria-hidden="false" class="icon-location material-icons-outlined">pin_drop</mat-icon>
       <p class="message">Enable location to view deals near you</p>
     </div>
     <bdo-tagged-item *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
