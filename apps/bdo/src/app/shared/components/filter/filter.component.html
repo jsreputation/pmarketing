@@ -16,7 +16,7 @@
             <h3 class='header'>CATEGORIES</h3>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div formArrayName='categories'>
+        <div formArrayName='categories' class="custom-checkbox">
           <ng-container *ngFor='let item of filterSource.categories;
           let idx= index;'>
             <bdo-checkbox-group [formControlName]='idx' (updateCheckBoxValue)="selectCategory($event, idx)">
