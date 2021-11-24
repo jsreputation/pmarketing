@@ -50,7 +50,7 @@ export class FilterComponent implements OnInit {
     this.filterSource.categories.map(category=> category.selected = false);
     this.filterSource.tags.map(tag=> tag.selected = true);
     this.filterSource.locations.map(location=> location.selected = true);
-    this.renderForm();
+    this.dialogRef.close(this.filterSource);
   }
 
   chipClick(index: number) {
