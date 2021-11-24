@@ -25,3 +25,19 @@
     color: $near-black;
   }
 }
+
+::ng-deep .custom-checkbox {
+  .mat-checkbox.parent-checkbox {
+    .mat-checkbox-background, .mat-checkbox-frame {
+        border-radius: 70% !important;
+        border-color: $medium-blue !important;
+      }
+
+      .mat-checkbox-background {
+        margin: 0.4rem !important;
+        svg {
+          display: none !important;
+        }
+      }
+  }
+}
