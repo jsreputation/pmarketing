@@ -29,7 +29,7 @@ export class CategoryComponent implements OnInit {
         this.category = {
           ...this.category,
           children: this.category?.children ? this.category.children
-            .filter(sub => selectedFilterCategory.children.find(item => item.name === sub.name))
+            .filter(sub => selectedFilterCategory?.children.find(item => item.name === sub.name))
             .map(sub =>
               ({
               ...sub,
@@ -46,9 +46,17 @@ export class CategoryComponent implements OnInit {
             ) : []
         };
         if (!this.category.name) {
-          const tagName = filterValue.tags.find(tag=> tag.selected).name;
-          this.isTag = true;
-          this.categoryHeader = { displayName: tagName === 'featured' ? `What's new` : tagName, className: tagName === 'featured' ? 'new' : tagName };
+          const selectedTag = filterValue.tags.filter((tag) => tag.selected);
+          this.isTag = selectedTag.length > 0 && selectedTag.length < filterValue.tags.length;
+          const tagName = !this.isTag ? 'All' : selectedTag[0].name;
+          if (this.isTag) {
+            this.categoryHeader = {
+              displayName: tagName === 'featured' ? `What's new` : tagName,
+              className: tagName === 'featured' ? 'new' : tagName,
+            };
+          } else {
+            this.categoryHeader = { displayName: tagName, className: '' };
+          }
         } else {
           this.isTag = false;
           this.categoryHeader = { displayName:this.category.name, className:'' };

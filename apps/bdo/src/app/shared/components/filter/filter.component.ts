@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IFilterModel } from '../../models/filter.model';
 import { FilterService } from '../../services/filter.service';
-import { FILTER_DATA } from '../../constants/filter-configuration.const';
 import { CATALOG_CONFIGURATION } from '../../constants/catalog-configuration.const';
 import { SPECIAL_CATEGORIES } from '../../utilities/filter.util';
 
@@ -48,7 +47,10 @@ export class FilterComponent implements OnInit {
   }
 
   resetFilterClick() {
-    this.filterService.setValue(FILTER_DATA);
+    this.filterSource.categories.map(category=> category.selected = false);
+    this.filterSource.tags.map(tag=> tag.selected = true);
+    this.filterSource.locations.map(location=> location.selected = true);
+    this.dialogRef.close(this.filterSource);
   }
 
   chipClick(index: number) {
