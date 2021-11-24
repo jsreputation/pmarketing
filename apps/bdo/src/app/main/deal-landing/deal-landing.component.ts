@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IReward, ITag, NotificationService, RewardsService } from '@perxtech/core';
+import { IReward, ITag, NotificationService, RewardsService, IVoucherService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
@@ -21,6 +21,7 @@ export class DealLandingComponent implements OnInit {
   public shareTitle:string;
   public shareText: string;
   public shareUrl = `${window.location.protocol}//${window.location.host}/deal-welcome/`;
+  public showLocation = false;
   navigateTo(_selectedItem: FeaturedDeals) {
     throw new Error('not implemented');
   }
@@ -29,14 +30,17 @@ export class DealLandingComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private route: Router,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private voucherService: IVoucherService,
   ) {}
   ngOnInit(): void {
     this.activeRoute.params.subscribe((param) => {
       combineLatest([
         this.rewardService.getReward(param.rid),
         this.rewardService.getRewardsRelated(param.rid, 5),
-      ]).subscribe(([dealDetail, similarDeals]) => {
+        this.voucherService.getRewardLocations(param.rid)
+      ]).subscribe(([dealDetail, similarDeals, locations]) => {
+        this.showLocation = !!locations.length;
         this.dealDetail = dealDetail;
         this.similarDeals = mapRewardsToListItem(similarDeals);
         this.shareUrl.concat(dealDetail.id.toString());

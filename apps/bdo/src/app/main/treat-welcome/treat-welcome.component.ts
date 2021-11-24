@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ICampaign,
-  ICampaignService
+  ICampaignService,
+  LocationsService
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
 import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'bdo-treat-welcome',
@@ -21,20 +23,26 @@ export class TreatWelcomeComponent implements OnInit {
   public shareUrl = `${window.location.protocol}//${window.location.host}/treat-welcome/`;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
+  public isShowLocationsAndPhone = false;
 
   constructor(
     private campaignService: ICampaignService,
     private activeRoute: ActivatedRoute,
     private route: Router,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private locationsService: LocationsService
   ) {}
   ngOnInit() {
     this.activeRoute.params
       .pipe(
-        switchMap((param: Params) => this.campaignService.getCampaign(param.id))
+        switchMap((param: Params) => combineLatest([
+          this.campaignService.getCampaign(param.id),
+          this.locationsService.getMerchantLocationsFromCampaign(param.id)
+        ]))
       )
-      .subscribe((campaign) => {
+      .subscribe(([campaign, locations]) => {
+        this.isShowLocationsAndPhone = !!locations.length;
         this.campaign = campaign;
         this.initTranslate();
       }); 
