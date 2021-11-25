@@ -15,7 +15,7 @@ import { forkJoin } from 'rxjs';
 export class HomeComponent implements OnInit {
   categories = HOME_LIST_CATEGORY_CONFIGURATIONS;
   catalogConfiguration = CATALOG_CONFIGURATION;
-  featuredDeals: IReward[] = [];
+  featuredDeals: IListItemModel[] = [];
 
   nearByDeals: IListItemModel[] = [];
   whatsNewDeals: IListItemModel[] = [];
@@ -76,11 +76,15 @@ export class HomeComponent implements OnInit {
       }).slice(0, 5);
     });
     
-    this.rewardsService
-      .getRewards(1, this.requestPageSize, [ this.tag.featured ], undefined, undefined, undefined, Sort.descending, 'begins_at')
-      .subscribe((featuredDeals: IReward[]) => {
-        this.featuredDeals = featuredDeals;
-      });
+    forkJoin(
+      [this.rewardsService
+        .getRewards(1, this.requestPageSize, [ this.tag.featured ], undefined, undefined, undefined, Sort.descending, 'begins_at'),
+      this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.featured ], sortBy: 'begins_at'})
+    ]).subscribe(([featuredRewards, featuredCampaigns])=>{
+      this.featuredDeals = mapRewardsToListItem(featuredRewards).concat(mapCampaignsToListItem(featuredCampaigns)).sort((firstReward, secondReward)=>{
+        return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+      }).slice(0, 5);
+    });
   }
 
   navigateTo(_selectedItem: IListItemModel) {
