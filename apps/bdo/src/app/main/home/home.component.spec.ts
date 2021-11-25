@@ -67,7 +67,7 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
     component.categories = [];
     component.nearByDeals = mapRewardsToListItem(LIST_NEAR_BY);
-    component.featuredDeals = LIST_FEATURED_DEALS;
+    component.featuredDeals = mapRewardsToListItem(LIST_FEATURED_DEALS);
     fixture.detectChanges();
   });
 
