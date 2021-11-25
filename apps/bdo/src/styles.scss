@@ -319,9 +319,11 @@ body {
     }
 
     .mat-expansion-indicator {
-      transform: scale(1.5, 1) !important;
       &::after {
-        color: $medium-blue;
+        border-color: $medium-blue !important;
+        border-width: 0 3px 3px 0 !important;
+        vertical-align: super !important;
+        padding: 5px;
       }
     }
   }
