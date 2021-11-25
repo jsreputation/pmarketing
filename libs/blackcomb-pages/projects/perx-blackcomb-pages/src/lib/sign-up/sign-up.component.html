@@ -13,17 +13,17 @@
     </div>
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>First Name</mat-label>
+        <mat-label>First name</mat-label>
         <input matInput formControlName="firstName" autocomplete="given-name" required>
         <mat-error *ngIf="signupForm.get('firstName')!.hasError('required')">
-          <span>First Name is </span><strong>required</strong>
+          <span>First name is </span><strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>Last Name</mat-label>
+        <mat-label>Last name</mat-label>
         <input matInput formControlName="lastName" autocomplete="family-name" required>
         <mat-error *ngIf="signupForm.get('lastName')!.hasError('required')">
-          <span>Last Name is </span><strong>required</strong>
+          <span>Last name is </span><strong>required</strong>
         </mat-error>
       </mat-form-field>
 
@@ -41,7 +41,7 @@
         </ng-template>
         <ng-template #elseBlock>
           <mat-form-field appearance="standard" class="full-width__input">
-            <mat-label>Country Code</mat-label>
+            <mat-label>Country code</mat-label>
             <mat-select formControlName="countryCode">
               <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
                 <span>{{country.name}}&nbsp;</span>
