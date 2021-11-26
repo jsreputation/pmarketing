@@ -56,7 +56,9 @@ export class MapComponent implements OnChanges {
         this.rewardLocations = rewardLocations;
         this.nearbyRewards = mapRewardsToListItem(rewardLocations.map((item) => {
           return { ...item.reward, subtitle: '' };
-        }));
+        })).sort((firstNearbyReward, secondsNearbyReward)=>{
+          return  parseFloat(firstNearbyReward.position) - parseFloat(secondsNearbyReward.position);
+        });
         rewardLocations.map((item) => {
           this.locations = this.locations.concat(item.locations);
         });
