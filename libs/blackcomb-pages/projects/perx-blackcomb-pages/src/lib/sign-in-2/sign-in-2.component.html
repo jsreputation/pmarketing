@@ -40,7 +40,7 @@
                 </ng-template>
                 <ng-template #elseBlock>
                     <mat-form-field appearance="fill" class="full-width__input">
-                        <mat-label>Country Code</mat-label>
+                        <mat-label>Country code</mat-label>
                         <mat-select formControlName="countryCode">
                             <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
                                 <span>{{country.name}} </span>
