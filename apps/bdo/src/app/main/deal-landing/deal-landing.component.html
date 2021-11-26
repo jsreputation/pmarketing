@@ -10,9 +10,9 @@
 
       </p>
       <p>
-        <mat-icon (click)="navigateLocationPage()" *ngIf="showLocation" class="material-icons-outlined">pin_drop</mat-icon>
-        <mat-icon (click)="shareDeal()" class="material-icons-outlined">share</mat-icon>
-        <mat-icon (click)="navigateLocationPage()" *ngIf="showLocation" class="material-icons-outlined">call</mat-icon>
+        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
+        <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="shareDeal()"/>
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
       </p>
       <div class="description" [innerHTML]="dealDetail?.description"></div>
       <div class="description" [innerHTML]="dealDetail?.termsAndConditions"></div>
