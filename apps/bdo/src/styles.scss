@@ -307,6 +307,16 @@ body {
   .mat-tab-body-wrapper {
     height: calc(100vh - 270px);
   }
+
+  .mat-tab-label {
+    opacity: 1 !important;
+    font-weight: 100;
+  }
+
+  .mat-tab-label-active {
+    opacity: 1;
+    font-weight: bold;
+  }
 }
 
 .treat-welcome-page {

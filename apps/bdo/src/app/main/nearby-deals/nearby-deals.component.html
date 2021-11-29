@@ -12,10 +12,10 @@
   </div>
   <h4 class="header">Check out exciting promos near you!</h4>
   <div class="content-wrapper">
-    <mat-tab-group animationDuration="0ms" [disablePagination]="true" mat-stretch-tabs class="nearby-result-tab">
+    <mat-tab-group animationDuration="0ms" [disablePagination]="true" mat-stretch-tabs class="nearby-result-tab" (selectedIndexChange)="tabChange($event)">
       <mat-tab>
         <ng-template mat-tab-label>
-          <img src="assets/images/icon-location.svg" />
+          <img [src]="locationIcon" />
           <span class="label-tab">Map</span>
         </ng-template>
         <div class="content-wrapper map-content">
@@ -24,7 +24,7 @@
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <img src="assets/images/icon-n-catalogue.svg" />
+          <img [src]="catalogueIcon" />
           <span class="label-tab">Catalogue</span>
         </ng-template>
         <ul class="tab-content">

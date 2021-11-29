@@ -20,7 +20,8 @@ export class NearbyDealsComponent implements OnInit{
   public rad = 5000;
   public currentPosition: IPosition;
   private queryParams: Params;
-
+  public locationIcon = 'assets/images/icon-location-filled.svg';
+  public catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
   constructor(
     public filterService: FilterService,
     private rewardService: RewardsService,
@@ -93,5 +94,25 @@ export class NearbyDealsComponent implements OnInit{
       locations: locations.length === filterValue.locations.length ? null : locations
     };
     this.route.navigate(['nearby'], { queryParams: queryParams });
+  }
+
+  public tabChange(idx:number) {
+    switch (idx) {
+      case 1:{
+        this.locationIcon = 'assets/images/icon-n-location.svg';
+        this.catalogueIcon = 'assets/images/icon-n-catalogue.svg';
+      }
+        break;
+      case 2:{
+        this.locationIcon = 'assets/images/icon-n-location.svg';
+        this.catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
+      }
+        break;
+      default: {
+        this.locationIcon = 'assets/images/icon-location-filled.svg';
+        this.catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
+      }
+        break;
+    }
   }
 }
