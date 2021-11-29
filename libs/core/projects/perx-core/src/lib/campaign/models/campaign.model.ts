@@ -160,7 +160,8 @@ export interface ICampaign {
   isOperating?: boolean;
   teamSize?: number;
   categoryTags?:ICategoryTags[];
-  tags?: ITag[]
+  tags?: ITag[];
+  score?: number;
 }
 
 export enum CommChannel {

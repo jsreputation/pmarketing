@@ -96,6 +96,7 @@ export interface IV4Reward {
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
   distance?: {value:number, unit_of_measure:string};
+  score?: number;
 }
 
 interface IV4Price {
@@ -333,7 +334,8 @@ export class V4RewardsService extends RewardsService {
       operatingHours,
       isOperating: reward.operating_now,
       tags: reward?.tags,
-      distance: {value:reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure}
+      distance: {value:reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure},
+      score: reward?.score
     };
   }
 
@@ -765,12 +767,19 @@ export class V4RewardsService extends RewardsService {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', pageSize.toString());
-    return this.http.get<IV4GetSearchRewardsResponse>(endpoint, { headers, params })
+    return this.http
+      .get<IV4GetSearchRewardsResponse>(endpoint, { headers, params })
       .pipe(
-        map((res: IV4GetSearchRewardsResponse) => res.data.rewards.map(item => item.reward)),
-        map((rewards: IV4Reward[]) => rewards.map(
-          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-        ))
+        map((res: IV4GetSearchRewardsResponse) =>
+          res.data.rewards.map((item) => {
+            return { ...item.reward, score: item.score };
+          })
+        ),
+        map((rewards: IV4Reward[]) =>
+          rewards.map((reward: IV4Reward) =>
+            V4RewardsService.v4RewardToReward(reward)
+          )
+        )
       );
   }
 }
