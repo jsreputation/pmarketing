@@ -2,7 +2,7 @@ import { IListItemModel } from '../../shared/models/list-item.model';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaignService, RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService, Sort } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
 import { Observable, forkJoin, combineLatest } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
@@ -82,8 +82,8 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
               null,
               'en',
               null,
-              null,
-              null,
+              Sort.descending,
+              'begins_at',
               queryObject.categoryIds
             ),
             this.campaignsService.getCampaigns(campaignsParams),

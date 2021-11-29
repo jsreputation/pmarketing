@@ -62,16 +62,16 @@ export const FILTER_DATA: IFilterModel = {
   ],
   tags: [
     {
+      name: 'featured',
+      type: 'featured',
+    },
+    {
       name: 'nearby',
       type: 'nearby'
     },
     {
-      name: 'deals',
-      type: 'deals',
-    },
-    {
-      name: 'featured',
-      type: 'featured',
+      name: 'new',
+      type: 'new',
     },
     {
       name: 'popular',
