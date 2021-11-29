@@ -25,7 +25,16 @@
         }
       }
     }
-  }  
+  }
+
+  .uppercase-first-letter {
+    display: block;
+    text-transform: lowercase;
+  }
+
+  .uppercase-first-letter::first-letter{
+    text-transform: uppercase;
+  }
 }
 
 .sign-up {
