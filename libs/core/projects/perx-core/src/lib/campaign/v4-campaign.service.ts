@@ -97,6 +97,7 @@ export interface IV4Campaign {
   operating_hour?: IV4OperatingHours;
   operating_now?: boolean;
   team_size?: number; // used for stamp team campaigns
+  score?: number;
 }
 
 type CountObject = {
@@ -553,7 +554,8 @@ export class V4CampaignService implements ICampaignService {
       displayProperties,
       customFields,
       categoryTags: campaign.category_tags,
-      tags: campaign.tags
+      tags: campaign.tags,
+      score: campaign?.score
     };
   }
 
@@ -727,12 +729,19 @@ export class V4CampaignService implements ICampaignService {
     if (pageSize) {
       params = params.set('size', pageSize.toString());
     }
-    return this.http.get<IV4GetSearchCampaignsResponse>(endpoint, { headers, params })
+    return this.http
+      .get<IV4GetSearchCampaignsResponse>(endpoint, { headers, params })
       .pipe(
-        map((res: IV4GetSearchCampaignsResponse) => res.data.campaigns.map(item => item.campaign)),
-        map((campaign: IV4Campaign[]) => campaign.map(
-          (campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign)
-        ))
+        map((res: IV4GetSearchCampaignsResponse) =>
+          res.data.campaigns.map((item) => {
+            return { ...item.campaign, score: item.score };
+          })
+        ),
+        map((campaign: IV4Campaign[]) =>
+          campaign.map((campaign: IV4Campaign) =>
+            V4CampaignService.v4CampaignToCampaign(campaign)
+          )
+        )
       );
   }
 

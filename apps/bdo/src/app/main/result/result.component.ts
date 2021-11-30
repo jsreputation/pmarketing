@@ -39,7 +39,7 @@ export class ResultComponent implements OnInit {
         this.isLoaded = false;
         this.searchResult = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards))
           .sort((firstReward,secondReward)=> {
-          return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
+          return secondReward.score - firstReward.score;
         });
         this.isLoaded = true;
       });

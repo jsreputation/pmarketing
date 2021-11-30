@@ -39,6 +39,7 @@ export interface IReward {
   isOperating?: boolean;
   tags?: ITag[];
   distance?: {value?:number, unitOfMeasure?:string};
+  score?: number;
 }
 
 export interface IRewardState {

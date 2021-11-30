@@ -10,4 +10,5 @@ export interface IListItemModel {
   documentType?: string;
   position?: string;
   tags: ITag[];
+  score?: number;
 } 
