@@ -230,60 +230,60 @@ input::placeholder {
   }
 }
 
-.tagged-header-wrapper {
-  .filter-tag {
-    border-radius: 12px;
-    padding: 5px 10px;
-    font-size: 12px;
-    background-color: $white;
-    min-height: 25px;
-    text-transform: uppercase;
-    border: 1px solid $grey;
-    font-weight: bold;
+
+.filter-tag {
+  border-radius: 12px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: $white;
+  min-height: 25px;
+  text-transform: uppercase;
+  border: 1px solid $grey;
+  margin: 5px;
+  font-weight: bold;
+
+  &.selected {
+    background-color: $grey;
+    color: $white;
+  }
+
+  &--popular {
+    border: 1px solid $pink;
+    color: $pink;
 
     &.selected {
-      background-color: $grey;
+      background-color: $pink;
       color: $white;
     }
+  }
 
-    &--popular {
-      border: 1px solid $pink;
-      color: $pink;
+  &--new {
+    border: 1px solid $teal;
+    color: $teal;
 
-      &.selected {
-        background-color: $pink;
-        color: $white;
-      }
+    &.selected {
+      background-color: $teal;
+      color: $white;
     }
+  }
 
-    &--new {
-      border: 1px solid $teal;
-      color: $teal;
+  &--nearby {
+    border: 1px solid $purple;
+    color: $purple;
 
-      &.selected {
-        background-color: $teal;
-        color: $white;
-      }
+    &.selected {
+      background-color: $purple;
+      color: $white;
     }
+  }
 
-    &--nearby {
-      border: 1px solid $purple;
-      color: $purple;
+  &--featured {
+    border: 1px solid $medium-orange;
+    color: $medium-orange;
 
-      &.selected {
-        background-color: $purple;
-        color: $white;
-      }
-    }
-
-    &--featured {
-      border: 1px solid $medium-orange;
-      color: $medium-orange;
-
-      &.selected {
-        background-color: $medium-orange;
-        color: $white;
-      }
+    &.selected {
+      background-color: $medium-orange;
+      color: $white;
     }
   }
 }
