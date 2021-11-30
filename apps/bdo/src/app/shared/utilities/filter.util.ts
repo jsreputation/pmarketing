@@ -45,12 +45,12 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
 
 function handleTags(filterValue: IFilterModel) {
   const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => `cardtype-${card.type}`);
-  const tags = filterValue.tags.filter(tag => tag.selected && tag.name !== 'new').map(tag => tag.type);
+  const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
   const locations = filterValue.locations.filter(location => location.selected).map(location => `location-${location.type}`);
 
   let tagsParams = locations.length === FILTER_DATA.locations.length ? [] : locations;
   tagsParams = tagsParams.concat(cardTypes.length !== FILTER_DATA.cardType.length ? cardTypes :[] )
-  .concat(tags.length === FILTER_DATA.tags.length ? [] : tags);
+  .concat(tags.length === FILTER_DATA.tags.length ? [] : tags?.filter(tag => tag !== 'new'));
   return tagsParams.length ? tagsParams : null;
 }
 
