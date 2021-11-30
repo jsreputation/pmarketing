@@ -1,12 +1,12 @@
 <div class="deal-location">
     <div class="body">
         <div class="title">
-            Location
+            {{displayMode === 'phone' ? 'Phone' : 'Location'}}
         </div>
         <div class="content" mat-ripple *ngFor="let item of location">
             <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
                 <div class="text">
-                    {{item.name}}
+                    {{displayMode === 'phone' ? item.phoneNumber : item.name}}
                 </div>
             </div>
             <div class="icon-call" *ngIf="item.phoneNumber && item.phoneNumber.length > 0">

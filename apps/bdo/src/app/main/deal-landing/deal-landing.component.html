@@ -12,7 +12,7 @@
       <p>
         <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
         <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="shareDeal()"/>
-        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigatePhonePage()"/>
       </p>
       <div class="description" [innerHTML]="dealDetail?.description"></div>
       <div class="description" [innerHTML]="dealDetail?.termsAndConditions"></div>
