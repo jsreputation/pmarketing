@@ -69,19 +69,6 @@ input::placeholder {
   &--nearby {
     background-color: $purple;
   }
-}
-
-.tag {
-  text-transform: uppercase;
-  border-radius: 15px;
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: bold;
-  color: $white;
-
-  &--nearby {
-    background-color: $purple;
-  }
 
   &--new {
     background-color: $green;
