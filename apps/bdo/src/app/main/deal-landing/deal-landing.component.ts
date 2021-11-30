@@ -51,6 +51,11 @@ export class DealLandingComponent implements OnInit {
   navigateLocationPage(){
     this.route.navigate([`deal-welcome/${this.dealDetail.id}/location`]);
   }
+
+  public navigatePhonePage(): void {
+    this.route.navigate([ `deal-welcome/${this.dealDetail.id}/location` ], { queryParams: { 'display': 'phone' } });
+  }
+
   shareDeal(){
     if (navigator.share) {
       const data = {
