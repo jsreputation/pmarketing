@@ -579,10 +579,14 @@ export class V4CampaignService implements ICampaignService {
             }
           } else if (key === 'categoryIds') {
             if (filterOptions.categoryIds) {
-              params = params.set('category_ids', filterOptions.categoryIds.join() || '');
+              params = params.set('category_ids', filterOptions.categoryIds.join('|') || '');
             }
           } else if (key === 'sortBy') {
             params = params.set('sort_by', filterOptions.sortBy || '');
+          }  else if (key === 'tags') {
+            if (filterOptions.tags) {
+              params = params.set('tags', filterOptions.tags.join('|') || '');
+            }
           } else {
             params = params.set(key, filterOptions[key]);
           }
