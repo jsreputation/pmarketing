@@ -119,15 +119,15 @@
     margin: 10px 0;
 
     &.button-apply-filter {
-      background-color: $main-blue;
+      background-color: $medium-blue;
       color: $white;
       border: none;
     }
 
     &.button-reset-filter {
       background-color: $white;
-      color: $main-blue;
-      border: 2px solid $main-blue;
+      color: $medium-blue;
+      border: 2px solid $medium-blue;
     }
   }
 }
