@@ -12,6 +12,7 @@ export class MerchantLocationPageComponent implements OnInit {
   public location: IMerchantLocation[] | IVoucherLocation[];
 
   private rid: number;
+  public displayMode: 'phone' | 'location';
   constructor(
     private voucherService: IVoucherService,
     private locationsService: LocationsService,
@@ -24,6 +25,7 @@ export class MerchantLocationPageComponent implements OnInit {
       .pipe(
         tap(param => this.rid = param.id),
         switchMap(() => this.activeRoute.queryParams),
+        tap(params => {this.displayMode = params.display === 'phone' ? params.display : 'location'}),
         switchMap((params) => iif(() => params.mode === 'campaign',
           this.locationsService.getMerchantLocationsFromCampaign(this.rid),
           this.voucherService.getRewardLocations(this.rid)
