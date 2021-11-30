@@ -474,11 +474,11 @@ export class V4RewardsService extends RewardsService {
       .set('page', page.toString())
       .set('size', pageSize.toString());
     if (tags) {
-      params = params.set('tags', tags.join());
+      params = params.set('tags', tags.join('|'));
     }
 
     if (categories) {
-      params = params.set('categories', categories.join());
+      params = params.set('categories', categories.join('|'));
     }
 
     if (filterFavorites) {
@@ -492,7 +492,7 @@ export class V4RewardsService extends RewardsService {
     }
 
     if (categoryIds) {
-      params = params.set('category_ids', categoryIds.join());
+      params = params.set('category_ids', categoryIds.join('|'));
     }
 
     return this.http
@@ -657,10 +657,10 @@ export class V4RewardsService extends RewardsService {
       params= params.set('size', pageSize.toString());
     }
     if (tags) {
-      params = params.set('tags', Array.isArray(tags) ? tags.join() : tags);
+      params = params.set('tags', Array.isArray(tags) ? tags.join('|') : tags);
     }
     if (categories) {
-      params = params.set('categories', Array.isArray(categories) ? categories.join(): categories);
+      params = params.set('categories', Array.isArray(categories) ? categories.join('|'): categories);
     }
     return this.http
       .get<IV4GetRewardsResponse>(
