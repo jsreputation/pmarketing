@@ -239,6 +239,7 @@ input::placeholder {
     min-height: 25px;
     text-transform: uppercase;
     border: 1px solid $grey;
+    font-weight: bold;
 
     &.selected {
       background-color: $grey;
