@@ -27,7 +27,7 @@ $bdo-app-theme: mat-light-theme($bbo-app-primary, $bdo-app-accent, $bdo-app-warn
 @include angular-material-theme($bdo-app-theme);
 
 $custom-typography: mat-typography-config(
-  $font-family: "Lato, Roboto, Helvetica, Arial, sans-serif",
+  $font-family: "Nunito, Lato, Roboto, Helvetica, Arial, sans-serif",
 );
 
 // Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
