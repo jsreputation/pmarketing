@@ -75,6 +75,10 @@
     "BY_MOBILE_NUMBER": "By Mobile Number",
     "MOBILE_NUMBER": "Enter customer mobile number",
     "MOBILE_NUMBER_IS": "Mobile No. is required",
-    "CONFIRM": "Confirm"
+    "CONFIRM": "Confirm",
+    "COUNTRY_HONGKONG": "Hong Kong Island",
+    "COUNTRY_MACAU": "Macau",
+    "COUNTRY_CHINA": "China",
+    "COUNTRY_SINGAPORE": "Singapore"
   }
 }

@@ -49,16 +49,24 @@ export class IdentifyCustomerComponent implements OnInit {
     return this.identifyUserForm.get('mobileNumber');
   }
 
+  public get countryCode(): AbstractControl | null {
+    return this.identifyUserForm.get('countryCode');
+  }
+
   private initForm(): void {
     this.identifyUserForm = this.fb.group({
       mobileNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      countryCode: ['852', Validators.required]
     });
   }
 
   public onSubmit(): void {
-    const mobileNumber: number = this.identifyUserForm.get('mobileNumber')?.value;
+    const mobileNumber = this.identifyUserForm.value.mobileNumber as string;
+    const countryCode = this.identifyUserForm.value.countryCode as string;
+    const codeAndMobile = countryCode + mobileNumber;
+    const cleanedMobileNo = Number(codeAndMobile.replace(/[^0-9]/g, ''));
 
-    this.merchantAdminService.getCustomerDetails(mobileNumber, '').subscribe(
+    this.merchantAdminService.getCustomerDetails(cleanedMobileNo, '').subscribe(
       (customer: IProfile) => {
         const data = JSON.stringify({
           verifiedUser: customer

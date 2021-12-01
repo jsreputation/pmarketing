@@ -10,6 +10,22 @@
                 [formGroup]="identifyUserForm"
                 (ngSubmit)="onSubmit()">
                 <mat-form-field class="full-width__input">
+                    <mat-select formControlName="countryCode">
+                        <mat-option default value="852">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_HONGKONG' | translate}}</ng-container>(+852)
+                        </mat-option>
+                        <mat-option value="853">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_MACAU' | translate}}</ng-container> (+853)
+                        </mat-option>
+                        <mat-option value="86">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_CHINA' | translate}}</ng-container> (+86)
+                        </mat-option>
+                        <mat-option value="65">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="full-width__input">
                     <mat-label>{{"IDENTIFY_USER.MOBILE_NUMBER"|translate}}</mat-label>
                     <input
                     matInput
