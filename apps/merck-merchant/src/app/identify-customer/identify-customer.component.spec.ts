@@ -18,6 +18,7 @@ import { IMerchantAdminService, ThemesService } from '@perxtech/core';
 import { MerchantQrscannerModule } from '@perxtech/bcm-pages';
 import { HeaderComponent } from '../header/header.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('IdentifyCustomerComponent', () => {
   let component: IdentifyCustomerComponent;
@@ -46,6 +47,7 @@ describe('IdentifyCustomerComponent', () => {
         MatTabsModule,
         MerchantQrscannerModule,
         MatIconModule,
+        MatSelectModule,
         TranslateModule.forRoot()],
       providers: [
         { provide: ActivatedRoute, useValue: {params} },

@@ -75,6 +75,10 @@
     "BY_MOBILE_NUMBER": "By Mobile Number",
     "MOBILE_NUMBER": "Enter customer mobile number",
     "MOBILE_NUMBER_IS": "請輸入手機號碼",
-    "CONFIRM": "確認"
+    "CONFIRM": "確認",
+    "COUNTRY_HONGKONG": "香港",
+    "COUNTRY_CHINA": "澳门",
+    "COUNTRY_MACAU": "中国",
+    "COUNTRY_SINGAPORE": "新加坡"
   }
 }
