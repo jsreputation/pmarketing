@@ -151,6 +151,7 @@ blackcomb_app_base=(
   prudential-pulse
   razer
   rush
+  scphoenix
   siampiwat
   techfis
   zeal
