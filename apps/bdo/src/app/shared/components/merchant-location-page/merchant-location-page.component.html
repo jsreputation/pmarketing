@@ -6,7 +6,10 @@
         <div class="content" mat-ripple *ngFor="let item of location">
             <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
                 <div class="text">
-                    {{displayMode === 'phone' ? item.phoneNumber : item.name}}
+                    {{item.name}}
+                </div>
+                <div class="text" *ngIf="item.phoneNumber">
+                    {{item.phoneNumber}}
                 </div>
             </div>
             <div class="icon-call" *ngIf="item.phoneNumber && item.phoneNumber.length > 0">
