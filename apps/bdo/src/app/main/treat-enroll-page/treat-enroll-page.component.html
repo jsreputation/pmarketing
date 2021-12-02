@@ -37,7 +37,9 @@
         </div>
     </div>
     <div class="enroll">
-        <button mat-stroked-button color="primary" class="enroll-button" (click)="enroll()">Submit</button>
+        <button mat-stroked-button color="primary" class="enroll-button"
+                [disabled]="!enrollForm.valid"
+                (click)="enroll()">Submit</button>
     </div>
 </div>
 </ng-container>
