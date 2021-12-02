@@ -12,12 +12,12 @@
         <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
     </a>
     <div class="reminder" [innerHTML]="campaign.displayProperties?.enrolmentPage?.body"></div>
+    <div class="note">Sent to your registered mobile number via BDO Deals Viber/SMS</div>
     <div class="promoID">
         <div class="title">
             Promo ID
         </div>
         <input type="text" class="input-promo" placeholder="e.g. MMSP000001" formControlName="promoId">
-        <div class="note">Sent to your registered mobile number via BDO Deals Viber/SMS</div>
         <mat-error *ngIf="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required')">
             Promo ID is <strong>required</strong>
           </mat-error>
