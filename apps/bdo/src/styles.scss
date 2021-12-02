@@ -49,6 +49,10 @@ input::placeholder {
   font-family: var(--font, 'Nunito', sans-serif);
 }
 
+.mat-button-disabled {
+  background-color: $light-gray !important;
+}
+
 .bg-transparent {
   background: transparent;
 }
