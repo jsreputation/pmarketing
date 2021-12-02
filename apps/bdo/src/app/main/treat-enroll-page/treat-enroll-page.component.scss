@@ -53,6 +53,12 @@ $margin-bottom: 15px;
     }
   }
 
+  .note {
+    font-size: 14px;
+    color: $near-black;
+    margin-bottom: $margin-bottom;
+  }
+
   .promoID {
     display: flex;
     flex-direction: column;
@@ -77,11 +83,6 @@ $margin-bottom: 15px;
 
     .input-promo:focus-visible {
       outline: 1px solid $extreme-light-blue;
-    }
-
-    .note {
-      font-size: 11px;
-      color: $light-black;
     }
   }
 
