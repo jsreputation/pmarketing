@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ThemesService, ITheme, IMerchantAdminService, NotificationService } from '@perxtech/core';
+import { Router, NavigationExtras } from '@angular/router';
+import { ThemesService, ITheme, IMerchantAdminService, NotificationService, IProfile } from '@perxtech/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -51,9 +51,17 @@ export class UserSignupComponent implements OnInit {
     const countryCode = this.userSignUpForm.value.countryCode as string;
     const codeAndMobile = countryCode + mobileNumber;
     const cleanedMobileNo = codeAndMobile.replace(/[^0-9]/g, ''); // remove non numeric and special characters
-    this.merchantAdminService.signUpNewUser(cleanedMobileNo).subscribe(() => {
+    this.merchantAdminService.signUpNewUser(cleanedMobileNo).subscribe((profile: IProfile) => {
+      const data = JSON.stringify({
+        verifiedUser: profile
+      });
+      const navigationExtras: NavigationExtras = {
+            state: {
+              data
+            }
+          };
       this.notificationService.addSnack('User signed up successfully');
-      this.router.navigate(['/home']);
+      this.router.navigate(['/order'], navigationExtras);
     }, err => {
       this.notificationService.addSnack(err?.error?.message);
     });
