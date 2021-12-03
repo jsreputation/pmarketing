@@ -61,32 +61,6 @@ input::placeholder {
   padding: 0;
 }
 
-.tag {
-  text-transform: uppercase;
-  border-radius: 15px;
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: bold;
-  color: $white;
-  background: $dark-grey;
-
-  &--nearby {
-    background-color: $purple;
-  }
-
-  &--new {
-    background-color: $green;
-  }
-
-  &--popular {
-    background-color: $pink;
-  }
-
-  &--featured {
-    background-color: $medium-orange;
-  }
-}
-
 .search-result-tab, .nearby-deals-wrapper {
   .mat-tab-label {
     height: 46px !important;
@@ -238,6 +212,32 @@ input::placeholder {
   }
 }
 
+
+.tag {
+  text-transform: uppercase;
+  border-radius: 15px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: $white;
+  background: $dark-grey;
+
+  &--nearby {
+    background-color: $purple;
+  }
+
+  &--new {
+    background-color: $green;
+  }
+
+  &--popular {
+    background-color: $pink;
+  }
+
+  &--featured {
+    background-color: $medium-orange;
+  }
+}
 
 .mat-chip.mat-standard-chip.filter-tag {
   border-radius: 12px;
