@@ -212,39 +212,19 @@ input::placeholder {
   }
 }
 
-//
-//.tag {
-//  text-transform: uppercase;
-//  border-radius: 15px;
-//  padding: 5px 12px;
-//  font-size: 12px;
-//  font-weight: bold;
-//  color: $white;
-//  background: $dark-grey;
-//
-//  &--nearby {
-//    background-color: $purple;
-//  }
-//
-//  &--new {
-//    background-color: $green;
-//  }
-//
-//  &--popular {
-//    background-color: $pink;
-//  }
-//
-//  &--featured {
-//    background-color: $medium-orange;
-//  }
-//}
 
-.mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
+.tag {
+  border-radius: 15px;
+  padding: 5px 12px;
+}
+.filter-tag {
   border-radius: 12px;
   padding: 5px 10px;
+  min-height: 25px;
+}
+.mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
   font-size: 12px;
   background-color: $white;
-  min-height: 25px;
   text-transform: uppercase;
   border: 1px solid $grey;
   margin: 5px;
