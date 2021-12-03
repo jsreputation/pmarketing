@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ICampaign,
-  ICampaignService,
+  ICampaignService, ITag,
   LocationsService
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 
 @Component({
   selector: 'bdo-treat-welcome',
@@ -109,5 +110,9 @@ export class TreatWelcomeComponent implements OnInit {
         this.copyToClipboardTxt = res['TREAT_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['TREAT_PAGE.CLIPBOARD_ERROR_TXT'];
       });
+  }
+
+  public existsInFilters(tag: ITag): boolean {
+    return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
 }
