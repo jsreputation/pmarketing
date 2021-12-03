@@ -13,7 +13,15 @@ import {
   WEngagementType,
 } from '@perxtech/whistler';
 
-import { CampaignState, CampaignType, ICampaign, ICampaignOutcome, ICampaignRule, IReferral } from './models/campaign.model';
+import {
+  CampaignState,
+  CampaignType,
+  IBDOCampaignEnrolment,
+  ICampaign,
+  ICampaignOutcome,
+  ICampaignRule,
+  IReferral
+} from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
@@ -168,7 +176,7 @@ export class WhistlerCampaignService implements ICampaignService {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
-  public  bdoCampaignEnrol(id:number,promoID:string): Observable<boolean>{
+  public  bdoCampaignEnrol(id:number,promoID:string): Observable<IBDOCampaignEnrolment>{
     throw new Error('Method not implemented.');
   }
   // @ts-ignore

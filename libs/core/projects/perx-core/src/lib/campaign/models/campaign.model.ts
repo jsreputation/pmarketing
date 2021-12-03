@@ -234,3 +234,12 @@ export interface IOperatingHours {
   days: number[]; // expects 0 - 6, Sunday - Saturday
   formattedOffset: string;
 }
+
+export interface IBDOCampaignEnrolment {
+  id: number;
+  campaignId: number;
+  campaignName: string;
+  enrolledAt: Date;
+  enrolmentReference: string;
+  userAccountId: number;
+}
