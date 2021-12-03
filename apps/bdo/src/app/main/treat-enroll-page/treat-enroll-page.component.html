@@ -17,7 +17,8 @@
         <div class="title">
             Promo ID
         </div>
-        <input type="text" class="input-promo" placeholder="e.g. MMSP000001" formControlName="promoId">
+        <input type="text" placeholder="e.g. MMSP000001" formControlName="promoId"
+        [className]="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required') ? 'input-promo error': 'input-promo'">
         <mat-error *ngIf="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required')">
             Promo ID is <strong>required</strong>
           </mat-error>
