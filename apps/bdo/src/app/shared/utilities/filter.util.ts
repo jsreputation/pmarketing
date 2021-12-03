@@ -31,7 +31,7 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
       ...item,
       selected: true
     } : item),
-    cardType: filterValue.cardType.map(item => !queryParams.cardType || equalOrIncludes(item.type, queryParams.cardType) ? {
+    cardType: filterValue.cardType.map(item => queryParams.cardType && equalOrIncludes(item.type, queryParams.cardType) ? {
       ...item,
       selected: true
     } : item),
