@@ -27,15 +27,15 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
           ) : []
         } : cate
     ),
-    tags: filterValue.tags.map(item => !queryParams.tags || equalOrIncludes(item.type, queryParams.tags) ? {
+    tags: filterValue.tags.map(item => queryParams.tags && equalOrIncludes(item.type, queryParams.tags) ? {
       ...item,
       selected: true
     } : item),
-    cardType: filterValue.cardType.map(item => !queryParams.cardType || equalOrIncludes(item.type, queryParams.cardType) ? {
+    cardType: filterValue.cardType.map(item => queryParams.cardType && equalOrIncludes(item.type, queryParams.cardType) ? {
       ...item,
       selected: true
     } : item),
-    locations: filterValue.locations.map(item => !queryParams.locations || equalOrIncludes(item.type, queryParams.locations) ? {
+    locations: filterValue.locations.map(item => queryParams.locations && equalOrIncludes(item.type, queryParams.locations) ? {
       ...item,
       selected: true
     } : item),
