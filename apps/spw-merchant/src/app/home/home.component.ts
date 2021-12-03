@@ -6,8 +6,8 @@ import { MerchantLandingPageComponent } from '@perxtech/bcm-pages';
 
 @Component({
   selector: 'app-home',
-  templateUrl: '../../../../../libs/bcm-pages/projects/perx-bcm-pages/src/lib/landing-page/landing-page.component.html',
-  styleUrls: ['../../../../../libs/bcm-pages/projects/perx-bcm-pages/src/lib/landing-page/landing-page.component.scss']
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent extends MerchantLandingPageComponent {
 
