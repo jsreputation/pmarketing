@@ -34,3 +34,4 @@ $custom-typography: mat-typography-config(
 @include mat-base-typography($custom-typography);
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include mat-core($custom-typography);
+$warn-color: mat-color(map-get($bdo-app-theme, warn));

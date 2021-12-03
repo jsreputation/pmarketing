@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import '../../../theme/theme.scss';
 
 $margin-bottom: 15px;
 
@@ -75,6 +75,10 @@ $margin-bottom: 15px;
       padding: 10px;
       max-width: 355px;
       margin: 5px 0;
+
+      &.error {
+        border: 1px solid $warn-color; // inherit colour from mat-error itself
+      }
     }
 
     .input-promo:active {
