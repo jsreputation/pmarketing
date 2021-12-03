@@ -8,7 +8,8 @@ import {
 import { switchMap } from 'rxjs/operators';
 import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'bdo-treat-welcome',
@@ -38,7 +39,7 @@ export class TreatWelcomeComponent implements OnInit {
       .pipe(
         switchMap((param: Params) => combineLatest([
           this.campaignService.getCampaign(param.id),
-          this.locationsService.getMerchantLocationsFromCampaign(param.id)
+          this.locationsService.getMerchantLocationsFromCampaign(param.id).pipe(catchError(() => of([])))
         ]))
       )
       .subscribe(([campaign, locations]) => {

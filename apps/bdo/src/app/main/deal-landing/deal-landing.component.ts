@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IReward, ITag, NotificationService, RewardsService, IVoucherService } from '@perxtech/core';
 import { FeaturedDeals } from '../../models/featured-deals.models';
-import { combineLatest } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { TranslateService } from '@ngx-translate/core';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
+import { catchError } from 'rxjs/operators';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
@@ -37,8 +38,8 @@ export class DealLandingComponent implements OnInit {
     this.activeRoute.params.subscribe((param) => {
       combineLatest([
         this.rewardService.getReward(param.rid),
-        this.rewardService.getRewardsRelated(param.rid, 5),
-        this.voucherService.getRewardLocations(param.rid)
+        this.rewardService.getRewardsRelated(param.rid, 5).pipe(catchError(() => of([]))),
+        this.voucherService.getRewardLocations(param.rid).pipe(catchError(() => of([])))
       ]).subscribe(([dealDetail, similarDeals, locations]) => {
         this.showLocation = !!locations.length;
         this.dealDetail = dealDetail;
