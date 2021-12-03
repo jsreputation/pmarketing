@@ -59,7 +59,6 @@ export class TreatEnrollPageComponent implements OnInit {
           },
           ((err) => {
             if (err.error) {
-              console.log(err);
               this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
                 .subscribe(
                   (errMessage: string) => {
