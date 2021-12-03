@@ -2,7 +2,7 @@
     <img [src]="reward.thumbnail ? reward.thumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
     <div class="tag-group">
     <ng-container *ngFor="let tag of reward.tags">
-      <span class="tag" [ngClass]="'tag--' + tag.name" *ngIf="existsInFilters(tag)">
+      <span class="selected tag" [ngClass]="'tag--' + tag.name" *ngIf="existsInFilters(tag)">
         {{ tag.name }}
       </span>
     </ng-container>
