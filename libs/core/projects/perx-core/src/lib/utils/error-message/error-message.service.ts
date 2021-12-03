@@ -128,6 +128,20 @@ export class ErrorMessageService {
           break;
       }
     }
+
+    if (errorHttpStatus === 403 ) {
+      switch (errorCode) {
+        case 9:
+          if (errMessage && errMessage.match(/rights to this object/i)) {
+            errorKey = 'ERRORS.USER_NOT_ELIGIBLE';
+          }
+          break;
+        default:
+          // Sorry, something went wrong
+          errorKey = 'ERRORS.GENERIC';
+          break;
+      }
+    }
     return this.translateService.get(errorKey);
   }
 }

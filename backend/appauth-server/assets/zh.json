@@ -280,7 +280,8 @@
     "INVALID_INVITE_CODE": "Invalid invite code",
     "TEAM_FULL": "This team is already full",
     "RESERVATION_EXPIRED": "Your game session has expired, please try again",
-    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again"
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling"
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",
