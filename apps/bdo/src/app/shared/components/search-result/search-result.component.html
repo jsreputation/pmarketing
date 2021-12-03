@@ -8,7 +8,7 @@
     <div class='ghost-card' *ngIf='!isLoaded'>
       <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
     </div>
-    <ul class='search-result-wrapper'>
+    <ul class='search-result-wrapper' id="catalogue">
       <bdo-large-list-item *ngFor='let item of result' [reward]='item'
                            (click)='selectedItem(item)'>
       </bdo-large-list-item>
@@ -24,8 +24,10 @@
       <bdo-ghost-cards [@fadeOut]='!ghostRewards.length' [ghosts]='ghostRewards'></bdo-ghost-cards>
     </div>
     <ul class='search-result-wrapper'>
-      <bdo-list-item *ngFor='let item of result' (click)='selectedItem(item)' [reward]='item'>
-      </bdo-list-item>
+      <div class="search-item-wrapper">
+        <bdo-list-item *ngFor='let item of result' (click)='selectedItem(item)' [reward]='item'>
+        </bdo-list-item>
+      </div>
     </ul>
   </mat-tab>
 </mat-tab-group>
