@@ -27,7 +27,7 @@
           <img [src]="catalogueIcon" />
           <span class="label-tab">Catalogue</span>
         </ng-template>
-        <ul class="tab-content">
+        <ul class="tab-content" id="catalogue">
           <ng-container *ngIf="rewardsItemModel?.length; else noResult">
             <bdo-large-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)">
             </bdo-large-list-item>

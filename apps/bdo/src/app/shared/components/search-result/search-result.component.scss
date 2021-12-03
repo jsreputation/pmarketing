@@ -15,42 +15,10 @@
     margin: 0;
     min-height: calc(100vh - 195px);
 
-    .item {
-      border-radius: 12px;
-      box-shadow: 0 0 16px $medium-black;
-      list-style-type: none;
-      margin: 16px;
-      background: $white 0 0% no-repeat padding-box;
-
-      .tag-group {
-        .tag {
-          top: -13px;
-          position: relative;
-          margin: 5px;
-        }
-
-        > .tag:first-child {
-          margin-left: 10px;
-        }
-      }
-
-      .container {
-        position: relative;
-        padding: 16px;
-
-        .title {
-          padding: 0;
-          margin: 0;
-          color: $medium-blue;
-          font-size: 16px;
-        }
-
-        .description {
-          padding: 0;
-          margin: 10px 0;
-          font-size: 12px;
-          color: $light-black;
-        }
+    @media screen and (min-width: $desktop-width) {
+      &#catalogue{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
       }
     }
   }
