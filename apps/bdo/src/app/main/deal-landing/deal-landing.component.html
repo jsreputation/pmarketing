@@ -5,7 +5,7 @@
       <h2 class="title">{{dealDetail?.name}}</h2>
       <p *ngIf="dealDetail?.tags">
         <ng-container *ngFor="let tag of dealDetail?.tags">
-          <span class="tag tag--{{tag.name}}" *ngIf="existsInFilters(tag)">{{tag.name}}</span>
+          <span class="selected tag tag--{{tag.name}}" *ngIf="existsInFilters(tag)">{{tag.name}}</span>
         </ng-container>
 
       </p>

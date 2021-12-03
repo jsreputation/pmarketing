@@ -212,34 +212,34 @@ input::placeholder {
   }
 }
 
+//
+//.tag {
+//  text-transform: uppercase;
+//  border-radius: 15px;
+//  padding: 5px 12px;
+//  font-size: 12px;
+//  font-weight: bold;
+//  color: $white;
+//  background: $dark-grey;
+//
+//  &--nearby {
+//    background-color: $purple;
+//  }
+//
+//  &--new {
+//    background-color: $green;
+//  }
+//
+//  &--popular {
+//    background-color: $pink;
+//  }
+//
+//  &--featured {
+//    background-color: $medium-orange;
+//  }
+//}
 
-.tag {
-  text-transform: uppercase;
-  border-radius: 15px;
-  padding: 5px 12px;
-  font-size: 12px;
-  font-weight: bold;
-  color: $white;
-  background: $dark-grey;
-
-  &--nearby {
-    background-color: $purple;
-  }
-
-  &--new {
-    background-color: $green;
-  }
-
-  &--popular {
-    background-color: $pink;
-  }
-
-  &--featured {
-    background-color: $medium-orange;
-  }
-}
-
-.mat-chip.mat-standard-chip.filter-tag, .filter-tag {
+.mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
   border-radius: 12px;
   padding: 5px 10px;
   font-size: 12px;
