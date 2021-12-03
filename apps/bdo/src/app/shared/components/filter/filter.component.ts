@@ -48,8 +48,8 @@ export class FilterComponent implements OnInit {
 
   resetFilterClick() {
     this.filterSource.categories.map(category=> category.selected = false);
-    this.filterSource.tags.map(tag=> tag.selected = true);
-    this.filterSource.locations.map(location=> location.selected = true);
+    this.filterSource.tags.map(tag=> tag.selected = false);
+    this.filterSource.locations.map(location=> location.selected = false);
     this.dialogRef.close(this.filterSource);
   }
 

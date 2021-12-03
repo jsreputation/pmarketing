@@ -27,7 +27,7 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
           ) : []
         } : cate
     ),
-    tags: filterValue.tags.map(item => !queryParams.tags || equalOrIncludes(item.type, queryParams.tags) ? {
+    tags: filterValue.tags.map(item => queryParams.tags && equalOrIncludes(item.type, queryParams.tags) ? {
       ...item,
       selected: true
     } : item),
@@ -35,7 +35,7 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
       ...item,
       selected: true
     } : item),
-    locations: filterValue.locations.map(item => !queryParams.locations || equalOrIncludes(item.type, queryParams.locations) ? {
+    locations: filterValue.locations.map(item => queryParams.locations && equalOrIncludes(item.type, queryParams.locations) ? {
       ...item,
       selected: true
     } : item),
