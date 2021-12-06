@@ -1,8 +1,10 @@
 <div class="category" *ngIf="category">
     <div class="title">
         <div class="title-content">
-            <h3 *ngIf="!isTag">{{categoryHeader.displayName}}</h3>
-            <span *ngIf="isTag" class="selected tag tag--{{categoryHeader.className}}">{{categoryHeader.displayName}}</span>
+            <h3 *ngIf="!isTag">{{categoryHeaders[0].displayName}}</h3>
+            <ng-container *ngIf="isTag">
+                <span *ngFor="let tagHeader of categoryHeaders" class="selected tag tag--{{tagHeader.className}}">{{tagHeader.displayName}}</span>
+            </ng-container>
         </div>
         <div class="filter">
             <button mat-button class="filter" (click)="filter()" *ngIf="filterService.currentValue">

@@ -3,6 +3,7 @@ import { FilterService } from '../../../shared/services/filter.service';
 import { Router } from '@angular/router';
 import { ItemModel } from '../../../shared/models/item.model';
 import { CATEGORY_CONFIGURATIONS } from '../../../shared/constants/category-configuration.const';
+import { IOptionsModel } from '../../../shared/models/filter.model';
 
 @Component({
   selector: 'bdo-category',
@@ -13,7 +14,7 @@ export class CategoryComponent implements OnInit {
   @Input() categoryCode = '';
   category: ItemModel;
   selectedSubcategory: ItemModel;
-  categoryHeader: { displayName:string, className:string };
+  categoryHeaders: { displayName: string, className: string }[];
   isTag = false;
 
   constructor(
@@ -46,20 +47,21 @@ export class CategoryComponent implements OnInit {
             ) : []
         };
         if (!this.category.name) {
-          const selectedTag = filterValue.tags.filter((tag) => tag.selected);
-          this.isTag = selectedTag.length > 0 && selectedTag.length < filterValue.tags.length;
-          const tagName = !this.isTag ? 'All' : selectedTag[0].name;
+          const selectedTags = filterValue.tags.filter((tag) => tag.selected);
+          this.isTag = selectedTags.length > 0 && selectedTags.length < filterValue.tags.length;
           if (this.isTag) {
-            this.categoryHeader = {
-              displayName: tagName === 'featured' ? `What's new` : tagName,
-              className: tagName === 'featured' ? 'new' : tagName,
-            };
+            this.categoryHeaders = selectedTags.map((selectedTag: IOptionsModel) => {
+              return {
+                displayName: selectedTag.name === 'featured' ? `What's new` : selectedTag.name,
+                className: selectedTag.name === 'featured' ? 'new' : selectedTag.name,
+              }
+            });
           } else {
-            this.categoryHeader = { displayName: tagName, className: '' };
+            this.categoryHeaders = [{ displayName: 'All', className: '' }];
           }
         } else {
           this.isTag = false;
-          this.categoryHeader = { displayName:this.category.name, className:'' };
+          this.categoryHeaders = [{ displayName: this.category.name, className:'' }];
         }
         this.selectedSubcategory = this.category.children.find(item => item.selected);
       }
