@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaign, ICampaignService, RewardsService, Sort } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
-import { Observable, forkJoin, combineLatest, of } from 'rxjs';
+import { Observable, forkJoin, combineLatest, of, iif } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
@@ -89,14 +89,16 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             this.campaignsService.getCampaigns(campaignsParams)
               .pipe(
                 catchError(() => of([])),
-                // for each campaign, get detailed version
-                mergeMap((campaigns: ICampaign[]) =>
+                mergeMap((campaigns:ICampaign[]) => iif(() => campaigns.length > 0,
+                  // for each campaign, get detailed version=
                   combineLatest(
                     ...campaigns.map((campaign) =>
                       this.campaignsService
                         .getCampaign(campaign.id)
                         .pipe(catchError(() => of(void 0)))
                     )
+                  ),
+                  of([])
                   )
                 )
               )
