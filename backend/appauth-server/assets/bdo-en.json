@@ -421,6 +421,7 @@
     "TEAM_FULL": "This team is already full",
     "RESERVATION_EXPIRED": "Your game session has expired, please try again",
     "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
     "BDO_PROMO_ID_INVALID": "You have provided an incorrect PROMO ID. Please try again."
   },
   "QUEST_CAMPAIGN": {

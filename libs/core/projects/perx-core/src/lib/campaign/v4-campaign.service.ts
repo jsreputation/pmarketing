@@ -8,6 +8,7 @@ import {
   CampaignState,
   CampaignType,
   IBadgeOutcome,
+  IBDOCampaignEnrolment,
   ICampaign,
   ICampaignOutcome,
   ICampaignRule,
@@ -199,6 +200,19 @@ interface IV4GetSearchCampaignsResponse {
       score: number
     }[]
   }
+}
+
+interface IV4BdoEnrolmentResponse {
+  data: IV4BdoEnrolment;
+}
+
+interface IV4BdoEnrolment {
+  id: number;
+  campaign_id: number;
+  campaign_name: string;
+  enrolled_at: Date;
+  enrolment_reference: string;
+  user_account_id: number;
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -705,22 +719,25 @@ export class V4CampaignService implements ICampaignService {
         )
       );
   }
-  public bdoCampaignEnrol(id:number,promoID:string): Observable<boolean>{
+
+  public bdoCampaignEnrol(id: number, promoID: string): Observable<IBDOCampaignEnrolment> {
     return this.http
-    .post(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, {
-      promo_id: promoID,
-    },{
-      observe: 'response',
-    })
-    .pipe(
-      map((response: HttpResponse<any>) =>
-     {
-     return response.status === 200 ? true : false}
-      ),
-      catchError((error: HttpErrorResponse) =>
-        error.status === 403 ? of(false) : throwError(error)
-      )
-    );
+      .post<IV4BdoEnrolmentResponse>(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, { promo_id: promoID }).pipe(
+        map((response: IV4BdoEnrolmentResponse) => response.data),
+        map((enrolment: IV4BdoEnrolment) => {
+          return {
+            id: enrolment.id,
+            campaignId: enrolment.campaign_id,
+            campaignName: enrolment.campaign_name,
+            enrolledAt: enrolment.enrolled_at,
+            enrolmentReference: enrolment.enrolment_reference,
+            userAccountId: enrolment.user_account_id,
+          };
+        }),
+        catchError((error: HttpErrorResponse) =>
+          throwError(error)
+        )
+      );
   }
 
   public searchCampaigns(text: string, page?: number, pageSize?: number, locale = 'en'): Observable<ICampaign[]> {

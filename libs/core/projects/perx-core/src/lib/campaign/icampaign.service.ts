@@ -1,5 +1,12 @@
 import { Observable } from 'rxjs';
-import { CampaignType, ICampaign, ICampaignOutcome, ICampaignRule, IReferral } from './models/campaign.model';
+import {
+  CampaignType,
+  IBDOCampaignEnrolment,
+  ICampaign,
+  ICampaignOutcome,
+  ICampaignRule,
+  IReferral
+} from './models/campaign.model';
 import { GameType } from '../game/game.model';
 
 export interface ICampaignFilterOptions {
@@ -22,6 +29,6 @@ export abstract class ICampaignService {
   public abstract getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]>;
   public abstract enrolIntoCampaign(campaignId: number): Observable<boolean>;
   public abstract getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>;
-  public abstract bdoCampaignEnrol(id:number,promoID:string): Observable<boolean>;
+  public abstract bdoCampaignEnrol(id:number,promoID:string): Observable<IBDOCampaignEnrolment>;
   public abstract searchCampaigns(text: string, page?: number, pageSize?: number, locale?: string): Observable<ICampaign[]>
 }
