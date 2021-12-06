@@ -90,6 +90,7 @@ export class FilterComponent implements OnInit {
   public selectCategory(value, idx) {
     const formArray = (this.filterForm.controls.categories as FormArray).controls;
     formArray.forEach((item, index) => {
+      // logic for clearing other category selections on selecting in a different category
       if (index != idx && value) {
         item.setValue({ ...item.value,
           selected: false,
