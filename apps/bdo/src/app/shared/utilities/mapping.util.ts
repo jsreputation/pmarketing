@@ -25,7 +25,7 @@ export function mapCampaignsToListItem(campaigns: ICampaign[]): IListItemModel[]
       thumbnail: campaign.thumbnailUrl,
       categoryTags: campaign.categoryTags,
       name: campaign.name,
-      description: campaign.displayProperties?.landingPage?.subHeadline,
+      description: campaign.displayProperties?.landingPage?.subHeadline || campaign.displayProperties?.landingPage?.subHeading.text,
       documentType: 'campaign',
       createdAt: campaign.beginsAt,
       tags: campaign.tags,
