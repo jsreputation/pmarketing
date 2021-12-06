@@ -64,18 +64,22 @@ export const FILTER_DATA: IFilterModel = {
     {
       name: 'featured',
       type: 'featured',
+      selected: false
     },
     {
       name: 'nearby',
-      type: 'nearby'
+      type: 'nearby',
+      selected: false
     },
     {
       name: 'new',
       type: 'new',
+      selected: false
     },
     {
       name: 'popular',
       type: 'popular',
+      selected: false
     }
   ],
   locations: [
