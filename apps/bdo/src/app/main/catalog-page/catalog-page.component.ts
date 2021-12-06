@@ -1,10 +1,10 @@
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaignService, RewardsService, Sort } from '@perxtech/core';
+import { ICampaign, ICampaignService, RewardsService, Sort } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
-import { Observable, forkJoin, combineLatest } from 'rxjs';
+import { Observable, forkJoin, combineLatest, of } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
@@ -86,7 +86,20 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
               'begins_at',
               queryObject.categoryIds
             ),
-            this.campaignsService.getCampaigns(campaignsParams),
+            this.campaignsService.getCampaigns(campaignsParams)
+              .pipe(
+                catchError(() => of([])),
+                // for each campaign, get detailed version
+                mergeMap((campaigns: ICampaign[]) =>
+                  combineLatest(
+                    ...campaigns.map((campaign) =>
+                      this.campaignsService
+                        .getCampaign(campaign.id)
+                        .pipe(catchError(() => of(void 0)))
+                    )
+                  )
+                )
+              )
           ]);
         }),
         filter(value => value.length),
