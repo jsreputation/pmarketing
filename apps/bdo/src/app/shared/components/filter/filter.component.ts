@@ -90,6 +90,7 @@ export class FilterComponent implements OnInit {
   public selectCategory(value, idx) {
     const formArray = (this.filterForm.controls.categories as FormArray).controls;
     formArray.forEach((item, index) => {
+      // logic for clearing other category selections on selecting in a different category
       if (index != idx && value) {
         item.setValue({ ...item.value,
           selected: false,
@@ -101,7 +102,7 @@ export class FilterComponent implements OnInit {
 
   public locationClick(value:any, index:number){
       this.filterSource.locations = this.filterSource.locations.map(
-        (item, idx) => index === idx ? { ...item, selected: value} : { ...item, selected: false}
+        (item, idx) => index === idx ? { ...item, selected: value} : { ...item}
       );
     (this.filterForm.get('locations') as FormArray).setValue([...this.filterSource.locations]);
     (this.filterForm.get('locations') as FormArray).updateValueAndValidity();
