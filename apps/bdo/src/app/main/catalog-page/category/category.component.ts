@@ -76,14 +76,14 @@ export class CategoryComponent implements OnInit {
 
   selectSubcategory(selectedItem: ItemModel) {
     this.category.children = this.category.children
-      .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item, selected: false });
+      .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item});
     this.selectedSubcategory = this.category.children.find(item => item.selected);
     this.buildCategoryParamsAndNavigate();
   }
 
   selectSubcategoryChildren(selectedItem: ItemModel) {
     this.selectedSubcategory.children = this.selectedSubcategory.children
-      .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item, selected: false });
+      .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item});
     this.buildCategoryParamsAndNavigate();
   }
 
