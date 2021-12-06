@@ -57,7 +57,7 @@ export class FilterComponent implements OnInit {
     const value = (this.filterForm.get('tags') as FormArray).controls[index]
       .value;
       this.filterSource.tags = this.filterSource.tags.map(
-        (item, idx) => index === idx ? { ...item, selected: !value} : { ...item, selected: false}
+        (item, idx) => index === idx ? { ...item, selected: !value} : { ...item,}
       );
     (this.filterForm.get('tags') as FormArray).setValue([...this.filterSource.tags.map(tag=>tag.selected)]);
     (this.filterForm.get('tags') as FormArray).updateValueAndValidity();
