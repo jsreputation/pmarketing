@@ -52,8 +52,8 @@ export class CategoryComponent implements OnInit {
           if (this.isTag) {
             this.categoryHeaders = selectedTags.map((selectedTag: IOptionsModel) => {
               return {
-                displayName: selectedTag.name === 'featured' ? `What's new` : selectedTag.name,
-                className: selectedTag.name === 'featured' ? 'new' : selectedTag.name,
+                displayName: selectedTag.name === 'new' ? `What's new` : selectedTag.name,
+                className: selectedTag.name,
               }
             });
           } else {
