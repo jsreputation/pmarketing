@@ -1,10 +1,10 @@
-import { switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ICampaignService, RewardsService } from '@perxtech/core';
+import { ICampaign, ICampaignService, RewardsService } from '@perxtech/core';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
 @Component({
   selector: 'bdo-result',
   templateUrl: './result.component.html',
@@ -30,8 +30,19 @@ export class ResultComponent implements OnInit {
         }
         return forkJoin(
           this.rewardsService.searchRewards(this.searchValue, this.pageNumber, this.requestPageSize, params['tags']),
-          this.campaignService.searchCampaigns(this.searchValue, this.pageNumber, this.requestPageSize)
-          );
+          this.campaignService.searchCampaigns(this.searchValue, this.pageNumber, this.requestPageSize).pipe(
+            // for each campaign, get detailed version
+            mergeMap((campaigns: ICampaign[]) =>
+              combineLatest(
+                ...campaigns.map((campaign) =>
+                  this.campaignService
+                    .getCampaign(campaign.id)
+                    .pipe(catchError(() => of(void 0)))
+                )
+              )
+            )
+          )
+        );
       }))
       .subscribe((
         [ rewards, campaigns ]
