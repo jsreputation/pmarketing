@@ -66,6 +66,7 @@ export class TreatEnrollPageComponent implements OnInit {
                 .subscribe(
                   (errMessage: string) => {
                     this.notificationService.addSnack(errMessage);
+                    this.enrollForm.get(['promoId']).setErrors({apiError: errMessage});
                   });
             }
           })
