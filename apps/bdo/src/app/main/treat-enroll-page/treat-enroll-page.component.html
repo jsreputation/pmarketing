@@ -18,10 +18,14 @@
             Promo ID
         </div>
         <input type="text" placeholder="e.g. MMSP000001" formControlName="promoId"
-        [className]="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required') ? 'input-promo error': 'input-promo'">
+        [className]="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].errors ? 'input-promo error': 'input-promo'">
         <mat-error *ngIf="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required')">
             Promo ID is <strong>required</strong>
           </mat-error>
+        <mat-error
+            *ngIf="enrollForm.controls['promoId'].hasError('apiError')">
+            {{enrollForm.controls['promoId'].errors.apiError}}
+        </mat-error>
     </div>
     <div class="confirm-term">
         <mat-checkbox class="checkbox" formControlName="tnc"></mat-checkbox>
