@@ -33,6 +33,7 @@ export type LeaderBoard = {
   ],
   aboutBanner?: string;
   listBanner?: string;
+  usersToShow?: number;
 };
 
 export type UserRanking = {

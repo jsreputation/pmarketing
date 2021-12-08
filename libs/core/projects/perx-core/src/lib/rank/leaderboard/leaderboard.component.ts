@@ -35,8 +35,18 @@ export class LeaderboardComponent implements OnInit {
   private extractRankImages(): void {
     if (this.leaderboard) {
       const podiums = this.leaderboard.podiums;
-      this.rank1to3Images = podiums.map((podium) => podium.displayProperties && podium.displayProperties.rankIcon ?
-        podium.displayProperties.rankIcon.value.imageUrl : '');
+
+      podiums.map((podium) => {
+        const imgUrl = podium.displayProperties && podium.displayProperties.rankIcon ?
+        podium.displayProperties.rankIcon.value.imageUrl : '';
+        if (podium.positionStart === podium.positionEnd) {
+          this.rank1to3Images.push(imgUrl);
+        } else {
+          for (let i = podium.positionStart; i <= podium.positionEnd ; i++) {
+            this.rank1to3Images.push(imgUrl);
+          }
+        }
+      });
     }
   }
 }
