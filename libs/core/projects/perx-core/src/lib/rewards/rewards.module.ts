@@ -20,6 +20,7 @@ import { RewardVoucherComponent } from './reward-voucher/reward-voucher.componen
 import { MatListModule } from '@angular/material/list';
 import { ProgressBarModule } from '../progress-bar/progress-bar.module';
 import { ProgressRequirePipe } from './rewards-large-list/reward-requirement.pipe';
+import { PipeUtilsModule } from '../utils/pipe-utils.module';
 
 const components = [
   RewardsCollectionComponent,
@@ -47,6 +48,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
   imports: [
     DragScrollModule,
     CommonModule,
+    PipeUtilsModule,
     MaterialModule,
     UtilsModule,
     TranslateModule.forChild(),

@@ -8,6 +8,7 @@ import { AuthenticationModule } from './auth/authentication/authentication.modul
 import { MerchantAdminModule } from './merchant-admin/merchant-admin.module';
 import { UtilsModule } from './utils/utils.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PipeUtilsModule } from './utils/pipe-utils.module';
 // import { FeedItemPopupComponent } from './utils/feed-item-popup/feed-item-popup.component';
 
 const modules = [
@@ -18,7 +19,8 @@ const modules = [
   CommonModule,
   MatIconModule,
   UtilsModule,
-  ScrollingModule
+  ScrollingModule,
+  PipeUtilsModule
 ];
 
 const comps = [

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  PipeUtilsModule,
   ProgressBarModule,
   ProgressInfoPipe,
   RewardsModule,
@@ -26,6 +27,7 @@ import { MatCardModule } from '@angular/material/card';
     ProgressBarModule,
     TransactionsServiceModule.forRoot(),
     UtilsModule,
+    PipeUtilsModule,
     RewardsModule.forChild()
   ]
 })

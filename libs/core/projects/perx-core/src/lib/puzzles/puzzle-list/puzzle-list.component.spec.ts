@@ -10,6 +10,7 @@ import { IStampCard, StampState } from '../../stamp/models/stamp.model';
 import { StampService } from '../../stamp/stamp.service';
 import { UtilsModule } from '../../utils/utils.module';
 import { PuzzleListComponent } from './puzzle-list.component';
+import { PipeUtilsModule } from '@perxtech/core';
 
 const SimpleChangesMock: SimpleChanges = {
   campaignId:
@@ -40,7 +41,8 @@ describe('PuzzleListComponent', () => {
         MatCardModule,
         MatRippleModule,
         MatIconModule,
-        UtilsModule
+        UtilsModule,
+        PipeUtilsModule
       ],
       providers: [
         EnvConfig,

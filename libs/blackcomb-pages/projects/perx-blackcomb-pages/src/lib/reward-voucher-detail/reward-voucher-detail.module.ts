@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import {
   ConfigModule,
-  LoyaltyModule,
+  LoyaltyModule, PipeUtilsModule,
   RewardsModule,
   UtilsModule,
   VouchersModule
@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatProgressSpinnerModule,
     UtilsModule,
+    PipeUtilsModule,
     MatIconModule
   ]
 })
