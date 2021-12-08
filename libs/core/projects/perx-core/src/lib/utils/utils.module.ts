@@ -17,7 +17,6 @@ import { DebounceClickDirective } from './directives/debounce-click.directive';
 import { RepeatTimesDirective } from './directives/repeat-times.directive';
 import { PinInputComponent } from './pin-input/pin-input.component';
 import { FeedReaderService } from './feed-reader.service';
-import { DistancePipe } from './directives/distance-pipe';
 import { GeneralStaticDataService } from './general-static-data/general-static-data.service';
 import { ThemesService } from './themes/themes.service';
 import { WhistlerThemesService } from './themes/whistler-themes.service';
@@ -26,26 +25,19 @@ import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { StorageModule } from './storage/storage.module';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
-import { SortRewardsPipe } from './directives/sort-rewards-pipe';
-import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
-import { TimerComponent, ForceLengthPipe } from './timer/timer.component';
+import { TimerComponent } from './timer/timer.component';
 import { CountDownComponent } from './count-down/count-down.component';
-import { SafeHtmlPipe } from './safe-html.pipe';
-import { SafeUrlPipe } from './safe-url.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
-import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 import { TokenStorage } from './storage/token-storage.service';
 import { MatRippleModule } from '@angular/material/core';
-import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
-import { GettingStartedPipe } from './getting-started/getting-started.pipe';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
-import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
 import { LeaderboardCTAComponent } from './leaderboard-cta/leaderboard-cta.component';
 import { BadgeDetailPopupComponent } from './badge-detail-popup/badge-detail-popup.component';
 import { MatIconModule } from '@angular/material/icon';
+import { PipeUtilsModule } from './pipe-utils.module';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -79,18 +71,6 @@ const components = [
   BadgeDetailPopupComponent
 ];
 
-const pipes = [
-  DistancePipe,
-  SortRewardsPipe,
-  StripHtmlPipe,
-  SafeHtmlPipe,
-  SafeUrlPipe,
-  PointsToCashPipe,
-  ProgressInfoPipe,
-  GettingStartedPipe,
-  GettingStartedNearPicPipe
-];
-
 // make sure we have only one instance of the NotificationService
 export function notificationServiceFactory(): NotificationService {
   // @ts-ignore
@@ -105,9 +85,7 @@ export function notificationServiceFactory(): NotificationService {
 @NgModule({
   declarations: [
     ...directives,
-    ...components,
-    ...pipes,
-    ForceLengthPipe,
+    ...components
   ],
   entryComponents: [
     ...components,
@@ -126,12 +104,12 @@ export function notificationServiceFactory(): NotificationService {
     ScrollingModule,
     MatToolbarModule,
     MatIconModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeUtilsModule
   ],
   exports: [
     ...directives,
-    ...components,
-    ...pipes
+    ...components
   ],
   providers: [
     { provide: NotificationService, useFactory: notificationServiceFactory },
