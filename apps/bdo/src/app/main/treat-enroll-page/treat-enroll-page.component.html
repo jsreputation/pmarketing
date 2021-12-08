@@ -31,10 +31,9 @@
         <mat-checkbox class="checkbox" formControlName="tnc"></mat-checkbox>
         <div class="tnc-container">
             <div class="confirm-term-content">
-                I hereby agree to be bound by the Shop. Choose. Redeem. <a class="confirm-term-content-link">Terms and
-                Conditions</a>. I further agree to maintain my BDO Credit Card account current and in good credit
-                standing. I also acknowledge that by choosing to redeem other offers before the awarding of the eGC, I
-                will not be eligible to avail myself of this Promo.
+                I hereby agree to be bound by the BDO Credit Card Promo Terms and Conditions.
+                I further agree to maintain my BDO Credit Card account current and in good standing.
+                I also acknowledge that the promo cannot be used in conjunction with any other existing offer.
             </div>
             <mat-error *ngIf="enrollForm.controls['tnc'].touched && enrollForm.controls['tnc'].hasError('required')">
                 Agreement is <strong>required</strong>
