@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { UtilsModule } from '@perxtech/core';
+import { PipeUtilsModule, UtilsModule } from '@perxtech/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -28,8 +28,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     FormsModule,
     UtilsModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    PipeUtilsModule
   ],
-  declarations: [ CreateTeamComponent, JoinTeamComponent, PendingTeamComponent ]
+  declarations: [
+    CreateTeamComponent,
+    JoinTeamComponent,
+    PendingTeamComponent
+  ]
 })
 export class TeamsModule {}

@@ -8,7 +8,7 @@ import {
   UtilsModule,
   ProfileServiceModule,
   PointsToCashPipe,
-  PosModule
+  PosModule, PipeUtilsModule
 } from '@perxtech/core';
 import { RebatesWalletComponent } from './rebates-wallet/rebates-wallet.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -44,7 +44,8 @@ import { TransactionShowComponent } from './transaction-show/transaction-show.co
     ProfileServiceModule,
     PosModule,
     NgxCurrencyModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PipeUtilsModule
   ],
   entryComponents: [
     QrScannerComponent

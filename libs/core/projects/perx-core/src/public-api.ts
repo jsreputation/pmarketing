@@ -234,6 +234,7 @@ export { RewardsLargeListComponent } from './lib/rewards/rewards-large-list/rewa
  * Utils
  */
 export { UtilsModule } from './lib/utils/utils.module';
+export { PipeUtilsModule } from './lib/utils/pipe-utils.module';
 export {
   PopupComponent,
   IPopupConfig,

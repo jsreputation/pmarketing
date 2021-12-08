@@ -2,6 +2,8 @@
 @import './theme/theme.scss';
 @import './theme/fonts.scss';
 @import './theme/variables.scss';
+@import '~suneditor/dist/css/suneditor.min.css';
+@import 'suneditor-overrides';
 
 :root {
   --font: Roboto;

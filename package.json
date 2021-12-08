@@ -318,6 +318,7 @@
     "ngx-pinch-zoom": "2.5.4",
     "regenerator-runtime": "^0.13.3",
     "rxjs": "6.6.7",
+    "suneditor": "^2.41.3",
     "text-mask-addons": "^3.8.0",
     "ts-optchain": "^0.1.7",
     "tslib": "^1.10.0",

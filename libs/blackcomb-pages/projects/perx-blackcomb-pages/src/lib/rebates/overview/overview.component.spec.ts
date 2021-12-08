@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {
   ILoyalty,
   UtilsModule,
-  LoyaltyService
+  LoyaltyService, PipeUtilsModule
 } from '@perxtech/core';
 import { of } from 'rxjs';
 
@@ -33,7 +33,8 @@ describe('OverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ OverviewComponent ],
       imports: [
-        UtilsModule
+        UtilsModule,
+        PipeUtilsModule
       ],
       providers: [
         { provide: Router, useValue: router },

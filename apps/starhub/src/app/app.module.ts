@@ -53,7 +53,7 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
-  TeamsServiceModule as PerxTeamsServiceModule, InstantOutcomeTransactionServiceModule
+  TeamsServiceModule as PerxTeamsServiceModule, InstantOutcomeTransactionServiceModule, PipeUtilsModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -173,6 +173,7 @@ export const appInit =
     MatBottomSheetModule,
     MatDividerModule,
     MatSnackBarModule,
+    PipeUtilsModule,
     UtilsModule,
     BrowserAnimationsModule,
     ProfileModule,

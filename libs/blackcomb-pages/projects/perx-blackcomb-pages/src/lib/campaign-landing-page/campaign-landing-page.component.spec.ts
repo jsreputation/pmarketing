@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
   ICampaignService,
-  IPrizeSetOutcomeService, NotificationService,
+  IPrizeSetOutcomeService, NotificationService, PipeUtilsModule,
   RewardsService,
   SettingsService,
   TeamsService,
@@ -47,6 +47,7 @@ describe('CampaignLandingPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CampaignLandingPageComponent],
       imports: [
+        PipeUtilsModule,
         UtilsModule,
         MatToolbarModule,
         RouterTestingModule,

@@ -29,7 +29,7 @@ import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
 import { NoResultComponent } from './result/no-result/no-result.component';
-import { RewardsModule } from '@perxtech/core';
+import { PipeUtilsModule, RewardsModule } from '@perxtech/core';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
 import { SortComponent } from './catalog-page/sort/sort.component';
@@ -96,7 +96,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatSelectModule,
     MatBadgeModule,
     TranslateModule.forChild(),
-    MatRippleModule
+    MatRippleModule,
+    PipeUtilsModule
 
   ],
   bootstrap: [],

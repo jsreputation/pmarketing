@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { VouchersModule, UtilsModule } from '@perxtech/core';
+import { VouchersModule, UtilsModule, PipeUtilsModule } from '@perxtech/core';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
     RouterModule,
     MatButtonModule,
     MatIconModule,
-    UtilsModule
+    UtilsModule,
+    PipeUtilsModule
   ]
 })
 export class VoucherDetailModule { }

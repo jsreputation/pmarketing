@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RewardsService, UtilsModule, SettingsService } from '@perxtech/core';
+import { RewardsService, UtilsModule, SettingsService, PipeUtilsModule } from '@perxtech/core';
 import { of } from 'rxjs';
 import { CatalogComponent } from './catalog.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
@@ -48,6 +48,7 @@ describe('CatalogComponent', () => {
       ],
       imports: [
         InfiniteScrollModule,
+        PipeUtilsModule,
         MatIconModule,
         MatMenuModule,
         MatCardModule,

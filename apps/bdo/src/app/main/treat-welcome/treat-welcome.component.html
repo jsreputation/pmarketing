@@ -17,7 +17,7 @@
         <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="sharePromo()">
         <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="isShowLocationsAndPhone" (click)="navigatePhonePage()">
     </p>
-    <div class="description" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description"></div>
+    <div class="description" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description | safeHtml"></div>
     <div class="sections" *ngIf="campaign?.displayProperties?.landingPage">
         <div *ngFor="let item of campaign.displayProperties.landingPage?.additionalSections; let idx = index">
             <mat-accordion class="location-wrapper">
@@ -27,7 +27,7 @@
                         {{item.headerText}}
                     </mat-expansion-panel-header>
                     <ng-template matExpansionPanelContent>
-                      <p [innerHTML]="item.bodyText"></p>
+                      <div class="sun-editor-editable" [innerHTML]="item.bodyText | safeHtml"></div>
                     </ng-template>
                 </mat-expansion-panel>
             </mat-accordion>

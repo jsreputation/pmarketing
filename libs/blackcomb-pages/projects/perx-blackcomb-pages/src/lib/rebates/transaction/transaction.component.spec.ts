@@ -15,10 +15,9 @@ import {
 } from 'rxjs';
 import { CurrencyPipe } from '@angular/common';
 import {
-  PointsToCashPipe,
   ILoyalty,
   LoyaltyService,
-  UtilsModule
+  UtilsModule, PipeUtilsModule, PointsToCashPipe
 } from '@perxtech/core';
 
 const activatedRouteStub: Partial<ActivatedRoute> = {
@@ -41,6 +40,7 @@ describe('TransactionComponent', () => {
       declarations: [ TransactionComponent ],
       imports: [
         ReactiveFormsModule,
+        PipeUtilsModule,
         UtilsModule
       ],
       providers: [
