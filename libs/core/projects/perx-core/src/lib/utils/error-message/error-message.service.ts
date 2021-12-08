@@ -111,6 +111,14 @@ export class ErrorMessageService {
       if (errMessage?.match(/expire/i)) {
         errorKey = 'ERRORS.RESERVATION_EXPIRED';
       }
+      switch (errorCode) {
+        case 41:
+          // Could not enrol campaign
+          if (errMessage?.match(/enrol/i)) {
+            errorKey = 'ERRORS.COULD_NOT_ENROL';
+          }
+          break;
+      }
     }
 
     if (errorHttpStatus === 404) {
