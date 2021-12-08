@@ -12,7 +12,7 @@
     <p>Promotions that BDO has in store for you!</p>
     <bdo-secondary-catalog></bdo-secondary-catalog>
   </mat-card>
-  <mat-card class="card bg-transparent">
+  <mat-card class="card">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">
@@ -31,7 +31,7 @@
     <bdo-tagged-item *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
     <p class="no-item" *ngIf="currentPosition && !nearByDeals.length;">No result</p>
   </mat-card>
-  <mat-card class="card bg-transparent">
+  <mat-card class="card card-without-margin">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">
@@ -45,7 +45,7 @@
     </div>
     <bdo-tagged-item *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
   </mat-card>
-  <mat-card class="card bg-transparent">
+  <mat-card class="card card-without-margin">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">
