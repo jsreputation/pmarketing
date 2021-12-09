@@ -2,10 +2,17 @@
   <div class="banner" *ngIf="isShowCarousel">
     <ul>
       <li class="item">
-        <div class="content-group" [style.background-image]="'url('+selectedItem.image+')'">
-          <h3 class="header">{{selectedItem?.header}}</h3>
-          <p class="content" [innerHTML]="selectedItem?.description"></p>
-          <a class="btn" [href]="selectedItem.link" target="_blank">{{selectedItem?.buttonName}}</a>
+        <div class="content-group">
+          <div class="content-details">
+            <div class="content-text">
+             <h3 class="header">{{selectedItem?.header}}</h3>
+              <p class="content" [innerHTML]="selectedItem?.description"></p>
+              <a class="btn" [href]="selectedItem.link" target="_blank">{{selectedItem?.buttonName}}</a>
+            </div>
+            <div class="content-img">
+              <img [src]="selectedItem.image"/>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
