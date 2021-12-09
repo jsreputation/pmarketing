@@ -75,13 +75,21 @@
         ol {
           list-style: none;
           counter-reset: item;
-        }
-
+        }        
+        
         li {
           counter-increment: item;
           margin-bottom: 5px;
           position: relative;
           padding: 10px 0;
+          li {
+            &::before{
+              content: counter(item, lower-alpha)!important;
+            }         
+            li::before{
+              content: counter(item, lower-roman)!important;
+            }
+          }
         }
 
         li::before {
