@@ -7,15 +7,14 @@
         <ng-container *ngFor="let tag of dealDetail?.tags">
           <span class="selected tag tag--{{tag.name}}" *ngIf="existsInFilters(tag)">{{tag.name}}</span>
         </ng-container>
-
       </p>
       <p>
         <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
         <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="shareDeal()"/>
         <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigatePhonePage()"/>
       </p>
-      <div class="description" [innerHTML]="dealDetail?.description"></div>
-      <div class="description" [innerHTML]="dealDetail?.termsAndConditions"></div>
+      <div class="description sun-editor-editable" [innerHTML]="dealDetail?.description | safeHtml"></div>
+      <div class="description sun-editor-editable" [innerHTML]="dealDetail?.termsAndConditions | safeHtml"></div>
     </div>
   </mat-card>
   <mat-card class="card">
