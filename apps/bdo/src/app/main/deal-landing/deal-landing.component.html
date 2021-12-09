@@ -1,6 +1,8 @@
 <div class="deal-landing">
   <mat-card class="card no-padding detail">
-    <img [src]="dealDetail?.rewardBanner" />
+    <div class="thumbnail">
+      <img [src]="dealDetail?.rewardBanner" />
+    </div>
     <div class="container">
       <h2 class="title">{{dealDetail?.name}}</h2>
       <p *ngIf="dealDetail?.tags">
