@@ -68,12 +68,57 @@
       .container {
         padding: 0 16px 16px 16px;
 
-        .description {
+        .description {         
           padding: 0;
           margin: 0;
           font-size: 14px;
           color: $light-black;
+    
+          ::ng-deep {
+            ol {
+              list-style:none;
+              counter-reset: item;
+            }        
+    
+            li {
+              counter-increment: item;
+              margin-bottom: 5px;
+              position: relative;
+              padding: 10px 0;
+              li {
+                &::before{
+                  content: counter(item, lower-alpha)!important;
+                }         
+                li::before{
+                  content: counter(item, lower-roman)!important;
+                }
+              }
+            }
+    
+            li::before {
+              padding: 5px;
+              content: counter(item);
+              background: $medium-orange;
+              border-radius: 7px;
+              color: $white;
+              width: 1em;
+              height: 1em;
+              text-align: center;
+              position: absolute;
+              left: -35px;
+              top: 8px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 12px;
+            }
+    
+            li::marker {
+              content: "";
+            }
+          }
         }
+
         p {
           .treat-icon {
             height: 24px;
