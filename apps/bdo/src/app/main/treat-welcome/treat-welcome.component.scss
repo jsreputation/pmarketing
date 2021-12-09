@@ -146,12 +146,13 @@
   }
 
   .btn-enroll-treat {
-    position: sticky;
+    position: fixed;
     bottom: 0;
     padding: 10px 20px;
     background-color: $white;
-    margin-bottom: -8px;
     box-shadow: 0 1px 8px rgb(50 50 50 / 50%);
+    width: 100%;
+    box-sizing: border-box;
 
     &_action {
       background-color: $medium-blue;
