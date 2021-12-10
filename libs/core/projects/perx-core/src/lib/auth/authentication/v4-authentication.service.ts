@@ -116,6 +116,7 @@ export class V4AuthenticationService
         () => {
           this.retries = 0;
           this.logout();
+          console.error('refresh could not recover');
           this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
         }
       );
