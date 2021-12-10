@@ -114,6 +114,7 @@ export class V4AuthenticationService
           location.reload();
         },
         () => {
+          this.retries = 0;
           this.logout();
           this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
         }
