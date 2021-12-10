@@ -28,7 +28,7 @@ export class PreAuthGuard implements CanActivate {
           return false;
         }
         if (this.config.preAuth) {
-          this.router.navigateByUrl('/loading');
+          this.router.navigateByUrl('/home');
           return false;
         }
 
