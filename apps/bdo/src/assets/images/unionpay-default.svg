@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
   <g id="unionpay-default" transform="translate(-309 -919)">
-    <g id="essentials" transform="translate(309 919)">
+  <!--  <g id="essentials" transform="translate(309 919)">
       <g id="grocery-enclosed-outline-fullcolor">
         <rect id="enclosed-lightmonochrome" width="50" height="50" rx="8" fill="#e5f5ff" opacity="0.8"/>
       </g>
-    </g>
+    </g>-->
     <g id="UnionPay_logo" transform="translate(315.494 932.424)">
       <path id="Path_8771" data-name="Path 8771" d="M7.248,0h9.238a1.8,1.8,0,0,1,1.791,2.345l-4.3,18.465a3.139,3.139,0,0,1-2.885,2.341H1.854A1.8,1.8,0,0,1,.063,20.811l4.3-18.465A3.131,3.131,0,0,1,7.248,0" transform="translate(0)" fill="#e21836"/>
       <path id="Path_8772" data-name="Path 8772" d="M65.723,0H76.347c1.289,0,.708,1.051.4,2.345l-4.3,18.465c-.3,1.289-.208,2.341-1.5,2.341H60.328a1.8,1.8,0,0,1-1.788-2.341l4.3-18.465A3.137,3.137,0,0,1,65.723,0" transform="translate(-50.006)" fill="#00447c"/>

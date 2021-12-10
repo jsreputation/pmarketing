@@ -112,19 +112,19 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
           {
             key:"visa",
             name:"Visa",
-            imageLink:"assets/images/visa-default.png",
+            imageLink:"assets/images/visa-default.svg",
             imageLinkSelected:"assets/images/visa-selected.png",
           },
           {
             key:"amex",
             name:"American Express",
-            imageLink:"assets/images/amex-default.png",
+            imageLink:"assets/images/amex-default.svg",
             imageLinkSelected:"assets/images/amex-selected.png",
           },
           {
             key:"jcb",
             name:"JCB",
-            imageLink:"assets/images/jcb-default.png",
+            imageLink:"assets/images/jcb-default.svg",
             imageLinkSelected:"assets/images/jcb-selected.png",
           },
           {
