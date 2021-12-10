@@ -5,11 +5,11 @@
     </clipPath>
   </defs>
   <g id="dinersclub-default" transform="translate(-371 -919)">
-    <g id="essentials" transform="translate(371 919)">
+   <!-- <g id="essentials" transform="translate(371 919)">
       <g id="grocery-enclosed-outline-fullcolor">
         <rect id="enclosed-lightmonochrome" width="50" height="50" rx="8" fill="#e5f5ff" opacity="0.8"/>
       </g>
-    </g>
+    </g>-->
     <g id="dinersclub" transform="translate(249.039 931.074)" clip-path="url(#clip-path)">
       <g id="__x0023_Layer_x0020_1" transform="translate(131.039 0.014)">
         <path id="Path_8775" data-name="Path 8775" d="M19.1,25.823c7.058.034,13.5-5.756,13.5-12.8C32.6,5.321,26.153,0,19.1,0H13.021A12.736,12.736,0,0,0,0,13.024a12.937,12.937,0,0,0,13.021,12.8Z" transform="translate(0 0)" fill="#0079be"/>
