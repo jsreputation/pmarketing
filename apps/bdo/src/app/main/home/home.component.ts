@@ -5,7 +5,7 @@ import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configurat
 import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../shared/constants/home-category-configuration.const';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
-import { combineLatest, forkJoin, of } from 'rxjs';
+import { combineLatest, forkJoin, iif, of } from 'rxjs';
 import { catchError, mergeMap } from 'rxjs/operators';
 
 @Component({
@@ -63,17 +63,22 @@ export class HomeComponent implements OnInit {
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, sortBy: 'begins_at'}).pipe(
         // for each campaign, get detailed version
         mergeMap((campaigns: ICampaign[]) =>
-          combineLatest(
-            ...campaigns.map((campaign) =>
-              this.campaignService
-                .getCampaign(campaign.id)
-                .pipe(catchError(() => of(void 0)))
-            )
+          iif(() => campaigns.length > 0,
+            combineLatest(
+              ...campaigns.map((campaign) =>
+                this.campaignService
+                  .getCampaign(campaign.id)
+                  .pipe(catchError(() => of(void 0)))
+              )
+            ),
+            of([])
           )
         )
       )
-    ]).subscribe(([rewards, campaigns])=>{
-      this.whatsNewDeals = mapRewardsToListItem(rewards).concat(mapCampaignsToListItem(campaigns)).sort((firstReward, secondReward)=>{
+      ]).subscribe(([ rewards, campaigns])=>{
+      let itemList = rewards.length > 0 ? mapRewardsToListItem(rewards) : [];
+      itemList = campaigns.length > 0 ? itemList.concat(mapCampaignsToListItem(campaigns)): itemList;
+      this.whatsNewDeals = itemList.sort((firstReward, secondReward)=>{
         return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
       }).slice(0, 5);
     });
@@ -84,17 +89,22 @@ export class HomeComponent implements OnInit {
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.popular ], sortBy: 'begins_at'}).pipe(
         // for each campaign, get detailed version
         mergeMap((campaigns: ICampaign[]) =>
-          combineLatest(
-            ...campaigns.map((campaign) =>
-              this.campaignService
-                .getCampaign(campaign.id)
-                .pipe(catchError(() => of(void 0)))
-            )
+          iif(() => campaigns.length > 0,
+            combineLatest(
+              ...campaigns.map((campaign) =>
+                this.campaignService
+                  .getCampaign(campaign.id)
+                  .pipe(catchError(() => of(void 0)))
+              )
+            ),
+            of([])
           )
         )
       )
     ]).subscribe(([popularRewards, popularCampaigns])=>{
-      this.popularDeals = mapRewardsToListItem(popularRewards).concat(mapCampaignsToListItem(popularCampaigns)).sort((firstReward, secondReward)=>{
+      let itemList = popularRewards.length > 0 ? mapRewardsToListItem(popularRewards) : [];
+      itemList = popularCampaigns.length > 0 ? itemList.concat(mapCampaignsToListItem(popularCampaigns)): itemList;
+      this.popularDeals = itemList.sort((firstReward, secondReward)=>{
         return new Date(secondReward.createdAt).getTime() - new Date(firstReward.createdAt).getTime();
       }).slice(0, 5);
     });
@@ -105,12 +115,15 @@ export class HomeComponent implements OnInit {
       this.campaignService.getCampaigns({ page: 1, size: this.requestPageSize, tags: [ this.tag.featured ], sortBy: 'begins_at'}).pipe(
         // for each campaign, get detailed version
         mergeMap((campaigns: ICampaign[]) =>
-          combineLatest(
-            ...campaigns.map((campaign) =>
-              this.campaignService
-                .getCampaign(campaign.id)
-                .pipe(catchError(() => of(void 0)))
-            )
+          iif(() => campaigns.length > 0,
+            combineLatest(
+              ...campaigns.map((campaign) =>
+                this.campaignService
+                  .getCampaign(campaign.id)
+                  .pipe(catchError(() => of(void 0)))
+              )
+            ),
+            of([])
           )
         )
       )

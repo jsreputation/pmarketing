@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ICampaign, ICampaignService, RewardsService } from '@perxtech/core';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
-import { combineLatest, forkJoin, of } from 'rxjs';
+import { combineLatest, forkJoin, iif, of } from 'rxjs';
 @Component({
   selector: 'bdo-result',
   templateUrl: './result.component.html',
@@ -33,23 +33,26 @@ export class ResultComponent implements OnInit {
           this.campaignService.searchCampaigns(this.searchValue, this.pageNumber, this.requestPageSize).pipe(
             // for each campaign, get detailed version
             mergeMap((campaigns: ICampaign[]) =>
-              combineLatest(
-                ...campaigns.map((campaign) =>
-                  this.campaignService
-                    .getCampaign(campaign.id)
-                    .pipe(catchError(() => of(void 0)))
-                )
+              iif(() => campaigns.length > 0,
+                combineLatest(
+                  ...campaigns.map((campaign) =>
+                    this.campaignService
+                      .getCampaign(campaign.id)
+                      .pipe(catchError(() => of(void 0)))
+                  )
+                ),
+                of([])
               )
-            )
           )
-        );
+        ));
       }))
       .subscribe((
         [ rewards, campaigns ]
       ) => {
         this.isLoaded = false;
-        this.searchResult = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards))
-          .sort((firstReward,secondReward)=> {
+        let itemList = rewards.length > 0 ? mapRewardsToListItem(rewards) : [];
+        itemList = campaigns.length > 0 ? itemList.concat(mapCampaignsToListItem(campaigns)): itemList;
+        this.searchResult = itemList.sort((firstReward,secondReward)=> {
           return secondReward.score - firstReward.score;
         });
         this.isLoaded = true;
