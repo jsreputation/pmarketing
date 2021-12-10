@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { PreAuthGuard } from './pre-auth.guard';
 
 const routes: Routes = [
   {
@@ -10,17 +11,17 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then((mod) => mod.LoginModule),
-    canActivate: [PublicGuard]
+    canActivate: [PublicGuard, PreAuthGuard]
   },
   {
     path: 'signup',
     loadChildren: () => import('./sign-up/sign-up.module').then((mod) => mod.SignUpModule),
-    canActivate: [PublicGuard]
+    canActivate: [PublicGuard, PreAuthGuard]
   },
   {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then((mod) => mod.ForgotPasswordModule),
-    canActivate: [PublicGuard]
+    canActivate: [PublicGuard, PreAuthGuard]
   }
 ];
 
