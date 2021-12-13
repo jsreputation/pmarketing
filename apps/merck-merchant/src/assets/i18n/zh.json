@@ -37,7 +37,8 @@
   "REDEEM": {
     "CANCEL": "取消",
     "PROCEED": "繼續",
-    "CLOSE": "關閉"
+    "CLOSE": "關閉",
+    "SCANNER_TXT": "在上面的框架內掃描二維碼"
   },
   "RESET_PW_PAGE": {
     "RESET_PASSWORD": "重設你的密碼",
@@ -68,12 +69,13 @@
     "COUNTRY_HONGKONG": "香港",
     "COUNTRY_CHINA": "澳门",
     "COUNTRY_MACAU": "中国",
-    "COUNTRY_SINGAPORE": "新加坡"
+    "COUNTRY_SINGAPORE": "新加坡",
+    "USER_CREATION_COMPLETED": "用戶成功建立"
   },
   "IDENTIFY_USER": {
-    "BY_QR_SCAN": "By QR Scan",
-    "BY_MOBILE_NUMBER": "By Mobile Number",
-    "MOBILE_NUMBER": "Enter customer mobile number",
+    "BY_QR_SCAN": "二維碼掃描",
+    "BY_MOBILE_NUMBER": "手機號碼",
+    "MOBILE_NUMBER": "輸入客戶手機號碼",
     "MOBILE_NUMBER_IS": "請輸入手機號碼",
     "CONFIRM": "確認",
     "COUNTRY_HONGKONG": "香港",

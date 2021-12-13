@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Router, NavigationExtras } from '@angular/router';
 import { ThemesService, ITheme, IMerchantAdminService, NotificationService, IProfile } from '@perxtech/core';
 import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-signup',
@@ -13,6 +14,7 @@ export class UserSignupComponent implements OnInit {
 
   public userSignUpForm: FormGroup;
   public theme: ITheme;
+  public userCreationTxt: string;
 
   constructor(
     private fb: FormBuilder,
@@ -20,7 +22,8 @@ export class UserSignupComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
     private themesService: ThemesService,
     private location: Location,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translateService: TranslateService
   ) { }
 
   public get mobileNumber(): AbstractControl | null {
@@ -33,6 +36,10 @@ export class UserSignupComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initForm();
+    this.translateService.get('USER_SIGN_UP_PAGE.USER_CREATION_COMPLETED')
+      .subscribe((userCreationTxt: string) => {
+        this.userCreationTxt = userCreationTxt;
+      });
   }
 
   private initForm(): void {
@@ -60,7 +67,7 @@ export class UserSignupComponent implements OnInit {
               data
             }
           };
-      this.notificationService.addSnack('User signed up successfully');
+      this.notificationService.addSnack(this.userCreationTxt);
       this.router.navigate(['/order'], navigationExtras);
     }, err => {
       this.notificationService.addSnack(err?.error?.message);

@@ -29,7 +29,8 @@
     "REDEEM": {
         "CANCEL": "Cancel",
         "PROCEED": "Proceed",
-        "CLOSE": "Close"
+        "CLOSE": "Close",
+        "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
     },
     "POPUP_CONTENT": {
         "TRANSACTION_COMPLETED": "Transaction completed"
