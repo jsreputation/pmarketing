@@ -37,7 +37,8 @@
   "REDEEM": {
     "CANCEL": "Cancel",
     "PROCEED": "Proceed",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
   },
   "RESET_PW_PAGE": {
     "RESET_PASSWORD": "Reset your password",
@@ -68,7 +69,8 @@
     "COUNTRY_HONGKONG": "Hong Kong Island",
     "COUNTRY_MACAU": "Macau",
     "COUNTRY_CHINA": "China",
-    "COUNTRY_SINGAPORE": "Singapore"
+    "COUNTRY_SINGAPORE": "Singapore",
+    "USER_CREATION_COMPLETED": "User successfully created"
   },
   "IDENTIFY_USER": {
     "BY_QR_SCAN": "By QR Scan",
