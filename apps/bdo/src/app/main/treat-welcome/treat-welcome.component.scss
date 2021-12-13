@@ -142,14 +142,18 @@
   .btn-enroll-treat {
     position: fixed;
     bottom: 0;
+    left: 0;
     padding: 10px 20px;
     background-color: $white;
     box-shadow: 0 1px 8px rgb(50 50 50 / 50%);
     width: 100%;
     box-sizing: border-box;
+    z-index: 1;
     @media screen and (min-width: $desktop-width) {
-      position: sticky;
-      width: auto;
+      position: static;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: none;
     }
 
     &_action {
@@ -158,6 +162,10 @@
       width: 100%;
       padding: 5px 7px;
       border-radius: 8px;
+      @media screen and (min-width: $desktop-width) {
+        width: auto;
+        padding: 8px 80px;
+      }
     }
   }
 }
