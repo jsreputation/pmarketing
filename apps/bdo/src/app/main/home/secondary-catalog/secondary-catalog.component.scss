@@ -1,12 +1,17 @@
 @import "../../../../theme/variables";
 
 .secondary-catalog {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
   .catalog-list-container {
+    max-width: 500px;
+    width: 90%;
     list-style-type: none;
     padding: 0 20px 10px 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 120px 120px;
     grid-column-gap: 15px;
     grid-row-gap: 15px;
     margin: 0;
@@ -20,11 +25,13 @@
       background-color: $light-blue;
       background-position: right bottom;
       background-repeat: no-repeat;
+      background-size: 50%;
+      aspect-ratio: 5 / 2.8;
 
       span {
         height: 40%;
         font-weight: bold;
-        width: 50%;
+        width: 40%;
         font-size: 14px;
       }
     }
