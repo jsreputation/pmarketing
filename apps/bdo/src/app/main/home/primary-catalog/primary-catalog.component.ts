@@ -1,7 +1,6 @@
-import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import {  Params, Router } from '@angular/router';
 import { ScrollToItemDirective } from '../../../shared/directives/scroll-to-item.directive';
-import { ItemModel } from '../../../shared/models/item.model';
 
 @Component({
   selector: 'bdo-primary-catalog',
@@ -10,7 +9,6 @@ import { ItemModel } from '../../../shared/models/item.model';
 })
 
 export class PrimaryCatalogComponent extends ScrollToItemDirective {
-  @Input() categories: ItemModel[] = [];
   @ViewChild('containerCategory', { static: true }) public containerCategory!: ElementRef;
   constructor(private router:Router,) {
     super();

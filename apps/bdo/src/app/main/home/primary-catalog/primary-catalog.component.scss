@@ -30,6 +30,31 @@
     background-repeat: no-repeat;
     background-size: contain;
 
+      &#credit-card-catalog {
+      background-image: url("/assets/images/img-creditcard-mobile.svg");
+      @media screen and (min-width: $desktop-width) {
+        background-image: url("/assets/images/img-creditcard.svg");
+      }
+    }
+
+    &#debit-card-catalog {
+      background-image: url("/assets/images/img-debitcard-mobile.svg");
+
+      @media screen and (min-width: $desktop-width) {
+        background-image: url("/assets/images/img-debitcard.svg");
+
+      }
+    }
+
+    &#bdo-reward-catalog {
+      background-image: url("/assets/images/img-bdorewards-mobile.svg");
+
+      @media screen and (min-width: $desktop-width) {
+        background-image: url("/assets/images/img-bdorewards.svg");
+
+      }
+    }
+
     .content-container {
       display: flex;
       flex-direction: column;

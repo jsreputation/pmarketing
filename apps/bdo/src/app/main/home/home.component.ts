@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ICampaign, ICampaignService, IReward, RewardsService, Sort } from '@perxtech/core';
 import { Params, Router } from '@angular/router';
 import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
-import { HOME_LIST_CATEGORY_CONFIGURATIONS } from '../../shared/constants/home-category-configuration.const';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapCampaignsToListItem, mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { combineLatest, forkJoin, iif, of } from 'rxjs';
@@ -14,7 +13,6 @@ import { catchError, mergeMap } from 'rxjs/operators';
   styleUrls: [ './home.component.scss' ],
 })
 export class HomeComponent implements OnInit {
-  categories = HOME_LIST_CATEGORY_CONFIGURATIONS;
   catalogConfiguration = CATALOG_CONFIGURATION;
   featuredDeals: IListItemModel[] = [];
 
