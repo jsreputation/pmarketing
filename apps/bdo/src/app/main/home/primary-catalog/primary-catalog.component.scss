@@ -30,6 +30,10 @@
     background-repeat: no-repeat;
     background-size: contain;
 
+    @media screen and (min-width: $desktop-width) {
+      background-position: center right;
+    }
+
       &#credit-card-catalog {
       background-image: url("/assets/images/img-creditcard-mobile.svg");
       @media screen and (min-width: $desktop-width) {
