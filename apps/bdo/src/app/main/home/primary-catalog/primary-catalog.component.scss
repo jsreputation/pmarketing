@@ -12,14 +12,8 @@
   padding-inline-start: 0 !important;
   margin: 10px 0 0 0;
   padding-bottom: 10px;
+  padding-right: 20px;
   overflow-y: hidden;
-  .item:first-child {
-    margin-left: 20px;
-  }
-
-  .item:last-child {
-    margin-right: 20px;
-  }
 
   .item {
     display: flex;
