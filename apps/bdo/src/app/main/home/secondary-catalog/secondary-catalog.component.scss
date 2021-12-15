@@ -6,15 +6,23 @@
   flex-direction: column;
 
   .catalog-list-container {
-    max-width: 500px;
-    width: 90%;
     list-style-type: none;
-    padding: 0 20px 10px 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 15px;
-    grid-row-gap: 15px;
+    grid-gap: 15px;
     margin: 0;
+    padding-inline-start: 0 !important;
+
+    @media screen and (min-width: $desktop-width) {
+      width: 100%;
+      height: 150px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media screen and (max-width: $desktop-width) {
+      width: 90%;
+      max-width: 500px;
+      grid-template-columns: 1fr 1fr;
+    }
 
     li {
       color: $near-black;
