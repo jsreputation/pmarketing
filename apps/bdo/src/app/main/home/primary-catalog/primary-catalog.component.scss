@@ -30,10 +30,6 @@
     background-repeat: no-repeat;
     background-size: contain;
 
-    @media screen and (min-width: $desktop-width) {
-      background-position: center right;
-    }
-
       &#credit-card-catalog {
       background-image: url("/assets/images/img-creditcard-mobile.svg");
       @media screen and (min-width: $desktop-width) {
@@ -66,8 +62,7 @@
       padding: 24px 5px 0px 5px;
 
       .title {
-        margin: 0;
-        margin-bottom: 10px;
+        margin: 0 0 10px;
         color: $near-black;
         font-size: 24px;
 
@@ -89,15 +84,25 @@
 @media screen and (min-width: $desktop-width) {
   .wrapper {
     grid-auto-columns: minmax(250px, 350px);
-    grid-auto-rows: 300px;
+    grid-auto-rows: 150px;
+    padding-right: unset;
+
+    .item {
+      background-position: center right;
+      min-height: 150px;
+
+      .content-container {
+        flex-direction: row;
+        align-items: center;
+        padding: 0 0 0 20px;
+
+        .title {
+          margin: 0;
+        }
+      }
+    }
   }
 }
 
-@media screen and (min-width: 1366px) {
-  .wrapper {
-    grid-auto-columns: 250px;
-    grid-auto-rows: 250px;
-  }
-}
 
 
