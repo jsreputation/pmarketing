@@ -20,14 +20,7 @@
   border-radius: 15px;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
   list-style-type: none;
-  
-  &:first-child {
-    margin-left: 20px;
-  }
-
-  &:last-child {
-    margin-right: 20px;
-  }
+  padding-right: 20px;
 
   img {
     width: 100%;

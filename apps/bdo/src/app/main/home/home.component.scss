@@ -3,7 +3,6 @@
 .homepage {
   .header {
     margin: 12px 0;
-    padding: 0 20px;
     color: $main-blue-text;
     font-size: 14px;
     font-weight: bold;
@@ -18,21 +17,20 @@
     margin-top: 10px;
     box-shadow: none;
     border-radius: 0;
-    padding: 5px 0;
+    padding: 5px 20px;
 
     .tag {
       margin-left: 20px;
     }
 
     p {
-      padding: 0 20px;
       font-size: 14px;
     }
 
     .tagged-header-wrapper {
       display: flex;
       flex-direction: column;
-      padding: 0 16px;
+      margin-top: 12px;
 
       .filter-wrapper {
         display: flex;

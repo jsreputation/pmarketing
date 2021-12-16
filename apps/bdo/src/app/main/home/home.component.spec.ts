@@ -65,7 +65,6 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    component.categories = [];
     component.nearByDeals = mapRewardsToListItem(LIST_NEAR_BY);
     component.featuredDeals = mapRewardsToListItem(LIST_FEATURED_DEALS);
     fixture.detectChanges();
