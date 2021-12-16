@@ -1,4 +1,4 @@
-<div [ngClass]="showCarouselArrows ? 'cont-with-arrows' :'cont-with-padding'" #carouselContainer>
+<div [ngClass]="showCarouselArrows ? 'cont-with-arrows' : ''" #carouselContainer>
     <carousel [height]="carouselHeight" [cellWidth]="itemWidth" [cellsToScroll]="2" [margin]="15"
       [arrowsOutside]="true" [arrows]="showCarouselArrows" class="carousel" #carouselElement> 
       <div class="carousel-cell" [ngClass]="isFeatured ? 'featured-item' : 'item'" *ngFor="let deal of deals" (click)="selectedItem(deal)">
