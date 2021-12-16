@@ -1,0 +1,23 @@
+<div [ngClass]="showCarouselArrows ? 'cont-with-arrows' : ''" #carouselContainer>
+    <carousel [height]="carouselHeight" [cellWidth]="itemWidth" [cellsToScroll]="2" [margin]="15"
+      [arrowsOutside]="true" [arrows]="showCarouselArrows" class="carousel" #carouselElement> 
+      <div class="carousel-cell" [ngClass]="isFeatured ? 'featured-item' : 'item'" *ngFor="let deal of deals" (click)="selectedItem(deal)">
+        <ng-container *ngIf="!isFeatured; else featuredBlock">
+          <img [src]="deal.thumbnail ? deal.thumbnail:urlImageDefault" />
+          <div class="container">
+            <h4 class="title">{{deal.name}}</h4>
+            <p class="description" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
+            <span class="position" *ngIf="deal?.position">
+              <img class="icon-location" src="assets/images/icon-location.svg"/>
+              {{deal.position | meterToKilometer}} km
+            </span>
+          </div>
+        </ng-container>
+        <ng-template #featuredBlock>
+            <div class="image" [style.background-image]="'url('+(deal.thumbnail ? deal.thumbnail : urlImageDefault)+')'">
+            </div>
+            <span class="title">{{deal.name}}</span>
+        </ng-template>
+      </div>
+  </carousel>
+</div>

@@ -21,6 +21,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
 import { MerchantLocationPageComponent } from './components/merchant-location-page/merchant-location-page.component';
 import { LocationModule, MerchantsModule } from '@perxtech/core';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { CarouselItemsComponent } from './components/carousel-items/carousel-items.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { LocationModule, MerchantsModule } from '@perxtech/core';
     FooterComponent,
     GhostCardComponent,
     MeterToKilometerPipe,
-    MerchantLocationPageComponent
+    MerchantLocationPageComponent,
+    CarouselItemsComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +52,8 @@ import { LocationModule, MerchantsModule } from '@perxtech/core';
     RouterModule,
     LocationModule,
     MerchantsModule.forChild(), //required for location module
-    MatChipsModule
+    MatChipsModule,
+    IvyCarouselModule
   ],
   exports: [
     ListItemComponent,
@@ -61,7 +65,8 @@ import { LocationModule, MerchantsModule } from '@perxtech/core';
     SearchResultComponent,
     MatTabsModule,
     FooterComponent,
-    MeterToKilometerPipe
+    MeterToKilometerPipe,
+    CarouselItemsComponent
   ],
   providers: [FilterService],
 })

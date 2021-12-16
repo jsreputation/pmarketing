@@ -6,6 +6,7 @@ import { of, combineLatest } from 'rxjs';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { Promo } from '../../models/promo.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bdo-treat-enroll-complete-page',
@@ -26,7 +27,8 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     private notificationService: NotificationService,
     private translate: TranslateService,
     private campaignService: ICampaignService,
-    private rewardService: RewardsService
+    private rewardService: RewardsService,
+    private router: Router
   ) {}
 
   dealDetail = {
@@ -102,5 +104,9 @@ export class TreatEnrollCompletePageComponent implements OnInit{
         this.copyToClipboardTxt = res['TREAT_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['TREAT_PAGE.CLIPBOARD_ERROR_TXT'];
       });
+  }
+
+  navigateTo(_selectedItem: IListItemModel) {
+    this.router.navigate([ `deal-welcome/${_selectedItem.id}` ]);
   }
 }
