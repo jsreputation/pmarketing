@@ -6,7 +6,8 @@ import {
   ViewChild,
   OnChanges,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  HostListener
 } from '@angular/core';
 import { CarouselComponent } from 'angular-responsive-carousel';
 import { IListItemModel } from '../../models/list-item.model';
@@ -30,6 +31,11 @@ export class CarouselItemsComponent implements AfterViewInit, OnChanges {
   public isClickEvent = false;
   @ViewChild("carouselContainer") public carouselContainer: ElementRef;
 
+  @HostListener('window:resize', ['$event'])
+  public onResize(event): void  {
+    this.updateCarouselSettings(event.target.innerWidth);
+  }
+
   public ngAfterViewInit(): void {
     if(this.carouselContainer) {
       this.carouselContainer.nativeElement?.addEventListener('mousedown', () => { this.isDragEvent = false});
@@ -40,17 +46,22 @@ export class CarouselItemsComponent implements AfterViewInit, OnChanges {
 
   public ngOnChanges() {
     const innerWidth = window.innerWidth;
-    this.itemWidth = this.isFeatured ? ( innerWidth < 1024 ? 288 : 350) : 245;
-    this.carouselHeight = this.isFeatured ? 170 : 310;  
-    if(innerWidth < 1024 || (this.carouselElement?.carousel?.visibleWidth > this.deals?.length * this.itemWidth)) {
-      this.showCarouselArrows = false;
-    }  
+    this.updateCarouselSettings(innerWidth);
   }
 
-  selectedItem(item:IListItemModel) {
+  public selectedItem(item:IListItemModel) {
     if(this.isClickEvent) {
-      this.eventItemClick.emit(item); 
-    }  
+      this.eventItemClick.emit(item);
+    }
   }
 
+  private updateCarouselSettings(innerWidth: number): void {
+    this.itemWidth = this.isFeatured ? (innerWidth < 1024 ? 288 : 350) : 245;
+    this.carouselHeight = this.isFeatured ? 170 : 310;
+    if (innerWidth < 1024 || (this.carouselElement?.carousel?.visibleWidth > this.deals?.length * this.itemWidth)) {
+      this.showCarouselArrows = false;
+    } else {
+      this.showCarouselArrows = true;
+    }
+  }
 }
