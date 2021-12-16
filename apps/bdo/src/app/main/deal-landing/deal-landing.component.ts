@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IReward, ITag, NotificationService, RewardsService, IVoucherService } from '@perxtech/core';
-import { FeaturedDeals } from '../../models/featured-deals.models';
 import { combineLatest, of } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,8 +22,8 @@ export class DealLandingComponent implements OnInit {
   public shareText: string;
   public shareUrl = `${window.location.protocol}//${window.location.host}/deal-welcome/`;
   public showLocation = false;
-  navigateTo(_selectedItem: FeaturedDeals) {
-    throw new Error('not implemented');
+  navigateTo(_selectedItem: IListItemModel) {
+    this.route.navigate([ `deal-welcome/${_selectedItem.id}` ]);
   }
   constructor(
     private rewardService: RewardsService,

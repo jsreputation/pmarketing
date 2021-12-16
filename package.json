@@ -295,6 +295,7 @@
     "@zxing/browser": "^0.0.5",
     "@zxing/library": "^0.18.5",
     "@zxing/ngx-scanner": "^3.0.1",
+    "angular-responsive-carousel": "^2.1.2",
     "angular2-text-mask": "^9.0.0",
     "angularx-qrcode": "~10.0.12",
     "axios": "^0.21.3",

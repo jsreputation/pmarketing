@@ -5,7 +5,7 @@
   </mat-card>
   <mat-card class="card">
     <h2 class="header">FEATURED DEALS</h2>
-    <bdo-featured-deals [deals]="featuredDeals" (eventItemClick)="navigateTo($event)"></bdo-featured-deals>
+    <bdo-carousel-items [isFeatured]="true" [deals]="featuredDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
   <mat-card class="card">
     <h2 class="header">DEALS YOU CAN ENJOY</h2>
@@ -28,7 +28,7 @@
       <mat-icon aria-hidden="false" class="icon-location material-icons-outlined">pin_drop</mat-icon>
       <p class="message">Enable location to view deals near you</p>
     </div>
-    <bdo-tagged-item *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <bdo-carousel-items *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
     <p class="no-item" *ngIf="currentPosition && !nearByDeals.length;">No result</p>
   </mat-card>
   <mat-card class="card card-without-margin">
@@ -43,7 +43,7 @@
       </div>
       <p class="description">Learn more about our newest deals for you!</p>
     </div>
-    <bdo-tagged-item *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <bdo-carousel-items *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
   <mat-card class="card card-without-margin">
     <div class="tagged-header-wrapper">
@@ -57,7 +57,7 @@
       </div>
       <p class="description">Avail of these promos that are popular with others</p>
     </div>
-    <bdo-tagged-item *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-tagged-item>
+    <bdo-carousel-items *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
 </div>
 
