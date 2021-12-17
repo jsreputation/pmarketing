@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { PublicGuard } from 'ngx-auth';
+import { ProtectedGuard } from '@perxtech/core';
 
 const routes: Routes = [
   {
