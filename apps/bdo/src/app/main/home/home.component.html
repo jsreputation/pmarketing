@@ -25,7 +25,7 @@
       <p class="description">Find deals that are just right around the corner</p>
     </div>
     <div *ngIf="!currentPosition" class="message-wrapper">
-      <mat-icon aria-hidden="false" class="icon-location material-icons-outlined">pin_drop</mat-icon>
+      <img src="assets/images/icon-n-location.svg" alt="">
       <p class="message">Enable location to view deals near you</p>
     </div>
     <bdo-carousel-items *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
