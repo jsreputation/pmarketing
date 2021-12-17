@@ -125,6 +125,7 @@
         padding-left: 0;
         color: $medium-blue;
         font-weight: 600;
+        padding-right: 5px !important;
 
         .mat-expansion-indicator {
           &::after {
@@ -136,6 +137,14 @@
           background-color: unset;
         }
       }
+    }
+    ::ng-deep .mat-expansion-indicator::after {
+      border-width: 0 !important;
+      transform: none !important;
+      background: url("/assets/images/icon-n-down.svg") no-repeat center center;
+      height: 20px;
+      width: 20px;
+      vertical-align: middle!important;
     }
   }
 
