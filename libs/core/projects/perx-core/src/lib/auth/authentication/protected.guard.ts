@@ -65,7 +65,7 @@ export class ProtectedGuard implements CanActivate, CanActivateChild {
   public canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> {
+  ): Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 
