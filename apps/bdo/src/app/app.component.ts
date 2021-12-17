@@ -96,6 +96,7 @@ export class AppComponent implements OnInit {
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             this.router.navigate([ '/login' ]);
+            console.log('session expired detected');
             this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
