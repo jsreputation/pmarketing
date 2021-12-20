@@ -50,7 +50,7 @@ export class ProtectedGuard implements CanActivate, CanActivateChild {
           if (this.authService.setInterruptedUrl) {
             this.authService.setInterruptedUrl?.(state.url);
           }
-          const redirectTarget: UrlTree = this.router.parseUrl(config.custom.redirectBeforeLogin || this.publicFallbackPageUri);
+          const redirectTarget: UrlTree = this.router.parseUrl(config?.custom?.redirectBeforeLogin || this.publicFallbackPageUri);
           // by returning a UrlTree we cancel existing navigation and create a new routing event
           return redirectTarget;
         }
