@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BannerModel } from '../../../models/banner.model';
 
 @Component({
@@ -10,6 +10,7 @@ export class FooterComponent implements OnInit {
   @Input() isShowCarousel = true;
   public activeNumber = 0;
   public selectedItem:BannerModel;
+  @ViewChild('itemsContainer') public itemsContainer: ElementRef;
   public banners:BannerModel[]= [
     // {
     //   id:1,
@@ -39,8 +40,19 @@ export class FooterComponent implements OnInit {
     this.selectedItem = this.banners[this.activeNumber];
   }
 
-  public onCircleClick(index:number) {
-    this.activeNumber = index;
-    this.selectedItem = this.banners[this.activeNumber];
+  public onCircleClick(isActive: boolean) {
+    if(!isActive) {
+      if(this.itemsContainer.nativeElement.scrollLeft == 0) {
+        this.itemsContainer.nativeElement.scrollLeft += this.itemsContainer.nativeElement.offsetWidth;
+      } else {
+        this.itemsContainer.nativeElement.scrollLeft -= this.itemsContainer.nativeElement.offsetWidth;
+      } 
+    }
+    // this.activeNumber = index;
+    // this.selectedItem = this.banners[this.activeNumber];
+  }
+
+  public onScroll() {
+    this.activeNumber = this.itemsContainer.nativeElement.scrollLeft < this.itemsContainer.nativeElement.offsetWidth ? 0 : 1;
   }
 }

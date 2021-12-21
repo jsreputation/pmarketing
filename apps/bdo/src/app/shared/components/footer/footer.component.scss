@@ -3,11 +3,25 @@
 .home-footer-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1; 
+
+  .banner-cont {
+    position: relative;
+  }
 
   .banner {
     cursor: pointer;
-    position: relative;
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-width: none !important; 
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar { 
+      width: 0;
+      height: 0;
+      display: none;
+    }
 
     .pagination {
       display: flex;
@@ -30,16 +44,20 @@
       }
     }
 
-    ul {
+    .items-cont {
       list-style: none;
       padding-inline-start: 0;
       margin: 0;
+      flex-basis: 100%;
+      flex-shrink: 0;
+      scroll-snap-align: start;
 
       .item {
         height: 177px;
         background-image: url('/assets/images/Rectangle 20371.svg');
         background-position: center;
         background-repeat: repeat;
+        width: 100%!important;
 
         .content-group {
           display: flex;
