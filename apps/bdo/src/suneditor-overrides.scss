@@ -2505,13 +2505,17 @@
 .sun-editor-editable table {
   display: table;
   table-layout: auto !important;
-  border: 1px solid #ccc;
+  border: 1px solid #c2c2c1;
   width: 100%;
   max-width: 100%;
   margin: 0 0 10px;
   background-color: transparent;
   border-spacing: 0;
   border-collapse: collapse;
+  @media screen and (min-width: $tablet-width) {
+    width: 536px!important;
+    margin: auto;
+  }
 }
 
 .sun-editor-editable.se-rtl table {
@@ -2519,7 +2523,7 @@
 }
 
 .sun-editor-editable table thead {
-  border-bottom: 2px solid #333;
+  border: none;
 }
 
 .sun-editor-editable table tr {
@@ -2527,14 +2531,22 @@
 }
 
 .sun-editor-editable table th {
-  background-color: #f3f3f3;
+  background-color: #0072D8!important;
+  color: white!important;
+  font-size: 16px!important;
+  font-weight: bold;
+  text-align: left;
 }
 
 .sun-editor-editable table td,
 .sun-editor-editable table th {
-  border: 1px solid #e1e1e1;
-  padding: 0.4em;
+  border: 1px solid #c2c2c1;
+  padding: 16px;
   background-clip: padding-box;
+}
+
+.sun-editor-editable table tr:nth-child(even) {
+  background-color: #e4e4e4!important;
 }
 
 .sun-editor-editable table.se-table-size-auto {
@@ -2543,6 +2555,10 @@
 
 .sun-editor-editable table.se-table-size-100 {
   width: 100% !important;
+  @media screen and (min-width: $tablet-width) {
+    width: 536px!important;
+    margin: auto;
+  }
 }
 
 .sun-editor-editable table.se-table-layout-auto {
