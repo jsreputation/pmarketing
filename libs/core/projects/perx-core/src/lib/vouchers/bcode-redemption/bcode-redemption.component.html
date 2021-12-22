@@ -15,7 +15,7 @@
           <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
         </div>
       </div>
-      <div class="instruction" [innerHtml]="(voucher?.reward?.redemptionText || instructions) | safeHtml"></div>
+      <div class="instruction" *ngIf="voucher?.code" [innerHtml]="(voucher?.reward?.redemptionText || instructions) | safeHtml"></div>
       <div *ngIf="showAfterInstruction">
         <div class="bcode" *ngIf="voucher?.code">{{voucher.code}}</div>
       </div>
