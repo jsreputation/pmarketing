@@ -1,25 +1,27 @@
 <div class="home-footer-wrapper">
-  <div class="banner" *ngIf="isShowCarousel">
-    <ul>
-      <li class="item">
+  <div class="banner-cont">
+  <div class="banner" *ngIf="isShowCarousel" (scroll)="onScroll()" #itemsContainer>
+    <div class="items-cont" *ngFor="let banner of banners">
+      <div class="item">
         <div class="content-group">
           <div class="content-details">
             <div class="content-text">
-             <h3 class="header">{{selectedItem?.header}}</h3>
-              <p class="content" [innerHTML]="selectedItem?.description"></p>
-              <a class="btn" [href]="selectedItem.link" target="_blank">{{selectedItem?.buttonName}}</a>
+             <h3 class="header">{{banner?.header}}</h3>
+              <p class="content" [innerHTML]="banner?.description"></p>
+              <a class="btn" [href]="banner.link" target="_blank">{{banner?.buttonName}}</a>
             </div>
             <div class="content-img">
-              <img [src]="selectedItem.image"/>
+              <img [src]="banner.image"/>
             </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
     <div class="pagination">
       <div *ngFor="let banner of banners;let ind = index;" [ngClass]="{'circle--active': (ind === activeNumber)}"
-        class="circle" (click)="onCircleClick(ind)"></div>
+        class="circle" (click)="onCircleClick(ind === activeNumber)"></div>
     </div>
+  </div>
   </div>
   <div class="footer">
     <p>
