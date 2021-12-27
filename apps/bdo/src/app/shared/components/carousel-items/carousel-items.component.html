@@ -14,9 +14,8 @@
           </div>
         </ng-container>
         <ng-template #featuredBlock>
-            <div class="image" [style.background-image]="'url('+(deal.thumbnail ? deal.thumbnail : urlImageDefault)+')'">
-            </div>
-            <span class="title">{{deal.name}}</span>
+          <img class="image" [src]="deal.thumbnail ? deal.thumbnail : urlImageDefault">
+          <span class="title">{{deal.name}}</span>
         </ng-template>
       </div>
   </carousel>

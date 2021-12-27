@@ -1,7 +1,6 @@
 <ul class="wrapper">
   <li class="item" *ngFor="let featuredDeal of deals" (click)="itemClick(featuredDeal)">
-    <div class="image" [style.background-image]="'url('+(featuredDeal.thumbnail ? featuredDeal.thumbnail : urlImageDefault)+')'">
-    </div>
+    <img class="image" [src]="featuredDeal.thumbnail ? featuredDeal.thumbnail : urlImageDefault">
     <span class="title">{{featuredDeal.name}}</span>
   </li>
 </ul>
