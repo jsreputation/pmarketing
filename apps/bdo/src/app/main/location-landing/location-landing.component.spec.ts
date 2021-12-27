@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { LocationLandingComponent } from './location-landing.componen';
+import { LocationLandingComponent } from './location-landing.component';
 
 
 describe('LocationLandingComponent', () => {
