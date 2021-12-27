@@ -10,7 +10,6 @@ import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
 import { SearchComponent } from './search/search.component';
-import { LocationLandingComponent } from './location-landing/location-landing.componen';
 import { MerchantLocationPageComponent } from '../shared/components/merchant-location-page/merchant-location-page.component';
 
 const routes: Routes = [
@@ -24,10 +23,16 @@ const routes: Routes = [
       { path: 'result', component: ResultComponent },
       { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'deal-welcome/:id/location', component: MerchantLocationPageComponent },
-      { path: 'deal-welcome/:rid/location/map', component: LocationLandingComponent },
+      {
+        path: 'deal-welcome/:rid/location/map',
+        loadChildren: () => import('./location-landing/location-landing.module').then((mod) => mod.LocationLandingModule)
+      },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-welcome/:id/location', component: MerchantLocationPageComponent },
-      { path: 'treat-welcome/:rid/location/map', component: LocationLandingComponent },
+      {
+        path: 'treat-welcome/:rid/location/map',
+        loadChildren: () => import('./location-landing/location-landing.module').then((mod) => mod.LocationLandingModule)
+      },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby', component: NearbyDealsComponent },
       { path: 'catalog-page', component: CatalogPageComponent },
