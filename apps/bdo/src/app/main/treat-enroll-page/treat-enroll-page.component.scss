@@ -4,11 +4,11 @@ $margin-bottom: 15px;
 
 .thumbnail {
   width: 100%;
-  height: 128px;
+  //height: 128px;
   border-radius: 15px 15px 0 0;
-  @media screen and (min-width: $desktop-width) {
-    height: 232px;
-  }
+  //@media screen and (min-width: $desktop-width) {
+  //  height: 232px;
+  //}
 
   img {
     height: 100%;
