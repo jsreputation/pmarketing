@@ -15,15 +15,19 @@ export class LocationLandingComponent implements OnInit {
   public markersArray: google.maps.Marker[] = [];
   locations: IVoucherLocation[] = [];
 
+  private currentViewLocation = { lat: '', long: ''};
   constructor(private activeRoute: ActivatedRoute) {}
   ngOnInit(): void {
     this.loadScript().then(() => {
       this.activeRoute.queryParams.subscribe((param) => {
         const { lat = '', long = '' } = param;
+        this.currentViewLocation.lat = lat;
+        this.currentViewLocation.long = long;
+
         const mapProp: google.maps.MapOptions = {
           center: {
-            lat: parseFloat(lat),
-            lng: parseFloat(long),
+            lat: parseFloat(this.currentViewLocation.lat),
+            lng: parseFloat(this.currentViewLocation.long),
           },
           zoom: 15,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -34,8 +38,8 @@ export class LocationLandingComponent implements OnInit {
           {
             id: this.activeRoute.snapshot.params.rid,
             name: '',
-            latitude: lat,
-            longitude: long,
+            latitude: this.currentViewLocation.lat,
+            longitude: this.currentViewLocation.long,
           },
         ]);
       });
@@ -85,5 +89,13 @@ export class LocationLandingComponent implements OnInit {
     script.defer = true;
     body.appendChild(script);
     return loadingPromise;
+  }
+
+  public navToGmaps() {
+    window.open( ` https://www.google.com/maps/search/?api=1&query=${this.currentViewLocation.lat},${this.currentViewLocation.long}`, "_blank");
+  }
+
+  public navToWaze() {
+    window.open( `https://waze.com/ul?ll=${this.currentViewLocation.lat},${this.currentViewLocation.long}&z=10`, "_blank");
   }
 }

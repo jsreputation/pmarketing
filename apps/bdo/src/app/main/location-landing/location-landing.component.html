@@ -2,9 +2,9 @@
   <div class="gmap-wrapper">
     <div #gmap class="map"></div>
     <div class="link-out-buttons">
-      <button mat-button color="primary" class="gmap-button"><img src="assets/images/Google_Maps_icon_(2020).svg"></button>
+      <button mat-button color="primary" class="gmap-button" (click)="navToGmaps()"><img src="assets/images/Google_Maps_icon_(2020).svg"></button>
       <mat-divider [vertical]="true"></mat-divider>
-      <button mat-button color="primary" class="waze-button"><img src="assets/images/waze.svg"></button>
+      <button mat-button color="primary" class="waze-button" (click)="navToWaze()"><img src="assets/images/waze.svg"></button>
     </div>
   </div>
 </div>
