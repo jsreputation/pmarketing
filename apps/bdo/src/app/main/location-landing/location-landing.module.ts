@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocationLandingComponent } from './location-landing.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +17,8 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ]
 })
 export class LocationLandingModule { }
