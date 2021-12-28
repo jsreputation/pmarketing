@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { PrimaryCatalogComponent } from './home/primary-catalog/primary-catalog.component';
 import { MainRoutingModule } from './main-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -46,6 +46,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MapComponent } from './nearby-deals/map/map.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatRippleModule } from '@angular/material/core';
+import { RECAPTCHA_LANGUAGE, RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -97,13 +98,19 @@ import { MatRippleModule } from '@angular/material/core';
     MatBadgeModule,
     TranslateModule.forChild(),
     MatRippleModule,
-    PipeUtilsModule
-
+    PipeUtilsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   bootstrap: [],
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: {} },
+    {
+      provide: RECAPTCHA_LANGUAGE,
+      useFactory: (locale: string) => locale,
+      deps: [LOCALE_ID],
+    },
   ],
 })
 export class MainModule {}

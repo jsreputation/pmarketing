@@ -40,6 +40,10 @@
             </mat-error>
         </div>
     </div>
+    <div class="captcha-container">
+<!--        <re-captcha [siteKey]="captchaKey" (resolved)="captchaResolved($event)" formControlName="captchaReactive"></re-captcha>-->
+        <re-captcha [siteKey]="captchaKey" formControlName="captchaReactive"></re-captcha>
+    </div>
     <div class="enroll">
         <button mat-stroked-button color="primary" class="enroll-button"
                 [disabled]="!enrollForm.valid"

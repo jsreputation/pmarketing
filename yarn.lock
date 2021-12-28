@@ -3432,6 +3432,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/grecaptcha@^3.0.1":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-3.0.3.tgz#9b487b1d20f7813ea382e8cf7a4b621ae61782c4"
+  integrity sha512-osLqWRzsRsDtCfiCl1lbtUY8ANGCQsG/hhht3E7g1pVT7fD5SXgAg53S2grKjjSkXcm0fvMDbhUeL9NyAJvzGQ==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.3.tgz#4ba8ddb720221f432e443bd5f9117fd22cfd4762"
@@ -11369,6 +11374,14 @@ ng-packagr@10.1.2:
     sass "^1.23.0"
     stylus "^0.54.7"
     terser "^5.0.0"
+
+ng-recaptcha@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/ng-recaptcha/-/ng-recaptcha-8.0.1.tgz#4068eabf34caffbf9e1aa6db1e5310f380705909"
+  integrity sha512-Urc/0iGof9gqdXJ3HydpDrDlS3qLnjYLHqabCexpci8H3g6fYPeVWCKa2/haDHPUiyGc/+SXUaf7qTHlzJjObg==
+  dependencies:
+    "@types/grecaptcha" "^3.0.1"
+    tslib "^2.0.0"
 
 ngx-auth@^5.0.0:
   version "5.4.0"

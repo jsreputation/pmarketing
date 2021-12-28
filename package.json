@@ -311,6 +311,7 @@
     "jsbarcode": "3.11.0",
     "moment": "^2.29.1",
     "ng-mat-select-infinite-scroll": "^2.1.1",
+    "ng-recaptcha": "^8.0.1",
     "ngx-auth": "^5.0.0",
     "ngx-cacheable": "^1.4.1",
     "ngx-currency": "2.5.1",
