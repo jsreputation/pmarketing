@@ -13,6 +13,8 @@ export class TreatEnrollPageComponent implements OnInit {
   public campaign: ICampaign;
   enrollForm: FormGroup;
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
+  public captchaKey = '6LdIs9EdAAAAACKoOAlAE4MrwvjwJFb9ZgKwt3Rh';
+  // private captchaResponse: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -38,8 +40,13 @@ export class TreatEnrollPageComponent implements OnInit {
     this.enrollForm = new FormGroup({
       promoId: new FormControl('', [ Validators.required ]),
       tnc: new FormControl(false, [ Validators.requiredTrue ]),
+      captchaReactive: new FormControl(null, [ Validators.required ])
     });
   }
+
+  // public captchaResolved(captchaResponse: string) {
+  //   this.captchaResponse = captchaResponse;
+  // }
 
   enroll() {
     if (this.enrollForm.valid) {
