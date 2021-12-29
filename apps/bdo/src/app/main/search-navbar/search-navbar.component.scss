@@ -72,6 +72,8 @@
     background: $white;
     border-bottom: 2px solid $light-white;
     box-shadow: 1px 5px 16px $medium-black;
+    z-index: 99;
+    position: relative;
 
     ul {
       list-style: none;
@@ -92,5 +94,12 @@
         background: $light-grey;
       }
     }
+  }
+
+  .search-modal {
+    width: 100%;
+    position: fixed;
+    top: 100px;
+    left: 0;
   }
 }

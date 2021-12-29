@@ -17,14 +17,6 @@
 <!--  </div>-->
   <bdo-search-navbar *ngIf="!isLocationLanding"></bdo-search-navbar>
 </mat-toolbar>
-<mat-sidenav-container fxFlexFill class="main-navbar-content">
-  <mat-sidenav class="side-nav" position="end" color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
-    <div fxLayout="column">
-      <a mat-button routerLink="/about-us">Menu 1</a>
-      <a mat-button routerLink="/about-us">Menu 2</a>
-    </div>
-  </mat-sidenav>
-</mat-sidenav-container>
 
 <div [ngClass]="{'main-content': !isLocationLanding, 'main-content-exclude-search-navbar': isLocationLanding, 'nearby-page': isNearbyPage}">
   <router-outlet></router-outlet>

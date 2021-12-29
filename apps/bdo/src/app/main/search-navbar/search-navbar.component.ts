@@ -36,9 +36,7 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   searchValueChange(event) {
     const value = event.target.value;
     this.searchValue = value;
-    if (!value) {
-      this.isExpanded = false;
-    } else {
+    if (value) {
       this.searchEvent$.next(value);
     }
   }
