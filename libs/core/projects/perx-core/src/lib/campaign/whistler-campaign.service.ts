@@ -176,7 +176,7 @@ export class WhistlerCampaignService implements ICampaignService {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
-  public  bdoCampaignEnrol(id:number,promoID:string): Observable<IBDOCampaignEnrolment>{
+  public bdoCampaignEnrol(id: number, promoID: string, captchaToken: string): Observable<IBDOCampaignEnrolment> {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore

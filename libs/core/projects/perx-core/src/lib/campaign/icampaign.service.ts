@@ -29,6 +29,6 @@ export abstract class ICampaignService {
   public abstract getCampaignOutcomes(id: number): Observable<ICampaignOutcome[]>;
   public abstract enrolIntoCampaign(campaignId: number): Observable<boolean>;
   public abstract getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>;
-  public abstract bdoCampaignEnrol(id:number,promoID:string): Observable<IBDOCampaignEnrolment>;
+  public abstract bdoCampaignEnrol(id: number, promoID: string, captchaToken: string): Observable<IBDOCampaignEnrolment>;
   public abstract searchCampaigns(text: string, page?: number, pageSize?: number, locale?: string): Observable<ICampaign[]>
 }
