@@ -9,7 +9,7 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { TreatEnrollCompletePageComponent } from './treat-enroll-complete-page/treat-enroll-complete-page.component';
-import { SearchComponent } from './search/search.component';
+// import { SearchComponent } from './search/search.component';
 import { MerchantLocationPageComponent } from '../shared/components/merchant-location-page/merchant-location-page.component';
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'search', component: SearchComponent },
+      // { path: 'search', component: SearchComponent },
       { path: 'result', component: ResultComponent },
       { path: 'deal-welcome/:rid', component: DealLandingComponent },
       { path: 'deal-welcome/:id/location', component: MerchantLocationPageComponent },
