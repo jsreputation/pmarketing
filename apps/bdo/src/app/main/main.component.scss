@@ -52,39 +52,6 @@
   margin-top: 56px;
 }
 
-.search-wrapper {
-  position: relative;
-  width: 100%;
-  height: 40px;
-  background: $white;
-  display: flex;
-  padding: 0 10px;
-  justify-content: center;
-  box-sizing: border-box;
-  align-items: center;
-
-  .input-search {
-    height: inherit;
-    width: calc(100% - 24px);
-    outline-color: transparent;
-    border: none;
-    background: transparent;
-    box-sizing: border-box;
-    cursor: pointer;
-
-    &:focus-visible {
-      box-sizing: border-box;
-      padding: 0 10px;
-      outline: none;
-    }
-  }
-
-
-  .search-icon {
-    width: 24px;
-    height: 24px;
-  }
-}
 
 
 @media screen and (min-width: $desktop-width) {
@@ -99,5 +66,10 @@
     width: 100%;
     margin-top: 96px;
     padding: 8px 0;
+  }
+
+  .main-navbar-content {
+    width: $desktop-width;
+    margin: auto;
   }
 }
