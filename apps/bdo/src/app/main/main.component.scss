@@ -71,5 +71,17 @@
   .main-navbar-content {
     width: $desktop-width;
     margin: auto;
+    display: flex;
+    flex-direction: row;
+
+    .logo {
+      flex: 1;
+      width: unset;
+    }
+
+    .search-wrapper {
+      width: 800px;
+      align-self: center;
+    }
   }
 }

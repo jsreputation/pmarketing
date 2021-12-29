@@ -7,6 +7,10 @@
 
   .search-mat-panel {
     width: 100vw;
+
+    @media screen and (min-width: $desktop-width) {
+      width: unset;
+    }
   }
 
   .search-mat-panel:last-of-type {
@@ -19,12 +23,20 @@
     margin: 0;
     padding: 0 16px;
     background: $white;
+
+    @media screen and (min-width: $desktop-width) {
+      padding: 0;
+    }
   }
 
   .search-wrapper {
     position: relative;
     width: 100%;
     height: 40px;
+
+    @media screen and (min-width: $desktop-width) {
+      padding-left: 16px;
+    }
 
     .input-search {
       height: inherit;
@@ -41,6 +53,10 @@
       z-index: 10;
       right: 0;
       top: 8px;
+
+      @media screen and (min-width: $desktop-width) {
+        right: 16px;
+      }
     }
   }
 
@@ -101,5 +117,11 @@
     position: fixed;
     top: 100px;
     left: 0;
+
+    @media screen and (min-width: $desktop-width) {
+      max-width: 800px;
+      left: unset;
+      top: 48px;
+    }
   }
 }

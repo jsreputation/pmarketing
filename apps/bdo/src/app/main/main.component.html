@@ -12,11 +12,9 @@
         <button mat-button color="primary" class="back-button" (click)="back()"><mat-icon>chevron_left</mat-icon> Back</button>
       </div>
     </ng-template>
-    <!--  <div class="search-wrapper">-->
-    <!--    <input type="text" class="input-search" placeholder="Search deals" (click)="navigateToSearch()">-->
-    <!--    <img class="search-icon" src="assets/images/search-outline.svg"/>-->
-    <!--  </div>-->
-    <bdo-search-navbar *ngIf="!isLocationLanding"></bdo-search-navbar>
+    <div class="search-wrapper" *ngIf="!isLocationLanding">
+      <bdo-search-navbar></bdo-search-navbar>
+    </div>
   </div>
 
 </mat-toolbar>
