@@ -118,6 +118,10 @@ export class ErrorMessageService {
             errorKey = 'ERRORS.COULD_NOT_ENROL';
           }
           break;
+        case 800:
+          // captcha failed
+          errorKey = 'ERRORS.CAPTCHA_INVALID';
+          break;
       }
     }
 

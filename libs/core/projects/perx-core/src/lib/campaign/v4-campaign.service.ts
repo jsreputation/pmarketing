@@ -720,9 +720,13 @@ export class V4CampaignService implements ICampaignService {
       );
   }
 
-  public bdoCampaignEnrol(id: number, promoID: string): Observable<IBDOCampaignEnrolment> {
+  public bdoCampaignEnrol(id: number, promoID: string, captchaToken: string): Observable<IBDOCampaignEnrolment> {
     return this.http
-      .post<IV4BdoEnrolmentResponse>(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`, { promo_id: promoID }).pipe(
+      .post<IV4BdoEnrolmentResponse>(`${this.baseUrl}/v4/custom/bdo/campaigns/${id}/enrolment`,
+        {
+          promo_id: promoID,
+          recaptcha_token: captchaToken
+        }).pipe(
         map((response: IV4BdoEnrolmentResponse) => response.data),
         map((enrolment: IV4BdoEnrolment) => {
           return {

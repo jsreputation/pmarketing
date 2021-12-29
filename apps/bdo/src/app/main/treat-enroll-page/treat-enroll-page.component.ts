@@ -14,7 +14,7 @@ export class TreatEnrollPageComponent implements OnInit {
   enrollForm: FormGroup;
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
   public captchaKey = '6LdIs9EdAAAAACKoOAlAE4MrwvjwJFb9ZgKwt3Rh';
-  // private captchaResponse: string;
+  private captchaResponse: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -44,14 +44,14 @@ export class TreatEnrollPageComponent implements OnInit {
     });
   }
 
-  // public captchaResolved(captchaResponse: string) {
-  //   this.captchaResponse = captchaResponse;
-  // }
+  public captchaResolved(captchaResponse: string) {
+    this.captchaResponse = captchaResponse;
+  }
 
   enroll() {
     if (this.enrollForm.valid) {
       this.campaignService
-        .bdoCampaignEnrol(this.campaign.id, this.enrollForm.get('promoId').value)
+        .bdoCampaignEnrol(this.campaign.id, this.enrollForm.get('promoId').value, this.captchaResponse)
         .subscribe(
           (item) => {
             if (item) {
