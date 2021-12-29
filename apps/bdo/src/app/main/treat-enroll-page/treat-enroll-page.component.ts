@@ -13,7 +13,7 @@ export class TreatEnrollPageComponent implements OnInit {
   public campaign: ICampaign;
   enrollForm: FormGroup;
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
-  public captchaKey = '6LdIs9EdAAAAACKoOAlAE4MrwvjwJFb9ZgKwt3Rh';
+  public captchaKey = '6LeDPNgdAAAAAJXJbh2r49JRAv8xqR7wstchS8Nf';
   private captchaResponse: string;
 
   constructor(
