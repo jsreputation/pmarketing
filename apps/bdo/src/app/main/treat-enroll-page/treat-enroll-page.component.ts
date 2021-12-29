@@ -74,6 +74,7 @@ export class TreatEnrollPageComponent implements OnInit {
                   (errMessage: string) => {
                     this.notificationService.addSnack(errMessage);
                     this.enrollForm.get(['promoId']).setErrors({apiError: errMessage});
+                    this.enrollForm.get(['captchaReactive']).reset();
                   });
             }
           })
