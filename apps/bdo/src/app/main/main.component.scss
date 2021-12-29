@@ -68,20 +68,24 @@
     padding: 8px 0;
   }
 
-  .main-navbar-content {
-    width: $desktop-width;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
+  .main-navbar {
+    height: 64px;
 
-    .logo {
-      flex: 1;
-      width: unset;
-    }
+    .main-navbar-content {
+      width: $desktop-width;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
 
-    .search-wrapper {
-      width: 800px;
-      align-self: center;
+      .logo {
+        flex: 1;
+        width: unset;
+      }
+
+      .search-wrapper {
+        width: 800px;
+        align-self: center;
+      }
     }
   }
 }
