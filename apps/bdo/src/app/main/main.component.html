@@ -16,10 +16,8 @@
       <bdo-search-navbar></bdo-search-navbar>
     </div>
   </div>
-
 </mat-toolbar>
 
 <div [ngClass]="{'main-content': !isLocationLanding, 'main-content-exclude-search-navbar': isLocationLanding, 'nearby-page': isNearbyPage}">
   <router-outlet></router-outlet>
 </div>
-

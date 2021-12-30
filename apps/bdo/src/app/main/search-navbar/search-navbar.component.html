@@ -1,33 +1,31 @@
 <mat-accordion class="search-popup">
-  <mat-expansion-panel class="search-mat-panel" hideToggle [expanded]='isExpanded' disabled>
+  <mat-expansion-panel class="search-mat-panel" hideToggle [expanded]="isExpanded" disabled>
     <mat-expansion-panel-header class="search-mat-panel-header">
-        <div class="search-wrapper">
-          <input type="text" class="input-search" placeholder="Search deals"
-                 (keydown)="$event.stopPropagation()"
-                 (focus)="isExpanded=true"
-                 (keyup)="searchValueChange($event)"
-                 (keyup.enter)="search(searchValue)"
-                 (blur)="onBlur()"
-                 [value]="searchValue">
-          <ng-container *ngIf="isSearching; else searchBlock">      
-            <img class="search-icon" src="assets/images/close.svg" (click)="searchValue && clearSearchValue($event)"/>
-          </ng-container> 
-          <ng-template #searchBlock>
-            <img class="search-icon" src="assets/images/search-outline.svg" (click)="search(searchValue)"/>
-          </ng-template>
-        </div>
+      <div class="search-wrapper">
+        <input type="text" class="input-search" placeholder="Search deals"
+               (keydown)="$event.stopPropagation()"
+               (focus)="isExpanded=true"
+               (keyup)="searchValueChange($event)"
+               (keyup.enter)="search(searchValue)"
+               (blur)="onBlur()"
+               [value]="searchValue">
+        <ng-container *ngIf="isSearching; else searchBlock">
+          <img class="search-icon" src="assets/images/close.svg" (click)="searchValue && clearSearchValue($event)"/>
+        </ng-container>
+        <ng-template #searchBlock>
+          <img class="search-icon" src="assets/images/search-outline.svg" (click)="search(searchValue)"/>
+        </ng-template>
+      </div>
       <div class="search-modal" *ngIf="isExpanded">
         <bdo-search></bdo-search>
       </div>
     </mat-expansion-panel-header>
-      <div class="recommend" *ngIf="searchSuggestion.length && searchValue">
-        <ul>
-          <li *ngFor="let item of searchSuggestion" (click)="search(item)">
-            {{item}}
-          </li>
-        </ul>
-      </div>
-
+    <div class="recommend" *ngIf="searchSuggestion.length && searchValue">
+      <ul>
+        <li *ngFor="let item of searchSuggestion" (click)="search(item)">
+          {{item}}
+        </li>
+      </ul>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
-

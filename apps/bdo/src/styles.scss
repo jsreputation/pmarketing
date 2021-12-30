@@ -134,6 +134,7 @@ input::placeholder {
     }
   }
 }
+
 .inline-checkbox-group {
   .checkbox-group-wrapper {
     .mat-expansion-panel-header {
@@ -141,6 +142,7 @@ input::placeholder {
     }
   }
 }
+
 .checkbox-group-wrapper {
   .mat-expansion-panel-header {
     border-top: 1px solid $grey-white;
@@ -150,6 +152,7 @@ input::placeholder {
     box-shadow: none !important;
   }
 }
+
 .filter-form {
   .mat-expansion-panel-body {
     padding: 0;
@@ -218,11 +221,13 @@ input::placeholder {
   border-radius: 15px;
   padding: 5px 12px;
 }
+
 .filter-tag {
   border-radius: 12px;
   padding: 5px 10px;
   min-height: 25px;
 }
+
 .mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
   font-size: 12px;
   background-color: $white;
@@ -279,6 +284,7 @@ input::placeholder {
 
 .tags-chip {
   line-height: 40px;
+
   .mat-chip-list-wrapper {
     padding: 10px;
   }
@@ -295,6 +301,7 @@ input::placeholder {
     .mat-expansion-panel-header {
       padding: 0 12px !important;
     }
+
     .mat-expansion-panel-body {
       padding: 0 0 10px 0 !important;
     }
