@@ -80,6 +80,7 @@
       .logo {
         flex: 1;
         width: unset;
+        height: 64px; // don't allow to grow with search-wrapper
       }
 
       .search-wrapper {
