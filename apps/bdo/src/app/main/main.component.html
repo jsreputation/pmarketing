@@ -12,9 +12,13 @@
         <button mat-button color="primary" class="back-button" (click)="back()"><mat-icon>chevron_left</mat-icon> Back</button>
       </div>
     </ng-template>
-    <div class="search-wrapper" *ngIf="!isLocationLanding">
-      <bdo-search-navbar></bdo-search-navbar>
+    <div class="vertical-flex">
+      <div class="vertical-spacer"></div>
+      <div class="search-wrapper" *ngIf="!isLocationLanding">
+        <bdo-search-navbar></bdo-search-navbar>
+      </div>
     </div>
+
   </div>
 </mat-toolbar>
 

@@ -83,12 +83,24 @@
         height: 64px; // don't allow to grow with search-wrapper
       }
 
-      .search-wrapper {
-        width: 800px;
-        align-self: center;
-        border-radius: 5px;
-        overflow: hidden;
+      .vertical-flex {
+        display: flex;
+        flex-direction: column;
+
+        .vertical-spacer {
+          height: 10px;
+          flex: 0 0 10px;
+          width: 100%;
+        }
+
+        .search-wrapper {
+          width: 800px;
+          align-self: center;
+          border-radius: 5px;
+          overflow: hidden;
+        }
       }
+
     }
   }
 }
