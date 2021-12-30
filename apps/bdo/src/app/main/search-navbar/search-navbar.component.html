@@ -20,7 +20,7 @@
         <bdo-search></bdo-search>
       </div>
     </mat-expansion-panel-header>
-      <div class="recommend" *ngIf="searchSuggestion.length">
+      <div class="recommend" *ngIf="searchSuggestion.length && searchValue">
         <ul>
           <li *ngFor="let item of searchSuggestion" (click)="search(item)">
             {{item}}
