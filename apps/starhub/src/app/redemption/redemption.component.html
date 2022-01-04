@@ -13,7 +13,7 @@
             <ng-container *ngIf="!isVoucherValid else showVoucherState">
               <span class="hide-for-new-ux code">Not redeemable yet</span>
               <h3 class="hide-for-old-ux code">Not redeemable yet</h3>
-            </ng-container>           
+            </ng-container>
             <ng-template #showVoucherState>
               <span class="hide-for-new-ux code">{{voucher.state}}</span>
               <h3 class="hide-for-old-ux code">{{voucher.state}}</h3>
@@ -56,6 +56,14 @@
                   </perx-core-pin-input>
                 </div>
               </ng-template>
+            </div>
+            <div *ngIf="voucher.redemptionType === 'url'" class="code-container">
+              <div class="code-redemption">
+                <h1 class="hide-for-new-ux">Redemption link</h1>
+                <h3 class="title hide-for-old-ux">Redemption link</h3>
+                <input class="code" #codeInput matInput type="text" [value]="voucher.code" readonly>
+                <button mat-button (click)="copyCode(codeInput)">Copy the code</button>
+              </div>
             </div>
           </ng-template>
         </div>
