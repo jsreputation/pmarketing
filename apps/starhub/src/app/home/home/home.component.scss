@@ -131,9 +131,3 @@ mat-toolbar {
     position: sticky !important;
   }
 }
-
-::ng-deep {
-  app-stars .main-container .left-block {
-      margin-left: 0!important;
-  }
-}
