@@ -35,6 +35,8 @@ import {
   of
 } from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
+import {MatExpansionPanel} from '@angular/material/expansion';
+
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 
@@ -71,6 +73,8 @@ export class HomeComponent implements OnInit {
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
   public uxcr: boolean = false;
+  @ViewChild('expansionPanel')
+  public expansionPanel: MatExpansionPanel;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -159,19 +163,34 @@ export class HomeComponent implements OnInit {
     }
   }
   public onScrollCall(): void {
+    if (this.expansionPanel?.expanded) {
+      this.expansionPanel.close();
+    }
     requestAnimationFrame(() => {
       const delta =
         this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
       this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
       if (this.top + delta > 0) {
         this.top = 0;
-      } else if (this.top + delta <= -178) {
-        this.top = -178;
+      } else if (this.top + delta <= -184) {
+        this.top = -184;
       } else {
         this.top = this.top + delta;
       }
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
     });
+  }
+
+  public onPanelExpansion(): void {
+    this.toolBar._elementRef.nativeElement.style.transform = 'translateY(0)';
+    this.toolBar._elementRef.nativeElement.classList.add('accordion-expanded');
+    this.contentScrolled.nativeElement.classList.add('accordion-expanded');
+  }
+
+  public onPanelCollapse(): void {
+    this.toolBar._elementRef.nativeElement.classList.remove('accordion-expanded');
+    this.contentScrolled.nativeElement.classList.remove('accordion-expanded');
+    this.contentScrolled.nativeElement.scrollTop = '230px';
   }
 
   private fetchPopupCampaigns(): void {

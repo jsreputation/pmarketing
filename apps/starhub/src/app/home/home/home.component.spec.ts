@@ -24,6 +24,7 @@ import { Type } from '@angular/core';
 import { campaigns } from '../../campaigns.mock';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true),
@@ -78,7 +79,8 @@ describe('HomeComponent', () => {
           path: 'error', component: HomeComponent,
         }]),
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        MatExpansionModule
       ],
       providers: [
         NoRenewaleInNamePipe,
