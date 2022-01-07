@@ -38,6 +38,7 @@ import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
 import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campaigns.component';
 import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
 import { StarsComponent } from './stars/stars.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { StarsComponent } from './stars/stars.component';
     PerxGameServiceModule.forChild(),
     StampModule,
     OutcomeModule,
-    GhostsModule
+    GhostsModule,
+    MatExpansionModule
   ],
   bootstrap: [],
   providers: [

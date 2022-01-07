@@ -35,11 +35,30 @@
         </div>
       </div>
     </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="starsCR && starsLoyalty">
-      <app-stars class="stars-row" [pointsBalance]="starsLoyalty?.pointsBalance"
-        [membershipTierName]="starsLoyalty?.membershipTierName" [nextTierPointsDiff]="starsLoyalty?.nextTierPointsDiff"
-        [expiringPoints]="starsLoyalty?.expiringPoints[0]">
-      </app-stars>
+    <mat-toolbar-row *ngIf="starsCR && starsLoyalty" class="stars-loyalty">
+      <mat-accordion class=''>
+        <mat-expansion-panel #expansionPanel (opened)="onPanelExpansion()" (closed)="onPanelCollapse()">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <app-stars class="stars-row" [pointsBalance]="starsLoyalty?.pointsBalance"
+              [membershipTierName]="starsLoyalty?.membershipTierName" [nextTierPointsDiff]="starsLoyalty?.nextTierPointsDiff"
+              [expiringPoints]="starsLoyalty?.expiringPoints[0]">
+            </app-stars>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <p>Snap up exclusive Saturday treats!</p>
+            <p>Taking part is easy, you’ll get 1 star for each action:</p>
+            <ul>
+              <li>Spin the wheel every Saturday</li>
+              <li>Save a lifestyle rewards deal</li>
+              <li>Play a monthly game at “Play & win” for each day</li>   
+            </ul>
+            <p>Each month, depending on the total number of stars you’ve collected, 
+            redeem exclusive treats on Saturday. It’s first come first served so hurry and start collecting your stars now!</p>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
       <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"

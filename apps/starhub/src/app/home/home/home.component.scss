@@ -8,12 +8,15 @@
   flex-direction: column;
 
   .content {
-    padding-top: 17rem;
+    padding-top: 23rem;
     flex: 1;
     overflow-y: auto;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+    &.accordion-expanded {
+      padding-top: 0 !important;
+    }
   }
 }
 
@@ -99,5 +102,32 @@ mat-toolbar {
   .stars-row {
     margin-top: 0.4rem;
     flex: 1;
+  }
+
+  .stars-loyalty {
+    height: 100%!important;
+    width: 100% !important;
+  }
+
+  .mat-toolbar-row {
+    white-space: normal !important;
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none!important;
+    border-radius: 2.4rem!important;
+    background-color: #f8f9f9 !important;
+    width: 100%;
+  }
+
+  .mat-expansion-panel-header {
+    height: auto !important;
+    background-color: #f8f9f9 !important;
+    padding: 0 14px!important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
+
+  &.accordion-expanded {
+    position: sticky !important;
   }
 }

@@ -24,6 +24,7 @@ import { Type } from '@angular/core';
 import { campaigns } from '../../campaigns.mock';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true),
@@ -78,7 +79,8 @@ describe('HomeComponent', () => {
           path: 'error', component: HomeComponent,
         }]),
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        MatExpansionModule
       ],
       providers: [
         NoRenewaleInNamePipe,
@@ -177,7 +179,7 @@ describe('HomeComponent', () => {
     component.previousDelta = -1000;
     component.onScrollCall();
     tick(100);
-    expect(component.top).toBe(-178);
+    expect(component.top).toBe(-184);
   }));
 
   it('should redirect to error screen', fakeAsync(() => {
