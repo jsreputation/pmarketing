@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   };
 
 
-  private rad = 2000;
+  private rad = 3000;
   public currentPosition: {
     lat: number;
     lng: number;
