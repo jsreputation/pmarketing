@@ -20,8 +20,8 @@ import {
   OutcomeModule,
   PopupComponent,
   QuestModule as PerxQuestModule,
+  UtilsModule,
   StampModule,
-  UtilsModule
 } from '@perxtech/core';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -40,6 +40,7 @@ import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campa
 import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
 import { StarsComponent } from './stars/stars.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NoRenewaleInNamePipe,
     QuizSurveyCampaignsComponent,
     TaggedItemsComponent,
-    StarsComponent
+    StarsComponent,
   ],
   imports: [
     ConfigModule.forChild(),
@@ -79,15 +80,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
     OutcomeModule,
     GhostsModule,
     MatExpansionModule,
-    PerxQuestModule.forChild()
+    PerxQuestModule.forChild(),
+    IvyCarouselModule,
   ],
   bootstrap: [],
-  providers: [
-    NoRenewaleInNamePipe,
-  ],
-  entryComponents: [
-    PopupComponent
-  ]
+  providers: [NoRenewaleInNamePipe],
+  entryComponents: [PopupComponent],
 })
-export class HomeModule {
-}
+export class HomeModule {}

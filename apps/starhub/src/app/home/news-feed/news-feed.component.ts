@@ -9,7 +9,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   RssFeedsPages,
-  ConfigService
+  ConfigService,
 } from '@perxtech/core';
 
 import { AnalyticsService, PageType } from '../../analytics.service';
@@ -19,7 +19,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-news-feed',
   templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.scss']
+  styleUrls: ['./news-feed.component.scss'],
 })
 export class NewsFeedComponent implements OnInit {
   public items: FeedItem[];
@@ -28,6 +28,11 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
   public showButton: boolean = true;
   public ghostFeed?: any[] = new Array(1);
+  public showCarouselArrows: boolean = true;
+  public isDragEvent: boolean = false;
+  public isClickEvent: boolean = false;
+  public carouselHeight: number = 220;
+  public itemWidth: number = window.innerWidth;
 
   private initNewsFeedItems(): void {
     this.configService
@@ -53,6 +58,8 @@ export class NewsFeedComponent implements OnInit {
           this.newsAfterScroll = Array.from(
             Array(items.length > 0 ? items.length - 1 : 1).keys()
           );
+
+          console.log('this.items: ', this.items);
         },
         () => {
           this.ghostFeed = undefined;
@@ -66,7 +73,7 @@ export class NewsFeedComponent implements OnInit {
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
     private configService: ConfigService
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.itemSize = window.innerWidth;
@@ -97,14 +104,14 @@ export class NewsFeedComponent implements OnInit {
   public readMore(item: FeedItem): void {
     this.analytics.addEvent({
       pageType: PageType.overlay,
-      pageName: 'The All New Starhub Rewards'
+      pageName: 'The All New Starhub Rewards',
     });
     this.dialog.open(FeedItemPopupComponent, {
       panelClass: 'app-full-bleed-dialog',
       data: { ...item, ...(this.showButton ? {} : { hideButton: true }) },
       height: '85vh',
       minWidth: '35.5rem',
-      maxWidth: '94vw'
+      maxWidth: '94vw',
     });
   }
 
