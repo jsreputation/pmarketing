@@ -142,6 +142,7 @@ export class RedemptionComponent implements OnInit {
   public copyCode(inputElement: HTMLInputElement): void {
     inputElement.select();
     document.execCommand('copy');
+    this.notficationService.addSnack('Code Copied.');
   }
 
   public updatePin(): void {
