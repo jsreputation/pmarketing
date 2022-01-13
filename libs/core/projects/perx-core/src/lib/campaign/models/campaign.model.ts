@@ -162,6 +162,7 @@ export interface ICampaign {
   categoryTags?:ICategoryTags[];
   tags?: ITag[];
   score?: number;
+  miscImages?: { [key: string]: string };
 }
 
 export enum CommChannel {
