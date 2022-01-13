@@ -14,7 +14,7 @@ export function mapRewardsToListItem(rewards: IReward[]): IListItemModel[] {
       position: reward?.distance?.value ? reward.distance.value.toString() : '',
       tags: reward.tags,
       score: reward.score,
-      featuredImg: reward.miscImages.miscImage1
+      featuredImg: reward.miscImages?.miscImage1
     };
   });
 }
@@ -31,7 +31,7 @@ export function mapCampaignsToListItem(campaigns: ICampaign[]): IListItemModel[]
       createdAt: campaign.beginsAt,
       tags: campaign.tags,
       score: campaign.score,
-      featuredImg: campaign.miscImages.miscImage1
+      featuredImg: campaign.miscImages?.miscImage1
     };
   });
 }
