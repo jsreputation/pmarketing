@@ -249,6 +249,13 @@ export class V4CampaignService implements ICampaignService {
     if (campaignBannerUrl) {
       campaignBannerUrl = patchUrl(campaignBannerUrl);
     }
+    const miscImg1 = campaign.images.find(
+      (image: IV4Image) => image.type === 'misc_image_1'
+    )?.url;
+    const miscImg2 = campaign.images.find(
+      (image: IV4Image) => image.type === 'misc_image_2'
+    )?.url;
+
     const rewards =
       campaign.rewards &&
       campaign.rewards.map((reward: IV4Reward) =>
@@ -569,7 +576,11 @@ export class V4CampaignService implements ICampaignService {
       customFields,
       categoryTags: campaign.category_tags,
       tags: campaign.tags,
-      score: campaign?.score
+      score: campaign?.score,
+      miscImages: {
+        miscImage1: miscImg1 || '',
+        miscImage2: miscImg2 || ''
+      }
     };
   }
 

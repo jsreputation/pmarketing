@@ -227,6 +227,13 @@ export class V4RewardsService extends RewardsService {
       (image: IV4Image) => image.type === 'reward_banner'
     );
     const rewardBanner: string = oc(banner).url('');
+
+    const miscImg1 = images.find(
+      (image: IV4Image) => image.type === 'misc_image_1'
+    )?.url;
+    const miscImg2 = images.find(
+      (image: IV4Image) => image.type === 'misc_image_2'
+    )?.url;
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from
       ? new Date(reward.selling_from)
@@ -290,12 +297,12 @@ export class V4RewardsService extends RewardsService {
       loyalty: loyaltyTierInfo,
       rewardPrice: reward.reward_price
         ? reward.reward_price.map((price) => ({
-            id: price.id,
-            currencyCode: price.currency_code,
-            price: Number(price.price || 0).toFixed(2),
-            points: price.points,
-            identifier: price.identifier,
-          }))
+          id: price.id,
+          currencyCode: price.currency_code,
+          price: Number(price.price || 0).toFixed(2),
+          points: price.points,
+          identifier: price.identifier,
+        }))
         : undefined,
       rewardThumbnail: thumbnailImg,
       rewardState: RewardStateHelper.getRewardState(
@@ -317,25 +324,29 @@ export class V4RewardsService extends RewardsService {
       displayProperties: reward.display_properties,
       customFields: reward.custom_fields
         ? {
-            requirement: campaignType
-              ? V4RewardsService.custFieldRequirementSelector(
-                  campaignType,
-                  reward.custom_fields
-                )
-              : reward.custom_fields.points_requirement ||
-                reward.custom_fields.referrals_requirement,
-            requirementDescription:
-              reward.custom_fields.reward_description || '',
-            faqLink: reward.custom_fields.faq_link,
-            tncLink: reward.custom_fields.tnc_link,
-            cardLink: reward.custom_fields.card_link,
-          }
+          requirement: campaignType
+            ? V4RewardsService.custFieldRequirementSelector(
+              campaignType,
+              reward.custom_fields
+            )
+            : reward.custom_fields.points_requirement ||
+            reward.custom_fields.referrals_requirement,
+          requirementDescription:
+            reward.custom_fields.reward_description || '',
+          faqLink: reward.custom_fields.faq_link,
+          tncLink: reward.custom_fields.tnc_link,
+          cardLink: reward.custom_fields.card_link,
+        }
         : undefined,
       operatingHours,
       isOperating: reward.operating_now,
       tags: reward?.tags,
-      distance: {value:reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure},
-      score: reward?.score
+      distance: { value: reward?.distance?.value, unitOfMeasure: reward?.distance?.unit_of_measure },
+      score: reward?.score,
+      miscImages: {
+        miscImage1: miscImg1 || '',
+        miscImage2: miscImg2 || ''
+      }
     };
   }
 

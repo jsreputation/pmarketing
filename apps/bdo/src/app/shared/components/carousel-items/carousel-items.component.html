@@ -14,7 +14,7 @@
           </div>
         </ng-container>
         <ng-template #featuredBlock>
-          <img class="image" [src]="deal.thumbnail ? deal.thumbnail : urlImageDefault">
+          <img class="image" [src]="deal.featuredImg ? deal.featuredImg : (deal.thumbnail ? deal.thumbnail : urlImageDefault)">
           <span class="title">{{deal.name}}</span>
         </ng-template>
       </div>
