@@ -22,9 +22,16 @@
                 <p> {{promo?.promoId}}</p>
             </div>
         </div>
-        <div class="share" (click)="sharePromo()">
-            <img src=" assets/images/share.svg" alt="" class="share-icon">
-            Share
+        <div class="share-container">
+            <div class="share" (click)="sharePromo()">
+                <img src=" assets/images/share.svg" alt="" class="share-icon">
+                Share
+            </div>
+            <div class="spacer"></div>
+            <div class="copy" (click)="copy()">
+                <mat-icon class="material-icons">content_copy</mat-icon>
+                Copy Reference
+            </div>
         </div>
         <div class="note">
             <p>{{promo.tnc}}</p>
