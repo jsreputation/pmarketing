@@ -79,9 +79,9 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     }
   }
 
-  public copy(): void {
+  public copy(text?: string): void {
     navigator.clipboard
-      .writeText(`${this.shareTitle}`)
+      .writeText(`${text ? text : this.shareTitle}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
