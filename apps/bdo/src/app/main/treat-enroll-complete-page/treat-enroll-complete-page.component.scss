@@ -69,6 +69,10 @@ $font-weight:bold;
                 width: 150px;
                 cursor: pointer;
                 text-transform: capitalize;
+
+                @media screen and (max-width: $desktop-width) {
+                    justify-content: center !important;
+                }
             }
 
             .share {
