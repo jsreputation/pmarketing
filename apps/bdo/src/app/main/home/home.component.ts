@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.rewardsService.getCatalogs(1, this.requestPageSize).subscribe((catalogs) => {
-      this.catalogId = catalogs?.find((item: ICatalog) => item.name === ORDERED_CATALOG_NAME)?.id;
+      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name === ORDERED_CATALOG_NAME)?.id;
       this.loadDeals();
     });
 

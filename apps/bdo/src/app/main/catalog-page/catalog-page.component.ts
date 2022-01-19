@@ -40,7 +40,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       this.rewardsService.getAllCategories(),
       this.rewardsService.getCatalogs(1, this.requestPageSize)
     ]).subscribe(([params, categories, catalogs]) => {
-      this.catalogId = catalogs?.find((item: ICatalog) => item.name === ORDERED_CATALOG_NAME)?.id;
+      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name === ORDERED_CATALOG_NAME)?.id;
       const filterData = FILTER_DATA;
       filterData.categories = filterData.categories
         .map(item => {
