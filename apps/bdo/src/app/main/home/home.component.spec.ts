@@ -26,7 +26,10 @@ describe('HomeComponent', () => {
     },
     nearMe() {
      return of([]);
-   }
+   },
+   getCatalogs() {
+    return of();
+  }
   };
 
   const campaignServiceBdo: Partial<ICampaignService> = {

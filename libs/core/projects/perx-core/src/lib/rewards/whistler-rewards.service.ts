@@ -231,6 +231,11 @@ export class WhistlerRewardsService implements RewardsService {
     throw new Error('Method not implemented.');
   }
 
+  // @ts-ignore
+  public getRewardsById(ids: number[], locale?: string): Observable<IReward[]> {
+      throw new Error('Method not implemented.');
+    }
+
   public getAllCatalogs(): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
   }
@@ -247,6 +252,12 @@ export class WhistlerRewardsService implements RewardsService {
   // @ts-ignore
   public getCatalog(id: number): Observable<ICatalog> {
     throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCatalogItems(id: number, page: number, pageSize: number, locale?: string, categoryIds?: number[] | null,
+  // @ts-ignore
+                         tags?: string[] | null, sort?: Sort, sortBy?: string | null): Observable<ICatalogItem[]> {
+      throw new Error('Method not implemented.');
   }
 
   // @ts-ignore

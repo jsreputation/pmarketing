@@ -657,6 +657,39 @@ export class V4CampaignService implements ICampaignService {
         })
       ));
   }
+
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 50,
+    maxAge: 300000,
+  })
+  public getCampaignsById(
+    ids: number[],
+    pageSize?: number,
+    locale: string = 'en'): Observable<ICampaign[]> {
+      const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept-Language', locale);
+      const campaignIds = ids.join('|');
+      let params = new HttpParams();
+      if (pageSize) {
+        params = params.set('size', pageSize.toString());
+      }
+      return this.http
+        .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns/?ids=${campaignIds}`, {
+          headers,
+          params
+        })
+        .pipe(
+          map((res) => res.data),
+          map((campaigns: IV4Campaign[]) =>
+          campaigns.map((campaign) =>
+            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
+          )
+        ),
+      );
+  }
+
   public getVoucherLeftCount(
     campaignId: number
   ): Observable<{ count: number; campaignId: number }> {

@@ -59,6 +59,12 @@ export interface ICatalog {
   rewards?: IReward[];
 }
 
+export interface ICatalogItem {
+  id: number;
+  itemId: number;
+  itemType: string;
+  ordering: number;
+}
 
 export interface IPrice {
   id?: number;

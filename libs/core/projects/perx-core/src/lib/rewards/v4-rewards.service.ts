@@ -16,7 +16,8 @@ import {
   ISearchHistory,
   ITrending,
   ISearchSuggestion,
-  Sort
+  Sort,
+  ICatalogItem
 } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
@@ -193,6 +194,17 @@ interface IV4SearchHistory {
 
 interface IV4GetSearchSuggestionResponse {
   data: ISearchSuggestion[];
+}
+
+interface IV4CatalogItem {
+  id: number;
+  item_id: number;
+  item_type: string;
+  ordering: number;
+} 
+
+interface IV4GetCatalogItemsResponse {
+  data: IV4CatalogItem[];
 }
 
 @Injectable({
@@ -384,6 +396,15 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
+  private static v4CatalogItemsToCatalogItems(catalogItem: IV4CatalogItem): ICatalogItem {
+      return {
+        id: catalogItem.id,
+        itemId: catalogItem.item_id,
+        itemType: catalogItem.item_type,
+        ordering: catalogItem.ordering
+      };
+  }
+
   private static v4CategoriesToCategories(
     category: IV4Category
   ): ITabConfigExtended {
@@ -528,6 +549,26 @@ export class V4RewardsService extends RewardsService {
       );
   }
 
+  public getRewardsById(
+    ids: number[],
+    locale: string = 'en'): Observable<IReward[]> {
+      const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept-Language', locale);
+      const rewardsIds = ids.join('|');
+      return this.http
+        .get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/?ids=${rewardsIds}`, {
+          headers,
+        })
+        .pipe(
+          map((res) => res.data),
+          map((rewards: IV4Reward[]) =>
+          rewards.map((reward: IV4Reward) =>
+            V4RewardsService.v4RewardToReward(reward))
+          )
+      );
+  }
+
   public getAllCatalogs(locale: string = 'en'): Observable<ICatalog[]> {
     return new Observable((subject) => {
       const pageSize = 100;
@@ -592,6 +633,52 @@ export class V4RewardsService extends RewardsService {
         map((res) => res.data),
         map((catalog: IV4Catalog) =>
           V4RewardsService.v4CatalogToCatalog(catalog)
+        )
+      );
+  }
+
+  public getCatalogItems(
+    id: number,
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en',
+    categoryIds?: number[] | null,
+    tags?: string[] | null,
+    sort?: Sort,
+    sortBy?: string | null): Observable<ICatalogItem[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    if (tags) {
+      params = params.set('tags', tags.join('|'));
+    }
+
+    if (categoryIds && categoryIds.length > 0) {
+      params = params.set('category_ids', categoryIds.join('|'));
+    }
+
+    if (sort) {
+      params = params.set('order', sort);
+    }
+
+    if (sortBy) {
+      params = params.set('sort_by', sortBy);
+    }
+
+    return this.http
+      .get<IV4GetCatalogItemsResponse>(`${this.apiHost}/v4/catalogs/${id}/items`, {
+        headers,
+        params
+      })
+      .pipe(
+        map((res: IV4GetCatalogItemsResponse) => res.data),
+        map((catalogs: IV4CatalogItem[]) =>
+          catalogs.map((catalog: IV4CatalogItem) =>
+            V4RewardsService.v4CatalogItemsToCatalogItems(catalog)
+          )
         )
       );
   }

@@ -183,4 +183,8 @@ export class WhistlerCampaignService implements ICampaignService {
   public searchCampaigns(text: string, page?: number, pageSize?: number, locale?: string): Observable<ICampaign[]> {
     throw new Error('Method not implemented.');
   }
+  // @ts-ignore
+  public getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
 }
