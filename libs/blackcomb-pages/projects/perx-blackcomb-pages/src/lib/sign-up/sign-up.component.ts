@@ -184,8 +184,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
     if (userObj.primary_identifier) {
       if (this.signupForm.value.countryCode) {
+        // converting to Number will strip leading 0s
+        let sanitizedId = '';
+        const numberedId = Number(userObj.primary_identifier);
+        if (! isNaN(numberedId)) {
+          sanitizedId = numberedId.toString();
+        }
         userObj.primary_identifier =
-          this.signupForm.value.countryCode + userObj.primary_identifier;
+          this.signupForm.value.countryCode + sanitizedId;
       } else {
         // prepend with default countryCode
         userObj.primary_identifier = `65${userObj.primary_identifier}`;

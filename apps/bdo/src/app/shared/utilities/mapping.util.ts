@@ -18,7 +18,8 @@ export function mapRewardToListItem(reward: IReward): IListItemModel {
     documentType: 'reward',
     position: reward?.distance?.value ? reward.distance.value.toString() : '',
     tags: reward.tags,
-    score: reward.score
+    score: reward.score,
+    featuredImg: reward.miscImages?.miscImage1
   };
 }
 
@@ -38,6 +39,7 @@ export function mapCampaignToListItem(campaign: ICampaign): IListItemModel {
     documentType: 'campaign',
     createdAt: campaign.beginsAt,
     tags: campaign.tags,
-    score: campaign.score
+    score: campaign.score,
+    featuredImg: campaign.miscImages?.miscImage1
   };
 }

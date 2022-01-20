@@ -40,6 +40,7 @@ export interface IReward {
   tags?: ITag[];
   distance?: {value?:number, unitOfMeasure?:string};
   score?: number;
+  miscImages?: { [key: string]: string };
 }
 
 export interface IRewardState {

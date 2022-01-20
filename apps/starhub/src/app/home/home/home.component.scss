@@ -1,5 +1,5 @@
-@import "../../../theme/variables.scss";
-@import "../../../theme/typography.scss";
+@import '../../../theme/variables.scss';
+@import '../../../theme/typography.scss';
 
 .app {
   width: 100%;
@@ -105,8 +105,12 @@ mat-toolbar {
   }
 
   .stars-loyalty {
-    height: 100%!important;
+    height: 100% !important;
     width: 100% !important;
+
+    .mat-accordion {
+      width: 100%;
+    }
   }
 
   .mat-toolbar-row {
@@ -114,8 +118,8 @@ mat-toolbar {
   }
 
   .mat-expansion-panel {
-    box-shadow: none!important;
-    border-radius: 2.4rem!important;
+    box-shadow: none !important;
+    border-radius: 2.4rem !important;
     background-color: #f8f9f9 !important;
     width: 100%;
   }
@@ -123,8 +127,8 @@ mat-toolbar {
   .mat-expansion-panel-header {
     height: auto !important;
     background-color: #f8f9f9 !important;
-    padding: 0 14px!important;
-    -webkit-tap-highlight-color:transparent !important;
+    padding: 0 14px !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   &.accordion-expanded {

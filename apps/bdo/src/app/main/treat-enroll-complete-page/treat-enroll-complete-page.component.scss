@@ -54,17 +54,48 @@ $font-weight:bold;
             }
         }
 
-        .share {
-            color: $medium-blue;
+        .share-container {
             display: flex;
-            align-items: center;
+            flex-direction: row;
             justify-content: center;
-            font-size: 15px;
-            margin-bottom: $margin-bottom;
-            font-weight: $font-weight;
 
-            &-icon {
-                margin-right: 5px;
+            .share, .copy {
+                color: $medium-blue;
+                display: flex;
+                align-items: center;
+                font-size: 15px;
+                margin-bottom: $margin-bottom;
+                font-weight: $font-weight;
+                width: 150px;
+                cursor: pointer;
+                text-transform: capitalize;
+
+                @media screen and (max-width: $desktop-width) {
+                    justify-content: center !important;
+                }
+            }
+
+            .share {
+                justify-content: right;
+
+                &-icon {
+                    margin-right: 5px;
+                    width: 32px;
+                    height: auto;
+                }
+            }
+
+            .copy {
+                justify-content: left;
+
+                mat-icon {
+                    width: 32px;
+                    height: auto;
+                }
+            }
+
+            .spacer {
+                flex: 0.1 0.1 20px;
             }
         }
 
