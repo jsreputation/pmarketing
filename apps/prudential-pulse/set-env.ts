@@ -36,23 +36,11 @@ const displayProperties = `{
   "account": {
       "pages": [
           {
-              "key": "contact-us",
-              "title": "CONTACT_US",
-              "content_url": "${
-                process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''
-              }"
-          },
-          {
             "key": "faqs",
             "title": "FAQS",
             "content_url": "${
               process.env.FAQSURL ? process.env.FAQSURL : ''
             }"
-          },
-          {
-              "key": "tnc",
-              "title": "TNC",
-              "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]
   }
