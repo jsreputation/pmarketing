@@ -1,13 +1,13 @@
 import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-  OnChanges,
-  ElementRef,
   AfterViewInit,
-  HostListener
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  Output,
+  ViewChild
 } from '@angular/core';
 import { CarouselComponent } from 'angular-responsive-carousel';
 import { IListItemModel } from '../../models/list-item.model';
@@ -56,7 +56,7 @@ export class CarouselItemsComponent implements AfterViewInit, OnChanges {
   }
 
   private updateCarouselSettings(innerWidth: number): void {
-    this.itemWidth = this.isFeatured ? (innerWidth < 1024 ? 288 : 350) : 245;
+    this.itemWidth = this.isFeatured ? (innerWidth < 1024 ? 288 : 344) : 245;
     this.carouselHeight = this.isFeatured ? 170 : 310;
     if (innerWidth < 1024 || (this.carouselElement?.carousel?.visibleWidth > this.deals?.length * this.itemWidth)) {
       this.showCarouselArrows = false;
