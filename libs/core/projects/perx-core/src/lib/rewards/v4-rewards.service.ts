@@ -853,14 +853,14 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getSearchSuggestion(query: string): Observable<ISearchSuggestion[]> {
-    return this.http.get<IV4GetSearchSuggestionResponse>(`${this.apiHost}/v4/search/suggestion?search_string=${query}`)
+    return this.http.get<IV4GetSearchSuggestionResponse>(`${this.apiHost}/v4/search/suggestion?search_string=${encodeURIComponent(escape(query))}`)
       .pipe(
         map((res: IV4GetSearchSuggestionResponse) => res.data)
       );
   }
 
   public searchRewards(text: string,page: number, pageSize: number, tags?: string, locale= "en"): Observable<IReward[]> {
-    const endpoint = tags ? `${this.apiHost}/v4/search?search_string=${text}&tags=${tags}` : `${this.apiHost}/v4/search?search_string=${text}`;
+    const endpoint = tags ? `${this.apiHost}/v4/search?search_string=${encodeURIComponent(escape(text))}&tags=${tags}` : `${this.apiHost}/v4/search?search_string=${encodeURIComponent(escape(text))}`;
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
     .set('page', page.toString())
