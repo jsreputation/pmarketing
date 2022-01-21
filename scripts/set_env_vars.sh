@@ -148,7 +148,6 @@ blackcomb_app_base=(
   partners-demo
   perx-demo
   petron-demo
-  prudential-pulse
   razer
   rush
   scphoenix

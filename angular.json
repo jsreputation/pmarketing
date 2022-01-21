@@ -1925,6 +1925,122 @@
         }
       }
     },
+    "prudential-pulse": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/prudential-pulse",
+      "sourceRoot": "apps/prudential-pulse/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/prudential-pulse",
+            "index": "apps/prudential-pulse/src/index.html",
+            "main": "apps/prudential-pulse/src/main.ts",
+            "polyfills": "apps/prudential-pulse/src/polyfills.ts",
+            "tsConfig": "apps/prudential-pulse/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/prudential-pulse/src/favicon.ico",
+              "apps/prudential-pulse/src/assets",
+              "apps/prudential-pulse/src/static",
+              "apps/prudential-pulse/src/manifest.webmanifest",
+              "apps/prudential-pulse/src/robots.txt"
+            ],
+            "styles": [
+              "apps/prudential-pulse/src/styles.scss",
+              "apps/blackcomb/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/prudential-pulse/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/prudential-pulse/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "prudential-pulse:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "prudential-pulse:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "prudential-pulse:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/prudential-pulse/e2e/protractor.conf.js",
+            "devServerTarget": "prudential-pulse:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "prudential-pulse:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/prudential-pulse/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/prudential-pulse"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/prudential-pulse/src/**/*.d.ts",
+              "apps/prudential-pulse/src/main.ts",
+              "apps/prudential-pulse/src/polyfills.ts",
+              "apps/prudential-pulse/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
     "all-it": {
       "projectType": "application",
       "schematics": {
