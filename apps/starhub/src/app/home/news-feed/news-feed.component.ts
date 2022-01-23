@@ -31,7 +31,6 @@ export class NewsFeedComponent implements OnInit {
 
   @ViewChild('itemsContainer') public itemsContainer: ElementRef;
   public activeNumber: number = 0;
-  public prevNumber: number = 0;
 
   private initNewsFeedItems(): void {
     this.configService
@@ -81,10 +80,6 @@ export class NewsFeedComponent implements OnInit {
     const unitsScrolledPast =
       (event.target as Element).scrollLeft / window.innerWidth;
     this.activeNumber = Math.round(unitsScrolledPast);
-
-    if (this.activeNumber > 0) {
-      this.prevNumber = this.activeNumber - 1;
-    }
   }
 
   public readMore(item: FeedItem): void {

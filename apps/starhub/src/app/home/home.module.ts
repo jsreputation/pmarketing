@@ -40,7 +40,6 @@ import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campa
 import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
 import { StarsComponent } from './stars/stars.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -81,7 +80,6 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     GhostsModule,
     MatExpansionModule,
     PerxQuestModule.forChild(),
-    IvyCarouselModule,
   ],
   bootstrap: [],
   providers: [NoRenewaleInNamePipe],
