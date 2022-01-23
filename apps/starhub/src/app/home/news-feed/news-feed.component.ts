@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
@@ -33,6 +33,9 @@ export class NewsFeedComponent implements OnInit {
   public isClickEvent: boolean = false;
   public carouselHeight: number = 220;
   public itemWidth: number = window.innerWidth;
+  @ViewChild('itemsContainer') public itemsContainer: ElementRef;
+  public activeNumber: number = 0;
+  public prevNumber: number = 0;
 
   private initNewsFeedItems(): void {
     this.configService
@@ -81,24 +84,13 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public feedScrolled(event: Event): void {
-    // since the feed is full width we can assume each block of scrolling full width is one unit.
     const unitsScrolledPast =
       (event.target as Element).scrollLeft / window.innerWidth;
-    this.updateScrollIndex(Math.round(unitsScrolledPast)); // round to nearest integer
-  }
+    this.activeNumber = Math.round(unitsScrolledPast);
 
-  public updateScrollIndex(index: number): void {
-    this.newsBeforeScroll = Array(index >= 0 ? index : 0);
-    if (this.items && this.items.length > 0 && index >= 0) {
-      this.newsAfterScroll = Array(this.items.length - index - 1);
-    } else {
-      this.newsAfterScroll = [];
+    if (this.activeNumber > 0) {
+      this.prevNumber = this.activeNumber - 1;
     }
-  }
-
-  @HostListener('window:resize', ['$event'])
-  public onResize(): void {
-    this.itemSize = window.innerWidth;
   }
 
   public readMore(item: FeedItem): void {
@@ -118,5 +110,22 @@ export class NewsFeedComponent implements OnInit {
   public getFirstLine(text: string): string {
     const lines = text.match(/[^\r\n]+/g) || [];
     return lines && lines.length > 0 ? lines[0] : '';
+  }
+
+  public onCircleClick(isActive: boolean, index: number): void {
+    const newsBeforeScroll = Array(index >= 0 ? index : 0);
+    if (!isActive) {
+      if (index === 0) {
+        this.itemsContainer.nativeElement.scrollLeft = 0;
+      } else if (index > this.activeNumber) {
+        this.itemsContainer.nativeElement.scrollLeft +=
+          this.itemsContainer.nativeElement.offsetWidth *
+          newsBeforeScroll.length;
+      } else {
+        this.itemsContainer.nativeElement.scrollLeft -=
+          this.itemsContainer.nativeElement.offsetWidth *
+          newsBeforeScroll.length;
+      }
+    }
   }
 }
