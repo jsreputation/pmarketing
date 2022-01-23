@@ -28,11 +28,7 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
   public showButton: boolean = true;
   public ghostFeed?: any[] = new Array(1);
-  public showCarouselArrows: boolean = true;
-  public isDragEvent: boolean = false;
-  public isClickEvent: boolean = false;
-  public carouselHeight: number = 220;
-  public itemWidth: number = window.innerWidth;
+
   @ViewChild('itemsContainer') public itemsContainer: ElementRef;
   public activeNumber: number = 0;
   public prevNumber: number = 0;
@@ -61,8 +57,6 @@ export class NewsFeedComponent implements OnInit {
           this.newsAfterScroll = Array.from(
             Array(items.length > 0 ? items.length - 1 : 1).keys()
           );
-
-          console.log('this.items: ', this.items);
         },
         () => {
           this.ghostFeed = undefined;
