@@ -1,4 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
@@ -80,6 +86,11 @@ export class NewsFeedComponent implements OnInit {
     const unitsScrolledPast =
       (event.target as Element).scrollLeft / window.innerWidth;
     this.activeNumber = Math.round(unitsScrolledPast);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  public onResize(): void {
+    this.itemSize = window.innerWidth;
   }
 
   public readMore(item: FeedItem): void {
