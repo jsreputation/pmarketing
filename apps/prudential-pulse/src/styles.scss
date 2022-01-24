@@ -597,6 +597,13 @@ perx-blackcomb-pages-wallet {
   }
 }
 
+perx-blackcomb-home {
+  .home-qr-button {
+    border-radius: 14px;
+    width: 80px;
+  }
+}
+
 drag-scroll .drag-scroll-content {
   white-space: unset !important;
 }
