@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 // @import ~@angular/material/theming;
-@import "./custom-theme.scss";
+@import './custom-theme.scss';
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
+  --logo: '';
+  --title: '';
   --accent: #96289a;
   --primary: #147dd3;
   --button_text_color: #fff;
@@ -122,7 +122,15 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .custom-popup-class {
-  h1, .mat-dialog-content {
+  h1,
+  .mat-dialog-content {
     text-align: left !important;
+  }
+}
+
+perx-blackcomb-home {
+  .home-qr-button {
+    border-radius: 14px;
+    width: 80px;
   }
 }
