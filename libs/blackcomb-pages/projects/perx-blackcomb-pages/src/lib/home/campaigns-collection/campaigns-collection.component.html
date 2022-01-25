@@ -28,6 +28,7 @@
       *ngIf="!(campaigns.length <= defaultNbCampaigns)"
       mat-flat-button [ngStyle]="buttonStyle"
       class="see-button"
+      [ngClass]="showAllCampaigns ? 'see-less' : 'see-more'"
       (click)="showAllCampaigns = !showAllCampaigns">
       {{ (showAllCampaigns ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}
     </button>

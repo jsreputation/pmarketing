@@ -134,3 +134,25 @@ perx-blackcomb-home {
     width: 80px;
   }
 }
+
+perx-blackcomb-pages-campaigns-collection,
+perx-blackcomb-games-collection {
+  .see-button {
+    background-color: transparent !important;
+    color: #8EA0B2 !important;
+    .mat-button-ripple {
+      display: none !important;
+    }
+  }
+  .see-less:after {
+    content: '\e5ce';  
+  }
+  .see-more:after {
+    content: '\e5cf';
+  }
+  .see-less:after, .see-more:after {
+    font-family: 'Material Icons';
+    font-size: 16px;
+    vertical-align: bottom;  
+  } 
+}
