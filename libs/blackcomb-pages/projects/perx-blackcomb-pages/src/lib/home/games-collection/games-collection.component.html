@@ -31,6 +31,7 @@
       *ngIf="!(games.length <= defaultNbGames)"
       mat-flat-button
       class="see-button"
+      [ngClass]="showAllGames ? 'see-less' : 'see-more'"
       (click)="showAllGames = !showAllGames"
       [ngStyle]="buttonStyle">
       {{ (showAllGames ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}
