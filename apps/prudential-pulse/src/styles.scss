@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 // @import ~@angular/material/theming;
-@import './custom-theme.scss';
+@import "./custom-theme.scss";
 
 :root {
   --font: Roboto;
-  --logo: '';
-  --title: '';
+  --logo: "";
+  --title: "";
   --accent: #96289a;
   --primary: #147dd3;
   --button_text_color: #fff;
@@ -128,6 +128,22 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 }
 
+.rewards-collection {
+  perx-core-rewards-list-tabbed {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
+}
+
 .game-container {
   perx-blackcomb-home {
     .home-qr-button {
@@ -197,4 +213,112 @@ mat-progress-bar .mat-progress-bar-fill::after {
       border-radius: 24px !important;
     }
   }
+
+  perx-blackcomb-survey {
+    perx-core-survey {
+      .survey-container {
+        formly-field-stepper {
+          mat-progress-bar {
+            .mat-progress-bar-buffer {
+              background-color: #ffcdd2 !important;
+            }
+
+            .mat-progress-bar-fill {
+              &::after {
+                background-color: #ed1b2e !important;
+              }
+            }
+          }
+
+          mat-radio-button {
+            &.mat-radio-checked {
+              .mat-radio-outer-circle {
+                border-color: #ed1b2e !important;
+              }
+              .mat-radio-inner-circle {
+                background-color: #ed1b2e !important;
+              }
+            }
+          }
+
+          mat-checkbox {
+            &.mat-checkbox-checked {
+              .mat-checkbox-background {
+                background-color: #ed1b2e !important;
+              }
+
+              &:not(.mat-checkbox-disabled) .mat-ripple-element,
+              &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+                background: #ed1b2e !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-quiz {
+    .quiz-main-container {
+      .quiz-page {
+        mat-progress-bar {
+          .mat-progress-bar-buffer {
+            background-color: #ffcdd2 !important;
+          }
+
+          .mat-progress-bar-fill {
+            &::after {
+              background-color: #ed1b2e !important;
+            }
+          }
+        }
+
+        mat-radio-button {
+          &.mat-radio-checked {
+            .mat-radio-outer-circle {
+              border-color: #ed1b2e !important;
+            }
+            .mat-radio-inner-circle {
+              background-color: #ed1b2e !important;
+            }
+          }
+        }
+
+        mat-checkbox {
+          &.mat-checkbox-checked {
+            .mat-checkbox-background {
+              background-color: #ed1b2e !important;
+            }
+
+            &:not(.mat-checkbox-disabled) .mat-ripple-element,
+            &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+              background: #ed1b2e !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+perx-blackcomb-pages-campaigns-collection,
+perx-blackcomb-games-collection {
+  .see-button {
+    background-color: transparent !important;
+    color: #8EA0B2 !important;
+    .mat-button-ripple {
+      display: none !important;
+    }
+  }
+  .see-less:after {
+    content: '\e5ce';  
+  }
+  .see-more:after {
+    content: '\e5cf';
+  }
+  .see-less:after, .see-more:after {
+    font-family: 'Material Icons';
+    font-size: 16px;
+    vertical-align: bottom;  
+  } 
 }
