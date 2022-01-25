@@ -128,23 +128,23 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 }
 
-.game-container {
-  .rewards-collection {
-    perx-core-rewards-list-tabbed {
-      .mat-tab-group {
-        .mat-ink-bar {
-          background-color: #ed1b2e !important;
-        }
+.rewards-collection {
+  perx-core-rewards-list-tabbed {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
 
-        .mat-tab-labels {
-          .mat-tab-label-active {
-            color: #ed1b2e !important;
-          }
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
         }
       }
     }
   }
+}
 
+.game-container {
   perx-blackcomb-home {
     .home-qr-button {
       border-radius: 14px;
@@ -159,20 +159,6 @@ mat-progress-bar .mat-progress-bar-fill::after {
         }
       }
     }
-
-    perx-core-loyalty-summary {
-      mat-progress-bar {
-        .mat-progress-bar-buffer {
-          background-color: #ffcdd2 !important;
-        }
-
-        .mat-progress-bar-fill {
-          &::after {
-            background-color: #ed1b2e !important;
-          }
-        }
-      }
-    }
   }
 
   perx-blackcomb-pages-campaign-landing-page,
@@ -182,6 +168,16 @@ mat-progress-bar .mat-progress-bar-fill::after {
     .bottom-nav-container {
       button {
         border-radius: 24px;
+      }
+    }
+  }
+
+  perx-core-survey {
+    .survey-container {
+      .button-flex-wrapper {
+        button {
+          border-radius: 24px;
+        }
       }
     }
   }
@@ -213,50 +209,8 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 
   perx-blackcomb-pages-quest {
-    .bottom-toolbar button {
-       border-radius: 24px !important;
-     }
-   }
-
-  perx-blackcomb-pages-campaign-landing-page {
-    .main-container {
-      .header {
-        .title,
-        .subtitle {
-          color: #fff;
-        }
-      }
-      .additional-info-container {
-        .rich-text-container {
-          color: #fff;
-        }
-      }
-    }
-  }
-
-  perx-blackcomb-pages-progress-campaign {
-    .mat-tab-group {
-      .mat-ink-bar {
-        background-color: #ed1b2e !important;
-      }
-
-      .mat-tab-labels {
-        .mat-tab-label-active {
-          color: #ed1b2e !important;
-        }
-      }
-    }
-
-    .macaron {
-      background-color: #ed1b2e !important;
-    }
-
-    mat-nav-list {
-      mat-list-item {
-        mat-icon {
-          color: #ed1b2e !important;
-        }
-      }
+   .bottom-toolbar button {
+      border-radius: 24px !important;
     }
   }
 
@@ -264,10 +218,6 @@ mat-progress-bar .mat-progress-bar-fill::after {
     perx-core-survey {
       .survey-container {
         formly-field-stepper {
-          .question {
-            color: #fff !important;
-          }
-
           mat-progress-bar {
             .mat-progress-bar-buffer {
               background-color: #ffcdd2 !important;
@@ -349,32 +299,31 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
-
-  perx-blackcomb-pages-campaigns-collection,
-  perx-blackcomb-games-collection {
-    .see-button {
-      background-color: transparent !important;
-      color: #8ea0b2 !important;
-      .mat-button-ripple {
-        display: none !important;
-      }
-    }
-    .see-less:after {
-      content: "\e5ce";
-    }
-    .see-more:after {
-      content: "\e5cf";
-    }
-    .see-less:after,
-    .see-more:after {
-      font-family: "Material Icons";
-      font-size: 16px;
-      vertical-align: bottom;
-    }
-  }
 }
 
-.cdk-overlay-container {
+perx-blackcomb-pages-campaigns-collection,
+perx-blackcomb-games-collection {
+  .see-button {
+    background-color: transparent !important;
+    color: #8EA0B2 !important;
+    .mat-button-ripple {
+      display: none !important;
+    }
+  }
+  .see-less:after {
+    content: '\e5ce';  
+  }
+  .see-more:after {
+    content: '\e5cf';
+  }
+  .see-less:after, .see-more:after {
+    font-family: 'Material Icons';
+    font-size: 16px;
+    vertical-align: bottom;  
+  } 
+}
+
+cdk-overlay-container {
   .cdk-global-overlay-wrapper {
     .cdk-overlay-pane {
       mat-dialog-container {
