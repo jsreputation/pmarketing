@@ -128,8 +128,40 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 }
 
-.rewards-collection {
-  perx-core-rewards-list-tabbed {
+.game-container {
+  .rewards-collection {
+    perx-core-rewards-list-tabbed {
+      .mat-tab-group {
+        .mat-ink-bar {
+          background-color: #ed1b2e !important;
+        }
+
+        .mat-tab-labels {
+          .mat-tab-label-active {
+            color: #ed1b2e !important;
+          }
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-campaign-landing-page {
+    .main-container {
+      .header {
+        .title,
+        .subtitle {
+          color: #fff;
+        }
+      }
+      .additional-info-container {
+        .rich-text-container {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-progress-campaign {
     .mat-tab-group {
       .mat-ink-bar {
         background-color: #ed1b2e !important;
@@ -141,76 +173,17 @@ mat-progress-bar .mat-progress-bar-fill::after {
         }
       }
     }
-  }
-}
 
-.game-container {
-  perx-blackcomb-home {
-    .home-qr-button {
-      border-radius: 14px;
-      width: 80px;
+    .macaron {
+      background-color: #ed1b2e !important;
     }
 
-    perx-blackcomb-games-collection,
-    perx-blackcomb-pages-campaigns-collection {
-      .flex-for-button {
-        button {
-          border-radius: 24px;
+    mat-nav-list {
+      mat-list-item {
+        mat-icon {
+          color: #ed1b2e !important;
         }
       }
-    }
-  }
-
-  perx-blackcomb-pages-campaign-landing-page,
-  perx-blackcomb-quiz,
-  perx-blackcomb-pages-quiz-results,
-  perx-blackcomb-pages-progress-campaign {
-    .bottom-nav-container {
-      button {
-        border-radius: 24px;
-      }
-    }
-  }
-
-  perx-core-survey {
-    .survey-container {
-      .button-flex-wrapper {
-        button {
-          border-radius: 24px;
-        }
-      }
-    }
-  }
-
-  perx-blackcomb-redeem {
-    .button-container {
-      button {
-        border-radius: 24px;
-      }
-    }
-  }
-
-  perx-blackcomb-reward-details,
-  perx-blackcomb-voucher-detail {
-    .actions-container {
-      button {
-        border-radius: 24px;
-      }
-    }
-  }
-
-  perx-blackcomb-pages-game,
-  perx-blackcomb-stamp-card {
-    .game-footer {
-      button {
-        border-radius: 24px !important;
-      }
-    }
-  }
-
-  perx-blackcomb-pages-quest {
-   .bottom-toolbar button {
-      border-radius: 24px !important;
     }
   }
 
@@ -218,6 +191,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
     perx-core-survey {
       .survey-container {
         formly-field-stepper {
+          .question {
+            color: #fff !important;
+          }
+
           mat-progress-bar {
             .mat-progress-bar-buffer {
               background-color: #ffcdd2 !important;
@@ -299,26 +276,80 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
-}
 
-perx-blackcomb-pages-campaigns-collection,
-perx-blackcomb-games-collection {
-  .see-button {
-    background-color: transparent !important;
-    color: #8EA0B2 !important;
-    .mat-button-ripple {
-      display: none !important;
+  perx-blackcomb-home {
+    .home-qr-button {
+      border-radius: 14px;
+      width: 80px;
+    }
+
+    perx-core-loyalty-summary {
+      mat-progress-bar {
+        .mat-progress-bar-buffer {
+          background-color: #ffcdd2 !important;
+        }
+
+        .mat-progress-bar-fill {
+          &::after {
+            background-color: #ed1b2e !important;
+          }
+        }
+      }
     }
   }
-  .see-less:after {
-    content: '\e5ce';  
+
+  perx-blackcomb-pages-campaigns-collection,
+  perx-blackcomb-games-collection {
+    .see-button {
+      background-color: transparent !important;
+      color: #8ea0b2 !important;
+      .mat-button-ripple {
+        display: none !important;
+      }
+    }
+    .see-less:after {
+      content: "\e5ce";
+    }
+    .see-more:after {
+      content: "\e5cf";
+    }
+    .see-less:after,
+    .see-more:after {
+      font-family: "Material Icons";
+      font-size: 16px;
+      vertical-align: bottom;
+    }
   }
-  .see-more:after {
-    content: '\e5cf';
+}
+
+.cdk-overlay-container {
+  .cdk-global-overlay-wrapper {
+    .cdk-overlay-pane {
+      mat-dialog-container {
+        perx-core-popup {
+          .title-wrapper {
+            .mat-dialog-title {
+              font-weight: 500;
+              font-size: 20px;
+              line-height: 18px;
+              color: #283542;
+            }
+          }
+
+          mat-dialog-content {
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 21px;
+            color: #283542;
+          }
+
+          .button-group {
+            button {
+              border-radius: 24px;
+            }
+          }
+        }
+      }
+    }
   }
-  .see-less:after, .see-more:after {
-    font-family: 'Material Icons';
-    font-size: 16px;
-    vertical-align: bottom;  
-  } 
 }
