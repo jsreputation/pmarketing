@@ -322,3 +322,28 @@ perx-blackcomb-games-collection {
     vertical-align: bottom;  
   } 
 }
+mat-dialog-container {
+  perx-core-popup {
+    .title-wrapper {
+      .mat-dialog-title {
+        font-weight: 500 !important;;
+        font-size: 2rem !important;;
+        line-height: 1.8rem !important;;
+        color: #283542 !important;;
+      }
+    }
+
+    mat-dialog-content {
+      font-weight: normal !important;;
+      font-size: 1.6rem !important;;
+      line-height: 2.1rem !important;;
+      color: #283542 !important;;
+    }
+
+    .button-group {
+      button {
+        border-radius: 2.4rem !important;;
+      }
+    }
+  }
+}
