@@ -322,34 +322,27 @@ perx-blackcomb-games-collection {
     vertical-align: bottom;  
   } 
 }
+mat-dialog-container {
+  perx-core-popup {
+    .title-wrapper {
+      .mat-dialog-title {
+        font-weight: 500 !important;;
+        font-size: 2rem !important;;
+        line-height: 1.8rem !important;;
+        color: #283542 !important;;
+      }
+    }
 
-cdk-overlay-container {
-  .cdk-global-overlay-wrapper {
-    .cdk-overlay-pane {
-      mat-dialog-container {
-        perx-core-popup {
-          .title-wrapper {
-            .mat-dialog-title {
-              font-weight: 500;
-              font-size: 20px;
-              line-height: 18px;
-              color: #283542;
-            }
-          }
+    mat-dialog-content {
+      font-weight: normal !important;;
+      font-size: 1.6rem !important;;
+      line-height: 2.1rem !important;;
+      color: #283542 !important;;
+    }
 
-          mat-dialog-content {
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 21px;
-            color: #283542;
-          }
-
-          .button-group {
-            button {
-              border-radius: 24px;
-            }
-          }
-        }
+    .button-group {
+      button {
+        border-radius: 2.4rem !important;;
       }
     }
   }
