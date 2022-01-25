@@ -1,12 +1,20 @@
 import { NgModule } from '@angular/core';
-import { LayoutModule as BCPLayoutModule } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from './layout.component';
 import { LayoutRoutingModule } from './layout-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
+  declarations: [LayoutComponent],
+  exports: [LayoutComponent],
   imports: [
-    // LayoutRoutingModule must be listed first to use its '' routing paths
     LayoutRoutingModule,
-    BCPLayoutModule
+    CommonModule,
+    MatIconModule,
+    MatToolbarModule,
+    TranslateModule
   ]
 })
 export class LayoutModule { }
