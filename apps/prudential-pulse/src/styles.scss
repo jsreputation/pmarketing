@@ -128,6 +128,22 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 }
 
+.rewards-collection {
+  perx-core-rewards-list-tabbed {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
+}
+
 perx-blackcomb-home {
   .home-qr-button {
     border-radius: 14px;
