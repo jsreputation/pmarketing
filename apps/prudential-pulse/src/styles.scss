@@ -209,7 +209,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 
   perx-blackcomb-pages-quest {
-   .bottom-toolbar button {
+    .bottom-toolbar button {
       border-radius: 24px !important;
     }
   }
@@ -299,50 +299,67 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
+
+  perx-blackcomb-pages-history {
+    .card-list-container {
+      mat-card {
+        .voucher-content {
+          .ribbon {
+            &.redeemed,
+            &.issued {
+              background-color: #ed1b2e;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 perx-blackcomb-pages-campaigns-collection,
 perx-blackcomb-games-collection {
   .see-button {
     background-color: transparent !important;
-    color: #8EA0B2 !important;
+    color: #8ea0b2 !important;
     .mat-button-ripple {
       display: none !important;
     }
   }
   .see-less:after {
-    content: '\e5ce';  
+    content: "\e5ce";
   }
   .see-more:after {
-    content: '\e5cf';
+    content: "\e5cf";
   }
-  .see-less:after, .see-more:after {
-    font-family: 'Material Icons';
+  .see-less:after,
+  .see-more:after {
+    font-family: "Material Icons";
     font-size: 16px;
-    vertical-align: bottom;  
-  } 
+    vertical-align: bottom;
+  }
 }
 mat-dialog-container {
   perx-core-popup {
     .title-wrapper {
       .mat-dialog-title {
-        font-weight: 500 !important;;
-        font-size: 2rem !important;;
-        line-height: 1.8rem !important;;
-        color: #283542 !important;;
+        font-weight: 500 !important;
+        font-size: 2rem !important;
+        line-height: 1.8rem !important;
+        color: #283542 !important;
       }
     }
 
     mat-dialog-content {
-      font-weight: normal !important;;
-      font-size: 1.6rem !important;;
-      line-height: 2.1rem !important;;
-      color: #283542 !important;;
+      font-weight: normal !important;
+      font-size: 1.6rem !important;
+      line-height: 2.1rem !important;
+      color: #283542 !important;
     }
 
     .button-group {
       button {
-        border-radius: 2.4rem !important;;
+        border-radius: 2.4rem !important;
       }
     }
   }
