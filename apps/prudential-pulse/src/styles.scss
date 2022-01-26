@@ -151,7 +151,9 @@ mat-progress-bar .mat-progress-bar-fill::after {
         }
 
         .mat-card-image {
-          height: 84px !important;
+          @media (min-width: 360px) and (max-width: 390px) {
+            height: 84px !important;
+          }
         }
       }
     }
