@@ -180,7 +180,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
   perx-blackcomb-home {
     .home-qr-button {
       border-radius: 14px;
-      width: 80px;
+      padding: 8px 20px 8px 21px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
     }
 
     perx-blackcomb-games-collection,
