@@ -146,14 +146,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
   perx-core-rewards-collection {
     .card-collection-container {
       mat-card {
-        @media (min-width: 360px) and (max-width: 390px) {
-          width: 192px !important;
-        }
+        width: calc(192px - 32px) !important;
+        max-width: calc(192px - 32px) !important;
+        min-width: calc(192px - 32px) !important;
 
         .mat-card-image {
-          @media (min-width: 360px) and (max-width: 390px) {
-            height: 84px !important;
-          }
+          height: 84px !important;
         }
       }
     }
@@ -382,7 +380,7 @@ mat-dialog-container {
 
   perx-core-badge-detail-popup {
     button {
-      border-radius: 2.4rem !important;;
+      border-radius: 2.4rem !important;
     }
   }
 }
