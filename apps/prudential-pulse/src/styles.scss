@@ -145,18 +145,19 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .campaign-list {
-  .campaigns,
-  .catalogs {
+  .campaigns {
     mat-card {
-      @media (min-width: 360px) and (max-width: 390px) {
-        .img-wrapper {
-         height: 144px !important;
-        }
-
-        .mat-card-image {
-          height: 144px !important;
-        }
+      .img-wrapper {
+        height: 144px !important;
       }
+    }
+  }
+}
+
+.catalogs {
+  mat-card {
+    .mat-card-image {
+      height: 128px !important;
     }
   }
 }
@@ -383,7 +384,7 @@ mat-dialog-container {
 
   perx-core-badge-detail-popup {
     button {
-      border-radius: 2.4rem !important;;
+      border-radius: 2.4rem !important;
     }
   }
 }
