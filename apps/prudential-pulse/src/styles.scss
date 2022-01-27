@@ -300,7 +300,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
     }
   }
 
-  perx-blackcomb-pages-leaderboard-page{
+  perx-blackcomb-pages-leaderboard-page {
     .mat-tab-group {
       .mat-ink-bar {
         background-color: #ed1b2e !important;
@@ -339,7 +339,9 @@ perx-blackcomb-games-collection {
 }
 
 mat-dialog-container {
-  border-radius: 12px;
+  border-radius: 12px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
 
   perx-core-popup {
     .title-wrapper {
@@ -367,8 +369,6 @@ mat-dialog-container {
 }
 
 .cdk-overlay-pane {
-  @media (min-width: 360px) and (max-width: 390px) {
-    width: calc(100% - 40px);
-    max-width: 100vw !important;
-  }
+  width: calc(100% - 40px);
+  max-width: 100vw !important;
 }
