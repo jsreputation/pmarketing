@@ -789,7 +789,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public searchCampaigns(text: string, page?: number, pageSize?: number, locale = 'en'): Observable<ICampaign[]> {
-    const endpoint = `${this.baseUrl}/v4/campaigns/search?search_string=${encodeURIComponent(escape(text))}`;
+    const endpoint = `${this.baseUrl}/v4/campaigns/search?search_string=${encodeURIComponent(text)}`;
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams();
     if (page) {

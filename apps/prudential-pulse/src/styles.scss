@@ -122,7 +122,242 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .custom-popup-class {
-  h1, .mat-dialog-content {
+  h1,
+  .mat-dialog-content {
     text-align: left !important;
+  }
+}
+
+.rewards-collection {
+  perx-core-rewards-list-tabbed {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
+}
+
+.game-container {
+  perx-blackcomb-home {
+    .home-qr-button {
+      border-radius: 14px;
+      width: 80px;
+    }
+
+    perx-blackcomb-games-collection,
+    perx-blackcomb-pages-campaigns-collection {
+      .flex-for-button {
+        button {
+          border-radius: 24px;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-campaign-landing-page,
+  perx-blackcomb-quiz,
+  perx-blackcomb-pages-quiz-results,
+  perx-blackcomb-pages-progress-campaign {
+    .bottom-nav-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-core-survey {
+    .survey-container {
+      .button-flex-wrapper {
+        button {
+          border-radius: 24px;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-redeem {
+    .button-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-blackcomb-reward-details,
+  perx-blackcomb-voucher-detail {
+    .actions-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-blackcomb-pages-game,
+  perx-blackcomb-stamp-card {
+    .game-footer {
+      button {
+        border-radius: 24px !important;
+      }
+    }
+  }
+
+  perx-blackcomb-pages-quest {
+   .bottom-toolbar button {
+      border-radius: 24px !important;
+    }
+  }
+
+  perx-blackcomb-survey {
+    perx-core-survey {
+      .survey-container {
+        formly-field-stepper {
+          mat-progress-bar {
+            .mat-progress-bar-buffer {
+              background-color: #ffcdd2 !important;
+            }
+
+            .mat-progress-bar-fill {
+              &::after {
+                background-color: #ed1b2e !important;
+              }
+            }
+          }
+
+          mat-radio-button {
+            &.mat-radio-checked {
+              .mat-radio-outer-circle {
+                border-color: #ed1b2e !important;
+              }
+              .mat-radio-inner-circle {
+                background-color: #ed1b2e !important;
+              }
+            }
+          }
+
+          mat-checkbox {
+            &.mat-checkbox-checked {
+              .mat-checkbox-background {
+                background-color: #ed1b2e !important;
+              }
+
+              &:not(.mat-checkbox-disabled) .mat-ripple-element,
+              &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+                background: #ed1b2e !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-quiz {
+    .quiz-main-container {
+      .quiz-page {
+        mat-progress-bar {
+          .mat-progress-bar-buffer {
+            background-color: #ffcdd2 !important;
+          }
+
+          .mat-progress-bar-fill {
+            &::after {
+              background-color: #ed1b2e !important;
+            }
+          }
+        }
+
+        mat-radio-button {
+          &.mat-radio-checked {
+            .mat-radio-outer-circle {
+              border-color: #ed1b2e !important;
+            }
+            .mat-radio-inner-circle {
+              background-color: #ed1b2e !important;
+            }
+          }
+        }
+
+        mat-checkbox {
+          &.mat-checkbox-checked {
+            .mat-checkbox-background {
+              background-color: #ed1b2e !important;
+            }
+
+            &:not(.mat-checkbox-disabled) .mat-ripple-element,
+            &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+              background: #ed1b2e !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-leaderboard-page{
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
+}
+
+perx-blackcomb-pages-campaigns-collection,
+perx-blackcomb-games-collection {
+  .see-button {
+    background-color: transparent !important;
+    color: #8EA0B2 !important;
+    .mat-button-ripple {
+      display: none !important;
+    }
+  }
+  .see-less:after {
+    content: '\e5ce';  
+  }
+  .see-more:after {
+    content: '\e5cf';
+  }
+  .see-less:after, .see-more:after {
+    font-family: 'Material Icons';
+    font-size: 16px;
+    vertical-align: bottom;  
+  } 
+}
+mat-dialog-container {
+  perx-core-popup {
+    .title-wrapper {
+      .mat-dialog-title {
+        font-weight: 500 !important;;
+        font-size: 2rem !important;;
+        line-height: 1.8rem !important;;
+        color: #283542 !important;;
+      }
+    }
+
+    mat-dialog-content {
+      font-weight: normal !important;;
+      font-size: 1.6rem !important;;
+      line-height: 2.1rem !important;;
+      color: #283542 !important;;
+    }
+
+    .button-group {
+      button {
+        border-radius: 2.4rem !important;;
+      }
+    }
   }
 }
