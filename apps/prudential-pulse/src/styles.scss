@@ -299,6 +299,20 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
+
+  perx-blackcomb-pages-leaderboard-page{
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
 }
 
 perx-blackcomb-pages-campaigns-collection,
