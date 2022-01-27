@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
 
 
     this.rewardsService.getTrending().subscribe((searchHistory: ITrending[]) => {
-      this.trendingList = searchHistory.filter(trending => trending.value.trim()).map((item) => decodeURIComponent(item.value));
+      this.trendingList = searchHistory.filter(trending => trending.value.trim()).map((item) => unescape(item.value));
     });
     this.rewardsService.getSearchHistory().subscribe((searchHistory: ISearchHistory[]) => {
       this.searchHistories = searchHistory.map(item => item.value);
