@@ -315,6 +315,21 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
+  
+  badge-landing,
+  perx-blackcomb-pages-leaderboard-page {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: #ed1b2e !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: #ed1b2e !important;
+        }
+      }
+    }
+  }
 }
 
 perx-blackcomb-pages-campaigns-collection,
@@ -361,6 +376,12 @@ mat-dialog-container {
       button {
         border-radius: 2.4rem !important;
       }
+    }
+  }
+
+  perx-core-badge-detail-popup {
+    button {
+      border-radius: 2.4rem !important;
     }
   }
 }
