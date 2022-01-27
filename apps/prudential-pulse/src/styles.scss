@@ -158,6 +158,24 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 }
 
+.campaign-list {
+  .campaigns {
+    mat-card {
+      .img-wrapper {
+        height: 144px !important;
+      }
+    }
+  }
+}
+
+.catalogs {
+  mat-card {
+    .mat-card-image {
+      height: 128px !important;
+    }
+  }
+}
+
 .game-container {
   perx-blackcomb-home {
     .home-qr-button {
