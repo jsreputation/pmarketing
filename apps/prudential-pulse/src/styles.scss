@@ -412,6 +412,9 @@ mat-dialog-container {
 }
 
 .cdk-overlay-pane {
-  width: calc(100% - 40px);
-  max-width: 100vw !important;
+  @media (min-width: 360px) and (max-width: 375px) {
+    width: calc(100% - 80px);
+    max-width: 100vw !important;
+    min-width: calc(100% - 80px) !important;
+  }
 }
