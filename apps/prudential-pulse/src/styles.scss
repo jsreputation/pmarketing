@@ -301,6 +301,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
   }
 
   perx-blackcomb-pages-progress-campaign,
+  badge-landing,
   perx-blackcomb-pages-leaderboard-page {
     .mat-tab-group {
       .mat-ink-bar {
@@ -360,6 +361,12 @@ mat-dialog-container {
       button {
         border-radius: 2.4rem !important;
       }
+    }
+  }
+
+  perx-core-badge-detail-popup {
+    button {
+      border-radius: 2.4rem !important;;
     }
   }
 }
