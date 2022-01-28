@@ -362,6 +362,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
             .mat-checkbox-background,
             .mat-checkbox-frame {
               border-color: #ed1b2e;
+              background: #ed1b2e;
             }
           }
 
@@ -377,7 +378,8 @@ mat-progress-bar .mat-progress-bar-fill::after {
           }
 
           .mat-checkbox-background {
-            margin: 0.1rem !important;
+            width: 85%;
+            margin: auto;
           }
         }
       }
