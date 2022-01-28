@@ -148,6 +148,7 @@ blackcomb_app_base=(
   partners-demo
   perx-demo
   petron-demo
+  progresif
   razer
   rush
   scphoenix
