@@ -6,7 +6,8 @@ import {
   ISearchHistory,
   ITrending,
   ICategoryTags,
-  ISearchSuggestion
+  ISearchSuggestion,
+  ICatalogItem
 } from './models/reward.model';
 import { Observable } from 'rxjs';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
@@ -48,6 +49,10 @@ export abstract class RewardsService {
     locale?: string
   ): Observable<IPrice[]>;
 
+  public abstract getRewardsById(
+    ids: number[],
+    locale?: string): Observable<IReward[]>;
+
   public abstract getAllCatalogs(locale?: string): Observable<ICatalog[]>;
 
   public abstract getCatalog(id: number, locale?: string): Observable<ICatalog>;
@@ -59,6 +64,16 @@ export abstract class RewardsService {
     order?: Sort,
     sortBy?: string | null
   ): Observable<ICatalog[]>;
+
+  public abstract getCatalogItems(
+    id: number,
+    page: number,
+    pageSize: number,
+    locale?: string,
+    categoryIds?: number[] | null,
+    tags?: string[] | null,
+    sort?: Sort,
+    sortBy?: string | null): Observable<ICatalogItem[]>;
 
   public abstract getCategories(): Observable<ITabConfigExtended[]>;
 

@@ -50,7 +50,7 @@ function handleTags(filterValue: IFilterModel) {
 
   let tagsParams = locations.length === FILTER_DATA.locations.length ? [] : locations;
   tagsParams = tagsParams.concat(cardTypes.length !== FILTER_DATA.cardType.length ? cardTypes :[] )
-  .concat(tags.length === FILTER_DATA.tags.length ? [] : tags?.filter(tag => tag !== 'new'));
+  .concat(tags.length === FILTER_DATA.tags.length ? [] : tags);
   return tagsParams.length ? tagsParams : null;
 }
 
