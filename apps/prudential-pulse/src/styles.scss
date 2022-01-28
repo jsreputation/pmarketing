@@ -142,13 +142,48 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
+
+  perx-core-rewards-collection {
+    .card-collection-container {
+      mat-card {
+        width: calc(192px - 32px) !important;
+        max-width: calc(192px - 32px) !important;
+        min-width: calc(192px - 32px) !important;
+
+        .mat-card-image {
+          height: 84px !important;
+        }
+      }
+    }
+  }
+}
+
+.campaign-list {
+  .campaigns {
+    mat-card {
+      .img-wrapper {
+        height: 144px !important;
+      }
+    }
+  }
+}
+
+.catalogs {
+  mat-card {
+    .mat-card-image {
+      height: 128px !important;
+    }
+  }
 }
 
 .game-container {
   perx-blackcomb-home {
     .home-qr-button {
       border-radius: 14px;
-      width: 80px;
+      padding: 8px 20px 8px 21px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
     }
 
     perx-blackcomb-games-collection,
@@ -316,6 +351,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
     }
   }
   
+  perx-blackcomb-pages-progress-campaign,
   badge-landing,
   perx-blackcomb-pages-leaderboard-page {
     .mat-tab-group {
@@ -354,7 +390,12 @@ perx-blackcomb-games-collection {
     vertical-align: bottom;
   }
 }
+
 mat-dialog-container {
+  border-radius: 12px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+
   perx-core-popup {
     .title-wrapper {
       .mat-dialog-title {
@@ -383,5 +424,13 @@ mat-dialog-container {
     button {
       border-radius: 2.4rem !important;
     }
+  }
+}
+
+.cdk-overlay-pane {
+  @media (min-width: 360px) and (max-width: 375px) {
+    width: calc(100% - 80px);
+    max-width: 100vw !important;
+    min-width: calc(100% - 80px) !important;
   }
 }
