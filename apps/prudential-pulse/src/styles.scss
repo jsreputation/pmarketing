@@ -207,16 +207,6 @@ mat-progress-bar .mat-progress-bar-fill::after {
     }
   }
 
-  perx-core-survey {
-    .survey-container {
-      .button-flex-wrapper {
-        button {
-          border-radius: 24px;
-        }
-      }
-    }
-  }
-
   perx-blackcomb-redeem {
     .button-container {
       button {
@@ -286,7 +276,36 @@ mat-progress-bar .mat-progress-bar-fill::after {
               &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
                 background: #ed1b2e !important;
               }
+
+              .mat-checkbox-background,
+              .mat-checkbox-frame {
+                border-color: #ed1b2e;
+              }
             }
+
+            .mat-checkbox-inner-container {
+              width: 20px;
+              height: 20px;
+            }
+
+            .mat-checkbox-background,
+            .mat-checkbox-frame {
+              border-radius: 100% !important;
+              border-color: rgba(0, 0, 0, 0.54);
+            }
+
+            .mat-checkbox-background {
+              svg {
+                width: 85%;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        .button-flex-wrapper {
+          button {
+            border-radius: 24px;
           }
         }
       }
@@ -328,6 +347,30 @@ mat-progress-bar .mat-progress-bar-fill::after {
             &:not(.mat-checkbox-disabled) .mat-ripple-element,
             &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
               background: #ed1b2e !important;
+            }
+
+            .mat-checkbox-background,
+            .mat-checkbox-frame {
+              border-color: #ed1b2e;
+              background: #ed1b2e;
+            }
+          }
+
+          .mat-checkbox-inner-container {
+            width: 20px;
+            height: 20px;
+          }
+
+          .mat-checkbox-background,
+          .mat-checkbox-frame {
+            border-radius: 100% !important;
+            border-color: rgba(0, 0, 0, 0.54);
+          }
+
+          .mat-checkbox-background {
+            svg {
+              width: 85%;
+              margin: auto;
             }
           }
         }
