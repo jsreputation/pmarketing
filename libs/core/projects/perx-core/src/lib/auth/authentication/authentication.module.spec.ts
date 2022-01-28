@@ -70,7 +70,7 @@ describe('AuthenticationModule', () => {
   }));
 
   it('should create tokenService', inject([HttpClient], (http: HttpClient) => {
-    let service = TokenStorageServiceFactory(http,{ storageType: TokenType.local });
+    let service = TokenStorageServiceFactory(http, { storageType: TokenType.local });
     expect(service instanceof LocalTokenStorage).toBeTruthy();
     service = TokenStorageServiceFactory(http, {});
     expect(service instanceof LocalTokenStorage).toBeTruthy();
