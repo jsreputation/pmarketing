@@ -295,8 +295,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
             }
 
             .mat-checkbox-background {
-              width: 85%;
-              margin: auto;
+              svg {
+                width: 85%;
+                margin: auto;
+              }
             }
           }
         }
@@ -366,8 +368,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
           }
 
           .mat-checkbox-background {
-            width: 85%;
-            margin: auto;
+            svg {
+              width: 85%;
+              margin: auto;
+            }
           }
         }
       }
