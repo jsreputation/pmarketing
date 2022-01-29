@@ -1,4 +1,3 @@
-import { TokenType } from '../utils/storage/models/token-storage.model';
 
 export abstract class Config {
   public apiHost?: string;
@@ -8,5 +7,5 @@ export abstract class Config {
   public production?: boolean;
   public defaultLang?: string;
   public appVersion?: string;
-  public storageType?: TokenType;
+  public storageType?: string;
 }

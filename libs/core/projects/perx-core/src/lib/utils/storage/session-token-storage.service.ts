@@ -1,8 +1,9 @@
-import { Observable, of } from 'rxjs';
-import { TokenStorage } from './token-storage.service';
 import { Injectable } from '@angular/core';
-
-import { Config } from '../../config/config';
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { shareReplay, tap } from 'rxjs/operators';
+import { TokenStorage } from './token-storage.service';
+import { IConfig } from '../../config/models/config.model';
 import { TokenType } from './models/token-storage.model';
 
 interface IAppInfo {
@@ -11,19 +12,26 @@ interface IAppInfo {
   [others: string]: any;
 }
 
-@Injectable()
-export class LocalTokenStorage extends TokenStorage {
-  public appInfo: IAppInfo;
-  public storageType: TokenType;
+interface ITokenConfig {
+  storageType?: string;
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class SessionTokenStorageService extends TokenStorage {
 
-  constructor(config: Config | null) {
+  constructor(
+    private http: HttpClient
+  ) {
     super();
-    if (config && config.storageType) {
-      this.storageType = config.storageType === 'session' ? TokenType.local : TokenType.session;
-    }
+    this.http.get<IConfig<ITokenConfig>>('assets/config/app-config.json').pipe(
+      tap((appConfig: IConfig<ITokenConfig>) => this.storageType = appConfig.custom?.storageType === 'session' ? TokenType.session: TokenType.local),
+      shareReplay(1)
+    );
   }
+
   public getAppInfo(): Observable<IAppInfo> {
-    const appInfo = localStorage.getItem('appInfo');
+    const appInfo = sessionStorage.getItem('appInfo');
     this.appInfo = appInfo ? JSON.parse(appInfo) : { appAccessToken: '', userAccessToken: '' };
     return of(this.appInfo);
   }
@@ -36,7 +44,7 @@ export class LocalTokenStorage extends TokenStorage {
   public setAppInfoProperty(value: string | number | any[], key: string): void {
     this.getAppInfo();
     this.appInfo[key] = value;
-    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
+    sessionStorage.setItem('appInfo', JSON.stringify(this.appInfo));
   }
 
   public clearAppInfoProperty(keys: string[]): void {
@@ -46,6 +54,6 @@ export class LocalTokenStorage extends TokenStorage {
     } else {
       this.appInfo = {};
     }
-    localStorage.setItem('appInfo', JSON.stringify(this.appInfo));
+    sessionStorage.setItem('appInfo', JSON.stringify(this.appInfo));
   }
 }

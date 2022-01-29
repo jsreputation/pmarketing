@@ -87,7 +87,8 @@ const envConfigFile = `export const environment = {
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
+  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}',
+  storageType: '${process.env.STORAGE_TYPE ? process.env.STORAGE_TYPE : 'local'}'
 };
 `;
 
@@ -241,7 +242,9 @@ const appConfigFile = `{
     ],
     "showSurveyFirstOnHomePageCampaignList": "${
       process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST ? process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST : false
-    }"
+    }",
+    "storageType": "${process.env.STORAGE_TYPE ? process.env.STORAGE_TYPE : 'local'}"
+
   },
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false
