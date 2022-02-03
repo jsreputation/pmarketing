@@ -30,7 +30,7 @@ import {
   switchMap,
   tap
 } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Event, NavigationEnd, Router, RouterLinkActive } from '@angular/router';
 import {
   combineLatest,
   iif,
@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit {
   public showLeaderboardLinkOnHomePage: boolean = false;
   @ViewChild('expansionPanel')
   public expansionPanel: MatExpansionPanel;
+  @ViewChild('disco') public disco: RouterLinkActive;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -90,7 +91,17 @@ export class HomeComponent implements OnInit {
     private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+    this.router.events.subscribe((event: Event) => {
+      const header: any = document.getElementById('homeToolbar');
+      const content: any = document.getElementById('contentScrolled');
+
+      if (event instanceof NavigationEnd && this.disco.isActive) {
+        header.classList.remove('sticky');
+        content.classList.remove('has-content');
+      }
+    });
+  }
 
   public ngOnInit(): void {
     this.configService.readAppConfig<IStarhubConfig>().pipe(
@@ -277,6 +288,39 @@ export class HomeComponent implements OnInit {
       const membershipType = userCustomProps.membership ? userCustomProps.membership : '';
       const subMembershipType = userCustomProps.sub_membership_type ? userCustomProps.sub_membership_type : '';
       document.location.href = `https://membershipclicked/?Membership=${membershipType}&SubMembershipType=${subMembershipType}`;
+    }
+  }
+
+  public onScroll(event: any): void {
+    const header: any = document.getElementById('homeToolbar');
+    const tabBar: any = document.getElementById('homeTabbar');
+    const content: any = document.getElementById('contentScrolled');
+    const tabOffset = tabBar?.offsetTop;
+
+    if (this.expansionPanel?.expanded) {
+      this.expansionPanel.close();
+    }
+
+    if (!this.disco.isActive) {
+      header.classList.remove('sticky');
+      content.classList.remove('has-content');
+    }
+
+    if (this.disco.isActive) {
+      if (event.target.scrollTop > tabOffset) {
+        header.classList.add('sticky');
+        content.classList.add('has-content');
+      } else if (event.target.scrollTop < 1) {
+        header.classList.remove('sticky');
+        // header.classList.remove('sticky');
+        content.classList.remove('has-content');
+      } else if (event.target.scrollTop <= 184 && event.target.scrollTop > 0) {
+        header.classList.remove('sticky');
+        content.classList.remove('has-content');
+      } else {
+        header.classList.add('sticky');
+        content.classList.add('has-content');
+      }
     }
   }
 }
