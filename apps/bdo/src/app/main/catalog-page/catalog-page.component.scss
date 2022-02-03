@@ -21,10 +21,14 @@
     display: none;
     @media screen and (min-width: $desktop-width) {
       display: block !important;
+      width: 16%;
     }
   }
   .results-container {
-    flex: 1 0 84%;
+   @media screen and (min-width: $desktop-width) {
+      flex: 1 0 84%;
+      width: 84%;
+    }
   }
 
   .desktop-filter {
