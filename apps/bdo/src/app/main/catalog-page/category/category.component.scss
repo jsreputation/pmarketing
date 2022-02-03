@@ -17,6 +17,9 @@
             display: flex;
             align-items: center;
             color: $medium-blue;
+            @media screen and (min-width: $desktop-width) {
+                display: none !important;
+            }
         }
     }
     .looking-for{

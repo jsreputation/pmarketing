@@ -1,0 +1,82 @@
+@import '../../../../../theme/variables.scss';
+
+.filter-form {
+  padding: 16px;
+  background: $white;
+  margin-bottom: 6rem;
+
+  .header {
+    font-size: 16px;
+    line-height: 20px;
+    color: $main-blue;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .inline-checkbox-group {
+    padding-inline-start: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      width: 50%;
+
+      .title {
+        color: $near-black;
+        font-size: 16px;
+      }
+    }
+
+    li:last-child {
+      margin-bottom: 14px;
+    }
+  }
+
+  .categories-wrapper,
+  .tags-wrapper,
+  .location-wrapper {
+    .mat-expansion-panel-header {
+      padding: 0 5px 0 0;
+      border-radius: 0;
+      height: 32px;
+      margin-top: 14px;
+    }
+
+    .mat-expansion-panel {
+      box-shadow: none;
+      border-bottom: 2px solid $grey-white;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    ::ng-deep .mat-expansion-indicator::after {
+      border-width: 0 !important;
+      transform: none !important;
+      background: url("/assets/images/icon-n-down.svg") no-repeat center center;
+      height: 20px;
+      width: 20px;
+      vertical-align: middle !important;
+    }
+  }
+
+  .button {
+    width: 100%;
+    height: 48px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 12px;
+    margin: 10px 0;
+
+    &.button-apply-filter {
+      background-color: $medium-blue;
+      color: $white;
+      border: none;
+    }
+
+    &.button-reset-filter {
+      background-color: $white;
+      color: $medium-blue;
+      border: 2px solid $medium-blue;
+    }
+  }
+}

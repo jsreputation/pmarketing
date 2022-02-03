@@ -4,15 +4,21 @@
         <bdo-category-header [title]="'Every day'" [description]="'A short description here'"></bdo-category-header>
     </div>
      -->
-    <div class="category">
-       <bdo-category [categoryCode]="categoryCode"></bdo-category>
-    </div>
+     <div class="desktop-filter-container">
+         <div class="desktop-filter">
+            <bdo-desktop-filter ></bdo-desktop-filter>
+        </div>
+     </div>
+     <div class="results-container">
+        <div class="category">
+        <bdo-category [categoryCode]="categoryCode"></bdo-category>
+        </div>
 
-<!--    <div class="sort">-->
-<!--        <bdo-sort></bdo-sort>-->
-<!--    </div>-->
-    <div class="filter-result">
-        <bdo-search-result [result]="filterResult$ | async" [isLoaded]="isLoaded"></bdo-search-result>
+    <!--    <div class="sort">-->
+    <!--        <bdo-sort></bdo-sort>-->
+    <!--    </div>-->
+        <div class="filter-result">
+            <bdo-search-result [result]="filterResult$ | async" [isLoaded]="isLoaded"></bdo-search-result>
+        </div>
     </div>
-
 </div>
