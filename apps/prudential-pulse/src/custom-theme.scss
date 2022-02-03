@@ -3,6 +3,7 @@
 @include mat-core();
 
 $custom-red: map-merge($mat-red, (500: #DB1E2B));
+$main-red: #ed1b2e;
 
 $primary: mat-palette($custom-red);
 $accent:  mat-palette($mat-pink, A200, A100, A400);

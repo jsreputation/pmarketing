@@ -14,6 +14,7 @@
   --background: #fafafa;
   --font_color: #333;
   --disabled_text_color: #aaaaaa;
+  --main-red: #ed1b2e;
 }
 
 html {
@@ -132,12 +133,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
   perx-core-rewards-list-tabbed {
     .mat-tab-group {
       .mat-ink-bar {
-        background-color: #ed1b2e !important;
+        background-color: var(--main-red) !important;
       }
 
       .mat-tab-labels {
         .mat-tab-label-active {
-          color: #ed1b2e !important;
+          color: var(--main-red) !important;
         }
       }
     }
@@ -250,7 +251,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
 
             .mat-progress-bar-fill {
               &::after {
-                background-color: #ed1b2e !important;
+                background-color: var(--main-red) !important;
               }
             }
           }
@@ -258,10 +259,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
           mat-radio-button {
             &.mat-radio-checked {
               .mat-radio-outer-circle {
-                border-color: #ed1b2e !important;
+                border-color: var(--main-red) !important;
               }
               .mat-radio-inner-circle {
-                background-color: #ed1b2e !important;
+                background-color: var(--main-red) !important;
               }
             }
           }
@@ -269,12 +270,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
           mat-checkbox {
             &.mat-checkbox-checked {
               .mat-checkbox-background {
-                background-color: #ed1b2e !important;
+                background-color: var(--main-red) !important;
               }
 
               &:not(.mat-checkbox-disabled) .mat-ripple-element,
               &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
-                background: #ed1b2e !important;
+                background: var(--main-red) !important;
               }
 
               .mat-checkbox-background,
@@ -322,7 +323,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
 
           .mat-progress-bar-fill {
             &::after {
-              background-color: #ed1b2e !important;
+              background-color: var(--main-red) !important;
             }
           }
         }
@@ -330,10 +331,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
         mat-radio-button {
           &.mat-radio-checked {
             .mat-radio-outer-circle {
-              border-color: #ed1b2e !important;
+              border-color: var(--main-red) !important;
             }
             .mat-radio-inner-circle {
-              background-color: #ed1b2e !important;
+              background-color: var(--main-red) !important;
             }
           }
         }
@@ -341,12 +342,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
         mat-checkbox {
           &.mat-checkbox-checked {
             .mat-checkbox-background {
-              background-color: #ed1b2e !important;
+              background-color: var(--main-red) !important;
             }
 
             &:not(.mat-checkbox-disabled) .mat-ripple-element,
             &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
-              background: #ed1b2e !important;
+              background: var(--main-red) !important;
             }
 
             .mat-checkbox-background,
@@ -383,12 +384,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
   perx-blackcomb-pages-leaderboard-page {
     .mat-tab-group {
       .mat-ink-bar {
-        background-color: #ed1b2e !important;
+        background-color: var(--main-red) !important;
       }
 
       .mat-tab-labels {
         .mat-tab-label-active {
-          color: #ed1b2e !important;
+          color: var(--main-red) !important;
         }
       }
     }
