@@ -247,7 +247,10 @@ const appConfigFile = `{
     ],
     "showSurveyFirstOnHomePageCampaignList": "${
       process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST ? process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST : false
-    }"
+    }",
+    "showOrderedCatalogItems":  ${
+      process.env.SHOW_ORDERED_CATALOG_ITEMS ? process.env.SHOW_ORDERED_CATALOG_ITEMS : false
+    }
   },
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false

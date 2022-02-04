@@ -1,4 +1,4 @@
-import { ICampaignService, RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService, ConfigService } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { PrimaryCatalogComponent } from './primary-catalog/primary-catalog.component';
@@ -40,6 +40,11 @@ describe('HomeComponent', () => {
   const routerBdo: Partial<Router> = {
     navigate: () => Promise.resolve(true)
   };
+
+  const configServiceStub: Partial<ConfigService > = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -60,7 +65,8 @@ describe('HomeComponent', () => {
       ],
       providers:[{provide: RewardsService, useValue:rewardsServiceBdo},
         {provide: Router, useValue:routerBdo},
-        {provide: ICampaignService, useValue:campaignServiceBdo}]
+        {provide: ICampaignService, useValue:campaignServiceBdo},
+        {provide: ConfigService, useValue: configServiceStub}]
     })
       .compileComponents();
   });
