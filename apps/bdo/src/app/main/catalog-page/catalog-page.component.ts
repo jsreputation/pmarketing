@@ -1,17 +1,21 @@
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, takeUntil, tap, filter, mergeMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaignService, RewardsService, Sort, ICatalogItem, ICatalog } from '@perxtech/core';
+import { ICampaignService, RewardsService, Sort, ICatalogItem, ICatalog, ICampaign, IConfig, ConfigService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
 import { Observable, forkJoin, combineLatest, of, iif } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
-import { mapCampaignToListItem, mapRewardToListItem } from '../../shared/utilities/mapping.util';
+import { mapCampaignsToListItem, mapRewardsToListItem, mapCampaignToListItem, mapRewardToListItem } from '../../shared/utilities/mapping.util';
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 import { buildParams, mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
 
 const ORDERED_CATALOG_NAME = 'Bdo deals';
+
+interface IBDOConfig {
+  showOrderedCatalogItems: boolean;
+}
 @Component({
   selector: 'bdo-catalog-page',
   templateUrl: './catalog-page.component.html',
@@ -24,17 +28,23 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
   isLoaded = false;
   pageNumber = 1;
   catalogId: number;
+  public showOrderedCatalogItems = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
     private filterService: FilterService,
-    private campaignsService: ICampaignService
+    private campaignsService: ICampaignService,
+    private configService: ConfigService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.configService.readAppConfig<IBDOConfig>().subscribe((config: IConfig<IBDOConfig>) => {
+      this.showOrderedCatalogItems = config.custom && config.custom.showOrderedCatalogItems ? config.custom.showOrderedCatalogItems : false;
+    });
+
     combineLatest([
       this.activeRoute.queryParams,
       this.rewardsService.getAllCategories(),
@@ -60,6 +70,8 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       this.filterService.setValue(mapQueryParamsToFilterObject(filterData, params));
     })
     let rewardIds, campaignIds, catalogItems;
+
+    if (this.showOrderedCatalogItems) {
 
     this.filterResult$ = this.filterService.filterValue$
       .pipe(
@@ -136,5 +148,64 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
           });
           return listItems;
         }));
+    } else {
+
+        this.filterResult$ = this.filterService.filterValue$
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((filterValue: IFilterModel) => {
+          if (!filterValue) {
+            return [];
+          }
+          this.isLoaded = false;
+          const queryObject = buildParams(filterValue);
+          Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
+          const campaignsParams = {
+            page: this.pageNumber,
+            size: this.requestPageSize,
+            tags: queryObject.tags,
+            categoryIds: queryObject.categoryIds,
+            sort_by: 'begins_at'
+          };
+          Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
+          return forkJoin([
+            this.rewardsService.getRewards(
+              this.pageNumber,
+              this.requestPageSize,
+              queryObject.tags,
+              null,
+              'en',
+              null,
+              Sort.descending,
+              'begins_at',
+              queryObject.categoryIds
+            ),
+            this.campaignsService.getCampaigns(campaignsParams)
+              .pipe(
+                catchError(() => of([])),
+                mergeMap((campaigns:ICampaign[]) => iif(() => campaigns.length > 0,
+                  // for each campaign, get detailed version=
+                  combineLatest(
+                    ...campaigns.map((campaign) =>
+                      this.campaignsService
+                        .getCampaign(campaign.id)
+                        .pipe(catchError(() => of(void 0)))
+                    )
+                  ),
+                  of([])
+                  )
+                )
+              )
+          ]);
+        }),
+        filter(value => value.length),
+        map(([rewards, campaigns]) => {
+          this.isLoaded = true;
+          const listItem = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards));
+          return listItem.sort(function(firstItem, secondItem) {
+            return new Date(secondItem.createdAt).getTime() - new Date(firstItem.createdAt).getTime();
+          });
+        }));
+    }    
   }
 }

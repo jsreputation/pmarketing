@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FilterService } from '../../shared/services/filter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ICampaignService, RewardsService } from '@perxtech/core';
+import { ICampaignService, RewardsService, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { GhostCardComponent } from '../../shared/components/ghosts/card-ghost.component';
 
@@ -45,6 +45,11 @@ describe('CatalogPageComponent', () => {
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
+
+  const configServiceStub: Partial<ConfigService > = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -82,7 +87,8 @@ describe('CatalogPageComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: RewardsService, useValue:rewardsServiceBdo }
+        { provide: RewardsService, useValue:rewardsServiceBdo },
+        {provide: ConfigService, useValue: configServiceStub}
       ]
     })
     .compileComponents();
