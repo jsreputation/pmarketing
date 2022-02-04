@@ -23,6 +23,7 @@ import { MerchantLocationPageComponent } from './components/merchant-location-pa
 import { LocationModule, MerchantsModule } from '@perxtech/core';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { CarouselItemsComponent } from './components/carousel-items/carousel-items.component';
+import { DesktopFilterComponent } from './components/filter/desktop-filter/desktop-filter.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CarouselItemsComponent } from './components/carousel-items/carousel-ite
     GhostCardComponent,
     MeterToKilometerPipe,
     MerchantLocationPageComponent,
-    CarouselItemsComponent
+    CarouselItemsComponent,
+    DesktopFilterComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +68,8 @@ import { CarouselItemsComponent } from './components/carousel-items/carousel-ite
     MatTabsModule,
     FooterComponent,
     MeterToKilometerPipe,
-    CarouselItemsComponent
+    CarouselItemsComponent,
+    DesktopFilterComponent
   ],
   providers: [FilterService],
 })
