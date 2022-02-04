@@ -136,6 +136,7 @@ echo "APP=${APP}" >>"${GITHUB_ENV}"
 blackcomb_app_base=(
   citibankhk
   daiichi-dlvn
+  dbssg
   feature-demo
   globeathome
   globeone
