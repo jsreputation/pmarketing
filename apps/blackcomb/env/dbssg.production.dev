@@ -1,3 +1,4 @@
+APP=DBSSG
 PREAUTH=false
 APIHOST=https://api.perxtech.net
 IS_WHISTLER=false
