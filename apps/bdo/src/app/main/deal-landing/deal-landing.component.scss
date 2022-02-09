@@ -132,8 +132,12 @@
   .similar-deal {
     bdo-carousel-items {
       ::ng-deep {
-        .carousel-cell {
-          height: 260px !important;
+        .carousel {
+          height: calc(260px / 0.95) !important;
+
+          .carousel-cell {
+            height: 260px !important;
+          }
         }
       }
     }

@@ -121,8 +121,12 @@ $font-weight: bold;
         .similar-deal-content {
             bdo-carousel-items {
                 ::ng-deep {
-                    .carousel-cell {
-                    height: 260px !important;
+                    .carousel {
+                        height: calc(260px / 0.95);
+                        
+                        .carousel-cell {
+                            height: 260px !important;
+                        }
                     }
                 }
             }
