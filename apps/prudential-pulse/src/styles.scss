@@ -288,6 +288,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
             .mat-checkbox-inner-container {
               width: 20px;
               height: 20px;
+              border-radius: 50%;
             }
 
             .mat-checkbox-background,
@@ -361,6 +362,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
           .mat-checkbox-inner-container {
             width: 20px;
             height: 20px;
+            border-radius: 50%;
           }
 
           .mat-checkbox-background,
