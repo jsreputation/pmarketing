@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import "./theme/theme.scss";
-@import "./theme/fonts.scss";
-@import "./theme/variables.scss";
-@import "~suneditor/dist/css/suneditor.min.css";
-@import "suneditor-overrides";
+@import './theme/theme.scss';
+@import './theme/fonts.scss';
+@import './theme/variables.scss';
+@import '~suneditor/dist/css/suneditor.min.css';
+@import 'suneditor-overrides';
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
+  --logo: '';
+  --title: '';
   --accent: #96289a;
   --primary: #147dd3;
   --button_text_color: #fff;
@@ -30,7 +30,7 @@ html,
 body {
   height: 100%;
   margin: 0;
-  font-family: var(--font, "Nunito", sans-serif);
+  font-family: var(--font, 'Nunito', sans-serif);
   background-color: var(--background);
   color: var(--font_color);
 }
@@ -48,7 +48,7 @@ body {
 }
 
 input::placeholder {
-  font-family: var(--font, "Nunito", sans-serif);
+  font-family: var(--font, 'Nunito', sans-serif);
 }
 
 .mat-button-disabled {
@@ -63,8 +63,7 @@ input::placeholder {
   padding: 0;
 }
 
-.search-result-tab,
-.nearby-deals-wrapper {
+.search-result-tab, .nearby-deals-wrapper {
   .mat-tab-label {
     height: 46px !important;
     opacity: 1 !important;
@@ -86,11 +85,9 @@ input::placeholder {
   }
 }
 
-.filter-wrapper,
-.treat-welcome,
-.filter-form {
+.filter-wrapper, .treat-welcome, .filter-form {
   .categories-wrapper {
-    .travel-entertaiment .mat-expansion-panel-header:not([class*="mat-expanded"]) {
+    .travel-entertaiment .mat-expansion-panel-header:not([class*='mat-expanded']) {
       border-bottom: none;
     }
   }
@@ -151,7 +148,7 @@ input::placeholder {
     border-top: 1px solid $grey-white;
   }
 
-  .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none !important;
   }
 }
@@ -174,8 +171,7 @@ input::placeholder {
     border: none;
   }
 
-  .mat-select-value,
-  .mat-select-arrow {
+  .mat-select-value, .mat-select-arrow {
     color: $medium-blue;
     font-size: 14px;
   }
@@ -231,9 +227,7 @@ input::placeholder {
   min-height: 25px;
 }
 
-.mat-chip.mat-standard-chip.filter-tag,
-.filter-tag,
-.tag {
+.mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
   font-size: 12px;
   background-color: $white;
   text-transform: uppercase;
