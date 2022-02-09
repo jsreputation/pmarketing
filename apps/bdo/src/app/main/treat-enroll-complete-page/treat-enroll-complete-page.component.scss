@@ -117,5 +117,15 @@ $font-weight: bold;
         text-align: left;
         background-color: $white;
         padding: 20px;
+
+        .similar-deal-content {
+            bdo-carousel-items {
+                ::ng-deep {
+                    .carousel-cell {
+                    height: 260px !important;
+                    }
+                }
+            }
+        }
     }
 }
