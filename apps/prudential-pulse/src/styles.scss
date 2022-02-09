@@ -311,6 +311,9 @@ mat-progress-bar .mat-progress-bar-fill::after {
             border-radius: 24px;
           }
         }
+        .choice-content.selected {
+          border: none !important;
+        }
       }
     }
   }
@@ -377,6 +380,9 @@ mat-progress-bar .mat-progress-bar-fill::after {
               margin: auto;
             }
           }
+        }
+        .choice-content.selected {
+          border: none !important;
         }
       }
     }
