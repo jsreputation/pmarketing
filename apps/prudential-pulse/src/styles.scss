@@ -34,7 +34,7 @@ body {
 
 .mat-dialog-container {
   background-color: var(--popup_background_colour) !important;
-  padding: 3.2rem !important;
+  padding: 16px !important;
 }
 
 button {
@@ -139,6 +139,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
@@ -406,6 +407,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
@@ -441,6 +443,10 @@ mat-dialog-container {
   padding-right: 16px !important;
 
   perx-core-popup {
+    .popup-container {
+      margin: 16px;
+    }
+
     .title-wrapper {
       .mat-dialog-title {
         font-weight: 500 !important;
