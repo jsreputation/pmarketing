@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
 import { IFilterModel } from '../../../models/filter.model';
 import { FilterService } from '../../../services/filter.service';
@@ -16,6 +16,8 @@ export class DesktopFilterComponent implements OnInit {
   public desktopFilterForm: FormGroup;
   filterSource: IFilterModel;
   catalogConfiguration = CATALOG_CONFIGURATION;
+  @Input() isNearbyFilter = false;
+
   constructor(
     private fb: FormBuilder,
     public filterService: FilterService,
@@ -124,8 +126,12 @@ export class DesktopFilterComponent implements OnInit {
       tags: tags.length === filterValue.tags.length ? null : tags,
       locations: locations.length === filterValue.locations.length ? null : locations
     };
-  
-    this.route.navigate(['catalog-page'], { queryParams: queryParams });
+    if(!this.isNearbyFilter) {
+      this.route.navigate(['catalog-page'], { queryParams: queryParams });
+    } else {
+      this.route.navigate(['nearby'], { queryParams: queryParams });
+    }
+    
   }
 
 }

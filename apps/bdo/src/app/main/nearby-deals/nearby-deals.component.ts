@@ -54,7 +54,7 @@ export class NearbyDealsComponent implements OnInit{
   }
 
   getRewardNearBy() {
-    const locations = this.queryParams?.locations ? [`location-${this.queryParams?.locations}`] : [];
+    const locations = this.queryParams?.locations?.length > 0 ? [`location-${this.queryParams?.locations}`] : [];
     const tags  = (this.queryParams?.tags || []).concat(locations);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {

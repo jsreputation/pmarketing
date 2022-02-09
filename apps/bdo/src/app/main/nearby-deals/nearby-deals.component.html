@@ -1,3 +1,9 @@
+<div class="nearby-page">
+<div class="desktop-filter-container">
+  <div class="desktop-filter">
+     <bdo-desktop-filter isNearbyFilter="true"></bdo-desktop-filter>
+ </div>
+</div>
 <div class="nearby-deals-wrapper">
   <div class="filter-wrapper">
     <div class="tag-group">
@@ -33,7 +39,9 @@
             </bdo-large-list-item>
           </ng-container>
           <ng-template #noResult>
-            <p class="no-result">No result</p>
+            <div class="no-result">
+              <bdo-no-result></bdo-no-result>
+            </div>
           </ng-template>
         </ul>
       </mat-tab>
@@ -47,10 +55,13 @@
             <bdo-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)"></bdo-list-item>
           </ng-container>
           <ng-template #noResult>
-           <p class="no-result">No result</p> 
+            <div class="no-result">
+              <bdo-no-result></bdo-no-result> 
+            </div>
           </ng-template>
         </ul>
       </mat-tab>
     </mat-tab-group>
   </div>
+</div>
 </div>
