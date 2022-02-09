@@ -15,6 +15,9 @@
   --font_color: #333;
   --disabled_text_color: #aaaaaa;
   --main-red: #ed1b2e;
+  --ribbon-redeemed: #fff;
+  --ribbon-issued: #ED1B2E;
+  --ribbon-redeemed-expired: #B4C0CC;
 }
 
 html {
@@ -385,9 +388,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
         .voucher-content {
           .ribbon {
             &.redeemed,
+            &.expired {
+              background-color: var(--ribbon-redeemed-expired);
+              color: var(--button_text_color);
+            }
+
             &.issued {
-              background-color: #ed1b2e;
-              color: #fff;
+              background-color: var(--ribbon-issued);
+              color: var(--button_text_color);
             }
           }
         }
