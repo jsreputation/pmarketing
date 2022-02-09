@@ -139,6 +139,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
@@ -406,6 +407,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
