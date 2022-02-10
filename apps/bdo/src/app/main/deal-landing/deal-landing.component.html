@@ -19,7 +19,7 @@
       <div class="description sun-editor-editable" [innerHTML]="dealDetail?.termsAndConditions | safeHtml"></div>
     </div>
   </mat-card>
-  <mat-card class="card">
+  <mat-card class="card similar-deal">
     <h2 class="header">SIMILAR DEALS</h2>
     <bdo-carousel-items [deals]="similarDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
