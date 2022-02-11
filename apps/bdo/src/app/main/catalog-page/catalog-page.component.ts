@@ -61,7 +61,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             children: item.children.filter(item =>
               categories.find(t => t.title.toLowerCase() === item.name.toLowerCase() && categoryWithId?.id && t.parent.id === categoryWithId?.id)
             )
-              .map(child => ({ ...child, id: categories.find(t => t.title.toLowerCase() === child.name.toLowerCase()).id }))
+              .map(child => ({ ...child, id: categories.find(t => (t.title.toLowerCase() === child.name.toLowerCase()) && (t.parent?.id === categoryWithId?.id)).id }))
           };
         })
         .filter(item => item.id);
