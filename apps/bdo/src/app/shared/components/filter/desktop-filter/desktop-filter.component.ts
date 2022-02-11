@@ -17,6 +17,7 @@ export class DesktopFilterComponent implements OnInit {
   filterSource: IFilterModel;
   catalogConfiguration = CATALOG_CONFIGURATION;
   @Input() isNearbyFilter = false;
+  public specialCategoriesTypes = SPECIAL_CATEGORIES;
 
   constructor(
     private fb: FormBuilder,
@@ -77,9 +78,9 @@ export class DesktopFilterComponent implements OnInit {
 
   private renderForm() {
     if (this.filterSource) {
-      this.filterSource.categories = this.filterSource.categories.filter(category=>{
+     /* this.filterSource.categories = this.filterSource.categories.filter(category=>{
         return !SPECIAL_CATEGORIES.includes(category.type);
-      });
+      });*/
         this.desktopFilterForm = this.fb.group({
           categories: new FormArray(
             this.filterSource.categories.map((item) => new FormControl(item))
