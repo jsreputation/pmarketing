@@ -1,19 +1,21 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  ICampaign,
   CampaignType,
-  ICampaignService,
-  IGameService,
-  IGame,
   ConfigService,
   GameType,
+  ICampaign,
   ICampaignItem,
+  ICampaignService,
   IFlags,
-  SettingsService,
-  IOperatingHours
+  IGame,
+  IGameService,
+  IOperatingHours,
+  IQuest,
+  IQuestService,
+  SettingsService
 } from '@perxtech/core';
-import { catchError, map, scan, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { catchError, map, scan, startWith, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { trigger } from '@angular/animations';
 import { fadeIn, fadeOut } from '../../utils/fade-animations';
@@ -44,6 +46,7 @@ export class CampaignsComponent implements OnInit {
   constructor(
     private campaignService: ICampaignService,
     private gameService: IGameService,
+    protected questService: IQuestService,
     private macaronService: MacaronService,
     private configService: ConfigService,
     private settingsService: SettingsService
@@ -64,6 +67,9 @@ export class CampaignsComponent implements OnInit {
 
   public loadCampaigns(): void {
     let tempCampaigns;
+    let gameCampaigns: ICampaign[] = [];
+    let questCampaigns: ICampaign[] = [];
+
     this.campaignService
       .getCampaigns({ page: this.campaignsPageId })
       .pipe(
@@ -74,24 +80,28 @@ export class CampaignsComponent implements OnInit {
           }
         }),
         map((campaigns: ICampaign[]) =>
-          campaigns.filter((campaign) => campaign.type === CampaignType.game)
+          campaigns.filter((campaign) => campaign.type === CampaignType.game || campaign.type === CampaignType.quest)
         ),
         tap((campaigns: ICampaign[]) => {
           tempCampaigns = campaigns;
+          gameCampaigns = tempCampaigns.filter((campaign) => campaign.type === CampaignType.game);
+          questCampaigns = tempCampaigns.filter((campaign) => campaign.type === CampaignType.quest);
+
         }),
-        switchMap((campaigns: ICampaign[]) =>
-          combineLatest(
-            ...campaigns.map((campaign) =>
-              this.gameService
-                .getGamesFromCampaign(campaign)
-                .pipe(catchError(() => of([])))
-            )
-          )
-        ),
-        map((games: IGame[][]) => [].concat(...(games as [])) as IGame[])
+        switchMap(() =>
+          forkJoin(
+            combineLatest(
+              gameCampaigns.map(
+                (campaign) => this.gameService.getGamesFromCampaign(campaign).pipe(catchError(() => of([])))
+              )).pipe(startWith([]), map((games: IGame[][]) => [].concat(...(games as [])) as IGame[])),
+            combineLatest(
+              questCampaigns.map((campaign) =>
+                this.questService.getQuestFromCampaign(campaign.id).pipe(catchError(() => of([])))
+              )).pipe( startWith([]), map((quests: IQuest[][]) => [].concat(...(quests as [])) as IQuest[]))
+          ))
       )
       .subscribe(
-        (games: IGame[]) => {
+        ([games, quests]) => {
           this.games.push(...games);
           const filteredAndMacoronedCampaigns = tempCampaigns
             .filter((campaign) => {
@@ -101,7 +111,8 @@ export class CampaignsComponent implements OnInit {
                 campaign.beginsAt.getTime() > currentDate.getTime();
               return (
                 isComingSoon ||
-                games.filter((game) => game.campaignId === campaign.id).length > 0 ||
+                ( campaign.type === CampaignType.quest && quests.filter((quest) => quest.campaignId === campaign.id)) ||
+                ( campaign.type === CampaignType.game && games.filter((game) => game.campaignId === campaign.id).length > 0) ||
                 campaign.subType === GameType.quiz
               );
             })
