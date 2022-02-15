@@ -328,7 +328,15 @@ input::placeholder {
 }
 
 bdo-carousel-items {
-  .featured-item {
+  .carousel-cell {
     cursor: pointer;
+  }
+}
+
+bdo-search-navbar {
+  .search-wrapper {
+    .search-icon {
+      cursor: pointer;
+    }
   }
 }

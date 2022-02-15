@@ -1,4 +1,4 @@
-@import '../../../../../theme/variables.scss';
+@import "../../../../../theme/variables.scss";
 
 .filter-form {
   padding: 16px;
@@ -79,5 +79,9 @@
       color: $medium-blue;
       border: 2px solid $medium-blue;
     }
+  }
+
+  .mat-chip {
+    cursor: pointer;
   }
 }
