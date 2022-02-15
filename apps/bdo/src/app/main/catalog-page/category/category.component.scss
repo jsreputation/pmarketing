@@ -8,7 +8,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        h3{
+        h3 {
             color: $medium-blue;
             margin: 0;
             text-transform: uppercase;
@@ -22,10 +22,10 @@
             }
         }
     }
-    .looking-for{
+    .looking-for {
         background-color: $white;
         padding: 16px 16px 0 16px;
-        h4{
+        h4 {
             margin-top: 0;
         }
         .icon-category {
@@ -37,6 +37,7 @@
                     display: inline-block;
                     word-wrap: break-word;
                     text-align: center;
+                    cursor: pointer;
                 }
                 display: flex;
                 flex-direction: column;
@@ -47,18 +48,19 @@
                 min-width: 92px;
                 overflow-x: auto;
                 margin-bottom: 30px;
+                cursor: pointer;
             }
         }
     }
 
-    .card-type{
+    .card-type {
         margin-top: 10px;
         background-color: $white;
         padding: 16px 16px 0 16px;
-        h4{
+        h4 {
             margin-top: 0;
         }
-        &-content{
+        &-content {
             display: flex;
             overflow-x: auto;
             width: 100%;
@@ -83,6 +85,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
             &.selected {
                 background-color: #0072D8 !important;
             }
