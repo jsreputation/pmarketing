@@ -103,4 +103,8 @@ export class DealLandingComponent implements OnInit {
   public existsInFilters(tag: ITag): boolean {
     return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
+
+  public viewOtherPromos(): void {
+   // this.route.navigate([``]);
+  }
 }
