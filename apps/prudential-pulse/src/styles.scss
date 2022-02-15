@@ -15,6 +15,9 @@
   --font_color: #333;
   --disabled_text_color: #aaaaaa;
   --main-red: #ed1b2e;
+  --ribbon-redeemed: #fff;
+  --ribbon-issued: #ED1B2E;
+  --ribbon-redeemed-expired: #B4C0CC;
 }
 
 html {
@@ -34,7 +37,7 @@ body {
 
 .mat-dialog-container {
   background-color: var(--popup_background_colour) !important;
-  padding: 3.2rem !important;
+  padding: 16px !important;
 }
 
 button {
@@ -139,6 +142,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
@@ -287,6 +291,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
             .mat-checkbox-inner-container {
               width: 20px;
               height: 20px;
+              border-radius: 50%;
             }
 
             .mat-checkbox-background,
@@ -308,6 +313,9 @@ mat-progress-bar .mat-progress-bar-fill::after {
           button {
             border-radius: 24px;
           }
+        }
+        .choice-content.selected {
+          border: none !important;
         }
       }
     }
@@ -360,6 +368,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
           .mat-checkbox-inner-container {
             width: 20px;
             height: 20px;
+            border-radius: 50%;
           }
 
           .mat-checkbox-background,
@@ -375,6 +384,9 @@ mat-progress-bar .mat-progress-bar-fill::after {
             }
           }
         }
+        .choice-content.selected {
+          border: none !important;
+        }
       }
     }
   }
@@ -385,9 +397,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
         .voucher-content {
           .ribbon {
             &.redeemed,
+            &.expired {
+              background-color: var(--ribbon-redeemed-expired);
+              color: var(--button_text_color);
+            }
+
             &.issued {
-              background-color: #ed1b2e;
-              color: #fff;
+              background-color: var(--ribbon-issued);
+              color: var(--button_text_color);
             }
           }
         }
@@ -406,6 +423,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       .mat-tab-labels {
         .mat-tab-label-active {
           color: var(--main-red) !important;
+          opacity: 1;
         }
       }
     }
@@ -441,12 +459,18 @@ mat-dialog-container {
   padding-right: 16px !important;
 
   perx-core-popup {
+    .popup-container {
+      margin: 16px;
+    }
+
     .title-wrapper {
       .mat-dialog-title {
         font-weight: 500 !important;
         font-size: 2rem !important;
         line-height: 1.8rem !important;
         color: #283542 !important;
+
+        margin: 0 0 8px !important;
       }
     }
 
@@ -477,4 +501,8 @@ mat-dialog-container {
     max-width: 100vw !important;
     min-width: calc(100% - 80px) !important;
   }
+}
+
+.mat-card {
+  border-radius: 12px !important;
 }
