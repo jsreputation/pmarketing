@@ -1,0 +1,59 @@
+
+  hr {
+    margin: 4rem 0;
+  }
+
+  h1 {
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+  }
+
+.voucher-bg {
+  width: 100%;
+  height: 4.6rem;
+  position: relative;
+  margin: 2rem 0;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .voucher-title {
+    position: absolute;
+    top: 1.8rem;
+    text-align: center;
+    width: 100%;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+.remove-btn {
+  color: #DF3856!important;
+  border-color: #DF3856;
+  color: #FFFFFF;
+}
+
+.apply-btn {
+  color: var(--primary)!important;
+  border-color: var(--primary);
+  color: #FFFFFF;
+}
+
+.apply-voucher-cont {
+  margin-top: 2rem;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::ng-deep {
+  .mat-form-field-suffix {
+    align-self: center;
+  }
+}
+.voucher-section {
+ //  display: none;
+}

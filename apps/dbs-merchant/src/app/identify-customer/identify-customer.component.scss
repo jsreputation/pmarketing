@@ -1,0 +1,50 @@
+.mat-tab-group {
+    margin-top: -1rem;
+}
+
+form{
+    padding-top: 4rem;
+    button {
+        margin-top: 1.5rem;
+    }
+}
+
+.main-container {
+  overflow: hidden;
+  height: 100%;
+}
+
+.tab-container {
+  overflow-y: auto;
+  height: 100%;
+}
+
+button:disabled {
+  opacity: 0.45;
+}
+
+
+
+::ng-deep {
+  
+    .mat-tab-group {
+      height: 100%;
+    }
+  
+    .mat-tab-label-active {
+      color: var(--primary);
+    }
+  
+    .mat-tab-group.mat-primary .mat-ink-bar {
+      background-color: var(--primary);
+    }
+
+    .mat-tab-body-wrapper {
+      height: 100%;
+    }
+    perx-bcm-pages-qrscanner .container {
+      padding-top: 5rem!important;
+    }
+  }
+
+  

@@ -2510,6 +2510,114 @@
         }
       }
     },
+    "dbs-merchant": {
+      "projectType": "application",
+      "root": "apps/dbs-merchant",
+      "sourceRoot": "apps/dbs-merchant/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/dbs-merchant",
+            "index": "apps/dbs-merchant/src/index.html",
+            "main": "apps/dbs-merchant/src/main.ts",
+            "polyfills": "apps/dbs-merchant/src/polyfills.ts",
+            "tsConfig": "apps/dbs-merchant/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/dbs-merchant/src/favicon.ico",
+              "apps/dbs-merchant/src/assets",
+              "apps/dbs-merchant/src/manifest.webmanifest",
+              "apps/dbs-merchant/src/robots.txt"
+            ],
+            "styles": ["apps/dbs-merchant/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/dbs-merchant/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/dbs-merchant/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "dbs-merchant:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dbs-merchant:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dbs-merchant:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/dbs-merchant/src/**/*.d.ts",
+              "apps/dbs-merchant/src/main.ts",
+              "apps/dbs-merchant/src/polyfills.ts",
+              "apps/dbs-merchant/src/**/*.spec.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/dbs-merchant"],
+          "options": {
+            "jestConfig": "apps/dbs-merchant/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/dbs-merchant/e2e/protractor.conf.js",
+            "devServerTarget": "dbs-merchant:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "dbs-merchant:serve:production"
+            }
+          }
+        }
+      }
+    },
     "whistler": {
       "projectType": "library",
       "root": "libs/whistler",
