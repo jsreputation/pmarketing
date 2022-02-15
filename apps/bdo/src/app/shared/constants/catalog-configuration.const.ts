@@ -2,7 +2,7 @@ export const CATALOG_CONFIGURATION = {
   bdo: {
     type: 'bdo-rewards',
     name: 'BDO Rewards',
-    tags: ['featured','popular']
+    tags: ['new','featured','popular']
   },
   deals: {
     type: 'deals',
