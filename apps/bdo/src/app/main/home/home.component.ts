@@ -7,7 +7,7 @@ import { mapRewardsToListItem, mapRewardToListItem, mapCampaignToListItem, mapCa
 import { forkJoin, iif, of, combineLatest } from 'rxjs';
 import { catchError, tap, switchMap, mergeMap } from 'rxjs/operators';
 
-const ORDERED_CATALOG_NAME = 'Bdo deals';
+const ORDERED_CATALOG_NAME = 'bdo deals';
 
 interface IBDOConfig {
   showOrderedCatalogItems: boolean;
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.rewardsService.getCatalogs(1, this.requestPageSize).subscribe((catalogs) => {
-      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name === ORDERED_CATALOG_NAME)?.id;
+      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name.toLowerCase() === ORDERED_CATALOG_NAME)?.id;
       this.loadDeals();
     });
 

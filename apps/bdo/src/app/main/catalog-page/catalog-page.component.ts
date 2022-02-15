@@ -11,7 +11,7 @@ import { mapCampaignsToListItem, mapRewardsToListItem, mapCampaignToListItem, ma
 import { SelfDestruct } from '../../shared/utilities/self-destruct.component';
 import { buildParams, mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
 
-const ORDERED_CATALOG_NAME = 'Bdo deals';
+const ORDERED_CATALOG_NAME = 'bdo deals';
 
 interface IBDOConfig {
   showOrderedCatalogItems: boolean;
@@ -50,7 +50,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       this.rewardsService.getAllCategories(),
       this.rewardsService.getCatalogs(1, this.requestPageSize)
     ]).subscribe(([params, categories, catalogs]) => {
-      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name === ORDERED_CATALOG_NAME)?.id;
+      this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name.toLowerCase() === ORDERED_CATALOG_NAME)?.id;
       const filterData = FILTER_DATA;
       filterData.categories = filterData.categories
         .map(item => {
@@ -61,7 +61,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
             children: item.children.filter(item =>
               categories.find(t => t.title.toLowerCase() === item.name.toLowerCase() && categoryWithId?.id && t.parent.id === categoryWithId?.id)
             )
-              .map(child => ({ ...child, id: categories.find(t => t.title.toLowerCase() === child.name.toLowerCase()).id }))
+              .map(child => ({ ...child, id: categories.find(t => (t.title.toLowerCase() === child.name.toLowerCase()) && (t.parent?.id === categoryWithId?.id)).id }))
           };
         })
         .filter(item => item.id);

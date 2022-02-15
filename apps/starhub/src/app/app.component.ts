@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AuthenticationService,
   ConfigService,
@@ -24,25 +21,9 @@ import {
 } from '@perxtech/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  catchError,
-  filter,
-  first,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
-import {
-  AnalyticsService,
-  IEvent,
-  PageType
-} from './analytics.service';
-import {
-  EMPTY,
-  iif,
-  throwError,
-  timer
-} from 'rxjs';
+import { catchError, filter, first, map, switchMap, tap, } from 'rxjs/operators';
+import { AnalyticsService, IEvent, PageType } from './analytics.service';
+import { EMPTY, iif, of, throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { IStarhubConfig } from './home/home/home.component';
 import { oc } from 'ts-optchain';
@@ -195,18 +176,21 @@ export class AppComponent implements OnInit {
         }
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
-      switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
-        .pipe(
-          switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
-            catchError((err: string) => {
-              throwError(err);
-              console.error(err);
-              this.holdingGateOpened = false;
-              return EMPTY;
-            })
-          )),
-        )
-      ),
+      switchMap((flags: IFlags) => iif(
+        () => flags.gatekeeperUrl !== undefined && flags.gatekeeperUrl?.length > 0,
+        timer(0, flags && flags.gatekeeperPollingInterval || 2000)
+          .pipe(
+            switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
+              catchError((err: string) => {
+                throwError(err);
+                console.error(err);
+                this.holdingGateOpened = false;
+                return EMPTY;
+              })
+            )),
+          ),
+        of(true)
+      )),
       first(res => res === true)
     ).subscribe(() => {
       this.loadApp();
