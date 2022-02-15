@@ -73,7 +73,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public createInvoice(userId: string, amount: number, receiptIdentifier: string, voucherId: number, pointsId: number
+  public createInvoice(userId: string, amount: number, receiptIdentifier: string, voucherId: number, pointsId: number, merchantName?: string
   ): Observable<IMerchantInvoice> {
     throw new Error('createInvoice Method not implemented.');
   }
