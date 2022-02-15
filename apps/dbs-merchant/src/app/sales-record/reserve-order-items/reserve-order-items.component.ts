@@ -88,7 +88,7 @@ export class ReserveOrderItemsComponent implements OnInit {
 
     this.merchantAdminService.getCustomerLoyalties(this.userDetails?.identifier).subscribe(
       (loyalties: ILoyalty[]) => {
-        const loyalty = loyalties.find((item: ILoyalty) => item.name === 'Coin Program');
+        const loyalty = loyalties.find((item: ILoyalty) => item.name === 'DBS Points Program');
         this.loyaltyProgramId = loyalty?.id;
       }
     );
