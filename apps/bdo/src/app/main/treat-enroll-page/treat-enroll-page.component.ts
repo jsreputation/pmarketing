@@ -15,6 +15,7 @@ export class TreatEnrollPageComponent implements OnInit {
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
   public captchaKey = '6LeDPNgdAAAAAJXJbh2r49JRAv8xqR7wstchS8Nf';
   private captchaResponse: string;
+  public isCampaignEnrollable = true;
 
   constructor(
     private campaignService: ICampaignService,
@@ -26,14 +27,20 @@ export class TreatEnrollPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initForm();
+    
     this.activeRoute.params.pipe(
       switchMap((item: Params) => this.campaignService.getCampaign(item.id))
     ).subscribe(
       (campaign: ICampaign) => {
         this.campaign = campaign;
+        this.isCampaignEnrollable = !campaign.enrollableUntil || (campaign.enrollableUntil &&
+          campaign.enrollableUntil.getTime() > new Date().getTime());
+          if(!this.isCampaignEnrollable) {
+            this.enrollForm?.controls['promoId']?.disable();
+          }
       }
-    );
-    this.initForm();
+    );  
   }
 
   public initForm(): void {
