@@ -36,7 +36,7 @@ export class CampaignsComponent implements OnInit {
   public ghostCampaigns: any[] = new Array(3);
   public campaignsSubj: BehaviorSubject<ICampaignWithMacaron[]> = new BehaviorSubject([]);
   public games: IGame[] = [];
-  public campaignsPageId: number = 1;
+  public campaignsPageId: number = 0;
   public campaignsEnded: boolean = false;
   public showOperatingHours: boolean = false;
 
@@ -69,6 +69,7 @@ export class CampaignsComponent implements OnInit {
     let tempCampaigns;
     let gameCampaigns: ICampaign[] = [];
     let questCampaigns: ICampaign[] = [];
+    this.campaignsPageId++;
 
     this.campaignService
       .getCampaigns({ page: this.campaignsPageId })
@@ -123,7 +124,6 @@ export class CampaignsComponent implements OnInit {
 
           // ensure list of campaigns does not get stuck when not long enough to scroll to paginate
           if (!this.campaignsEnded && filteredAndMacoronedCampaigns.length < 5) {
-            this.campaignsPageId++;
             this.loadCampaigns();
           }
 
@@ -165,7 +165,6 @@ export class CampaignsComponent implements OnInit {
     if (this.campaignsEnded) {
       return;
     }
-    this.campaignsPageId++;
     this.loadCampaigns();
   }
 
