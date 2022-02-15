@@ -121,6 +121,12 @@ export class CampaignsComponent implements OnInit {
               return campaign;
             });
 
+          // ensure list of campaigns does not get stuck when not long enough to scroll to paginate
+          if (!this.campaignsEnded && filteredAndMacoronedCampaigns.length < 5) {
+            this.campaignsPageId++;
+            this.loadCampaigns();
+          }
+
           this.campaignsSubj.next(filteredAndMacoronedCampaigns);
           this.ghostCampaigns = [];
         },
