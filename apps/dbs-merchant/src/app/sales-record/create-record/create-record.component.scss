@@ -1,0 +1,80 @@
+.order-form-container {
+    margin: -2.5rem -2.5rem 2.5rem -2.5rem;
+    border-radius: 1.6rem 1.6rem 0 0;
+    overflow-y: auto;
+    padding-bottom: 9rem;
+}
+
+.voucher-details {
+    text-align: center;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background: #202C46;
+    color: #FFFFFF;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    p {
+        font-weight: 900;     
+        margin: 1rem 0 0 0;
+    }
+    small {
+        font-weight: 500;
+        margin-top: .5rem;
+    }
+}
+
+.voucher-bg {
+    width: 100%;
+    height: 12.3rem;
+    position: relative;
+    margin: 2rem 0;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .voucher-title {
+        font-weight: 900;
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+        color: #202C46;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
+    .voucher-code {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 4.7rem;
+        padding: 1rem 0;
+    }
+    hr {
+        border-top: 1px dashed #A5A5A5;
+        width: 85%;
+        margin: 1.5rem auto .5rem; 
+    }
+}
+.instruction-cont {
+    padding: 0 2.5rem;
+    color: #212121;
+    h1 {
+        font-weight: 900;
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        margin-top: 3rem;
+    }
+    ol {
+        padding-inline-start: 2rem!important;
+        font-size: 1.4rem;
+        line-height: 2.5rem;
+        margin: 2rem 0;
+     }   
+}
+.order-form {
+    padding: 0 2.5rem; 
+    button:disabled {
+        opacity: 0.45;
+    }
+}

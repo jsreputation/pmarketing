@@ -99,6 +99,7 @@ export interface IV4Campaign {
   operating_now?: boolean;
   team_size?: number; // used for stamp team campaigns
   score?: number;
+  enrollable_until?: string | null;
 }
 
 type CountObject = {
@@ -577,6 +578,7 @@ export class V4CampaignService implements ICampaignService {
       categoryTags: campaign.category_tags,
       tags: campaign.tags,
       score: campaign?.score,
+      enrollableUntil: campaign.enrollable_until ?  new Date(campaign.enrollable_until) : null,
       miscImages: {
         miscImage1: miscImg1 || '',
         miscImage2: miscImg2 || ''

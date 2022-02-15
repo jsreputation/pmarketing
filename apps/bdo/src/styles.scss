@@ -216,7 +216,6 @@ input::placeholder {
   }
 }
 
-
 .tag {
   border-radius: 15px;
   padding: 5px 12px;
@@ -328,3 +327,16 @@ input::placeholder {
   }
 }
 
+bdo-carousel-items {
+  .carousel-cell {
+    cursor: pointer;
+  }
+}
+
+bdo-search-navbar {
+  .search-wrapper {
+    .search-icon {
+      cursor: pointer;
+    }
+  }
+}

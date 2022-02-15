@@ -1,32 +1,19 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  Router,
-  NavigationEnd,
-  Event, ActivatedRoute
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
-import {
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
 import {
-  ThemesService,
-  ITheme,
   Config,
   ConfigService,
+  FlagLocalStorageService,
   IConfig,
-  SettingsService,
   IFlags,
-  FlagLocalStorageService
+  ITheme,
+  SettingsService,
+  ThemesService
 } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
@@ -102,7 +89,7 @@ export class LayoutComponent implements OnInit {
     this.configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => this.appConfig = config),
       switchMap(() => this.themesService.getThemeSetting()),
-      map(theme => {
+      map((theme: ITheme) => {
         this.theme = theme;
         const title = (theme.properties ? theme.properties['--title'] : undefined) || '';
         if (title.length > 0) {

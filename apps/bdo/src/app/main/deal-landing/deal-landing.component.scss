@@ -1,4 +1,4 @@
-@import '../../../theme/variables';
+@import "../../../theme/variables";
 
 .deal-landing {
   .header {
@@ -8,7 +8,7 @@
   }
 
   .card {
-    font-family: 'Nunito', sans-serif;
+    font-family: "Nunito", sans-serif;
     margin-top: 10px;
     box-shadow: none;
     border-radius: 0;
@@ -128,6 +128,7 @@
       }
     }
   }
+  
   .similar-deals-heading {
     display: flex;
     justify-content: space-between;
@@ -141,6 +142,20 @@
       cursor: pointer;
 
       padding-right: 16px;
+    }
+  }
+
+  .similar-deal {
+    bdo-carousel-items {
+      ::ng-deep {
+        .carousel {
+          height: calc(260px / 0.95) !important;
+
+          .carousel-cell {
+            height: 260px !important;
+          }
+        }
+      }
     }
   }
 }

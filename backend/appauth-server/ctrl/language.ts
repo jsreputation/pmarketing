@@ -1,5 +1,5 @@
 // import { ApiConfig } from '../types/apiConfig';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
 import { join } from 'path';
 
@@ -8,7 +8,7 @@ const EXPRESS_DIST_FOLDER = join(__dirname);
 export const language = () => (req: Request, res: Response, next: NextFunction) => {
   try {
     // @ts-ignore
-    const app = req.query.app ? `${req.query.app}-` : '';
+    const app = req.query.app ? `${(req.query.app as string).toLowerCase()}-` : '';
     const langsStr: string | undefined = req.headers['accept-language'];
     let langs = ['en'];
     if (langsStr) {
