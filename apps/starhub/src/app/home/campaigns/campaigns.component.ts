@@ -150,6 +150,8 @@ export class CampaignsComponent implements OnInit {
       this.tapped.emit({ itemType: GameType.quiz.toString(), itemId: campaign.id });
     } else if (gameWithCampaign) {
       this.tapped.emit({ itemType: CampaignType.game, itemId: gameWithCampaign.id });
+    } else if (campaign.type === CampaignType.quest) {
+      this.tapped.emit({ itemType: CampaignType.quest, itemId: campaign.id });
     }
   }
 
