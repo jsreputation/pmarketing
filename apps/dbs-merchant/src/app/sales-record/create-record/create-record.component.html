@@ -1,0 +1,51 @@
+<div class="order-form-container">
+    <div class="voucher-details" *ngIf="!isPreActivatedUser">
+        <p>{{"CREATE_ORDER_PAGE.VOUCHER_APPLIED"|translate}}</p>
+        <div class="voucher-bg" *ngIf="reservedVoucher; else noVoucherBlock">
+            <img src="assets/voucher-barcode-bg.png"/>
+            <div class="voucher-code" *ngIf="reservedVoucher">
+                <p class="voucher-title">{{reservedVoucher.reward?.name}}</p>
+                <hr/>
+                <ngx-barcode6
+                [bc-value]="reservedVoucher.code" [bc-background]="barcodeBgColor"
+                [bc-height]="47" [bc-width]="2"
+                ></ngx-barcode6>
+            </div>
+        </div>
+        <ng-template #noVoucherBlock>
+            <small><i>None</i></small>
+        </ng-template>
+        <p>{{"CREATE_ORDER_PAGE.POINTS_PAID"|translate}}</p>
+        <small>{{this.reservedPoints?.points ? -(this.reservedPoints?.points) : '0'}}</small>
+    </div>
+    <div class="instruction-cont">
+        <h1>{{"CREATE_ORDER_PAGE.INSTRUCTIONS"|translate}}</h1>
+        <ol>
+            <li *ngIf="!isPreActivatedUser"><p>{{"CREATE_ORDER_PAGE.INSTRUCTION_1"|translate}}</p></li>
+            <li><p>{{"CREATE_ORDER_PAGE.INSTRUCTION_2"|translate}}</p></li>
+        </ol>
+    </div>
+    <form class="order-form" [formGroup]="orderForm" (ngSubmit)="onCreateRecord()">
+        <mat-form-field appearance="fill" class="full-width__input">
+            <mat-label>{{"CREATE_ORDER_PAGE.AMOUNT"|translate}}</mat-label>
+            <input matInput formControlName="netAmount" required>
+            <mat-error *ngIf="netAmount && netAmount.hasError('required')">
+                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}}
+            </mat-error>
+            <mat-error *ngIf="netAmount && netAmount.hasError('pattern')">
+                Please enter a valid amount 
+            </mat-error>
+            </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width__input">
+            <mat-label>{{"CREATE_ORDER_PAGE.RECEIPT"|translate}}</mat-label>
+            <input matInput formControlName="receipt" required>
+            <mat-error *ngIf="receipt && receipt.hasError('required')">
+                {{"CREATE_ORDER_PAGE.INPUT_ERR_MSG"|translate}}
+            </mat-error>
+        </mat-form-field> 
+        <div class="btn-bottom-fixed">                      
+            <button mat-raised-button [disabled]="!orderForm.valid"  class="full-width__button mat-primary">{{"CREATE_ORDER_PAGE.CREATE_RECORD"|translate}}</button>
+            <button mat-stroked-button (click)="goToPreviousPage()" class="full-width__button btn-transparent">{{"CREATE_ORDER_PAGE.BACK"|translate}}</button>
+        </div> 
+    </form>          
+</div>

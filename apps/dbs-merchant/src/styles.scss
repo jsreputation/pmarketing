@@ -1,0 +1,133 @@
+@import "./custom-theme.scss";
+
+:root {
+  --font: "Lato";
+  --logo: "";
+  --title: "";
+  --accent: #96289a;
+  --primary: #147dd3;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
+  --header_color: #147dd3;
+  --background: #fafafa;
+  --font_color: #333;
+  --disabled_text_color: #aaaaaa;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font, "Lato");
+  font-style: normal;
+  background-color: #fafafa;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--font_color);
+}
+
+.mat-dialog-container {
+  background-color: var(--popup_background_colour) !important;
+  padding: 3.2rem !important;
+}
+
+button {
+  background-color: var(--button_background_color);
+  color: var(--button_text_color);
+}
+
+button:disabled {
+  background-color: var(--disabled_text_color) !important;
+  color: white !important;
+}
+
+button.mat-primary {
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
+}
+
+.mat-accent {
+  color: var(--accent) !important;
+}
+
+button.mat-accent {
+  background-color: var(--accent) !important;
+  color: var(--button_text_color) !important;
+}
+
+button.mat-default {
+  background-color: var(--background) !important;
+  color: var(--font_color) !important;
+}
+
+button.mat-stroked-button {
+  background-color: white !important;
+  color: var(--accent) !important;
+}
+
+.mat-toolbar {
+  background-color: transparent !important;
+}
+
+.backArrow {
+  color: white;
+}
+
+.full-width__input {
+  width: 100%;
+  display: block;
+}
+
+.full-width__button {
+  width: 100%;
+}
+
+.btn-transparent {
+  background-color: transparent!important;
+  color: var(--primary)!important;
+}
+
+.mat-form-field {
+  font-size: 1.4rem!important;
+  display: block!important;
+}
+
+.custom-snackbar {
+  background: #FFC832;
+  color: black;
+  position: absolute;
+  bottom: 0;
+  margin: .5rem !important;
+  font-weight: 900;
+  max-width: calc(100% - 1rem) !important;
+} 
+
+.mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: var(--primary)!important;
+  }
+  .mat-form-field-ripple {
+    background-color: var(--primary)!important;
+  }
+}
+
+.mat-form-field-appearance-fill .mat-form-field-underline::before {
+  background-color: rgba(0, 0, 0, 0.12)!important;
+}
+
+.btn-bottom-fixed {
+  position: absolute !important;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 5rem);
+  text-align: center !important;
+  padding: 2.5rem !important;
+  background-color: white!important;
+  box-shadow: 0px 2px 6px rgb(0 0 0 / 18%);
+  :not(:first-child) {
+    margin-top: 1.5rem;
+  }
+}
