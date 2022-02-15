@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IReward, ITag, NotificationService, RewardsService, IVoucherService } from '@perxtech/core';
 import { combineLatest, of } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { catchError } from 'rxjs/operators';
+import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
@@ -106,5 +107,47 @@ export class DealLandingComponent implements OnInit {
 
   public viewOtherPromos(): void {
    // this.route.navigate([``]);
+  }
+
+  private findCategoryTagsInFilters(): boolean {
+    const countLimit = 2;
+    let count = 0;
+    let hasFound = false;
+    const filters = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
+    filters.forEach(filter => {
+      if (this.dealDetail?.categoryTags?.find(r => r.title.indexOf(filter) !== -1)) {
+        count += 1;
+      }
+      if (count >= countLimit) {
+        hasFound = true;
+        return;
+      }
+    });
+    return hasFound;
+  }
+
+  private findCategoryTagsInFilter(filter) {
+    return this.dealDetail?.categoryTags?.find(tag=> tag.title.indexOf(filter) !== -1)
+  }
+
+  private navigateToCatalog(type:string){
+    const queryParams: Params = { type: type };
+    this.route.navigate(["/catalog-page"], { queryParams });
+  }
+
+  public viewAll(): void {
+    if(this.findCategoryTagsInFilters()) {
+      this.route.navigate([ '/home' ]);
+    }else{
+      if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.bdo.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.bdo.type);
+      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.debit.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.debit.type);
+      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.credit.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.credit.type);
+      }else{
+        this.route.navigate([ '/home' ]);
+      }
+    }
   }
 }

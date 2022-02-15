@@ -66,12 +66,12 @@
       .container {
         padding: 0 16px 16px 16px;
 
-        .description {         
+        .description {
           padding: 0;
           margin: 0;
           font-size: 14px;
           color: $light-black;
-    
+
           //::ng-deep {
           //  ol {
           //    list-style:none;
@@ -112,7 +112,7 @@
           //  }
           //
           //  li::marker {
-          //    content: "";
+          //    content: '';
           //  }
           //}
         }
@@ -132,5 +132,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .action {
+      color: $medium-blue;
+      font-size: 14px;
+      font-weight: bold;
+      min-width: 55px;
+      cursor: pointer;
+
+      padding-right: 16px;
+    }
   }
 }
