@@ -24,6 +24,7 @@ import { LocationModule, MerchantsModule } from '@perxtech/core';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { CarouselItemsComponent } from './components/carousel-items/carousel-items.component';
 import { DesktopFilterComponent } from './components/filter/desktop-filter/desktop-filter.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DesktopFilterComponent } from './components/filter/desktop-filter/deskt
     LocationModule,
     MerchantsModule.forChild(), //required for location module
     MatChipsModule,
-    IvyCarouselModule
+    IvyCarouselModule,
+    MatDividerModule,
   ],
   exports: [
     ListItemComponent,
