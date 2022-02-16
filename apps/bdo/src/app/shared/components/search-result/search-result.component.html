@@ -1,8 +1,7 @@
 <mat-tab-group animationDuration='0ms' mat-stretch-tabs class='search-result-tab'>
   <mat-tab #catalogueTab>
     <ng-template mat-tab-label>
-      <img src='assets/images/catalog-default.svg' *ngIf="!catalogueTab.isActive"/>
-      <img src='assets/images/catalog-selected.svg' *ngIf="catalogueTab.isActive"/>
+      <img [src]="catalogueTab.isActive ? catalogImage.selected : catalogImage.default"/>
       <span class='label-tab'>Catalogue</span>
     </ng-template>
 
@@ -18,8 +17,7 @@
   </mat-tab>
   <mat-tab #listTab>
     <ng-template mat-tab-label>
-      <img src='assets/images/view_all_list-default.svg' *ngIf="!listTab.isActive"/>
-      <img src='assets/images/view_all_list-selected.svg' *ngIf="listTab.isActive"/>
+      <img [src]="listTab.isActive ? listImage.selected : listImage.default"/>
       <span class='label-tab'>List</span>
     </ng-template>
     <div class='ghost-card' *ngIf='!isLoaded'>
