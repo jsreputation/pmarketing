@@ -44,7 +44,7 @@ export class MerchantLocationPageComponent implements OnInit {
           this.location = item;
           if (this.location) {
             if (this.location.length > 1) {
-              const center = this.centerGeolocation(this.location.map(location => ({
+              const center = this.centerGeolocation(Array(this.location)?.map((location: any) => ({
                 latitude: location.latitude,
                 longitude: location.longitude
               })));
