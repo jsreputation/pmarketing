@@ -30,8 +30,7 @@
             <div class="card-type-content-action" *ngFor="let item of selectedSubcategory.children; let i = index"
                 (click)="selectSubcategoryChildren(item)">
                 <div class="card-type-container" [ngClass]="item.selected ? 'selected' : ''" >
-                    <img [src]="item.imageLink" alt="" class="img-category" *ngIf="!item.selected"/>
-                    <img [src]="item.imageLinkSelected" alt="" class="img-category" *ngIf="item.selected"/>
+                    <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category"/>
                 </div>
 <!--                <span class="card-type-name">{{item.name}}</span>-->
             </div>
