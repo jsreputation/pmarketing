@@ -15,7 +15,7 @@ import {
   SettingsService
 } from '@perxtech/core';
 import { catchError, map, scan, startWith, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, iif, Observable, of } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { trigger } from '@angular/animations';
 import { fadeIn, fadeOut } from '../../utils/fade-animations';
@@ -39,6 +39,7 @@ export class CampaignsComponent implements OnInit {
   public campaignsPageId: number = 0;
   public campaignsEnded: boolean = false;
   public showOperatingHours: boolean = false;
+  private flags: IFlags;
 
   @Output()
   public tapped: EventEmitter<ICampaignItem> = new EventEmitter();
@@ -61,6 +62,7 @@ export class CampaignsComponent implements OnInit {
     this.settingsService.getRemoteFlagsSettings().subscribe(
       (flags: IFlags) => {
         this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+        this.flags = flags;
       }
     );
   }
@@ -95,10 +97,13 @@ export class CampaignsComponent implements OnInit {
               gameCampaigns.map(
                 (campaign) => this.gameService.getGamesFromCampaign(campaign).pipe(catchError(() => of([])))
               )).pipe(startWith([]), map((games: IGame[][]) => [].concat(...(games as [])) as IGame[])),
-            combineLatest(
+            iif(() => this.flags.showQuest ? true : false,
+              combineLatest(
               questCampaigns.map((campaign) =>
                 this.questService.getQuestFromCampaign(campaign.id).pipe(catchError(() => of([])))
-              )).pipe( startWith([]), map((quests: IQuest[][]) => [].concat(...(quests as [])) as IQuest[]))
+              )).pipe( startWith([]), map((quests: IQuest[][]) => [].concat(...(quests as [])) as IQuest[])),
+              of([])
+            )
           ))
       )
       .subscribe(
@@ -112,7 +117,7 @@ export class CampaignsComponent implements OnInit {
                 campaign.beginsAt.getTime() > currentDate.getTime();
               return (
                 isComingSoon ||
-                ( campaign.type === CampaignType.quest && quests.filter((quest) => quest.campaignId === campaign.id)) ||
+                ( this.flags.showQuest && campaign.type === CampaignType.quest && quests.filter((quest: IQuest) => quest.campaignId === campaign.id)) ||
                 ( campaign.type === CampaignType.game && games.filter((game) => game.campaignId === campaign.id).length > 0) ||
                 campaign.subType === GameType.quiz
               );
@@ -123,7 +128,7 @@ export class CampaignsComponent implements OnInit {
             });
 
           // ensure list of campaigns does not get stuck when not long enough to scroll to paginate
-          if (!this.campaignsEnded && filteredAndMacoronedCampaigns.length < 5) {
+          if (! this.campaignsEnded && filteredAndMacoronedCampaigns.length < 5) {
             this.loadCampaigns();
           }
 
