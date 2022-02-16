@@ -1,8 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,13 +12,17 @@ import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {
-  GameModule,
-  RewardsService,
-  ICampaignService,
+  CampaignType,
+  ConfigService,
   FeedReaderService,
+  GameModule,
+  ICampaignService,
   IGameService,
+  IQuestService,
   IReward,
-  ConfigService, SettingsService, StampService, CampaignType
+  RewardsService,
+  SettingsService,
+  StampService
 } from '@perxtech/core';
 
 import { rewards } from '../../rewards.mock';
@@ -78,6 +78,10 @@ describe('DiscoverComponent', () => {
   const stamServcieStub: Partial<StampService> = {
     getCards: () => of()
   };
+  const questServiceStub: Partial<IQuestService> = {
+    getQuestFromCampaign: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -112,6 +116,7 @@ describe('DiscoverComponent', () => {
         { provide: StampService, useValue: stamServcieStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: IQuestService, useValue: questServiceStub }
       ]
     })
       .compileComponents();

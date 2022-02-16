@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule } from '@angular/material/card';
@@ -6,14 +6,15 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import {
-  ICampaignService,
-  CampaignType,
   CampaignState,
-  IGameService,
-  ICampaign,
-  IGame,
-  GameType,
+  CampaignType,
   ConfigService,
+  GameType,
+  ICampaign,
+  ICampaignService,
+  IGame,
+  IGameService,
+  IQuestService,
   SettingsService
 } from '@perxtech/core';
 import { Type } from '@angular/core';
@@ -51,6 +52,10 @@ describe('CampaignsComponent', () => {
     getRemoteFlagsSettings: () => of()
   };
 
+  const questServiceStub: Partial<IQuestService> = {
+    getQuestFromCampaign: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent, GhostCardComponent],
@@ -65,7 +70,8 @@ describe('CampaignsComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: IQuestService, useValue: questServiceStub }
       ]
     })
       .compileComponents();
