@@ -15,7 +15,8 @@
   --button_background_color: #147dd3;
   --header_color: #147dd3;
   --background: #fafafa;
-  --font_color: #333;
+  // --font_color: #333;
+  --font_color: #2e2e2e !important;
   --disabled_text_color: #aaaaaa;
 }
 
@@ -44,7 +45,7 @@ body {
 
 body {
   background: $light-grey;
-  color: $dark-grey;
+  // color: $dark-grey;
 }
 
 input::placeholder {
@@ -63,7 +64,8 @@ input::placeholder {
   padding: 0;
 }
 
-.search-result-tab, .nearby-deals-wrapper {
+.search-result-tab,
+.nearby-deals-wrapper {
   .mat-tab-label {
     height: 46px !important;
     opacity: 1 !important;
@@ -85,9 +87,12 @@ input::placeholder {
   }
 }
 
-.filter-wrapper, .treat-welcome, .filter-form {
+.filter-wrapper,
+.treat-welcome,
+.filter-form {
   .categories-wrapper {
-    .travel-entertaiment .mat-expansion-panel-header:not([class*='mat-expanded']) {
+    .travel-entertaiment
+      .mat-expansion-panel-header:not([class*='mat-expanded']) {
       border-bottom: none;
     }
   }
@@ -171,7 +176,8 @@ input::placeholder {
     border: none;
   }
 
-  .mat-select-value, .mat-select-arrow {
+  .mat-select-value,
+  .mat-select-arrow {
     color: $medium-blue;
     font-size: 14px;
   }
@@ -227,7 +233,9 @@ input::placeholder {
   min-height: 25px;
 }
 
-.mat-chip.mat-standard-chip.filter-tag, .filter-tag, .tag {
+.mat-chip.mat-standard-chip.filter-tag,
+.filter-tag,
+.tag {
   font-size: 12px;
   background-color: $white;
   text-transform: uppercase;
