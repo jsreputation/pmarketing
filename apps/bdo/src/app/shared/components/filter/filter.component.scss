@@ -1,4 +1,4 @@
-@import '../../../../theme/variables.scss';
+@import "../../../../theme/variables.scss";
 
 .filter-form {
   padding: 16px;
@@ -77,6 +77,19 @@
       background-color: $white;
       color: $medium-blue;
       border: 2px solid $medium-blue;
+    }
+  }
+
+  .tags-wrapper {
+    ::ng-deep {
+      .mat-chip-list {
+        .mat-chip-list-wrapper {
+          @media screen and (max-width: $desktop-width) {
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        }
+      }
     }
   }
 }
