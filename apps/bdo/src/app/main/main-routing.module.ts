@@ -29,10 +29,10 @@ const routes: Routes = [
       },
       { path: 'treat-welcome/:id', component: TreatWelcomeComponent },
       { path: 'treat-welcome/:id/location', component: MerchantLocationPageComponent },
-      {
-        path: 'treat-welcome/:rid/location/map',
-        loadChildren: () => import('./location-landing/location-landing.module').then((mod) => mod.LocationLandingModule)
-      },
+      // {
+      //   path: 'treat-welcome/:rid/location/map',
+      //   loadChildren: () => import('./location-landing/location-landing.module').then((mod) => mod.LocationLandingModule)
+      // },
       { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
       { path: 'nearby', component: NearbyDealsComponent },
       { path: 'catalog-page', component: CatalogPageComponent },

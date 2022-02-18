@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IMerchantLocation, IVoucherLocation, IVoucherService, LocationsService } from '@perxtech/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { iif } from 'rxjs';
@@ -17,14 +17,14 @@ export class MerchantLocationPageComponent implements OnInit {
   private rid: number;
   public displayMode: 'phone' | 'location';
   public markersArray: google.maps.Marker[] = [];
-  private currentViewLocation = { lat: '', long: '' };
+  private currentViewLocation = { lat: '', long: '', id: null };
+  private centerViewLocation = { lat: '', long: '' };
   private defaultZoom: number;
 
   constructor(
     private voucherService: IVoucherService,
     private locationsService: LocationsService,
     private activeRoute: ActivatedRoute,
-    private router: Router
   ) { }
   ngOnInit() {
     const markerLocations: IVoucherLocation[] = [];
@@ -44,16 +44,27 @@ export class MerchantLocationPageComponent implements OnInit {
           this.location = item;
           if (this.location) {
             if (this.location.length > 1) {
-              const center = this.centerGeolocation(Array(this.location)?.map((location: any) => ({
+              const center = this.centerGeolocation([...this.location]?.map((location: any) => ({
                 latitude: location.latitude,
                 longitude: location.longitude
               })));
-              this.currentViewLocation.lat = center?.latitude;
-              this.currentViewLocation.long = center?.longitude;
+              this.currentViewLocation = {
+                lat: center?.latitude,
+                long: center?.longitude,
+                id: null
+              };
+              this.centerViewLocation = {
+                lat: center?.latitude,
+                long: center?.longitude,
+              };
+
               this.defaultZoom = 10;
             } else {
-              this.currentViewLocation.lat = item[0]?.latitude;
-              this.currentViewLocation.long = item[0]?.longitude;
+              this.currentViewLocation = {
+                lat: item[0]?.latitude,
+                long: item[0]?.longitude,
+                id: item[0]?.id,
+              };
               this.defaultZoom = 15;
             }
 
@@ -82,19 +93,47 @@ export class MerchantLocationPageComponent implements OnInit {
     });
   }
 
-  navigateGoogleMaps(lat, lng) {
-    const queryParams: Params = { lat: lat, long: lng };
-    this.router.navigate([`treat-welcome/${this.rid}/location/map`], {
-      queryParams: queryParams
-    });
+  navigateGoogleMaps(item: IMerchantLocation | IVoucherLocation) {
+    let cameraOptions: google.maps.MapOptions = {
+      tilt: 0,
+      heading: 0,
+      zoom: 8,
+    };
+
+    if (item?.id === this.currentViewLocation?.id) {
+      cameraOptions = {
+        ...cameraOptions,
+        center: {
+          lat: parseFloat(this.centerViewLocation.lat),
+          lng: parseFloat(this.centerViewLocation.long),
+        },
+      }
+    } else {
+      this.currentViewLocation = {
+        lat: item.latitude,
+        long: item.longitude,
+        id: item.id
+      };
+
+      cameraOptions = {
+        ...cameraOptions,
+        center: {
+          lat: parseFloat(this.currentViewLocation.lat),
+          lng: parseFloat(this.currentViewLocation.long),
+        },
+      }
+    }
+
+    this.map.setCenter(cameraOptions.center);
+    this.map.panTo(cameraOptions.center);
   }
 
   public navToGmaps() {
-    // window.open( ` https://www.google.com/maps/search/?api=1&query=${this.currentViewLocation.lat},${this.currentViewLocation.long}`, "_blank");
+    window.open(` https://www.google.com/maps/search/?api=1&query=${this.currentViewLocation.lat},${this.currentViewLocation.long}`, "_blank");
   }
 
   public navToWaze() {
-    // window.open( `https://waze.com/ul?ll=${this.currentViewLocation.lat},${this.currentViewLocation.long}&z=10`, "_blank");
+    window.open(`https://waze.com/ul?ll=${this.currentViewLocation.lat},${this.currentViewLocation.long}&z=10`, "_blank");
   }
 
   private loadScript(): Promise<void> {

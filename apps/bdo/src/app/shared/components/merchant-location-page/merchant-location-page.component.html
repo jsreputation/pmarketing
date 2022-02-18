@@ -8,7 +8,7 @@
         <div class="deal-location">
             <div class="body">
                 <div class="content" mat-ripple *ngFor="let item of location">
-                    <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
+                    <div class="text-container" (click)="navigateGoogleMaps(item)">
                         <div class="text">
                             {{item.name}}
                         </div>
