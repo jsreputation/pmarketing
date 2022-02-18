@@ -51,6 +51,11 @@ $font-weight: bold;
                 font-size: 23px;
                 font-weight: $font-weight;
                 word-wrap: break-word;
+
+                p {
+                    margin-block-start: 12px;
+                    margin-block-end: 12px;
+                }
             }
         }
 
