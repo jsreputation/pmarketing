@@ -53,7 +53,7 @@ $card-actual-height: 200px;
   display: flex;
   flex-direction: row;
   overflow-x: auto;
-  padding: 1.5rem 0;
+  padding: 0 0 0.2rem;
 
   .mat-card {
     max-width: calc(#{$card-actual-height} - 32px);
@@ -63,8 +63,16 @@ $card-actual-height: 200px;
     min-height: calc(#{$card-actual-height} - 24px);
     display: flex;
     flex-direction: column;
-    padding-bottom: 8px;
-    margin: 0 1rem;
+    padding-bottom: 0.8rem;
+    margin: 0 0.6rem;
+
+    &:first-child {
+      margin-left: 1.6rem;
+    }
+
+    &:last-child {
+      margin-right: 1.6rem;
+    }
 
     img.mat-card-image {
       width: auto; //maintain aspect ratio
