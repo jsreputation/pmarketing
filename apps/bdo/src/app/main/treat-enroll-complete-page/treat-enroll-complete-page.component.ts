@@ -56,7 +56,6 @@ export class TreatEnrollCompletePageComponent implements OnInit{
         map((rewards: IReward[]) => {
           const ids = rewards.map(o => o.id);
           const filtered = rewards.filter(({id}, index) => !ids.includes(id, index + 1));
-          console.log("filtered: ", filtered)
           return filtered?.slice(0,5);
         }        
         )
