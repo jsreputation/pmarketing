@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, ICampaignService, ICampaign, RewardsService, IReward } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, switchMap, map } from 'rxjs/operators';
-import { of, combineLatest, Observable } from 'rxjs';
+import { of, combineLatest } from 'rxjs';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { Promo } from '../../models/promo.model';
@@ -24,7 +24,6 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   public clipboardErrorTxt: string;
   public promo: Promo;
   public campaign: ICampaign;
-  campaign$: Observable<ICampaign>;
 
   constructor(
     private notificationService: NotificationService,
@@ -44,15 +43,15 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     this.promo = history.state;
     this.initTranslate();
 
-    this.campaign$ = this.campaignService.getCampaign(this.promo?.campaignId);
-    this.campaign$.subscribe((campaign: ICampaign)=>this.campaign = campaign);
-    this.campaign$.pipe(
+    this.campaignService.getCampaign(this.promo?.campaignId).pipe(
       switchMap((campaign: ICampaign) => 
-        combineLatest(
+        {
+          this.campaign = campaign;
+          return combineLatest(
           [...campaign.rewards.map((reward) =>
             this.rewardService.getRewardsRelated(reward.id, 5).pipe(catchError(() => of([])))
           )]
-        )),
+        )}),
         map((rewards: IReward[][]) => [].concat(...(rewards as [])) as IReward[]),
         map((rewards: IReward[]) => {
           const ids = rewards.map(o => o.id);
@@ -117,25 +116,16 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     this.router.navigate([ `deal-welcome/${_selectedItem.id}` ]);
   }
 
-  private findCategoryTagsInFilters(): boolean {
-    const countLimit = 2;
-    let count = 0;
-    let hasFound = false;
-    const filters = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
-    filters.forEach(filter => {
-      if (this.campaign?.categoryTags?.find(r => r.title.indexOf(filter) !== -1)) {
-        count += 1;
-      }
-      if (count >= countLimit) {
-        hasFound = true;
-        return;
-      }
-    });
-    return hasFound;
-  }
-
-  private findCategoryTagsInFilter(filter) {
-    return this.campaign?.categoryTags?.find(tag=> tag.title.indexOf(filter) !== -1)
+  private getUniqueMainCategories(): string[] {
+    const uniqueCampaignCategories = [];
+    const bdoMainCategories = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
+    for (const tag of this.campaign?.categoryTags) {
+      const categoryTitle = tag.parent == null ? tag.title : tag.parent.title;    
+      if (bdoMainCategories.includes(categoryTitle) && !uniqueCampaignCategories.includes(categoryTitle)) {
+        uniqueCampaignCategories.push(categoryTitle)
+       }
+    }
+    return uniqueCampaignCategories;
   }
 
   private navigateToCatalog(type:string){
@@ -144,16 +134,17 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   }
 
   public viewAll(): void {
-    if(this.findCategoryTagsInFilters()) {
+    const campaignMainCategories = this.getUniqueMainCategories();
+    if (campaignMainCategories?.length > 1) {
       this.router.navigate([ '/home' ]);
-    }else{
-      if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.bdo.name)) {
+    } else {
+      if (campaignMainCategories?.includes(CATALOG_CONFIGURATION.bdo.name)) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.bdo.type);
-      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.debit.name)) {
+      } else if(campaignMainCategories?.includes(CATALOG_CONFIGURATION.debit.name)) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.debit.type);
-      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.credit.name)) {
+      } else if(campaignMainCategories?.includes(CATALOG_CONFIGURATION.credit.name)) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.credit.type);
-      }else{
+      }else {
         this.router.navigate([ '/home' ]);
       }
     }

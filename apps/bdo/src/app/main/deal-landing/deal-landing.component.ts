@@ -105,29 +105,16 @@ export class DealLandingComponent implements OnInit {
     return !!FILTER_DATA.tags.find(element => element.type === tag.name);
   }
 
-  public viewOtherPromos(): void {
-   // this.route.navigate([``]);
-  }
-
-  private findCategoryTagsInFilters(): boolean {
-    const countLimit = 2;
-    let count = 0;
-    let hasFound = false;
-    const filters = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
-    filters.forEach(filter => {
-      if (this.dealDetail?.categoryTags?.find(r => r.title.indexOf(filter) !== -1)) {
-        count += 1;
-      }
-      if (count >= countLimit) {
-        hasFound = true;
-        return;
-      }
-    });
-    return hasFound;
-  }
-
-  private findCategoryTagsInFilter(filter) {
-    return this.dealDetail?.categoryTags?.find(tag=> tag.title.indexOf(filter) !== -1)
+  private getUniqueMainCategories(): string[] {
+    const uniqueDealsCategories = [];
+    const bdoMainCategories = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
+    for (const tag of this.dealDetail?.categoryTags) {
+      const categoryTitle = tag.parent == null ? tag.title : tag.parent.title;    
+      if (bdoMainCategories.includes(categoryTitle) && !uniqueDealsCategories.includes(categoryTitle)) {
+        uniqueDealsCategories.push(categoryTitle)
+       }
+    }
+    return uniqueDealsCategories;
   }
 
   private navigateToCatalog(type:string){
@@ -136,16 +123,17 @@ export class DealLandingComponent implements OnInit {
   }
 
   public viewAll(): void {
-    if(this.findCategoryTagsInFilters()) {
+    const dealsMainCategories = this.getUniqueMainCategories();
+    if (dealsMainCategories?.length > 1) {
       this.route.navigate([ '/home' ]);
-    }else{
-      if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.bdo.name)) {
+    } else {
+      if (dealsMainCategories?.includes(CATALOG_CONFIGURATION.bdo.name)) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.bdo.type);
-      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.debit.name)) {
+      } else if((dealsMainCategories?.includes(CATALOG_CONFIGURATION.debit.name))) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.debit.type);
-      } else if(this.findCategoryTagsInFilter(CATALOG_CONFIGURATION.credit.name)) {
+      } else if((dealsMainCategories?.includes(CATALOG_CONFIGURATION.credit.name))) {
         this.navigateToCatalog(CATALOG_CONFIGURATION.credit.type);
-      }else{
+      } else {
         this.route.navigate([ '/home' ]);
       }
     }
