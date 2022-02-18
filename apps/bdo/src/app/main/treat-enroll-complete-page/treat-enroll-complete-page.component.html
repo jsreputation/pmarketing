@@ -42,7 +42,10 @@
     </div>
 
     <div class="similar-deal" *ngIf="similarDeals && similarDeals.length > 0">
-        <h3 class="header">SIMILAR DEALS</h3>
+        <div class="similar-deals-heading">
+            <h2 class="header">SIMILAR DEALS</h2>
+            <div class="action" (click)="viewAll()">View All</div>
+          </div>
         <div class="similar-deal-content">
             <bdo-carousel-items [deals]="similarDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
         </div>
