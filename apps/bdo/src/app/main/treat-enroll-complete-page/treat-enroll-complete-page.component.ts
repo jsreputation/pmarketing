@@ -6,7 +6,8 @@ import { of, combineLatest } from 'rxjs';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { Promo } from '../../models/promo.model';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
+import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
 
 @Component({
   selector: 'bdo-treat-enroll-complete-page',
@@ -22,6 +23,7 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public promo: Promo;
+  public campaign: ICampaign;
 
   constructor(
     private notificationService: NotificationService,
@@ -40,13 +42,16 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   ngOnInit(){
     this.promo = history.state;
     this.initTranslate();
+
     this.campaignService.getCampaign(this.promo?.campaignId).pipe(
       switchMap((campaign: ICampaign) => 
-        combineLatest(
+        {
+          this.campaign = campaign;
+          return combineLatest(
           [...campaign.rewards.map((reward) =>
             this.rewardService.getRewardsRelated(reward.id, 5).pipe(catchError(() => of([])))
           )]
-        )),
+        )}),
         map((rewards: IReward[][]) => [].concat(...(rewards as [])) as IReward[]),
         map((rewards: IReward[]) => {
           const ids = rewards.map(o => o.id);
@@ -108,5 +113,39 @@ export class TreatEnrollCompletePageComponent implements OnInit{
 
   navigateTo(_selectedItem: IListItemModel) {
     this.router.navigate([ `deal-welcome/${_selectedItem.id}` ]);
+  }
+
+  private getUniqueMainCategories(): string[] {
+    const uniqueCampaignCategories = [];
+    const bdoMainCategories = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
+    for (const tag of this.campaign?.categoryTags) {
+      const categoryTitle = tag.parent == null ? tag.title : tag.parent.title;    
+      if (bdoMainCategories.includes(categoryTitle) && !uniqueCampaignCategories.includes(categoryTitle)) {
+        uniqueCampaignCategories.push(categoryTitle)
+       }
+    }
+    return uniqueCampaignCategories;
+  }
+
+  private navigateToCatalog(type:string){
+    const queryParams: Params = { type: type };
+    this.router.navigate(["/catalog-page"], { queryParams });
+  }
+
+  public viewAll(): void {
+    const campaignMainCategories = this.getUniqueMainCategories();
+    if (campaignMainCategories?.length > 1) {
+      this.router.navigate([ '/home' ]);
+    } else {
+      if (campaignMainCategories?.includes(CATALOG_CONFIGURATION.bdo.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.bdo.type);
+      } else if(campaignMainCategories?.includes(CATALOG_CONFIGURATION.debit.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.debit.type);
+      } else if(campaignMainCategories?.includes(CATALOG_CONFIGURATION.credit.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.credit.type);
+      }else {
+        this.router.navigate([ '/home' ]);
+      }
+    }
   }
 }
