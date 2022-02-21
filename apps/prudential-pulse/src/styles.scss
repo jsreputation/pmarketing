@@ -133,6 +133,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .rewards-collection {
+  .mat-tab-header {
+    margin: 0 1.6rem;
+  }
+
   perx-core-rewards-list-tabbed {
     .mat-tab-group {
       .mat-ink-bar {
