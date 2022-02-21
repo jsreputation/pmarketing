@@ -137,10 +137,11 @@ describe('CampaignsComponent', () => {
         }
       ];
       const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
+      const gameServiceSpy = spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of(game));
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(component.games).toEqual(game);
+      expect(gameServiceSpy).toHaveBeenCalled();
     }));
   });
   it('should handle ngOnInit with games', fakeAsync(() => {

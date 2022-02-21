@@ -99,9 +99,9 @@ export class CampaignsComponent implements OnInit {
               )).pipe(startWith([]), map((games: IGame[][]) => [].concat(...(games as [])) as IGame[])),
             iif(() => this.flags.showQuest ? true : false,
               combineLatest(
-              questCampaigns.map((campaign) =>
-                this.questService.getQuestFromCampaign(campaign.id).pipe(catchError(() => of([])))
-              )).pipe( startWith([]), map((quests: IQuest[][]) => [].concat(...(quests as [])) as IQuest[])),
+                questCampaigns.map((campaign) =>
+                  this.questService.getQuestFromCampaign(campaign.id).pipe(catchError(() => of([])))
+                )).pipe(startWith([]), map((quests: IQuest[][]) => [].concat(...(quests as [])) as IQuest[])),
               of([])
             )
           ))
