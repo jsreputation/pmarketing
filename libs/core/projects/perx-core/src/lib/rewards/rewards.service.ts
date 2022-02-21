@@ -51,6 +51,7 @@ export abstract class RewardsService {
 
   public abstract getRewardsById(
     ids: number[],
+    pageSize?: number,
     locale?: string): Observable<IReward[]>;
 
   public abstract getAllCatalogs(locale?: string): Observable<ICatalog[]>;

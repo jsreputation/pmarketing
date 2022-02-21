@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
       }),
       switchMap(() => 
         forkJoin([
-          iif(() => whatsNewRewardIds && whatsNewRewardIds.length > 0 , this.rewardsService.getRewardsById(whatsNewRewardIds)
+          iif(() => whatsNewRewardIds && whatsNewRewardIds.length > 0 , this.rewardsService.getRewardsById(whatsNewRewardIds, whatsNewRewardIds.length)
           .pipe(catchError(() => of([]))), of([])),
           iif(() => whatsNewCampaignIds && whatsNewCampaignIds.length > 0, this.campaignService.getCampaignsById(whatsNewCampaignIds, whatsNewCampaignIds.length)
           .pipe(catchError(() => of([]))), of([]))
@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
       }),
       switchMap(() => 
         forkJoin([
-          iif(() => popularRewardIds && popularRewardIds.length > 0 , this.rewardsService.getRewardsById(popularRewardIds)
+          iif(() => popularRewardIds && popularRewardIds.length > 0 , this.rewardsService.getRewardsById(popularRewardIds, popularRewardIds.length)
           .pipe(catchError(() => of([]))), of([])),
           iif(() => popularCampaignIds && popularCampaignIds.length > 0, this.campaignService.getCampaignsById(popularCampaignIds, popularCampaignIds.length)
           .pipe(catchError(() => of([]))), of([]))
@@ -158,7 +158,7 @@ export class HomeComponent implements OnInit {
       }),
       switchMap(() => 
         forkJoin([
-          iif(() => featuredRewardIds && featuredRewardIds.length > 0 , this.rewardsService.getRewardsById(featuredRewardIds)
+          iif(() => featuredRewardIds && featuredRewardIds.length > 0 , this.rewardsService.getRewardsById(featuredRewardIds, featuredRewardIds.length)
           .pipe(catchError(() => of([]))), of([])),
           iif(() => featuredCampaignIds && featuredCampaignIds.length > 0, this.campaignService.getCampaignsById(featuredCampaignIds, featuredCampaignIds.length)
           .pipe(catchError(() => of([]))), of([]))
