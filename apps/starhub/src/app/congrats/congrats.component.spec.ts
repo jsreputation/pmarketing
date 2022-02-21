@@ -22,16 +22,15 @@ describe('CongratsComponent', () => {
 
   const gameOutcomeServiceStub: Partial<GameOutcomeService> = {
     getVouchersRewarded: () => [],
-    clearVoucherList: () => { },
-    getPrizeSetOutcome: () => {
-      return {
+    clearVoucherList: () => {
+    },
+    getPrizeSetOutcome: () => ({
         transactionId: 1,
         prizeSetId: 1,
         outcomeType: OutcomeType.prizeSet,
         state: 'issued'
-      };
-    },
-    getOutcome: () => { return {} as any;}
+    }),
+    getOutcome: () => ({} as any)
   };
 
   const analyticsServiceStub: Partial<AnalyticsService> = {
