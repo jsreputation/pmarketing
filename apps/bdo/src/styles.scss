@@ -15,8 +15,8 @@
   --button_background_color: #147dd3;
   --header_color: #147dd3;
   --background: #fafafa;
-  // --font_color: #333;
-  --font_color: #2e2e2e !important;
+  --font_color: #333;
+  --new_font_color: #2e2e2e;
   --disabled_text_color: #aaaaaa;
 }
 
@@ -33,7 +33,7 @@ body {
   margin: 0;
   font-family: var(--font, 'Nunito', sans-serif);
   background-color: var(--background);
-  color: var(--font_color);
+  color: var(--new_font_color);
 }
 
 .content-container {
