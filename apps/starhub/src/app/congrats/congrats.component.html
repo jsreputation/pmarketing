@@ -1,6 +1,6 @@
 <mat-toolbar>
-  <h1>{{getOutcome().title}}</h1>
-  <h2>{{getOutcome().subTitle}}</h2>
+  <h1>{{getOutcome() ? getOutcome().title : 'Congratulations!'}}</h1>
+  <h2>{{getOutcome() ? getOutcome().subTitle : 'Check out your rewards'}}</h2>
 </mat-toolbar>
 <div class="main">
   <ng-container *ngIf="prizeSetOutcomes && prizeSetOutcomes.length > 0">
@@ -76,5 +76,5 @@
   </div>
 </div>
 <div class="actions">
-  <a mat-flat-button color="primary" (click)="navigateToRewards()">{{getOutcome().button}}</a>
+  <a mat-flat-button color="primary" (click)="navigateToRewards()">{{getOutcome() ? getOutcome().button : 'Go to wallet'}}</a>
 </div>
