@@ -49,6 +49,7 @@ import {
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
   PuzzlesModule,
+  QuestModule as PerxQuestModule,
   RewardPopupComponent,
   RewardsModule,
   SettingsModule,
@@ -210,7 +211,8 @@ export const appInit =
       }
     }),
     PerxTeamsServiceModule.forRoot(),
-    PerxPrizeSetOutcomeModule
+    PerxPrizeSetOutcomeModule,
+    PerxQuestModule.forRoot()
   ],
   entryComponents: [
     CategorySelectComponent,
