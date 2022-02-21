@@ -22,6 +22,7 @@ export class NearbyDealsComponent implements OnInit{
   private queryParams: Params;
   public locationIcon = 'assets/images/icon-location-filled.svg';
   public catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
+  public listIcon = 'assets/images/view_all_list-default.svg';
   constructor(
     public filterService: FilterService,
     private rewardService: RewardsService,
@@ -101,16 +102,19 @@ export class NearbyDealsComponent implements OnInit{
       case 1:{
         this.locationIcon = 'assets/images/icon-n-location.svg';
         this.catalogueIcon = 'assets/images/icon-n-catalogue.svg';
+        this.listIcon = 'assets/images/view_all_list-default.svg';
       }
         break;
       case 2:{
         this.locationIcon = 'assets/images/icon-n-location.svg';
         this.catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
+        this.listIcon = 'assets/images/view_all_list-selected.svg';
       }
         break;
       default: {
         this.locationIcon = 'assets/images/icon-location-filled.svg';
         this.catalogueIcon = 'assets/images/icon-n-catalogue-unselect.svg';
+        this.listIcon = 'assets/images/view_all_list-default.svg';
       }
         break;
     }
