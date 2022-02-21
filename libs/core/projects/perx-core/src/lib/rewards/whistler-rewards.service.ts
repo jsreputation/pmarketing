@@ -232,7 +232,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public getRewardsById(ids: number[], locale?: string): Observable<IReward[]> {
+  public getRewardsById(ids: number[], pageSize?: number, locale?: string): Observable<IReward[]> {
       throw new Error('Method not implemented.');
     }
 
