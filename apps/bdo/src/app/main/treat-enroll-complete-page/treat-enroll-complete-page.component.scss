@@ -51,6 +51,11 @@ $font-weight: bold;
                 font-size: 23px;
                 font-weight: $font-weight;
                 word-wrap: break-word;
+
+                p {
+                    margin-block-start: 12px;
+                    margin-block-end: 12px;
+                }
             }
         }
 
@@ -108,7 +113,7 @@ $font-weight: bold;
         }
 
         .note {
-            text-align: left;
+            text-align: center;
         }
     }
 
@@ -118,6 +123,22 @@ $font-weight: bold;
         background-color: $white;
         padding: 20px;
 
+        .similar-deals-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        
+            .action {
+                color: $medium-blue;
+                font-size: 14px;
+                font-weight: bold;
+                min-width: 55px;
+                cursor: pointer;
+        
+                padding-right: 16px;
+            }
+        }
+        
         .similar-deal-content {
             bdo-carousel-items {
                 ::ng-deep {

@@ -65,6 +65,8 @@ export class SearchNavbarComponent extends SelfDestruct implements OnInit{
   }
 
   onBlur() {
-    this.isExpanded = false;
+    setTimeout(()=>{
+      this.isExpanded = false;
+    },200)
   }
 }

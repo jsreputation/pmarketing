@@ -1,4 +1,4 @@
-@import '../../../../theme/variables.scss';
+@import "../../../../theme/variables.scss";
 
 .search-result-tab {
   .label-tab {
@@ -15,8 +15,26 @@
     margin: 0;
     min-height: calc(100vh - 195px);
 
+    bdo-large-list-item {
+      ::ng-deep {
+        .item {
+          cursor: pointer;
+        }
+      }
+    }
+
+    bdo-list-item {
+      ::ng-deep {
+        li {
+          .title {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
     @media screen and (min-width: $desktop-width) {
-      &#catalogue{
+      &#catalogue {
         display: grid;
         grid-template-columns: 1fr 1fr;
       }

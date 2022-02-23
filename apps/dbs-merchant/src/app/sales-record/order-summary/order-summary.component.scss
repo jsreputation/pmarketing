@@ -1,0 +1,121 @@
+
+  .main-container {
+    margin: 0 -2.5rem;
+    background: #202C46;
+    height: 100%;
+  }
+
+  h1 {
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 3rem;
+  }
+  h2 {
+    font-weight: 900;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+  }
+  h3 {
+    font-weight: 900;
+    font-size: 1.6rem;
+    line-height: 1.9rem;
+    margin-bottom: 0!important;
+  }
+
+  .header-details {
+    padding: 0 2.5rem 2.5rem;
+    background: white;
+    h3 {
+      color: #6A6A73;
+    }
+
+    .sales-id {
+      font-weight: normal;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      color: #6A6A73;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    .invoice-barcode {
+      margin-top: 3rem;
+    }
+  }
+
+  .summary-details {
+    text-align: center;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background: #202C46;
+    color: #FFFFFF;
+    p {
+        font-weight: 900;
+        font-size: 1.6rem;
+        line-height: 1.9rem;     
+        margin: 1rem 0 0 0;
+    }
+    small {
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        margin-top: 1rem;
+    }
+    hr {
+      border: 1px solid #4E6A94;
+      width: 100%;
+      margin: 2rem 0 1rem 0;
+    }
+    button {
+      margin-top: 3.5rem;
+    }
+}
+
+.customer-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  small {
+    font-size: 1.4em;
+  }
+
+  .user-details {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: start;
+    padding: 2rem 0 .5rem 0;
+    p {
+        margin: 0;
+        text-align: start;
+    }
+    small {
+      text-align: end;
+      margin-top: 1rem;
+    }
+  }
+}
+
+.voucher-bg {
+  width: 100%;
+  height: 4.6rem;
+  position: relative;
+  margin: 2rem 0;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .voucher-title {
+    position: absolute;
+    top: 1.6rem;
+    text-align: center;
+    width: 100%;
+    font-weight: 900;
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+    color: #212121;
+  }
+}

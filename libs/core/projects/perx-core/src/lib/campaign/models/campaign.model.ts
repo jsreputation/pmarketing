@@ -163,6 +163,7 @@ export interface ICampaign {
   tags?: ITag[];
   score?: number;
   miscImages?: { [key: string]: string };
+  enrollableUntil?: Date | null;
 }
 
 export enum CommChannel {

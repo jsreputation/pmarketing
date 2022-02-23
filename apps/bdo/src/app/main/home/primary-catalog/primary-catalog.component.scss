@@ -15,11 +15,17 @@
   padding-right: 20px;
   overflow-y: hidden;
 
+  &::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+
   .item {
     display: flex;
     flex-direction: row;
     scroll-snap-align: center;
     border-radius: 16px;
+    cursor: pointer;
 
     min-height: 200px;
     min-width: 200px;
@@ -30,7 +36,7 @@
     background-repeat: no-repeat;
     background-size: contain;
 
-      &#credit-card-catalog {
+    &#credit-card-catalog {
       background-image: url("/assets/images/img-creditcard-mobile.svg");
       @media screen and (min-width: $desktop-width) {
         background-image: url("/assets/images/img-creditcard.svg");
@@ -42,7 +48,6 @@
 
       @media screen and (min-width: $desktop-width) {
         background-image: url("/assets/images/img-debitcard.svg");
-
       }
     }
 
@@ -51,7 +56,6 @@
 
       @media screen and (min-width: $desktop-width) {
         background-image: url("/assets/images/img-bdorewards.svg");
-
       }
     }
 
@@ -103,6 +107,3 @@
     }
   }
 }
-
-
-

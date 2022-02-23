@@ -48,7 +48,8 @@ export abstract class IMerchantAdminService {
     amount: number,
     receiptIdentifier: string,
     voucherId: number,
-    pointsId: number
+    pointsId: number,
+    merchantName?: string
   ): Observable<IMerchantInvoice>;
 
   public abstract setupNewMerchantsPassword(

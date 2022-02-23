@@ -428,7 +428,8 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     amount: number,
     receiptIdentifier: string,
     voucherId: number,
-    pointsId: number
+    pointsId: number,
+    merchantName?: string
   ): Observable<IMerchantInvoice> {
 
     const headers = new HttpHeaders().set('user-id', userId);
@@ -452,7 +453,10 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     const body = {
       collected_amount: amount,
       identifier: receiptIdentifier,
-      used_items: usedItems
+      used_items: usedItems,
+      transaction_properties: {
+        ...(merchantName && { merchant_name: merchantName })
+      }
     };
 
     return this.http.post<IV4MerchantInvoiceResponse>(url, body, {headers}).pipe(

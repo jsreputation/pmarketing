@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IReward, ITag, NotificationService, RewardsService, IVoucherService } from '@perxtech/core';
 import { combineLatest, of } from 'rxjs';
 import { IListItemModel } from '../../shared/models/list-item.model';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { catchError } from 'rxjs/operators';
+import { CATALOG_CONFIGURATION } from '../../shared/constants/catalog-configuration.const';
 @Component({
   selector: 'bdo-deal-landing',
   templateUrl: './deal-landing.component.html',
@@ -102,5 +103,39 @@ export class DealLandingComponent implements OnInit {
 
   public existsInFilters(tag: ITag): boolean {
     return !!FILTER_DATA.tags.find(element => element.type === tag.name);
+  }
+
+  private getUniqueMainCategories(): string[] {
+    const uniqueDealsCategories = [];
+    const bdoMainCategories = [CATALOG_CONFIGURATION.bdo.name, CATALOG_CONFIGURATION.debit.name, CATALOG_CONFIGURATION.credit.name]
+    for (const tag of this.dealDetail?.categoryTags) {
+      const categoryTitle = tag.parent == null ? tag.title : tag.parent.title;    
+      if (bdoMainCategories.includes(categoryTitle) && !uniqueDealsCategories.includes(categoryTitle)) {
+        uniqueDealsCategories.push(categoryTitle)
+       }
+    }
+    return uniqueDealsCategories;
+  }
+
+  private navigateToCatalog(type:string){
+    const queryParams: Params = { type: type };
+    this.route.navigate(["/catalog-page"], { queryParams });
+  }
+
+  public viewAll(): void {
+    const dealsMainCategories = this.getUniqueMainCategories();
+    if (dealsMainCategories?.length > 1) {
+      this.route.navigate([ '/home' ]);
+    } else {
+      if (dealsMainCategories?.includes(CATALOG_CONFIGURATION.bdo.name)) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.bdo.type);
+      } else if((dealsMainCategories?.includes(CATALOG_CONFIGURATION.debit.name))) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.debit.type);
+      } else if((dealsMainCategories?.includes(CATALOG_CONFIGURATION.credit.name))) {
+        this.navigateToCatalog(CATALOG_CONFIGURATION.credit.type);
+      } else {
+        this.route.navigate([ '/home' ]);
+      }
+    }
   }
 }
