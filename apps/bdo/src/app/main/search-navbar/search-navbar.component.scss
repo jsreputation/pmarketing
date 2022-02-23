@@ -27,6 +27,11 @@
     @media screen and (min-width: $desktop-width) {
       padding: 0;
     }
+
+    @media screen and (max-width: $desktop-width) {
+      padding: 0 0 10px;
+      background: $light-grey !important;
+    }
   }
 
   .search-wrapper {
@@ -36,6 +41,11 @@
 
     @media screen and (min-width: $desktop-width) {
       padding-left: 16px;
+    }
+
+    @media screen and (max-width: $desktop-width) {
+      padding: 0 16px;
+      background: $white !important;
     }
 
     .input-search {
@@ -56,6 +66,10 @@
       top: 8px;
 
       @media screen and (min-width: $desktop-width) {
+        right: 16px;
+      }
+
+      @media screen and (max-width: $desktop-width) {
         right: 16px;
       }
     }
