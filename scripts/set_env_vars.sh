@@ -140,6 +140,7 @@ blackcomb_app_base=(
   feature-demo
   globeathome
   globeone
+  hangseng
   hsbcph-blackcomb
   hsbcvn
   hoolah
