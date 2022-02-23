@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
       header: 'Apply for a BDO Credit Card',
       description: 'Already a card holder? Refer your friends now and get rewarded!',
       buttonName: 'Apply Now',
-      image: 'assets/images/img-creditcard.png',
+      image: 'assets/images/img-creditcard@2x.png',
       link: 'https://www.bdo.com.ph/personal/credit-cards/right-card-for-you'
     },
     {
@@ -32,7 +32,7 @@ export class FooterComponent implements OnInit {
       header: 'Open a BDO account',
       description: 'Open an account and enjoy awesome deals and treats.',
       buttonName: 'Apply Now',
-      image: 'assets/images/img-debitcard.png',
+      image: 'assets/images/img-debitcard@2x.png',
       link: 'https://www.bdo.com.ph/personal/accounts'
     }
   ]
