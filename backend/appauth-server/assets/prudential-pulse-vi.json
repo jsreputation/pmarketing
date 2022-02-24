@@ -41,7 +41,7 @@
     "REWARD_STATUS_EXPIRED": "Đã hết hạn",
     "CTA_TXT": "Dùng ngay",
     "POINT_EARNED": "Điểm tích lũy: {points}",
-    "POINT_SPENT": "Điểm đã sử dụng: {points}",
+    "POINT_SPENT": "Điểm đã sử dụng: {points}"
   },
   "REDEMPTION": {
     "HOW_TO_REDEEM_TITLE": "Hướng dẫn đổi thưởng",
