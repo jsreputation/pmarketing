@@ -1,7 +1,7 @@
 <mat-tab-group animationDuration='0ms' mat-stretch-tabs class='search-result-tab'>
-  <mat-tab>
+  <mat-tab #catalogueTab>
     <ng-template mat-tab-label>
-      <img src='assets/images/icon-n-catalogue.svg' />
+      <img [src]="catalogueTab.isActive ? catalogImage.selected : catalogImage.default"/>
       <span class='label-tab'>Catalogue</span>
     </ng-template>
 
@@ -15,9 +15,9 @@
     </ul>
 
   </mat-tab>
-  <mat-tab>
+  <mat-tab #listTab>
     <ng-template mat-tab-label>
-      <img src='assets/images/icon-n-viewall.svg' />
+      <img [src]="listTab.isActive ? listImage.selected : listImage.default"/>
       <span class='label-tab'>List</span>
     </ng-template>
     <div class='ghost-card' *ngIf='!isLoaded'>

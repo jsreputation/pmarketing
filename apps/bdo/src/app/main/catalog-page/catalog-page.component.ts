@@ -109,7 +109,7 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
           }),
           switchMap(() => 
             forkJoin([
-              iif(() => rewardIds && rewardIds.length > 0 , this.rewardsService.getRewardsById(rewardIds)
+              iif(() => rewardIds && rewardIds.length > 0 , this.rewardsService.getRewardsById(rewardIds, rewardIds.length)
               .pipe(catchError(() => of([]))), of([])),
               iif(() => campaignIds && campaignIds.length > 0, this.campaignsService.getCampaignsById(campaignIds, campaignIds.length)
               .pipe(

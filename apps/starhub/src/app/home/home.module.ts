@@ -19,8 +19,9 @@ import {
   LoyaltyModule,
   OutcomeModule,
   PopupComponent,
-  UtilsModule,
-  StampModule
+  QuestModule as PerxQuestModule,
+  StampModule,
+  UtilsModule
 } from '@perxtech/core';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -77,7 +78,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     StampModule,
     OutcomeModule,
     GhostsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    PerxQuestModule.forChild()
   ],
   bootstrap: [],
   providers: [
