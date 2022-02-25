@@ -135,6 +135,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .rewards-collection {
+  .title {
+    font-weight: 500 !important
+  }
+
   .mat-tab-header {
     margin: 0 1.6rem;
   }
@@ -179,6 +183,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
 
 .campaign-list {
   .campaigns {
+    .title {
+      font-weight: 500 !important
+    }
+
     mat-card {
       .img-wrapper {
         height: 144px !important;
@@ -188,6 +196,10 @@ mat-progress-bar .mat-progress-bar-fill::after {
 }
 
 .catalogs {
+  .title {
+    font-weight: 500 !important
+  }
+
   mat-card {
     .mat-card-image {
       height: 128px !important;
@@ -434,7 +446,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
-  
+
   perx-blackcomb-pages-progress-campaign,
   badge-landing,
   perx-blackcomb-pages-leaderboard-page {
