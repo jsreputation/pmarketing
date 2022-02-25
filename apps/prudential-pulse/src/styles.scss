@@ -16,8 +16,8 @@
   --disabled_text_color: #aaaaaa;
   --main-red: #ed1b2e;
   --ribbon-redeemed: #fff;
-  --ribbon-issued: #ED1B2E;
-  --ribbon-redeemed-expired: #B4C0CC;
+  --ribbon-issued: #ed1b2e;
+  --ribbon-redeemed-expired: #b4c0cc;
 }
 
 html {
@@ -137,6 +137,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
     margin: 0 1.6rem;
   }
 
+  .card-collection-container,
+  .drag-scroll-content {
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+    }
+  }
+
   perx-core-rewards-list-tabbed {
     .mat-tab-group {
       .mat-ink-bar {
@@ -181,6 +189,15 @@ mat-progress-bar .mat-progress-bar-fill::after {
   mat-card {
     .mat-card-image {
       height: 128px !important;
+    }
+  }
+
+  .main-container {
+    .cards {
+      &::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
+      }
     }
   }
 }
