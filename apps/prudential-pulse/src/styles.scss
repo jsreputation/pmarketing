@@ -18,8 +18,8 @@
   --ribbon-redeemed: #fff;
   --ribbon-issued: #ED1B2E;
   --ribbon-redeemed-expired: #B4C0CC;
-  --gray2: #5C6E80;
-  --gray1: #283542;
+  --light_grey: #5C6E80;
+  --dark_grey: #283542;
 }
 
 html {
@@ -474,7 +474,7 @@ mat-dialog-container {
         font-weight: 500 !important;
         font-size: 2rem !important;
         line-height: 1.8rem !important;
-        color: var(--gray1) !important;
+        color: var(--dark_grey) !important;
 
         margin: 0 0 8px !important;
       }
@@ -484,7 +484,7 @@ mat-dialog-container {
       font-weight: normal !important;
       font-size: 1.6rem !important;
       line-height: 2.1rem !important;
-      color: var(--gray1) !important;
+      color: var(--dark_grey) !important;
     }
 
     .button-group {
