@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import "../../../theme/variables.scss";
 
 .treat-welcome-page {
   background: $white;
@@ -19,7 +19,7 @@
 
     .title {
       font-size: 24px;
-      font-weight: 500;
+      font-weight: bold;
     }
 
     .tag-group {
@@ -69,19 +69,19 @@
         ol {
           list-style: none;
           counter-reset: item;
-        }        
-        
+        }
+
         li {
           counter-increment: item;
           margin-bottom: 5px;
           position: relative;
           padding: 10px 0;
           li {
-            &::before{
-              content: counter(item, lower-alpha)!important;
-            }         
-            li::before{
-              content: counter(item, lower-roman)!important;
+            &::before {
+              content: counter(item, lower-alpha) !important;
+            }
+            li::before {
+              content: counter(item, lower-roman) !important;
             }
           }
         }
@@ -144,7 +144,7 @@
       background: url("/assets/images/icon-n-down.svg") no-repeat center center;
       height: 20px;
       width: 20px;
-      vertical-align: middle!important;
+      vertical-align: middle !important;
     }
   }
 
