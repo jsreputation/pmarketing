@@ -159,6 +159,12 @@ mat-progress-bar .mat-progress-bar-fill::after {
           opacity: 1;
         }
       }
+
+      .reward-preview-details {
+        .description {
+          color: #666666 !important;
+        }
+      }
     }
   }
 
@@ -434,7 +440,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
       }
     }
   }
-  
+
   perx-blackcomb-pages-progress-campaign,
   badge-landing,
   perx-blackcomb-pages-leaderboard-page {
