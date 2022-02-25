@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IMerchantLocation, IVoucherLocation, IVoucherService, LocationsService } from '@perxtech/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { iif } from 'rxjs';
@@ -25,6 +25,7 @@ export class MerchantLocationPageComponent implements OnInit {
     private voucherService: IVoucherService,
     private locationsService: LocationsService,
     private activeRoute: ActivatedRoute,
+    private router: Router,
   ) { }
   ngOnInit() {
     const markerLocations: IVoucherLocation[] = [];
@@ -99,6 +100,7 @@ export class MerchantLocationPageComponent implements OnInit {
       heading: 0,
       zoom: 8,
     };
+    const queryParams: Params = { lat: item.latitude, long: item.longitude };
 
     if (item?.id === this.currentViewLocation?.id) {
       cameraOptions = {
@@ -126,6 +128,11 @@ export class MerchantLocationPageComponent implements OnInit {
 
     this.map.setCenter(cameraOptions.center);
     this.map.panTo(cameraOptions.center);
+
+
+    // this.router.navigate([`treat-welcome/${this.rid}/location/map`], {
+    //   queryParams: queryParams
+    // });
   }
 
   public navToGmaps() {

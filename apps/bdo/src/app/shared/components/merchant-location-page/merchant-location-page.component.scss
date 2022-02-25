@@ -76,6 +76,10 @@ $font-weight: bold;
         width: 50%;
     }
 
+    @media screen and (max-width: $desktop-width) {
+        display: none;
+    }
+
     .gmap-wrapper {
         display: flex;
         flex-direction: column;
