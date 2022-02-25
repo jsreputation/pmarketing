@@ -14,7 +14,15 @@ mat-card {
   flex: 0 0 0;
   flex-grow: 1;
   flex-basis: 75%;
-  margin: 0 0.5rem 1rem 0.5rem;
+  margin: 0 0.6rem;
+
+  &:first-child {
+    margin-left: 1.6rem;
+  }
+
+  &:last-child {
+    margin-right: 1.6rem;
+  }
 
   .mat-card-image {
     height: 15rem;
@@ -63,8 +71,6 @@ mat-card-content {
 }
 
 .main-container {
-  margin-left: 0.5rem;
-
   h1 {
     font-size: 2.5rem;
     margin: 1rem;
@@ -75,5 +81,6 @@ mat-card-content {
     flex-direction: row;
     width: 100%;
     overflow-x: scroll;
+    padding: 0 0 0.2rem;
   }
 }

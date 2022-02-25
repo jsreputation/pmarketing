@@ -20,7 +20,10 @@
     </div>
   </mat-card>
   <mat-card class="card similar-deal">
-    <h2 class="header">SIMILAR DEALS</h2>
+    <div class="similar-deals-heading">
+      <h2 class="header">SIMILAR DEALS</h2>
+      <div class="action" (click)="viewAll()">View All</div>
+    </div>
     <bdo-carousel-items [deals]="similarDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
 </div>

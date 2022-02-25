@@ -224,7 +224,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         );
       this.resetTimer();
       this.questionPointer++;
-      this.progress$.next(((this.questionPointer + 1) / this.totalLength) * 100 || 0);
+      this.progress$.next(((this.questionPointer) / this.totalLength) * 100 || 0);
       this.questionChanged();
     }
   }

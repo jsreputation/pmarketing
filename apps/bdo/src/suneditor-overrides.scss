@@ -2551,6 +2551,12 @@
 
 .sun-editor-editable table.se-table-size-auto {
   width: auto !important;
+
+  @media only screen and (max-width: 480px) {
+    /* horizontal scrollbar for tables if mobile screen */
+    overflow-x: auto;
+    display: block;
+  }
 }
 
 .sun-editor-editable table.se-table-size-100 {

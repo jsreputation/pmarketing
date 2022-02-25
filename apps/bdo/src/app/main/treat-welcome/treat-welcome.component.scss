@@ -62,7 +62,7 @@
 
     .description {
       background-color: $light-blue;
-      padding: 15px;
+      padding: 16px 15px;
       border-radius: 8px;
 
       ::ng-deep {
@@ -114,7 +114,7 @@
       box-shadow: none;
       background-color: unset;
       color: inherit;
-      border-bottom: 2px solid $grey-white;
+      border-bottom: 1px solid $grey-white;
       border-radius: 0;
 
       &--no-border {

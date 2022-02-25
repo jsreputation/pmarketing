@@ -46,6 +46,11 @@ const routes: Routes = [
     loadChildren: () => import('./leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
     canActivate: [ProtectedGuard]
   },
+  {
+    path: "quest/:id",
+    loadChildren: () => import('./quest/quest.module').then((mod) => mod.QuestModule),
+    canActivate: [ProtectedGuard]
+  },
   { path: 'error', component: ErrorComponent }
 ];
 
