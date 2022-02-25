@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { IMerchantLocation, IVoucherLocation, IVoucherService, LocationsService } from '@perxtech/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { iif } from 'rxjs';
+import { isPlatformMobile } from '../../utilities/device';
 @Component({
   selector: 'bdo-merchant-location-page',
   templateUrl: './merchant-location-page.component.html',
@@ -95,12 +96,20 @@ export class MerchantLocationPageComponent implements OnInit {
   }
 
   navigateGoogleMaps(item: IMerchantLocation | IVoucherLocation) {
+
+    if (isPlatformMobile()) {
+      const queryParams: Params = { lat: item.latitude, long: item.longitude };
+      return this.router.navigate([`treat-welcome/${this.rid}/location/map`], {
+        queryParams: queryParams
+      });
+    }
+
+
     let cameraOptions: google.maps.MapOptions = {
       tilt: 0,
       heading: 0,
       zoom: 8,
     };
-    const queryParams: Params = { lat: item.latitude, long: item.longitude };
 
     if (item?.id === this.currentViewLocation?.id) {
       cameraOptions = {
@@ -128,11 +137,6 @@ export class MerchantLocationPageComponent implements OnInit {
 
     this.map.setCenter(cameraOptions.center);
     this.map.panTo(cameraOptions.center);
-
-
-    // this.router.navigate([`treat-welcome/${this.rid}/location/map`], {
-    //   queryParams: queryParams
-    // });
   }
 
   public navToGmaps() {
