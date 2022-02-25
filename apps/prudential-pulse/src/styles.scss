@@ -510,3 +510,9 @@ mat-dialog-container {
 .mat-card {
   border-radius: 12px !important;
 }
+
+.loading-spin {
+  .mat-progress-spinner circle{
+    stroke: var(--main-red);
+  }
+}
