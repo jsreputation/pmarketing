@@ -139,6 +139,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
     margin: 0 1.6rem;
   }
 
+  .card-collection-container,
+  .drag-scroll-content {
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+    }
+  }
+
   perx-core-rewards-list-tabbed {
     .mat-tab-group {
       .mat-ink-bar {
@@ -183,6 +191,15 @@ mat-progress-bar .mat-progress-bar-fill::after {
   mat-card {
     .mat-card-image {
       height: 128px !important;
+    }
+  }
+
+  .main-container {
+    .cards {
+      &::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
+      }
     }
   }
 }
@@ -511,4 +528,10 @@ mat-dialog-container {
 
 .mat-card {
   border-radius: 12px !important;
+}
+
+.loading-spin {
+  .mat-progress-spinner circle{
+    stroke: var(--main-red);
+  }
 }
