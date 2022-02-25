@@ -33,10 +33,10 @@ const routes: Routes = [
         path: 'treat-welcome/:rid/location/map',
         loadChildren: () => import('./location-landing/location-landing.module').then((mod) => mod.LocationLandingModule)
       },
-      { path: 'treat-enroll/:id',component:TreatEnrollPageComponent },
+      { path: 'treat-enroll/:id', component: TreatEnrollPageComponent },
       { path: 'nearby', component: NearbyDealsComponent },
       { path: 'catalog-page', component: CatalogPageComponent },
-      { path: 'treat-enroll/:id/complete',component:TreatEnrollCompletePageComponent }
+      { path: 'treat-enroll/:id/complete', component: TreatEnrollCompletePageComponent }
     ],
   },
 ];
@@ -45,4 +45,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MainRoutingModule {}
+export class MainRoutingModule { }
