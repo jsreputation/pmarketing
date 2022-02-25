@@ -1,6 +1,6 @@
 <div *ngIf="(itemsSnapping$ | async) as itemsSnapping" class="main-container">
-  <h1 class="hide-for-new-ux" *ngIf="ghostItems.length || itemsSnapping.length">Snapping Saturday</h1>
-  <h2 class="hide-for-old-ux" *ngIf="ghostItems.length || itemsSnapping.length">Snapping Saturday</h2>
+  <h1 class="hide-for-new-ux" *ngIf="ghostItems.length || itemsSnapping.length">Snap Treats</h1>
+  <h2 class="hide-for-old-ux" *ngIf="ghostItems.length || itemsSnapping.length">Snap Treats</h2>
   <div [@fadeIn]="itemsSnapping.length" *ngIf="itemsSnapping.length > 0" infiniteScroll [infiniteScrollDistance]="3"
     [infiniteScrollThrottle]="500" [horizontal]="true" (scrolled)="onTaggedItemsScroll()" [alwaysCallback]="true"
     [scrollWindow]="false" class="cards">
