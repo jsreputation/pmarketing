@@ -18,6 +18,8 @@
   --ribbon-redeemed: #fff;
   --ribbon-issued: #ED1B2E;
   --ribbon-redeemed-expired: #B4C0CC;
+  --light_grey: #5C6E80;
+  --dark_grey: #283542;
 }
 
 html {
@@ -137,6 +139,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
     margin: 0 1.6rem;
   }
 
+  .card-collection-container,
+  .drag-scroll-content {
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+    }
+  }
+
   perx-core-rewards-list-tabbed {
     .mat-tab-group {
       .mat-ink-bar {
@@ -181,6 +191,15 @@ mat-progress-bar .mat-progress-bar-fill::after {
   mat-card {
     .mat-card-image {
       height: 128px !important;
+    }
+  }
+
+  .main-container {
+    .cards {
+      &::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
+      }
     }
   }
 }
@@ -472,7 +491,7 @@ mat-dialog-container {
         font-weight: 500 !important;
         font-size: 2rem !important;
         line-height: 1.8rem !important;
-        color: #283542 !important;
+        color: var(--dark_grey) !important;
 
         margin: 0 0 8px !important;
       }
@@ -482,7 +501,7 @@ mat-dialog-container {
       font-weight: normal !important;
       font-size: 1.6rem !important;
       line-height: 2.1rem !important;
-      color: #283542 !important;
+      color: var(--dark_grey) !important;
     }
 
     .button-group {
@@ -509,4 +528,10 @@ mat-dialog-container {
 
 .mat-card {
   border-radius: 12px !important;
+}
+
+.loading-spin {
+  .mat-progress-spinner circle{
+    stroke: var(--main-red);
+  }
 }
