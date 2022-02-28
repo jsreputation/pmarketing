@@ -85,6 +85,11 @@ $card-actual-height: 200px;
     .mat-card-content {
       display: flex;
       flex-direction: column;
+
+      .subtitle-1 {
+        font-size: 1.4rem;
+        font-weight: 500;
+      }
     }
   }
 

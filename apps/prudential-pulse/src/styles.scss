@@ -1,11 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 // @import ~@angular/material/theming;
-@import "./custom-theme.scss";
+@import './custom-theme.scss';
 
 :root {
   --font: Roboto;
-  --logo: "";
-  --title: "";
+  --logo: '';
+  --title: '';
   --accent: #96289a;
   --primary: #147dd3;
   --button_text_color: #fff;
@@ -16,9 +16,9 @@
   --disabled_text_color: #aaaaaa;
   --main-red: #ed1b2e;
   --ribbon-redeemed: #fff;
-  --ribbon-issued: #ED1B2E;
-  --ribbon-redeemed-expired: #B4C0CC;
-  --light_grey: #5C6E80;
+  --ribbon-issued: #ed1b2e;
+  --ribbon-redeemed-expired: #b4c0cc;
+  --light_grey: #5c6e80;
   --dark_grey: #283542;
 }
 
@@ -161,6 +161,20 @@ mat-progress-bar .mat-progress-bar-fill::after {
         .mat-tab-label-active {
           color: var(--main-red) !important;
           opacity: 1;
+        }
+      }
+
+      .reward-preview-details {
+        .description {
+          color: #666666 !important;
+        }
+      }
+    }
+
+    perx-core-rewards-list {
+      .mat-card {
+        .reward-preview-details {
+            padding-right: 0.8rem !important;
         }
       }
     }
@@ -475,16 +489,24 @@ perx-blackcomb-games-collection {
     }
   }
   .see-less:after {
-    content: "\e5ce";
+    content: '\e5ce';
   }
   .see-more:after {
-    content: "\e5cf";
+    content: '\e5cf';
   }
   .see-less:after,
   .see-more:after {
-    font-family: "Material Icons";
+    font-family: 'Material Icons';
     font-size: 16px;
     vertical-align: bottom;
+  }
+}
+
+perx-blackcomb-pages-account {
+  .mat-nav-list {
+    .mat-list-item{
+      font-size: 14px !important;
+    }
   }
 }
 
@@ -543,7 +565,11 @@ mat-dialog-container {
 }
 
 .loading-spin {
-  .mat-progress-spinner circle{
+  .mat-progress-spinner circle {
     stroke: var(--main-red);
   }
+}
+
+drag-scroll .drag-scroll-content {
+  white-space: unset !important;
 }
