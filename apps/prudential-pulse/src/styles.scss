@@ -166,6 +166,14 @@ mat-progress-bar .mat-progress-bar-fill::after {
         }
       }
     }
+
+    perx-core-rewards-list {
+      .mat-card {
+        .reward-preview-details {
+            padding-right: 0.8rem !important;
+        }
+      }
+    }
   }
 
   perx-core-rewards-collection {
