@@ -557,3 +557,7 @@ mat-dialog-container {
     stroke: var(--main-red);
   }
 }
+
+drag-scroll .drag-scroll-content {
+  white-space: unset !important;
+}
