@@ -1,4 +1,4 @@
-@import '../../../theme/theme.scss';
+@import "../../../theme/theme.scss";
 
 $margin-bottom: 15px;
 
@@ -25,6 +25,10 @@ $margin-bottom: 15px;
   background-color: #fff;
   min-height: calc(100vh - 235px);
 
+  h2 {
+    font-weight: bold;
+  }
+
   h4 {
     margin: 0;
     margin-bottom: $margin-bottom;
@@ -32,7 +36,7 @@ $margin-bottom: 15px;
   }
 
   .navigate-promotion {
-    color: #0072D8;
+    color: #0072d8;
     display: flex;
     align-items: center;
     margin-bottom: $margin-bottom;
