@@ -83,7 +83,7 @@ export class LoyaltySummaryComponent implements OnInit {
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe,
-    protected translate: TranslateService,
+    private translate: TranslateService,
   ) { }
 
   public ngOnInit(): void {
