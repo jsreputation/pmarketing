@@ -56,15 +56,16 @@ export class CampaignsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(() => {
+
+    this.configService.readAppConfig()
+    .pipe(
+      switchMap(() =>  this.settingsService.getRemoteFlagsSettings())
+    ).subscribe((flags: IFlags) => {
+      this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      this.flags = flags;
       this.loadCampaigns();
     });
-    this.settingsService.getRemoteFlagsSettings().subscribe(
-      (flags: IFlags) => {
-        this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
-        this.flags = flags;
-      }
-    );
+
   }
 
   public loadCampaigns(): void {
