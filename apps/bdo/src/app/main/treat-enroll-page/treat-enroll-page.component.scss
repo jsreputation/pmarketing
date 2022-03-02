@@ -73,30 +73,29 @@ $margin-bottom: 15px;
     }
 
     .input-promo {
-      border: 1px solid $grey-white;
+      border: 1px solid $extreme-light-blue;
       border-radius: 8px;
       padding: 10px;
       max-width: 355px;
       margin: 5px 0;
+      color: $light-gray;
 
       &:disabled {
-        border: 1px solid #C2C2C1;
-        background-color: #F6F6F6;
-        color: #919191;
+        border: 1px solid $grey-white;
+        background-color: $light-grey;
+        color: $light-gray;
       }
 
       &:hover,
       &:focus {
-        border: 1px solid #99C1E7;
-        // background-color: #FFFFFF;
-        color: #919191;
+        border: 1px solid $extreme-light-blue;
+        color: $light-gray;
       }
 
       &:not(:placeholder-shown) {
         // filled
-        border: 1px solid #99C1E7;
-        // background-color: #FFFFFF;
-        color: #2E2E2E;
+        border: 1px solid $extreme-light-blue;
+        color: $near-black;
       }
 
       &:active {
@@ -105,13 +104,12 @@ $margin-bottom: 15px;
 
       &:focus-visible {
         outline: 1px solid $extreme-light-blue;
-        filter: drop-shadow(0px 0px 8px #0072D852);
+        filter: drop-shadow(0px 0px 8px #0072d852);
       }
 
       &.error {
-        // border: 1px solid $warn-color; // inherit colour from mat-error itself
         border: 1px solid #ff3700; // inherit colour from mat-error itself
-        color: #2E2E2E;
+        color: $near-black;
       }
     }
   }
