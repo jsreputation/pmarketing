@@ -1,4 +1,3 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltySummaryComponent } from './loyalty-summary.component';
@@ -34,6 +33,9 @@ describe('LoyaltySummaryComponent', () => {
       lastName: ''
     })
   };
+  const translateServiceStub: Partial<TranslateService> = {
+    get: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -46,7 +48,7 @@ describe('LoyaltySummaryComponent', () => {
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
-        TranslateService
+        { provide: TranslateService, useValue: translateServiceStub },
       ]
     })
       .compileComponents();
