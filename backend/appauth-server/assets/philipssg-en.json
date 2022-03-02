@@ -237,7 +237,8 @@
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
-    "READ_MORE": "Read More"
+    "READ_MORE": "Read More",
+    "YOU_HAVE": "Your total points as of"
   },
   "QR": {
     "QR_TO_MERCHANT": "Present this QR code to the merchant",

@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
@@ -13,6 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfigService } from '../config/config.service';
 import { CashbackTransactionPipe } from './loyalty-transactions-list/cashback-transaction.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -33,6 +34,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
     CommonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    TranslateModule,
   ],
   exports: [
     LoyaltySummaryComponent,

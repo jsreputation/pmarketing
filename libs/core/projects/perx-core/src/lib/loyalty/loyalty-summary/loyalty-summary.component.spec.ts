@@ -1,4 +1,3 @@
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltySummaryComponent } from './loyalty-summary.component';
@@ -11,6 +10,7 @@ import { ProfileService } from '../../profile/profile.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ILoyalty } from '../models/loyalty.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -33,17 +33,22 @@ describe('LoyaltySummaryComponent', () => {
       lastName: ''
     })
   };
+  const translateServiceStub: Partial<TranslateService> = {
+    get: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         ProfileModule,
         LoyaltyModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: TranslateService, useValue: translateServiceStub },
       ]
     })
       .compileComponents();

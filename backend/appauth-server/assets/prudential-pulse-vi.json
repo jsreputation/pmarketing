@@ -7,7 +7,8 @@
     "HISTORY": "Lịch sử",
     "LEADER_BOARD": "Bảng xếp hạng",
     "OTHERS": "Khác",
-    "STAMPS": "Tem"
+    "STAMPS": "Tem",
+    "ACCOUNT": "Khác"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Tham gia quiz",
@@ -89,9 +90,11 @@
     "NO_RANK": "NA"
   },
   "ACCOUNT_PAGE": {
+    "TRANSACTION_HISTORY": "Lịch sử tích điểm",
     "POINTS_LOG": "Lịch sử tích điểm",
     "TNC": "Điều kiện và điều khoản sử dụng ",
-    "BADGES": "Huy hiệu của tôi"
+    "BADGES": "Huy hiệu của tôi",
+    "FAQS": "Câu hỏi thường gặp"
   },
   "REFERRAL": {
     "TITLE": "Giới thiệu bạn bè",
@@ -116,7 +119,7 @@
     "SEE_LESS": "Thu gọn",
     "REWARDS_LEFT": " Ưu đãi còn lại",
     "READ_MORE": "Xem thêm",
-    "YOU_HAVE": "Số điểm đang có",
+    "YOU_HAVE": "điểm của bạn kể từ",
     "POINTS_EXPIRING": "{{points}} điểm sẽ hết hạn vào {{date}}",
     "POINT_EXPIRE": "{{points}} điểm sẽ hết hạn vào {{date}}",
     "ACCOUNT_EXPIRE": "Thời hạn tài khoản",
@@ -128,7 +131,8 @@
     "QUEST_CAMPAIGNS": "Nhiệm vụ",
     "SURVEYS": "Khảo sát",
     "PROGRESS_BAR_CAMPAIGNS": "Chuỗi nhiệm vụ",
-    "INSTANT_REWARD_CAMPAIGNS": "Ưu đãi dùng ngay"
+    "INSTANT_REWARD_CAMPAIGNS": "Ưu đãi dùng ngay",
+    "SUB_TITLE": "điểm của bạn kể từ"
   },
   "QR": {
     "QR_TO_MERCHANT": "Xuất trình mã QR này cho người bán",

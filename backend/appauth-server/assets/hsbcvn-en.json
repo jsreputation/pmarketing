@@ -276,7 +276,7 @@
     "SEE_LESS": "See less",
     "REWARDS_LEFT": " Rewards Left",
     "READ_MORE": "Read More",
-    "YOU_HAVE": "You have points",
+    "YOU_HAVE": "Your total points as of",
     "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
