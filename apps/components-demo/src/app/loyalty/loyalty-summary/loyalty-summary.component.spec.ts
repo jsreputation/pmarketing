@@ -5,13 +5,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
-  ProfileModule as PerxProfileModule,
+  IProfile,
   LoyaltyModule as PerxLoyaltyModule,
   LoyaltyService,
-  ProfileService,
-  IProfile
+  ProfileModule as PerxProfileModule,
+  ProfileService
 } from '@perxtech/core';
 import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -19,6 +20,9 @@ describe('SummaryComponent', () => {
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([]),
     getTransactionHistory: () => of()
+  };
+  const translateServiceStub: Partial<TranslateService> = {
+    get: () => of()
   };
   const mockProfile: IProfile = {
     id: 1,
@@ -42,7 +46,8 @@ describe('SummaryComponent', () => {
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: TranslateService, useValue: translateServiceStub },
       ]
     })
       .compileComponents();
