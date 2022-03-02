@@ -80,7 +80,8 @@ $margin-bottom: 15px;
       margin: 5px 0;
 
       &.error {
-        border: 1px solid $warn-color; // inherit colour from mat-error itself
+        // border: 1px solid $warn-color; // inherit colour from mat-error itself
+        border: 1px solid #FF3700; // inherit colour from mat-error itself
       }
     }
 
