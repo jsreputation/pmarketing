@@ -10,6 +10,7 @@ import {
   ILoyalty,
   ILoyaltyTransactionHistory
 } from '../models/loyalty.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -81,7 +82,8 @@ export class LoyaltySummaryComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    protected translate: TranslateService,
   ) { }
 
   public ngOnInit(): void {
@@ -92,7 +94,8 @@ export class LoyaltySummaryComponent implements OnInit {
         )
       ).subscribe(
         (lastTransactionDate: Date) => {
-          this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(lastTransactionDate, 'mediumDate')}`);
+          this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE').pipe(map(res => (`${res.toString()} ${this.datePipe.transform(lastTransactionDate, 'mediumDate')}`)));
+          // this.subTitleFn = () => of(`Your total points as of ${ this.datePipe.transform(lastTransactionDate, 'mediumDate') }`);
         }
       );
     }
@@ -146,7 +149,8 @@ export class LoyaltySummaryComponent implements OnInit {
             `Account Expiry: ${this.datePipe.transform(
               loyalty.membershipExpiry || loyalty.endDate,
               'mediumDate'
-            )}`
+            )
+            }`
           )
           : of('');
     }
