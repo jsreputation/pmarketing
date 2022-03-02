@@ -280,7 +280,8 @@
     "EXPIRY": "Hết hạn vào: {{date}}",
     "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Điều khoản & Điều kiện"
   },
   "REWARD": {
     "GET_VOUCHER": "Nhận Quà Tặng",

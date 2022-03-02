@@ -243,7 +243,8 @@
     "EXPIRY": "Expires on: {{date}}",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
