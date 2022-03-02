@@ -7,7 +7,7 @@
     <h2 class="header">FEATURED DEALS</h2>
     <bdo-carousel-items [isFeatured]="true" [deals]="featuredDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
-  <mat-card class="card">
+  <mat-card class="card secondary-catalog">
     <h2 class="header">DEALS YOU CAN ENJOY</h2>
     <p>Promotions that BDO has in store for you!</p>
     <bdo-secondary-catalog></bdo-secondary-catalog>
@@ -29,9 +29,11 @@
       <p class="message">Enable location to view deals near you</p>
     </div>
     <bdo-carousel-items *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
-    <p class="no-item" *ngIf="currentPosition && !nearByDeals.length;">No result</p>
+    <div *ngIf="currentPosition && !nearByDeals.length;" class="no-result-wrapper">
+      <p class="message">There are no deals near you</p>
+    </div>
   </mat-card>
-  <mat-card class="card card-without-margin">
+  <mat-card class="card">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">
@@ -45,7 +47,7 @@
     </div>
     <bdo-carousel-items *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
   </mat-card>
-  <mat-card class="card card-without-margin">
+  <mat-card class="card">
     <div class="tagged-header-wrapper">
       <div class="filter-wrapper">
         <div class="filter-value">

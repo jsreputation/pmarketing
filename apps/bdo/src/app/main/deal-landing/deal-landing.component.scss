@@ -112,7 +112,7 @@
           //  }
           //
           //  li::marker {
-          //    content: "";
+          //    content: '';
           //  }
           //}
         }
@@ -126,6 +126,22 @@
           }
         }
       }
+    }
+  }
+  
+  .similar-deals-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .action {
+      color: $medium-blue;
+      font-size: 14px;
+      font-weight: bold;
+      min-width: 55px;
+      cursor: pointer;
+
+      padding-right: 16px;
     }
   }
 

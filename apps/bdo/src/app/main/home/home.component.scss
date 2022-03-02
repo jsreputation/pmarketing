@@ -93,6 +93,27 @@
         padding: 1rem;
       }
     }
+
+    .no-result-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      height: 215px;
+      background: $light-grey;
+      border-radius: 8px;
+
+      .message {
+        color: $grey;
+        font-size: 14px;
+        padding: 1rem;
+      }
+    }
+    
+    &.secondary-catalog{
+      padding: 5px 16px 16px !important;
+    }
   }
 
   .card-without-margin {

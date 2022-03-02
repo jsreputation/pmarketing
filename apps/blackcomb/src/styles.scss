@@ -126,3 +126,7 @@ mat-progress-bar .mat-progress-bar-fill::after {
     text-align: left !important;
   }
 }
+
+drag-scroll .drag-scroll-content {
+  white-space: unset !important;
+}

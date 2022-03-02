@@ -53,7 +53,7 @@ input::placeholder {
 }
 
 .mat-button-disabled {
-  background-color: $light-gray !important;
+  background-color: $grey-white !important;
 }
 
 .bg-transparent {
@@ -346,5 +346,26 @@ bdo-search-navbar {
     .search-icon {
       cursor: pointer;
     }
+  }
+}
+
+a {
+  font-size: 12px !important;
+  color: $grey !important;
+  text-decoration: underline !important;
+
+  &:active {
+    color: $grey !important;
+    text-decoration: underline !important;
+  }
+
+  &:hover {
+    color: $near-black !important;
+    text-decoration: underline !important;
+  }
+
+  &:visited {
+    color: $purple-visited !important;
+    text-decoration: underline !important;
   }
 }

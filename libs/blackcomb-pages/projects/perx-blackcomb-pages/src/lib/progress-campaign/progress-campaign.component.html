@@ -101,10 +101,10 @@
                                     [value]="milestoneCompletedProgressCalculation(milestone)
                                     /milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
                   <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
-                    <span class="subtitle" *ngIf="outcomes.length > 0">
+                    <span class="subtitle">
                       {{milestone.encouragementText}}
                     </span>
-                    <mat-nav-list>
+                    <mat-nav-list *ngIf="outcomes.length > 0">
                       <mat-list-item *ngFor="let outcome of outcomes"
                                      (click)="outcomeClicked(outcome)"
                                      [disabled]="outcome.type === 'StoredValue::Campaign' || outcome.type === 'Badge'">

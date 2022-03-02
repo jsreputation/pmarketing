@@ -562,14 +562,22 @@ export class V4RewardsService extends RewardsService {
 
   public getRewardsById(
     ids: number[],
-    locale: string = 'en'): Observable<IReward[]> {
+    pageSize?: number,
+    locale: string = 'en',
+    ): Observable<IReward[]> {
       const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept-Language', locale);
+
+      let params = new HttpParams();
+      if (pageSize) {
+        params = params.set('size', pageSize.toString());
+      }
       const rewardsIds = ids.join('|');
       return this.http
         .get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards/?ids=${rewardsIds}`, {
           headers,
+          params
         })
         .pipe(
           map((res) => res.data),

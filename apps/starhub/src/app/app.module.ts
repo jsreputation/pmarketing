@@ -39,21 +39,25 @@ import {
   FeedItemPopupComponent,
   GameServiceModule as PerxGameServiceModule,
   IConfig,
+  InstantOutcomeTransactionServiceModule,
   LanguageService,
   LocationModule,
   LoyaltyModule,
   MerchantsModule,
+  PipeUtilsModule,
+  PrizeSetOutcomeModule as PerxPrizeSetOutcomeModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
   PuzzlesModule,
+  QuestModule as PerxQuestModule,
   RewardPopupComponent,
   RewardsModule,
   SettingsModule,
   StampModule,
+  TeamsServiceModule as PerxTeamsServiceModule,
   TokenStorage,
   UtilsModule,
-  VouchersModule,
-  TeamsServiceModule as PerxTeamsServiceModule, InstantOutcomeTransactionServiceModule, PipeUtilsModule
+  VouchersModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -206,7 +210,9 @@ export const appInit =
         useClass: LanguageService
       }
     }),
-    PerxTeamsServiceModule.forRoot()
+    PerxTeamsServiceModule.forRoot(),
+    PerxPrizeSetOutcomeModule,
+    PerxQuestModule.forRoot()
   ],
   entryComponents: [
     CategorySelectComponent,
