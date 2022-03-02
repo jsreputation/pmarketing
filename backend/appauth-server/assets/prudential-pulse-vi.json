@@ -144,7 +144,8 @@
     "EXPIRY": "Hết hạn vào: {{date}}",
     "NO_VOUCHERS": "Không có voucher",
     "URL_REDEEM": "Link sử dụng",
-    "INSTRUCTIONS": "Hướng dẫn"
+    "INSTRUCTIONS": "Hướng dẫn",
+    "TERMS_AND_CONDITIONS": "Điều khoản & Điều kiện"
   },
   "REWARD": {
     "GET_VOUCHER": "Đổi ngay",

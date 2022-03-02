@@ -234,7 +234,8 @@
   "VOUCHER": {
     "REDEEM": "Utiliser",
     "EXPIRY": "Expire le {{date}}",
-    "NO_VOUCHERS": "No vouchers here yet!"
+    "NO_VOUCHERS": "No vouchers here yet!",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Obtenir",
