@@ -32,7 +32,7 @@ $margin-bottom: 15px;
   }
 
   .navigate-promotion {
-    color: #0072D8;
+    color: #0072d8;
     display: flex;
     align-items: center;
     margin-bottom: $margin-bottom;
@@ -79,19 +79,45 @@ $margin-bottom: 15px;
       max-width: 355px;
       margin: 5px 0;
 
+      &:disabled {
+        border: 1px solid #C2C2C1;
+        background-color: #F6F6F6;
+        color: #919191;
+      }
+
+      &:hover,
+      &:focus {
+        border: 1px solid #99C1E7;
+        // background-color: #FFFFFF;
+        color: #919191;
+      }
+
+      &:not(:placeholder-shown) {
+        // filled
+        border: 1px solid #99C1E7;
+        // background-color: #FFFFFF;
+        color: #2E2E2E;
+      }
+
+      &:active {
+        border: 1px solid $extreme-light-blue;
+      }
+
+      &:focus-visible {
+        outline: 1px solid $extreme-light-blue;
+        filter: drop-shadow(0px 0px 8px #0072D852);
+      }
+
       &.error {
         // border: 1px solid $warn-color; // inherit colour from mat-error itself
-        border: 1px solid #FF3700; // inherit colour from mat-error itself
+        border: 1px solid #ff3700; // inherit colour from mat-error itself
+        color: #2E2E2E;
       }
     }
+  }
 
-    .input-promo:active {
-      border: 1px solid $extreme-light-blue;
-    }
-
-    .input-promo:focus-visible {
-      outline: 1px solid $extreme-light-blue;
-    }
+  .mat-error {
+    color: #ff3700;
   }
 
   .confirm-term {
