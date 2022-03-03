@@ -36,14 +36,16 @@ $margin-bottom: 15px;
   }
 
   .navigate-promotion {
-    color: #0072d8;
+    color: #0072d8 !important;
     display: flex;
     align-items: center;
     margin-bottom: $margin-bottom;
-    text-decoration: none;
+    text-decoration: none !important;
 
     font-size: 12px;
     font-weight: bold;
+
+
   }
 
   .reminder {
