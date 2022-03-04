@@ -1,58 +1,41 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  Router,
-  NavigationEnd,
-  Event,
-  ActivatedRoute,
-} from '@angular/router';
+import { Event, NavigationEnd, Router, } from '@angular/router';
 import { Location } from '@angular/common';
 
-import {
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, tap, } from 'rxjs/operators';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import {
-  PopupComponent,
-  NotificationService,
-  IPopupConfig,
   ConfigService,
   IConfig,
+  IPopupConfig,
   ITheme,
+  NotificationService,
+  PopupComponent,
   ThemesService,
   TokenStorage,
-  SettingsService
 } from '@perxtech/core';
 import {
-  HomeComponent,
-  HistoryComponent,
   AccountComponent,
-  SignIn2Component,
-  WalletComponent,
-  WalletHistoryComponent,
-  ProfileComponent,
   CampaignStampsComponent,
+  FindLocationComponent,
+  HistoryComponent,
+  HomeComponent,
   LeaderboardPageComponent,
   LeaderboardsComponent,
-  FindLocationComponent,
-  TransactionHistoryComponent,
+  NearmeComponent,
+  ProfileComponent,
   RebatesWalletComponent,
   RewardsPageComponent,
-  NearmeComponent
+  TransactionHistoryComponent,
+  WalletComponent,
+  WalletHistoryComponent
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
-import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -79,12 +62,10 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
-    private route: ActivatedRoute,
     private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
     private storage: TokenStorage,
-    private settingsService: SettingsService
   ) {
   }
 
@@ -155,13 +136,6 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    combineLatest([
-      this.route.queryParams,
-      this.settingsService.getRemoteFlagsSettings()
-    ]).subscribe(([params, flags]) => {
-      const paramArr: string[] = params.flags && params.flags.split(',');
-      this.showHeader = (paramArr && paramArr.includes('chromeless') || !!flags.chromeless) ? false : !(ref instanceof SignIn2Component);
-    });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
