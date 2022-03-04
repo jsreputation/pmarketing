@@ -39,17 +39,23 @@ export function mapQueryParamsToFilterObject(filterValue: IFilterModel, queryPar
       ...item,
       selected: true
     } : item),
+    rewardType: filterValue?.rewardType.map(item => queryParams.rewardType && equalOrIncludes(item.type, queryParams.rewardType) ? {
+      ...item,
+      selected: true
+    } : item),
   };
   return filterValue;
 }
 
 function handleTags(filterValue: IFilterModel) {
   const cardTypes = filterValue.cardType.filter(card => card.selected).map(card => `cardtype-${card.type}`);
+  const rewardTypes = filterValue.rewardType.filter(card => card.selected).map(card => `rewardtype-${card.type}`);
   const tags = filterValue.tags.filter(tag => tag.selected).map(tag => tag.type);
   const locations = filterValue.locations.filter(location => location.selected).map(location => `location-${location.type}`);
 
   let tagsParams = locations.length === FILTER_DATA.locations.length ? [] : locations;
   tagsParams = tagsParams.concat(cardTypes.length !== FILTER_DATA.cardType.length ? cardTypes :[] )
+  .concat(rewardTypes.length !== FILTER_DATA.rewardType.length ? rewardTypes :[] )
   .concat(tags.length === FILTER_DATA.tags.length ? [] : tags);
   return tagsParams.length ? tagsParams : null;
 }

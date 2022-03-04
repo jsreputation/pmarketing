@@ -10,18 +10,56 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         name:"Emerald",
         imageLink:"assets/images/emerald-default.svg",
         imageLinkSelected:"assets/images/emerald-selected.svg",
+        children: [
+          {
+            key:"pointspromos",
+            name:"Points Promos"
+          },
+          {
+            key:"memberexclusives",
+            name:"Member Exclusives"
+          }
+        ]
       },
       {
         key:"sapphire",
         name:"Sapphire",
         imageLink:"assets/images/sapphire-default.svg",
         imageLinkSelected:"assets/images/sapphire-selected.svg",
+        children: [
+          {
+            key:"pointspromos",
+            name:"Points Promos"
+          },
+          {
+            key:"bankperks",
+            name:"Bank Perks"
+          },
+          {
+            key:"memberexclusives",
+            name:"Member Exclusives"
+          }
+        ]
       },
       {
         key:"diamond",
         name:"Diamond",
         imageLink:"assets/images/diamond-default.svg",
-        imageLinkSelected:"assets/images/diamond-selected.svg"
+        imageLinkSelected:"assets/images/diamond-selected.svg",
+        children: [
+          {
+            key:"pointspromos",
+            name:"Points Promos"
+          },
+          {
+            key:"bankperks",
+            name:"Bank Perks"
+          },
+          {
+            key:"memberexclusives",
+            name:"Member Exclusives"
+          }
+        ]
       }
     ]
   },

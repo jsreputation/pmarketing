@@ -25,13 +25,20 @@
         </div>
     </div>
     <div class="card-type" *ngIf="selectedSubcategory && selectedSubcategory?.children?.length">
-        <h4>Card Types</h4>
+        <h4>{{ category?.key === 'bdo-rewards' ? 'Perks and Privileges' : 'Card Types' }}</h4>       
         <div class="card-type-content">
             <div class="card-type-content-action" *ngFor="let item of selectedSubcategory.children; let i = index"
                 (click)="selectSubcategoryChildren(item)">
-                <div class="card-type-container" [ngClass]="item.selected ? 'selected' : ''" >
-                    <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category"/>
-                </div>
+                    <ng-container *ngIf="category?.key === 'bdo-rewards'; else nonRewardCatgories">
+                        <div class="reward-type-container" [ngClass]="item.selected ? 'selected' : ''" >
+                            <span class="reward-type-name">{{item.name}}</span>  
+                        </div>           
+                    </ng-container>
+                    <ng-template #nonRewardCatgories>
+                        <div class="card-type-container" [ngClass]="item.selected ? 'selected' : ''" >
+                            <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category"/>
+                        </div>
+                    </ng-template>
 <!--                <span class="card-type-name">{{item.name}}</span>-->
             </div>
         </div>
