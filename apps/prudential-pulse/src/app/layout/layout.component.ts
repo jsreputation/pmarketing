@@ -1,42 +1,40 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  Router,
-  NavigationEnd,
-  Event, ActivatedRoute
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
-import {
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
 import {
-  ThemesService,
-  ITheme,
   Config,
   ConfigService,
+  FlagLocalStorageService,
   IConfig,
-  SettingsService,
   IFlags,
-  FlagLocalStorageService
+  ITheme,
+  SettingsService,
+  ThemesService
 } from '@perxtech/core';
 
 
 import { AccountComponent } from '../account/account.component';
 import {
-  BACK_ARROW_URLS, CampaignStampsComponent, FindLocationComponent,
-  HistoryComponent, HomeComponent, LeaderboardPageComponent, LeaderboardsComponent,
-  NearmeComponent, ProfileComponent, RebatesWalletComponent, RewardsPageComponent,
-  SignIn2Component, TransactionHistoryComponent, WalletComponent, WalletHistoryComponent,
-  BadgeLandingComponent
+  BACK_ARROW_URLS,
+  BadgeLandingComponent,
+  CampaignStampsComponent,
+  FindLocationComponent,
+  HistoryComponent,
+  HomeComponent,
+  LeaderboardPageComponent,
+  LeaderboardsComponent,
+  NearmeComponent,
+  ProfileComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  SignIn2Component,
+  TransactionHistoryComponent,
+  WalletComponent,
+  WalletHistoryComponent
 } from '@perxtech/blackcomb-pages';
 import { combineLatest } from 'rxjs';
 
@@ -51,7 +49,7 @@ export interface ShowTitleInHeader {
 })
 export class LayoutComponent implements OnInit {
 
-  public showHeader: boolean;
+  public showHeader: boolean = false;
   public headerTitle: string;
   public showToolbar: boolean;
   public backArrowIcon: string = '';
