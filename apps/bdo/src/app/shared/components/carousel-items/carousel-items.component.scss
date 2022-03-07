@@ -4,12 +4,12 @@
 .item {
   border-radius: 15px;
   box-shadow: 0 0 16px #0000001a;
-  height: 95%!important;
+  height: 105%!important;
   bottom: 8px;
   
   img {
     width: 100%;
-    height: unset !important;
+    height: 180px !important;
     object-fit: cover!important;
     border-radius: 15px 15px 0 0;
   }
@@ -28,6 +28,10 @@
       @include ellipse-lines(1);
     }
 
+    .ellipsis-2-lines {
+      @include ellipse-lines(2);
+    }
+
     .description {
       padding: 0;
       margin: 10px 0;
@@ -37,6 +41,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      min-height: 32px;
     }
 
     .position {
@@ -78,6 +83,10 @@
 
   .ellipsis-1-lines {
     @include ellipse-lines(1);
+  }
+
+  .ellipsis-2-lines {
+    @include ellipse-lines(2);
   }
 }
 
