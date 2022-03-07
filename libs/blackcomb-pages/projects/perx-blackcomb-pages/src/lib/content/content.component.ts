@@ -3,7 +3,14 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AccountPageObject, ITheme, PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import {
+  AccountPageObject,
+  FlagLocalStorageService,
+  ITheme,
+  PagesObject,
+  SettingsService,
+  ThemesService
+} from '@perxtech/core';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -19,6 +26,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   public theme: ITheme;
   public baseHref: string;
   public lang: string;
+  public showHeader: boolean = false;
 
   constructor(
     private settingsService: SettingsService,
@@ -27,7 +35,8 @@ export class ContentComponent implements OnInit, OnDestroy {
     private themeService: ThemesService,
     private location: Location,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private flagLocalStorageService: FlagLocalStorageService
     // private configService: ConfigService
   ) { }
 
@@ -70,6 +79,22 @@ export class ContentComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       );
+
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
+
+      if (chromelessFlag) {
+        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      } else if (params && params.flags === '') {
+        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      }
+
+      this.showHeader = !Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
+    });
 
     this.themeService.getThemeSetting().subscribe(theme => this.theme = theme);
   }
