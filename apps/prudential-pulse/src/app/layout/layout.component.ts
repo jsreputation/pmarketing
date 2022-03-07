@@ -114,6 +114,8 @@ export class LayoutComponent implements OnInit {
         this.initBackArrow(url);
       });
     this.initBackArrow(this.router.url);
+
+    // todo: unify header bar in a more central location - currently in layout and content components
     combineLatest([
       this.route.queryParams,
       this.settingsService.getRemoteFlagsSettings()
