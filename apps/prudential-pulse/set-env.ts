@@ -60,6 +60,11 @@ const displayPropertiesWithoutFaq = `{
           "key": "tnc",
           "title": "TNC",
           "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
+      },
+      {
+          "key": "faq",
+          "title": "FAQ",
+          "content_url": "${process.env.FAQURL ? process.env.FAQURL : ''}"
       }
       ]
   }
