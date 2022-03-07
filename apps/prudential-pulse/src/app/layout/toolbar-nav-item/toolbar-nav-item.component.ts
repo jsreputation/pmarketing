@@ -13,6 +13,7 @@ export class ToolbarNavItemComponent {
   @Input() activeImg: string;
   @Input() defaultImg: string;
   @Input() icon: string;
+  @Input() iconClass: string;
   @Input() ngClass: string | string[] | Set<string> | {
     [klass: string]: any;
   };
