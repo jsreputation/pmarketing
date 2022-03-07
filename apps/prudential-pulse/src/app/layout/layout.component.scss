@@ -60,6 +60,10 @@
 
     &.active {
       color: var(--accent);
+
+      mat-icon {
+        color: #DA3738;
+      }
     }
   }
 }
