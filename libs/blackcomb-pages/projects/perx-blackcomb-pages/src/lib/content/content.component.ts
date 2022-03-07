@@ -80,6 +80,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       );
 
+    // todo: unify header bar in a more central location - currently in layout and content components
     combineLatest([
       this.route.queryParams,
       this.settingsService.getRemoteFlagsSettings()
