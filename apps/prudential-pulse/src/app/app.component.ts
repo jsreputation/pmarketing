@@ -43,7 +43,6 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public showHeader: boolean;
   public showToolbar: boolean;
   public backArrowIcon: string = '';
   public preAuth: boolean;
