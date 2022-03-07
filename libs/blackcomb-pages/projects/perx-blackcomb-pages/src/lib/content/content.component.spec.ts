@@ -18,6 +18,7 @@ describe('ContentComponent', () => {
   const getAccountSettingsSpy: jest.Mock = jest.fn();
   const settingsServiceStub: Partial<SettingsService> = {
     getAccountSettings: getAccountSettingsSpy,
+    getRemoteFlagsSettings: () => of()
   };
   const getSpy: jest.Mock = jest.fn();
   const httpClientStub: Partial<HttpClient> = { get: getSpy };
