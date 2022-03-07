@@ -1,12 +1,5 @@
-import {
-  AuthenticationService,
-  ConfigService,
-  ICampaignService,
-  ThemesService,
-  TokenStorage,
-  SettingsService
-} from '@perxtech/core';
-import { TestBed, async } from '@angular/core/testing';
+import { AuthenticationService, ConfigService, ICampaignService, ThemesService, TokenStorage, } from '@perxtech/core';
+import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -63,13 +56,6 @@ describe('AppComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: ThemesService, useValue: themesServiceStub },
-        {
-          provide: SettingsService,
-          useValue: {
-            getRemoteFlagsSettings: () => of()
-          }
-        }
-
       ]
     }).compileComponents();
   }));
