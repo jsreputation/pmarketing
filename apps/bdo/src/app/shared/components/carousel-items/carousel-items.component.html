@@ -5,7 +5,7 @@
         <ng-container *ngIf="!isFeatured; else featuredBlock">
           <img [src]="deal.thumbnail ? deal.thumbnail:urlImageDefault" />
           <div class="container">
-            <h4 class="title">{{deal.name}}</h4>
+            <h4 class="title ellipsis-1-lines">{{deal.name}}</h4>
             <p class="description" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
             <span class="position" *ngIf="deal?.position">
               <img class="icon-location" src="assets/images/icon-location.svg"/>
@@ -15,7 +15,7 @@
         </ng-container>
         <ng-template #featuredBlock>
           <img class="image" [src]="deal.featuredImg ? deal.featuredImg : (deal.thumbnail ? deal.thumbnail : urlImageDefault)">
-          <span class="title">{{deal.name}}</span>
+          <span class="title ellipsis-1-lines">{{deal.name}}</span>
         </ng-template>
       </div>
   </carousel>

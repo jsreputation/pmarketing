@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 // @import ~@angular/material/theming;
 @import './custom-theme.scss';
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}
 
 :root {
   --font: Roboto;
