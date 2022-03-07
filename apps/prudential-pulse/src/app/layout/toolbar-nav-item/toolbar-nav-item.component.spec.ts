@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ToolbarNavItemComponent } from './toolbar-nav-item.component';
 
@@ -8,9 +10,10 @@ describe('ToolbarNavItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ToolbarNavItemComponent ]
+      declarations: [ToolbarNavItemComponent],
+      imports: [RouterTestingModule, MatIconModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
