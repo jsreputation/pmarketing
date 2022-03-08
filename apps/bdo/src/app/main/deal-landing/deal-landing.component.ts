@@ -80,12 +80,13 @@ export class DealLandingComponent implements OnInit {
       this.copy();
     }
   }
-  public copy(): void {
+  public copy() {
     navigator.clipboard
-      .writeText(`${this.shareText}`)
+      .writeText(this.shareText)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
+
   private initTranslate(): void {
     this.shareUrl = this.shareUrl.concat(this.dealDetail.id.toString());
     this.translate
