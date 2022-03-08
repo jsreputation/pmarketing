@@ -1,4 +1,5 @@
 @import '../../../../theme/variables.scss';
+@import '../../../../theme/mixins.scss';
 
 .item {
   border-radius: 12px;
@@ -6,6 +7,7 @@
   list-style-type: none;
   margin: 16px;
   background: $white 0 0 no-repeat padding-box;
+  max-width: 340px;
 
   a {
     text-decoration: none;
@@ -42,6 +44,10 @@
       font-size: 16px;
     }
 
+    .ellipsis-2-lines {
+      @include ellipse-lines(2);
+    }
+
     .description {
       padding: 0;
       margin: 10px 0;
@@ -50,7 +56,7 @@
 
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
   }

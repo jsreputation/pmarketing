@@ -39,6 +39,13 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+
+        @media screen and (max-width: $desktop-width) {
+      &#catalogue {
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+      }
+    }
   }
 
   .no-result {
