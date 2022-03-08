@@ -84,12 +84,13 @@ export class TreatEnrollCompletePageComponent implements OnInit{
     }
   }
 
-  public copy(text?: string): void {
+  public copy() {
     navigator.clipboard
-      .writeText(`${text ? text : this.shareTitle}`)
+      .writeText(this.shareText)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
+  
 
   private initTranslate(): void {
     this.shareUrl = this.shareUrl.concat(this.promo.campaignId?.toString());
