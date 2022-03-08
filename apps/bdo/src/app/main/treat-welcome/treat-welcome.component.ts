@@ -66,7 +66,6 @@ export class TreatWelcomeComponent implements OnInit {
           console.log('failed to use share, falling back to clipboard');
           this.copy();
         });
-        console.log('This: ', this)
     } else {
       console.log('no access to share api, falling back to clipboard');
       this.copy();
