@@ -526,7 +526,7 @@
     
   },
   "DEAL_LANDING_PAGE":{
-    "SHARE_COPY_TXT":"Come join this deal with me",
+    "SHARE_COPY_TXT":"Check out this exciting deal from BDO! {{url}}",
     "SHARE_COPY_TITLE": "Join me in this deal {{url}}",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
