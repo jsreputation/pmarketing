@@ -22,12 +22,7 @@
           <span translate>NAVIGATION.PAY</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false">home</mat-icon>
-          <span translate>NAVIGATION.HOME</span>
-        </div>
-      </a>
+      <toolbar-nav-item label="NAVIGATION.HOME" [routerLink]="[ '/home' ]" [activeImg]="'assets/toolbars/home-red.svg'" [defaultImg]="'assets/toolbars/home-grey.svg'" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage"></toolbar-nav-item>
       <a matRipple [routerLink]="[ '/progress-campaigns' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.showProgressCampaignsNavButton">
         <div class="nav-item">
           <mat-icon aria-hidden="false">local_activity</mat-icon>
@@ -46,31 +41,15 @@
           <span translate>NAVIGATION.NEARME</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
-          <span translate>NAVIGATION.WALLET</span>
-        </div>
-      </a>
-      <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" *ngIf="appConfig.showHistoryPage">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false">list</mat-icon>
-          <span translate>NAVIGATION.HISTORY</span>
-        </div>
-      </a>
+      <toolbar-nav-item label="NAVIGATION.WALLET" [routerLink]="[ '/wallet' ]" [activeImg]="'assets/toolbars/wallet-red.svg'" [defaultImg]="'assets/toolbars/wallet-grey.svg'"></toolbar-nav-item>
+      <toolbar-nav-item label="NAVIGATION.HISTORY" [routerLink]="[ '/history' ]" [activeImg]="'assets/toolbars/history-red.svg'" [defaultImg]="'assets/toolbars/history-grey.svg'" *ngIf="appConfig.showHistoryPage"></toolbar-nav-item>
       <a matRipple [routerLink]="[ '/locations' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.merchantMap">
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
           <span translate>NAVIGATION.DEALS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/leaderboards' ]"  [ngClass]="{'active': isLeaderboardPage}"
-         *ngIf="(appRemoteFlags?.showLeaderboard && appRemoteFlags?.showLeaderboardLinkOnHomePage) || (appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage)">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false" class="material-icons-outlined">emoji_events</mat-icon>
-          <span translate>NAVIGATION.LEADER_BOARD</span>
-        </div>
-      </a>
+      <toolbar-nav-item label="NAVIGATION.LEADER_BOARD" [ngClass]="{'active': isLeaderboardPage}" [routerLink]="[ '/leaderboards' ]" [activeImg]="'assets/toolbars/leaderboards-red.svg'" [defaultImg]="'assets/toolbars/leaderboards-grey.svg'" *ngIf="(appRemoteFlags?.showLeaderboard && appRemoteFlags?.showLeaderboardLinkOnHomePage) || (appConfig.enableLeaderBoard && appConfig.showLeaderboardLinkOnHomePage)"></toolbar-nav-item>
       <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage || appRemoteFlags?.showAccountsPage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_circle</mat-icon>
