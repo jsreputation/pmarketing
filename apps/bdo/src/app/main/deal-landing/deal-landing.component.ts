@@ -138,8 +138,4 @@ export class DealLandingComponent implements OnInit {
       }
     }
   }
-
-  navigateToDealsDetail() {
-    window.location.href = this.dealDetail?.customFields?.dealsButtonLink;
-  }
 }
