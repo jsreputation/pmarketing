@@ -445,6 +445,13 @@ mat-progress-bar .mat-progress-bar-fill::after {
         }
       }
     }
+
+    .tab-group__content {
+        > h1:first-child {
+        padding-top: 2rem;
+        font-weight: bold !important;
+      }
+    }
   }
 
   perx-blackcomb-pages-progress-campaign,
@@ -545,5 +552,21 @@ mat-dialog-container {
 .loading-spin {
   .mat-progress-spinner circle{
     stroke: var(--main-red);
+  }
+}
+
+perx-blackcomb-pages-leaderboards {
+  .leaderboard-list-container {
+    > h1:first-child {
+        font-weight: bold !important;
+    }
+  }
+}
+
+perx-blackcomb-pages-wallet {
+  .tab-group__content {
+    h1 {
+      font-weight: bold !important;
+    }
   }
 }
