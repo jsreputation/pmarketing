@@ -20,7 +20,7 @@
     </div>
     <div class="btn-cta-deals"  *ngIf="dealDetail?.customFields?.dealsButtonLink && dealDetail?.customFields?.dealsButtonName">
       <div class="btn-cta-container">
-        <a [href]="dealDetail?.customFields?.dealsButtonLink | safeUrl" class="btn-cta-deals-link">
+        <a [href]="dealDetail?.customFields?.dealsButtonLink | safeUrl" class="btn-cta-deals-link" target="_blank">
           <button mat-stroked-button color="primary" class="btn-cta-deals_action">
             {{dealDetail?.customFields?.dealsButtonName}}
           </button>
