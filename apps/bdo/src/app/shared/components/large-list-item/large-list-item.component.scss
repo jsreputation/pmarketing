@@ -14,6 +14,7 @@
   }
 
   .tag-group {
+    height: 0;
     .tag {
       top: -13px;
       position: relative;
@@ -35,7 +36,7 @@
 
   .container {
     position: relative;
-    padding: 16px;
+    padding: 28px 16px 16px;
 
     .title {
       padding: 0;
@@ -58,6 +59,10 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+
+
+      margin-block-start: 8px;
+      margin-block-end: 8px;
     }
   }
 }
