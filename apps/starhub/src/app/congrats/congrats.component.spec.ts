@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CongratsComponent } from './congrats.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { IGameService } from '@perxtech/core';
+import { IGameService, IPrizeSetOutcomeService, LoyaltyService, OutcomeType, RewardsService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GameOutcomeService } from './game-outcome/game-outcome.service';
 import { vouchers } from '../vouchers.mock';
@@ -22,7 +22,15 @@ describe('CongratsComponent', () => {
 
   const gameOutcomeServiceStub: Partial<GameOutcomeService> = {
     getVouchersRewarded: () => [],
-    clearVoucherList: () => { }
+    clearVoucherList: () => {
+    },
+    getPrizeSetOutcome: () => ({
+        transactionId: 1,
+        prizeSetId: 1,
+        outcomeType: OutcomeType.prizeSet,
+        state: 'issued'
+    }),
+    getOutcome: () => ({} as any)
   };
 
   const analyticsServiceStub: Partial<AnalyticsService> = {
@@ -30,6 +38,20 @@ describe('CongratsComponent', () => {
   };
 
   const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
+
+  const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {
+    getPrizeSetDetails: () => of(),
+    getPrizeSetState: () => of(),
+    getPrizeSetIssuedOutcomes: () => of()
+  };
+
+  const rewardServiceStub: Partial<RewardsService> = {
+    getReward: () => of()
+  };
+
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: () => of()
+  };
 
   beforeEach(async(() => {
 
@@ -41,7 +63,10 @@ describe('CongratsComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: GameOutcomeService, useValue: gameOutcomeServiceStub },
         { provide: AnalyticsService, useValue: analyticsServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
+        { provide: RewardsService, useValue: rewardServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
       ]
     })
       .compileComponents();
