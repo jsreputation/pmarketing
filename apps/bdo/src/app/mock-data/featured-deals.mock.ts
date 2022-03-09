@@ -39,7 +39,9 @@ export const LIST_FEATURED_DEALS: IReward[] = [
     requirementDescription: "",
     tncLink: "",
     cardLink: "",
-    requirement: ""
+    requirement: "",
+    dealsButtonName: "",
+    dealsButtonLink: ""
     },
     "description": "<p>Get FREE 2pc. Chickenjoy Meal for a minimum P1000 spend at Jollibee &nbsp;with BDO Cards.</p>",
     

@@ -65,6 +65,8 @@ interface IV4CustomField {
   referrals_requirement: string;
   reward_description: string;
   card_link: string;
+  deals_button_name: string;
+  deals_button_link: string;
 }
 
 
@@ -348,6 +350,8 @@ export class V4RewardsService extends RewardsService {
           faqLink: reward.custom_fields.faq_link,
           tncLink: reward.custom_fields.tnc_link,
           cardLink: reward.custom_fields.card_link,
+          dealsButtonName: reward.custom_fields.deals_button_name,
+          dealsButtonLink: reward.custom_fields.deals_button_link
         }
         : undefined,
       operatingHours,
