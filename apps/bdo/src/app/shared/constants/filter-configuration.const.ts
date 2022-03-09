@@ -130,5 +130,19 @@ export const FILTER_DATA: IFilterModel = {
       name: 'Diners Club',
       type: 'diners'
     }
+  ],
+  rewardType: [
+    {
+      name: 'Points Promos',
+      type: 'pointspromos'
+    },
+    {
+      name: 'Bank Perks',
+      type: 'bankperks'
+    },
+    {
+      name: 'Member Exclusives',
+      type: 'memberexclusives'
+    }
   ]
 }
