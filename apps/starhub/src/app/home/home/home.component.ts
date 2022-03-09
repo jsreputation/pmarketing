@@ -172,8 +172,8 @@ export class HomeComponent implements OnInit {
       this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
       if (this.top + delta > 0) {
         this.top = 0;
-      } else if (this.top + delta <= -184) {
-        this.top = -184;
+      } else if (this.top + delta <= -240) {
+        this.top = -240;
       } else {
         this.top = this.top + delta;
       }
