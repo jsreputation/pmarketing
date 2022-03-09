@@ -34,6 +34,8 @@ export interface IReward {
     tncLink: string;
     cardLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
+    dealsButtonName: string;
+    dealsButtonUrl: string;
   };
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
