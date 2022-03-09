@@ -344,12 +344,12 @@
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
     "INSTRUCTIONS": "READ INSTRUCTIONS",
-    "TERMS_AND_CONDITIONS": "Terms and Conditions"
+    "TERMS_AND_CONDITIONS": "Voucher Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
-    "TNC": "Terms and Conditions",
+    "TNC": "Voucher Terms and Conditions",
     "EXPIRY": "Expiry",
     "CODE": "Code",
     "POINT": "Points",
