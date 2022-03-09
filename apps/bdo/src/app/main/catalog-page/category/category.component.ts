@@ -37,11 +37,21 @@ export class CategoryComponent implements OnInit {
                 selected: selectedFilterCategory.children.some(item => !item.selected) || selectedFilterCategory.children.length == 1 ?
                   selectedFilterCategory.children.find(item => item.name === sub.name)?.selected : false,
                 children: sub.children ? sub.children.map(card =>
-                  filterValue.cardType.some(item => !item.selected) || filterValue.cardType.length == 1 ?
-                    {
-                      ...card,
-                      selected: filterValue.cardType.find(item => item.type === card.key)?.selected
-                    } : card
+                  {
+                    if (selectedFilterCategory?.type === 'bdo-rewards') {
+                      return filterValue.rewardType.some(item => !item.selected) || filterValue.rewardType.length == 1 ?
+                        {
+                          ...card,
+                          selected: filterValue?.rewardType.find(item => item.type === card.key)?.selected
+                        } : card;
+                    } else {
+                      return filterValue.cardType.some(item => !item.selected) || filterValue.cardType.length == 1 ?
+                        {
+                          ...card,
+                          selected: filterValue.cardType.find(item => item.type === card.key)?.selected
+                        } : card;
+                    }
+                  }
                 ) : []
               })
             ) : []
@@ -63,7 +73,8 @@ export class CategoryComponent implements OnInit {
           this.isTag = false;
           this.categoryHeaders = [{ displayName: this.category.name, className:'' }];
         }
-        this.selectedSubcategory = this.category.children.find(item => item.selected);
+        const selectedSubCategories = this.category.children.filter(item => item.selected);
+        this.selectedSubcategory = selectedSubCategories?.length > 1 ? null : selectedSubCategories[0];
       }
     })
   }
@@ -79,7 +90,8 @@ export class CategoryComponent implements OnInit {
   selectSubcategory(selectedItem: ItemModel) {
     this.category.children = this.category.children
       .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item});
-    this.selectedSubcategory = this.category.children.find(item => item.selected);
+    const selectedSubCategories = this.category.children.filter(item => item.selected);
+    this.selectedSubcategory = selectedSubCategories?.length > 1 ? null : selectedSubCategories[0];
     this.buildCategoryParamsAndNavigate();
   }
 
@@ -93,8 +105,13 @@ export class CategoryComponent implements OnInit {
     const queryParams: { [name: string]: string | string[] } = {};
     queryParams.type = this.category.key;
     queryParams.category = this.category.children.filter(item => item.selected).map(item => item.key);
-    queryParams.cardType = this.selectedSubcategory?.children ?
+    if (this.category.key === 'bdo-rewards') {
+      queryParams.rewardType = this.selectedSubcategory?.children ?
       this.selectedSubcategory.children.filter(item => item.selected).map(item => item.key) : null;
+    } else {
+      queryParams.cardType = this.selectedSubcategory?.children ?
+      this.selectedSubcategory.children.filter(item => item.selected).map(item => item.key) : null;
+    } 
     this.route.navigate(['catalog-page'],{ queryParams: queryParams });
   }
 

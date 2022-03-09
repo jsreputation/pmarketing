@@ -1,4 +1,4 @@
-PREAUTH=false
+PREAUTH=true
 APIHOST=https://api.perxtech.net
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true
@@ -18,4 +18,5 @@ LOGIN_METHOD=phone
 SHOW_REFERRAL_DETAILS=true
 SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE=true
 SHOW_PRIZE_SET_OUTCOME=false
+FAQSURL=https://cdn.perxtech.net/content/prudential-pulse/faq.html
 PRODUCTION=true

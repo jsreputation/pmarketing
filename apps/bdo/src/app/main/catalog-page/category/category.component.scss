@@ -88,7 +88,23 @@
             justify-content: center;
             cursor: pointer;
             &.selected {
-                background-color: #0072D8 !important;
+                background-color: $medium-blue !important;
+            }
+        }
+
+        .reward-type-container {
+            background-color: #E5F5FF;
+            border-radius: 8px;
+            padding: 15px 8px;
+            cursor: pointer;
+            &.selected {
+                background-color: $medium-blue !important;
+                color: white !important;
+            }
+            .reward-type-name {
+                font-size: 14px;
+                font-weight: normal !important;
+                white-space: nowrap;
             }
         }
 

@@ -86,10 +86,11 @@ export class TreatEnrollCompletePageComponent implements OnInit{
 
   public copy(text?: string): void {
     navigator.clipboard
-      .writeText(`${text ? text : this.shareTitle}`)
+      .writeText(`${text ? text : this.shareText}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
+  
 
   private initTranslate(): void {
     this.shareUrl = this.shareUrl.concat(this.promo.campaignId?.toString());
@@ -105,7 +106,7 @@ export class TreatEnrollCompletePageComponent implements OnInit{
           '{{url}}',
           this.shareUrl
         );
-        this.shareText = res['TREAT_PAGE.SHARE_COPY_TXT'];
+        this.shareText = res['TREAT_PAGE.SHARE_COPY_TXT'].replace('{{url}}', this.shareUrl);
         this.copyToClipboardTxt = res['TREAT_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['TREAT_PAGE.CLIPBOARD_ERROR_TXT'];
       });

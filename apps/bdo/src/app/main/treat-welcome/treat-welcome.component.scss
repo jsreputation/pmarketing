@@ -19,7 +19,7 @@
 
     .title {
       font-size: 24px;
-      font-weight: 500;
+      font-weight: bold;
     }
 
     .tag-group {
@@ -64,24 +64,28 @@
       background-color: $light-blue;
       padding: 16px 15px;
       border-radius: 8px;
+      margin-top: 16px;
+      margin-bottom: 16px;
 
       ::ng-deep {
         ol {
           list-style: none;
           counter-reset: item;
-        }        
-        
+          margin-block-start: 0;
+          margin-block-end: 0;
+        }
+
         li {
           counter-increment: item;
           margin-bottom: 5px;
           position: relative;
           padding: 10px 0;
           li {
-            &::before{
-              content: counter(item, lower-alpha)!important;
-            }         
-            li::before{
-              content: counter(item, lower-roman)!important;
+            &::before {
+              content: counter(item, lower-alpha) !important;
+            }
+            li::before {
+              content: counter(item, lower-roman) !important;
             }
           }
         }
@@ -105,7 +109,7 @@
         }
 
         li::marker {
-          content: "";
+          content: '';
         }
       }
     }
@@ -141,10 +145,10 @@
     ::ng-deep .mat-expansion-indicator::after {
       border-width: 0 !important;
       transform: none !important;
-      background: url("/assets/images/icon-n-down.svg") no-repeat center center;
+      background: url('/assets/images/icon-n-down.svg') no-repeat center center;
       height: 20px;
       width: 20px;
-      vertical-align: middle!important;
+      vertical-align: middle !important;
     }
   }
 
@@ -152,18 +156,10 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    padding: 10px 20px;
-    background-color: $white;
-    box-shadow: 0 1px 8px rgb(50 50 50 / 50%);
     width: 100%;
     box-sizing: border-box;
     z-index: 1;
-    @media screen and (min-width: $desktop-width) {
-      position: static;
-      text-align: center;
-      padding: 20px 0;
-      box-shadow: none;
-    }
+   
 
     &_action {
       background-color: $medium-blue;
@@ -175,6 +171,19 @@
         width: auto;
         padding: 8px 80px;
       }
+    }
+  }
+
+  .btn-enroll-container {
+    padding: 10px 20px;
+    background-color: $white;
+    box-shadow: 0 1px 8px rgb(50 50 50 / 50%);
+    display: flex;
+    justify-content: center;
+    @media screen and (min-width: $desktop-width) {
+      width: $desktop-width;
+      padding: 10px 0;
+      margin: auto;  
     }
   }
 }

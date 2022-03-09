@@ -231,7 +231,8 @@
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
-    "READ_MORE": "Read More"
+    "READ_MORE": "Read More",
+    "YOU_HAVE": "Your total points as of"
   },
   "QR": {
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
@@ -243,7 +244,8 @@
     "EXPIRY": "Expires on: {{date}}",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",

@@ -57,8 +57,8 @@ export class TreatWelcomeComponent implements OnInit {
     if (navigator.share) {
       const data = {
         url: this.shareUrl,
-        text:this.shareText,
-        title:this.shareTitle
+        text: this.shareText,
+        title: this.shareText,
       };
       (navigator as any)
         .share(data)
@@ -87,7 +87,7 @@ export class TreatWelcomeComponent implements OnInit {
 
   public copy(): void {
     navigator.clipboard
-      .writeText(`${this.shareTitle}`)
+      .writeText(`${this.shareText}`)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }

@@ -46,25 +46,6 @@ const displayProperties = `{
   }
 }`;
 
-const displayPropertiesWithoutFaq = `{
-  "account": {
-      "pages": [
-        {
-          "key": "contact-us",
-          "title": "CONTACT_US",
-          "content_url": "${
-            process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''
-          }"
-      },
-      {
-          "key": "tnc",
-          "title": "TNC",
-          "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
-      }
-      ]
-  }
-}`;
-
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
@@ -240,9 +221,7 @@ const appConfigFile = `{
   "showLeaderboardLinkOnHomePage": ${
     process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE ? process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE : false
   },
-  "displayProperties" : ${
-    process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties
-  },
+  "displayProperties" : ${displayProperties},
   "showLogo":  ${
     process.env.SHOW_LOGO ? process.env.SHOW_LOGO : false
   },

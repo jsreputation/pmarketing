@@ -1,0 +1,33 @@
+:host {
+    display: flex;
+    flex: 1;
+}
+
+.a-container {
+    display: flex;
+    width: 40rem;
+    max-width: 40rem;
+}
+
+a {
+    text-decoration: none;
+    color: #666666;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+
+    &.active {
+        color: var(--tab-red);
+
+        mat-icon {
+            color: #da3738;
+        }
+    }
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -49,7 +49,7 @@ describe('CampaignsComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    getRemoteFlagsSettings: () => of()
+    getRemoteFlagsSettings: () => of({})
   };
 
   const questServiceStub: Partial<IQuestService> = {

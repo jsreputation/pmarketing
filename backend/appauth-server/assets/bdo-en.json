@@ -279,7 +279,7 @@
     "SEE_LESS": "See less",
     "REWARDS_LEFT": " Rewards Left",
     "READ_MORE": "Read More",
-    "YOU_HAVE": "You have points",
+    "YOU_HAVE": "Your total points as of",
     "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
@@ -343,7 +343,8 @@
     "EXPIRY": "Expires on: {{date}}",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
@@ -525,7 +526,7 @@
     
   },
   "DEAL_LANDING_PAGE":{
-    "SHARE_COPY_TXT":"Come join this deal with me",
+    "SHARE_COPY_TXT":"Check out this exciting deal from BDO! {{url}}",
     "SHARE_COPY_TITLE": "Join me in this deal {{url}}",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"

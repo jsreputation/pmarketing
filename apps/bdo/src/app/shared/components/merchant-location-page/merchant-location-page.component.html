@@ -1,19 +1,37 @@
-<div class="deal-location">
-    <div class="body">
+<div class="merchant-location-page">
+    <div class="header-title">
         <div class="title">
             {{displayMode === 'phone' ? 'Phone' : 'Location'}}
         </div>
-        <div class="content" mat-ripple *ngFor="let item of location">
-            <div class="text-container" (click)="navigateGoogleMaps(item.latitude,item.longitude)">
-                <div class="text">
-                    {{item.name}}
-                </div>
-                <div class="text" *ngIf="item.phoneNumber">
-                    {{item.phoneNumber}}
+    </div>
+    <div class="content-body">
+        <div class="deal-location">
+            <div class="body">
+                <div class="content" mat-ripple *ngFor="let item of location">
+                    <div class="text-container" (click)="navigateGoogleMaps(item)">
+                        <div class="text">
+                            {{item.name}}
+                        </div>
+                        <div class="text" *ngIf="item.phoneNumber">
+                            {{item.phoneNumber}}
+                        </div>
+                    </div>
+                    <div class="icon-call" *ngIf="item.phoneNumber && item.phoneNumber.length > 0">
+                        <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
+                    </div>
                 </div>
             </div>
-            <div class="icon-call" *ngIf="item.phoneNumber && item.phoneNumber.length > 0">
-                <a [href]="'tel:'+item.phoneNumber"> <img src="assets/images/icon-ua-contact.svg" alt=""></a>
+        </div>
+        <div class="location-landing-wrapper">
+            <div class="gmap-wrapper">
+                <div #gmap class="map"></div>
+                <div class="link-out-buttons">
+                    <button mat-button color="primary" class="gmap-button" (click)="navToGmaps()"><img
+                            src="assets/images/Google_Maps_icon_(2020).svg"></button>
+                    <mat-divider [vertical]="true"></mat-divider>
+                    <button mat-button color="primary" class="waze-button" (click)="navToWaze()"><img
+                            src="assets/images/waze.svg"></button>
+                </div>
             </div>
         </div>
     </div>

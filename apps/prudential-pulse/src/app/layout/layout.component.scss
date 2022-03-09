@@ -59,7 +59,11 @@
     align-items: center;
 
     &.active {
-      color: var(--accent);
+      color: var(--tab-red);
+
+      mat-icon {
+        color: #DA3738;
+      }
     }
   }
 }

@@ -18,6 +18,15 @@
       <div class="description sun-editor-editable" [innerHTML]="dealDetail?.description | safeHtml"></div>
       <div class="description sun-editor-editable" [innerHTML]="dealDetail?.termsAndConditions | safeHtml"></div>
     </div>
+    <div class="btn-cta-deals"  *ngIf="dealDetail?.customFields?.dealsButtonLink && dealDetail?.customFields?.dealsButtonName">
+      <div class="btn-cta-container">
+        <a [href]="dealDetail?.customFields?.dealsButtonLink | safeUrl" class="btn-cta-deals-link">
+          <button mat-stroked-button color="primary" class="btn-cta-deals_action">
+            {{dealDetail?.customFields?.dealsButtonName}}
+          </button>
+        </a>
+      </div>
+    </div>
   </mat-card>
   <mat-card class="card similar-deal">
     <div class="similar-deals-heading">
