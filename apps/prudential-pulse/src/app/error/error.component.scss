@@ -2,10 +2,10 @@
   height: 100%;
   background-color: #f6f7f9;
   display: flex;
-  // align-items: center;
   flex-direction: row;
   text-align: center;
   padding: 0 1.5rem;
+  justify-content: center;
 
   .content {
     display: block;
