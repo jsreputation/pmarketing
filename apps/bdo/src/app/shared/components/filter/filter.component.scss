@@ -1,4 +1,4 @@
-@import '../../../../theme/variables.scss';
+@import "../../../../theme/variables.scss";
 
 .filter-form {
   padding: 16px;
@@ -39,7 +39,7 @@
       padding: 0 5px 0 0;
       border-radius: 0;
       height: 32px;
-      margin-top: 14px;
+      margin-top: 16px;
     }
 
     .mat-expansion-panel {
@@ -65,7 +65,7 @@
     font-weight: bold;
     font-size: 16px;
     border-radius: 12px;
-    margin: 10px 0;
+    margin: 16px 0;
 
     &.button-apply-filter {
       background-color: $medium-blue;
@@ -77,6 +77,42 @@
       background-color: $white;
       color: $medium-blue;
       border: 2px solid $medium-blue;
+      margin-top: 0 !important;
+    }
+  }
+
+  .tags-wrapper {
+    ::ng-deep {
+      .mat-chip-list {
+        .mat-chip-list-wrapper {
+          @media screen and (max-width: $desktop-width) {
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  .location-wrapper {
+    .inline-checkbox-group {
+      margin-block-start: 0 !important;
+      margin-block-end: 0 !important;
+    }
+  }
+
+  .categories-wrapper {
+    ::ng-deep {
+      .custom-checkbox {
+        .checkbox-group-wrapper {
+          .mat-expansion-panel-header {
+            padding-top: 16px;
+          }
+          .mat-expansion-panel-content {
+            margin-bottom: 16px;
+          }
+        }
+      }
     }
   }
 }

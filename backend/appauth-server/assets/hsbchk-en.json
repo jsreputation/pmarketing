@@ -266,7 +266,8 @@
     "READ_MORE": "Read More",
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
-    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
+    "YOU_HAVE": "Your total points as of"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
@@ -318,7 +319,8 @@
     "EXPIRY": "Expires on: {{date}}",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
