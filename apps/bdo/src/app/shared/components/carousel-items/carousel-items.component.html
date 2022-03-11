@@ -5,17 +5,20 @@
         <ng-container *ngIf="!isFeatured; else featuredBlock">
           <img [src]="deal.thumbnail ? deal.thumbnail:urlImageDefault" />
           <div class="container">
-            <h4 class="title ellipsis-1-lines">{{deal.name}}</h4>
-            <p class="description" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
+            <h4 class="title ellipsis-2-lines">{{deal.name}}</h4>
+            <p class="description ellipsis-2-lines" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
             <span class="position" *ngIf="deal?.position">
               <img class="icon-location" src="assets/images/icon-location.svg"/>
               {{deal.position | meterToKilometer}} km
+              <!-- {{1000 | meterToKilometer}} km -->
             </span>
           </div>
         </ng-container>
         <ng-template #featuredBlock>
-          <img class="image" [src]="deal.featuredImg ? deal.featuredImg : (deal.thumbnail ? deal.thumbnail : urlImageDefault)">
-          <span class="title ellipsis-1-lines">{{deal.name}}</span>
+          <div class="container">
+              <img class="image" [src]="deal.featuredImg ? deal.featuredImg : (deal.thumbnail ? deal.thumbnail : urlImageDefault)">
+              <span class="title ellipsis-2-lines">{{deal.name}}</span>
+          </div>
         </ng-template>
       </div>
   </carousel>
