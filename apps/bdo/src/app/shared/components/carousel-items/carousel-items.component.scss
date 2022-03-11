@@ -15,7 +15,7 @@
   }
 
   .container {
-    padding: 10px 16px 16px 16px;
+    padding: 16px;
 
     .title {
       padding: 0;
@@ -28,6 +28,10 @@
       @include ellipse-lines(1);
     }
 
+    .ellipsis-2-lines {
+      @include ellipse-lines(2);
+    }
+
     .description {
       padding: 0;
       margin: 10px 0;
@@ -37,6 +41,10 @@
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
+      min-height: 32px;
+
+      margin-block-start: 8px;
+      margin-block-end: 8px;
     }
 
     .position {
@@ -78,6 +86,10 @@
 
   .ellipsis-1-lines {
     @include ellipse-lines(1);
+  }
+
+  .ellipsis-2-lines {
+    @include ellipse-lines(2);
   }
 }
 
