@@ -85,7 +85,7 @@ export class V4ThemesService extends ThemesService {
         '--header_color': settingValues.header_color,
         '--background': settingValues.app_bg_color,
         '--login_background_colour': settingValues.login_page_bg_color,
-        '--font_color': '#231f20',
+        '--font_color': settingValues.font_color || '#231f20',
         '--surface_colour': '#ffffff',
         '--popup_background_colour': '#ffffff',
         '--login_page_bg_image': settingValues?.login_page_bg_image ? settingValues?.login_page_bg_image : ''
