@@ -17,7 +17,8 @@ import {
   ICampaignService,
   TokenStorage,
   ConfigService,
-  SettingsService
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from '../../loyalty.mock';
@@ -71,7 +72,9 @@ describe('HomeComponent', () => {
   const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
   const settingsServiceStub: Partial<SettingsService> = {
-    getRemoteFlagsSettings: () => of()
+    getRemoteFlagsSettings: () => of({
+      showLeaderboardLinkOnHomePage: true
+    })
   };
 
   beforeEach(async(() => {
@@ -172,6 +175,7 @@ describe('HomeComponent', () => {
     });
   });
   it('should handle scroll', fakeAsync(() => {
+    const settingsService: SettingsService = fixture.debugElement.injector.get<SettingsService>(SettingsService as Type<SettingsService>);
     component.previousDelta = -10;
     const spy = spyOn(window, 'requestAnimationFrame').and.callThrough();
     component.onScrollCall();
@@ -185,7 +189,16 @@ describe('HomeComponent', () => {
     component.previousDelta = -1000;
     component.onScrollCall();
     tick(100);
-    expect(component.top).toBe(-240);
+
+    settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        const showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
+        if (showLeaderboardLinkOnHomePage) {
+          expect(component.top).toBe(-240);
+        } else {
+          expect(component.top).toBe(-184);
+        }
+      });
   }));
 
   it('should redirect to error screen', fakeAsync(() => {
