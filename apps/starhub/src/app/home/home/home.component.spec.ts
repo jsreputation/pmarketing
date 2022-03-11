@@ -16,7 +16,8 @@ import {
   InstantOutcomeService,
   ICampaignService,
   TokenStorage,
-  ConfigService
+  ConfigService,
+  SettingsService
 } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from '../../loyalty.mock';
@@ -69,6 +70,10 @@ describe('HomeComponent', () => {
 
   const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, StarsComponent, NoRenewaleInNamePipe],
@@ -91,7 +96,8 @@ describe('HomeComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
