@@ -37,7 +37,7 @@ import {
   of
 } from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
-import {MatExpansionPanel} from '@angular/material/expansion';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
@@ -177,13 +177,14 @@ export class HomeComponent implements OnInit {
       this.expansionPanel.close();
     }
     requestAnimationFrame(() => {
+      const offset = this.showLeaderboardLinkOnHomePage ? -240 : -184;
       const delta =
         this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
       this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
       if (this.top + delta > 0) {
         this.top = 0;
-      } else if (this.top + delta <= -240) {
-        this.top = -240;
+      } else if (this.top + delta <= offset) {
+        this.top = offset;
       } else {
         this.top = this.top + delta;
       }
