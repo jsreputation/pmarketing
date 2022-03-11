@@ -17,7 +17,9 @@ import {
   IProfile,
   LoyaltyService,
   ProfileService,
-  RewardPopupComponent
+  RewardPopupComponent,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatDialog } from '@angular/material/dialog';
@@ -73,6 +75,7 @@ export class HomeComponent implements OnInit {
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
   public uxcr: boolean = false;
+  public showLeaderboardLinkOnHomePage: boolean = false;
   @ViewChild('expansionPanel')
   public expansionPanel: MatExpansionPanel;
 
@@ -84,6 +87,7 @@ export class HomeComponent implements OnInit {
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
     private configService: ConfigService,
+    private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog
   ) { }
@@ -134,6 +138,12 @@ export class HomeComponent implements OnInit {
               }
             });
         }
+      }
+    );
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
       }
     );
   }
