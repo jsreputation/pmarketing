@@ -15,11 +15,10 @@ import {
   ErrorMessageService,
   RewardPopupComponent,
   IRewardPopupConfig,
-  ConfigService,
   IPrizeSetOutcome,
   SettingsService,
   IBadgeOutcome,
-  IConfig,
+  IFlags,
 } from '@perxtech/core';
 import {
   map,
@@ -103,6 +102,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private prizeSetReserved: boolean = false;
   public showPrizeSetOutcome: boolean = false;
   private prizeSetBtnTxt: string;
+  public remoteFlags: IFlags;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,18 +114,15 @@ export class GameComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService,
     private errorMessageService: ErrorMessageService,
     private dialog: MatDialog,
-    private configService: ConfigService,
     private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
-
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-      }
-    );
+    
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+    });
 
     this.isAnonymousUser = this.auth.getAnonymous();
     combineLatest([

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import {
   IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory,
-  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig, ConfigService, IConfig, IBadgeOutcome
+  TokenStorage, IPrizeSetOutcome, RewardPopupComponent, IRewardPopupConfig, IBadgeOutcome, IFlags, SettingsService
 } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -27,6 +27,7 @@ export class QuizResultsComponent implements OnInit {
   public prizeSetOutcomes: IPrizeSetOutcome[];
   public badgeOutcomes: IBadgeOutcome[];
   public showPrizeSetOutcome: boolean = false;
+  public remoteFlags: IFlags;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -36,16 +37,14 @@ export class QuizResultsComponent implements OnInit {
     private notificationService: NotificationService,
     private translate: TranslateService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-      }
-    );
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+    });
 
     this.translate.get('QUIZ_TEMPLATE.QUESTION_TIME_TAKEN').subscribe((text) => {
       this.timeConsumed = of(text);

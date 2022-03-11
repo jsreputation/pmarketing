@@ -1,8 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AuthenticationService,
-  ConfigService,
-  IConfig,
   IPopupConfig,
   IPrePlayStateData,
   IPrizeSetOutcome,
@@ -11,7 +9,9 @@ import {
   ISurveyResultOutcome,
   NotificationService,
   RewardPopupComponent,
-  SurveyService
+  SurveyService,
+  IFlags, 
+  SettingsService
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
@@ -46,6 +46,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public showPrizeSetOutcome: boolean = false;
   private prizeSetBtnTxt: string;
   private isBadgeOucome: boolean;
+  public remoteFlags: IFlags;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
@@ -127,16 +128,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private auth: AuthenticationService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-      }
-    );
+  
+     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+    });
+
     this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
