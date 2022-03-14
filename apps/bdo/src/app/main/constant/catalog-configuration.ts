@@ -12,7 +12,9 @@ export const CATALOG_CONFIGURATION = {
       spend: 'spend-anywhere',
       redeem: 'shop-choose-redeem',
       online: 'online-exclusives',
-      rewards: 'bdo-rewards'
+      rewards: 'bdo-rewards',
+      credit: 'credit-card',
+      debit: 'debit-card',
     }
   },
   category: {
