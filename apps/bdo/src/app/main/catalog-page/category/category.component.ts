@@ -25,8 +25,13 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.filterService.filterValue$.subscribe(filterValue => {
       if (filterValue) {
+        console.log("filterValue: ", filterValue)
         this.category = CATEGORY_CONFIGURATIONS.find(item => item.key === filterValue.type);
+        console.log("category: ", this.category)
+
         const selectedFilterCategory = filterValue.categories.find(item => item.selected);
+
+        console.log('selectedFilterCategory: ', selectedFilterCategory);
         this.category = {
           ...this.category,
           children: this.category?.children ? this.category.children
@@ -88,6 +93,7 @@ export class CategoryComponent implements OnInit {
   }
 
   selectSubcategory(selectedItem: ItemModel) {
+    console.log('ItemModel: ', selectedItem);
     this.category.children = this.category.children
       .map(item => item.key === selectedItem.key ? { ...item, selected: !selectedItem.selected } : { ...item});
     const selectedSubCategories = this.category.children.filter(item => item.selected);
