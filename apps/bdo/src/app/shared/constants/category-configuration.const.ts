@@ -192,12 +192,6 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLinkSelected:"assets/images/installment-enclosed-filled-fullcolor.svg"
       },
       {
-        key:"buy-now-pay-later",
-        name:"Buy Now Pay Later",
-        imageLink:"assets/images/installment-enclosed-outline-fullcolor.svg",
-        imageLinkSelected:"assets/images/installment-enclosed-filled-fullcolor.svg"
-      },
-      {
         key:"shop",
         name:"Shop",
         imageLink:"assets/images/shop-enclosed-outline-fullcolor.svg",
