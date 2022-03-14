@@ -83,10 +83,15 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public feedScrolled(event: Event): void {
-    const unitsScrolledPast =
-      (event.target as Element).scrollLeft / window.innerWidth;
-    this.activeNumber = Math.round(unitsScrolledPast);
+    // const unitsScrolledPast =
+    //   (event.target as Element).scrollLeft / window.innerWidth;
+    // this.activeNumber = Math.round(unitsScrolledPast);
+    // this.activeNumber = this.itemsContainer.nativeElement.scrollLeft < this.itemsContainer.nativeElement.offsetWidth ? 0 : 1;
+
+    this.activeNumber = this.itemsContainer.nativeElement.scrollLeft / window.innerWidth;
   }
+
+
 
   @HostListener('window:resize', ['$event'])
   public onResize(): void {
