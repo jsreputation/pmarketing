@@ -134,4 +134,9 @@ mat-toolbar {
   &.accordion-expanded {
     position: sticky !important;
   }
+
+  .leaderboard {
+    width: 100%;
+    margin-top: 1.4rem;
+  }
 }

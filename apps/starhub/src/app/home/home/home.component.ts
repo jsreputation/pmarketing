@@ -17,7 +17,9 @@ import {
   IProfile,
   LoyaltyService,
   ProfileService,
-  RewardPopupComponent
+  RewardPopupComponent,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,7 +37,7 @@ import {
   of
 } from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
-import {MatExpansionPanel} from '@angular/material/expansion';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
@@ -73,6 +75,7 @@ export class HomeComponent implements OnInit {
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
   public uxcr: boolean = false;
+  public showLeaderboardLinkOnHomePage: boolean = false;
   @ViewChild('expansionPanel')
   public expansionPanel: MatExpansionPanel;
 
@@ -84,6 +87,7 @@ export class HomeComponent implements OnInit {
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
     private configService: ConfigService,
+    private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog
   ) { }
@@ -136,6 +140,12 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
+      }
+    );
   }
 
   private get data(): Partial<IdataLayerSH> {
@@ -167,13 +177,14 @@ export class HomeComponent implements OnInit {
       this.expansionPanel.close();
     }
     requestAnimationFrame(() => {
+      const offset = this.showLeaderboardLinkOnHomePage ? -240 : -184;
       const delta =
         this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
       this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
       if (this.top + delta > 0) {
         this.top = 0;
-      } else if (this.top + delta <= -184) {
-        this.top = -184;
+      } else if (this.top + delta <= offset) {
+        this.top = offset;
       } else {
         this.top = this.top + delta;
       }
