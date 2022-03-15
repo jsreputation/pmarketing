@@ -44,13 +44,6 @@
       }
     }
 
-    @media screen and (max-width: $desktop-width) {
-      &#catalogue {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
     @media screen and (max-width: $tablet-width) {
       &#catalogue {
         display: grid;
@@ -61,7 +54,7 @@
     @media screen and (min-width: $tablet-width) {
       &#catalogue {
         display: grid;
-        grid-template-columns: 2fr 2fr;
+        grid-template-columns: 1fr 1fr;
       }
     }
   }
