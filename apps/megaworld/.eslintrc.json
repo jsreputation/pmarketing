@@ -1,0 +1,14 @@
+{
+  "extends": "../../.eslintrc",
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["apps/blackcomb/tsconfig.*?.json"]
+      },
+      "rules": {}
+    }
+  ],
+  "ignorePatterns": ["!**/*"]
+}

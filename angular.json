@@ -2860,6 +2860,122 @@
           }
         }
       }
+    },
+    "megaworld": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/megaworld",
+      "sourceRoot": "apps/megaworld/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/megaworld",
+            "index": "apps/megaworld/src/index.html",
+            "main": "apps/megaworld/src/main.ts",
+            "polyfills": "apps/megaworld/src/polyfills.ts",
+            "tsConfig": "apps/megaworld/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/megaworld/src/favicon.ico",
+              "apps/megaworld/src/assets",
+              "apps/megaworld/src/static",
+              "apps/megaworld/src/manifest.webmanifest",
+              "apps/megaworld/src/robots.txt"
+            ],
+            "styles": [
+              "apps/megaworld/src/styles.scss",
+              "apps/megaworld/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/megaworld/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/megaworld/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "megaworld:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "megaworld:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "megaworld:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/megaworld/e2e/protractor.conf.js",
+            "devServerTarget": "megaworld:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "megaworld:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/megaworld/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/megaworld"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/megaworld/src/**/*.d.ts",
+              "apps/megaworld/src/main.ts",
+              "apps/megaworld/src/polyfills.ts",
+              "apps/megaworld/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
     }
   }
 }
