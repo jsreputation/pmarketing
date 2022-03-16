@@ -16,7 +16,9 @@ import {
   InstantOutcomeService,
   ICampaignService,
   TokenStorage,
-  ConfigService
+  ConfigService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from '../../loyalty.mock';
@@ -69,6 +71,12 @@ describe('HomeComponent', () => {
 
   const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of({
+      showLeaderboardLinkOnHomePage: true
+    })
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, StarsComponent, NoRenewaleInNamePipe],
@@ -91,7 +99,8 @@ describe('HomeComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
@@ -166,6 +175,7 @@ describe('HomeComponent', () => {
     });
   });
   it('should handle scroll', fakeAsync(() => {
+    const settingsService: SettingsService = fixture.debugElement.injector.get<SettingsService>(SettingsService as Type<SettingsService>);
     component.previousDelta = -10;
     const spy = spyOn(window, 'requestAnimationFrame').and.callThrough();
     component.onScrollCall();
@@ -179,7 +189,16 @@ describe('HomeComponent', () => {
     component.previousDelta = -1000;
     component.onScrollCall();
     tick(100);
-    expect(component.top).toBe(-184);
+
+    settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        const showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
+        if (showLeaderboardLinkOnHomePage) {
+          expect(component.top).toBe(-240);
+        } else {
+          expect(component.top).toBe(-184);
+        }
+      });
   }));
 
   it('should redirect to error screen', fakeAsync(() => {

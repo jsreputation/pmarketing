@@ -1,4 +1,4 @@
-@import "../../../../theme/variables.scss";
+@import '../../../../theme/variables.scss';
 
 .search-result-tab {
   .label-tab {
@@ -19,6 +19,10 @@
       ::ng-deep {
         .item {
           cursor: pointer;
+
+          @media screen and (max-width: $desktop-width) {
+            max-width: 100%;
+          }
         }
       }
     }
@@ -40,10 +44,17 @@
       }
     }
 
-        @media screen and (max-width: $desktop-width) {
+    @media screen and (max-width: $tablet-width) {
       &#catalogue {
         display: grid;
-        grid-template-columns: 2fr 2fr;
+        grid-template-columns: unset;
+      }
+    }
+
+    @media screen and (min-width: $tablet-width) {
+      &#catalogue {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
       }
     }
   }

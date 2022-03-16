@@ -187,7 +187,7 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
       },
       {
         key:"installment",
-        name:"Installment",
+        name:"Buy Now Pay Later",
         imageLink:"assets/images/installment-enclosed-outline-fullcolor.svg",
         imageLinkSelected:"assets/images/installment-enclosed-filled-fullcolor.svg"
       },
