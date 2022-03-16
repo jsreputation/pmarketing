@@ -145,7 +145,6 @@ blackcomb_app_base=(
   hsbcvn
   hoolah
   johnsen360
-  megaworld
   oracle-demo
   partners-demo
   perx-demo
