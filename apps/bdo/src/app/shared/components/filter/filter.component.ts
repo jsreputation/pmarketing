@@ -24,6 +24,7 @@ export class FilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterSource = this.filterService.currentValue;
+    console.log('this.filterSource: ', this.filterSource)
     this.renderForm();
   }
 

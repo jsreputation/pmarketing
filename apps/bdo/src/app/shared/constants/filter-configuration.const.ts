@@ -9,7 +9,7 @@ export const FILTER_DATA: IFilterModel = {
       children: [
         { name: 'Card Exclusives', type:'card-exclusives' },
         { name: 'Essentials',type:'essentials' },
-        { name: 'Installment',type:'installment' },
+        { name: 'Buy Now Pay Later',type:'installment' },
         { name: 'Shop',type:'shop' },
         { name: 'Dine',type:'dine' },
         { name: 'Pay Bills',type:'pay-bills' },
