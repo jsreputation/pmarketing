@@ -192,6 +192,7 @@
     "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "echo 'skipping old-hsbc tests'",
     "test:hsbchk": "echo 'skipping hsbchk tests'",
+    "test:megaworld": "nx test megaworld --detectOpenHandles",
     "test:merck-customer": "nx test merck-customer --detectOpenHandles",
     "test:merck-merchant": "nx test merck-merchant --detectOpenHandles",
     "test:oracle-pay": "echo 'skipping oracle-pay tests'",
