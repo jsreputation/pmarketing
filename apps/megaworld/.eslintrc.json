@@ -5,7 +5,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["apps/blackcomb/tsconfig.*?.json"]
+        "project": ["apps/megaworld/tsconfig.*?.json"]
       },
       "rules": {}
     }
