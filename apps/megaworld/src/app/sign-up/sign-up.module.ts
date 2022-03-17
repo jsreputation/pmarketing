@@ -9,6 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MAT_MOMENT_DATE_FORMATS,
@@ -39,6 +42,9 @@ import {
     MatIconModule,
     MatMomentDateModule,
     MatDatepickerModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
     ReactiveFormsModule,
     FormsModule,
     TranslateModule

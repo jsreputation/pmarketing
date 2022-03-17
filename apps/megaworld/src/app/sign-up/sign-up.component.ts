@@ -49,6 +49,7 @@ export class SignupComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public maxDobDate: Date = new Date(); // today
   public appConfig: IConfig<void>;
+  public loadingSubmit: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +60,7 @@ export class SignupComponent implements OnInit {
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
     private themesService: ThemesService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(
@@ -93,28 +94,26 @@ export class SignupComponent implements OnInit {
 
   private initForm(): void {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
-      dob: ['', Validators.required],
-      // postcode: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      // dob: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      email: ['', Validators.email],
+      // email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       referralCode: [''],
-      accept_terms: [false, Validators.requiredTrue],
-      accept_marketing: [false, Validators.required]
-    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
   }
 
   public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
     return (group: FormGroup) => {
-        const password = group.controls[passwordKey];
-        const passwordConfirmation = group.controls[passwordConfirmationKey];
-        if (password.value !== passwordConfirmation.value) {
-            return passwordConfirmation.setErrors({mismatchedPasswords: true});
-        }
-        passwordConfirmation.setErrors(null);
+      const password = group.controls[passwordKey];
+      const passwordConfirmation = group.controls[passwordConfirmationKey];
+      if (password.value !== passwordConfirmation.value) {
+        return passwordConfirmation.setErrors({ mismatchedPasswords: true });
+      }
+      passwordConfirmation.setErrors(null);
     };
   }
 
@@ -126,25 +125,27 @@ export class SignupComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    const name = this.signupForm.value.name;
+    const firstName = this.signupForm.value.firstName;
+    const lastName = this.signupForm.value.lastName;
     const dob = this.signupForm.value.dob as Moment;
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const codeAndMobile = countryCode + mobileNumber;
 
-    const emailValue = this.signupForm.value.email;
+    // const emailValue = this.signupForm.value.email;
 
     // const postcodeString = this.signupForm.value.postcode;
     const referralCode = this.signupForm.value.referralCode;
 
     const signUpData: ISignUpData = {
-      lastName: name,
+      lastName,
+      firstName,
       birthDay: dob.format(), // convert moment to ISO
       phone: codeAndMobile,
       password: passwordString,
       passwordConfirmation: confirmPassword,
-      email: emailValue,
+      // email: emailValue,
       // postcode: postcodeString
     };
 
@@ -154,16 +155,18 @@ export class SignupComponent implements OnInit {
       };
     }
 
+    this.loadingSubmit = true;
     this.authService.signup(signUpData)
       .subscribe(
         (data: IProfile | null) => {
           if (!data) {
             return;
           }
-
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
+          this.loadingSubmit = false;
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true });
         },
         err => {
+          this.loadingSubmit = false;
           this.notificationService.addSnack(err.error.message);
         });
   }

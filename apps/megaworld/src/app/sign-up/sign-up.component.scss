@@ -1,96 +1,90 @@
-$error-message-container-color: #ffc832;
-$heading-font-color: #1b1b25;
+@import "../../mixins";
 
-.main-container {
+.content-container {
+  padding: 4rem 0;
+  height: auto!important;
+  @include loginContentContainer;
+  @include multiLineFormFieldError;
+
+  ::ng-deep {
+    &[appearance="standard"],
+    &[appearance="legacy"] {
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.75em 0.75em 0 0.75em !important;
+        background-color: rgba(33, 33, 33, 0.03)!important;
+      }
+
+      .mat-form-field-flex > div {
+        padding-bottom: 0.75em;
+        top: -0.5em;
+
+        span.prefix-spacer {
+          width: 0.3em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .uppercase-first-letter {
+    display: block;
+    text-transform: lowercase;
+  }
+
+  .uppercase-first-letter::first-letter{
+    text-transform: uppercase;
+  }
+}
+
+.sign-up {
+  @include loginCard;
+
+  .red-text {
+    color: red;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      //color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  button {
     width: 100%;
+    box-sizing: border-box;
+    background: var(--button_background_color);
+    &:disabled {
+      opacity: 0.45;
+    }
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+
+  .subtitle {
+    @include form-subtitle;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}
+
+.login-image {
+  .logo {
+    width: 100%;
+    max-width: 30rem;
+    max-height: 10rem;
     height: 100%;
-    background: black;
-    background-size: cover;
-    position: fixed;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
-    overflow: scroll;
-
-    img {
-        float: none;
-        margin: 5.2rem auto;
-        margin-bottom: 0.8rem;
-        display: block;
-    }
-
-    .content-container {
-        width: 80%;
-        max-width: 80rem;
-        padding: 2.1rem;
-        background: white;
-        border-radius: 0.8rem;
-        margin: 1.2rem 1.5rem 1.5rem 1.5rem;
-
-        .main-heading {
-            font-weight: 900;
-            font-size: 3.2rem;
-            color: $heading-font-color;
-        }
-
-        .subtitle {
-            font-weight: normal;
-            font-size: 1.4rem;
-            margin-top: 1rem;
-            color: $heading-font-color;
-
-            .link {
-                color: red;
-            }
-        }
-
-        .error_msg {
-            padding-bottom: 1rem;
-
-            span {
-                color: #eb202f;
-                font-size: 1.5rem;
-            }
-        }
-
-        form {
-            margin-top: 1rem;
-            font-size: 1.6rem;
-
-            .accept-terms {
-                margin: 1rem 0 2rem 0;
-            }
-
-            .checkbox-container {
-                display: flex;
-                flex-direction: row;
-                align-items: baseline;
-                margin: 1rem 0;
-
-                .wrap-checkbox-text {
-                    margin-left: 0.8rem;
-
-                    .terms {
-                        color: #e42713;
-                    }
-                }
-            }
-        }
-
-        .full-width__button {
-            width: 100%;
-            color: white;
-            margin-top: 3rem;
-        }
-
-        .full-width__input {
-            width: 100%;
-            margin-top: 0;
-        }
-
-        .button-bg-color {
-            background: var(--button_background_color) !important;
-        }
-    }
+    object-fit: contain;
+  }
 }
