@@ -39,7 +39,7 @@
     &#credit-card-catalog {
       background-image: url("/assets/images/img-creditcard-mobile.svg");
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-creditcard.svg");
+        background-image: url("/assets/images/img-creditcard-desktop.png");
       }
     }
 
@@ -47,7 +47,7 @@
       background-image: url("/assets/images/img-debitcard-mobile.svg");
 
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-debitcard.svg");
+        background-image: url("/assets/images/img-debitcard-desktop.png");
       }
     }
 
@@ -55,7 +55,7 @@
       background-image: url("/assets/images/img-bdorewards-mobile.svg");
 
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-bdorewards.svg");
+        background-image: url("/assets/images/img-bdorewards-desktop.png");
       }
     }
 
