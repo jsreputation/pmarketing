@@ -83,15 +83,16 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public feedScrolled(event: Event): void {
-    // const unitsScrolledPast =
-    //   (event.target as Element).scrollLeft / window.innerWidth;
-    // this.activeNumber = Math.round(unitsScrolledPast);
-    // this.activeNumber = this.itemsContainer.nativeElement.scrollLeft < this.itemsContainer.nativeElement.offsetWidth ? 0 : 1;
+    let scrollTimer: any = null;
+    const unitsScrolledPast =
+      (event.target as Element).scrollLeft / window.innerWidth;
+    const activeNumber = Math.round(unitsScrolledPast);
 
-    this.activeNumber = this.itemsContainer.nativeElement.scrollLeft / window.innerWidth;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      this.activeNumber = activeNumber;
+    }, 250);
   }
-
-
 
   @HostListener('window:resize', ['$event'])
   public onResize(): void {
@@ -118,18 +119,24 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public onCircleClick(isActive: boolean, index: number): void {
-    const newsBeforeScroll = Array(index >= 0 ? index : 0);
+    const elem = this.itemsContainer.nativeElement;
     if (!isActive) {
       if (index === 0) {
-        this.itemsContainer.nativeElement.scrollLeft = 0;
-      } else if (index > this.activeNumber) {
-        this.itemsContainer.nativeElement.scrollLeft +=
-          this.itemsContainer.nativeElement.offsetWidth *
-          newsBeforeScroll.length;
+        elem.scrollLeft = 0;
+      } else if (index === 1) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth)
+          : (elem.scrollLeft -= elem.offsetWidth * this.activeNumber);
+      } else if (index === 2) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth * 2)
+          : (elem.scrollLeft -= elem.offsetWidth * 2);
+      } else if (index === 3) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth * 3)
+          : (elem.scrollLeft -= elem.offsetWidth * 3);
       } else {
-        this.itemsContainer.nativeElement.scrollLeft -=
-          this.itemsContainer.nativeElement.offsetWidth *
-          newsBeforeScroll.length;
+        elem.scrollLeft = 0;
       }
     }
   }

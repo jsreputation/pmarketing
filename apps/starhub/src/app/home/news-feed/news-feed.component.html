@@ -44,12 +44,9 @@
           class="gray-dot"
           *ngFor="let i of items; let ind = index"
           [ngClass]="{'green-bar': (ind === activeNumber)}"
-          (click)="onCircleClick(ind === activeNumber)"
+          (click)="onCircleClick(ind === activeNumber, ind)"
         ></span>
-        <!-- <span class="green-bar"></span> -->
       </div>
     </div>
   </div>
 </div>
- <!-- <div *ngFor="let banner of banners;let ind = index;" [ngClass]="{'circle--active': (ind === activeNumber)}"
-        class="circle" (click)="onCircleClick(ind === activeNumber)"></div> -->
