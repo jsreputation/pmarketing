@@ -117,19 +117,6 @@
     }
   }
 
-  .featured-deals {
-    ::ng-deep {
-      bdo-carousel-items {
-        .featured-item,
-        .container {
-          .ellipsis-lines {
-            @include ellipse-lines(1);
-          }
-        }
-      }
-    }
-  }
-
   .card-without-margin {
     margin-top: 0!important;
   }
