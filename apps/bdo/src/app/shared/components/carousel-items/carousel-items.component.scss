@@ -24,10 +24,6 @@
       font-size: 16px;
     }
 
-    .ellipsis-lines {
-      @include ellipse-lines(2);
-    }
-
     .ellipsis-1-lines {
       @include ellipse-lines(1);
     }
@@ -87,11 +83,7 @@
     font-size: 16px;
     font-weight: bold;
   }
-
-  .ellipsis-lines {
-    @include ellipse-lines(2);
-  }
-
+  
   .ellipsis-1-lines {
     @include ellipse-lines(1);
   }
