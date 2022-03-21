@@ -9,11 +9,11 @@ export class FilterDialogService {
   private filterDialogRef: MatDialogRef<FilterComponent>;
   constructor(public dialog: MatDialog) {}
 
-  public showFilterDialog(onCloseCallback?: (result) => void) {
+  public showFilterDialog(data: any, onCloseCallback?: (result) => void) {
     this.filterDialogRef = this.dialog.open(FilterComponent, {
       panelClass: 'filter-dialog-container',
       position: { top: '0' },
-      data: {},
+      data,
     });
 
     this.filterDialogRef.afterClosed().subscribe((result) => {

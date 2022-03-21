@@ -23,7 +23,7 @@ export class FilterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.filterSource = this.filterService.currentValue;
+    this.filterSource = this.filterService.currentValue || this.data;
     this.filterService.filterValue$.subscribe((filterValue) => {
       console.log('filterValue: ', filterValue);
     });

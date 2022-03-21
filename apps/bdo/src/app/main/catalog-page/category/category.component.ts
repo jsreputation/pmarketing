@@ -84,8 +84,7 @@ export class CategoryComponent implements OnInit {
   }
 
   filter() {
-    this.filterService.setValue(this.filterSource);
-    this.filterDialogService.showFilterDialog((value) => {
+    this.filterDialogService.showFilterDialog(this.filterSource,(value) => {
       if (value) {
         this.buildFilterQueryParamsAndNavigate(value);
       }
