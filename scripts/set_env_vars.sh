@@ -152,6 +152,7 @@ blackcomb_app_base=(
   progresif
   razer
   rush
+  sabb
   scphoenix
   siampiwat
   techfis
