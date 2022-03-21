@@ -219,8 +219,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
           .subscribe(result => {
             if (result) {
               const enrollPopUpConf: IPopupConfig = {
-                title: 'Campaign enrolled!',
-                text: `All the best, you have until ${this.campaign?.endsAt ? this.campaign?.endsAt.toDateString() : ''} to win prize(s)`,
+                title: 'You are enrolled!',
+                text: `You have until ${this.campaign?.endsAt ? this.campaign?.endsAt.toDateString() : 'All the best!'} to win prize(s). All the best!`,
                 buttonTxt: 'Ok',
               };
               this.notificationService.addPopup(enrollPopUpConf);
