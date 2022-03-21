@@ -83,20 +83,6 @@ describe('NewsFeedComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // describe('updateScrollIndex', () => {
-  //   it('should update newsAfterScroll to Array(0) on updateScrollIndex', () => {
-  //     component.items = items;
-  //     component.updateScrollIndex(1);
-  //     expect(component.newsAfterScroll).toEqual(Array(0));
-  //   });
-
-  //   it('should update newsAfterScroll to [] on updateScrollIndex', () => {
-  //     component.items = [];
-  //     component.updateScrollIndex(0);
-  //     expect(component.newsAfterScroll).toEqual([]);
-  //   });
-  // });
-
   it('should update itemSize onResize', () => {
     component.onResize();
     const windowWidth = window.innerWidth;
