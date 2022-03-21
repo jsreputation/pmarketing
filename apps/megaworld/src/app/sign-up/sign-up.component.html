@@ -59,7 +59,17 @@
                     </mat-form-field>
                 </ng-template>
             </div>
-
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>SIGN_UP_PAGE.EMAIL_FIELD</mat-label>
+                <input matInput [placeholder]="'SIGN_UP_PAGE.EMAIL_FIELD' | translate" formControlName="email"
+                    required>
+                <mat-error *ngIf="signupForm.get('email').hasError('required')">
+                    <span translate>SIGN_UP_PAGE.EMAIL_REQUIRED_TXT</span>
+                </mat-error>
+                <mat-error *ngIf="signupForm.get('email').hasError('email')">
+                    <span translate>SIGN_UP_PAGE.EMAIL_INVALID_TXT</span>
+                </mat-error>
+            </mat-form-field>
             <mat-form-field appearance="standard" class="full-width__input">
                 <mat-label translate>SIGN_UP_PAGE.PASSWORD_FIELD</mat-label>
                 <input matInput formControlName="password" [type]="passwordHide ? 'password' : 'text'"

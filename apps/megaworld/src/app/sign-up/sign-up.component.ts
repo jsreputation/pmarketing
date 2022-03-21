@@ -91,6 +91,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       lastName: ['', Validators.required],
       countryCode: ['', Validators.required],
       primary_identifier: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       referralCode: [''],
@@ -116,7 +117,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private configService: ConfigService,
     private generalStaticDataService: GeneralStaticDataService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
@@ -130,7 +131,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.configService
       .readAppConfig<ISignUpConfig>()
       .subscribe((conf: IConfig<ISignUpConfig>) => {
-        this.appConfig =  conf;
+        this.appConfig = conf;
         if (conf.countryCodePrefix) {
           this.countryCodePrefix = conf.countryCodePrefix;
         }
@@ -187,7 +188,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         // converting to Number will strip leading 0s
         let sanitizedId = '';
         const numberedId = Number(userObj.primary_identifier);
-        if (! isNaN(numberedId)) {
+        if (!isNaN(numberedId)) {
           sanitizedId = numberedId.toString();
         }
         userObj.primary_identifier =
