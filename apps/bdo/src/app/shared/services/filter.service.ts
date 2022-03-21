@@ -12,7 +12,6 @@ export class FilterService {
   constructor() {}
 
   public setValue(filterValue: IFilterModel) {
-    console.log('FilterService filterValue: ', filterValue);
     this.currentValue = filterValue;
     this.filterValue$.next(filterValue);
   }

@@ -24,10 +24,6 @@ export class FilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterSource = this.filterService.currentValue || this.data;
-    this.filterService.filterValue$.subscribe((filterValue) => {
-      console.log('filterValue: ', filterValue);
-    });
-
     this.renderForm();
   }
 
@@ -75,20 +71,20 @@ export class FilterComponent implements OnInit {
 
   private renderForm() {
     if (this.filterSource) {
-      this.filterSource.categories = this.filterSource.categories.filter(
+      this.filterSource.categories = this.filterSource?.categories?.filter(
         (category) => {
           return !SPECIAL_CATEGORIES.includes(category.type);
         }
       );
       this.filterForm = this.fb.group({
         categories: new FormArray(
-          this.filterSource.categories.map((item) => new FormControl(item))
+          this.filterSource?.categories?.map((item) => new FormControl(item))
         ),
         tags: new FormArray(
-          this.filterSource.tags.map((item) => new FormControl(item.selected))
+          this.filterSource?.tags?.map((item) => new FormControl(item.selected))
         ),
         locations: new FormArray(
-          this.filterSource.locations.map((item) => new FormControl(item))
+          this.filterSource?.locations?.map((item) => new FormControl(item))
         ),
       });
     }
@@ -97,22 +93,22 @@ export class FilterComponent implements OnInit {
   public selectCategory(value, idx) {
     const formArray = (this.filterForm.controls.categories as FormArray)
       .controls;
-    formArray.forEach((item, index) => {
-      // logic for clearing other category selections on selecting in a different category
-      if (index != idx && value) {
-        item.setValue(
-          {
-            ...item.value,
-            selected: false,
-            children: item.value.children.map((child) => ({
-              ...child,
-              selected: false,
-            })),
-          },
-          { emitEvent: false }
-        );
-      }
-    });
+      formArray?.forEach((item, index) => {
+        // logic for clearing other category selections on selecting in a different category
+        if (index != idx && value) {
+          item.setValue(
+              {
+                ...item.value,
+                selected: false,
+                children: item.value.children.map((child) => ({
+                  ...child,
+                  selected: false,
+                })),
+              },
+              { emitEvent: false }
+          );
+        }
+      });
   }
 
   public locationClick(value: any, index: number) {
