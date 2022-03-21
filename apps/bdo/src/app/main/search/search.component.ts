@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { IConfig, ITrending, ISearchHistory, RewardsService, ConfigService } from '@perxtech/core';
-import { FilterService } from '../../shared/services/filter.service';
-
+import { FilterDialogService } from '../../shared/services/filter.dialog.service';
 interface IBDOConfig {
   showSearchHistory: boolean;
 }
@@ -20,12 +19,12 @@ export class SearchComponent implements OnInit {
   constructor(
     private rewardsService: RewardsService,
     private configService: ConfigService,
-    private filterService: FilterService,
+    private filterDialogService: FilterDialogService,
     private route: Router) {
   }
 
   public ngOnInit(): void {
-    this.filterService.closeFilter();
+    this.filterDialogService.closeFilter();
     this.configService.readAppConfig<IBDOConfig>().subscribe((config: IConfig<IBDOConfig>) => {
       this.showHistory = config.custom!.showSearchHistory;
     });

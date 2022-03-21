@@ -3,7 +3,8 @@ import { FilterService } from '../../../shared/services/filter.service';
 import { Router } from '@angular/router';
 import { ItemModel } from '../../../shared/models/item.model';
 import { CATEGORY_CONFIGURATIONS } from '../../../shared/constants/category-configuration.const';
-import { IOptionsModel } from '../../../shared/models/filter.model';
+import { IFilterModel, IOptionsModel } from '../../../shared/models/filter.model';
+import { FilterDialogService } from '../../../shared/services/filter.dialog.service';
 
 @Component({
   selector: 'bdo-category',
@@ -14,17 +15,20 @@ export class CategoryComponent implements OnInit {
   @Input() categoryCode = '';
   category: ItemModel;
   selectedSubcategory: ItemModel;
+  filterSource: IFilterModel;
   categoryHeaders: { displayName: string, className: string }[];
   isTag = false;
 
   constructor(
     public filterService: FilterService,
+    public filterDialogService: FilterDialogService,
     private route: Router
   ) {}
 
   ngOnInit(): void {
     this.filterService.filterValue$.subscribe(filterValue => {
       if (filterValue) {
+        this.filterSource = filterValue;
         this.category = CATEGORY_CONFIGURATIONS.find(item => item.key === filterValue.type);
         const selectedFilterCategory = filterValue.categories.find(item => item.selected);
         this.category = {
@@ -80,7 +84,8 @@ export class CategoryComponent implements OnInit {
   }
 
   filter() {
-    this.filterService.showFilterDialog(value => {
+    this.filterService.setValue(this.filterSource);
+    this.filterDialogService.showFilterDialog((value) => {
       if (value) {
         this.buildFilterQueryParamsAndNavigate(value);
       }

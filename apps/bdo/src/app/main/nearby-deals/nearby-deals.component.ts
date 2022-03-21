@@ -8,6 +8,7 @@ import { combineLatest } from 'rxjs';
 import { mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { FilterDialogService } from '../../shared/services/filter.dialog.service';
 
 @Component({
   selector: 'bdo-nearby-deals',
@@ -25,6 +26,7 @@ export class NearbyDealsComponent implements OnInit{
   public listIcon = 'assets/images/view_all_list-default.svg';
   constructor(
     public filterService: FilterService,
+    public filterDialogService: FilterDialogService,
     private rewardService: RewardsService,
     private route: Router,
     private activeRoute: ActivatedRoute
@@ -75,7 +77,7 @@ export class NearbyDealsComponent implements OnInit{
   }
 
   filter() {
-    this.filterService.showFilterDialog(value => {
+    this.filterDialogService.showFilterDialog((value) => {
       if (value) {
         this.buildFilterQueryParamsAndNavigate(value);
       }
