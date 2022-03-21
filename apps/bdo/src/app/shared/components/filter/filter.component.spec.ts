@@ -11,12 +11,23 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { RewardsService } from '@perxtech/core';
 import { FilterService } from '../../services/filter.service';
 import { of } from 'rxjs';
+import { IFilterModel } from '../../models/filter.model';
 
 class MockRewardService {
   getAllCategories() {
     return of();
   }
 }
+
+const filterSource: IFilterModel = {
+  categories: [],
+  cardType: [],
+  locations: [],
+  rewardType: [],
+  tags: [],
+  type: null
+};
+
 describe('FilterComponent', () => {
   let component: FilterComponent;
   let fixture: ComponentFixture<FilterComponent>;
@@ -39,7 +50,7 @@ describe('FilterComponent', () => {
         FilterService,
         { provide: RewardsService, useClass: MockRewardService },
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: filterSource }
       ]
     })
       .compileComponents();
