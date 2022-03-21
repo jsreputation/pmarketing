@@ -20,7 +20,7 @@ export class FilterComponent implements OnInit {
     public filterService: FilterService,
     public dialogRef: MatDialogRef<FilterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.filterSource = this.filterService.currentValue || this.data;
@@ -66,7 +66,7 @@ export class FilterComponent implements OnInit {
   }
 
   checkCurrentValue(index: number) {
-    return (this.filterForm.get('tags') as FormArray).controls[index].value;
+    return (this.filterForm.get('tags') as FormArray)?.controls[index]?.value;
   }
 
   private renderForm() {
@@ -91,24 +91,25 @@ export class FilterComponent implements OnInit {
   }
 
   public selectCategory(value, idx) {
-    const formArray = (this.filterForm.controls.categories as FormArray)
-      .controls;
-      formArray?.forEach((item, index) => {
+    const formArray = (this.filterForm.controls?.categories as FormArray)?.controls;
+    if(formArray){
+      formArray.forEach((item, index) => {
         // logic for clearing other category selections on selecting in a different category
         if (index != idx && value) {
           item.setValue(
-              {
-                ...item.value,
+            {
+              ...item.value,
+              selected: false,
+              children: item.value.children.map((child) => ({
+                ...child,
                 selected: false,
-                children: item.value.children.map((child) => ({
-                  ...child,
-                  selected: false,
-                })),
-              },
-              { emitEvent: false }
+              })),
+            },
+            { emitEvent: false }
           );
         }
       });
+    }
   }
 
   public locationClick(value: any, index: number) {
