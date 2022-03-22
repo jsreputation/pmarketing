@@ -19,6 +19,7 @@
       ::ng-deep {
         .item {
           cursor: pointer;
+          max-width: 100%;
 
           @media screen and (max-width: $desktop-width) {
             max-width: 100%;
