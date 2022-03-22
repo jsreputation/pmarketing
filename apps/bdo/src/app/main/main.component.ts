@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FilterService } from '../shared/services/filter.service';
 import { Location } from '@angular/common';
+import { FilterDialogService } from '../shared/services/filter.dialog.service';
 
 @Component({
   selector: 'bdo-main',
@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private filterService: FilterService,
+    private filterDialogService: FilterDialogService,
     private router: Router,
     private activeRouter: ActivatedRoute) {
   }
@@ -40,8 +40,8 @@ export class MainComponent implements OnInit {
   }
 
   back() {
-    if (this.filterService.isOpen()) {
-      this.filterService.closeFilter();
+    if (this.filterDialogService.isOpen()) {
+      this.filterDialogService.closeFilter();
       return;
     }
 

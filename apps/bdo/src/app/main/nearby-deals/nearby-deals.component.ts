@@ -8,6 +8,8 @@ import { combineLatest } from 'rxjs';
 import { mapQueryParamsToFilterObject } from '../../shared/utilities/filter.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
+import { FilterDialogService } from '../../shared/services/filter.dialog.service';
+import {IFilterModel} from "../../shared/models/filter.model";
 
 @Component({
   selector: 'bdo-nearby-deals',
@@ -17,6 +19,7 @@ import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 export class NearbyDealsComponent implements OnInit{
   public rewards: IReward[];
   public rewardsItemModel: IListItemModel[];
+  public filterSource: IFilterModel;
   public rad = 3000;
   public currentPosition: IPosition;
   private queryParams: Params;
@@ -25,6 +28,7 @@ export class NearbyDealsComponent implements OnInit{
   public listIcon = 'assets/images/view_all_list-default.svg';
   constructor(
     public filterService: FilterService,
+    public filterDialogService: FilterDialogService,
     private rewardService: RewardsService,
     private route: Router,
     private activeRoute: ActivatedRoute
@@ -45,7 +49,8 @@ export class NearbyDealsComponent implements OnInit{
         }))
         .filter(item => item.id);
       filterData.type = params.type;
-      this.filterService.setValue(mapQueryParamsToFilterObject(filterData, this.queryParams));
+      this.filterSource = mapQueryParamsToFilterObject(filterData, this.queryParams);
+      this.filterService.setValue(this.filterSource);
       this.getRewardNearBy();
     })
   }
@@ -75,7 +80,7 @@ export class NearbyDealsComponent implements OnInit{
   }
 
   filter() {
-    this.filterService.showFilterDialog(value => {
+    this.filterDialogService.showFilterDialog(this.filterSource,(value) => {
       if (value) {
         this.buildFilterQueryParamsAndNavigate(value);
       }

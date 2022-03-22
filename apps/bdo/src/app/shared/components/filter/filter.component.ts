@@ -20,12 +20,18 @@ export class FilterComponent implements OnInit {
     public filterService: FilterService,
     public dialogRef: MatDialogRef<FilterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.filterSource = this.filterService.currentValue;
-    console.log('this.filterSource: ', this.filterSource)
+    this.filterSource = this.filterService.currentValue || this.data;
     this.renderForm();
+
+    this.filterService.filterValue$.subscribe(filterValue => {
+      if (filterValue) {
+        this.filterSource = filterValue;
+        this.renderForm();
+      }
+    });
   }
 
   getCategoriesFilterSource(categories: any[]) {
@@ -48,21 +54,22 @@ export class FilterComponent implements OnInit {
   }
 
   resetFilterClick() {
-    this.filterSource.categories.map(category=> category.selected = false);
-    this.filterSource.tags.map(tag=> tag.selected = false);
-    this.filterSource.locations.map(location=> location.selected = false);
+    this.filterSource.categories.map((category) => (category.selected = false));
+    this.filterSource.tags.map((tag) => (tag.selected = false));
+    this.filterSource.locations.map((location) => (location.selected = false));
     this.dialogRef.close(this.filterSource);
   }
 
   chipClick(index: number) {
     const value = (this.filterForm.get('tags') as FormArray).controls[index]
       .value;
-      this.filterSource.tags = this.filterSource.tags.map(
-        (item, idx) => index === idx ? { ...item, selected: !value} : { ...item,}
-      );
-    (this.filterForm.get('tags') as FormArray).setValue([...this.filterSource.tags.map(tag=>tag.selected)]);
+    this.filterSource.tags = this.filterSource.tags.map((item, idx) =>
+      index === idx ? { ...item, selected: !value } : { ...item }
+    );
+    (this.filterForm.get('tags') as FormArray).setValue([
+      ...this.filterSource.tags.map((tag) => tag.selected),
+    ]);
     (this.filterForm.get('tags') as FormArray).updateValueAndValidity();
-    
   }
 
   checkCurrentValue(index: number) {
@@ -71,41 +78,53 @@ export class FilterComponent implements OnInit {
 
   private renderForm() {
     if (this.filterSource) {
-      this.filterSource.categories = this.filterSource.categories.filter(category=>{
-        return !SPECIAL_CATEGORIES.includes(category.type);
+      this.filterSource.categories = this.filterSource?.categories?.filter(
+        (category) => {
+          return !SPECIAL_CATEGORIES.includes(category.type);
+        }
+      );
+      this.filterForm = this.fb.group({
+        categories: new FormArray(
+          this.filterSource?.categories?.map((item) => new FormControl(item))
+        ),
+        tags: new FormArray(
+          this.filterSource?.tags?.map((item) => new FormControl(item.selected))
+        ),
+        locations: new FormArray(
+          this.filterSource?.locations?.map((item) => new FormControl(item))
+        ),
       });
-        this.filterForm = this.fb.group({
-          categories: new FormArray(
-            this.filterSource.categories.map((item) => new FormControl(item))
-          ),
-          tags: new FormArray(
-            this.filterSource.tags.map((item) => new FormControl(item.selected))
-          ),
-          locations: new FormArray(
-            this.filterSource.locations.map((item) => new FormControl(item))
-          ),
-        });
     }
   }
 
   public selectCategory(value, idx) {
-    const formArray = (this.filterForm.controls.categories as FormArray).controls;
-    formArray.forEach((item, index) => {
+    const formArray = (this.filterForm.controls.categories as FormArray)
+      .controls;
+    formArray?.forEach((item, index) => {
       // logic for clearing other category selections on selecting in a different category
       if (index != idx && value) {
-        item.setValue({ ...item.value,
-          selected: false,
-          children: item.value.children.map(child => ({ ...child, selected: false }))
-        }, { emitEvent: false });
+        item.setValue(
+          {
+            ...item.value,
+            selected: false,
+            children: item.value.children.map((child) => ({
+              ...child,
+              selected: false,
+            })),
+          },
+          { emitEvent: false }
+        );
       }
-    })
+    });
   }
 
-  public locationClick(value:any, index:number){
-      this.filterSource.locations = this.filterSource.locations.map(
-        (item, idx) => index === idx ? { ...item, selected: value} : { ...item}
-      );
-    (this.filterForm.get('locations') as FormArray).setValue([...this.filterSource.locations]);
+  public locationClick(value: any, index: number) {
+    this.filterSource.locations = this.filterSource.locations.map((item, idx) =>
+      index === idx ? { ...item, selected: value } : { ...item }
+    );
+    (this.filterForm.get('locations') as FormArray).setValue([
+      ...this.filterSource.locations,
+    ]);
     (this.filterForm.get('locations') as FormArray).updateValueAndValidity();
   }
 }
