@@ -1,0 +1,67 @@
+$app-max-width: 30rem;
+$app-margin: 2.4rem;
+$app-padding: 1.6rem;
+$card-border-radius: 0.8rem;
+$button-height-min: 4.8rem;
+
+@mixin form-subtitle {
+    font-weight: normal;
+    font-size: 1.4rem;
+    margin-bottom: 2.4rem;
+
+    .link {
+        color: var(--accent);
+        text-decoration: none;
+    }
+}
+
+@mixin loginContentContainer {
+    width: 100%;
+    height: 100%;
+    background-color: var(--login_background_colour);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+//used in sign-in, signup, forgot-password
+@mixin loginCard {
+    background-color: var(--surface_colour);
+    max-width: 35.4rem;
+    padding: $app-padding;
+    margin: $app-padding;
+    font-size: 1.6rem;
+    border-radius: 0.8rem;
+
+    h1 {
+        font-weight: normal;
+        font-size: 3.4rem;
+        margin-bottom: 1rem;
+    }
+}
+
+// for multi line error messages
+@mixin multiLineFormFieldError {
+    ::ng-deep .mat-form-field {
+        .mat-form-field-wrapper {
+            padding-bottom: 0;
+
+            .mat-form-field-underline {
+                position: initial !important;
+                display: block;
+                margin-top: -1px;
+            }
+
+            .mat-form-field-subscript-wrapper,
+            .mat-form-field-ripple {
+                position: initial !important;
+                display: table;
+            }
+
+            .mat-form-field-subscript-wrapper {
+                min-height: calc(1em + 1px);
+            }
+        }
+    }
+}
