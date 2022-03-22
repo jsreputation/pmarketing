@@ -57,6 +57,10 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+
+    &.no-result {
+      display: block !important;
+    }
   }
 
   .no-result {

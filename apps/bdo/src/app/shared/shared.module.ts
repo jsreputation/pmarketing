@@ -25,13 +25,13 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { CarouselItemsComponent } from './components/carousel-items/carousel-items.component';
 import { DesktopFilterComponent } from './components/filter/desktop-filter/desktop-filter.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { NoResultComponent } from '../main/result/no-result/no-result.component';
 
 @NgModule({
   declarations: [
     ListItemComponent,
     LargeListItemComponent,
     TaggedItemComponent,
-    SearchResultComponent,
     SearchResultComponent,
     CheckboxGroupComponent,
     FilterComponent,
@@ -40,7 +40,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MeterToKilometerPipe,
     MerchantLocationPageComponent,
     CarouselItemsComponent,
-    DesktopFilterComponent
+    DesktopFilterComponent,
+    NoResultComponent,
   ],
   imports: [
     CommonModule,
@@ -71,7 +72,8 @@ import { MatDividerModule } from '@angular/material/divider';
     FooterComponent,
     MeterToKilometerPipe,
     CarouselItemsComponent,
-    DesktopFilterComponent
+    DesktopFilterComponent,
+    NoResultComponent,
   ],
   providers: [FilterService],
 })
