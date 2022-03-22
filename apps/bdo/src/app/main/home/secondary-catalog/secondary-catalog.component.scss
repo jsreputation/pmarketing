@@ -42,6 +42,10 @@
       max-width: 247px;
       width: 100%;
 
+      @media screen and (max-width: $desktop-width) {
+        background-size: contain;
+      }
+
       span {
         height: auto;
         font-weight: bold;
