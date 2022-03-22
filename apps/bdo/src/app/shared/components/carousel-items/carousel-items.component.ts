@@ -57,7 +57,9 @@ export class CarouselItemsComponent implements AfterViewInit, OnChanges {
 
   private updateCarouselSettings(innerWidth: number): void {
     this.itemWidth = this.isFeatured ? (innerWidth < 1024 ? 288 : 344) : 245;
-    this.carouselHeight = this.isFeatured ? 170 : 310;
+    console.log(' this.isFeatured: ', this.isFeatured);
+    // this.carouselHeight = this.isFeatured ? 170 : 310;
+    this.carouselHeight = this.isFeatured ? 170 : 248;
     if (innerWidth < 1024 || (this.carouselElement?.carousel?.visibleWidth > this.deals?.length * this.itemWidth)) {
       this.showCarouselArrows = false;
     } else {
