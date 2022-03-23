@@ -237,6 +237,27 @@ export class V4AuthenticationService
       );
   }
 
+  public getExchangeToken(jwtToken: string): Observable<void> {
+    const exchangeTokenRequest = {
+      jwt_token: jwtToken,
+    };
+
+    return this.http.post<IWLoginResponse>(
+      `${this.userAuthEndPoint}/exchange_token`,
+      exchangeTokenRequest
+    ).pipe(
+      tap((resp) => {
+        const userBearer = resp && resp.bearer_token;
+        if (!userBearer) {
+          throw new Error('Get exchange token failed!');
+        }
+        this.saveUserAccessToken(userBearer);
+      }),
+      map(() => void 0),
+      catchError((err) => throwError(err))
+    );
+  }
+
   public setInterruptedUrl(url: string): void {
     this.lastURL = url;
   }

@@ -9,7 +9,7 @@ import compression from 'compression';
 
 import { preauth } from './ctrl/preauth';
 import { login, users } from './ctrl/cognito';
-import { v4Token } from './ctrl/v4-token';
+import { v4Token, v4ExchangeToken } from './ctrl/v4-token';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
@@ -81,6 +81,8 @@ app.post(`${BASE_HREF}cognito/login`, login(getTokens));
 app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
+
+app.post(`${BASE_HREF}v4/oauth/exchange_token`, v4ExchangeToken(getTokens));
 
 // temporary intercept until v4 backend migrates away from using client secrets.
 // the way this query performs the API call is the v4 way forward and will be moved to the core service.

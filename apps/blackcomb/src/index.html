@@ -24,6 +24,13 @@
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-K3R5N4S');</script>
   <!-- End Google Tag Manager -->
+  <script>
+    function readFromApp(token) {
+      if (token) {
+        sessionStorage.setItem('jwt_token', token);  
+      }
+    }
+  </script>
   <link rel="manifest" crossorigin="use-credentials" href="manifest.webmanifest">
   <meta name="theme-color" content="#1976d2">
 </head>
