@@ -68,13 +68,12 @@ export class DealLandingComponent implements OnInit {
       const data = {
         url: this.shareUrl,
         text: this.shareText,
-        title: this.shareText,
+        title: this.shareTitle,
       };
       (navigator as any).share(data).catch(() => {
         console.log('failed to use share, falling back to clipboard');
         this.copy();
       });
-      console.log('data: ', data);
     } else {
       console.log('no access to share api, falling back to clipboard');
       this.copy();
@@ -97,11 +96,11 @@ export class DealLandingComponent implements OnInit {
         'DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT',
       ])
       .subscribe((res: any) => {
-        this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TITLE'].replace(
+        this.shareTitle = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'].replace(
           '{{url}}',
           this.shareUrl
         );
-        this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'].replace('{{url}}', this.shareUrl);
+        this.shareText = res['DEAL_LANDING_PAGE.SHARE_COPY_TXT'].replace('{{url}}', '');
         this.copyToClipboardTxt = res['DEAL_LANDING_PAGE.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['DEAL_LANDING_PAGE.CLIPBOARD_ERROR_TXT'];
       });
