@@ -20,8 +20,8 @@ import {
   OutcomeModule,
   PopupComponent,
   QuestModule as PerxQuestModule,
+  UtilsModule,
   StampModule,
-  UtilsModule
 } from '@perxtech/core';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -55,7 +55,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NoRenewaleInNamePipe,
     QuizSurveyCampaignsComponent,
     TaggedItemsComponent,
-    StarsComponent
+    StarsComponent,
   ],
   imports: [
     ConfigModule.forChild(),
@@ -79,15 +79,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     OutcomeModule,
     GhostsModule,
     MatExpansionModule,
-    PerxQuestModule.forChild()
+    PerxQuestModule.forChild(),
   ],
   bootstrap: [],
-  providers: [
-    NoRenewaleInNamePipe,
-  ],
-  entryComponents: [
-    PopupComponent
-  ]
+  providers: [NoRenewaleInNamePipe],
+  entryComponents: [PopupComponent],
 })
-export class HomeModule {
-}
+export class HomeModule {}
