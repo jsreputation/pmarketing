@@ -28,7 +28,6 @@ import { TreatWelcomeComponent } from './treat-welcome/treat-welcome.component';
 import { TreatEnrollPageComponent } from './treat-enroll-page/treat-enroll-page.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatChipsModule } from '@angular/material/chips';
-import { NoResultComponent } from './result/no-result/no-result.component';
 import { PipeUtilsModule, RewardsModule } from '@perxtech/core';
 import { CatalogPageComponent } from './catalog-page/catalog-page.component';
 import { CategoryComponent } from './catalog-page/category/category.component';
@@ -65,7 +64,6 @@ import { RECAPTCHA_LANGUAGE, RecaptchaFormsModule, RecaptchaModule } from 'ng-re
     TreatWelcomeComponent,
     TreatEnrollPageComponent,
     CatalogPageComponent,
-    NoResultComponent,
     CategoryComponent,
     SortComponent,
     CategoryHeaderComponent,
