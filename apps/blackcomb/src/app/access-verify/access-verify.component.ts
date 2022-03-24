@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '@perxtech/core';
 import { Router } from '@angular/router';
+import { interval, of, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-access-verify',
@@ -8,19 +10,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./access-verify.component.scss']
 })
 export class AccessVerifyComponent implements OnInit {
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
     private authService: AuthenticationService) { }
 
   public ngOnInit(): void {
-    const token = sessionStorage.getItem('jwt_token');
-    if (token) {
-      this.authService.getExchangeToken(token).subscribe(() => {
-        this.router.navigate(['/home']);
-      },
-      () => this.router.navigate(['/error']));
-   }
+    interval(500).pipe(
+      switchMap(() => of(sessionStorage.getItem('jwt_token'))),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      (token) => {
+        if (token) {
+          this.destroy$.next();
+          this.authService.getExchangeToken(token).subscribe(() => {
+              this.router.navigate([ '/home' ]);
+            },
+            () => this.router.navigate([ '/error' ]));
+        }
+      }
+    );
   }
 
 }
