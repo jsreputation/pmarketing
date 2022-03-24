@@ -45,7 +45,8 @@ export class V4ThemesService extends ThemesService {
       responseFallback = this.http.get<ITheme>(`${config.baseHref}assets/theme.json`);
     }
 
-    const appToken = this.tokenStorage.getAppInfoProperty('appAccessToken') as string;
+    const appToken = (this.tokenStorage.getAppInfoProperty('appAccessToken') ||
+                      this.tokenStorage.getAppInfoProperty('userAccessToken')) as string;
     const contentHeader: HttpHeaders = new HttpHeaders({ Authorization: `Bearer ${appToken}` });
     const response = this.httpBypass.get<ThemeJsonApiItemPayLoad<IThemeV4ApiProperties>>(
       this.themeSettingEndpoint,

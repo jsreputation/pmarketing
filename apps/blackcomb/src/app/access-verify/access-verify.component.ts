@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '@perxtech/core';
+import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { interval, of, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -14,7 +14,8 @@ export class AccessVerifyComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private tokenStorage: TokenStorage) { }
 
   public ngOnInit(): void {
     interval(500).pipe(
@@ -25,6 +26,7 @@ export class AccessVerifyComponent implements OnInit {
         if (token) {
           this.destroy$.next();
           this.authService.getExchangeToken(token).subscribe(() => {
+              this.tokenStorage.clearAppInfoProperty(['appAccessToken']);
               this.router.navigate([ '/home' ]);
             },
             () => this.router.navigate([ '/error' ]));
