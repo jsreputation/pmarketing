@@ -24,6 +24,14 @@
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-5H5V9FG');</script>
   <!-- End Google Tag Manager -->
+  <script>
+   //  JS bridge function for Citi token integration
+    function readFromApp(token) {
+      if (token) {
+        sessionStorage.setItem('jwt_token', token);  
+      }
+    }
+  </script>
   <link rel="manifest" crossorigin="use-credentials" href="manifest.webmanifest">
   <meta name="theme-color" content="#1976d2">
 </head>
