@@ -31,7 +31,6 @@ import {
   ThemesService,
   TokenStorage,
   SettingsService,
-  AuthenticationService
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -67,6 +66,7 @@ export class AppComponent implements OnInit {
   public preAuth: boolean;
   public translationLoaded: boolean = false;
   public navigateToLoading: boolean = false;
+  public jwtTokenAuth: boolean;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -86,7 +86,6 @@ export class AppComponent implements OnInit {
     private titleService: Title,
     private storage: TokenStorage,
     private settingsService: SettingsService,
-    private authService: AuthenticationService
   ) {
   }
 
@@ -108,6 +107,7 @@ export class AppComponent implements OnInit {
             this.navigateToLoading = conf.homeAsProgressPage;
           }
           this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+          this.jwtTokenAuth = conf?.jwtTokenAuth as boolean;
         }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
         switchMap(() =>
@@ -138,17 +138,8 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            const jwtToken = sessionStorage.getItem('jwt_token');
-            if (jwtToken) {
-              this.authService.getExchangeToken(jwtToken).subscribe(
-                () => {
-                  console.log('finished refresh jwt token');
-                  location.reload();
-                },
-                () => {
-                  console.error('refresh could not recover');
-                  this.router.navigate([ '/error' ]);
-                });
+            if (this.jwtTokenAuth) {
+              this.router.navigate(['/access-verify']);
             } else {
               this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
               this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));

@@ -278,7 +278,8 @@ const appConfigFile = `{
   },
   "showBadgesButton": ${ process.env.SHOW_BADGES_BUTTON || false },
   "showPersonaliseRewards": ${ process.env.SHOW_PERSONALISE_REWARDS || false },
-  "showPointTransfer": ${ process.env.SHOW_POINT_TRANSFER || false }
+  "showPointTransfer": ${ process.env.SHOW_POINT_TRANSFER || false },
+  "jwtTokenAuth": ${process.env.JWT_TOKEN_AUTH ? process.env.JWT_TOKEN_AUTH : false}
 }
 `;
 
