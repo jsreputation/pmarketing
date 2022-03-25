@@ -1,9 +1,10 @@
 import { PreAuthGuard } from './pre-auth.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { PreLoginGuard } from './pre-login.guard';
 import { ErrorComponent } from './error/error.component';
+import { AccessVerifyComponent } from './access-verify/access-verify.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,7 @@ const routes: Routes = [
     // content page can be accessed both logged-in and logged-out
     // canActivate: [ProtectedGuard]
   },
+  { path: 'access-verify', component: AccessVerifyComponent },
   { path: 'error', component: ErrorComponent},
   { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },

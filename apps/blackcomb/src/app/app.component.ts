@@ -30,7 +30,8 @@ import {
   ITheme,
   ThemesService,
   TokenStorage,
-  SettingsService
+  SettingsService,
+  AuthenticationService
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -47,7 +48,7 @@ import {
   TransactionHistoryComponent,
   RebatesWalletComponent,
   RewardsPageComponent,
-  NearmeComponent
+  NearmeComponent,
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
@@ -84,7 +85,8 @@ export class AppComponent implements OnInit {
     private themesService: ThemesService,
     private titleService: Title,
     private storage: TokenStorage,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authService: AuthenticationService
   ) {
   }
 
@@ -136,8 +138,21 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
-            this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
+            const jwtToken = sessionStorage.getItem('jwt_token');
+            if (jwtToken) {
+              this.authService.getExchangeToken(jwtToken).subscribe(
+                () => {
+                  console.log('finished refresh jwt token');
+                  location.reload();
+                },
+                () => {
+                  console.error('refresh could not recover');
+                  this.router.navigate([ '/error' ]);
+                });
+            } else {
+              this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
+              this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
+            }
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
           }
