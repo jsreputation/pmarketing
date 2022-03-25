@@ -90,4 +90,6 @@ export interface IConfig<T> {
 
   /*Prize set Outcome*/
   showPrizeSetOutcome?: boolean;
+
+  jwtTokenAuth?: boolean;
 }

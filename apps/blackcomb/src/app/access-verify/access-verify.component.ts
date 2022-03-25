@@ -25,6 +25,7 @@ export class AccessVerifyComponent implements OnInit {
       (token) => {
         if (token) {
           this.destroy$.next();
+          sessionStorage.removeItem('jwt_token');
           this.authService.getExchangeToken(token).subscribe(() => {
               this.tokenStorage.clearAppInfoProperty(['appAccessToken']);
               this.router.navigate([ '/home' ]);
