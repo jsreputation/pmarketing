@@ -3,14 +3,13 @@
     <clipPath id="clip-path">
       <rect id="Rectangle_21847" data-name="Rectangle 21847" width="82" height="98" rx="12" transform="translate(145.935 392)" fill="#e5f5ff"/>
     </clipPath>
-    <clipPath id="clip-path-2"/>
   </defs>
   <g id="img-onlineexclusives-mobile" transform="translate(-145.935 -392)" clip-path="url(#clip-path)">
     <g id="Group_20535" data-name="Group 20535" transform="translate(157.441 387.752)">
       <path id="Path_9135" data-name="Path 9135" d="M50.311,0C78.1,0,100.621,23.368,100.621,52.195S78.1,104.39,50.311,104.39,0,81.021,0,52.195,22.525,0,50.311,0Z" transform="translate(0 0)" fill="#7eb7eb" opacity="0.392"/>
     </g>
     <g id="mobile-filledoutline" transform="translate(167.892 394.526)">
-      <g id="Group_20320" data-name="Group 20320" transform="translate(1.229 2.42)" clip-path="url(#clip-path-2)">
+      <g id="Group_20643" data-name="Group 20643" transform="translate(1.229 2.42)">
         <path id="Path_9023" data-name="Path 9023" d="M556.93,19.257h31.384a10.822,10.822,0,0,1,10.822,10.822v82.788a10.822,10.822,0,0,1-10.822,10.822H556.93a10.822,10.822,0,0,1-10.822-10.822V30.079A10.822,10.822,0,0,1,556.93,19.257" transform="translate(-546.108 -19.257)" fill="#0072d8"/>
         <rect id="Rectangle_21743" data-name="Rectangle 21743" width="51.945" height="103.349" rx="10" transform="translate(0.541 0.541)" fill="none" stroke="#004ea8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
         <path id="Path_9024" data-name="Path 9024" d="M593.084,122.939H560.305a5.612,5.612,0,0,1-5.605-5.605v-84a5.612,5.612,0,0,1,5.605-5.605h3.073a.484.484,0,0,1,.483.483V29.24a2.593,2.593,0,0,0,2.59,2.59h20.487a2.593,2.593,0,0,0,2.59-2.59V28.216a.484.484,0,0,1,.483-.483h3.073a5.612,5.612,0,0,1,5.605,5.605v84a5.612,5.612,0,0,1-5.605,5.605" transform="translate(-550.051 -23.147)" fill="#f6f6f6"/>

@@ -23,7 +23,6 @@
 
     @media screen and (max-width: $desktop-width) {
       width: 100%;
-      // max-width: 500px;
       grid-template-columns: 1fr 1fr;
     }
 
@@ -39,11 +38,36 @@
       aspect-ratio: 5 / 2.8;
       cursor: pointer;
       height: 108px;
-      max-width: 247px;
       width: 100%;
+
+      &#bdo-rewards-catalog {
+        background-image: url("/assets/images/img-bdorewards-mobile-1.svg");
+        background-size: contain;
+      
+        @media screen and (min-width: $desktop-width) {
+          background-image: url("/assets/images/img-bdorewards-desktop-1.svg");
+          background-size: contain;
+        }
+      }
+
+      &#bdo-online-exclusives {
+        background-image: url("/assets/images/img-onlineexclusives-mobile-1.svg");
+        background-size: contain;
+      
+        @media screen and (min-width: $desktop-width) {
+          background-image: url("/assets/images/img-onlineexclusives-desktop.png");
+          background-size: contain;
+        }
+      }
 
       @media screen and (max-width: $desktop-width) {
         background-size: contain;
+        max-width: 170px;
+      }
+
+      @media screen and (min-width: $desktop-width) {
+        width: 100%;
+        max-width: 247px;
       }
 
       span {
@@ -53,7 +77,13 @@
         font-size: 14px;
         padding-top: 46px;
         padding-bottom: 40px;
-        padding-left: 16px;
+        padding-left: 11px;
+
+        @media screen and (max-width: $desktop-width) {
+          width: 35%;
+          padding-bottom: 11px;
+        }
+        
       }
     }
   }
