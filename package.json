@@ -192,6 +192,7 @@
     "test:dbshk-agent": "nx test dbshk-agent --detectOpenHandles",
     "test:dbs-merchant": "nx test dbs-merchant --detectOpenHandles",
     "test:globesuperapp": "nx test globesuperapp --detectOpenHandles",
+    "test:hangseng": "nx test hangseng --detectOpenHandles",
     "test:hkbn": "echo 'skipping hkbn tests'",
     "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "echo 'skipping old-hsbc tests'",
