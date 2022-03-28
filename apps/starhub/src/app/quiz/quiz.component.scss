@@ -67,6 +67,31 @@
       h2 {
         text-align: start;
       }
+
+      h1,
+      h2 {
+        color: var(--font_color);
+      }
+
+      ::ng-deep {
+        perx-core-quiz {
+          perx-core-quiz-question {
+             .question {
+                color: var(--font_color);
+             }
+
+             .description {
+                color: var(--font_color);
+             }
+
+             perx-core-quiz-select {
+                .mat-radio-label-content {
+                  color: var(--font_color);
+                }
+             }
+          }
+        }
+      }
     }
 
     .quiz-no-card {
@@ -75,17 +100,21 @@
       $horizontalPadding: 4rem;
       $verticalPadding: 0;
 
+
       h1,
       h2 {
         padding: $verticalPadding $horizontalPadding;
+        color: var(--font_color);
       }
 
       ::ng-deep .question {
         padding: $verticalPadding $horizontalPadding;
+        color: var(--font_color);
       }
 
       ::ng-deep .description {
         padding: $verticalPadding $horizontalPadding;
+        color: var(--font_color);
       }
 
       // customize look and feel of swipe component
