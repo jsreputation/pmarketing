@@ -72,8 +72,8 @@ export class SurveyComponent implements OnInit {
           ...field,
           templateOptions: {
             ...field.templateOptions,
-            ctaButtonBGColor: survey.ctaButtonBGColor || '#1ed760',
-            ctaButtonTextColor: survey.ctaButtonTextColor || '#09411d',
+            ctaButtonBGColor: survey.ctaButtonBGColor,
+            ctaButtonTextColor: survey.ctaButtonTextColor,
           },
         }));
 
