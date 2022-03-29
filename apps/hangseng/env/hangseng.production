@@ -1,7 +1,7 @@
 APIHOST=https://api.perxtech.net
 LOGIN_METHOD=phone
 PRODUCTION=true
-PREAUTH=false
+PREAUTH=true
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true
 SHOW_SURVEY_ON_HOMEPAGE=true
