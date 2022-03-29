@@ -34,7 +34,6 @@ import {
   ILoyalty,
   InstantOutcomeService,
   InstantOutcomeTransactionState,
-  IPlatformEnrolment,
   IPopupConfig,
   IPrice,
   IProfile,
@@ -45,7 +44,6 @@ import {
   ITabConfigExtended,
   ITheme,
   NotificationService,
-  PlatformEnrolmentService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -128,7 +126,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected teamsService: TeamsService,
     protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
     protected notificationService: NotificationService,
-    protected platformEnrolmentService: PlatformEnrolmentService
   ) {}
 
   public ngOnInit(): void {
@@ -184,10 +181,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.initCatalogsScan();
-
-    this.platformEnrolmentService.validatePlatformEnrolment().subscribe((res: IPlatformEnrolment) => {
-      console.log("platformEnrolmentService: ", res);
-    })
   }
 
   public ngOnDestroy(): void {

@@ -53,7 +53,8 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule
+  VouchersModule,
+  PlatformEnrolmentServiceModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -167,7 +168,8 @@ export const setLanguage = (
     ForgotPasswordModule,
     PerxQuestModule.forRoot(),
     BadgeServiceModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    PlatformEnrolmentServiceModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [
