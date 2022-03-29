@@ -207,7 +207,8 @@
       "REFERRED_USER": "Users Referred",
       "QUIZ_SCORE": "Score",
       "LOYALTY_POINTS_EARNED": "Loyalty Points",
-      "NO_RANK": "NA"
+      "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
     },
     "STATUS_LABELS": {
       "ISSUED": "Approved",
@@ -533,4 +534,3 @@
     "Terms and Conditions": "Terms and Conditions",
     "TRY_AGAIN": "Try again"
   }
-  

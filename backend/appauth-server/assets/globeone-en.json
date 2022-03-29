@@ -218,7 +218,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
