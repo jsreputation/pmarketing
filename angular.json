@@ -2976,6 +2976,122 @@
           }
         }
       }
+    },
+    "hangseng": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hangseng",
+      "sourceRoot": "apps/hangseng/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hangseng",
+            "index": "apps/hangseng/src/index.html",
+            "main": "apps/hangseng/src/main.ts",
+            "polyfills": "apps/hangseng/src/polyfills.ts",
+            "tsConfig": "apps/hangseng/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/hangseng/src/favicon.ico",
+              "apps/hangseng/src/assets",
+              "apps/hangseng/src/static",
+              "apps/hangseng/src/manifest.webmanifest",
+              "apps/hangseng/src/robots.txt"
+            ],
+            "styles": [
+              "apps/hangseng/src/styles.scss",
+              "apps/hangseng/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/hangseng/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/hangseng/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hangseng:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hangseng:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hangseng:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hangseng/e2e/protractor.conf.js",
+            "devServerTarget": "hangseng:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hangseng:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hangseng/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/hangseng"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/hangseng/src/**/*.d.ts",
+              "apps/hangseng/src/main.ts",
+              "apps/hangseng/src/polyfills.ts",
+              "apps/hangseng/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
     }
   }
 }
