@@ -129,7 +129,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
-        console.log("quiz: ", this.quiz);
         this.fetchMoveId();
         this.resetTimer();
         // prepopulate answers
