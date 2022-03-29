@@ -83,6 +83,8 @@ interface IV4SurveyDisplayProperties {
   button_text?: string;
   outcome?: IV4SurveyOutcome;
   nooutcome?: IV4SurveyOutcome;
+  CTA_button_bg_color?: string;
+  CTA_button_text_color?: string;
 }
 
 interface IV4SurveyOutcome {
@@ -208,6 +210,8 @@ export class V4SurveyService implements SurveyService {
           fields,
           backgroundImgUrl: patchUrl(oc(dp).background_image.value.image_url('')),
           cardBackgroundImgUrl: patchUrl(oc(dp).card_image.value.image_url('')),
+          ctaButtonBGColor: dp?.CTA_button_bg_color ? dp?.CTA_button_bg_color : undefined,
+          ctaButtonTextColor: dp?.CTA_button_text_color ? dp?.CTA_button_text_color : undefined,
         };
       })
     );
