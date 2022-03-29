@@ -84,6 +84,7 @@ export interface QuizDisplayProperties {
   };
   CTA_button_bg_color?: string;
   CTA_button_text_color?: string;
+  font_color?: string;
 }
 
 interface V4NextMoveResponse {
