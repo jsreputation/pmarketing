@@ -263,6 +263,7 @@ export class V4QuizService implements QuizService {
             oc(game)?.display_properties?.CTA_button_bg_color() : undefined,
           ctaButtonTextColor: oc(game)?.display_properties?.CTA_button_text_color() ?
             oc(game)?.display_properties?.CTA_button_text_color() : undefined,
+            fontColor: oc(game)?.display_properties?.font_color() ? oc(game)?.display_properties?.font_color() : undefined
         };
       })
     );

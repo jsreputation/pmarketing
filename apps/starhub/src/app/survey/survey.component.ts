@@ -33,19 +33,19 @@ export class SurveyComponent implements OnInit {
     title: 'Thanks for completing the survey.',
     text: 'Here is a reward for you.',
     imageUrl: '',
-    buttonTxt: 'View Reward'
+    buttonTxt: 'View Reward',
   };
 
   public noRewardsPopUp: IPopupConfig = {
     title: 'Thanks for completing the survey.',
     text: '',
-    buttonTxt: 'Back To Home'
+    buttonTxt: 'Back To Home',
   };
 
   private notAvailablePopUp: IPopupConfig = {
     title: 'Sorry',
     text: 'This survey is not available at the moment. Try again later.',
-    buttonTxt: 'Back To Home'
+    buttonTxt: 'Back To Home',
   };
 
   constructor(
@@ -74,7 +74,17 @@ export class SurveyComponent implements OnInit {
             ...field.templateOptions,
             ctaButtonBGColor: survey.ctaButtonBGColor,
             ctaButtonTextColor: survey.ctaButtonTextColor,
+            fontColor: survey.fontColor,
           },
+          fieldGroup: field.fieldGroup?.map((group) => ({
+            ...group,
+            templateOptions: {
+              ...group.templateOptions,
+              ctaButtonBGColor: survey.ctaButtonBGColor,
+              ctaButtonTextColor: survey.ctaButtonTextColor,
+              fontColor: survey.fontColor,
+            },
+          })),
         }));
 
         return {

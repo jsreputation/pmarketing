@@ -1,3 +1,5 @@
 <mat-form-field class="full-width">
-  <input matInput (keyup)="updateInput($event.target.value)">
+  <input matInput (keyup)="updateInput($event.target.value)" [ngStyle]="{
+    'color' : fontColor ? fontColor: ''
+  }">
 </mat-form-field>

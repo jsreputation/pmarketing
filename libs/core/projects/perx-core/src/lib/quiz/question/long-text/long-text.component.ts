@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Optional, Output, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { QuizQuestionType } from '../../models/quiz.model';
@@ -19,6 +19,9 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
 
   @Input()
   public flush: boolean;
+
+  @Input() @Optional()
+  public fontColor: string;
 
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();

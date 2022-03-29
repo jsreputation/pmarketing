@@ -8,8 +8,12 @@
         (click)="onSelect(i)">
         {{quizRatingIcons(i)}}
       </mat-icon>
-      <div *ngIf="i === 0" class="label left-label">{{payload.left_label}}</div>
-      <div *ngIf="i === payload?.scale - 1" class="label right-label">{{payload.right_label}}</div>
+      <div *ngIf="i === 0" class="label left-label" [ngStyle]="{
+        'color' : fontColor ? fontColor: ''
+      }">{{payload.left_label}}</div>
+      <div *ngIf="i === payload?.scale - 1" class="label right-label" [ngStyle]="{
+        'color' : fontColor ? fontColor: ''
+      }">{{payload.right_label}}</div>
     </div>
   </div>
 </div>

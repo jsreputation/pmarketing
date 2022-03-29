@@ -1,5 +1,5 @@
 import { animate, AnimationEvent, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { oc } from 'ts-optchain';
 import { QuizQuestionType } from '../../models/quiz.model';
 
@@ -89,6 +89,8 @@ export class QuizSwipeListComponent implements OnInit {
   public payload: ISwipePayload | undefined;
   @Input()
   public configuration: SwipeConfiguration = {};
+  @Input() @Optional()
+  public fontColor: string;
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
