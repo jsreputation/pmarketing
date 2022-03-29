@@ -110,7 +110,6 @@ export class AppComponent implements OnInit {
       )
     ).subscribe(
       (res: ITheme) => {
-        console.log("ITheme: ", res);
         const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
         this.titleService.setTitle(title);
       },
