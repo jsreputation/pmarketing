@@ -34,6 +34,7 @@ import {
   ILoyalty,
   InstantOutcomeService,
   InstantOutcomeTransactionState,
+  IPlatformEnrolment,
   IPopupConfig,
   IPrice,
   IProfile,
@@ -44,6 +45,7 @@ import {
   ITabConfigExtended,
   ITheme,
   NotificationService,
+  PlatformEnrolmentService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -126,6 +128,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected teamsService: TeamsService,
     protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
     protected notificationService: NotificationService,
+    protected platformEnrolmentService: PlatformEnrolmentService
   ) {}
 
   public ngOnInit(): void {
@@ -181,6 +184,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.initCatalogsScan();
+
+    this.platformEnrolmentService.validatePlatformEnrolment().subscribe((res: IPlatformEnrolment) => {
+      console.log("platformEnrolmentService: ", res);
+    })
   }
 
   public ngOnDestroy(): void {
@@ -251,18 +258,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       campaign.teamSize! > 0) {
       this.teamsService.getTeam(campaign.id).subscribe(
         () => {
-          this.router.navigate([ `teams/pending/${campaign.id}` ]);
+          this.router.navigate([`teams/pending/${campaign.id}`]);
         },
         () => {
           // expecting a error 500 in console
-          this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+          this.router.navigate([`campaign-welcome/${campaign.id}`]);
         }
       );
       return;
     }
 
     if (campaign.type === CampaignType.instant) {
-      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+      this.router.navigate([`campaign-welcome/${campaign.id}`]);
       return;
     }
 
@@ -329,8 +336,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         const firstComeFirstServeTransaction:
           | IInstantOutcomeTransaction
           | undefined = instantOutcomeTransactionsHaveOutcomes.length
-          ? instantOutcomeTransactionsHaveOutcomes[0]
-          : undefined;
+            ? instantOutcomeTransactionsHaveOutcomes[0]
+            : undefined;
         if (firstComeFirstServeTransaction) {
           this.campaignService.getCampaign(firstComeFirstServeTransaction.campaignId)
             .subscribe(campaignRes => {
@@ -342,7 +349,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 imageUrl: popupImageURL,
                 titleBelowImage: true,
                 afterClosedCallBack: {
-                  dialogClosed: (): void => {},
+                  dialogClosed: (): void => { },
                   onOkFn: (): void => {
                     this.instantOutcomeTransactionService
                       .claimPrize(firstComeFirstServeTransaction.id)
