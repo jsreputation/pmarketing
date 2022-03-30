@@ -25,7 +25,8 @@ const routes: Routes = [
   },
   {
     path: 'loading',
-    loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
+    loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule),
+    canActivate: [PreLoginGuard]
   },
   {
     path: '',

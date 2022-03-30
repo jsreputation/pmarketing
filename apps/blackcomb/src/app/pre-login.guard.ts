@@ -1,6 +1,6 @@
 import { AuthenticationService } from '@perxtech/core';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +20,11 @@ export class PreLoginGuard implements CanActivate {
       this.auth.saveUserAccessToken(new URLSearchParams(route.fragment).get('token'));
       return true;
     }
-
-    const token = this.auth.getUserAccessToken();
-    if (token) {
-      return true;
-    }
-    return false;
+    // use route guard as a pure interceptor
+    // const token = this.auth.getUserAccessToken();
+    // if (token) {
+    //   return true;
+    // }
+    // return false;
   }
 }
