@@ -8,22 +8,18 @@
 </div>
 <div class="question-container">
     <div class="question-content" *ngIf="question">
-        <div [ngClass]="['question ', questionTitleColor ? questionTitleColor : 'black']" [ngStyle]="{
-            'color' : fontColor ? fontColor: ''
-          }">
-            <span *ngIf="!hideIndex">
+        <div [ngClass]="['question ', questionTitleColor ? questionTitleColor : 'black']">
+            <span *ngIf="!hideIndex" [style.color]="fontColor">
                 {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question?.text}}
             </span>
-            <span *ngIf="hideIndex">
+            <span *ngIf="hideIndex" [style.color]="fontColor">
                 {{ (question?.question?.text) }}
             </span>
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>
         </div>
-        <div class="description" [innerHTML]="question?.description?.text" [ngStyle]="{
-          'color' : fontColor ? fontColor: ''
-        }"></div>
+        <div class="description" [innerHTML]="question?.description?.text" [style.color]="fontColor"></div>
         <!-- for group component below (updatePoints)="updateGroupPoint($event)"-->
         <!-- text saying to answer one or more depending-->
         <perx-core-quiz-select

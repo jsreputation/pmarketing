@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Optional, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { QuizQuestionType } from '../../models/quiz.model';
 
 export enum SurveyRatingIcons {
@@ -31,8 +31,8 @@ export class QuizRatingComponent implements OnChanges {
   @Input()
   public flush: boolean;
 
-  @Input() @Optional()
-  public fontColor: string;
+  @Input()
+  public fontColor: string = '';
 
   @Output()
   public updateAnswers: EventEmitter<number[]> = new EventEmitter<number[]>();

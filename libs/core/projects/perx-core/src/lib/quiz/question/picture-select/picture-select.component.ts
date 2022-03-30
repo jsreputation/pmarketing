@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Optional, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ITracker, QuizQuestionType } from '../../models/quiz.model';
 
 export interface IPictureSelectPayload {
@@ -37,8 +37,8 @@ export class QuizPictureSelectComponent implements OnChanges {
   @Input()
   public flush: boolean;
 
-  @Input() @Optional()
-  public fontColor: string;
+  @Input()
+  public fontColor: string = '';
 
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();

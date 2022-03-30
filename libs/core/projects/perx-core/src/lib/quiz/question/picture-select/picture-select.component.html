@@ -11,16 +11,12 @@
           *ngIf="choice?.answer?.en?.image?.value?.image_url else textLabel"
           class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
         <ng-template #textLabel>
-          <div class="span-text-pic" [ngStyle]="{
-            'color' : fontColor ? fontColor: ''
-          }">
+          <div class="span-text-pic" [style.color]="fontColor">
             {{ choice?.answer?.en?.text }}
           </div>
         </ng-template>
       </mat-checkbox>
-      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url" [ngStyle]="{
-        'color' : fontColor ? fontColor: ''
-      }">
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url" [style.color]="fontColor">
           {{ choice?.answer?.en?.text }}
       </div>
     </div>
@@ -38,14 +34,10 @@
              class="image" [src]="choice?.answer?.en?.image?.value?.image_url"
              [alt]="choice?.answer?.en?.text">
         <ng-template #textLabel>
-          <span [ngStyle]="{
-            'color' : fontColor ? fontColor: ''
-          }">{{ choice?.answer?.en?.text }}</span>
+          <span [style.color]="fontColor">{{ choice?.answer?.en?.text }}</span>
         </ng-template>
       </mat-radio-button>
-      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url" [ngStyle]="{
-        'color' : fontColor ? fontColor: ''
-      }">
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url" [style.color]="fontColor">
         {{ choice?.answer?.en?.text }}
       </div>
     </div>
