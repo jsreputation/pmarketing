@@ -1,17 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   IAnswerResult,
   IPoints,
   IQAnswer,
   IQuiz,
+  IQuizResultOutcome,
   ISwipePayload,
   ITracker,
   NotificationService,
@@ -22,27 +15,9 @@ import {
   SwipeConfiguration,
   SwipeListType
 } from '@perxtech/core';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router
-} from '@angular/router';
-import {
-  BehaviorSubject,
-  iif,
-  Observable,
-  of,
-  Subject,
-  throwError
-} from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-quiz',
@@ -77,6 +52,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   };
   private submitErrorTxt: string = 'Error Submitting Answer';
   public disableNextButton: boolean = true;
+  public rewardAcquired: boolean = false;
 
   constructor(
     private router: Router,
@@ -216,7 +192,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (questionComponentsArr[questionPointer].questionValidation()) {
       this.pushAnswer(questionPointer)
         .subscribe(
-          () => {
+          (quizOutcome) => {
+            this.rewardAcquired = quizOutcome.rewardAcquired;
             this.disableNextButton = true;
           },
           (err) => {
@@ -250,7 +227,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushAnswer(questionPointer: number): Observable<void> {
+  private pushAnswer(questionPointer: number): Observable<IQuizResultOutcome> {
     if (!this.moveId) {
       return throwError('Cannot push answer without move id');
     }
@@ -274,7 +251,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         () => iif(
           () => this.complete,
             this.quizService.postFinalQuizAnswer(this.moveId as number),
-            of({}) // let the observable complete
+            of() // let the observable complete
         )
       ),
       catchError(err => {
@@ -287,8 +264,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           time
         };
         return throwError(err);
-      }),
-      map(() => (void 0))
+      })
     );
   }
 
@@ -329,7 +305,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz });
+    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz, rewardAcquired: this.rewardAcquired });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 
