@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Event, NavigationEnd, Router, } from '@angular/router';
+import { Event, NavigationEnd, Router,} from '@angular/router';
 import { Location } from '@angular/common';
 
 import { filter, map, switchMap, tap, } from 'rxjs/operators';
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const langCode = this.storage.getAppInfoProperty('lang') || this.translate.getBrowserLang() || 'en';
     // to store so that it works with interceptor
     this.translate.onLangChange.pipe(
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
@@ -85,14 +86,14 @@ export class AppComponent implements OnInit {
           if (conf.homeAsProgressPage) {
             this.navigateToLoading = conf.homeAsProgressPage;
           }
-          this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+          this.storage.setAppInfoProperty(langCode, 'lang');
         }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
         switchMap(() =>
           // getTranslation fetches the translation and registers the language
           // for when default lang is not 'en'
           // only after fetching the translations do you .use() it
-          this.translate.getTranslation('en')
+          this.translate.getTranslation(langCode)
         ),
         tap((config: IConfig<ITheme>) => {
           // this.translate.getLangs() to get langs avail, in future pass array of langs
