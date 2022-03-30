@@ -70,7 +70,7 @@ export interface IQuiz {
   timeConfig: ITimeConfig;
   ctaButtonBGColor?: string | undefined;
   ctaButtonTextColor?: string | undefined;
-  fontColor?: string;
+  fontColor?: string | undefined;
 }
 
 export interface ITimeConfig {
