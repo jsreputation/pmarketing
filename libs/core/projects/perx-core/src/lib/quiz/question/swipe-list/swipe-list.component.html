@@ -16,9 +16,9 @@
         (@slideLeft.done)=alignComplete($event)>
         <ng-container *ngIf="listType === lt.LISTWITHIMAGE">
           <img matListAvatar src="{{item.img}}" alt="{{item.title}}">
-          <div class="mat-list-text ngstd-details">
-            <h3 matLine class="title"> {{item.title}}</h3>
-            <p matLine *ngIf="item.description">
+          <div class="mat-list-text ngstd-details" >
+            <h3 matLine class="title" [style.color]="fontColor"> {{item.title}}</h3>
+            <p matLine *ngIf="item.description" [style.color]="fontColor">
               <span>{{item.description}}</span>
             </p>
           </div>
@@ -26,17 +26,19 @@
         <ng-container *ngIf="listType === lt.LISTWITHICON">
           <mat-icon class="ngstd-icon" mat-list-icon>{{item.icon}}</mat-icon>
           <div class="mat-list-text ngstd-details">
-            <h4 mat-line class="title">{{item.title}}</h4>
-            <p mat-line *ngIf="item.description">{{item.description}}</p>
+            <h4 mat-line class="title" [style.color]="fontColor">{{item.title}}</h4>
+            <p mat-line *ngIf="item.description" [style.color]="fontColor">{{item.description}}</p>
           </div>
         </ng-container>
         <ng-container *ngIf="listType === lt.SINGLELINE">
-          <mat-list-item class="title"> {{item.title}} </mat-list-item>
+          <mat-list-item class="title" [ngStyle]="{
+            'color' : fontColor ? fontColor: ''
+          }"> {{item.title}} </mat-list-item>
         </ng-container>
         <ng-container *ngIf="listType === lt.MULTILINE">
-          <div class="mat-list-text ngstd-details">
-            <h3 matLine class="title"> {{item.title}} </h3>
-            <p matLine>
+          <div class="mat-list-text ngstd-details" >
+            <h3 matLine class="title" [style.color]="fontColor"> {{item.title}} </h3>
+            <p matLine [style.color]="fontColor">
               <span> {{item.description}} </span>
               <span class="demo-2"> -- {{item.description}} </span>
             </p>

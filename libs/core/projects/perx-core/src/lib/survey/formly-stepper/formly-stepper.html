@@ -17,13 +17,19 @@
           <pinch-zoom *ngIf="step.templateOptions?.bannerImage">
             <img class="question-image" [src]="step.templateOptions?.bannerImage" alt="question-img">
           </pinch-zoom>
-          <span class="margin-top-1">
+          <span class="margin-top-1" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{(index + 1) + '. ' + step.templateOptions.label}}
           </span>
-          <span class="required-star">
+          <span class="required-star" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{step.templateOptions.required ? '*': ''}}
           </span>
-          <div class="description">
+          <div class="description" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{ step.templateOptions.description }}
           </div>
         </div>

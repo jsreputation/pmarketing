@@ -20,6 +20,9 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
   @Input()
   public flush: boolean;
 
+  @Input()
+  public fontColor: string = '';
+
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 

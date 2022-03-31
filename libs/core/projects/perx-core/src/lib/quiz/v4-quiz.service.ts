@@ -82,8 +82,9 @@ export interface QuizDisplayProperties {
     button_text?: string;
     outcome_image: Asset;
   };
-  CTA_button_bg_color?: string;
-  CTA_button_text_color?: string;
+  cta_button_colour?: string;
+  cta_button_text_colour?: string;
+  font_colour?: string;
 }
 
 interface V4NextMoveResponse {
@@ -258,10 +259,11 @@ export class V4QuizService implements QuizService {
           cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url('')),
           remainingNumberOfTries: game.number_of_tries,
           timeConfig,
-          ctaButtonBGColor: oc(game)?.display_properties?.CTA_button_bg_color() ?
-            oc(game)?.display_properties?.CTA_button_bg_color() : undefined,
-          ctaButtonTextColor: oc(game)?.display_properties?.CTA_button_text_color() ?
-            oc(game)?.display_properties?.CTA_button_text_color() : undefined,
+          ctaButtonBGColor: oc(game)?.display_properties?.cta_button_colour() ?
+            oc(game)?.display_properties?.cta_button_colour() : undefined,
+          ctaButtonTextColor: oc(game)?.display_properties?.cta_button_text_colour() ?
+            oc(game)?.display_properties?.cta_button_text_colour() : undefined,
+            fontColor: oc(game)?.display_properties?.font_colour() ? oc(game)?.display_properties?.font_colour() : undefined
         };
       })
     );

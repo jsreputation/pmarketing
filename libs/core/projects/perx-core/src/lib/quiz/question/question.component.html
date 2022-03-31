@@ -9,44 +9,50 @@
 <div class="question-container">
     <div class="question-content" *ngIf="question">
         <div [ngClass]="['question ', questionTitleColor ? questionTitleColor : 'black']">
-            <span *ngIf="!hideIndex">
+            <span *ngIf="!hideIndex" [style.color]="fontColor">
                 {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question?.text}}
             </span>
-            <span *ngIf="hideIndex">
+            <span *ngIf="hideIndex" [style.color]="fontColor">
                 {{ (question?.question?.text) }}
             </span>
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>
         </div>
-        <div class="description" [innerHTML]="question?.description?.text"></div>
+        <div class="description" [innerHTML]="question?.description?.text" [style.color]="fontColor"></div>
         <!-- for group component below (updatePoints)="updateGroupPoint($event)"-->
         <!-- text saying to answer one or more depending-->
         <perx-core-quiz-select
             *ngIf="question.payload.type === quizQuestionType.multipleChoice"
             [payload]="question.payload"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-select>
         <perx-core-quiz-rating
             *ngIf="question.payload.type === quizQuestionType.rating"
             [payload]="question.payload"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-rating>
         <perx-core-quiz-picture-select
             *ngIf="question.payload.type === quizQuestionType.pictureChoice"
             [payload]="question.payload"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-picture-select>
         <perx-core-quiz-long-text
             *ngIf="question.payload.type === quizQuestionType.longText"
             [payload]="question.payload"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-long-text>
         <perx-core-swipe-list
             *ngIf="question.payload.type === quizQuestionType.swipeDelete"
             [payload]="question.payload"
             [configuration]="question?.meta"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-swipe-list>
         <perx-core-swipe-list
             *ngIf="question.payload.type === quizQuestionType.swipeSelect"
             [payload]="question.payload"
             [configuration]="question?.meta"
+            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-swipe-list>
 
         <div

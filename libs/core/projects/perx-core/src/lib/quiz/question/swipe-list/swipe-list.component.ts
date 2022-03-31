@@ -89,6 +89,8 @@ export class QuizSwipeListComponent implements OnInit {
   public payload: ISwipePayload | undefined;
   @Input()
   public configuration: SwipeConfiguration = {};
+  @Input()
+  public fontColor: string = '';
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 

@@ -3,14 +3,18 @@
     <div class="single-divider" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
       <mat-checkbox [id]="id + '_' + i" [formlyAttributes]="field" [tabindex]="to.tabindex" [color]="'primary'"
         [labelPosition]="to.labelPosition" [disabled]="formControl.disabled"
-        (change)="onChange(i + '. ' + option.value, $event.checked)">{{option.label}}</mat-checkbox>
+        (change)="onChange(i + '. ' + option.value, $event.checked)" [ngStyle]="{
+          'color' : to?.fontColor ? to?.fontColor: ''
+        }">{{option.label}}</mat-checkbox>
     </div>
   </ng-container>
   <ng-template #elseBlock>
     <mat-radio-group [color]="'primary'" [formControl]="formControl" [formlyAttributes]="field" [required]="to.required"
       [tabindex]="to.tabindex">
       <div class="single-divider" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
-        <mat-radio-button [id]="id + '_' + i" [color]="'primary'" [value]="i + '. ' + option.value">
+        <mat-radio-button [id]="id + '_' + i" [color]="'primary'" [value]="i + '. ' + option.value" [ngStyle]="{
+          'color' : to?.fontColor ? to?.fontColor: ''
+        }">
           {{option.label}}
         </mat-radio-button>
       </div>

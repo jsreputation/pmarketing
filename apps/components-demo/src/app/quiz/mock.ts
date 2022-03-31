@@ -53,10 +53,13 @@ export const quiz: IQuiz = {
       payload: {
         type: QuizQuestionType.rating,
         scale: 20
-      }
+      },
     }
   ],
-  results: {}
+  results: {},
+  fontColor: '#0f69af',
+  ctaButtonBGColor: '#1ed760',
+  ctaButtonTextColor: '#09411d',
 };
 
 export const results: IPoints[] = [
