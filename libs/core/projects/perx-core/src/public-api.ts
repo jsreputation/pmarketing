@@ -437,3 +437,12 @@ export {
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
+
+/**
+ * Platform Enrolment
+ */
+export { PlatformEnrolmentServiceModule } from './lib/platform-enrolment/platform-enrolment.service.module';
+export { PlatformEnrolmentService } from './lib/platform-enrolment/platform-enrolment.service';
+export {
+  IPlatformEnrolment
+} from './lib/platform-enrolment/platform-enrolment.model';
