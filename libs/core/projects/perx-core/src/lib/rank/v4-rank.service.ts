@@ -30,13 +30,14 @@ const objectKeysPascalize = (keyConvertFn, object: {} | null) => {
   }
 };
 
-interface V4LeaderBoard {
+export interface V4LeaderBoard {
   display_properties: {
     [key: string]: any;
   };
   id: number;
   metric: string;
   title: string;
+  name?: string;
 }
 
 interface V4UserRanking {
