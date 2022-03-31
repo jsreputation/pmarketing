@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
+import { IPoints, IPopupConfig, IQuiz, NotificationService } from '@perxtech/core';
 import { merge, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -19,6 +19,7 @@ export class QuizResultsComponent implements OnInit {
   private popup: IPopupConfig;
   public title: string;
   public subTitle: string;
+  private rewardAcquired: boolean | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,8 +39,9 @@ export class QuizResultsComponent implements OnInit {
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz }) => {
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz , rewardAcquired?: boolean}) => {
         this.results = res.points;
+        this.rewardAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
         this.title = this.correctAnswers !== this.results.length ? 'You Failed!' : 'You passed!';
@@ -49,7 +51,7 @@ export class QuizResultsComponent implements OnInit {
 
   public next(): void {
     let nextRoute: string;
-    if (this.correctAnswers !== this.results.length) {
+    if (this.correctAnswers !== this.results.length || !this.rewardAcquired) {
       const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
       this.popup = {
         /* eslint-disable */
