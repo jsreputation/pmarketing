@@ -8,15 +8,16 @@ import { oc } from 'ts-optchain';
 import { LoyaltyService } from './loyalty.service';
 import {
   IExchangerate,
-  IGameTransactionHistory,
+  ICampaignTransactionHistory,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
   IPointTransfer,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  IStampTransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  ILeaderBoardTransactionHistory,
+  IRuleTransactionHistory
 } from './models/loyalty.model';
 
 import { IV4Reward } from '../rewards/v4-rewards.service';
@@ -30,7 +31,7 @@ import {
 } from '../transactions/transaction-service/v4-transactions.service';
 import { IV4Campaign, IV4PointsOutcome } from '../campaign/v4-campaign.service';
 import { ITag } from '../merchants/models/merchants.model';
-
+import { V4LeaderBoard } from '../rank/v4-rank.service'
 const DEFAULT_PAGE_COUNT: number = 10;
 
 interface IV4Image {
@@ -161,14 +162,19 @@ interface IV4PurchaseTransactionHistory {
   transaction_reference: string;
 }
 
-interface IV4GameTransactionHistory {
+interface IV4CampaignTransactionHistory {
   id: number;
   campaign: IV4Campaign;
 }
 
-interface IV4StampTransactionHistory {
+interface IV4LeaderboardTransactionHistory {
   id: number;
-  campaign: IV4Campaign;
+  leaderboard: V4LeaderBoard;
+}
+
+interface IV4RuleTransactionHistory {
+  id: number;
+  name: string;
 }
 
 interface IV4LoyaltyTransactionPropertiesHistory {
@@ -182,7 +188,8 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
-    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory | IV4GameTransactionHistory | IV4StampTransactionHistory;
+    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory | IV4CampaignTransactionHistory
+     | IV4LeaderboardTransactionHistory | IV4RuleTransactionHistory;
   };
 }
 
@@ -314,7 +321,8 @@ export class V4LoyaltyService extends LoyaltyService {
     transactionHistory: IV4LoyaltyTransactionPropertiesHistory
   ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | IStampTransactionHistory | undefined;
+    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | ICampaignTransactionHistory |
+      ILeaderBoardTransactionHistory | IRuleTransactionHistory | undefined;
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
@@ -349,18 +357,15 @@ export class V4LoyaltyService extends LoyaltyService {
           };
           data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
-        case TransactionDetailType.game:
-          const gameDetails = transactionDetails as IV4GameTransactionHistory;
-          data = {
-            id: transactionDetails.id,
-            gameName: gameDetails.campaign.name
-          };
-          break;
         case TransactionDetailType.stamp:
-          const stampDetails = transactionDetails as IV4StampTransactionHistory;
+        case TransactionDetailType.game:
+        case TransactionDetailType.quest:
+        case TransactionDetailType.progressCampaign:
+        case TransactionDetailType.instantOutcomeCampaign:
+          const campaignDetails = transactionDetails as IV4CampaignTransactionHistory;
           data = {
             id: transactionDetails.id,
-            stampCampaignName: stampDetails.campaign.name
+            campaignName: campaignDetails.campaign?.name
           };
           break;
         case TransactionDetailType.dashboard:
@@ -378,6 +383,21 @@ export class V4LoyaltyService extends LoyaltyService {
             properties: {
               productName: 'Membership Extended' // todo: when more use-cases arise for user initiated txn's, identify using unique properties
             }
+          };
+          break;
+        case TransactionDetailType.leaderboard:
+          const leaderboardDetails = transactionDetails as IV4LeaderboardTransactionHistory;
+          data = {
+            id: transactionDetails.id,
+            leaderboardName: leaderboardDetails.leaderboard?.name
+          };
+          break;
+        case TransactionDetailType.rule:
+
+          const ruleDetails = transactionDetails as IV4RuleTransactionHistory;
+          data = {
+            id: transactionHistory.id,
+            ruleName: ruleDetails.name
           };
           break;
       }

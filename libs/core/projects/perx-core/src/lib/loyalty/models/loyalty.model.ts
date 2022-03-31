@@ -7,7 +7,12 @@ export const enum TransactionDetailType {
   'game' = 'GameTransaction',
   'stamp' = 'StampTransaction',
   'dashboard' = 'DeviseUser',
-  'user' = 'User::Account'
+  'user' = 'User::Account',
+  'quest' = 'UserQuest',
+  'leaderboard' = 'LeaderboardPodium',
+  'progressCampaign' = 'ProgressPointsTransaction',
+  'instantOutcomeCampaign' = 'InstantOutcomeTransaction',
+  'rule' = 'TransactionRule'
 }
 
 export interface IExpiringPoints {
@@ -112,17 +117,24 @@ export interface IPurchaseTransactionHistory {
   properties?: ITransactionProperties;
 }
 
-export interface IGameTransactionHistory {
+export interface ICampaignTransactionHistory {
   id: number;
-  gameName: string;
+  campaignName: string;
   properties?: ITransactionProperties;
 }
 
-export interface IStampTransactionHistory {
+export interface ILeaderBoardTransactionHistory {
   id: number;
-  stampCampaignName: string;
+  leaderboardName: string;
   properties?: ITransactionProperties;
 }
+
+export interface IRuleTransactionHistory {
+  id: number;
+  ruleName: string;
+  properties?: ITransactionProperties;
+}
+
 
 export interface ILoyaltyTransactionHistory {
   id: number;
@@ -134,7 +146,8 @@ export interface ILoyaltyTransactionHistory {
   properties?: ICustomProperties;
   transactionDetails?: {
     type?: TransactionDetailType,
-    data?: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | IStampTransactionHistory
+    data?: IPurchaseTransactionHistory | IRewardTransactionHistory | ICampaignTransactionHistory
+     | ILeaderBoardTransactionHistory | IRuleTransactionHistory
   };
 }
 
