@@ -643,7 +643,9 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public dialogClosed(): void {
-    this.router.navigate(['/home']);
+    if (!this.isEmbedded) {
+      this.router.navigate([ '/home' ]);
+    }
   }
 
   public closeAndRedirect(url: string): void {
