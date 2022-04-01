@@ -152,7 +152,13 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => {
         if (!games || !games.length) {
           this.popupData = this.gameNotAvailablePopUp;
-          this.redirectUrlAndPopUp();
+          if(!this.isEmbedded) {
+            this.redirectUrlAndPopUp();
+          } else {
+            this.gameNotAvailablePopUp.buttonTxt = null;
+            this.gameNotAvailablePopUp.hideCloseButton = true;
+            this.notificationService.addPopup(this.gameNotAvailablePopUp);
+          }
           return EMPTY;
         }
         return games;
@@ -182,6 +188,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.noRewardsPopUp.text = noOutcome.subTitle;
             this.noRewardsPopUp.imageUrl =
               noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.hideCloseButton = this.isEmbedded;
             this.noRewardsPopUp.buttonTxt = this.isEmbedded
               ? null
               : noOutcome.button || this.noRewardsPopUp.buttonTxt;
@@ -191,6 +198,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.text = successOutcome.subTitle;
             this.successPopUp.imageUrl =
               successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.hideCloseButton = this.isEmbedded;
             this.successPopUp.buttonTxt = this.isEmbedded
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
