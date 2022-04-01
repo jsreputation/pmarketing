@@ -203,6 +203,8 @@ export class GameComponent implements OnInit, OnDestroy {
             game.remainingNumberOfTries !== null
           ) {
             // null is recognised as infinite from dashboard
+            this.outOfTriesPopup.buttonTxt = this.isEmbedded ? null : this.outOfTriesPopup.buttonTxt;
+            this.outOfTriesPopup.hideCloseButton = this.isEmbedded;
             this.notificationService.addPopup(this.outOfTriesPopup);
           }
         }
@@ -624,6 +626,7 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.isEmbedded) {
       this.successPopUp.buttonTxt = null;
       this.noRewardsPopUp.buttonTxt = null;
+      this.outOfTriesPopup.buttonTxt = null;
     }
   }
 
