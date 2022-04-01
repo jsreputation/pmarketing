@@ -93,7 +93,10 @@ export class AppComponent implements OnInit {
     // to store so that it works with interceptor
     this.translate.onLangChange.pipe(
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
-      tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
+      tap((change: LangChangeEvent) => {
+        this.storage.setAppInfoProperty(change.lang, 'lang');
+        document.documentElement.lang = change.lang;
+      }),
     ).subscribe();
     this.config.readAppConfig<ITheme>()
       .pipe(
