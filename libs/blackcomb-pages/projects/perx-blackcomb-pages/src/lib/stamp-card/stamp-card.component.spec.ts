@@ -21,7 +21,8 @@ import {
   PuzzlesModule,
   StampCardState,
   StampService, ThemesService,
-  ConfigService
+  ConfigService,
+  SettingsService
 } from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
@@ -54,6 +55,12 @@ describe('StampCardComponent', () => {
 
   const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of({
+      showPrizeSetOutcome: true
+    })
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardComponent],
@@ -70,6 +77,7 @@ describe('StampCardComponent', () => {
         { provide: NotificationService, useValue: notificationStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         MatDialog
       ]
     })

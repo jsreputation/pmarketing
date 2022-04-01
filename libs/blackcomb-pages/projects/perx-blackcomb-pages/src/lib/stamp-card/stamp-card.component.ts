@@ -1,8 +1,6 @@
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   CampaignOutcomeType,
-  ConfigService,
-  IConfig,
   IRewardPopupConfig,
   IStamp,
   IStampCard,
@@ -14,6 +12,8 @@ import {
   StampService,
   StampState,
   ThemesService,
+  IFlags, 
+  SettingsService
 } from '@perxtech/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -43,6 +43,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public showPrizeSetOutcome: boolean = false;
   public showPointsHistory: boolean = false;
+  public remoteFlags: IFlags;
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -59,7 +60,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private translate: TranslateService,
     private dialog: MatDialog,
-    private configService: ConfigService
+    private settingsService: SettingsService
   ) {
   }
 
@@ -69,12 +70,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
 
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showPrizeSetOutcome = config.showPrizeSetOutcome ? config.showPrizeSetOutcome : false;
-        this.showPointsHistory = !!config.showPointTransfer;
-      }
-    );
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+    });
 
     this.initTranslate();
     this.route.paramMap

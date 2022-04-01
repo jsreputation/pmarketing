@@ -17,7 +17,8 @@ import {
   SurveyModule as PerxSurveyModule,
   SurveyQuestionType,
   SurveyService,
-  ConfigService
+  ConfigService,
+  SettingsService
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
@@ -30,8 +31,8 @@ describe('SurveyComponent', () => {
   const iCampaignServiceStub: Partial<ICampaignService> = {};
   const survey: ISurvey = {
     id: 1,
-    title: {text: 'Survey Test'},
-    subTitle: {text: 'Test'},
+    title: { text: 'Survey Test' },
+    subTitle: { text: 'Test' },
     results: {},
     displayProperties: {
       informationCollectionSetting: WInformationCollectionSettingType.signup_required,
@@ -59,6 +60,12 @@ describe('SurveyComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of({
+      showPrizeSetOutcome: true
+    })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -102,6 +109,7 @@ describe('SurveyComponent', () => {
           }
         },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();
