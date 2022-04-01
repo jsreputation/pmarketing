@@ -139,7 +139,7 @@ export class AppComponent implements OnInit {
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             if (this.jwtTokenAuth) {
-              this.router.navigate(['/access-verify']);
+              this.router.navigate(['/access-verify'],  { state: { refreshTokenFlow : true }});
             } else {
               this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
               this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
