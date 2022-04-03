@@ -125,9 +125,27 @@ Build the perx demo app:
 docker build -t microsite-apps-ng . --build-arg app=perx-demo --build-arg env=staging --build-arg appbase=blackcomb
 ```
 
+Build specific tenant app: 
+```
+docker build -t microsite-apps-ng . --build-arg app=bdo --build-arg env=staging
+```
+
 Run the image and expose on port 8000
 ```
 docker run -p 8000:8000 --rm --name microsite-apps-ng microsite-apps-ng
+```
+
+Run the image and expose on port 8000 
+```
+docker run -p 8000:8000 -v $(pwd)/config.json:/secrets/api-config/config.json -e API_CONFIG_PATH=/secrets/api-config/config.json --rm microsite-apps-ng
+```
+
+Copy the missing config.json to your active docker container
+```
+docker ps
+
+# copy the docker container_id
+docker cp backend/appauth-server/config.json <docker_container_id>:/service/express/config.json
 ```
 
 you should have the server now listening on http://localhost:8000

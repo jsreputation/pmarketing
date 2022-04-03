@@ -3,6 +3,7 @@ import { NotificationService, ICampaignService, ICampaign, RewardsService, IRewa
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, switchMap, map } from 'rxjs/operators';
 import { of, combineLatest } from 'rxjs';
+import copyToClipboard from 'copy-to-clipboard';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { Promo } from '../../models/promo.model';
@@ -66,29 +67,43 @@ export class TreatEnrollCompletePageComponent implements OnInit{
   }
 
   sharePromo(){
-    if (navigator.share) {
-      const data = {
-        url: this.shareUrl,
-        text:this.shareText,
-        title:this.shareTitle
-      };
-      (navigator as any)
-        .share(data)
-        .catch(() => {
-          console.log('failed to use share, falling back to clipboard');
-          this.copy();
-        });
-    } else {
-      console.log('no access to share api, falling back to clipboard');
+    try {
+      if ((navigator as any).share) {
+        const data = {
+          url: this.shareUrl,
+          text: this.shareText,
+          title: this.shareTitle,
+        };
+        (navigator as any).share(data);
+      } else {
+        console.log('no access to share api, falling back to clipboard');
+        this.copy();
+      }
+    } catch (error) {
+      console.log('failed to use share, falling back to clipboard');
       this.copy();
     }
   }
 
   public copy(text?: string): void {
-    navigator.clipboard
-      .writeText(`${text ? text : this.shareText}`)
-      .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
-      .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
+    try {
+      if (navigator.clipboard) {
+        navigator.clipboard
+          .writeText(`${text ? text : this.shareText}`)
+          .then(() =>
+            this.notificationService.addSnack(this.copyToClipboardTxt)
+          );
+      } else {
+        // Added fallback option for clipboard when its not available
+        copyToClipboard(this.shareTitle, {
+          onCopy: () => {
+            this.notificationService.addSnack(this.copyToClipboardTxt);
+          },
+        });
+      }
+    } catch (error) {
+      this.notificationService.addSnack(this.clipboardErrorTxt);
+    }
   }
   
 
