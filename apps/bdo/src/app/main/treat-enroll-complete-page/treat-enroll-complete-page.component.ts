@@ -3,7 +3,7 @@ import { NotificationService, ICampaignService, ICampaign, RewardsService, IRewa
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, switchMap, map } from 'rxjs/operators';
 import { of, combineLatest } from 'rxjs';
-import copyToClipboard from 'copy-to-clipboard';
+import * as copyToClipboard from 'copy-to-clipboard';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { Promo } from '../../models/promo.model';

@@ -8,7 +8,7 @@ import {
   IVoucherService,
 } from '@perxtech/core';
 import { combineLatest, of } from 'rxjs';
-import copyToClipboard from 'copy-to-clipboard';
+import * as copyToClipboard from 'copy-to-clipboard';
 import { IListItemModel } from '../../shared/models/list-item.model';
 import { TranslateService } from '@ngx-translate/core';
 import { mapRewardsToListItem } from '../../shared/utilities/mapping.util';

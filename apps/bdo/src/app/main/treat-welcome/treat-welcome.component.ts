@@ -7,7 +7,7 @@ import {
   LocationsService,
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
-import copyToClipboard from 'copy-to-clipboard';
+import * as copyToClipboard from 'copy-to-clipboard';
 import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, of } from 'rxjs';
