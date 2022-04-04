@@ -5,16 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
-import {
-  Config,
-  ConfigService,
-  FlagLocalStorageService,
-  IConfig,
-  IFlags,
-  ITheme,
-  SettingsService,
-  ThemesService
-} from '@perxtech/core';
+import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 
 import { AccountComponent } from '../account/account.component';
@@ -74,7 +65,6 @@ export class LayoutComponent implements OnInit {
     private config: Config,
     private configService: ConfigService,
     private settingsService: SettingsService,
-    private flagLocalStorageService: FlagLocalStorageService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -122,19 +112,14 @@ export class LayoutComponent implements OnInit {
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
       const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
-
-      if (chromelessFlag) {
-        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      } else if (params && params.flags === '') {
-        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
-      }
+      this.showHeader = !chromelessFlag;
     });
   }
 
   public onActivate(ref: any): void {
-
-    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
-    this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
+    if (ref instanceof SignIn2Component) {
+      this.showHeader = false;
+    }
 
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
