@@ -1,10 +1,10 @@
 import { IListItemModel } from '../../shared/models/list-item.model';
-import { catchError, map, switchMap, takeUntil, tap, filter, mergeMap } from 'rxjs/operators';
+import { catchError, switchMap, takeUntil, tap, filter, mergeMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ICampaignService, RewardsService, Sort, ICatalogItem, ICatalog, ICampaign, IConfig, ConfigService } from '@perxtech/core';
 import { FilterService } from '../../shared/services/filter.service';
-import { Observable, forkJoin, combineLatest, of, iif } from 'rxjs';
+import { forkJoin, combineLatest, of, iif } from 'rxjs';
 import { IFilterModel } from '../../shared/models/filter.model';
 import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 import { mapCampaignsToListItem, mapRewardsToListItem, mapCampaignToListItem, mapRewardToListItem } from '../../shared/utilities/mapping.util';
@@ -23,13 +23,14 @@ interface IBDOConfig {
 })
 export class CatalogPageComponent extends SelfDestruct implements OnInit {
   categoryCode: string;
-  requestPageSize = 100;
-  filterResult$: Observable<IListItemModel[]> = null;
+  requestPageSize = 20;
+  filterResult: IListItemModel[] = [];
   isLoaded = false;
   pageNumber = 1;
   catalogId: number;
   public showOrderedCatalogItems = false;
-
+  isPaginationCompleted: boolean;
+  
   constructor(
     private activeRoute: ActivatedRoute,
     private rewardsService: RewardsService,
@@ -69,88 +70,23 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
       this.categoryCode = params.type;
       this.filterService.setValue(mapQueryParamsToFilterObject(filterData, params));
     })
-    let rewardIds, campaignIds, catalogItems;
+   
 
     if (this.showOrderedCatalogItems) {
-
-    this.filterResult$ = this.filterService.filterValue$
+      this.filterService.filterValue$
       .pipe(
-        takeUntil(this.destroy$),
-        switchMap((filterValue: IFilterModel) => {
+        takeUntil(this.destroy$))
+      .subscribe((filterValue: IFilterModel) => {
           if (!filterValue) {
             return [];
           }
           this.isLoaded = false;
-          const queryObject = buildParams(filterValue);
-          Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
-          const campaignsParams = {
-            page: this.pageNumber,
-            size: this.requestPageSize,
-            tags: queryObject.tags,
-            categoryIds: queryObject.categoryIds,
-            // sort_by: 'begins_at'
-          };
-          Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
-
-          return this.rewardsService.getCatalogItems(
-              this.catalogId,
-              this.pageNumber,
-              this.requestPageSize,
-              'en',
-              queryObject.categoryIds,
-              queryObject.tags?.filter(tag => tag !== 'new'),
-              queryObject.tags?.includes('new') ? Sort.descending : null,
-              queryObject.tags?.includes('new') ? 'begins_at' : null)      
-           }),
-          tap((items: ICatalogItem[]) => {
-            catalogItems = items;
-            rewardIds = items?.filter(item => item.itemType === 'Reward::Campaign')?.map(item => item.itemId);
-            campaignIds  = items?.filter(item => item.itemType === 'Campaign')?.map(item => item.itemId);
-          }),
-          switchMap(() => 
-            forkJoin([
-              iif(() => rewardIds && rewardIds.length > 0 , this.rewardsService.getRewardsById(rewardIds, rewardIds.length)
-              .pipe(catchError(() => of([]))), of([])),
-              iif(() => campaignIds && campaignIds.length > 0, this.campaignsService.getCampaignsById(campaignIds, campaignIds.length)
-              .pipe(
-                catchError(() => of([])),
-               /* mergeMap((campaigns:ICampaign[]) => iif(() => campaigns.length > 0,
-                  // for each campaign, get detailed version=
-                  combineLatest(
-                    ...campaigns.map((campaign) =>
-                      this.campaignsService
-                        .getCampaign(campaign.id)
-                        .pipe(catchError(() => of(void 0)))
-                    )
-                  ),
-                  of([])
-                  )
-                )*/
-              )
-              , of([]))
-            ])
-          ),
-        map(([rewards, campaigns]) => { 
-          this.isLoaded = true;
-          const listItems =[];
-          catalogItems?.forEach((item: ICatalogItem) => {
-            if (item.itemType === 'Reward::Campaign') {
-              const reward = rewards?.find(reward => reward.id === item.itemId);
-              if(reward) {
-                listItems.push(mapRewardToListItem(reward));
-              }          
-            } else if (item.itemType === 'Campaign'){
-              const campaign = campaigns?.find(campaign => campaign.id === item.itemId);
-              if(campaign) {
-                listItems.push(mapCampaignToListItem(campaign));
-              }        
-            }
-          });
-          return listItems;
-        }));
+          this.pageNumber = 1;
+          this.filterResult = [];
+          this.getCatalogItems(filterValue);
+        });
     } else {
-
-        this.filterResult$ = this.filterService.filterValue$
+     this.filterService.filterValue$
       .pipe(
         takeUntil(this.destroy$),
         switchMap((filterValue: IFilterModel) => {
@@ -198,14 +134,85 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
               )
           ]);
         }),
-        filter(value => value.length),
-        map(([rewards, campaigns]) => {
+        filter(value => value.length))
+        .subscribe(([rewards, campaigns]) => {
           this.isLoaded = true;
           const listItem = mapCampaignsToListItem(campaigns).concat(mapRewardsToListItem(rewards));
-          return listItem.sort(function(firstItem, secondItem) {
+          listItem.sort(function(firstItem, secondItem) {
             return new Date(secondItem.createdAt).getTime() - new Date(firstItem.createdAt).getTime();
           });
-        }));
+          this.filterResult.push(...listItem);
+        });
     }    
+  }
+
+  public getCatalogItems(filterValue: IFilterModel): void {
+    let rewardIds, campaignIds, catalogItems;
+    const queryObject = buildParams(filterValue);
+    Object.keys(queryObject).forEach((k) => !queryObject[k] && delete queryObject[k]);
+    const campaignsParams = {
+      page: this.pageNumber,
+      size: this.requestPageSize,
+      tags: queryObject.tags,
+      categoryIds: queryObject.categoryIds,
+      // sort_by: 'begins_at'
+    };
+    Object.keys(campaignsParams).forEach((k) => !campaignsParams[k] && delete campaignsParams[k]);
+
+    this.rewardsService.getCatalogItems(
+        this.catalogId,
+        this.pageNumber,
+        this.requestPageSize,
+        'en',
+        queryObject.categoryIds,
+        queryObject.tags?.filter(tag => tag !== 'new'),
+        queryObject.tags?.includes('new') ? Sort.descending : null,
+        queryObject.tags?.includes('new') ? 'begins_at' : null)      
+    .pipe(
+    tap((items: ICatalogItem[]) => {
+      catalogItems = items;
+      this.pageNumber++;
+      this.isPaginationCompleted = catalogItems?.length < this.requestPageSize;
+      rewardIds = items?.filter(item => item.itemType === 'Reward::Campaign')?.map(item => item.itemId);
+      campaignIds  = items?.filter(item => item.itemType === 'Campaign')?.map(item => item.itemId);
+    }),
+    switchMap(() => 
+      forkJoin([
+        iif(() => rewardIds && rewardIds.length > 0 , this.rewardsService.getRewardsById(rewardIds, this.requestPageSize)
+        .pipe(catchError(() => of([]))), of([])),
+        iif(() => campaignIds && campaignIds.length > 0, this.campaignsService.getCampaignsById(campaignIds, this.requestPageSize)
+        .pipe(
+          catchError(() => of([])),
+        )
+        , of([]))
+      ])
+    )).
+    subscribe(([rewards, campaigns]) => { 
+      this.isLoaded = true;
+      const listItems =[];
+      catalogItems?.forEach((item: ICatalogItem) => {
+        if (item.itemType === 'Reward::Campaign') {
+          const reward = rewards?.find(reward => reward.id === item.itemId);
+          if(reward) {
+            listItems.push(mapRewardToListItem(reward));
+          }          
+        } else if (item.itemType === 'Campaign'){
+          const campaign = campaigns?.find(campaign => campaign.id === item.itemId);
+          if(campaign) {
+            listItems.push(mapCampaignToListItem(campaign));
+          }        
+        }
+      });
+      this.filterResult.push(...listItems);
+    });
+  }
+
+  public onScroll(): void {
+    if (this.isPaginationCompleted) {
+      return;
+    } 
+    if (this.showOrderedCatalogItems) {
+      this.getCatalogItems(this.filterService.currentValue);
+    }
   }
 }
