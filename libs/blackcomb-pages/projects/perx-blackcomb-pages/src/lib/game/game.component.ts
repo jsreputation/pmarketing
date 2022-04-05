@@ -1,48 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
-  IGameService,
-  IGame,
-  GameType,
-  IPopupConfig,
-  IEngagementTransaction,
   AuthenticationService,
-  NotificationService,
-  IPrePlayStateData,
-  IPointsOutcome,
-  ICampaignService,
-  ICampaign,
   ErrorMessageService,
-  RewardPopupComponent,
-  IRewardPopupConfig,
-  IPrizeSetOutcome,
-  SettingsService,
+  GameType,
   IBadgeOutcome,
+  ICampaign,
+  ICampaignService,
+  IEngagementTransaction,
   IFlags,
+  IGame,
+  IGameService,
+  IPlayOutcome,
+  IPointsOutcome,
+  IPopupConfig,
+  IPrePlayStateData,
+  IPrizeSetOutcome,
+  IRewardPopupConfig,
+  NotificationService,
+  RewardPopupComponent,
+  SettingsService,
 } from '@perxtech/core';
-import {
-  map,
-  tap,
-  first,
-  filter,
-  switchMap,
-  bufferCount,
-  catchError,
-  takeUntil,
-} from 'rxjs/operators';
-import {
-  Observable,
-  interval,
-  throwError,
-  Subject,
-  combineLatest,
-  EMPTY,
-} from 'rxjs';
+import { bufferCount, catchError, filter, first, map, switchMap, takeUntil, tap, } from 'rxjs/operators';
+import { combineLatest, EMPTY, interval, Observable, Subject, throwError, } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
 import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
@@ -119,7 +104,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
-    
+
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
     });
@@ -167,7 +152,14 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => {
         if (!games || !games.length) {
           this.popupData = this.gameNotAvailablePopUp;
-          this.redirectUrlAndPopUp();
+          if(!this.isEmbedded) {
+            this.redirectUrlAndPopUp();
+          } else {
+            this.gameNotAvailablePopUp.buttonTxt = null;
+            this.gameNotAvailablePopUp.hideCloseButton = true;
+            this.gameNotAvailablePopUp.disableOverlayClose = this.isEmbedded;
+            this.notificationService.addPopup(this.gameNotAvailablePopUp);
+          }
           return EMPTY;
         }
         return games;
@@ -197,6 +189,8 @@ export class GameComponent implements OnInit, OnDestroy {
             this.noRewardsPopUp.text = noOutcome.subTitle;
             this.noRewardsPopUp.imageUrl =
               noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.hideCloseButton = this.isEmbedded;
+            this.noRewardsPopUp.disableOverlayClose = this.isEmbedded;
             this.noRewardsPopUp.buttonTxt = this.isEmbedded
               ? null
               : noOutcome.button || this.noRewardsPopUp.buttonTxt;
@@ -206,6 +200,8 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.text = successOutcome.subTitle;
             this.successPopUp.imageUrl =
               successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.hideCloseButton = this.isEmbedded;
+            this.successPopUp.disableOverlayClose = this.isEmbedded;
             this.successPopUp.buttonTxt = this.isEmbedded
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
@@ -218,6 +214,9 @@ export class GameComponent implements OnInit, OnDestroy {
             game.remainingNumberOfTries !== null
           ) {
             // null is recognised as infinite from dashboard
+            this.outOfTriesPopup.buttonTxt = this.isEmbedded ? null : this.outOfTriesPopup.buttonTxt;
+            this.outOfTriesPopup.hideCloseButton = this.isEmbedded;
+            this.successPopUp.disableOverlayClose = this.isEmbedded;
             this.notificationService.addPopup(this.outOfTriesPopup);
           }
         }
@@ -639,11 +638,14 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.isEmbedded) {
       this.successPopUp.buttonTxt = null;
       this.noRewardsPopUp.buttonTxt = null;
+      this.outOfTriesPopup.buttonTxt = null;
     }
   }
 
   public dialogClosed(): void {
-    this.router.navigate(['/home']);
+    if (!this.isEmbedded) {
+      this.router.navigate([ '/home' ]);
+    }
   }
 
   public closeAndRedirect(url: string): void {
