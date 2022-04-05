@@ -114,7 +114,10 @@ export const setLanguage = (
   themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      tap((config: IConfig<void>) => {
+        translateService.setDefaultLang(config.defaultLang || 'en');
+        document.documentElement.lang = config.defaultLang;
+      }),
       // for currentLang registering to determine lang ver of url navigation on content.component
       tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
