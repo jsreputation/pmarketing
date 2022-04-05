@@ -1,38 +1,28 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  Router,
-  NavigationEnd,
-  Event, ActivatedRoute
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
-import {
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
+import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService, } from '@perxtech/core';
 import {
-  ThemesService,
-  ITheme,
-  Config,
-  ConfigService,
-  IConfig,
-  SettingsService,
-  IFlags,
-  FlagLocalStorageService
-} from '@perxtech/core';
-import {
-  AccountComponent, BACK_ARROW_URLS, CampaignStampsComponent, FindLocationComponent,
-  HistoryComponent, HomeComponent, LeaderboardPageComponent, LeaderboardsComponent,
-  NearmeComponent, ProfileComponent, RebatesWalletComponent, RewardsPageComponent,
-  SignIn2Component, TransactionHistoryComponent, WalletComponent, WalletHistoryComponent
+  AccountComponent,
+  BACK_ARROW_URLS,
+  CampaignStampsComponent,
+  FindLocationComponent,
+  HistoryComponent,
+  HomeComponent,
+  LeaderboardPageComponent,
+  LeaderboardsComponent,
+  NearmeComponent,
+  ProfileComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  SignIn2Component,
+  TransactionHistoryComponent,
+  WalletComponent,
+  WalletHistoryComponent
 } from '@perxtech/blackcomb-pages';
 
 
@@ -70,8 +60,7 @@ export class LayoutComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
-    private settingsService: SettingsService,
-    private flagLocalStorageService: FlagLocalStorageService
+    private settingsService: SettingsService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -109,20 +98,14 @@ export class LayoutComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
       const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
-
-      if (chromelessFlag) {
-        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      } else if (params && params.flags === '') {
-        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
-      }
+      this.showHeader = !chromelessFlag;
     });
   }
 
   public onActivate(ref: any): void {
-
-    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
-    this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
-
+    if (ref instanceof SignIn2Component) {
+      this.showHeader = false;
+    }
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||

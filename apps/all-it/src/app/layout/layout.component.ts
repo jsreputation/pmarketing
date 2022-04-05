@@ -1,14 +1,7 @@
 import { LayoutComponent as BCPLayoutComponent } from '@perxtech/blackcomb-pages';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Config,
-  ConfigService,
-  FlagLocalStorageService,
-  ILoyalty, LoyaltyService,
-  SettingsService,
-  ThemesService
-} from '@perxtech/core';
+import { Config, ConfigService, ILoyalty, LoyaltyService, SettingsService, ThemesService } from '@perxtech/core';
 import { Title } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 
@@ -30,10 +23,9 @@ export class LayoutComponent extends BCPLayoutComponent implements OnInit {
     config: Config,
     configService: ConfigService,
     settingsService: SettingsService,
-    flagLocalStorageService: FlagLocalStorageService,
     private loyaltyService: LoyaltyService,
   ) {
-    super(location, router, route, themesService, titleService, cd, config, configService, settingsService, flagLocalStorageService);
+    super(location, router, route, themesService, titleService, cd, config, configService, settingsService);
   }
 
   public ngOnInit(): void {
