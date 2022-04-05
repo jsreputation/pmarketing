@@ -157,6 +157,7 @@ export class GameComponent implements OnInit, OnDestroy {
           } else {
             this.gameNotAvailablePopUp.buttonTxt = null;
             this.gameNotAvailablePopUp.hideCloseButton = true;
+            this.gameNotAvailablePopUp.disableOverlayClose = this.isEmbedded;
             this.notificationService.addPopup(this.gameNotAvailablePopUp);
           }
           return EMPTY;
@@ -189,6 +190,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.noRewardsPopUp.imageUrl =
               noOutcome.image || this.noRewardsPopUp.imageUrl;
             this.noRewardsPopUp.hideCloseButton = this.isEmbedded;
+            this.noRewardsPopUp.disableOverlayClose = this.isEmbedded;
             this.noRewardsPopUp.buttonTxt = this.isEmbedded
               ? null
               : noOutcome.button || this.noRewardsPopUp.buttonTxt;
@@ -199,6 +201,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.imageUrl =
               successOutcome.image || this.successPopUp.imageUrl;
             this.successPopUp.hideCloseButton = this.isEmbedded;
+            this.successPopUp.disableOverlayClose = this.isEmbedded;
             this.successPopUp.buttonTxt = this.isEmbedded
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
@@ -213,6 +216,7 @@ export class GameComponent implements OnInit, OnDestroy {
             // null is recognised as infinite from dashboard
             this.outOfTriesPopup.buttonTxt = this.isEmbedded ? null : this.outOfTriesPopup.buttonTxt;
             this.outOfTriesPopup.hideCloseButton = this.isEmbedded;
+            this.successPopUp.disableOverlayClose = this.isEmbedded;
             this.notificationService.addPopup(this.outOfTriesPopup);
           }
         }
