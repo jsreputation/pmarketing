@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ICampaign,
-  ICampaignService, ITag,
-  LocationsService
+  ICampaignService,
+  ITag,
+  LocationsService,
 } from '@perxtech/core';
 import { switchMap } from 'rxjs/operators';
+import * as copyToClipboard from 'copy-to-clipboard';
 import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, of } from 'rxjs';
@@ -20,7 +22,7 @@ import { FILTER_DATA } from '../../shared/constants/filter-configuration.const';
 export class TreatWelcomeComponent implements OnInit {
   defaultImageUrl = 'assets/images/light-gray-color-default-image.png';
   campaign: ICampaign;
-  public shareTitle:string;
+  public shareTitle: string;
   public shareText: string;
   public shareUrl = `${window.location.protocol}//${window.location.host}/treat-welcome/`;
   public copyToClipboardTxt: string;
@@ -38,58 +40,78 @@ export class TreatWelcomeComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.params
       .pipe(
-        switchMap((param: Params) => combineLatest([
-          this.campaignService.getCampaign(param.id),
-          this.locationsService.getMerchantLocationsFromCampaign(param.id).pipe(catchError(() => of([])))
-        ]))
+        switchMap((param: Params) =>
+          combineLatest([
+            this.campaignService.getCampaign(param.id),
+            this.locationsService
+              .getMerchantLocationsFromCampaign(param.id)
+              .pipe(catchError(() => of([]))),
+          ])
+        )
       )
       .subscribe(([campaign, locations]) => {
         this.isShowLocationsAndPhone = !!locations.length;
         this.campaign = campaign;
         this.initTranslate();
-      }); 
+      });
   }
   navigateEnrollPage() {
     this.route.navigate([`treat-enroll/${this.campaign.id}`]);
   }
 
-  sharePromo(){   
-    if (navigator.share) {
-      const data = {
-        url: this.shareUrl,
-        text: this.shareText,
-        title: this.shareText,
-      };
-      (navigator as any)
-        .share(data)
-        .catch(() => {
-          console.log('failed to use share, falling back to clipboard');
-          this.copy();
-        });
-    } else {
-      console.log('no access to share api, falling back to clipboard');
+  sharePromo() {
+    try {
+      if ((navigator as any).share) {
+        const data = {
+          url: this.shareUrl,
+          text: this.shareText,
+          title: this.shareText,
+        };
+        (navigator as any).share(data);
+      } else {
+        console.log('no access to share api, falling back to clipboard');
+        this.copy();
+      }
+    } catch (error) {
+      console.log('failed to use share, falling back to clipboard');
       this.copy();
     }
   }
 
   public navigateLocationPage(): void {
-    this.route.navigate([`treat-welcome/${this.campaign.id}/location`], { queryParams: { mode: 'campaign'}});
+    this.route.navigate([`treat-welcome/${this.campaign.id}/location`], {
+      queryParams: { mode: 'campaign' },
+    });
   }
 
   public navigatePhonePage(): void {
-    this.route.navigate([ `treat-welcome/${this.campaign.id}/location` ], {
+    this.route.navigate([`treat-welcome/${this.campaign.id}/location`], {
       queryParams: {
         display: 'phone',
-        mode: 'campaign'
-      }
+        mode: 'campaign',
+      },
     });
   }
 
   public copy(): void {
-    navigator.clipboard
-      .writeText(`${this.shareText}`)
-      .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
-      .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
+    try {
+      if (navigator.clipboard) {
+        navigator.clipboard
+          .writeText(this.shareText)
+          .then(() =>
+            this.notificationService.addSnack(this.copyToClipboardTxt)
+          );
+      } else {
+        // Added fallback option for clipboard when its not available
+        copyToClipboard(this.shareTitle, {
+          onCopy: () => {
+            this.notificationService.addSnack(this.copyToClipboardTxt);
+          },
+        });
+      }
+    } catch (error) {
+      this.notificationService.addSnack(this.clipboardErrorTxt);
+    }
   }
 
   private initTranslate(): void {
@@ -116,6 +138,6 @@ export class TreatWelcomeComponent implements OnInit {
   }
 
   public existsInFilters(tag: ITag): boolean {
-    return !!FILTER_DATA.tags.find(element => element.type === tag.name);
+    return !!FILTER_DATA.tags.find((element) => element.type === tag.name);
   }
 }
