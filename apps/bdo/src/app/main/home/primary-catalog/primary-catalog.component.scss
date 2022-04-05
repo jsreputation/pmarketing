@@ -37,30 +37,31 @@
     background-size: contain;
 
     &#credit-card-catalog {
-      background-image: url("/assets/images/img-creditcard-mobile.png");
+      background-image: url("/assets/images/img-creditcard-mobile@2x.png");
       background-size: contain;
 
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-creditcard-desktop.png");
+        background-image: url("/assets/images/img-creditcard-desktop@2x.png");
         background-size: contain;
       }
     }
 
     &#debit-card-catalog {
-      background-image: url("/assets/images/img-debitcard-mobile.png");
-      background-size: auto;
+      background-image: url("/assets/images/img-debitcard-mobile@2x.png");
+      background-size: contain;
 
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-debitcard-desktop.png");
+        background-image: url("/assets/images/img-debitcard-desktop@2x.png");
+        background-size: contain;
       }
     }
 
     &#bdo-reward-catalog {
-      background-image: url("/assets/images/img-bdorewards-mobile.png");
+      background-image: url("/assets/images/img-bdorewards-mobile@2x.png");
       background-size: contain;
 
       @media screen and (min-width: $desktop-width) {
-        background-image: url("/assets/images/img-bdorewards-desktop.png");
+        background-image: url("/assets/images/img-bdorewards-desktop@2x.png");
       }
     }
 
