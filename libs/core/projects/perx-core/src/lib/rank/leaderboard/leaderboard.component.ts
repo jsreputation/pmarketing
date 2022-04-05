@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { LeaderBoard, UserRanking } from '../models/rank.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ export class LeaderboardComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.nickNameTxtFn) {
-      this.nickNameTxtFn = () => of('NICKNAME');
+      this.nickNameTxtFn = () => this.translate.get('LEADER_BOARD.NICKNAME');
     }
 
     if (this.leaderboard && this.leaderboard?.displayProperties?.baseName) {

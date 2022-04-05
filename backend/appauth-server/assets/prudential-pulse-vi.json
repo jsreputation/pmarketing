@@ -87,7 +87,8 @@
     "REFERRED_USER": "Bạn bè đã giới thiệu",
     "QUIZ_SCORE": "Điểm",
     "LOYALTY_POINTS_EARNED": "Điểm tích lũy",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "ACCOUNT_PAGE": {
     "TRANSACTION_HISTORY": "Lịch sử tích điểm",
