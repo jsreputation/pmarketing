@@ -169,11 +169,14 @@ export class GameComponent implements OnInit, OnDestroy {
       }),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
+        console.log('GAME: ', game)
         if (game) {
           if (!game.texts.button) {
             this.translate
               .get('START_PLAYING')
-              .subscribe((text) => (game.texts.button = text));
+              .subscribe((text) => {
+                  (game.texts.button = text)
+              });
           }
           const { displayProperties } = game;
           this.gameId = game.id;
@@ -495,7 +498,7 @@ export class GameComponent implements OnInit, OnDestroy {
               buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
               imageUrl: '',
             };
-          }  else if (
+          } else if (
             err instanceof HttpErrorResponse) {
             if (err.error) {
               this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
