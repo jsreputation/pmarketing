@@ -1,6 +1,5 @@
-<div class="search-result">
+<div class="search-result" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="true">
   <bdo-search-header [keyWord]="searchValue"></bdo-search-header>
-  <bdo-search-result *ngIf="searchResult && searchResult.length > 0;"
-                     [isLoaded]="isLoaded" [result]="searchResult"></bdo-search-result>
-  <bdo-no-result *ngIf="isLoaded && searchResult && searchResult.length === 0;"></bdo-no-result>
+  <bdo-search-result [isLoaded]="isLoaded" [result]="searchResult"></bdo-search-result>
+ <!-- <bdo-no-result *ngIf="isLoaded && searchResult && searchResult.length === 0;"></bdo-no-result>-->
 </div>
