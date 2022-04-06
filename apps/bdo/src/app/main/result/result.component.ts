@@ -1,4 +1,4 @@
-import { catchError, mergeMap, } from 'rxjs/operators';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ICampaign, ICampaignService, RewardsService } from '@perxtech/core';
@@ -53,7 +53,9 @@ export class ResultComponent implements OnInit {
                 ...campaigns.map((campaign) =>
                   this.campaignService
                     .getCampaign(campaign.id)
-                    .pipe(catchError(() => of(void 0)))
+                    .pipe(
+                      tap((campaignDetail) => campaignDetail.score = campaign.score),
+                      catchError(() => of(void 0)))
                 )
               ),
               of([])
