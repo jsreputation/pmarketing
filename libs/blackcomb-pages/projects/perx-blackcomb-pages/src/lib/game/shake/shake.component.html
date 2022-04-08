@@ -17,12 +17,17 @@
   </div>
   <div class="game-footer">
     <button
-      class="js-play ga_start_game"
+      class="btn-grad"
       mat-flat-button
       (click)="onClick()"
       [disabled]="showOperatingHours && !game.isOperating"
       [ngStyle]="buttonStyle">
       {{ game.texts.button }}
+      <mat-icon outline="true" class="material-icons-outlined lock-icon">lock</mat-icon>
+    </button>
+    <button class="enrol" mat-flat-button (click)="onClick()"
+      [disabled]="showOperatingHours && !game.isOperating" [ngStyle]="buttonStyle">
+      <span>Enrol</span>
     </button>
   </div>
 </div>

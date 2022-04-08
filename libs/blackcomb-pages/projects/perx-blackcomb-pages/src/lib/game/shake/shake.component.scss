@@ -31,3 +31,35 @@
 .nullBlock {
   height: 4.8rem;
 }
+
+.enrol {
+  height: 44px;
+  border-radius: 4px;
+}
+
+.btn-grad {
+  background: linear-gradient(#186DE1 -80%, #FFFFFF 100%, #FFFFFF 100%)
+}
+
+.btn-grad {
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #FFFFFF;
+  border-radius: 10px;
+  display: block;
+  height: 44px;
+  margin-bottom: 6px;
+}
+
+.btn-grad:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+.lock-icon {
+  color: #186DE1;
+}
