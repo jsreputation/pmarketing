@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HomeComponent } from './home.component';
+import { HomeMissionComponent } from './components/home-mission/home-mission.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,7 +31,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, HomeMissionComponent],
   imports: [
     CommonModule,
     MatCardModule,

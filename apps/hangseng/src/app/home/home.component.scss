@@ -1,10 +1,11 @@
-.loyalty-block {
-  background-color: var(--surface_colour);
+.mission-block {
+  background-color: var(--accent);
   display: flex;
   width: 100%;
-  align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 2.4rem;
+  height: auto;
+  min-height: 25vh;
 }
 
 .home-qr-button {
