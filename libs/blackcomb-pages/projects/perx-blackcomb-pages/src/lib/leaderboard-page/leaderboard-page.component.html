@@ -1,8 +1,9 @@
 <div class="leaderboard-container">
   <div class="detail-container">
     <h1>{{leaderBoardSettings?.displayProperties?.header?.values?.title}}</h1>
-    <h3 *ngIf="leaderBoardSettings && leaderBoardSettings.endDate">{{'LEADER_BOARD.ENDS_ON' | translate}}
-      {{leaderBoardSettings.endDate | date: 'dd.MM.yyyy'}}</h3>
+    <p class="description">{{leaderBoardSettings?.displayProperties?.header?.values?.description}}</p>
+    <p class="subtitle" *ngIf="leaderBoardSettings && leaderBoardSettings.endDate">{{'LEADER_BOARD.ENDS_ON' | translate}}
+      {{leaderBoardSettings.endDate | date: 'dd.MM.yyyy'}}</p>
   </div>
   <mat-tab-group *ngIf="leaderBoardSettings" mat-stretch-tabs>
     <mat-tab [label]="'LEADER_BOARD.RANKING_TAB_TITLE' | translate">

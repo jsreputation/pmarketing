@@ -5,14 +5,14 @@
     </div>
     <div class="point-and-rank-box">
       <div class="rank-box">
-        <h3>{{rantTextFn() | async}}</h3>
-        <h1>{{userGameInfo?.rank}}</h1>
+        <div class="metric-label">{{rantTextFn() | async}}</div>
+        <div class="metric">{{userGameInfo?.rank}}</div>
       </div>
       <div class="box-spacer"></div>
       <div class="point-box">
-        <h3>{{metric}}</h3>
+        <div class="metric-label">{{metric}}</div>
         <span>
-          <h1>{{userGameInfo?.value}}</h1>
+          <div class="metric">{{userGameInfo?.value}}</div>
         </span>
       </div>
     </div>
