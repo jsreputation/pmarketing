@@ -1,6 +1,7 @@
 <div class="leaderboard-container">
   <div class="detail-container">
     <h1>{{leaderBoardSettings?.displayProperties?.header?.values?.title}}</h1>
+    <h2>{{leaderBoardSettings?.displayProperties?.header?.values?.description}}</h2>
     <h3 *ngIf="leaderBoardSettings && leaderBoardSettings.endDate">{{'LEADER_BOARD.ENDS_ON' | translate}}
       {{leaderBoardSettings.endDate | date: 'dd.MM.yyyy'}}</h3>
   </div>
