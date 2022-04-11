@@ -2,6 +2,10 @@
 
 .treat-welcome-page {
   background: $white;
+  margin-top: 10px;
+  scroll-snap-align: center;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  list-style-type: none;
 
   .thumbnail {
     img {
@@ -15,7 +19,7 @@
   .treat-welcome-content {
     padding: 0 20px;
     font-size: 14px;
-    min-height: 59vh;
+    min-height: 62vh;
 
     .title {
       font-size: 24px;
