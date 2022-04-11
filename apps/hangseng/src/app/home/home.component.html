@@ -29,14 +29,16 @@
   </div>
   <div class="campaign-list">
     <!-- instant reward campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showInstantRewardCampaignsOnHomePage || appRemoteFlags?.showInstantRewardCampaignsOnHomePage">
+    <div class="campaigns"
+      *ngIf="appConfig.showInstantRewardCampaignsOnHomePage || appRemoteFlags?.showInstantRewardCampaignsOnHomePage">
       <div *ngIf="(instantCampaigns$ | async)?.length > 0" class="title" translate>HOME.INSTANT_REWARD_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="instantCampaigns$" (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
     </div>
 
     <!-- progress bar campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
+    <div class="campaigns"
+      *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
       <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>

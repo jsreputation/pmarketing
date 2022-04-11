@@ -6,7 +6,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 
 import enGb from '@angular/common/locales/en-GB';
 import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
@@ -68,6 +68,7 @@ import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { ErrorComponent } from './error/error.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AccessVerifyComponent } from './access-verify/access-verify.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -133,6 +134,7 @@ export const setLanguage = (
     AccessVerifyComponent
   ],
   imports: [
+    CommonModule,
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
     AuthenticationModule,
@@ -173,7 +175,8 @@ export const setLanguage = (
     PerxQuestModule.forRoot(),
     BadgeServiceModule.forRoot(),
     MatProgressSpinnerModule,
-    PlatformEnrolmentServiceModule.forRoot()
+    PlatformEnrolmentServiceModule.forRoot(),
+    InfiniteScrollModule,
   ],
   bootstrap: [AppComponent],
   providers: [

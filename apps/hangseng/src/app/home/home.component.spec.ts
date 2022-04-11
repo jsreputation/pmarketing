@@ -28,14 +28,12 @@ import {
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
-import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { profile } from '../mock/profile.mock';
+// import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
-import { CatalogsComponent } from './catalogs/catalogs.component';
+import { CampaignsCollectionComponent, CatalogsComponent, GamesCollectionComponent } from '@perxtech/blackcomb-pages';
 
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of([]),
@@ -60,8 +58,9 @@ const tokenStorageStub: Partial<TokenStorage> = {
 };
 
 const profileService: Partial<ProfileService> = {
-  whoAmI: () => of(profile),
-  getCustomProperties: () => of ()
+  // whoAmI: () => of(profile),
+  whoAmI: () => of({}),
+  getCustomProperties: () => of()
 };
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true)

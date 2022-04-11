@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { PageComponentsModule, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import {
   CampaignModule,
   CampaignServiceModule,
@@ -30,6 +30,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -50,7 +51,8 @@ const routes: Routes = [{
     InstantOutcomeTransactionServiceModule,
     PipeUtilsModule,
     InfiniteScrollModule,
-    TranslateModule.forChild(),
+    TranslateModule,
+    PageComponentsModule
   ],
   entryComponents: [
     RewardPopupComponent
