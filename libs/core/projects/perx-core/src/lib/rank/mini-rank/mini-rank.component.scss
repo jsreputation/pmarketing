@@ -12,8 +12,7 @@
     margin-top: 1.6rem;
     display: flex;
 
-    p,
-    h1 {
+    p {
       display: inline-block;
     }
 
@@ -27,11 +26,19 @@
       width: 50%;
       flex: 1 1 50%;
 
-      h3 {
+      .metric-label {
         font-weight: normal;
-        color: var(--disabled_text_color);
+        color: var(--disabled_text_color, #aaa);
         text-transform: uppercase;
         margin-bottom: 0;
+        font-size: 12px;
+      }
+
+      .metric {
+        font-size: 20px;
+        font-weight: bold;
+        display: inline-block;
+        margin: 1.2rem 0;
       }
     }
   }
