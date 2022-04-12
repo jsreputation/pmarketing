@@ -111,6 +111,9 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           } else if (transactionType === TransactionDetailType.rule) {
             const ruleData = (oc(tr).transactionDetails.data() as IRuleTransactionHistory);
             text = ruleData.ruleName ? ruleData.ruleName : '';
+          } else if (transactionType === TransactionDetailType.reward) {
+            const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
+            text = rewardData.rewardName ? rewardData.rewardName : '';
           }
           return of(text);
         };
