@@ -4,10 +4,22 @@
 <div class="page" *ngIf="theme && theme.properties && appConfig && appRemoteFlags" infiniteScroll
   [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
+  <div class="rewards-collection"
+    *ngIf="(appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage) && (rewards$ | async)?.length > 0">
+    <div class="title" translate>HOME.FEATURED_REWARDS</div>
+    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [showRewardFavButton]="false"
+      [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+  </div>
   <div class="campaign-list">
+    <!-- instant reward campaigns-->
+    <div class="campaigns">
+      <div *ngIf="(instantCampaigns$ | async)?.length > 0" class="title" translate>HOME.INSTANT_REWARD_CAMPAIGNS</div>
+      <perx-blackcomb-pages-campaigns-collection [campaigns]="instantCampaigns$" (selected)="goToCampaignPage($event)">
+      </perx-blackcomb-pages-campaigns-collection>
+    </div>
+
     <!-- progress bar campaigns-->
-    <div class="campaigns"
-      *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
+    <div class="campaigns">
       <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
       <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
