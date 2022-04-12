@@ -29,7 +29,6 @@ import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-// import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -58,7 +57,6 @@ const tokenStorageStub: Partial<TokenStorage> = {
 };
 
 const profileService: Partial<ProfileService> = {
-  // whoAmI: () => of(profile),
   whoAmI: () => of({}),
   getCustomProperties: () => of()
 };
