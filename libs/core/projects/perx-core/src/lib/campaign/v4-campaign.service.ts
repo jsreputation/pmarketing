@@ -228,7 +228,10 @@ export class V4CampaignService implements ICampaignService {
     this.configService
       .readAppConfig()
       .subscribe(
-        (config: IConfig<any>) => (this.baseUrl = config.apiHost as string)
+        (config: IConfig<any>) => {
+          this.lang = config.defaultLang || 'en';
+          (this.baseUrl = config.apiHost as string);
+        }
       );
   }
 
