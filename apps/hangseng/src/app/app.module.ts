@@ -175,7 +175,7 @@ export const setLanguage = (
     BadgeServiceModule.forRoot(),
     MatProgressSpinnerModule,
     PlatformEnrolmentServiceModule.forRoot(),
-    InfiniteScrollModule,
+    InfiniteScrollModule
   ],
   bootstrap: [AppComponent],
   providers: [
