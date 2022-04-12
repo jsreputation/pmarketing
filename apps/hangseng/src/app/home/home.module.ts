@@ -53,7 +53,11 @@ const routes: Routes = [{
     PipeUtilsModule,
     InfiniteScrollModule,
     TranslateModule,
-    PageComponentsModule
+    PageComponentsModule,
+    MatButtonModule,
+    MatCardModule,
+    MatRippleModule,
+    MatDialogModule
   ],
   entryComponents: [
     RewardPopupComponent
