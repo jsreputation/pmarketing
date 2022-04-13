@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ICampaignService, ITabConfigExtended } from '@perxtech/core';
 
 @Component({
   selector: 'hangseng-home-mission',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-mission.component.scss']
 })
 export class HomeMissionComponent implements OnInit {
+  public campaignCategoryChips: ITabConfigExtended[] = [];
 
-  constructor() { }
+  constructor(private campaignService: ICampaignService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.campaignService.getCategories().subscribe((res) => {
+      console.log('getCategories: ', res);
+      this.campaignCategoryChips = res;
+    });
   }
-
 }

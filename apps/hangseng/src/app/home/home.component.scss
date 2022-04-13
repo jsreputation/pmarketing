@@ -1,3 +1,5 @@
+@import "../../theme/variables.scss";
+
 .mission-block {
   background-color: var(--accent);
   display: flex;
@@ -5,7 +7,7 @@
   justify-content: space-between;
   margin-bottom: 2.4rem;
   height: auto;
-  min-height: 25vh;
+  min-height: 38vh;
 }
 
 .home-qr-button {

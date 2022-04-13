@@ -8,6 +8,7 @@ import {
   IReferral
 } from './models/campaign.model';
 import { GameType } from '../game/game.model';
+import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 export interface ICampaignFilterOptions {
   type?: CampaignType;
@@ -32,4 +33,5 @@ export abstract class ICampaignService {
   public abstract bdoCampaignEnrol(id: number, promoID: string, captchaToken: string): Observable<IBDOCampaignEnrolment>;
   public abstract searchCampaigns(text: string, page?: number, pageSize?: number, locale?: string): Observable<ICampaign[]>;
   public abstract getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]>;
+  public abstract getCategories(): Observable<ITabConfigExtended[]>;
 }

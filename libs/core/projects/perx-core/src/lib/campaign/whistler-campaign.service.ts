@@ -25,6 +25,7 @@ import {
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
+import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 @Injectable({
   providedIn: 'root'
@@ -185,6 +186,10 @@ export class WhistlerCampaignService implements ICampaignService {
   }
   // @ts-ignore
   public getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCategories(): Observable<ITabConfigExtended[]> {
     throw new Error('Method not implemented.');
   }
 }
