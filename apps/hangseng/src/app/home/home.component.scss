@@ -8,6 +8,9 @@
   margin-bottom: 2.4rem;
   height: auto;
   min-height: 38vh;
+
+  position: fixed;
+  top: 0;
 }
 
 .home-qr-button {
@@ -22,13 +25,18 @@
   min-height: 100%;
   overflow-y: auto;
   height: 100%;
+  flex: 1;
+
+  margin-top: 20rem;
 }
 
 .campaign-list {
   display: flex;
   flex-direction: column;
+  padding-bottom: 20rem;
   .campaigns {
     order: 1;
+
     &.prioritise {
       order: 0;
     }
