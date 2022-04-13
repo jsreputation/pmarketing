@@ -9,6 +9,7 @@ import {
   IReferral
 } from './models/campaign.model';
 import { GameType } from '../game/game.model';
+import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 export interface ICampaignFilterOptions {
   type?: CampaignType;

@@ -38,6 +38,7 @@ import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-c
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
+import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 interface IV4Image {
   type: string;

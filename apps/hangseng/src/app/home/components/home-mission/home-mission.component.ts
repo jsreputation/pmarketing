@@ -13,7 +13,6 @@ export class HomeMissionComponent implements OnInit {
 
   public ngOnInit(): void {
     this.campaignService.getCategories().subscribe((res) => {
-      console.log('getCategories: ', res);
       this.campaignCategoryChips = res;
     });
   }
