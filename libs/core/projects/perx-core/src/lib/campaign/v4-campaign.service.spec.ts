@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ConfigService } from '../config/config.service';
+import { TokenStorage } from '@perxtech/core';
 
 jest.mock('ngx-cacheable', () => ({
   // tslint:disable-next-line:variable-name
@@ -38,13 +39,17 @@ describe('V4CampaignService', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of(environment)
   };
+  const tokenStub: Partial<TokenStorage> = {
+    getAppInfoProperty: () => ''
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceMock },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: TokenStorage, useValue: tokenStub },
       ]
     });
     // httpClient = TestBed.get(HttpClient);

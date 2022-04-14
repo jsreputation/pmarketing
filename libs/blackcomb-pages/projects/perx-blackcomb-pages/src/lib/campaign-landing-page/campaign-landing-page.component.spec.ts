@@ -4,13 +4,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
   ICampaignService,
-  IPrizeSetOutcomeService, NotificationService, PipeUtilsModule,
+  IPrizeSetOutcomeService,
+  NotificationService,
+  PipeUtilsModule,
   RewardsService,
   SettingsService,
   TeamsService,
   ThemesService,
   UtilsModule,
-  TokenStorage
+  TokenStorage,
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
@@ -23,28 +25,29 @@ describe('CampaignLandingPageComponent', () => {
   let fixture: ComponentFixture<CampaignLandingPageComponent>;
   const campaignServiceStub: Partial<ICampaignService> = {};
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({
-      apiHost: '',
-      production: false,
-      preAuth: false,
-      isWhistler: false,
-      baseHref: '',
-    })
+    readAppConfig: () =>
+      of({
+        apiHost: '',
+        production: false,
+        preAuth: false,
+        isWhistler: false,
+        baseHref: '',
+      }),
   };
   const themesServiceStub: Partial<ThemesService> = {
-    getThemeSetting: () => of()
+    getThemeSetting: () => of(),
   };
   const rewardServiceStub: Partial<RewardsService> = {};
   const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
   const settingsServiceStub: Partial<SettingsService> = {};
   const teamsServiceStub: Partial<TeamsService> = {
-    createATeamforCampaign: () => of()
+    createATeamforCampaign: () => of(),
   };
   const notificationStub: Partial<NotificationService> = {
-    addPopup: () => { }
+    addPopup: () => {},
   };
   const tokenStub: Partial<TokenStorage> = {
-    getAppInfoProperty: () => ''
+    getAppInfoProperty: () => '',
   };
 
   beforeEach(async(() => {
@@ -57,7 +60,7 @@ describe('CampaignLandingPageComponent', () => {
         RouterTestingModule,
         MatListModule,
         MatIconModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
@@ -68,10 +71,9 @@ describe('CampaignLandingPageComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
         { provide: NotificationService, useValue: notificationStub },
-        {provide: TokenStorage, useValue:tokenStub }
-      ]
-    })
-      .compileComponents();
+        { provide: TokenStorage, useValue: tokenStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
