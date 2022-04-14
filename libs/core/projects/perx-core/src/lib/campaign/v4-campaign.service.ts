@@ -38,6 +38,7 @@ import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-c
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
+import { TokenStorage } from '@perxtech/core';
 
 interface IV4Image {
   type: string;
@@ -224,12 +225,12 @@ export class V4CampaignService implements ICampaignService {
   public baseUrl: string;
   private lang: string = 'en';
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService, private storage: TokenStorage) {
     this.configService
       .readAppConfig()
       .subscribe(
         (config: IConfig<any>) => {
-          this.lang = config.defaultLang || 'en';
+          this.lang = config.defaultLang || this.storage.getAppInfoProperty('lang') || 'en';
           (this.baseUrl = config.apiHost as string);
         }
       );
@@ -274,16 +275,16 @@ export class V4CampaignService implements ICampaignService {
         displayProperties = {
           landingPage: {
             body: {
-              text: lp.body ? lp.body[lang].text : '',
+              text: lp.body ? lp.body[lang]?.text : '',
             },
             buttonText: {
-              text: lp.button_text ? lp.button_text[lang].text : '',
+              text: lp.button_text ? lp.button_text[lang]?.text : '',
             },
             buttonText2: {
-              text: lp.button_text2 ? lp.button_text2[lang].text : '',
+              text: lp.button_text2 ? lp.button_text2[lang]?.text : '',
             },
             tnc: {
-              text: lp.tnc ? lp.tnc[lang].text : '',
+              text: lp.tnc ? lp.tnc[lang]?.text : '',
             },
             subHeadline:lp.sub_headline?lp.sub_headline:'',
             additionalSections: lp?.additional_sections?.map(item => {
@@ -677,16 +678,16 @@ export class V4CampaignService implements ICampaignService {
     maxCacheCount: 100,
     maxAge: 300000,
   })
-  public getCampaign(id: number): Observable<ICampaign> {
+  public getCampaign(id: number, lang: string = 'en'): Observable<ICampaign> {
     if (this.campaignsCache[id]) {
       return this.campaignsCache[id];
     }
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map((res) =>res.data),
+        map((res) => res.data),
         map((campaign: IV4Campaign) =>
-          V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
+          V4CampaignService.v4CampaignToCampaign(campaign, lang || this.lang)
         ),
         catchError((_) => {
           delete this.campaignsCache[id];

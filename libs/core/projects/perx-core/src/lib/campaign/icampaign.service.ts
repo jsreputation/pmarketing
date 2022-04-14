@@ -22,7 +22,7 @@ export interface ICampaignFilterOptions {
 
 export abstract class ICampaignService {
   public abstract getCampaigns(options?: ICampaignFilterOptions): Observable<ICampaign[]>;
-  public abstract getCampaign(id: number): Observable<ICampaign>;
+  public abstract getCampaign(id: number, lang?: string): Observable<ICampaign>;
   public abstract getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }>;
   public abstract applyReferral(referralCode: string): Observable<IReferral>; // response WIP
   public abstract clearCampaignCache(): void;

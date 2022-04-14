@@ -20,7 +20,8 @@ import {
   SettingsService,
   TeamsService,
   TeamState,
-  ThemesService
+  ThemesService,
+  TokenStorage
 } from '@perxtech/core';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
@@ -58,10 +59,11 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private teamsService: TeamsService,
     private notificationService: NotificationService,
+    private storage: TokenStorage,
   ) {}
 
   public ngOnInit(): void {
-
+    const langCode = this.storage.getAppInfoProperty('lang');
     this.configService
       .readAppConfig<ITheme>()
       .pipe(
@@ -87,7 +89,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
            forkJoin([
-             this.campaignService.getCampaign(campaignId),
+             this.campaignService.getCampaign(campaignId, langCode),
              iif(() => this.showCampaignOutcomes,
               this.getCampaignOutcome(campaignId), of([])),
              this.teamsService.getTeam(campaignId).pipe(
