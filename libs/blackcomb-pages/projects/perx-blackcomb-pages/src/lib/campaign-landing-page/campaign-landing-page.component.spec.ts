@@ -43,6 +43,9 @@ describe('CampaignLandingPageComponent', () => {
   const notificationStub: Partial<NotificationService> = {
     addPopup: () => { }
   };
+  const tokenStub: Partial<TokenStorage> = {
+    getAppInfoProperty: () => ''
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -65,7 +68,7 @@ describe('CampaignLandingPageComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
         { provide: NotificationService, useValue: notificationStub },
-        TokenStorage
+        {provide: TokenStorage, useValue:tokenStub }
       ]
     })
       .compileComponents();
