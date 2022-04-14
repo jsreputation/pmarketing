@@ -62,4 +62,10 @@ export interface LeaderboardOutcome extends IReward {
   pointsCount?: number;
   modularizableId: number;
   modularizableType: string;
+  outcome?: LeaderboardOutcomeDetail;
+}
+
+export interface LeaderboardOutcomeDetail {
+  name: string;
+  type: string;
 }
