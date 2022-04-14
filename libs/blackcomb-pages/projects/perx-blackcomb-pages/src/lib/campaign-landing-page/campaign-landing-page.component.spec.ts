@@ -9,7 +9,8 @@ import {
   SettingsService,
   TeamsService,
   ThemesService,
-  UtilsModule
+  UtilsModule,
+  TokenStorage
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
@@ -64,6 +65,7 @@ describe('CampaignLandingPageComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
         { provide: NotificationService, useValue: notificationStub },
+        TokenStorage
       ]
     })
       .compileComponents();
