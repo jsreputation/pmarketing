@@ -94,6 +94,7 @@ interface IV4Flags {
     disable_post_game_nav?: boolean;
     chromeless?: boolean;
     show_additional_details_on_voucher_QR?: boolean;
+    append_reward_name?: boolean;
   };
 }
 
@@ -216,7 +217,8 @@ export class V4SettingsService extends SettingsService {
       showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page,
       disablePostGameNav: data.json_value.disable_post_game_nav,
       chromeless: data.json_value.chromeless,
-      showAdditionalDetailsOnVoucherQR: data.json_value.show_additional_details_on_voucher_QR
+      showAdditionalDetailsOnVoucherQR: data.json_value.show_additional_details_on_voucher_QR,
+      appendRewardName: data.json_value.append_reward_name
     };
   }
 

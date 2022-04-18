@@ -69,6 +69,7 @@ export interface IFlags {
   disablePostGameNav?: boolean;
   chromeless?: boolean;
   showAdditionalDetailsOnVoucherQR?: boolean;
+  appendRewardName?: boolean;
 }
 
 export interface IRssFeeds {
