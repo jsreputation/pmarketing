@@ -11,50 +11,40 @@
       [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="campaign-list">
-    <!-- instant reward campaigns-->
     <div class="campaigns">
-      <div *ngIf="(instantCampaigns$ | async)?.length > 0" class="title" translate>HOME.INSTANT_REWARD_CAMPAIGNS</div>
-      <perx-blackcomb-pages-campaigns-collection [campaigns]="instantCampaigns$" (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
-    </div>
-
-    <!-- progress bar campaigns-->
-    <div class="campaigns"
-      *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">=
-      <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
-    </div>
-
-    <!-- Stamp card campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
-      <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
-    </div>
-
-    <!-- Game campaigns-->
-    <div class="campaigns">
+      <!-- progress bar campaigns-->
+      <div *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">=
+        <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$"
+          (selected)="goToCampaignPage($event)">
+        </perx-blackcomb-pages-campaigns-collection>
+      </div>
+      <!-- Stamp card campaigns-->
+      <div *ngIf="appConfig.showStampCampaignsOnHomePage">
+        <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
+        </perx-blackcomb-pages-campaigns-collection>
+      </div>
+      <!-- Game campaigns-->
       <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
-    </div>
-
-    <!-- Quiz campaigns -->
-    <div class="campaigns" *ngIf="appConfig.showQuizOnHomePage">
-      <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
-        [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
-        (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
-    </div>
-
-    <!-- Survey campaigns -->
-    <div class="campaigns" [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
-      *ngIf="appConfig.showSurveyOnHomePage">
-      <perx-blackcomb-pages-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
-        (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
-    </div>
-    <!-- Quest campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
-      <perx-blackcomb-pages-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
-      </perx-blackcomb-pages-campaigns-collection>
+      <!-- Quiz campaigns -->
+      <div *ngIf="appConfig.showQuizOnHomePage">
+        <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
+          [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
+          (selected)="goToCampaignPage($event)">
+        </perx-blackcomb-pages-campaigns-collection>
+      </div>
+      <!-- Survey campaigns -->
+      <div
+        [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
+        *ngIf="appConfig.showSurveyOnHomePage">
+        <perx-blackcomb-pages-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
+          (selected)="goToCampaignPage($event)">
+        </perx-blackcomb-pages-campaigns-collection>
+      </div>
+      <!-- Quest campaigns-->
+      <div *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
+        <perx-blackcomb-pages-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
+        </perx-blackcomb-pages-campaigns-collection>
+      </div>
     </div>
   </div>
 </div>
