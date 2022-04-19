@@ -248,3 +248,10 @@ export interface IBDOCampaignEnrolment {
   enrolmentReference: string;
   userAccountId: number;
 }
+
+export interface ICampaignCategory {
+  id: number;
+  description: string;
+  title: string;
+  usage: string[];
+}

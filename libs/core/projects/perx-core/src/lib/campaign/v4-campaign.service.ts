@@ -38,7 +38,6 @@ import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-c
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
-import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 interface IV4Image {
   type: string;
@@ -219,14 +218,12 @@ interface IV4BdoEnrolment {
 interface IV4GetCategoriesResponse {
   data: IV4Category[];
 }
-
 interface IV4Category {
   id: number;
   description: string;
   title: string;
   usage: string[];
 }
-
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
 
@@ -901,20 +898,7 @@ export class V4CampaignService implements ICampaignService {
     };
   }
 
-  private static v4CategoriesToCategories(
-    category: IV4Category
-  ): ITabConfigExtended {
-    return {
-      tabName: category.title,
-      rewardsType: category.title,
-      currentPage: 1,
-      completePagination: false,
-      filterKey: null,
-      filterValue: null,
-    };
-  }
-
-  public getCategories(): Observable<ITabConfigExtended[]> {
+  public getCategories(): Observable<IV4Category[]> {
     return this.http
       .get<IV4GetCategoriesResponse>(`${this.baseUrl}/v4/categories`)
       .pipe(
@@ -931,9 +915,7 @@ export class V4CampaignService implements ICampaignService {
           )
         ),
         map((categories: IV4Category[]) =>
-          categories.map((category) =>
-            V4CampaignService.v4CategoriesToCategories(category)
-          )
+          categories.map((category) => category)
         )
       );
   }

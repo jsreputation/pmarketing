@@ -18,6 +18,7 @@ import {
   CampaignType,
   IBDOCampaignEnrolment,
   ICampaign,
+  ICampaignCategory,
   ICampaignOutcome,
   ICampaignRule,
   IReferral
@@ -25,7 +26,6 @@ import {
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
-import { ITabConfigExtended } from '../rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 
 @Injectable({
   providedIn: 'root'
@@ -189,7 +189,7 @@ export class WhistlerCampaignService implements ICampaignService {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
-  public getCategories(): Observable<ITabConfigExtended[]> {
+  public getCategories(): Observable<ICampaignCategory[]> {
     throw new Error('Method not implemented.');
   }
 }

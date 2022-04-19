@@ -13,6 +13,11 @@
     color: #FFFFFF;
   }
 
+  .mat-chip {
+    min-height: 32px !important;
+    height: 3px !important;
+  }
+
   .btn-cta-deals  {
     position: fixed;
     bottom: 0;
@@ -24,8 +29,6 @@
     &_action {
       background-color: white;
       color: black;
-      border-radius: 60px;
-      padding: 5px 25px;
     }
   }
 }

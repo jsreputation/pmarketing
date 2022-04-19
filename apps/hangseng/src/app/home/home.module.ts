@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 import { HomeComponent } from './home.component';
 import { HomeMissionComponent } from './components/home-mission/home-mission.component';
 
@@ -57,7 +58,8 @@ const routes: Routes = [{
     MatButtonModule,
     MatCardModule,
     MatRippleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ],
   entryComponents: [
     RewardPopupComponent
