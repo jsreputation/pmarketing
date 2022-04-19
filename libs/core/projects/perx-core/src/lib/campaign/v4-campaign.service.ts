@@ -687,7 +687,7 @@ export class V4CampaignService implements ICampaignService {
       .pipe(
         map((res) => res.data),
         map((campaign: IV4Campaign) =>
-          V4CampaignService.v4CampaignToCampaign(campaign, lang || this.lang)
+          V4CampaignService.v4CampaignToCampaign(campaign, lang)
         ),
         catchError((_) => {
           delete this.campaignsCache[id];
