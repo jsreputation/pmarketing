@@ -9,9 +9,9 @@
   <!--      <div *ngIf="config?.media?.bannerImage">-->
   <!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
   <!--      </div>-->
-        <h1 class="title">{{campaign?.name}}</h1>
+        <h1 class="title" [style.color]="campaign?.displayProperties.fontColor">{{campaign?.name}}</h1>
         <ng-container *ngIf="!isTeamsEnabled">
-          <h2 class="subtitle" [innerHtml]="campaign?.description | safeHtml"></h2>
+          <h2 class="subtitle" [style.color]="campaign?.displayProperties.fontColor" [innerHtml]="campaign?.description | safeHtml"></h2>
         </ng-container>
         <ng-container *ngIf="campaign?.displayProperties.teamsDetails?.landingPage && isTeamsEnabled">
           <div class="rich-text-container"
@@ -22,8 +22,8 @@
 
       </div>
       <div class="prize-container" *ngIf="campaignOutcomes && campaignOutcomes.length > 0">
-        <p *ngIf="campaign?.displayProperties?.landingPage?.description?.text">{{ campaign?.displayProperties?.landingPage?.description?.text }}</p>
-        <p *ngIf="!campaign?.displayProperties?.landingPage?.description?.text">{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
+        <p [style.color]="campaign?.displayProperties.fontColor" *ngIf="campaign?.displayProperties?.landingPage?.description?.text">{{ campaign?.displayProperties?.landingPage?.description?.text }}</p>
+        <p [style.color]="campaign?.displayProperties.fontColor" *ngIf="!campaign?.displayProperties?.landingPage?.description?.text">{{ 'CAMPAIGN_LANDING.OUTCOMES_HEADING' | translate }}</p>
         <mat-nav-list>
           <mat-list-item *ngFor="let outcome of campaignOutcomes"
                          (click)="outcomeClicked(outcome)"
@@ -59,11 +59,11 @@
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
       <div class="additional-info-container">
-        <div class="rich-text-container" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
+        <div class="rich-text-container" [style.color]="campaign?.displayProperties.fontColor" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
         <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
           <div class="tnc-container">
-            <p class="subtitle">Terms and Conditions</p>
-            <div class="rich-text-container" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
+            <p class="subtitle" [style.color]="campaign?.displayProperties.fontColor">Terms and Conditions</p>
+            <div class="rich-text-container" [style.color]="campaign?.displayProperties.fontColor" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
           </div>
         </div>
       </div>
