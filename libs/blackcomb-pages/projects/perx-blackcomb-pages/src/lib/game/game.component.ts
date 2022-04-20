@@ -20,6 +20,7 @@ import {
   NotificationService,
   RewardPopupComponent,
   SettingsService,
+  Voucher
 } from '@perxtech/core';
 import { bufferCount, catchError, filter, first, map, switchMap, takeUntil, tap, } from 'rxjs/operators';
 import { combineLatest, EMPTY, interval, Observable, Subject, throwError, } from 'rxjs';
@@ -45,6 +46,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private rewardCount: string;
+  private rewards: Voucher[];
   private points: IPointsOutcome;
   private badge: IBadgeOutcome;
   private isEmbedded: boolean;
@@ -106,6 +108,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.remoteFlags = flags;
       this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
     });
 
@@ -336,12 +339,23 @@ export class GameComponent implements OnInit, OnDestroy {
     /*  todo:
      *    1. block is commented out because popup content is managed by dashboard.
      */
-    // if (rewardCount && parseInt(rewardCount, 10) > 0) {
-    //   this.successPopUp.text += this.rewardsTxt.replace(
-    //     '{{rewards}}',
-    //     rewardCount
-    //   );
-    // }
+    if (rewardCount && parseInt(rewardCount, 10) > 0) {
+      // this.successPopUp.text += this.rewardsTxt.replace(
+      //   '{{rewards}}',
+      //   rewardCount
+      // );
+
+      // append reward name to end of message
+      if (this.remoteFlags.appendRewardName) {
+        if (this.rewards.length === 1) {
+          this.successPopUp.text += this.rewards[0].reward ? `\n${this.rewards[0].reward.name}` : '';
+        } else if (this.rewards.length > 1) {
+          this.successPopUp.text! += `\n${this.rewards
+              .map(item => item.reward?.name)
+              .join()}`;
+        }
+      }
+    }
     // if (pointsOutcome) {
     //   if (pointsOutcome.points === 1) {
     //     this.translate
@@ -383,6 +397,7 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome && gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
+          this.rewards = gameOutcome.vouchers;
         }
         if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
           this.points = gameOutcome.points[0];
