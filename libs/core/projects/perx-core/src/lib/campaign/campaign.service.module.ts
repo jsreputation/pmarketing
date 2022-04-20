@@ -5,19 +5,17 @@ import { Config } from '../config/config';
 import { ConfigService } from '../config/config.service';
 import { WhistlerCampaignService } from './whistler-campaign.service';
 import { V4CampaignService } from './v4-campaign.service';
-import { TranslateService } from '@ngx-translate/core';
 
 export function campaignServiceFactory(
   http: HttpClient,
   config: Config,
-  configService: ConfigService,
-  translateService: TranslateService
+  configService: ConfigService
 ): ICampaignService {
   if (config.isWhistler) {
     return new WhistlerCampaignService(http, config);
   }
   // Make decision on what to instantiate base on config
-  return new V4CampaignService(http, configService, translateService);
+  return new V4CampaignService(http, configService);
 }
 
 @NgModule({})

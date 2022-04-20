@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ConfigService } from '../config/config.service';
-import { TranslateService } from '@ngx-translate/core';
 
 jest.mock('ngx-cacheable', () => ({
   // tslint:disable-next-line:variable-name
@@ -46,12 +45,6 @@ describe('V4CampaignService', () => {
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceMock },
         { provide: ConfigService, useValue: configServiceStub },
-        {
-          provide: TranslateService,
-          useValue: {
-            getTranslation: () => of()
-          }
-        }
       ]
     });
     // httpClient = TestBed.get(HttpClient);

@@ -38,7 +38,6 @@ import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-c
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
 import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
-import { TranslateService } from '@ngx-translate/core';
 
 interface IV4Image {
   type: string;
@@ -225,7 +224,7 @@ export class V4CampaignService implements ICampaignService {
   public baseUrl: string;
   private lang: string = 'en';
 
-  constructor(private http: HttpClient, private configService: ConfigService, private translateService: TranslateService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService
       .readAppConfig()
       .subscribe(
@@ -835,7 +834,7 @@ export class V4CampaignService implements ICampaignService {
         ),
         map((campaign: IV4Campaign[]) =>
           campaign.map((campaign: IV4Campaign) =>
-            V4CampaignService.v4CampaignToCampaign(campaign)
+            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
           )
         )
       );
