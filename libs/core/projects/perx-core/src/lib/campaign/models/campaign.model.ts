@@ -15,6 +15,9 @@ export interface CampaignDisplayProperties {
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
   enrolmentPage?: EnrolmentProperties;
+  buttonBgColour?: string;
+  buttonTextColour?: string;
+  fontColor?: string;
 }
 export interface AdditionalSection{
   headerText: String,

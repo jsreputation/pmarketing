@@ -442,6 +442,27 @@ export class V4CampaignService implements ICampaignService {
       }
     }
 
+    if (dp && (dp as any)?.cta_button_colour) {
+      displayProperties = {
+        ...displayProperties,
+        buttonBgColour: (dp as any).cta_button_colour,
+      };
+    }
+
+    if (dp && (dp as any)?.cta_button_text_colour) {
+      displayProperties = {
+        ...displayProperties,
+        buttonTextColour: (dp as any).cta_button_text_colour,
+      };
+    }
+
+    if (dp && (dp as any)?.font_colour) {
+      displayProperties = {
+        ...displayProperties,
+        fontColor: (dp as any).font_colour,
+      };
+    }
+
     if (campaign.campaign_type === CampaignType.instant) {
       const lp = (dp as IV4InstantRewardCampaignDisplayProperties)?.landing_page;
       const cp = (dp as IV4InstantRewardCampaignDisplayProperties)?.claim_prize;

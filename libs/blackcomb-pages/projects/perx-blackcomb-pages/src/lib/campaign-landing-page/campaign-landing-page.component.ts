@@ -58,7 +58,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private teamsService: TeamsService,
     private notificationService: NotificationService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
 
@@ -80,80 +80,80 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         }),
         switchMap(() => this.settingsService.getRemoteFlagsSettings()),
         tap((flags: IFlags) => {
-          this.showCampaignOutcomes = flags.showOutcomesOnCampaignLandingPage ? flags.showOutcomesOnCampaignLandingPage : false ;
+          this.showCampaignOutcomes = flags.showOutcomesOnCampaignLandingPage ? flags.showOutcomesOnCampaignLandingPage : false;
         }),
         switchMap(() => this.activatedRoute.params),
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
-           forkJoin([
-             this.campaignService.getCampaign(campaignId),
-             iif(() => this.showCampaignOutcomes,
+          forkJoin([
+            this.campaignService.getCampaign(campaignId),
+            iif(() => this.showCampaignOutcomes,
               this.getCampaignOutcome(campaignId), of([])),
-             this.teamsService.getTeam(campaignId).pipe(
-               catchError(() => of({})) // let the parent observable carry on when user is not part of team
-             )
-           ])
+            this.teamsService.getTeam(campaignId).pipe(
+              catchError(() => of({})) // let the parent observable carry on when user is not part of team
+            )
+          ])
         )
-      ).subscribe(([ campaign, outcomes, userTeam ]: [ ICampaign, ICampaignOutcome[], ITeam ]) => {
-      this.campaign = campaign;
-      this.landingPageConfig = oc(campaign).displayProperties.landingPage();
-      this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
-      this.campaignOutcomes = outcomes;
-      this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
-      if (this.isTeamsEnabled) {
-        switch (userTeam.state) {
-          case TeamState.completed:
-            this.teamCompleted = true;
-            break;
-          case TeamState.inProgress:
-            this.router.navigate([ `teams/pending/${campaign.id}` ], { replaceUrl: true });
-            break;
-        // do nothing if there's no team state available due to catch error
+      ).subscribe(([campaign, outcomes, userTeam]: [ICampaign, ICampaignOutcome[], ITeam]) => {
+        this.campaign = campaign;
+        this.landingPageConfig = oc(campaign).displayProperties.landingPage();
+        this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
+        this.campaignOutcomes = outcomes;
+        this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
+        if (this.isTeamsEnabled) {
+          switch (userTeam.state) {
+            case TeamState.completed:
+              this.teamCompleted = true;
+              break;
+            case TeamState.inProgress:
+              this.router.navigate([`teams/pending/${campaign.id}`], { replaceUrl: true });
+              break;
+            // do nothing if there's no team state available due to catch error
+          }
         }
-      }
-      this.initCTAs();
-    });
+        this.initCTAs();
+      });
   }
 
   public getCampaignOutcome(campaignId: number): Observable<ICampaignOutcome[]> {
     let prizeSetOutcomes: ICampaignOutcome[] = [];
     let allOutcomes: ICampaignOutcome[] = [];
     return this.campaignService.getCampaignOutcomes(campaignId).pipe(
-     switchMap((outcomes: ICampaignOutcome[]) => {
+      switchMap((outcomes: ICampaignOutcome[]) => {
         this.campaignOutcomes = outcomes;
         allOutcomes = outcomes;
         prizeSetOutcomes = outcomes && outcomes.filter((outcome) => outcome.type === CampaignOutcomeType.prizeSet);
-        return  prizeSetOutcomes && prizeSetOutcomes.length > 0 ?
-                forkJoin([...prizeSetOutcomes.map((outcome) => this.getPrizeSetOutcome(outcome.id))]) : of([]);
+        return prizeSetOutcomes && prizeSetOutcomes.length > 0 ?
+          forkJoin([...prizeSetOutcomes.map((outcome) => this.getPrizeSetOutcome(outcome.id))]) : of([]);
       }),
       map(
         (prizeSets: IPrizeSetItem[][]) =>
           [].concat(...(prizeSets as [])) as IPrizeSetItem[]
       ),
       switchMap((prizeSetItems) => {
-          allOutcomes.map((outcome) => {
-            if (outcome.type === CampaignOutcomeType.prizeSet) {
-               const items = prizeSetItems && prizeSetItems.filter(prizeSetItem => prizeSetItem?.prizeSetId === outcome.id);
-               items?.map((item) => {
-                if (item.campaignPrizeType === PrizeSetOutcomeType.reward && item?.rewardDetails?.name) {
-                  if (outcome.prizeSetItems) {
-                    outcome.prizeSetItems?.push(item?.rewardDetails?.name);
-                  } else {
-                    outcome.prizeSetItems = [item?.rewardDetails?.name];
-                  }
-                 }  else if (item.campaignPrizeType === PrizeSetOutcomeType.points && item?.pointsCount) {
-                    const title = `${item.pointsCount} loyalty points`;
-                    if (outcome.prizeSetItems) {
-                      outcome.prizeSetItems?.push(title);
-                    } else {
-                      outcome.prizeSetItems = [title];
-                    }
-                 }
-                });
-            }
-          });
-          return of(allOutcomes);
+        allOutcomes.map((outcome) => {
+          if (outcome.type === CampaignOutcomeType.prizeSet) {
+            const items = prizeSetItems && prizeSetItems.filter(prizeSetItem => prizeSetItem?.prizeSetId === outcome.id);
+            items?.map((item) => {
+              if (item.campaignPrizeType === PrizeSetOutcomeType.reward && item?.rewardDetails?.name) {
+                if (outcome.prizeSetItems) {
+                  outcome.prizeSetItems?.push(item?.rewardDetails?.name);
+                } else {
+                  outcome.prizeSetItems = [item?.rewardDetails?.name];
+                }
+              } else if (item.campaignPrizeType === PrizeSetOutcomeType.points && item?.pointsCount) {
+                const title = `${item.pointsCount} loyalty points`;
+                if (outcome.prizeSetItems) {
+                  outcome.prizeSetItems?.push(title);
+                } else {
+                  outcome.prizeSetItems = [title];
+                }
+              }
+            });
+          }
+        });
+        return of(allOutcomes);
       }));
   }
 
@@ -167,15 +167,15 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         rewardOutcomes = allOutcomes.filter((outcome) => outcome.campaignPrizeType === PrizeSetOutcomeType.reward);
         return forkJoin([
           combineLatest([...rewardOutcomes.map((outcome) => this.rewardsService.getReward(outcome.campaignPrizeId)
-          .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
+            .pipe(catchError(() => of([]))))]).pipe(startWith([]))]);
       }),
       switchMap(([rewards]: ([IReward[]])) => {
-          allOutcomes.map((outcome) => {
-            if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
-              outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
-            }
-          });
-          return of(allOutcomes);
+        allOutcomes.map((outcome) => {
+          if (outcome.campaignPrizeType === PrizeSetOutcomeType.reward) {
+            outcome.rewardDetails = rewards && rewards.find(reward => reward?.id === outcome.campaignPrizeId);
+          }
+        });
+        return of(allOutcomes);
       }));
   }
 
@@ -186,10 +186,10 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public outcomeClicked(outcome: ICampaignOutcome): void {
     if (outcome.type === CampaignOutcomeType.reward) {
-      this.router.navigate([ '/reward-detail', outcome.id ], { queryParams:  { previewReward: true } });
+      this.router.navigate(['/reward-detail', outcome.id], { queryParams: { previewReward: true } });
     }
     if (outcome.type === CampaignOutcomeType.prizeSet) {
-      this.router.navigate([ '/prize-set-outcomes', outcome.id ]);
+      this.router.navigate(['/prize-set-outcomes', outcome.id]);
     }
   }
 
