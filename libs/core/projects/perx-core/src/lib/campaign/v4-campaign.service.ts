@@ -236,7 +236,7 @@ export class V4CampaignService implements ICampaignService {
 
   public static v4CampaignToCampaign(
     campaign: IV4Campaign,
-    lang: string
+    lang: string = 'en'
   ): ICampaign {
     const customFields = campaign.custom_fields;
     const thumbnail = campaign.images.find((image) =>

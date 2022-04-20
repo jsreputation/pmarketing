@@ -12,7 +12,6 @@ import {
   TeamsService,
   ThemesService,
   UtilsModule,
-  TokenStorage,
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
