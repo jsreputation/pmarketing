@@ -100,7 +100,6 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       ).subscribe(([ campaign, outcomes, userTeam ]: [ ICampaign, ICampaignOutcome[], ITeam ]) => {
       this.campaign = campaign;
       this.landingPageConfig = oc(campaign).displayProperties.landingPage();
-        console.log("this.landingPageConfig: ",)
       this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
       this.campaignOutcomes = outcomes;
       this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
