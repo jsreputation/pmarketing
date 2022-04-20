@@ -106,6 +106,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.remoteFlags = flags;
       this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
     });
 
