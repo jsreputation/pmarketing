@@ -339,12 +339,23 @@ export class GameComponent implements OnInit, OnDestroy {
     /*  todo:
      *    1. block is commented out because popup content is managed by dashboard.
      */
-    // if (rewardCount && parseInt(rewardCount, 10) > 0) {
-    //   this.successPopUp.text += this.rewardsTxt.replace(
-    //     '{{rewards}}',
-    //     rewardCount
-    //   );
-    // }
+    if (rewardCount && parseInt(rewardCount, 10) > 0) {
+      // this.successPopUp.text += this.rewardsTxt.replace(
+      //   '{{rewards}}',
+      //   rewardCount
+      // );
+
+      // append reward name to end of message
+      if (this.remoteFlags.appendRewardName) {
+        if (this.rewards.length === 1) {
+          this.successPopUp.text += this.rewards[0].reward ? `\n${this.rewards[0].reward.name}` : '';
+        } else if (this.rewards.length > 1) {
+          this.successPopUp.text! += `\n${this.rewards
+              .map(item => item.reward?.name)
+              .join()}`;
+        }
+      }
+    }
     // if (pointsOutcome) {
     //   if (pointsOutcome.points === 1) {
     //     this.translate
