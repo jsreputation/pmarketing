@@ -46,6 +46,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public primaryCtaText: string | undefined = 'Continue';
   public secondaryCtaText: string | undefined;
   public isDisplayCtaBtn: boolean = true;
+  public themeProp: ITheme;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,6 +69,9 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         flatMap((config: IConfig<ITheme>) =>
           this.themesService.getThemeSetting(config)
         ),
+        tap((theme: ITheme) => {
+          this.themeProp = theme;
+        }),
         switchMap(() => this.settingsService.getRemoteFlagsSettings()),
         tap((flags: IFlags) => {
           this.showCampaignOutcomes = flags.showOutcomesOnCampaignLandingPage ? flags.showOutcomesOnCampaignLandingPage : false;
@@ -82,19 +86,21 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
               this.getCampaignOutcome(campaignId), of([])),
             this.teamsService.getTeam(campaignId).pipe(
               catchError(() => of({})) // let the parent observable carry on when user is not part of team
-            )
+            ),
           ])
         )
       ).subscribe(([campaign, outcomes, userTeam]: [ICampaign, ICampaignOutcome[], ITeam]) => {
+        const buttonBgColour = oc(campaign).displayProperties?.buttonBgColour();
+        const buttonTextColour = oc(campaign).displayProperties?.buttonTextColour();
+        const buttonThemeBgColour = this.themeProp.properties[
+          '--button_background_color'
+        ];
+        const buttonThemeTextColour = this.themeProp.properties['--button_text_color'];
+
         this.campaign = campaign;
         this.landingPageConfig = oc(campaign).displayProperties.landingPage();
-        this.buttonStyle['background-color'] = oc(campaign).displayProperties?.buttonBgColour()
-          ? oc(campaign).displayProperties?.buttonBgColour()
-          : '';
-
-        this.buttonStyle.color = oc(campaign).displayProperties?.buttonTextColour()
-          ? oc(campaign).displayProperties?.buttonTextColour()
-          : '';
+        this.buttonStyle['background-color'] = buttonBgColour ? buttonBgColour : buttonThemeBgColour ? buttonThemeBgColour : '';
+        this.buttonStyle.color = buttonTextColour ? buttonTextColour : buttonThemeTextColour ? buttonThemeTextColour : '';
         this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
         this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
