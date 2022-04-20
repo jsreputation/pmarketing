@@ -33,7 +33,7 @@ import {
   ConfigService,
   GameModule as PerxGameModule,
   GameServiceModule as PerxSvcGameModule,
-  IConfig, InstantOutcomeTransactionServiceModule,
+  InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
   LocaleIdFactory,
@@ -47,7 +47,6 @@ import {
   QuestModule as PerxQuestModule,
   RewardsModule,
   SettingsModule,
-  SettingsService,
   StampModule as PerxStampModule,
   TeamsServiceModule as PerxTeamsServiceModule,
   ThemesService,
@@ -111,15 +110,17 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService) =>
+  themesService: ThemesService,
+  tokenStorage: TokenStorage) =>
   () => new Promise((resolve) => {
+    const langCode = tokenStorage.getAppInfoProperty('lang') || translateService.getBrowserLang() || 'en';
     configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => {
-        translateService.setDefaultLang(config.defaultLang || 'en');
-        document.documentElement.lang = config.defaultLang;
+      tap(() => {
+      //  translateService.setDefaultLang(langCode);
+        document.documentElement.lang = langCode;
       }),
       // for currentLang registering to determine lang ver of url navigation on content.component
-      tap(() => translateService.use(translateService.getBrowserLang())),
+      tap(() => translateService.use(langCode)),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting()),
     ).toPromise().then(() => resolve());
@@ -179,7 +180,7 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService, SettingsService], multi: true
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService, TokenStorage], multi: true
     },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {
