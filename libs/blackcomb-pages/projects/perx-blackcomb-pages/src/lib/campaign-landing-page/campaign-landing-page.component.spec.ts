@@ -18,7 +18,7 @@ import { CampaignLandingPageComponent } from './campaign-landing-page.component'
 import { of } from 'rxjs';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('CampaignLandingPageComponent', () => {
   let component: CampaignLandingPageComponent;
@@ -46,9 +46,6 @@ describe('CampaignLandingPageComponent', () => {
   const notificationStub: Partial<NotificationService> = {
     addPopup: () => {},
   };
-  const tokenStub: Partial<TokenStorage> = {
-    getAppInfoProperty: () => '',
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -71,7 +68,12 @@ describe('CampaignLandingPageComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
         { provide: NotificationService, useValue: notificationStub },
-        { provide: TokenStorage, useValue: tokenStub },
+        {
+          provide: TranslateService,
+          useValue: {
+            getTranslation: () => of()
+          }
+        }
       ],
     }).compileComponents();
   }));

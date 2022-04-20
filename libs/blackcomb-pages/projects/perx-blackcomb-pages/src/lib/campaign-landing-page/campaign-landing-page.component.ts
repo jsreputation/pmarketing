@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import {
   CampaignLandingPage,
   CampaignOutcomeType,
@@ -21,7 +22,6 @@ import {
   TeamsService,
   TeamState,
   ThemesService,
-  TokenStorage
 } from '@perxtech/core';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
@@ -59,11 +59,11 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private teamsService: TeamsService,
     private notificationService: NotificationService,
-    private storage: TokenStorage,
+    private translateService: TranslateService,
   ) {}
 
   public ngOnInit(): void {
-    const langCode = this.storage.getAppInfoProperty('lang');
+    const lang = this.translateService.currentLang || this.translateService.defaultLang;
     this.configService
       .readAppConfig<ITheme>()
       .pipe(
@@ -89,7 +89,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
            forkJoin([
-             this.campaignService.getCampaign(campaignId, langCode),
+             this.campaignService.getCampaign(campaignId, lang),
              iif(() => this.showCampaignOutcomes,
               this.getCampaignOutcome(campaignId), of([])),
              this.teamsService.getTeam(campaignId).pipe(
@@ -100,6 +100,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       ).subscribe(([ campaign, outcomes, userTeam ]: [ ICampaign, ICampaignOutcome[], ITeam ]) => {
       this.campaign = campaign;
       this.landingPageConfig = oc(campaign).displayProperties.landingPage();
+        console.log("this.landingPageConfig: ",)
       this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
       this.campaignOutcomes = outcomes;
       this.isTeamsEnabled = !! this.campaign.teamSize && (this.campaign.teamSize > 0);
