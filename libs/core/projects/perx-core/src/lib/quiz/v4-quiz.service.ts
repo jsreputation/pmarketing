@@ -55,9 +55,9 @@ export interface QuizDisplayProperties {
     payload: any;
   }[];
   landing_page: {
-    body: { en: { text: string } };
+    body: { [k: string]: { text: string } };
     media?: { youtube?: string; };
-    button_text: { en: { text: string } };
+    button_text: { [k: string]: { text: string } };
   };
   background_image?: Asset;
   card_image?: Asset;

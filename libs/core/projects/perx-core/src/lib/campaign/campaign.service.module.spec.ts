@@ -9,21 +9,32 @@ import { of } from 'rxjs';
 
 describe('CampaignServiceModule', () => {
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of()
+    readAppConfig: () => of(),
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        { provide: ConfigService, useValue: configServiceStub }
-      ]
+      providers: [{ provide: ConfigService, useValue: configServiceStub }],
     });
   });
   // no longer calls campaignServiceFacotry here
-  it('should call campaignServiceFactory', inject([HttpClient, ConfigService], (http: HttpClient, configService: ConfigService) => {
-    const instWhistler = campaignServiceFactory(http, { isWhistler: true }, configService) instanceof WhistlerCampaignService;
-    expect(instWhistler).toBeTruthy();
-    const inst = campaignServiceFactory(http, { isWhistler: false }, configService) instanceof V4CampaignService;
-    expect(inst).toBeTruthy();
-  }));
+  it('should call campaignServiceFactory', inject(
+    [HttpClient, ConfigService],
+    (http: HttpClient, configService: ConfigService) => {
+      const instWhistler =
+        campaignServiceFactory(
+          http,
+          { isWhistler: true },
+          configService
+        ) instanceof WhistlerCampaignService;
+      expect(instWhistler).toBeTruthy();
+      const inst =
+        campaignServiceFactory(
+          http,
+          { isWhistler: false },
+          configService
+        ) instanceof V4CampaignService;
+      expect(inst).toBeTruthy();
+    }
+  ));
 });

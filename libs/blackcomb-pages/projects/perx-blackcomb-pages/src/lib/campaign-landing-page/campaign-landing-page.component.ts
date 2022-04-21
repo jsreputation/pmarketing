@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import {
   CampaignLandingPage,
   CampaignOutcomeType,
@@ -20,7 +21,7 @@ import {
   SettingsService,
   TeamsService,
   TeamState,
-  ThemesService
+  ThemesService,
 } from '@perxtech/core';
 import { combineLatest, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, flatMap, map, startWith, switchMap, tap, } from 'rxjs/operators';
@@ -59,10 +60,11 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private teamsService: TeamsService,
     private notificationService: NotificationService,
-  ) { }
+    private translateService: TranslateService,
+  ) {}
 
   public ngOnInit(): void {
-
+    const lang = this.translateService.currentLang || this.translateService.defaultLang;
     this.configService
       .readAppConfig<ITheme>()
       .pipe(
@@ -80,9 +82,9 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((campaignId) =>
-          forkJoin([
-            this.campaignService.getCampaign(campaignId),
-            iif(() => this.showCampaignOutcomes,
+           forkJoin([
+             this.campaignService.getCampaign(campaignId, lang),
+             iif(() => this.showCampaignOutcomes,
               this.getCampaignOutcome(campaignId), of([])),
             this.teamsService.getTeam(campaignId).pipe(
               catchError(() => of({})) // let the parent observable carry on when user is not part of team

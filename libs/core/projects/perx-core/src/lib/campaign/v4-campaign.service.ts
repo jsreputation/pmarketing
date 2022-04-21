@@ -228,7 +228,9 @@ export class V4CampaignService implements ICampaignService {
     this.configService
       .readAppConfig()
       .subscribe(
-        (config: IConfig<any>) => (this.baseUrl = config.apiHost as string)
+        (config: IConfig<any>) => {
+          (this.baseUrl = config.apiHost as string);
+        }
       );
   }
 
@@ -271,18 +273,18 @@ export class V4CampaignService implements ICampaignService {
         displayProperties = {
           landingPage: {
             body: {
-              text: lp.body ? lp.body[lang].text : '',
+              text: lp.body ? lp.body[lang]?.text : '',
             },
             buttonText: {
-              text: lp.button_text ? lp.button_text[lang].text : '',
+              text: lp.button_text ? lp.button_text[lang]?.text : '',
             },
             buttonText2: {
-              text: lp.button_text2 ? lp.button_text2[lang].text : '',
+              text: lp.button_text2 ? lp.button_text2[lang]?.text : '',
             },
             tnc: {
-              text: lp.tnc ? lp.tnc[lang].text : '',
+              text: lp.tnc ? lp.tnc[lang]?.text : '',
             },
-            subHeadline:lp.sub_headline?lp.sub_headline:'',
+            subHeadline: lp.sub_headline ? lp.sub_headline : '',
             additionalSections: lp?.additional_sections?.map(item => {
               return {
                 headerText: item.header_text,
@@ -674,14 +676,15 @@ export class V4CampaignService implements ICampaignService {
     maxCacheCount: 100,
     maxAge: 300000,
   })
-  public getCampaign(id: number): Observable<ICampaign> {
+  public getCampaign(id: number, lang?: string): Observable<ICampaign> {
     if (this.campaignsCache[id]) {
       return this.campaignsCache[id];
     }
+    this.lang = lang ? lang : 'en';
     return (this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
-        map((res) =>res.data),
+        map((res) => res.data),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
@@ -831,7 +834,7 @@ export class V4CampaignService implements ICampaignService {
         ),
         map((campaign: IV4Campaign[]) =>
           campaign.map((campaign: IV4Campaign) =>
-            V4CampaignService.v4CampaignToCampaign(campaign)
+            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
           )
         )
       );
