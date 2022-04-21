@@ -1,17 +1,19 @@
 body.electric-green {
+    .mat-button-base {
+      // Secondary buttons (default button)
+      height: 40px;
+      border-radius: 4px;
+      font-size: 16px;
+      border: 1px solid $electric-green;
+      // important to override .mat-flat-button.mat-primary from material theme
+      color: $deep-electric-green;
+      font-weight: bold;
+      text-transform: none;
+      background-color: transparent;
+      font-family: var(--font), Arial, Helvetica, sans-serif !important;
+    }
     button,
     .button {
-        // Secondary buttons (default button)
-        height: 40px;
-        border-radius: 4px;
-        font-size: 16px;
-        border: 1px solid $electric-green;
-        // important to override .mat-flat-button.mat-primary from material theme
-        color: $deep-electric-green !important;
-        font-weight: bold;
-        text-transform: none;
-        background-color: transparent;
-        font-family: var(--font), Arial, Helvetica, sans-serif !important;
         // Button states
         // &:active {
         //     background-color: $electric-green;
