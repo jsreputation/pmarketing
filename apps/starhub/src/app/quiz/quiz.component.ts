@@ -175,7 +175,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        () => this.redirectUrlAndPopUp(),
+        (quizOutcome) =>  {
+          this.rewardAcquired = quizOutcome?.rewardAcquired;
+          this.redirectUrlAndPopUp();
+        },
         (err) => {
           console.error(err);
           this.notificationService.addSnack(this.submitErrorTxt);
@@ -192,8 +195,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (questionComponentsArr[questionPointer].questionValidation()) {
       this.pushAnswer(questionPointer)
         .subscribe(
-          (quizOutcome) => {
-            this.rewardAcquired = quizOutcome.rewardAcquired;
+          () => {
             this.disableNextButton = true;
           },
           (err) => {
