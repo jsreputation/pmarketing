@@ -10,12 +10,14 @@ import {
   ICampaignOutcome,
   ICampaignService,
   IConfig,
-  IFlags, IPopupConfig,
+  IFlags,
+  IPopupConfig,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IReward,
   ITeam,
-  ITheme, NotificationService,
+  ITheme,
+  NotificationService,
   PrizeSetOutcomeType,
   RewardsService,
   SettingsService,
@@ -103,6 +105,9 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         this.landingPageConfig = oc(campaign).displayProperties.landingPage();
         this.buttonStyle['background-color'] = buttonBgColour ? buttonBgColour : buttonThemeBgColour ? buttonThemeBgColour : '';
         this.buttonStyle.color = buttonTextColour ? buttonTextColour : buttonThemeTextColour ? buttonThemeTextColour : '';
+        // the following will affect secondaryCTAText. todo: use different styling for secondaryCTAbutton
+        this.buttonStyle.border = 'none';
+
         this.backgroundUrl = oc(this.landingPageConfig).backgroundUrl('');
         this.campaignOutcomes = outcomes;
         this.isTeamsEnabled = !!this.campaign.teamSize && (this.campaign.teamSize > 0);
