@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, IPopupConfig, IQuiz, NotificationService } from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ICampaign, ICampaignService, IPoints, IPopupConfig, IQuiz, NotificationService } from '@perxtech/core';
+import { CampaignDisplayProperties } from 'libs/core/projects/perx-core/src/lib/campaign/models/campaign.model';
 import { merge, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -20,14 +22,19 @@ export class QuizResultsComponent implements OnInit {
   public title: string;
   public subTitle: string;
   private rewardAcquired: boolean | undefined;
+  public displayProperties: CampaignDisplayProperties = {};
+  public buttonStyle: { [key: string]: string } = {};
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
+    private campaignService: ICampaignService,
   ) { }
 
   public ngOnInit(): void {
+    const lang = this.translateService.currentLang || this.translateService.defaultLang;
     merge(this.activatedRoute.data, this.activatedRoute.params)
       .pipe(
         filter((data: Data | Params) => data.results),
@@ -39,13 +46,27 @@ export class QuizResultsComponent implements OnInit {
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz , rewardAcquired?: boolean}) => {
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz, rewardAcquired?: boolean }) => {
         this.results = res.points;
         this.rewardAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
         this.title = this.correctAnswers !== this.results.length ? 'You Failed!' : 'You passed!';
         this.subTitle = `You scored ${this.correctAnswers} out of ${this.results.length} Quiz Points`;
+
+        if (this.quiz) {
+          this.campaignService.getCampaign(Number(this.quiz.campaignId), lang).subscribe((campaign: ICampaign) => {
+            if (campaign) {
+              const buttonBgColour = campaign.displayProperties?.buttonBgColour;
+              const buttonTextColour = campaign.displayProperties?.buttonTextColour;
+              this.displayProperties = campaign.displayProperties as any;
+              this.buttonStyle['background-color'] = buttonBgColour ? buttonBgColour : '';
+              this.buttonStyle.color = buttonTextColour ? buttonTextColour : '';
+              // the following will affect secondaryCTAText. todo: use different styling for secondaryCTAbutton
+              this.buttonStyle.border = 'none';
+            }
+          });
+        }
       });
   }
 
