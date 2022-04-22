@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoadingComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient, HttpBackend } from '@angular/common/http';
+import { ConfigService, TokenStorage, LanguageService } from '@perxtech/core';
 
 const routes: Routes = [{
   path: '',
@@ -14,7 +17,14 @@ const routes: Routes = [{
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
-    PerxBlackcombPagesModule
+    PerxBlackcombPagesModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    })
   ]
 })
 export class LoadingModule { }
