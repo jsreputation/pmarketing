@@ -20,6 +20,7 @@ import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs'
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-quiz',
@@ -55,6 +56,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   private submitErrorTxt: string = 'Error Submitting Answer';
   public disableNextButton: boolean = true;
   public rewardAcquired: boolean = false;
+  public title: string;
+  public text: string;
 
   constructor(
     private router: Router,
@@ -63,7 +66,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private notificationService: NotificationService,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private translate: TranslateService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -286,10 +290,16 @@ export class QuizComponent implements OnInit, OnDestroy {
         (err: { errorState: string } | HttpErrorResponse) => {
           if (err instanceof HttpErrorResponse) {
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
-              .subscribe((message) => {
+              .subscribe(() => {
+                this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TXT']).subscribe(
+                  (res) => {
+                    this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
+                    this.text = res['ERRORS.OUT_OF_TRIES_TXT'];
+                  }
+                );
                 this.notificationService.addPopup({
-                  title: 'Sorry!',
-                  text: message,
+                  title: this.title,
+                  text: this.text,
                   disableOverlayClose: true,
                   panelClass: 'custom-class'
                 });
