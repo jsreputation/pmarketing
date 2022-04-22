@@ -18,6 +18,8 @@ import {
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { ErrorMessageService } from '../utils/error-message/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-quiz',
@@ -60,7 +62,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     private quizService: QuizService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -280,12 +283,24 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.quizService.getMove(quizId)
       .subscribe(
         (move) => this.moveId = move.moveId,
-        (_) => {
-          this.notificationService.addPopup({
-            title: 'Quiz is not Available',
-            buttonTxt: 'Back'
-          });
-          this.router.navigate(['/home']);
+        (err: { errorState: string } | HttpErrorResponse) => {
+          if (err instanceof HttpErrorResponse) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((message) => {
+                this.notificationService.addPopup({
+                  title: 'Sorry!',
+                  text: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              });
+          } else {
+            this.notificationService.addPopup({
+              title: 'Quiz is not Available',
+              buttonTxt: 'Back'
+            });
+          }
+          this.router.navigate([ '/home' ]);
         }
       );
   }
