@@ -57,7 +57,6 @@ export class QuizComponent implements OnChanges, OnDestroy {
     if (changes.data$ && this.data$) {
       this.data$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
         this.data = data;
-        console.log('this.data: ', this.data);
         if (this.data) {
           this.totalLength.emit(this.data.questions.length);
         }

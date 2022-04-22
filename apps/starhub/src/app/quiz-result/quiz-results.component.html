@@ -3,14 +3,14 @@
   [ngStyle]="{'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }">
   <div class="survey-page">
     <div class="results-text-container">
-      <h1>{{title}}</h1>
-      <h2 *ngIf="subTitle">{{subTitle}}</h2>
+      <h1 [style.color]="displayProperties.fontColor">{{title}}</h1>
+      <h2 [style.color]="displayProperties.fontColor" *ngIf="subTitle">{{subTitle}}</h2>
       <perx-core-results [results]="results" [timeConsumed]="timeConsumed">
       </perx-core-results>
     </div>
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" (click)="next()" mat-flat-button>
+    <button color="primary" (click)="next()" mat-flat-button [ngStyle]="buttonStyle">
       NEXT
     </button>
   </mat-toolbar>
