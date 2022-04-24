@@ -291,7 +291,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           if (err instanceof HttpErrorResponse) {
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
-                if (message.indexOf('Move limit has reached') !== -1) {
+                if (message.indexOf('Move limit has reached') !== -1 || message.indexOf('Something went wrong') !== -1) {
                   this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TXT']).subscribe(
                     (res) => {
                       this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
