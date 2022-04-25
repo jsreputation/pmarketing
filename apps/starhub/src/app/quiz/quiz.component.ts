@@ -182,7 +182,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        (quizOutcome) =>  {
+        (quizOutcome) => {
           this.rewardAcquired = quizOutcome?.rewardAcquired;
           this.redirectUrlAndPopUp();
         },
@@ -259,8 +259,8 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap(
         () => iif(
           () => this.complete,
-            this.quizService.postFinalQuizAnswer(this.moveId as number),
-            of() // let the observable complete
+          this.quizService.postFinalQuizAnswer(this.moveId as number),
+          of() // let the observable complete
         )
       ),
       catchError(err => {
@@ -290,19 +290,21 @@ export class QuizComponent implements OnInit, OnDestroy {
         (err: { errorState: string } | HttpErrorResponse) => {
           if (err instanceof HttpErrorResponse) {
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
-              .subscribe(() => {
-                this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TXT']).subscribe(
-                  (res) => {
-                    this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
-                    this.text = res['ERRORS.OUT_OF_TRIES_TXT'];
-                  }
-                );
-                this.notificationService.addPopup({
-                  title: this.title,
-                  text: this.text,
-                  disableOverlayClose: true,
-                  panelClass: 'custom-class'
-                });
+              .subscribe((message) => {
+                if (message.indexOf('Move limit has reached') !== -1) {
+                  this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TXT']).subscribe(
+                    (res) => {
+                      this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
+                      this.text = res['ERRORS.OUT_OF_TRIES_TXT'];
+                    }
+                  );
+                  this.notificationService.addPopup({
+                    title: this.title,
+                    text: this.text,
+                    disableOverlayClose: true,
+                    panelClass: 'custom-class'
+                  });
+                }
               });
           } else {
             this.notificationService.addPopup({
@@ -310,7 +312,7 @@ export class QuizComponent implements OnInit, OnDestroy {
               buttonTxt: 'Back'
             });
           }
-          this.router.navigate([ '/home' ]);
+          this.router.navigate(['/home']);
         }
       );
   }
