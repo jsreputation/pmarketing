@@ -78,7 +78,7 @@ export class ErrorMessageService {
         if (errMessage && errMessage.match(/move/i)) {
           errorKey = 'ERRORS.OUT_OF_TRIES';
         } else if (errMessage && errMessage.match(/balance/i)) {
-          errorKey = 'ERRORS.OUT_OF_TRIES';
+          errorMessage = 'Not enough points balance';
         }
         break;
       case 429:
