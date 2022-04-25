@@ -207,7 +207,8 @@
     "STATE_TRANSITION_FAILED": "Phiên trò chơi đã hết hạn, vui lòng thử lại",
     "USER_NOT_ELIGIBLE": "Bạn chưa đủ điều kiện để đăng ký",
     "COULD_NOT_ENROL": "Bạn không thể tham gia chương trình",
-    "CAPTCHA_INVALID": "Xác minh CAPTCHA không thành công. Vui lòng thử lại"
+    "CAPTCHA_INVALID": "Xác minh CAPTCHA không thành công. Vui lòng thử lại",
+    "OUT_OF_TRIES": "Sorry! You've reached the quiz attempt limit for today."
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "Bắt đầu",

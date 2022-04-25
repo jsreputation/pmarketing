@@ -371,8 +371,7 @@
     "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
     "COULD_NOT_ENROL": "Unable to enrol into campaign",
     "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
-    "OUT_OF_TRIES_TITLE": "Thank you for participating",
-    "OUT_OF_TRIES_TXT": "You've reached the quiz attempt limit for today."
+    "OUT_OF_TRIES": "Sorry! You've reached the quiz attempt limit for today."
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",

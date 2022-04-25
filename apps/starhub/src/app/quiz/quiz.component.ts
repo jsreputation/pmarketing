@@ -143,6 +143,12 @@ export class QuizComponent implements OnInit, OnDestroy {
       },
       () => this.router.navigate(['/'])
     );
+
+    this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE']).subscribe(
+      (res) => {
+        this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
+      }
+    );
   }
 
   public ngOnDestroy(): void {
@@ -291,24 +297,15 @@ export class QuizComponent implements OnInit, OnDestroy {
           if (err instanceof HttpErrorResponse) {
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
-                if (message.indexOf('Move limit has reached') !== -1) {
-                  this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TXT']).subscribe(
-                    (res) => {
-                      this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
-                      this.text = res['ERRORS.OUT_OF_TRIES_TXT'];
-                    }
-                  );
-                  this.notificationService.addPopup({
-                    title: this.title,
-                    text: this.text,
-                    disableOverlayClose: true,
-                    panelClass: 'custom-class'
-                  });
-                }
+                this.notificationService.addPopup({
+                  title: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
               });
           } else {
             this.notificationService.addPopup({
-              title: 'Quiz is not Available',
+              title: this.title,
               buttonTxt: 'Back'
             });
           }
