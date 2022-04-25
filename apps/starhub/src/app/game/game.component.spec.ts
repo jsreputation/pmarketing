@@ -17,6 +17,7 @@ import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { ScratchComponent, ShakeComponent, TapComponent, SpinComponent } from '@perxtech/blackcomb-pages';
 import { Type } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 const mockGame: IGame = {
   id: 1,
@@ -83,6 +84,11 @@ describe('GameComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        {
+          provide: TranslateService, useValue: {
+            get: () => of('')
+          }
+        }
       ]
     })
       .compileComponents();
