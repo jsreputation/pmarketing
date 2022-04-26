@@ -427,7 +427,7 @@
     "COULD_NOT_ENROL": "Unable to enrol into campaign",
     "BDO_PROMO_ID_INVALID": "You have provided an incorrect PROMO ID. Please try again.",
     "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
-    "OUT_OF_TRIES": "Sorry! You've reached the quiz attempt limit for today."
+    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",
