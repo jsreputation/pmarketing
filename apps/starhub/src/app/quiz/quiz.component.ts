@@ -20,7 +20,6 @@ import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs'
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-quiz',
@@ -66,8 +65,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private notificationService: NotificationService,
-    private errorMessageService: ErrorMessageService,
-    private translate: TranslateService
+    private errorMessageService: ErrorMessageService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -142,12 +140,6 @@ export class QuizComponent implements OnInit, OnDestroy {
         });
       },
       () => this.router.navigate(['/'])
-    );
-
-    this.translate.get(['ERRORS.OUT_OF_TRIES_TITLE']).subscribe(
-      (res) => {
-        this.title = res['ERRORS.OUT_OF_TRIES_TITLE'];
-      }
     );
   }
 
@@ -305,7 +297,7 @@ export class QuizComponent implements OnInit, OnDestroy {
               });
           } else {
             this.notificationService.addPopup({
-              title: this.title,
+              title: 'Quiz is not Available',
               buttonTxt: 'Back'
             });
           }
