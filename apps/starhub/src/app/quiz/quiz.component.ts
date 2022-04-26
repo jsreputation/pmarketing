@@ -290,7 +290,7 @@ export class QuizComponent implements OnInit, OnDestroy {
             this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
                 this.notificationService.addPopup({
-                  title: message,
+                  text: message,
                   disableOverlayClose: true,
                   panelClass: 'custom-class'
                 });
