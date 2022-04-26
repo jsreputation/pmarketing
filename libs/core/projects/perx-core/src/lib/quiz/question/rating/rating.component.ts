@@ -31,9 +31,6 @@ export class QuizRatingComponent implements OnChanges {
   @Input()
   public flush: boolean;
 
-  @Input()
-  public fontColor: string = '';
-
   @Output()
   public updateAnswers: EventEmitter<number[]> = new EventEmitter<number[]>();
 

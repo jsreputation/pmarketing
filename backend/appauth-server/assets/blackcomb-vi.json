@@ -437,7 +437,8 @@
     "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
     "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
     "COULD_NOT_ENROL": "Unable to enrol into campaign",
-    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again"
+    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
+    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",

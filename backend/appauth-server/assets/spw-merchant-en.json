@@ -37,7 +37,8 @@
     },
     "ERRORS": {
         "NOT_ENOUGH_POINTS": "User does not have enough points balance",
-        "GENERIC": "Sorry, something went wrong"
+        "GENERIC": "Sorry, something went wrong",
+        "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
     },
     "FORGET_PW_PAGE": {
         "RESET_PASSWORD": "Reset your password",

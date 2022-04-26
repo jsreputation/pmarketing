@@ -25,34 +25,28 @@
         <perx-core-quiz-select
             *ngIf="question.payload.type === quizQuestionType.multipleChoice"
             [payload]="question.payload"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-select>
         <perx-core-quiz-rating
             *ngIf="question.payload.type === quizQuestionType.rating"
             [payload]="question.payload"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-rating>
         <perx-core-quiz-picture-select
             *ngIf="question.payload.type === quizQuestionType.pictureChoice"
             [payload]="question.payload"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-picture-select>
         <perx-core-quiz-long-text
             *ngIf="question.payload.type === quizQuestionType.longText"
             [payload]="question.payload"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-long-text>
         <perx-core-swipe-list
             *ngIf="question.payload.type === quizQuestionType.swipeDelete"
             [payload]="question.payload"
             [configuration]="question?.meta"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-swipe-list>
         <perx-core-swipe-list
             *ngIf="question.payload.type === quizQuestionType.swipeSelect"
             [payload]="question.payload"
             [configuration]="question?.meta"
-            [fontColor]="fontColor"
             (updateAnswers)="updateAnswer($event)"></perx-core-swipe-list>
 
         <div
