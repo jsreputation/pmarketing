@@ -2,7 +2,7 @@
   <ng-container *ngIf="payload.multiple; else elseBlock">
     <div class="single-divider" *ngFor="let choice of payload?.choices; let i = index">
       <mat-checkbox color="primary" class="choice-box" [(ngModel)]="selectedChoices[choice.id]" (change)="emitValue()">
-        <span class="span-text" [style.color]="fontColor">
+        <span class="span-text">
           {{choice?.title?.text}}
         </span>
       </mat-checkbox>
@@ -12,7 +12,7 @@
     <mat-radio-group [color]="'primary'" class="selection-radio-group" aria-labelledby="single-selection"
       [(ngModel)]="selectedChoice" (change)="emitValue()">
       <div class="single-divider" *ngFor="let choice of payload?.choices">
-        <mat-radio-button class="selection-radio-button choice-box selected" [value]="choice.id" [style.color]="fontColor">
+        <mat-radio-button class="selection-radio-button choice-box selected" [value]="choice.id">
           {{choice?.title?.text}}
         </mat-radio-button>
       </div>

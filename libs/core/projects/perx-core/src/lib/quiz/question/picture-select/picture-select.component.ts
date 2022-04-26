@@ -37,9 +37,6 @@ export class QuizPictureSelectComponent implements OnChanges {
   @Input()
   public flush: boolean;
 
-  @Input()
-  public fontColor: string = '';
-
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
