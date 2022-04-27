@@ -18,7 +18,9 @@ import {
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { ErrorMessageService } from '../utils/error-message/error-message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-quiz',
@@ -63,7 +65,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     private quizService: QuizService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -81,11 +85,14 @@ export class QuizComponent implements OnInit, OnDestroy {
       catchError((err: Error) => {
         console.error(err.name, err.message);
         if(err.message && err.message.match(/No available game for this campaign/i)) {
-          this.notificationService.addPopup({
-            title: 'Try again tomorrow',
-            text: 'You\'ve reached the maximum number of tries today',
-            buttonTxt: 'Back'
-          });
+          this.translateService.get('ERRORS.OUT_OF_TRIES').subscribe(
+            (outOfTriesMessage: string) => {
+              this.notificationService.addPopup({
+                text: outOfTriesMessage,
+                buttonTxt: 'Back'
+              });
+            }
+          );
         } else {
           this.notificationService.addPopup({
             title: 'Quiz is not Available',
@@ -293,11 +300,14 @@ export class QuizComponent implements OnInit, OnDestroy {
         (move) => this.moveId = move.moveId,
         (err: { errorState: string } | HttpErrorResponse) => {
           if (err instanceof HttpErrorResponse) {
-            this.notificationService.addPopup({
-              title: 'Try again tomorrow',
-              text: 'You\'ve reached the maximum number of tries today',
-              buttonTxt: 'Back'
-            });
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((message) => {
+                this.notificationService.addPopup({
+                  text: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              });
           } else {
             this.notificationService.addPopup({
               title: 'Quiz is not Available',
