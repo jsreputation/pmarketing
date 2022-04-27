@@ -76,9 +76,9 @@ export class GameComponent implements OnInit, OnDestroy {
   };
 
   public outOfTriesPopup: IPopupConfig = {
-    title: 'GAME_PAGE.OUT_OF_TRIES_TITLE',
-    text: 'GAME_PAGE.OUT_OF_TRIES_TEXT',
-    buttonTxt: 'GAME_PAGE.OUT_OF_TRIES_CTA',
+    title: 'ERRORS.OUT_OF_TRIES_TITLE',
+    text: 'ERRORS.OUT_OF_TRIES_TEXT',
+    buttonTxt: 'ERRORS.OUT_OF_TRIES_CTA',
     afterClosedCallBack: this,
     disableOverlayClose: true,
   };
