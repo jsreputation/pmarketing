@@ -9,7 +9,8 @@ import {
   IGameService,
   Config,
   NotificationService,
-  ConfigService
+  ConfigService,
+  TokenStorage
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -36,6 +37,10 @@ describe('LoadingComponent', () => {
   };
   const notificationServiceStub: Partial<NotificationService> = {
     addPopup: () => { }
+  };
+
+  const tokenStorageStub: Partial<TokenStorage> = {
+    setAppInfoProperty: () => { }
   };
 
   const configServiceStub: Partial<ConfigService> = {
@@ -77,7 +82,8 @@ describe('LoadingComponent', () => {
             }
           }
         },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();

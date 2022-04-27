@@ -14,11 +14,13 @@ export const language = () => (req: Request, res: Response, next: NextFunction) 
     if (langsStr) {
       langs = langsStr.split(',');
     }
+   
+    langs = langs.map(l => l.split(';')[0])
+      .map(l => l.split('-')[0]);
+
     if (req.query.default) {
       langs.unshift(<string> req.query.default);
     }
-    langs = langs.map(l => l.split(';')[0])
-      .map(l => l.split('-')[0]);
     // find finds the first instance so default has to be at front of array to be fetched
     const lang: string = langs.find(l => fs.existsSync(join(EXPRESS_DIST_FOLDER, `/assets/${app}${l}.json`))) || '';
     res.setHeader('content-language', lang);

@@ -90,6 +90,7 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    const langCode = this.storage.getAppInfoProperty('lang') || this.translate.getBrowserLang() || 'en';
     // to store so that it works with interceptor
     this.translate.onLangChange.pipe(
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
@@ -109,7 +110,7 @@ export class AppComponent implements OnInit {
           if (conf.homeAsProgressPage) {
             this.navigateToLoading = conf.homeAsProgressPage;
           }
-          this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+          this.storage.setAppInfoProperty(langCode, 'lang');
           this.jwtTokenAuth = conf?.jwtTokenAuth as boolean;
         }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
@@ -117,7 +118,7 @@ export class AppComponent implements OnInit {
           // getTranslation fetches the translation and registers the language
           // for when default lang is not 'en'
           // only after fetching the translations do you .use() it
-          this.translate.getTranslation('en')
+          this.translate.getTranslation(langCode)
         ),
         tap((config: IConfig<ITheme>) => {
           // this.translate.getLangs() to get langs avail, in future pass array of langs

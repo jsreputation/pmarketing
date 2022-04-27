@@ -94,7 +94,7 @@ const envConfigFile = `export const environment = {
 
 
 const appConfigFile = `{
-  "app": "${process.env.APP ? process.env.APP : 'blackcomb'}",
+  "app": "${process.env.APP ? process.env.APP : 'hangseng'}",
   "appVersion": "${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}",
   "apiHost": "${
     process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
