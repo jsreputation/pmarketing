@@ -423,7 +423,9 @@
     "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
     "COULD_NOT_ENROL": "Unable to enrol into campaign",
     "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
-    "OUT_OF_TRIES": "You've reached the maximum try today."
+    "OUT_OF_TRIES_TITLE": "",
+    "OUT_OF_TRIES_TEXT": "You've reached the maximum try today.",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",

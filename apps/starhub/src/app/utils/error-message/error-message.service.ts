@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +73,7 @@ export class ErrorMessageService {
       case 40:
         // General API error
         if (errMessage && errMessage.match(/move/i)) {
-          errorKey = 'ERRORS.OUT_OF_TRIES';
+          errorKey = 'ERRORS.OUT_OF_TRIES_TEXT';
         } else if (errMessage && errMessage.match(/balance/i)) {
           errorMessage = 'Not enough points balance';
         }
