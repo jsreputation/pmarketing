@@ -38,7 +38,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 perx-blackcomb-pages-login,
 app-signup {
   .content-container {
-    background-image: url("/assets/login_background.png");
+    background-image: url("/assets/login_background.png") !important;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
