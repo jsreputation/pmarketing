@@ -18,6 +18,7 @@ import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.servic
 import { iif, Observable, of, Subject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-game',
@@ -45,7 +46,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
     private gameOutcomeService: GameOutcomeService,
     private configService: ConfigService,
     private campaignService: ICampaignService,
-    private errorMessageServce: ErrorMessageService
+    private errorMessageServce: ErrorMessageService,
+    private translateService: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -93,17 +95,31 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         if (
           // GLOB-29: Let scratch card tries error be handled by the game service
           game.type !== GameType.scratch &&
-          game.remainingNumberOfTries !== null &&
-          game.remainingNumberOfTries <= 0
+          game.remainingNumberOfTries !== null
         ) {
-          this.notificationService.addPopup({
-            title: game.results.noOutcome && game.results.noOutcome.title,
-            text: game.results.noOutcome && game.results.noOutcome.subTitle,
-            buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-            afterClosedCallBack: this,
-            disableOverlayClose: true,
-            panelClass: 'custom-class'
-          });
+          if (game.remainingNumberOfTries <= 0) {
+            this.translateService.get([ 'ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TEXT', 'ERRORS.OUT_OF_TRIES_CTA' ]).subscribe(
+              (dictionary) => {
+                this.notificationService.addPopup({
+                  title: dictionary['ERRORS.OUT_OF_TRIES_TITLE'],
+                  text: dictionary['ERRORS.OUT_OF_TRIES_TEXT'],
+                  buttonTxt: dictionary['ERRORS.OUT_OF_TRIES_CTA'],
+                  afterClosedCallBack: this,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              }
+            );
+          } else {
+            this.notificationService.addPopup({
+              title: game.results.noOutcome && game.results.noOutcome.title,
+              text: game.results.noOutcome && game.results.noOutcome.subTitle,
+              buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
+              afterClosedCallBack: this,
+              disableOverlayClose: true,
+              panelClass: 'custom-class'
+            });
+          }
         }
 
         if ((window as any).appboy) {
