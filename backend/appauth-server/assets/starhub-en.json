@@ -377,8 +377,8 @@
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
     "VIEW_REWARD": "View reward",
-    "OUT_OF_TRIES_TITLE": "No more tries",
-    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_TITLE": "",
+    "OUT_OF_TRIES_TEXT": "You've reached the maximum try today.",
     "OUT_OF_TRIES_CTA": "Close"
   },
   "STAMP_CAMPAIGN": {
@@ -423,7 +423,7 @@
     "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
     "COULD_NOT_ENROL": "Unable to enrol into campaign",
     "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
-    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
+    "OUT_OF_TRIES": "You've reached the maximum try today."
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",
