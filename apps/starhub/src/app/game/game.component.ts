@@ -95,6 +95,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         if (
           // GLOB-29: Let scratch card tries error be handled by the game service
           game.type !== GameType.scratch &&
+          game.type !== GameType.plinko &&
           game.remainingNumberOfTries !== null &&
           game.remainingNumberOfTries <= 0
         ) {
