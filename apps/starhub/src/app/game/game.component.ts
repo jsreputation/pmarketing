@@ -95,9 +95,9 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         if (
           // GLOB-29: Let scratch card tries error be handled by the game service
           game.type !== GameType.scratch &&
-          game.remainingNumberOfTries !== null
+          game.remainingNumberOfTries !== null &&
+          game.remainingNumberOfTries <= 0
         ) {
-          if (game.remainingNumberOfTries <= 0) {
             this.translateService.get([ 'ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TEXT', 'ERRORS.OUT_OF_TRIES_CTA' ]).subscribe(
               (dictionary) => {
                 this.notificationService.addPopup({
@@ -110,16 +110,6 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
                 });
               }
             );
-          } else {
-            this.notificationService.addPopup({
-              title: game.results.noOutcome && game.results.noOutcome.title,
-              text: game.results.noOutcome && game.results.noOutcome.subTitle,
-              buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-              afterClosedCallBack: this,
-              disableOverlayClose: true,
-              panelClass: 'custom-class'
-            });
-          }
         }
 
         if ((window as any).appboy) {
