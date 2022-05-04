@@ -14,7 +14,7 @@ import {
   SurveyModule as PerxSurveyModule,
   ProfileModule as PerxProfileModule,
   ConfigModule,
-  ProfileServiceModule
+  ProfileServiceModule, SettingsModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,6 +51,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     MatToolbarModule,
     BrowserModule,
     AppRoutingModule,
@@ -61,6 +62,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     PerxSurveyModule,
     PerxProfileModule,
     ProfileServiceModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
     FormsModule,
     RewardsModule,
     PerxMerchantsModule,

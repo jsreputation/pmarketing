@@ -1,0 +1,15 @@
+<div class="main-container">
+  <div class="left-block">
+    <div class="icon-wrapper">
+      <img class="icon" src="assets/Loyalty SH Star.svg" alt="">
+      <span class="point-balance">{{pointsBalance}}</span>
+    </div>
+    <div class="membership-tier">{{membershipTierName}}</div>
+  </div>
+  <div class="right-block">
+    <div class="expiring-point">
+      <span *ngIf="pointsBalance > 0">{{expiringPoints?.points}} stars expiring on {{expiringPoints?.expireDate | date: 'dd MMM yyyy'}}</span>
+    </div>
+    <div class="next-tier" *ngIf="nextTierPointsDiff > 0">{{nextTierPointsDiff}} stars to next level</div>
+  </div>
+</div>

@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Params,
-  Router
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ConfigService,
   GameType,
@@ -17,31 +10,15 @@ import {
   IGameService,
   IPlayOutcome,
   NotificationService,
-  PopUpClosedCallBack,
-  Voucher
+  PopUpClosedCallBack
 } from '@perxtech/core';
-import {
-  catchError,
-  map,
-  switchMap,
-  take,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
-import {
-  AnalyticsService,
-  PageType
-} from '../analytics.service';
+import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
-import {
-  iif,
-  Observable,
-  of,
-  Subject,
-  throwError
-} from 'rxjs';
+import { iif, Observable, of, Subject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-game',
@@ -69,7 +46,8 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
     private gameOutcomeService: GameOutcomeService,
     private configService: ConfigService,
     private campaignService: ICampaignService,
-    private errorMessageServce: ErrorMessageService
+    private errorMessageServce: ErrorMessageService,
+    private translateService: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -83,8 +61,20 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
       switchMap((params: Params) => {
         if (params.id) {
           const id = parseInt(params.id, 10);
-          return this.gameService.get(id);
+          return this.gameService.get(id).pipe(
+            switchMap((game: IGame) => {
+              if (game.campaignId) {
+                 return this.campaignService.getCampaign(game.campaignId).pipe(
+                  map((campaign: ICampaign) => {
+                    game.operatingHours = campaign?.operatingHours;
+                    game.isOperating = campaign?.isOperating;
+                    return game;
+                  }));
+              }
+              return of(game);
+            }));
         }
+
         const cid = parseInt(params.cid, 10);
         return this.campaignService.getCampaign(cid).pipe(
           switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
@@ -105,17 +95,22 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         if (
           // GLOB-29: Let scratch card tries error be handled by the game service
           game.type !== GameType.scratch &&
+          game.type !== GameType.plinko &&
           game.remainingNumberOfTries !== null &&
           game.remainingNumberOfTries <= 0
         ) {
-          this.notificationService.addPopup({
-            title: game.results.noOutcome && game.results.noOutcome.title,
-            text: game.results.noOutcome && game.results.noOutcome.subTitle,
-            buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-            afterClosedCallBack: this,
-            disableOverlayClose: true,
-            panelClass: 'custom-class'
-          });
+            this.translateService.get([ 'ERRORS.OUT_OF_TRIES_TITLE', 'ERRORS.OUT_OF_TRIES_TEXT', 'ERRORS.OUT_OF_TRIES_CTA' ]).subscribe(
+              (dictionary) => {
+                this.notificationService.addPopup({
+                  title: dictionary['ERRORS.OUT_OF_TRIES_TITLE'],
+                  text: dictionary['ERRORS.OUT_OF_TRIES_TEXT'],
+                  buttonTxt: dictionary['ERRORS.OUT_OF_TRIES_CTA'],
+                  afterClosedCallBack: this,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              }
+            );
         }
 
         if ((window as any).appboy) {
@@ -159,6 +154,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         (gameTransaction: IEngagementTransaction) => {
           this.gameTransaction = gameTransaction;
           this.isGameTransactionSet = of(true);
+          this.startGameAnimation = true;
           if (
             gameTransaction.voucherIds &&
             gameTransaction.voucherIds.length > 0
@@ -204,10 +200,9 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   private confirmPrePlay(): void {
     this.gameService
       .prePlayConfirm(this.gameTransaction.id)
-      .pipe(map((game: IPlayOutcome) => game.vouchers))
       .subscribe(
-        (vouchs: Voucher[]) => {
-          this.gameCompletedHandler(vouchs);
+        (outcome: IPlayOutcome) => {
+          this.gameCompletedHandler(outcome);
         },
         () => this.showNoRewardsPopUp()
       );
@@ -224,30 +219,24 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   public gameCompleted(): void {
     this.gameService
       .play(this.game.id)
-      .pipe(map((game: IPlayOutcome) => game.vouchers))
       .subscribe(
-        (vouchs: Voucher[]) => {
-          this.gameCompletedHandler(vouchs);
+        (outcome: IPlayOutcome) => {
+          this.gameCompletedHandler(outcome);
         },
         () => this.showNoRewardsPopUp()
       );
   }
 
-  private gameCompletedHandler(vouchs: Voucher[], withRedirectAndPopup: boolean = true): void {
+  private gameCompletedHandler(gameOutcome: IPlayOutcome, withRedirectAndPopup: boolean = true): void {
     if ((window as any).appboy) {
       (window as any).appboy.logCustomEvent('user_played_game', {
         game_id: this.game.id,
         campaign_id: this.game.campaignId
       });
     }
-    if (!vouchs || vouchs.length === 0) {
-      // This params is specially for spin the wheel, load play first process
-      this.hasNoRewardsPopup = true;
-      if (withRedirectAndPopup) {
-        this.showNoRewardsPopUp();
-      }
-    } else {
-      this.gameOutcomeService.setVouchersList(vouchs);
+    if (gameOutcome && gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
+      // set this as a property
+      this.gameOutcomeService.setVouchersList(gameOutcome.vouchers);
       if (this.game.results && this.game.results.outcome) {
         this.gameOutcomeService.setOutcome(this.game.results.outcome);
       }
@@ -255,19 +244,37 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
         this.router.navigate(['/congrats']);
       }
     }
+    if (gameOutcome && gameOutcome.prizeSets && gameOutcome.prizeSets.length > 0) {
+      this.gameOutcomeService.setPrizeSetOutcome(gameOutcome.prizeSets[0]);
+      if (this.game.results && this.game.results.outcome) {
+        this.gameOutcomeService.setOutcome(this.game.results.outcome);
+      }
+      if (withRedirectAndPopup) {
+        this.router.navigate(['/congrats']);
+      }
+    }
+    if ((!gameOutcome.vouchers || gameOutcome.vouchers.length === 0) &&
+      (!gameOutcome.points || gameOutcome.points.length === 0) &&
+      (!gameOutcome.prizeSets || gameOutcome.prizeSets.length === 0)
+    ) {
+      // This params is specially for spin the wheel, load play first process
+      this.hasNoRewardsPopup = true;
+      if (withRedirectAndPopup) {
+        this.showNoRewardsPopUp();
+      }
+    }
   }
 
   public loadPlay(): void {
     this.gameService.play(this.game.id)
       .pipe(
-        map((game: IPlayOutcome) => game.vouchers)
       ).subscribe(
-        (vouchs: Voucher[]) => {
+        (outcome: IPlayOutcome) => {
           this.startGameAnimation = true;
-          if (vouchs && vouchs.length > 0) {
+          if (outcome && (outcome.vouchers?.length || outcome.points?.length || outcome.prizeSets?.length)) {
             this.hasNoRewardsPopup = false;
             this.willWin = true;
-            this.gameCompletedHandler(vouchs, false);
+            this.gameCompletedHandler(outcome, false);
           } else {
             // For spin game with no outcome option
             this.willWin = false;

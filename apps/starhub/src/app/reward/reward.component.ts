@@ -7,7 +7,9 @@ import {
   IReward,
   IVoucherService,
   NotificationService,
-  RewardsService
+  RewardsService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
@@ -26,6 +28,7 @@ export class RewardComponent implements OnInit {
   public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
+  public showOperatingHours: boolean = false;
 
   constructor(
     private location: Location,
@@ -37,7 +40,8 @@ export class RewardComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private macaronService: MacaronService,
     private configService: ConfigService,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
@@ -80,6 +84,10 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = false;
         }
       });
+
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+    });
   }
 
   public back(): void {
@@ -92,18 +100,26 @@ export class RewardComponent implements OnInit {
     this.vouchersService.issueReward(this.reward.id).subscribe(
       () => this.router.navigate(['/home/vouchers']),
       (response) => {
-        this.loadingSubmit = false;
         if (response instanceof HttpErrorResponse) {
           this.errorMessageService.getErrorMessageByErrorCode(response.error.code, response.error.message)
             .subscribe(
               (message: string) => {
                 if (response.status === 401) {
                   this.router.navigate([ '/error' ]);
+                } else if (response.status === 429) {
+                  this.notificationService.addSnack(message);
+                  const retryAfter = response.headers.get('retry-after');
+                  const retryAfterTime = retryAfter ? parseInt(retryAfter, 10)  * 1000 : 3000;
+                  setTimeout(() => {
+                      this.save();
+                  }, retryAfterTime);
                 } else {
                   if (response.error.code === 4103) { // rewards run out due to reward limits
+                    this.loadingSubmit = false;
                     this.refreshReward(); // refresh the reward to show fully redeemed
                     this.isButtonEnable = false;
                   } else {
+                    this.loadingSubmit = false;
                     // change button back to enable which it originally is, before save is triggered
                     this.isButtonEnable = true;
                   }

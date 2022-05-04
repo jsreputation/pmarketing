@@ -1,0 +1,14 @@
+<li class="item" (click)="selectItem(reward)" *ngIf="reward">
+    <img [src]="reward.thumbnail ? reward.thumbnail : defaultImageUrl" [attr.alt]="reward.name"/>
+    <div class="tag-group">
+    <ng-container *ngFor="let tag of reward.tags">
+      <span class="selected tag" [ngClass]="'tag--' + tag.name" *ngIf="existsInFilters(tag)">
+        {{ tag.name }}
+      </span>
+    </ng-container>
+    </div>
+    <div class="container">
+      <h4 class="title ellipsis-2-lines">{{reward.name}}</h4>
+      <p class="description" [innerHTML]="reward.description"></p>
+    </div>
+</li>

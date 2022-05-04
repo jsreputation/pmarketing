@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { from, of } from 'rxjs';
 import { Type } from '@angular/core';
-import { IMerchantAdminService, NotificationService, TokenStorage } from '@perxtech/core';
+import { IMerchantAdminService, NotificationService, ThemesService, TokenStorage } from '@perxtech/core';
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -119,6 +119,9 @@ describe('OrderComponent', () => {
   const productServiceStub: Partial<ProductService> = {
     getProducts: () => of(products)
   };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -146,7 +149,8 @@ describe('OrderComponent', () => {
             }
           }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();

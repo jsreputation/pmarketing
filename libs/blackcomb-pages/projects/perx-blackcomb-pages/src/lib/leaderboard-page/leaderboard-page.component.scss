@@ -9,9 +9,20 @@
     padding: 0 1.6rem;
     margin-bottom: 0.8rem;
 
-    h3 {
-      color: var(--disabled_text_color);
+    p.title {
+      font-size: 20px;
+    }
+
+    p.description {
       font-weight: normal;
+      line-height: 20px;
+      font-size: 16px;
+    }
+
+    p.subtitle {
+      color: var(--disabled_text_color, #aaa);
+      font-weight: normal;
+      font-size: 12px;
     }
   }
 

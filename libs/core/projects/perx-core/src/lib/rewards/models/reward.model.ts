@@ -1,5 +1,6 @@
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 import { IOperatingHours } from '../../campaign/models/campaign.model';
+import { ITag } from '../../merchants/models/merchants.model';
 
 export interface IReward {
   id: number;
@@ -33,9 +34,15 @@ export interface IReward {
     tncLink: string;
     cardLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
+    dealsButtonName: string;
+    dealsButtonLink: string;
   };
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
+  tags?: ITag[];
+  distance?: {value?:number, unitOfMeasure?:string};
+  score?: number;
+  miscImages?: { [key: string]: string };
 }
 
 export interface IRewardState {
@@ -55,6 +62,13 @@ export interface ICatalog {
   rewards?: IReward[];
 }
 
+export interface ICatalogItem {
+  id: number;
+  itemId: number;
+  itemType: string;
+  ordering: number;
+}
+
 export interface IPrice {
   id?: number;
   rewardCampaignId?: number;
@@ -67,7 +81,9 @@ export interface IPrice {
 export interface ICategoryTags {
   id: number;
   title: string;
+  description?: string;
   parent?: any;
+  children?: ICategoryTags[];
 }
 
 export interface IRewardParams {
@@ -94,4 +110,22 @@ export interface ILoyaltyTierInfo {
   loyaltyName: string;
   loyaltyPointsRequiredForRedemption: number;
   sneakPeek: boolean;
+}
+
+export interface ITrending {
+  value: string;
+}
+
+export interface ISearchHistory {
+  value: string;
+}
+
+export enum SearchSuggestionType {
+  reward = 'reward',
+  merchant = 'merchant'
+}
+
+export interface ISearchSuggestion {
+  type: SearchSuggestionType;
+  value: string;
 }

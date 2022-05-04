@@ -7,7 +7,7 @@ import {
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
   IMerchantRewardTransactionHistory,
-  ConfigService
+  ConfigService, ITheme, ThemesService
 } from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
@@ -35,6 +35,7 @@ export class TransactionHistoryComponent implements OnInit {
   private pageSizeReward: number = 10;
   private complitePaginationReward: boolean = false;
   private currentSelectedLanguage: string = 'en';
+  public theme: ITheme;
 
   constructor(
     private location: Location,
@@ -42,6 +43,7 @@ export class TransactionHistoryComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
     private translate: TranslateService,
     protected configService: ConfigService,
+    private themesService: ThemesService,
   ) { }
 
   public ngOnInit(): void {
@@ -54,6 +56,9 @@ export class TransactionHistoryComponent implements OnInit {
           console.error(error);
         }
       );
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
   }
 
   private initComponent(): void {

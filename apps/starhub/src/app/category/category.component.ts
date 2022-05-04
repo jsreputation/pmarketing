@@ -28,6 +28,9 @@ import {
   IReward,
   RewardsService,
   Sort,
+  SettingsService,
+  IFlags,
+  IOperatingHours
 } from '@perxtech/core';
 
 import {
@@ -86,6 +89,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public showToolbarTitle: boolean = false;
 
   public uxcr: boolean = false;
+  public showOperatingHours: boolean = false;
 
   private fetchRewards(): Observable<IReward[]> {
     const categories: string[] | null = this.selectedCategory === 'All' ? null : [this.selectedCategory];
@@ -124,7 +128,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private macaronService: MacaronService,
     private analytics: AnalyticsService,
     private renderer: Renderer2,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) { }
 
   public ngOnInit(): void {
@@ -176,6 +181,12 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       () => {
         this.ghostRewards = [];
       });
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+      }
+    );
   }
 
   private initCatalog(): Observable<any> {
@@ -302,5 +313,51 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
         this.checkScrolledPosition(this.contentScroll.nativeElement.scrollTop);
       });
     }
+  }
+
+  public getOperatingHours(operatingHours: IOperatingHours): string {
+
+    const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+
+    for (const dayIndex in operatingHours.days) {
+      if (dayIndex) { // guard-for-in
+        daysMapArr[operatingHours.days[dayIndex]] = true;
+      }
+    }
+    const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
+    const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
+    return `Collect a voucher during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
+  }
+
+  private dayOfWeekAsString(dayIndex: number): string {
+    return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
+  }
+
+  // works but can't wrap sat and sun
+  private dayArrToIntuitiveStringDayRange(daysMapArr: boolean[]): string {
+    let dayRange = '', multiDayRange = '';
+    let findingRange = false;
+
+    for (let i = 0; i <= daysMapArr.length; i++) {
+      if (daysMapArr[i]) {
+        if (dayRange.length > 0 && !findingRange) {
+          findingRange = true;
+        } else if (dayRange.length === 0) { // first item in current range.
+          dayRange = `${this.dayOfWeekAsString(i)}`;
+        }
+      } else if (dayRange.length > 0 && ! daysMapArr[i]) { // first part of range already identified
+        if (this.dayOfWeekAsString(i - 1) !== dayRange) {
+          dayRange = `${dayRange} - ${this.dayOfWeekAsString(i - 1)}`;
+        }
+        if (multiDayRange.length === 0) {
+          multiDayRange = dayRange;
+        } else {
+          multiDayRange = `${multiDayRange}, ${dayRange}`;
+        }
+        dayRange = ''; // reset for more ranges;
+        findingRange = false;
+      }
+    }
+    return multiDayRange;
   }
 }

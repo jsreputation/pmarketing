@@ -8,7 +8,7 @@ import {
   LoginType,
   LoyaltyService,
   NotificationService,
-  ThemesService,
+  ThemesService
 } from '@perxtech/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Navigation, Router } from '@angular/router';

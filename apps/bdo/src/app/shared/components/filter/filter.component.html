@@ -1,0 +1,65 @@
+<form [formGroup]='filterForm' class='filter-form' *ngIf='filterForm'>
+  <div mat-dialog-content>
+    <!-- <h3 class='header'>Account Type</h3>
+    <ul formArrayName='accountTypes' class='inline-checkbox-group'>
+      <li *ngFor='let item of filterSource.accountTypes; let idx= index;'>
+        <mat-checkbox
+          [formControlName]='idx'>
+          <span class='title'>{{item.name}}</span>
+        </mat-checkbox>
+      </li>
+    </ul> -->
+    <mat-accordion class='categories-wrapper'>
+      <mat-expansion-panel [expanded]='true'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3 class='header'>CATEGORIES</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div formArrayName='categories' class="custom-checkbox">
+          <ng-container *ngFor='let item of filterSource.categories;
+          let idx= index;'>
+            <bdo-checkbox-group [formControlName]='idx' (updateCheckBoxValue)="selectCategory($event, idx)">
+            </bdo-checkbox-group>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion class='tags-wrapper'>
+      <mat-expansion-panel [expanded]='true'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3 class='header'>Tags</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-chip-list class='tags-chip' cdkDropList cdkDropListOrientation='horizontal' formArrayName='tags'>
+          <mat-chip (click)='chipClick(idx)' *ngFor='let chip of filterSource.tags; let idx= index;' class='filter-tag'
+                    [class]="'filter-tag--'+ chip.name.toLowerCase()"
+                    [ngClass]="{'selected': checkCurrentValue(idx)}">
+            {{chip.name}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion class='location-wrapper'>
+      <mat-expansion-panel [expanded]='true'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h3 class='header'>Location</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul formArrayName='locations' class='inline-checkbox-group'>
+          <li *ngFor='let item of filterSource.locations; let idx= index;'>
+            <bdo-checkbox-group [formControlName]='idx' (updateCheckBoxValue)="locationClick($event, idx)">
+            </bdo-checkbox-group>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div mat-dialog-actions>
+    <button (click)='applyFilterClick()' mat-button class='button button-apply-filter'>Apply Filter</button>
+    <button (click)='resetFilterClick()' class='button button-reset-filter'>Reset Filter</button>
+  </div>
+
+</form>

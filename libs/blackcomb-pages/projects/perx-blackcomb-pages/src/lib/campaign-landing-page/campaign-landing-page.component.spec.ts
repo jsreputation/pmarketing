@@ -5,51 +5,58 @@ import {
   ConfigService,
   ICampaignService,
   IPrizeSetOutcomeService,
+  NotificationService,
+  PipeUtilsModule,
   RewardsService,
   SettingsService,
   TeamsService,
   ThemesService,
-  UtilsModule
+  UtilsModule,
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
 import { of } from 'rxjs';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('CampaignLandingPageComponent', () => {
   let component: CampaignLandingPageComponent;
   let fixture: ComponentFixture<CampaignLandingPageComponent>;
   const campaignServiceStub: Partial<ICampaignService> = {};
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({
-      apiHost: '',
-      production: false,
-      preAuth: false,
-      isWhistler: false,
-      baseHref: '',
-    })
+    readAppConfig: () =>
+      of({
+        apiHost: '',
+        production: false,
+        preAuth: false,
+        isWhistler: false,
+        baseHref: '',
+      }),
   };
   const themesServiceStub: Partial<ThemesService> = {
-    getThemeSetting: () => of()
+    getThemeSetting: () => of(),
   };
   const rewardServiceStub: Partial<RewardsService> = {};
   const prizeSetOutcomeService: Partial<IPrizeSetOutcomeService> = {};
   const settingsServiceStub: Partial<SettingsService> = {};
   const teamsServiceStub: Partial<TeamsService> = {
-    createATeamforCampaign: () => of()
+    createATeamforCampaign: () => of(),
+  };
+  const notificationStub: Partial<NotificationService> = {
+    addPopup: () => {},
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CampaignLandingPageComponent],
       imports: [
+        PipeUtilsModule,
         UtilsModule,
         MatToolbarModule,
         RouterTestingModule,
         MatListModule,
         MatIconModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
@@ -58,10 +65,16 @@ describe('CampaignLandingPageComponent', () => {
         { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeService },
         { provide: RewardsService, useValue: rewardServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: TeamsService, useValue: teamsServiceStub }
-      ]
-    })
-      .compileComponents();
+        { provide: TeamsService, useValue: teamsServiceStub },
+        { provide: NotificationService, useValue: notificationStub },
+        {
+          provide: TranslateService,
+          useValue: {
+            getTranslation: () => of()
+          }
+        }
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

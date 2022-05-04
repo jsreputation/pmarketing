@@ -9,6 +9,8 @@ import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../../perx-core.models';
+import { ProfileService } from '../../profile/profile.service';
+import { SettingsService } from '../../settings/settings.service';
 
 describe('QrcodeRedemptionComponent', () => {
   let component: QrcodeRedemptionComponent;
@@ -46,6 +48,10 @@ describe('QrcodeRedemptionComponent', () => {
     get: () => of(mockVoucher)
   };
 
+  const settingServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -53,7 +59,12 @@ describe('QrcodeRedemptionComponent', () => {
         ConfigModule.forRoot({})
       ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        {
+          provide: ProfileService,
+          useValue: { whoAmI: () => of({}) }
+        },
+        { provide: SettingsService, useValue: settingServiceStub },
       ]
     })
       .compileComponents();
@@ -73,12 +84,17 @@ describe('QrcodeRedemptionComponent', () => {
     component.voucherId = 1;
     const voucherService: IVoucherService = fixture.debugElement.injector
       .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+    const settingService: SettingsService = fixture.debugElement.injector
+      .get<SettingsService>(SettingsService as Type<SettingsService>);
     const voucherServiceSpy = jest.spyOn(voucherService, 'get').mockReturnValue(of(mockVoucher));
+    const settingServiceSpy = jest.spyOn(settingService, 'getRemoteFlagsSettings').mockReturnValue(of({}));
+
     component.ngOnChanges({
       voucherId: new SimpleChange(null, 1, true)
     });
     fixture.detectChanges();
     tick();
+    expect(settingServiceSpy).toHaveBeenCalled();
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(fixture.nativeElement.querySelector('.voucher-name').textContent.trim()).toEqual(oc(mockVoucher).reward.name());
   }));

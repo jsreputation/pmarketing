@@ -53,3 +53,6 @@ skaffold-v-star-microsite.yaml
 
 angular.json*.bak
 apps/**/coverage/
+.yarn/
+.yarn/*
+yarn.lock

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
 import { RewardComponent } from './reward/reward.component';
 import { VoucherComponent } from './voucher/voucher.component';
@@ -9,6 +9,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ErrorComponent } from './error/error.component';
 import { StampCardComponent } from './stamp/stamp-card.component';
+import { ProtectedGuard } from 'ngx-auth';
 
 const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(mod => mod.HomeModule) },
@@ -30,6 +31,26 @@ const routes: Routes = [
   },
   { path: 'stamp-card/:id', component: StampCardComponent },
   { path: 'congrats', component: CongratsComponent },
+  {
+    path: "leaderboard/:id",
+    loadChildren: () => import('./leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
+    canActivate: [ProtectedGuard]
+  },
+  {
+    path: "leaderboards",
+    loadChildren: () => import('./leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+    canActivate: [ProtectedGuard]
+  },
+  {
+    path: "leaderboards/:id",
+    loadChildren: () => import('./leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+    canActivate: [ProtectedGuard]
+  },
+  {
+    path: "quest/:id",
+    loadChildren: () => import('./quest/quest.module').then((mod) => mod.QuestModule),
+    canActivate: [ProtectedGuard]
+  },
   { path: 'error', component: ErrorComponent }
 ];
 

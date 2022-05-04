@@ -114,6 +114,7 @@
     "CTA_TXT": "換領"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "輸入密碼",
     "DESCRIPTION": "請將這個屏幕交給員工以便輸入密碼並換領您的獎品",
     "WRONG_PIN": "密碼錯誤",

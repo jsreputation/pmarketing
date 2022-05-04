@@ -17,7 +17,8 @@ import {
   NotificationService,
   RewardsService,
   VoucherState,
-  UtilsModule
+  UtilsModule,
+  SettingsService
 } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
@@ -34,6 +35,7 @@ import {
   MacaronService
 } from '../services/macaron.service';
 import { AnalyticsService } from '../analytics.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const rewardStub = {
   id: 1,
@@ -93,10 +95,13 @@ describe('RewardComponent', () => {
   const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
   const macaronServiceStub: Partial<MacaronService> = { getMacaron: () => null };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent ],
+      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
         UtilsModule,
@@ -117,6 +122,12 @@ describe('RewardComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: MacaronService, useValue: macaronServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
+        {
+          provide: TranslateService, useValue: {
+            get: () => of('')
+          }
+        }
       ]
     })
       .compileComponents();
@@ -186,7 +197,7 @@ describe('RewardComponent', () => {
           termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           merchantId: 2,
-          categoryTags: [ { id: 1, title: 'test' } ]
+          categoryTags: [{ id: 1, title: 'test' }]
         })
       );
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
@@ -249,7 +260,7 @@ describe('RewardComponent', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.save();
     expect(vouchersServiceSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith([ '/home/vouchers' ]);
+    expect(routerSpy).toHaveBeenCalledWith(['/home/vouchers']);
   });
 
 });

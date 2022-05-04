@@ -1,4 +1,4 @@
-button {
+button:not(.close-btn) {
   margin-top: 4rem;
   width: 100%;
   text-transform: uppercase;
@@ -7,7 +7,6 @@ button {
 .img-wrapper {
   display: flex;
   justify-content: center;
-  margin: 2.5rem;
 
   img {
     margin: 0 auto 2rem;
@@ -22,4 +21,21 @@ mat-dialog-content {
   line-height: 1.8rem;
   white-space: pre-line;
   color: var(--disabled_text_color);
+}
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -1.3rem;
+    right: -1.3rem;
+    width: 3.5rem;
+    height: 3.5rem;
+
+    .mat-icon {
+      color: #606060;
+    }
+  }
 }

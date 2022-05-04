@@ -1,28 +1,7 @@
-button {
+button:not(.close-btn) {
   margin-top: 16px;
   width: 100%;
   text-transform: uppercase;
-}
-
-h1 {
-  text-align: center;
-  font-size: 2.4rem;
-  line-height: 2.8rem;
-  margin: 0 auto 2rem;
-}
-
-.img-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 2.5rem;
-
-  img {
-    margin: 0 auto 2rem;
-    max-width: 100%;
-    height: auto;
-    display: flex;
-    align-self: flex-start; //MEG-31: https://stackoverflow.com/a/61196907/1179865
-  }
 }
 
 mat-dialog-content {
@@ -39,5 +18,51 @@ mat-dialog-content {
 
   button {
     margin: 0 0.5rem;
+  }
+}
+
+.popup-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .title-wrapper {
+    min-height: 2.8rem;
+
+    h1 {
+      text-align: center;
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+    }
+  }
+
+  .img-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem;
+
+    img {
+      margin: 0 auto 2rem;
+      max-width: 100%;
+      height: auto;
+      display: flex;
+      align-self: flex-start; //MEG-31: https://stackoverflow.com/a/61196907/1179865
+    }
+  }
+}
+
+.close-btn-container {
+  .close-btn {
+    border: none;
+    position: absolute;
+    z-index: 2;
+    top: -2.3rem;
+    right: -2.3rem;
+    width: 3.5rem;
+    height: 3.5rem;
+
+    .mat-icon {
+      color: #606060;
+    }
   }
 }

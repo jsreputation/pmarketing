@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PopupComponent } from './popup.component';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('PopupComponent', () => {
   let component: PopupComponent;
@@ -11,7 +12,8 @@ describe('PopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PopupComponent],
       imports: [
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

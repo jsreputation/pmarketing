@@ -36,7 +36,7 @@
           </mat-list-item>
         </mat-nav-list>
       </div>
-      <div *ngIf="aConfig?.enablePointTransfer && remoteFlags?.showPointTransfer" class="section">
+      <div *ngIf="aConfig?.enablePointTransfer || remoteFlags?.showPointTransfer" class="section">
         <mat-nav-list>
           <mat-list-item routerLink="/points/transfer">
             {{'ACCOUNT_PAGE.TRANSFER_POINTS' | translate}}

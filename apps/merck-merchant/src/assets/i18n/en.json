@@ -1,6 +1,6 @@
 {
   "LOGIN_PAGE": {
-    "LOGIN_SUBTITLE": "M-Gear Program",
+    "LOGIN_SUBTITLE": "PHARMACY PORTAL",
     "WELCOME": "Welcome",
     "NAME": "Name",
     "NAME_IS": "Name is",
@@ -20,7 +20,8 @@
     "SALES_SCAN": "Sales Scan",
     "REDEMPTION": "Redemption",
     "TRANSACTION_HISTORY": "Transaction History",
-    "LOGOUT": "Log Out"
+    "LOGOUT": "Log Out",
+    "USER_SIGN_UP":"Sign up a user"
   },
   "FORGET_PW_PAGE": {
     "EMAIL_ADDRESS": "Email Address",
@@ -36,7 +37,8 @@
   "REDEEM": {
     "CANCEL": "Cancel",
     "PROCEED": "Proceed",
-    "CLOSE": "Close"
+    "CLOSE": "Close",
+    "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
   },
   "RESET_PW_PAGE": {
     "RESET_PASSWORD": "Reset your password",
@@ -57,5 +59,28 @@
   },
   "ERRORS": {
     "NOT_ENOUGH_POINTS": "User does not have enough points balance"
+  },
+  "USER_SIGN_UP_PAGE": {
+    "USER_SIGN_UP": "Sign up a user",
+    "MOBILE_NO": "Mobile No.",
+    "MOBILE_NO_IS": "Mobile No. is required",
+    "MOBILE_NO_INVALID": "Please enter a valid mobile number",
+    "SUBMIT_BUTTON": "Submit",
+    "COUNTRY_HONGKONG": "Hong Kong Island",
+    "COUNTRY_MACAU": "Macau",
+    "COUNTRY_CHINA": "China",
+    "COUNTRY_SINGAPORE": "Singapore",
+    "USER_CREATION_COMPLETED": "User successfully created"
+  },
+  "IDENTIFY_USER": {
+    "BY_QR_SCAN": "By QR Scan",
+    "BY_MOBILE_NUMBER": "By Mobile Number",
+    "MOBILE_NUMBER": "Enter customer mobile number",
+    "MOBILE_NUMBER_IS": "Mobile No. is required",
+    "CONFIRM": "Confirm",
+    "COUNTRY_HONGKONG": "Hong Kong Island",
+    "COUNTRY_MACAU": "Macau",
+    "COUNTRY_CHINA": "China",
+    "COUNTRY_SINGAPORE": "Singapore"
   }
 }

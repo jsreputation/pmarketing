@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "../../.eslintrc"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
+      "parserOptions": {
+        "project": [
+          "apps/dbs-merchant/tsconfig.*?.json"
+        ]
+      },
+      "rules": {}
+    }
+  ]
+}

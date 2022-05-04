@@ -1,14 +1,10 @@
 <div class="mat-tab-group-wrapper">
-  <mat-tab-group [selectedIndex]="selectedIndex"
-                 (selectedTabChange)="tabChangedHandler($event)">
+  <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="tabChangedHandler($event)">
     <mat-tab *ngFor="let tab of tabs$ | async; let index = index" [label]="tab.tabName">
       <div *ngIf="tab.rewardsList || rewards; then showRewards; else ghostRewards"></div>
       <ng-template #showRewards>
-        <perx-core-rewards-list
-          [rewardsList]="filterRewards(tab)"
-          [displayPriceFn]="displayPriceFn"
-          (tapped)="rewardTappedHandler($event)"
-        >
+        <perx-core-rewards-list [rewardsList]="filterRewards(tab)" [displayPriceFn]="displayPriceFn"
+          (tapped)="rewardTappedHandler($event)">
         </perx-core-rewards-list>
       </ng-template>
       <ng-template #ghostRewards>

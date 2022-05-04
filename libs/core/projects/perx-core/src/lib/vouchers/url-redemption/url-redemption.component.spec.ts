@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationService, UtilsModule } from '@perxtech/core';
+import { NotificationService, PipeUtilsModule, UtilsModule } from '@perxtech/core';
 import { UrlRedemptionComponent } from './url-redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +20,8 @@ describe('UrlRedemptionComponent', () => {
         UtilsModule,
         MatIconModule,
         RouterTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        PipeUtilsModule
       ],
       providers: [
         { provide: NotificationService, useValue: notificationServiceStub },
@@ -37,5 +38,17 @@ describe('UrlRedemptionComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('url field should be present', () => {
+    const url = fixture.nativeElement.querySelector('.url-txt');
+    expect(url).toBeTruthy();
+  });
+
+  it('url value should be equal to vouhcer.code', () => {
+    component.url = 'voucher.code';
+    fixture.detectChanges();
+    const url = fixture.nativeElement.querySelector('.url-txt');
+    expect(url.textContent.trim()).toEqual('voucher.code');
   });
 });

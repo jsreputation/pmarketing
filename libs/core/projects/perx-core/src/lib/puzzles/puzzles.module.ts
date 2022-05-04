@@ -7,6 +7,7 @@ import { PuzzleStampComponent } from './puzzle-stamp/puzzle-stamp.component';
 import { PuzzleCollectStampsComponent } from './puzzle-collect-stamps/puzzle-collect-stamps.component';
 import { StampComponent } from './puzzle-stamp/stamp/stamp.component';
 import { UtilsModule } from '../utils/utils.module';
+import { PipeUtilsModule } from '../utils/pipe-utils.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UtilsModule } from '../utils/utils.module';
     PuzzleCollectStampsComponent,
     StampComponent
   ],
-  imports: [CommonModule, MaterialModule, UtilsModule],
+  imports: [CommonModule, MaterialModule, UtilsModule,
+    PipeUtilsModule],
   exports: [
     PuzzleListComponent,
     PuzzlePlayComponent,

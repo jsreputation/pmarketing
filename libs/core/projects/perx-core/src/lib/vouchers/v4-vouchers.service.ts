@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { oc } from 'ts-optchain';
-import {
-  interval,
-  Observable,
-  of
-} from 'rxjs';
+import { interval, Observable, of } from 'rxjs';
 import {
   filter,
   flatMap,
@@ -19,7 +11,7 @@ import {
   mergeMap,
   scan,
   switchMap,
-  tap
+  tap,
 } from 'rxjs/operators';
 
 import { IVoucherService } from './ivoucher.service';
@@ -28,13 +20,10 @@ import {
   IRedeemOptions,
   IVoucher,
   IVoucherLocation,
-  VoucherState
+  VoucherState,
 } from './models/voucher.model';
 import { IRewardParams } from '../rewards/models/reward.model';
-import {
-  IV4Reward,
-  V4RewardsService
-} from '../rewards/v4-rewards.service';
+import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
@@ -65,10 +54,10 @@ export interface IV4MinifiedVoucher {
 export interface IV4VouchersResponse {
   data: IV4Voucher[];
   meta: {
-    count: number
-    page: number
-    size: number
-    total_pages: number
+    count: number;
+    page: number;
+    size: number;
+    total_pages: number;
   };
 }
 
@@ -109,9 +98,9 @@ export interface IV4MerchantLocation {
   city: string;
   country: string;
   id: number;
-  latitude: number | null;
-  loc: string | null;
-  longitude: number | null;
+  latitude?: string;
+  loc: string | null | { loc: string; lon: string };
+  longitude?: string;
   name: string;
   phone_number: string;
   postal_code: string;
@@ -142,7 +131,7 @@ export interface IV4VoucherLocation {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class V4VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
@@ -153,38 +142,48 @@ export class V4VouchersService implements IVoucherService {
     private configService: ConfigService,
     private cdkplatform: Platform
   ) {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.apiHost = config.apiHost as string;
-      });
+    this.configService.readAppConfig().subscribe((config: IConfig<void>) => {
+      this.apiHost = config.apiHost as string;
+    });
   }
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward | null = v.reward ? v.reward : null;
-    const merchantLocation: IV4MerchantLocation | null = v.merchant_location ? v.merchant_location : null;
-    const accessoryImage = reward && reward.images && reward.images.length ?
-      reward.images.find((image) => image.type === 'accessory_image') : null;
+    const merchantLocation: IV4MerchantLocation | null = v.merchant_location
+      ? v.merchant_location
+      : null;
+    const accessoryImage =
+      reward && reward.images && reward.images.length
+        ? reward.images.find((image) => image.type === 'accessory_image')
+        : null;
     return {
       id: v.id,
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
-      code: (typeof v.voucher_code === 'string') ? v.voucher_code : undefined,
+      code: typeof v.voucher_code === 'string' ? v.voucher_code : undefined,
       expiry: v.valid_to !== null ? new Date(v.valid_to) : null,
-      redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
+      redemptionDate:
+        v.redemption_date !== null ? new Date(v.redemption_date) : null,
       redemptionType:
         v.redemption_type !== null &&
-          (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
-          v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type,
+        v.redemption_type.type !== null &&
+        v.redemption_type.type !== 'offline'
+          ? v.redemption_type.type
+          : v.voucher_type.toString() === 'code'
+          ? RedemptionType.txtCode
+          : v.voucher_type,
       accessoryImage: oc(accessoryImage).url(''),
-      merchantLocation: merchantLocation ? {
-        id: v.merchant_location.id,
-        address1: v.merchant_location.address1,
-        address2: v.merchant_location.address2,
-        city: v.merchant_location.city,
-        country: v.merchant_location.country,
-        name: v.merchant_location.name,
-        postalCode: v.merchant_location.postal_code
-      } : null,
+      merchantLocation: merchantLocation
+        ? {
+            id: v.merchant_location.id,
+            address1: v.merchant_location.address1,
+            address2: v.merchant_location.address2,
+            city: v.merchant_location.city,
+            country: v.merchant_location.country,
+            name: v.merchant_location.name,
+            postalCode: v.merchant_location.postal_code,
+          }
+        : null,
       vaildFrom: v.valid_from !== null ? new Date(v.valid_from) : null,
     };
   }
@@ -194,18 +193,20 @@ export class V4VouchersService implements IVoucherService {
       id: v.id,
       name: v.name,
       latitude: v.latitude,
-      longitude: v.longitude
+      longitude: v.longitude,
+      phoneNumber: v.phone_number,
     };
   }
 
-  public getAll(voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
+  public getAll(
+    voucherParams?: IGetVoucherParams,
+    locale: string = 'en'
+  ): Observable<IVoucher[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     // if (this.vouchers.length > 0) {
     //   return of(this.vouchers);
     // }
-    let params = new HttpParams()
-      .set('sort_by', 'id')
-      .set('order', 'desc');
+    let params = new HttpParams().set('sort_by', 'id').set('order', 'desc');
 
     if (voucherParams && voucherParams.type) {
       params = params.set('type', voucherParams.type);
@@ -215,28 +216,39 @@ export class V4VouchersService implements IVoucherService {
       params = params.set('source_type', voucherParams.sourceType);
     }
 
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { headers, params })
+    return this.http
+      .get<IV4VouchersResponse>(this.vouchersUrl, { headers, params })
       .pipe(
         // todo change to a combination of switchMap and combineLatest
         flatMap((resp: IV4VouchersResponse) => {
-          const streams = [
-            of(resp.data)
-          ];
+          const streams = [of(resp.data)];
           for (let i = 2; i <= resp.meta.total_pages; i++) {
-            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(i, voucherParams, locale);
+            const stream: Observable<IV4Voucher[]> = this.getAllFromPage(
+              i,
+              voucherParams,
+              locale
+            );
             streams.push(stream);
           }
           return streams;
         }),
         mergeAll(),
-        map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))),
+        map((resp: IV4Voucher[]) =>
+          resp.map((v) => V4VouchersService.v4VoucherToVoucher(v))
+        ),
         scan((acc: IVoucher[], curr: IVoucher[]) => acc.concat(curr), []),
-        map((vouchers: IVoucher[]) => vouchers.sort((v1, v2) => oc(v1).reward.id(0) - oc(v2).reward.id(0))),
-        tap(vouchers => this.vouchers = vouchers)
+        map((vouchers: IVoucher[]) =>
+          vouchers.sort((v1, v2) => oc(v1).reward.id(0) - oc(v2).reward.id(0))
+        ),
+        tap((vouchers) => (this.vouchers = vouchers))
       );
   }
 
-  public getAllFromPage(page: number, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IV4Voucher[]> {
+  public getAllFromPage(
+    page: number,
+    voucherParams?: IGetVoucherParams,
+    locale: string = 'en'
+  ): Observable<IV4Voucher[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
       .set('page', page.toString())
@@ -251,20 +263,24 @@ export class V4VouchersService implements IVoucherService {
       params = params.set('source_type', voucherParams.sourceType);
     }
 
-    return this.http.get<IV4VouchersResponse>(this.vouchersUrl, { headers, params })
-      .pipe(
-        map(res => res.data)
-      );
+    return this.http
+      .get<IV4VouchersResponse>(this.vouchersUrl, { headers, params })
+      .pipe(map((res) => res.data));
   }
 
   private get vouchersUrl(): string {
     return `${this.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
-  public get(id: number, useCache: boolean = true, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher> {
+  public get(
+    id: number,
+    useCache: boolean = true,
+    voucherParams?: IGetVoucherParams,
+    locale: string = 'en'
+  ): Observable<IVoucher> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     if (useCache) {
-      const found = this.vouchers.find(v => `${v.id}` === `${id}`);
+      const found = this.vouchers.find((v) => `${v.id}` === `${id}`);
       if (found !== undefined) {
         return of(found);
       }
@@ -274,28 +290,35 @@ export class V4VouchersService implements IVoucherService {
       params = params.set('source_type', voucherParams.sourceType);
     }
     const url = `${this.apiHost}/v4/vouchers/${id}`;
-    return this.http.get<IV4VoucherResponse>(url, { headers, params })
+    return this.http
+      .get<IV4VoucherResponse>(url, { headers, params })
       .pipe(
-        map(resp => resp.data),
+        map((resp) => resp.data),
         map((v: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v)),
         // if the vouchers list was not empty but we are here, it means it is a new voucher, so let's add it.
         tap((v: IVoucher) => {
-          if (this.vouchers.length > 0 && !this.vouchers.some((voucher) => voucher.id === v.id)) {
+          if (
+            this.vouchers.length > 0 &&
+            !this.vouchers.some((voucher) => voucher.id === v.id)
+          ) {
             this.vouchers.unshift(v);
           }
         })
       );
   }
 
-  public redeemVoucher(id: number, options?: IRedeemOptions, locale: string = 'en'): Observable<any> {
+  public redeemVoucher(
+    id: number,
+    options?: IRedeemOptions,
+    locale: string = 'en'
+  ): Observable<any> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     const url = `${this.apiHost}/v4/vouchers/${id}/redeem`;
     const post: IRedeemOptions | null = !options ? null : options;
 
-    return this.http.post(url, post, { headers })
-      .pipe(
-        tap(_ => this.reset())
-      );
+    return this.http
+      .post(url, post, { headers })
+      .pipe(tap((_) => this.reset()));
   }
 
   // resets the current cache to a new list or by default nothing, and it will filled during the next call to getAll
@@ -303,23 +326,33 @@ export class V4VouchersService implements IVoucherService {
     this.vouchers = vouchers;
   }
 
-  public newVouchersCreatedForReward(rewardId: number, intervalPeriod: number = 1000, locale: string = 'en'): Observable<IVoucher[]> {
+  public newVouchersCreatedForReward(
+    rewardId: number,
+    intervalPeriod: number = 1000,
+    locale: string = 'en'
+  ): Observable<IVoucher[]> {
     let current = 0;
     let firstPageVouchers: number[] = [];
     let newIssued: IVoucher[] = [];
     return interval(intervalPeriod).pipe(
-      map(val => {
+      map((val) => {
         current = val;
         return this.getAllFromPage(1, undefined, locale);
       }),
       mergeAll(1),
-      map((v4Vouchers: IV4Voucher[]) => v4Vouchers.map((v4Voucher: IV4Voucher) => V4VouchersService.v4VoucherToVoucher(v4Voucher))),
-      map((vouchers: IVoucher[]) => vouchers.filter(v => v.reward && v.reward.id === rewardId && v.state === 'issued')),
+      map((v4Vouchers: IV4Voucher[]) =>
+        v4Vouchers.map((v4Voucher: IV4Voucher) =>
+          V4VouchersService.v4VoucherToVoucher(v4Voucher)
+        )
+      ),
+      map((vouchers: IVoucher[]) =>
+        vouchers.filter(
+          (v) => v.reward && v.reward.id === rewardId && v.state === 'issued'
+        )
+      ),
       filter((vouchers: IVoucher[]) => {
         if (current === 0) {
-          firstPageVouchers = [
-            ...vouchers.map(v => v.id)
-          ];
+          firstPageVouchers = [...vouchers.map((v) => v.id)];
           return false;
         }
 
@@ -328,14 +361,12 @@ export class V4VouchersService implements IVoucherService {
           return false;
         }
 
-        newIssued = vouchers.filter(v => !firstPageVouchers.includes(v.id));
+        newIssued = vouchers.filter((v) => !firstPageVouchers.includes(v.id));
         if (newIssued && newIssued.length <= 0) {
           return false;
         }
 
-        firstPageVouchers = [
-          ...vouchers.map(v => v.id)
-        ];
+        firstPageVouchers = [...vouchers.map((v) => v.id)];
 
         return true;
       }),
@@ -343,11 +374,15 @@ export class V4VouchersService implements IVoucherService {
     );
   }
 
-  public stateChangedForVoucher(voucherId: number, intervalPeriod: number = 1000, locale: string = 'en'): Observable<IVoucher> {
+  public stateChangedForVoucher(
+    voucherId: number,
+    intervalPeriod: number = 1000,
+    locale: string = 'en'
+  ): Observable<IVoucher> {
     let current = 0;
     let previousState: string;
     return interval(intervalPeriod).pipe(
-      map(val => {
+      map((val) => {
         current = val;
         return this.get(voucherId, false, undefined, locale);
       }),
@@ -370,9 +405,13 @@ export class V4VouchersService implements IVoucherService {
     );
   }
 
-  public reserveReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
+  public reserveReward(
+    rewardId: number,
+    rewardParams?: IRewardParams,
+    locale: string = 'en'
+  ): Observable<IVoucher> {
     let params = new HttpParams();
-    const headers = (new HttpHeaders()).set('Accept-Language', locale);
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     if (rewardParams && rewardParams.locationId) {
       params = params.set('location_id', rewardParams.locationId.toString());
     }
@@ -385,24 +424,45 @@ export class V4VouchersService implements IVoucherService {
     if (this.cdkplatform.SAFARI) {
       params = params.set('unique_call_rnd_counter', String(Math.random()));
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
+    return this.http
+      .post<IV4ReserveRewardResponse>(
+        `${this.apiHost}/v4/rewards/${rewardId}/reserve`,
+        null,
+        { headers, params }
+      )
       .pipe(
         map((res: IV4ReserveRewardResponse) => res.data),
-        mergeMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale))
+        mergeMap((minVoucher: IV4MinifiedVoucher) =>
+          this.get(minVoucher.id, undefined, undefined, locale)
+        )
       );
   }
 
-  public getRewardLocations(rewardId: number, page?: number): Observable<IVoucherLocation[]> {
+  public getRewardLocations(
+    rewardId: number,
+    page?: number
+  ): Observable<IVoucherLocation[]> {
     if (page === undefined) {
       page = 1;
     }
-    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations/?page=${page}`)
+    return this.http
+      .get<IV4VoucherLocationsResponse>(
+        `${this.apiHost}/v4/rewards/${rewardId}/locations/?page=${page}`
+      )
       .pipe(
-        map((res: IV4VoucherLocationsResponse) => res.data.map(location => V4VouchersService.v4LocationToLocation(location)))
+        map((res: IV4VoucherLocationsResponse) =>
+          res.data.map((location) =>
+            V4VouchersService.v4LocationToLocation(location)
+          )
+        )
       );
   }
 
-  public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
+  public issueReward(
+    rewardId: number,
+    rewardParams?: IRewardParams,
+    locale: string = 'en'
+  ): Observable<IVoucher> {
     const headers = new HttpHeaders();
     headers.set('Accept-Language', locale);
     headers.set('Content-type', 'application/json');
@@ -418,28 +478,42 @@ export class V4VouchersService implements IVoucherService {
     let bodyData = {};
     if (rewardParams && rewardParams.locationId) {
       const locationId = {
-        location_id: rewardParams.locationId.toString()
+        location_id: rewardParams.locationId.toString(),
       };
-      bodyData = {...bodyData, ...locationId};
+      bodyData = { ...bodyData, ...locationId };
     }
     if (rewardParams && rewardParams.priceId) {
       const priceId = {
-        price_id: rewardParams.priceId.toString()
+        price_id: rewardParams.priceId.toString(),
       };
-      bodyData = {...bodyData, ...priceId};
+      bodyData = { ...bodyData, ...priceId };
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, bodyData, {
-      headers,
-      params
-    })
+    return this.http
+      .post<IV4ReserveRewardResponse>(
+        `${this.apiHost}/v4/rewards/${rewardId}/issue`,
+        bodyData,
+        {
+          headers,
+          params,
+        }
+      )
       .pipe(
-        map(res => res.data),
-        switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
+        map((res) => res.data),
+        switchMap((minVoucher: IV4MinifiedVoucher) =>
+          this.get(minVoucher.id, undefined, undefined, locale)
+        )
       );
   }
 
-  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
-    return this.getAllFromPage(page, voucherParams, locale)
-      .pipe(map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))));
+  public getFromPage(
+    page: number,
+    voucherParams?: IGetVoucherParams,
+    locale: string = 'en'
+  ): Observable<IVoucher[]> {
+    return this.getAllFromPage(page, voucherParams, locale).pipe(
+      map((resp: IV4Voucher[]) =>
+        resp.map((v) => V4VouchersService.v4VoucherToVoucher(v))
+      )
+    );
   }
 }

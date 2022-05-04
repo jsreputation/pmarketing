@@ -64,6 +64,9 @@ export interface ISurvey {
     noOutcome?: ISurveyOutcome;
   };
   displayProperties?: IWCampaignDisplayProperties;
+  ctaButtonBGColor?: string;
+  ctaButtonTextColor?: string;
+  fontColor?: string;
 }
 
 export enum SurveyQuestionType {

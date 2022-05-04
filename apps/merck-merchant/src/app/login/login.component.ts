@@ -1,7 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
-import { AuthenticationService, NotificationService, TokenStorage } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ITheme,
+  NotificationService,
+  ThemesService,
+  TokenStorage
+} from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public currentSelectedLanguage: string = 'en';
+  public theme: ITheme;
 
   public get name(): AbstractControl | null {
     return this.loginForm.get('name');
@@ -34,6 +41,7 @@ export class LoginComponent implements OnInit {
     private notificationService: NotificationService,
     private tokenStorage: TokenStorage,
     private translateService: TranslateService,
+    private themesService: ThemesService,
     private cd: ChangeDetectorRef
   ) {
     this.initForm();
@@ -49,6 +57,10 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
+
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
+    });
   }
 
   public onSubmit(): void {

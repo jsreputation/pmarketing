@@ -2,13 +2,13 @@
   padding: 2rem;
 }
 
-.close-button-container {
+.close-btn-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 }
 
-button {
+button:not(.close-btn) {
   margin-top: 1.6rem;
   width: 100%;
   color: #ffffff;
@@ -57,13 +57,18 @@ app-expire-timer {
 }
 
 .close-btn {
+  border: none;
   position: absolute;
-  top: -3.5rem;
-  right: -1.5rem;
-  width: auto;
+  top: -1.3rem;
+  right: -1.3rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .mat-icon {
-    color: #606060;
+    color: #606060 !important;
   }
   ::ng-deep .mat-button-focus-overlay {
     background: transparent !important;

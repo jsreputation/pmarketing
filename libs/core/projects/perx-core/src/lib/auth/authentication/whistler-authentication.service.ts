@@ -286,6 +286,11 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
     return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
+   // @ts-ignore
+  public getExchangeToken(jwtToken: string): Observable<void> {
+    return throwError('getExchangeToken Not implement yet');
+  }
+
   public getAccessToken(): Observable<string> {
     const userAccessToken = this.getUserAccessToken();
     const appAccessToken = this.getAppAccessToken();

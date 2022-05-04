@@ -1,8 +1,8 @@
 <div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
-  <h1 *ngIf="ghostCampaigns.length || campaigns.length" class="hide-for-new-ux">Play and
-    win</h1>
-  <h2 *ngIf="ghostCampaigns.length || campaigns.length" class="hide-for-old-ux">Play and
-    win</h2>
+  <h1 *ngIf="ghostCampaigns.length || campaigns.length" class="hide-for-new-ux">Play &
+    Win</h1>
+  <h2 *ngIf="ghostCampaigns.length || campaigns.length" class="hide-for-old-ux">Play &
+    Win</h2>
   <div class="ga_campaign cards" *ngIf="campaigns.length > 0" infiniteScroll [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false" [horizontal]="true">
     <mat-card [@fadeIn]="campaigns.length" *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
@@ -17,6 +17,7 @@
         <div>
           <h1 class="hide-for-new-ux">{{campaign.name}}</h1>
           <div class="hide-for-old-ux semi-bold">{{campaign.name}}</div>
+          <h4 class="operating-hours fine" *ngIf="showOperatingHours && campaign.operatingHours">{{getOperatingHours(campaign.operatingHours)}}</h4>
         </div>
         <div class="icon">
           <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">

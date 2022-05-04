@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Check branch name
         run: |
-          REGEX="[[:alpha:]]+-[[:digit:]]+"
+          REGEX="[[:alpha:]]+[[:digit:]]*-[[:digit:]]+"
           if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
             echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
             exit 1

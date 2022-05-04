@@ -9,10 +9,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 const themesServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
@@ -26,6 +27,10 @@ describe('SignupComponent', () => {
     navigate: () => { }
   };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => { } };
+
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    queryParams: of({ phone: '852123456' })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -42,6 +47,7 @@ describe('SignupComponent', () => {
         MatFormFieldModule,
         MatSelectModule,
         MatInputModule,
+        MatCardModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
       ],
@@ -56,7 +62,8 @@ describe('SignupComponent', () => {
         },
         { provide: Router, useValue: routerStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     })
       .compileComponents();

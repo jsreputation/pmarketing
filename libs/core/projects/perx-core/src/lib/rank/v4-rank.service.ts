@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
@@ -30,13 +30,14 @@ const objectKeysPascalize = (keyConvertFn, object: {} | null) => {
   }
 };
 
-interface V4LeaderBoard {
+export interface V4LeaderBoard {
   display_properties: {
     [key: string]: any;
   };
   id: number;
   metric: string;
   title: string;
+  name?: string;
 }
 
 interface V4UserRanking {
@@ -111,8 +112,13 @@ export class V4RankService {
       );
   }
 
-  public getLeaderBoardRanks(id: number): Observable<UserRanking[]> {
-    return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}/top_users`)
+  public getLeaderBoardRanks(id: number, topUsersCount?: number): Observable<UserRanking[]> {
+    let params = new HttpParams();
+    if (topUsersCount) {
+      params = params.set('users_to_show', topUsersCount.toString());
+    }
+
+    return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}/top_users`, { params })
       .pipe(
         map((res: ApiWrap<V4UserRanking[]>) => res.data),
         map((ranking: V4UserRanking[]) =>

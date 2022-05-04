@@ -23,33 +23,6 @@ else
   exit 1
 fi
 
-# Set env APIHOST
-case ${TARGET_ENV} in
-staging)
-  APIHOST="https://api.perxtech.io"
-  ;;
-production)
-  case ${APP} in
-  hsbc | hsbc-rewards | hsbc-xmas)
-    APIHOST="https://api-hsbc.perxtech.net"
-    ;;
-  starhub)
-    APIHOST="https://api-starhub.perxtech.net"
-    ;;
-  *)
-    APIHOST="https://api.perxtech.net"
-    ;;
-  esac
-  ;;
-*)
-  echo "Error! Unsupported environment"
-  exit 1
-  ;;
-esac
-
-echo APIHOST is ${APIHOST}
-echo "APIHOST=${APIHOST}" >>"${GITHUB_ENV}"
-
 # Set env PREAUTH
 case ${APP} in
 prudential | blackcomb | bpi)
@@ -124,6 +97,7 @@ home_redirect=(
   feature-demo
   globeathome
   globeone
+  globesuperapp
   megaworld
   partners-demo
   perx-demo
@@ -160,9 +134,9 @@ echo "APP=${APP}" >>"${GITHUB_ENV}"
 
 # Set env APP_BASE
 blackcomb_app_base=(
-  bdo
-  bnpl
+  citibankhk
   daiichi-dlvn
+  dbssg
   feature-demo
   globeathome
   globeone
@@ -170,25 +144,42 @@ blackcomb_app_base=(
   hsbcvn
   hoolah
   johnsen360
-  megaworld
   oracle-demo
   partners-demo
   perx-demo
   petron-demo
+  progresif
   razer
   rush
+  sabb
+  scphoenix
   siampiwat
   techfis
   zeal
 )
 
-for app in "${blackcomb_app_base[@]}"; do
+# Set env APP_BASE for merchant app
+blackcomb_merchant_app_base=(
+  generic-merchant
+)
+
+SET_APP_BASE=false
+
+for app in "${blackcomb_merchant_app_base[@]}"; do
   if [[ ${APP} == ${app} ]]; then
-    APP_BASE="blackcomb" && break
-  else
-    APP_BASE=${APP}
+    APP_BASE="blackcomb-merchant" && SET_APP_BASE=true && break
   fi
 done
+
+if [[ ${SET_APP_BASE} == false ]]; then
+  for app in "${blackcomb_app_base[@]}"; do
+    if [[ ${APP} == ${app} ]]; then
+      APP_BASE="blackcomb" && break
+    else
+      APP_BASE=${APP}
+    fi
+  done
+fi
 
 echo APP_BASE is ${APP_BASE}
 echo "APP_BASE=${APP_BASE}" >>"${GITHUB_ENV}"

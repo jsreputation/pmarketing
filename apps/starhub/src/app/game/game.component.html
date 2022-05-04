@@ -26,5 +26,13 @@
       (loaded)="loadPlay()"
       (broken)=playGameCompleted()>
     </perx-blackcomb-pages-spin>
+    <perx-blackcomb-pages-plinko
+      [startGame]="startGameAnimation"
+      *ngSwitchCase="'plinko'"
+      [game]="game"
+      [willWin]="willWin"
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
+    </perx-blackcomb-pages-plinko>
   </div>
 </div>

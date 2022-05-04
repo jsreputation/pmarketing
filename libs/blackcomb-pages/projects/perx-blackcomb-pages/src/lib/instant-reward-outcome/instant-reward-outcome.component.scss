@@ -1,0 +1,150 @@
+$base-color: rgba(221, 221, 221, 0.863);
+$ghost-color: #ecebebf1;
+$animation-duration: 1000ms;
+$gradient-offset: 52 + 16;
+
+@mixin background-gradient {
+  background-image: linear-gradient(90deg, $base-color 0, $ghost-color 40px, $base-color 80px);
+  background-size: 80vw;
+}
+
+@keyframes ghost-lines {
+  0% { background-position: -100px; }
+  40% { background-position: 40vw; }
+  100% { background-position: 60vw; }
+}
+
+@keyframes ghost-avatar {
+  0% { background-position: -100px + $gradient-offset; }
+  40%, 100% { background-position: 240px + $gradient-offset; }
+}
+
+@mixin animate-ghost-image {
+  @include background-gradient;
+
+  animation: ghost-avatar $animation-duration infinite linear;
+}
+
+@mixin animate-ghost-line {
+  @include background-gradient;
+
+  animation: ghost-lines $animation-duration infinite linear;
+}
+
+.card-list-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.outcome-container {
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding: 1.5rem;
+}
+
+.outcome-cards {
+  margin: 1.5rem 0;
+}
+
+.thumbnail-image {
+  height: 10.5rem;
+  width: 100%;
+
+  img, svg {
+    margin: auto;
+    height: 10.5rem;
+    width: 100%;
+    object-fit: cover;
+  }
+  svg {
+    background: #4E4E4E;
+  }
+}
+
+.title {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+  margin: 0 0 .8rem 0;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0 0 .8rem 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.contact-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: normal;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.38);
+}
+
+a {
+  text-decoration: none;
+}
+
+mat-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+mat-card-content {
+  padding: 16px;
+  margin-bottom: 0;
+  &.pending {
+    background: #E8E8E8;
+  }
+}
+
+.bottom-toolbar {
+  background: white !important;
+  button {
+    width: 100%;
+  }
+}
+
+.outcome-card.ghost {
+  height: 15rem;
+  margin-bottom: 1.5rem;
+
+  .outcome-name {
+    background-color: gray;
+    border-bottom: 3px solid white;
+    border-radius: 4px 4px 4px 4px;
+    height: 2.5rem;
+    @include animate-ghost-line;
+  }
+}
+
+.ghost-card-container {
+  margin-top: 6rem;
+}
+
+.thumbnail-image.ghost {
+  @include animate-ghost-image;
+}
+
+.marker {
+  display: inline-block;
+  vertical-align: baseline;
+  padding: .2rem .5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  background: #FAAD14;
+}
+
+.state-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0 1rem 0;
+  h2 {
+    margin: 0;
+  }
+}

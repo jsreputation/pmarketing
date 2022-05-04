@@ -1,0 +1,44 @@
+@import "../../../theme/variables.scss";
+.main-container {
+  padding: 0.4rem 1rem;
+  border-radius: 2.4rem;
+  background-color: $canvas-grey;
+  display: flex;
+  .left-block {
+    text-align: right;
+    .icon-wrapper {
+      .icon {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+      .point-balance {
+        font-size: 2.4rem;
+        font-weight: 900;
+        line-height: 3rem;
+        margin-left: 0.5rem;
+      }
+    }
+    .membership-tier {
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.8rem;
+    }
+  }
+  .right-block {
+    margin-left: 0.8rem;
+    .expiring-point {
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 2.2rem;
+      height: 2.2rem;
+      margin-top: 0.9rem;
+    }
+    .next-tier {
+      color: $medium-grey;
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.6rem;
+      margin-top: 0.3rem;
+    }
+  }
+}

@@ -1,11 +1,11 @@
-<div class="parent-container" *ngIf="voucher$">
+<div class="parent-container" *ngIf="voucher">
   <div class="full-page-container-white">
     <div class="code-redemption unavailable"
     *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired' || !isVoucherValid; else available">
       <p class="title">Your reward is</p>
       <span class="code">
         {{ !isVoucherValid ? 'Not redeemable yet' : voucher.state }}
-      </span>           
+      </span>
     </div>
   <ng-template #available>
     <div *ngIf="redemptionType === rt.pin">

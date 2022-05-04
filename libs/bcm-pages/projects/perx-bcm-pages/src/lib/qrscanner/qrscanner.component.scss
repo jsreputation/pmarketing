@@ -1,0 +1,64 @@
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 10rem 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+
+  .scanner {
+    position: relative;
+
+    &::before, &::after, > em::after, > em::before {
+      border-color: var(--primary);
+      content: "";
+      position: absolute;
+      width: 4.8rem;
+      height: 4.8rem;
+      border-style: solid;
+      border-width: 0;
+    }
+
+    &::before {
+      left: 0;
+      top: 0;
+      border-left-width: 0.4rem;
+      border-top-width: 0.4rem;
+    }
+
+    &::after {
+      right: 0;
+      top: 0;
+      border-right-width: 0.4rem;
+      border-top-width: 0.4rem;
+    }
+
+    em {
+      &::before {
+        left: 0;
+        bottom: 0;
+        border-left-width: 0.4rem;
+        border-bottom-width: 0.4rem;
+      }
+
+      &::after {
+        right: 0;
+        bottom: 0;
+        border-right-width: 0.4rem;
+        border-bottom-width: 0.4rem;
+      }
+    }
+  }
+  .instruction {
+    color: #212121;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    text-align: center;
+    width: 70%;
+    margin: auto;
+    padding: 1rem 0;
+  }
+}

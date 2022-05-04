@@ -3,7 +3,7 @@
 .main-container {
   width: 100%;
   height: 100%;
-  background: $main-blue-theme;
+  background: var(--login_background_colour);
   background-size: cover;
   position: fixed;
   display: flex;
@@ -12,33 +12,36 @@
   align-items: center;
   overflow: scroll;
 
-  .logo {
-    margin-top: 7.2rem;
-    margin-bottom: 0.8rem;
-    flex-shrink: 0;
-    max-width: 20rem;
-    max-height: 8rem;
-    object-fit: contain;
+  .login-image {
+    margin-bottom: 1rem;
+
+    .logo {
+      margin: 7.2rem auto 0.8rem;
+      width: 100%;
+      max-width: 30rem;
+      max-height: 10rem;
+      object-fit: contain;
+    }
   }
 
   .translate-switch {
-    color: white;
+    color: $main-blue-theme;
     position: fixed;
     top: 3rem;
     right: 2rem;
 
     ::ng-deep {
       mat-form-field {
-        width: 4rem;
+        width: 5rem;
       }
 
       .mat-select-value {
         font-size: 1.5rem;
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-select-arrow {
-        color: white;
+        color: $main-blue-theme;
       }
 
       .mat-form-field-underline {
@@ -49,7 +52,7 @@
 
   .logo-title {
     font-size: 2.2rem;
-    color: white;
+    color: $main-blue-theme;
     text-align: center;
     font-weight: 900;
     font-style: normal;

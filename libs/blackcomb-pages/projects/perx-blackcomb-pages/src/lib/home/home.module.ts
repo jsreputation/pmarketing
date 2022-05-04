@@ -17,6 +17,8 @@ import {
   QuizModule,
   SurveyModule,
   TeamsServiceModule,
+  InstantOutcomeTransactionServiceModule,
+  PipeUtilsModule
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
@@ -33,6 +35,7 @@ import { PageComponentsModule } from '../page-components/page-components.module'
     MatButtonModule,
     MatRippleModule,
     MatDialogModule,
+    PipeUtilsModule,
     LoyaltyModule,
     UtilsModule,
     RewardsModule,
@@ -41,6 +44,7 @@ import { PageComponentsModule } from '../page-components/page-components.module'
     CampaignModule,
     CampaignServiceModule.forChild(),
     TeamsServiceModule.forChild(),
+    InstantOutcomeTransactionServiceModule.forChild(),
     QuizModule,
     OutcomeModule,
     SurveyModule,

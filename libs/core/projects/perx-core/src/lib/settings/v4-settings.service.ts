@@ -73,6 +73,7 @@ interface IV4Flags {
     show_popup_campaign?: boolean;
     show_prize_set_outcome?: boolean;
     show_progress_bar_campaigns_on_home_page?: boolean;
+    show_instant_reward_campaigns_on_home_page?: boolean;
     show_qr_page_subtitle?: boolean;
     show_quest_campaigns_on_home_page?: boolean;
     show_quiz_on_home_page?: boolean;
@@ -90,6 +91,10 @@ interface IV4Flags {
     show_voucher_booking_from_rewards_page?: boolean;
     show_badges_button: boolean;
     show_outcomes_on_campaign_landing_page?: boolean;
+    disable_post_game_nav?: boolean;
+    chromeless?: boolean;
+    show_additional_details_on_voucher_QR?: boolean;
+    append_reward_name?: boolean;
   };
 }
 
@@ -191,6 +196,7 @@ export class V4SettingsService extends SettingsService {
       showPopupCampaign: data.json_value.show_popup_campaign,
       showPrizeSetOutcome: data.json_value.show_prize_set_outcome,
       showProgressBarCampaignsOnHomePage: data.json_value.show_progress_bar_campaigns_on_home_page,
+      showInstantRewardCampaignsOnHomePage: data.json_value.show_instant_reward_campaigns_on_home_page,
       showQrPageSubtitle: data.json_value.show_qr_page_subtitle,
       showQuestCampaignsOnHomePage: data.json_value.show_quest_campaigns_on_home_page,
       showQuizOnHomePage: data.json_value.show_quiz_on_home_page,
@@ -208,7 +214,11 @@ export class V4SettingsService extends SettingsService {
       showVoucherBookingFromRewardsPage: data.json_value.show_voucher_booking_from_rewards_page,
       showPointTransfer: data.json_value.show_point_transfer,
       showBadgesButton: data.json_value.show_badges_button,
-      showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page
+      showOutcomesOnCampaignLandingPage: data.json_value.show_outcomes_on_campaign_landing_page,
+      disablePostGameNav: data.json_value.disable_post_game_nav,
+      chromeless: data.json_value.chromeless,
+      showAdditionalDetailsOnVoucherQR: data.json_value.show_additional_details_on_voucher_QR,
+      appendRewardName: data.json_value.append_reward_name
     };
   }
 

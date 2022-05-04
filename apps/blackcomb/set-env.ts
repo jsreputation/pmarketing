@@ -87,7 +87,8 @@ const envConfigFile = `export const environment = {
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
+  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}',
+  storageType: '${process.env.STORAGE_TYPE ? process.env.STORAGE_TYPE : 'local'}'
 };
 `;
 
@@ -126,7 +127,7 @@ const appConfigFile = `{
   "showLoyaltyBlockOnHomePage": ${
     process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
       ? process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
-      : true
+      : false
   },
   "showLoyaltyProgress": ${
     process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : true
@@ -241,7 +242,9 @@ const appConfigFile = `{
     ],
     "showSurveyFirstOnHomePageCampaignList": "${
       process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST ? process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST : false
-    }"
+    }",
+    "storageType": "${process.env.STORAGE_TYPE ? process.env.STORAGE_TYPE : 'local'}"
+
   },
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false
@@ -275,7 +278,8 @@ const appConfigFile = `{
   },
   "showBadgesButton": ${ process.env.SHOW_BADGES_BUTTON || false },
   "showPersonaliseRewards": ${ process.env.SHOW_PERSONALISE_REWARDS || false },
-  "showPointTransfer": ${ process.env.SHOW_POINT_TRANSFER || false }
+  "showPointTransfer": ${ process.env.SHOW_POINT_TRANSFER || false },
+  "jwtTokenAuth": ${process.env.JWT_TOKEN_AUTH ? process.env.JWT_TOKEN_AUTH : false}
 }
 `;
 

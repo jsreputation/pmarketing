@@ -59,10 +59,6 @@ export class ScratchComponent implements OnInit {
   }
 
   public getOperatingHours(operatingHours: IOperatingHours): string {
-    // Date obj that we only need the time from
-
-    const openTime: Date = new Date(operatingHours.opensAt);
-    const closeTime: Date = new Date(operatingHours.closesAt);
 
     const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
 
@@ -72,10 +68,8 @@ export class ScratchComponent implements OnInit {
       }
     }
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
-    const hours: string =
-      `${(`0${openTime.getHours()}`).substr(-2)}:${(`0${openTime.getMinutes()}`).substr(-2)} -
-      ${(`0${closeTime.getHours()}`).substr(-2)}:${(`0${closeTime.getMinutes()}`).substr(-2)}`;
-    return `Play this game during: ${days}, ${hours}`;
+    const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
+    return `Play this game during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
   private dayOfWeekAsString(dayIndex: number): string {

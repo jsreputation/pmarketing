@@ -4,7 +4,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.FROM' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onSourceChanged($event)">
+                    <mat-select (selectionChange)="onSourceChanged($event)" class="source-dropdown">
                         <mat-option *ngFor="let loyaltyProgram of loyaltyProgramList" [value]="loyaltyProgram.value">
                             {{loyaltyProgram.text}}
                         </mat-option>
@@ -14,7 +14,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.TO' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onDestinationChanged($event)"
+                    <mat-select (selectionChange)="onDestinationChanged($event)" class="destination-dropdown"
                         [disabled]="!destintionLoyaltyProgramList?.length">
                         <mat-option *ngFor="let loyaltyProgram of destintionLoyaltyProgramList"
                             [value]="loyaltyProgram.value">

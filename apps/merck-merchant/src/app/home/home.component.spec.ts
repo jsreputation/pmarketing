@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService, ThemesService, TokenStorage } from '@perxtech/core';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
@@ -9,6 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Type } from '@angular/core';
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -20,6 +21,9 @@ describe('HomeComponent', () => {
 
   const tokenStorageStub: Partial<TokenStorage> = {
     clearAppInfoProperty: () => { }
+  };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -35,7 +39,9 @@ describe('HomeComponent', () => {
           provide: AuthenticationService,
           useValue: { logout: () => null }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+
       ]
     })
       .compileComponents();
@@ -51,11 +57,11 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to /qrscanner/order onSalesScan', () => {
+  it('should navigate to /identify-user/order onSalesScan', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     const routerSpy = spyOn(routerStub, 'navigate').and.stub();
     component.onSalesScan();
-    expect(routerSpy).toHaveBeenCalledWith(['/qrscanner/order']);
+    expect(routerSpy).toHaveBeenCalledWith(['/identify-user/order']);
   });
 
   it('should navigate to /qrscanner/redeem onRedemption', () => {

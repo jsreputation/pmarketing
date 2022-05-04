@@ -18,7 +18,7 @@ import {
   AuthenticationService,
   ConfigModule,
   ConfigService,
-  IConfig,
+  IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LoyaltyModule,
   MerchantAdminModule,
@@ -54,6 +54,10 @@ import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { switchMap, tap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatCardModule } from '@angular/material/card';
+import { UserSignupComponent } from './user-signup/user-signup.component';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
+import { MerchantQrscannerModule } from '@perxtech/bcm-pages';
 
 export const appInit =
   (
@@ -92,7 +96,9 @@ export const appInit =
     RegisterComponent,
     TransactionHistoryComponent,
     TransactionPipe,
-    TransactionHistoryPipe
+    TransactionHistoryPipe,
+    UserSignupComponent,
+    IdentifyCustomerComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -110,6 +116,7 @@ export const appInit =
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatCardModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -117,12 +124,14 @@ export const appInit =
     ZXingScannerModule,
     MatSnackBarModule,
     RewardsModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     MerchantAdminModule,
     LoyaltyModule.forRoot(),
     VouchersModule,
     HttpClientModule,
     InfiniteScrollModule,
+    MerchantQrscannerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

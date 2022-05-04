@@ -53,3 +53,20 @@
     }
   }
 }
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -3.5rem;
+    right: -2rem;
+    width: 4rem;
+    height: 4rem;
+
+    .mat-icon {
+      color: #606060;
+    }
+  }
+}

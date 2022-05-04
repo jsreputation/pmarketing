@@ -1,0 +1,29 @@
+.main {
+  height: 100%;
+  background-color: #f6f7f9;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  padding: 0 1.5rem;
+  justify-content: center;
+
+  .content {
+    display: block;
+    padding: 10rem 5rem;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-block-end: 12px;
+      margin-block-start: 30px;
+      color: var(--dark_grey);
+    }
+
+    p {
+      color: var(--light_grey);
+      font-size: 14px;
+      line-height: 19.6px;
+      margin-block-start: 0 !important;
+    }
+  }
+}

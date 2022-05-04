@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface IPopupConfig {
   title?: string;
@@ -12,10 +12,14 @@ export interface IPopupConfig {
   hideButton?: boolean;
   panelClass?: string[] | string;
   ctaButtonClass?: string;
+  hideCloseButton?: boolean;
+  titleBelowImage?: boolean;
+  popupClass?: string;
 }
-
+type OnOkFn = () => void;
 export interface PopUpClosedCallBack {
   dialogClosed(): void;
+  onOkFn?: OnOkFn;
 }
 
 /**
@@ -28,12 +32,15 @@ export interface PopUpClosedCallBack {
 })
 export class PopupComponent {
   public title: string | null = null;
+  public titleBelowImage: boolean = false;
   public text: string | null = null;
   public imageUrl: string | null = null;
   public showButton: boolean = true;
+  public hideCloseButton: boolean = false;
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
   public ctaButtonClass: string = '';
+  public popupClass: string = ''; // currently we have `.custom-popup-class`
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -64,7 +71,20 @@ export class PopupComponent {
     }
 
     if (data.ctaButtonClass) {
+
       this.ctaButtonClass = data.ctaButtonClass;
+    }
+
+    if (data.hideCloseButton) {
+      this.hideCloseButton = true;
+    }
+
+    if (data.titleBelowImage) {
+      this.titleBelowImage = true;
+    }
+
+    if (data.popupClass) {
+      this.popupClass = data.popupClass;
     }
   }
 
@@ -79,10 +99,17 @@ export class PopupComponent {
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
     }
+    if (this.data?.afterClosedCallBack?.onOkFn) {
+      this.data.afterClosedCallBack.onOkFn();
+    }
   }
 
   public buttonPressed2(): void {
     this.dialogRef.close(false);
+  }
+
+  public onClose(): void {
+    this.dialogRef.close();
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
     }

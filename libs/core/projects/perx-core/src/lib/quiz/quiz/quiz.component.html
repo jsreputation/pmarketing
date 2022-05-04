@@ -1,13 +1,15 @@
 <div *ngIf="data">
-  <div *ngFor="let question of data.questions ; let i = index;">
+  <div *ngFor="let question of data.questions; let i = index">
     <perx-core-quiz-question
       [questionTitleColor]="customTitleColor"
       [allowPicZoom]="allowPicZoom"
-      [ngClass]="{ hidden : questionPointer!=i }"
+      [ngClass]="{ hidden: questionPointer != i }"
       #questionsList
       [hideIndex]="hideIndex"
       [id]="i"
       [question]="question"
-      (updateAnswers)="updateAnswers($event)"></perx-core-quiz-question>
+      [fontColor]="data.fontColor"
+      (updateAnswers)="updateAnswers($event)"
+    ></perx-core-quiz-question>
   </div>
 </div>

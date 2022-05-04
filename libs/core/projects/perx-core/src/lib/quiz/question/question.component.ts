@@ -27,6 +27,9 @@ export class QuizQuestionComponent {
   public alpha: string;
 
   @Input()
+  public fontColor: string = '';
+
+  @Input()
   public isSubQuestion: boolean;
 
   @Output()

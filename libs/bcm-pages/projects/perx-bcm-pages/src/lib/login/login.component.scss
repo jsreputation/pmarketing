@@ -1,0 +1,35 @@
+@import "../mixins/mixins";
+
+.content-container {
+
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include multiLineFormFieldError;
+
+  .login-form {
+    width: 100%;
+  }
+
+  .main-heading {
+    font-weight: 900;
+    font-size: 2.6rem;
+    margin-bottom: 1rem;
+  }
+
+  mat-form-field {
+    font-size: 1.4rem;
+  }
+
+  .forgot-text {
+    color: var(--primary);
+    margin: 1rem 0 3.5rem 0;
+    font-size: 1.2rem;
+    display: inline-block;
+  }
+
+}
+

@@ -194,7 +194,9 @@ describe('GameComponent', () => {
     params: of({ id: 1 })
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    getRemoteFlagsSettings: () => of()
+    getRemoteFlagsSettings: () => of({
+      showPrizeSetOutcome: true
+    })
   };
 
   beforeEach(async(() => {
@@ -314,14 +316,16 @@ describe('GameComponent', () => {
   it('should set willWin true value when has prize set outcome', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
-    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [], prizeSets: [
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({
+      id: 3, voucherIds: [], prizeSets: [
         {
           transactionId: 10,
           prizeSetId: 1,
           outcomeType: OutcomeType.prizeSet,
           state: 'completed'
         }
-      ] }));
+      ]
+    }));
     component.ngOnInit();
     component.loadPreplay();
     expect(spy).toHaveBeenCalled();
@@ -331,13 +335,15 @@ describe('GameComponent', () => {
   it('should be displayed in popup when button view prize set when has prize set outcome', fakeAsync(() => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
-    spyOn(gameService, 'play').and.returnValue(of({ id: 3, prizeSets: [
+    spyOn(gameService, 'play').and.returnValue(of({
+      id: 3, prizeSets: [
         {
           transactionId: 1,
           prizeSetId: 2,
           outcomeType: OutcomeType.prizeSet
         }
-      ], voucherIds: [1, 2, 3]  }));
+      ], voucherIds: [1, 2, 3]
+    }));
     component.ngOnInit();
     component.loadPlay();
     tick();

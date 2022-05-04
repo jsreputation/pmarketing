@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
-import { LoyaltyService } from '../../loyalty/loyalty.service';
-import { RewardsService } from '../../rewards/rewards.service';
-import { LeaderBoard, LeaderboardOutcome } from '../models/rank.model';
+import { LeaderBoard } from '../models/rank.model';
 
 @Component({
   selector: 'perx-core-leaderboard-about',
@@ -14,9 +12,7 @@ export class LeaderboardAboutComponent implements OnInit {
   @Input() public data: LeaderBoard;
 
   constructor(
-    private translateService: TranslateService,
-    private rewardService: RewardsService,
-    private loyaltyService: LoyaltyService) { }
+    private translateService: TranslateService) { }
   public prizesTxt: string;
   public rankTxt: string;
   public tncTitle: string;
@@ -41,7 +37,7 @@ export class LeaderboardAboutComponent implements OnInit {
   }
 
   private getRankName(name: string | null, index: number): string {
-    return name ? `${name} ${this.prizesTxt}:` : `${this.rankTxt} ${index + 1} ${this.prizesTxt}:`;
+    return name ? `${name}` : `${this.rankTxt} ${index + 1}`;
   }
 
   private prepPodiums(): void {
@@ -58,18 +54,17 @@ export class LeaderboardAboutComponent implements OnInit {
           // for each outcome
           podium.outcomes.forEach((outcome, outcomeIndex) => {
             if (outcome.pointsCount) {
-              // fetch loyalty detail to extract program name
-              this.loyaltyService.getLoyalty(outcome.id).subscribe((loyaltyProgram) => {
-                podium.outcomes[outcomeIndex] = {
-                  ...podium.outcomes[outcomeIndex],
-                  name: `${outcome.pointsCount} ${this.loyaltyPoints} - ${loyaltyProgram.name}`
-                };
-              });
+              podium.outcomes[outcomeIndex] = {
+                ...podium.outcomes[outcomeIndex],
+                id: outcome?.modularizableId,
+                name: `${outcome.pointsCount} ${this.loyaltyPoints} - ${outcome?.outcome?.name}`
+              };
             } else {
-              //  get reward name
-              this.rewardService.getReward(outcome.id).subscribe((reward) => {
-                podium.outcomes[outcomeIndex] = reward as LeaderboardOutcome;
-              });
+              podium.outcomes[outcomeIndex] = {
+                ...podium.outcomes[outcomeIndex],
+                id: outcome?.modularizableId,
+                name: `${outcome?.outcome?.name}`
+              };
             }
             this.data.podiums[index] = podium;
           });

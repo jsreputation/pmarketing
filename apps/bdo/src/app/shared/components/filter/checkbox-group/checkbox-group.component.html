@@ -1,0 +1,27 @@
+<mat-accordion [formGroup]="formGroup"  [hideToggle]="hiddenToggle" class="checkbox-group-wrapper" *ngIf="dataSource">
+  <mat-expansion-panel [expanded]="true" [disabled]="hiddenToggle">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-checkbox
+          class="parent-checkbox"
+          formControlName="category"
+          (click)="$event.stopPropagation()"
+          (keydown)="$event.stopPropagation()">
+          <span class="title">
+            {{dataSource.name}}
+          </span>
+        </mat-checkbox>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ul *ngIf="dataSource?.children?.length" formArrayName="children">
+      <li *ngFor="let item of dataSource.children; let idx= index;">
+        <mat-checkbox
+          [formControlName]="idx"
+          (click)="$event.stopPropagation()"
+          (keydown)="$event.stopPropagation()">
+          <span class="title">{{item.name}}</span>
+        </mat-checkbox>
+      </li>
+    </ul>
+  </mat-expansion-panel>
+</mat-accordion>

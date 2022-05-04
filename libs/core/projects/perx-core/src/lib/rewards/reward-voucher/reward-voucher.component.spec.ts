@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
-import { ProgressBarModule } from '@perxtech/core';
+import { PipeUtilsModule, ProgressBarModule } from '@perxtech/core';
 import { ProgressRequirePipe } from '../rewards-large-list/reward-requirement.pipe';
 
 describe('RewardVoucherComponent', () => {
@@ -42,6 +42,7 @@ describe('RewardVoucherComponent', () => {
       ],
       imports: [
         UtilsModule,
+        PipeUtilsModule,
         MatIconModule,
         MatCardModule,
         MatRippleModule,

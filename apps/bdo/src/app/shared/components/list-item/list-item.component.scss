@@ -1,0 +1,31 @@
+@import './../../../../theme/variables.scss';
+
+li {
+  box-shadow: 0 0 16px $medium-black;
+  margin: 16px;
+  list-style-type: none;
+  border-radius: 16px;
+
+  a {
+    text-decoration: none;
+  }
+
+  div {
+    padding: 16px;
+    background: white;
+    border-radius: 12px;
+
+
+    .title {
+      font-size: 16px;
+      color: $medium-blue;
+      line-height: 24px;
+      margin: 0;
+    }
+
+    .description {
+      font-size: 12px;
+      color: $light-black;
+    }
+  }
+}

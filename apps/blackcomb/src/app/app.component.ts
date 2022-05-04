@@ -30,6 +30,7 @@ import {
   ITheme,
   ThemesService,
   TokenStorage,
+  SettingsService,
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -46,11 +47,12 @@ import {
   TransactionHistoryComponent,
   RebatesWalletComponent,
   RewardsPageComponent,
-  NearmeComponent
+  NearmeComponent,
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -64,6 +66,7 @@ export class AppComponent implements OnInit {
   public preAuth: boolean;
   public translationLoaded: boolean = false;
   public navigateToLoading: boolean = false;
+  public jwtTokenAuth: boolean;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -81,7 +84,8 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
-    private storage: TokenStorage
+    private storage: TokenStorage,
+    private settingsService: SettingsService,
   ) {
   }
 
@@ -103,6 +107,7 @@ export class AppComponent implements OnInit {
             this.navigateToLoading = conf.homeAsProgressPage;
           }
           this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+          this.jwtTokenAuth = conf?.jwtTokenAuth as boolean;
         }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
         switchMap(() =>
@@ -133,8 +138,12 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
-            this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
+            if (this.jwtTokenAuth) {
+              this.router.navigate(['/access-verify'],  { state: { refreshTokenFlow : true }});
+            } else {
+              this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
+              this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
+            }
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
           }
@@ -152,9 +161,12 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.route.queryParams.subscribe((params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+      this.showHeader = (paramArr && paramArr.includes('chromeless') || !!flags.chromeless) ? false : !(ref instanceof SignIn2Component);
     });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||

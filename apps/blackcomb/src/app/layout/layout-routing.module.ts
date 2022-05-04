@@ -135,6 +135,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: "instant-reward-outcomes/:id",
+        loadChildren: () => import('../instant-reward-outcome/instant-reward-outcome.module').then(m => m.InstantRewardOutcomeModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: "profile",
         loadChildren: () => import('../profile/profile.module').then((mod) => mod.ProfileModule)
       },

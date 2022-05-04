@@ -13,7 +13,7 @@ import {
 } from '@perxtech/core';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, of, Subject } from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -43,6 +43,7 @@ export class QuestComponent implements OnInit, OnDestroy {
 
   constructor(protected questService: IQuestService,
               protected route: ActivatedRoute,
+              private router: Router,
               private notificationService: NotificationService,
               private campaignService: ICampaignService) { }
 
@@ -117,4 +118,10 @@ export class QuestComponent implements OnInit, OnDestroy {
     }
   }
 
+  public outcomeClicked(outcome: ICampaignOutcome): void {
+    if (outcome.type === CampaignOutcomeType.reward) {
+      this.router
+        .navigate([ '/reward-detail', outcome.id ], { queryParams:  { previewReward: true } });
+    }
+  }
 }

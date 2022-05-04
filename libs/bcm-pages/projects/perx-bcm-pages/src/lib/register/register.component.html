@@ -1,0 +1,39 @@
+<div class="content-container">
+  <ng-container *ngIf="!isMerchantNameLoading">
+    <div class="main-heading">Welcome, {{merchantProfile?.username}}!</div>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" required>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password should be at least 8 characters long
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('maxlength')">
+          Password should not be more than 20 characters long
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Confirm password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" required>
+        <mat-error *ngIf="loginForm.get('confirmPassword')?.hasError('required')">
+          Confirm password is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('confirmPassword')?.hasError('minlength')">
+          Password should be at least 8 characters long
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('confirmPassword')?.hasError('maxlength')">
+          Password should not be more than 20 characters long
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!loginForm.valid" class="full-width__button mat-primary">Submit</button>
+    </form>
+  </ng-container>
+  <div *ngIf="isMerchantNameLoading" class="spinner-container">
+    <mat-spinner [diameter]="60" [color]="'primary'" [mode]="'indeterminate'">
+    </mat-spinner>
+  </div>
+</div>
+

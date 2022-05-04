@@ -1,0 +1,15 @@
+<div class="app-root">
+  <ng-container *ngIf="$loading | async; else loadingScreen">
+    <router-outlet *ngIf="translationLoaded"></router-outlet>
+  </ng-container>
+
+  <ng-template #loadingScreen >
+    <h1>
+      Welcome to bdo!
+    </h1>
+    <mat-spinner></mat-spinner>
+  </ng-template>
+  <div class="footer">
+    <bdo-footer [isShowCarousel]="showFooter"></bdo-footer>
+  </div>
+</div>

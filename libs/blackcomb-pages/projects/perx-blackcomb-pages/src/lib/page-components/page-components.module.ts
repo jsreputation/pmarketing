@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CampaignsCollectionComponent } from '../home/campaigns-collection/campaigns-collection.component';
-import { UtilsModule } from '@perxtech/core';
+import { PipeUtilsModule, UtilsModule } from '@perxtech/core';
 import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,7 @@ import { RouterModule } from '@angular/router';
     MatRippleModule,
     TranslateModule.forChild(),
     InfiniteScrollModule,
+    PipeUtilsModule,
     UtilsModule,
     RouterModule
   ],

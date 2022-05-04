@@ -1,0 +1,49 @@
+
+.main-container {
+  overflow: hidden;
+  padding: 7rem 2.5rem 1rem 2.5rem;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.tab-container {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+form {
+  padding-top: 4rem;
+  .full-width__input {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+.mat-error {
+  font-size: 1rem!important;
+}
+
+mat-form-field {
+  font-size: 1.4rem!important;
+}
+
+::ng-deep {
+  .mat-tab-group {
+    height: 100%;
+  }
+
+  .mat-tab-label-active {
+    color: #0f69af;
+  }
+
+  perx-bcm-pages-qrscanner {
+    .scanner {  
+      &::before, &::after, > em::after, > em::before {
+        border: 0 solid #000!important;
+      }
+    }
+    .container {
+      padding-top: 3rem!important;
+    }
+  }
+}

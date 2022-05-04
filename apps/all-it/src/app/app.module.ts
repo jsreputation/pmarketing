@@ -15,13 +15,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
   AuthenticationService,
+  BadgeServiceModule,
   CampaignModule as PerxCampaignModule,
   CampaignServiceModule as PerxCampaignServiceModule,
   ConfigModule,
   ConfigService,
   GameModule as PerxGameModule,
   GameServiceModule,
-  IConfig,
+  IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
   LoyaltyModule,
@@ -30,6 +31,7 @@ import {
   PerxCoreModule,
   ProfileModule,
   ProfileServiceModule,
+  ProgressCampaignServiceModule as PerxProgressCampaignServiceModule,
   QuestModule as PerxQuestModule,
   RewardsModule,
   SettingsModule,
@@ -38,7 +40,7 @@ import {
   TokenStorage,
   TransactionsServiceModule as PerxTransactionsServiceModule,
   UtilsModule,
-  VouchersModule,
+  VouchersModule
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,6 +64,7 @@ import { SignupModule } from './signup/signup.module';
 import * as Sentry from '@sentry/browser';
 import { registerLocaleData } from '@angular/common';
 import localeENMY from '@angular/common/locales/en-MY';
+import localesEnMyExtra from '@angular/common/locales/extra/en-MY';
 
 Sentry.init({
   dsn: 'https://813ab4ad94c94d5eb4370961b9e31e81@o225970.ingest.sentry.io/5276501'
@@ -90,7 +93,7 @@ export const setLanguage = (
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
-registerLocaleData(localeENMY);
+registerLocaleData(localeENMY, 'en', localesEnMyExtra);
 
 @NgModule({
   declarations: [AppComponent],
@@ -104,6 +107,7 @@ registerLocaleData(localeENMY);
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     AuthenticationModule,
     SignupModule,
     ProfileModule,
@@ -115,11 +119,13 @@ registerLocaleData(localeENMY);
     UtilsModule,
     PerxCampaignServiceModule.forRoot(),
     PerxCampaignModule,
+    PerxProgressCampaignServiceModule.forRoot(),
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
     PerxQuestModule.forRoot(),
+    BadgeServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     PerxTransactionsServiceModule.forRoot(),
     RewardsModule.forRoot(),

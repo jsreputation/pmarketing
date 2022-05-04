@@ -17,7 +17,9 @@ import {
   IProfile,
   LoyaltyService,
   ProfileService,
-  RewardPopupComponent
+  RewardPopupComponent,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +37,8 @@ import {
   of
 } from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
+import { MatExpansionPanel } from '@angular/material/expansion';
+
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 
@@ -43,6 +47,7 @@ export interface IStarhubConfig {
   showAllSnappingSaturdayItems: boolean;
   mobileIdCR: boolean;
   UXCR: boolean;
+  starsCR: boolean;
 }
 
 
@@ -59,15 +64,20 @@ export class HomeComponent implements OnInit {
   public lastOffset: number = 0;
   @ViewChild('contentScrolled')
   public contentScrolled: ElementRef;
-  public loyalty: ILoyalty;
+  public loyalty: ILoyalty | undefined;
+  public starsLoyalty: ILoyalty | undefined;
   public profile: IProfile;
   private firstComefirstServeCampaign: ICampaign;
   private token: string;
   public game?: IGame;
   public hubclubCR: boolean;
+  public starsCR: boolean;
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
   public uxcr: boolean = false;
+  public showLeaderboardLinkOnHomePage: boolean = false;
+  @ViewChild('expansionPanel')
+  public expansionPanel: MatExpansionPanel;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -77,6 +87,7 @@ export class HomeComponent implements OnInit {
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
     private configService: ConfigService,
+    private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog
   ) { }
@@ -85,6 +96,7 @@ export class HomeComponent implements OnInit {
     this.configService.readAppConfig<IStarhubConfig>().pipe(
       tap((config: IConfig<IStarhubConfig>) => {
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
+        this.starsCR = config.custom ? config.custom.starsCR : false;
         this.appConfig = config;
         this.uxcr = config.custom ? config.custom.UXCR : false;
       }),
@@ -105,8 +117,11 @@ export class HomeComponent implements OnInit {
     ).subscribe(
       () => {
         this.loyaltyService
-          .getLoyalty()
-          .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
+          .getLoyalties()
+          .subscribe((loyalties: ILoyalty[]) => {
+            this.loyalty = loyalties.find((item: ILoyalty) => item.name === 'StarHub Post-paid Loyalty');
+            this.starsLoyalty = loyalties.find((item: ILoyalty) => item.name === 'Stars loyalty');
+          });
         if (this.hubclubCR) {
           this.profileService
             .whoAmI()
@@ -123,6 +138,12 @@ export class HomeComponent implements OnInit {
               }
             });
         }
+      }
+    );
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
       }
     );
   }
@@ -152,19 +173,35 @@ export class HomeComponent implements OnInit {
     }
   }
   public onScrollCall(): void {
+    if (this.expansionPanel?.expanded) {
+      this.expansionPanel.close();
+    }
     requestAnimationFrame(() => {
+      const offset = this.showLeaderboardLinkOnHomePage ? -240 : -184;
       const delta =
         this.previousDelta - this.contentScrolled.nativeElement.scrollTop;
       this.previousDelta = this.contentScrolled.nativeElement.scrollTop;
       if (this.top + delta > 0) {
         this.top = 0;
-      } else if (this.top + delta <= -170) {
-        this.top = -170;
+      } else if (this.top + delta <= offset) {
+        this.top = offset;
       } else {
         this.top = this.top + delta;
       }
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
     });
+  }
+
+  public onPanelExpansion(): void {
+    this.toolBar._elementRef.nativeElement.style.transform = 'translateY(0)';
+    this.toolBar._elementRef.nativeElement.classList.add('accordion-expanded');
+    this.contentScrolled.nativeElement.classList.add('accordion-expanded');
+  }
+
+  public onPanelCollapse(): void {
+    this.toolBar._elementRef.nativeElement.classList.remove('accordion-expanded');
+    this.contentScrolled.nativeElement.classList.remove('accordion-expanded');
+    this.contentScrolled.nativeElement.scrollTop = '230px';
   }
 
   private fetchPopupCampaigns(): void {

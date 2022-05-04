@@ -4,31 +4,41 @@
   padding: 15px;
   margin: 2rem;
 
-  div {
-    line-height: 0;
-  }
-
   .rank-title h2 {
     font-weight: normal;
   }
 
   .point-and-rank-box {
-    margin-top: 2.8rem;
+    margin-top: 1.6rem;
     display: flex;
 
-    p,
-    h1 {
+    p {
       display: inline-block;
+    }
+
+    .box-spacer {
+      flex: 1 1 5%;
+
     }
 
     .point-box,
     .rank-box {
       width: 50%;
+      flex: 1 1 50%;
 
-      h3 {
+      .metric-label {
         font-weight: normal;
-        color: var(--disabled_text_color);
+        color: var(--disabled_text_color, #aaa);
         text-transform: uppercase;
+        margin-bottom: 0;
+        font-size: 12px;
+      }
+
+      .metric {
+        font-size: 20px;
+        font-weight: bold;
+        display: inline-block;
+        margin: 1.2rem 0;
       }
     }
   }

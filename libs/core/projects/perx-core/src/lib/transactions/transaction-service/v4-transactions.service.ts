@@ -14,7 +14,7 @@ export type V4TenantTransactionProperties =
   IV4TransactionPropertiesAbenson
   | IV4TransactionPropertiesMerck
   | IV4TransactionPropertiesAllit
-  | IV4TransactionPropertiesCashback;
+  | IV4TransactionPropertiesMerchant;
 
 interface IV4TransactionsResponse {
   data: IV4Transaction[];
@@ -95,11 +95,12 @@ export interface IV4TransactionPropertiesAllit {
   transaction_line_guid: string;
 }
 
-export interface IV4TransactionPropertiesCashback {
+export interface IV4TransactionPropertiesMerchant {
   tenant: 'perx'; // temporary template tenant name?
   merchant_name: string;
   item_name: string;
   outlet_name: string;
+  description: string;
 }
 
 @Injectable({
@@ -167,8 +168,8 @@ export class V4TransactionsService extends TransactionsService {
         storeName: props.pharmacy
       };
     }
-    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
-      const props = (pthProps as IV4TransactionPropertiesCashback);
+    if (pthProps && (pthProps as IV4TransactionPropertiesMerchant).merchant_name) {
+      const props = (pthProps as IV4TransactionPropertiesMerchant);
       data = {
         productName: props.item_name,
         storeCode: props.merchant_name,

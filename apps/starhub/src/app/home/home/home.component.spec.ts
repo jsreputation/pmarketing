@@ -1,3 +1,4 @@
+import { StarsComponent } from './../stars/stars.component';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
@@ -15,7 +16,9 @@ import {
   InstantOutcomeService,
   ICampaignService,
   TokenStorage,
-  ConfigService
+  ConfigService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from '../../loyalty.mock';
@@ -23,6 +26,7 @@ import { Type } from '@angular/core';
 import { campaigns } from '../../campaigns.mock';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true),
@@ -67,9 +71,15 @@ describe('HomeComponent', () => {
 
   const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of({
+      showLeaderboardLinkOnHomePage: true
+    })
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, NoRenewaleInNamePipe],
+      declarations: [HomeComponent, StarsComponent, NoRenewaleInNamePipe],
       imports: [
         MatToolbarModule,
         MatTabsModule,
@@ -77,7 +87,8 @@ describe('HomeComponent', () => {
           path: 'error', component: HomeComponent,
         }]),
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        MatExpansionModule
       ],
       providers: [
         NoRenewaleInNamePipe,
@@ -88,7 +99,8 @@ describe('HomeComponent', () => {
         { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
@@ -163,6 +175,7 @@ describe('HomeComponent', () => {
     });
   });
   it('should handle scroll', fakeAsync(() => {
+    const settingsService: SettingsService = fixture.debugElement.injector.get<SettingsService>(SettingsService as Type<SettingsService>);
     component.previousDelta = -10;
     const spy = spyOn(window, 'requestAnimationFrame').and.callThrough();
     component.onScrollCall();
@@ -176,7 +189,16 @@ describe('HomeComponent', () => {
     component.previousDelta = -1000;
     component.onScrollCall();
     tick(100);
-    expect(component.top).toBe(-170);
+
+    settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        const showLeaderboardLinkOnHomePage = flags.showLeaderboardLinkOnHomePage ? flags.showLeaderboardLinkOnHomePage : false;
+        if (showLeaderboardLinkOnHomePage) {
+          expect(component.top).toBe(-240);
+        } else {
+          expect(component.top).toBe(-184);
+        }
+      });
   }));
 
   it('should redirect to error screen', fakeAsync(() => {

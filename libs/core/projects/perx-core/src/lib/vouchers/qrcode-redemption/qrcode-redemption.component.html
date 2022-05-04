@@ -1,6 +1,12 @@
-<div class="main-container" *ngIf="voucher$ | async as voucher">
-  <qrcode [qrdata]="voucher.code" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+<div class="main-container" *ngIf="voucher">
+  <ng-container *ngIf="!showAdditionalDetailsOnVoucherQR; else showExtraDetailsBlock">
+    <qrcode [qrdata]="voucher.code" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+  </ng-container>
+  <ng-template #showExtraDetailsBlock>
+    <qrcode [qrdata]="qrCodeDetails" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
+  </ng-template>
   <div
     class="title" [innerHtml]="voucher?.reward?.redemptionText || 'Present this QR code to the cashier to complete your redemption'"></div>
-  <div class="voucher-name">{{voucher.reward.name}}</div>
+  <div class="voucher-name">{{voucher?.reward?.name}}</div>
+  <div class="voucher-id">ID: {{voucher?.id}}</div>
 </div>

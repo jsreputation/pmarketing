@@ -1,0 +1,42 @@
+@import '../../../theme/variables.scss';
+.location-landing-wrapper {
+  .gmap-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .map {
+      width: 100%;
+      height: calc(100vh - 106px);
+
+      @media screen and (min-width: $desktop-width) {
+        height: calc(100vh - 64px);
+      }
+
+    }
+
+    .link-out-buttons {
+      display: flex;
+      flex-direction: row;
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      background: white;
+
+      .gmap-button, .waze-button {
+        background: white;
+        width: 40px;
+        height: 40px;
+
+        img {
+          position: relative;
+          max-width: 100%;
+          max-height: 100%;
+          height: auto;
+          padding: 7px;
+
+        }
+      }
+    }
+  }
+
+}

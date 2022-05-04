@@ -1,0 +1,70 @@
+{
+    "LOGIN_PAGE": {
+        "WELCOME": "Welcome",
+        "NAME": "Name",
+        "NAME_IS": "Name is",
+        "EMAIL_ADDRESS": "Email address",
+        "EMAIL_ADDRESS_IS": "Email address is",
+        "PASSWORD": "Password",
+        "PASSWORD_IS": "Password is",
+        "FORGOT_PASSWORD": "Forgot password",
+        "LOGIN": "Login"
+    },
+    "HOME": {
+        "SALES_SCAN": "Sales Scan",
+        "REDEMPTION": "Redemption",
+        "TRANSACTION_HISTORY": "Transaction History",
+        "LOGOUT": "Log Out",
+        "WELCOME_MSG": "What are we doing today?",
+        "GREETING_MORNING": "Good morning",
+        "GREETING_AFTERNOON": "Good afternoon",
+        "GREETING_EVENING": "Good evening"
+    },
+    "TRANSACTION_HISTORY": {
+        "POINT_EARNED": "{points} Points earned",
+        "POINT_SPENT": "{points} Points spent",
+        "SALES_TXT": "Sales",
+        "REDEMPTION_TXT": "Redemptions"
+    },
+    "REDEEM": {
+        "CANCEL": "Cancel",
+        "PROCEED": "Proceed",
+        "CLOSE": "Close",
+        "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
+    },
+    "POPUP_CONTENT": {
+        "TRANSACTION_COMPLETED": "Transaction completed"
+    },
+    "ERRORS": {
+        "NOT_ENOUGH_POINTS": "User does not have enough points balance",
+        "GENERIC": "Sorry, something went wrong",
+        "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
+    },
+    "FORGET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
+        "EMAIL_ADDRESS": "Email Address",
+        "EMAIL_ADDRESS_IS": "Email Address is",
+        "NEXT": "Next"
+    },
+    "RESET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
+        "PASSWORD": "Password",
+        "NEW_PASSWORD": "New password",
+        "CONFIRM_PASSWORD": "Confirm new password",
+        "SUBMIT_BUTTON": "Update password"
+    },
+    "ORDER_PAGE": {
+        "SALES_RECORD": "Sales Record",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_IS": "Description is",
+        "AMOUNT": "Amount",
+        "AMOUNT_IS": "Amount is",
+        "TRANSACTION_DATE": "Transaction date",
+        "TIME": "Time",
+        "REVIEW": "Review",
+        "CANCEL": "Cancel",
+        "SUBMIT": "Submit",
+        "BACK": "Back"
+    },
+    "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+}

@@ -122,6 +122,6 @@
   @include toolbar();
 
   .backArrow {
-    @include toolBarArrow();
+    cursor: pointer;
   }
 }

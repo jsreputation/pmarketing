@@ -80,63 +80,28 @@ describe('PointConversionComponent', () => {
     expect(listLoyaltyOption.length).toEqual(mockLoyalty.length);
   });
 
-  it('To field should list all available loyalty programs except for selected program', () => {
-    spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
-    spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
+  it('To field should list all available loyalty programs with supported exchange rate', () => {
+    const loyaltyServiceCall =  spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
+    const exchangeratesCall = spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
     component.ngOnInit();
+    expect(loyaltyServiceCall).toHaveBeenCalled();
     fixture.detectChanges();
 
-    const fromArrowButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper')).nativeElement;
-    fromArrowButton.click();
+    const arrowSelectButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper')).nativeElement;
+    arrowSelectButton.click();
     fixture.detectChanges();
-
 
     const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
-    listLoyaltyOption[0].nativeElement.click();
-
-    const toArrowFieldButton = fixture.debugElement.queryAll(By.css('.mat-select-arrow-wrapper'))[1];
-    toArrowFieldButton.nativeElement.click();
+    listLoyaltyOption[1].nativeElement.click();
+    expect(exchangeratesCall).toHaveBeenCalled();
     fixture.detectChanges();
 
-    expect(component.destintionLoyaltyProgramList.length).toBeTruthy();
+    const toArrowButton = fixture.debugElement.query(By.css('.destination-dropdown .mat-select-arrow-wrapper')).nativeElement;
+    toArrowButton.click();
+    fixture.detectChanges();
+
+    const destintionLoyaltyPgmList = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+    expect(destintionLoyaltyPgmList.length).toBeTruthy();
   });
 
-  it('should enable the submit button when all field valid', () => {
-    spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
-    spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
-
-    component.ngOnInit();
-    fixture.detectChanges();
-
-    const fromArrowButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper')).nativeElement;
-    fromArrowButton.click();
-    fixture.detectChanges();
-
-    fixture.debugElement.query(By.css('.mat-option-text')).nativeElement.click();
-    fixture.detectChanges();
-
-    const toArrowFieldButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper'));
-    toArrowFieldButton.nativeElement.click();
-    fixture.detectChanges();
-
-    fixture.debugElement.query(By.css('.mat-option-text')).nativeElement.click();
-    fixture.detectChanges();
-
-    component.onDestinationChanged({
-      isUserInput: false,
-      source: { value: component.destintionLoyaltyProgramList[0].value }
-    } as MatOptionSelectionChange);
-
-    const inputPointTransfer = fixture.debugElement.query(By.css('.point-transfer-value')).nativeElement;
-    const keyUpEvent = new KeyboardEvent('keyup', {
-      bubbles : true, cancelable : true, shiftKey : false
-    });
-    inputPointTransfer.value = 10;
-    inputPointTransfer.dispatchEvent(keyUpEvent);
-    fixture.detectChanges();
-
-    const buttonSubmit = fixture.debugElement.query(By.css('button')).nativeElement;
-
-    expect(buttonSubmit.disabled).toBeFalsy();
-  });
 });

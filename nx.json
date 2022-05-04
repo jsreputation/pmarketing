@@ -1,4 +1,15 @@
 {
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*",
+    "tsconfig.base.json": "*",
+    ".eslintrc.json": "*"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
   "npmScope": "perxtech",
   "tasksRunnerOptions": {
     "default": {
@@ -8,15 +19,10 @@
       }
     }
   },
-  "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*",
-    "tsconfig.base.json": "*",
-    ".eslintrc.json": "*"
-  },
   "projects": {
+    "globesuperapp": {
+      "tags": []
+    },
     "blackcomb-pages": {
       "tags": []
     },
@@ -41,6 +47,9 @@
     "components-demo": {
       "tags": []
     },
+    "hangseng": {
+      "tags": []
+    },
     "hkbn": {
       "tags": []
     },
@@ -51,6 +60,9 @@
       "tags": []
     },
     "hsbchk": {
+      "tags": []
+    },
+    "megaworld": {
       "tags": []
     },
     "merck-customer": {
@@ -79,9 +91,24 @@
     },
     "transcycle": {
       "tags": []
+    },
+    "blackcomb-merchant": {
+      "tags": []
+    },
+    "bcm-pages": {
+      "tags": []
+    },
+    "bdo": {
+      "tags": []
+    },
+    "spw-merchant": {
+      "tags": []
+    },
+    "prudential-pulse": {
+      "tags": []
+    },
+    "dbs-merchant": {
+      "tags": []
     }
-  },
-  "affected": {
-    "defaultBase": "master"
   }
 }

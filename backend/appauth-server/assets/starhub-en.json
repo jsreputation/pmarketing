@@ -165,6 +165,7 @@
     "CASHBACK_SPENT": "{points} cashback spent"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Input PIN",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
@@ -189,7 +190,7 @@
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "LEADERBOARD",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "NO_LEADER_BOARDS": "No leaderboards here yet!",
     "NO_RANK_INFO": "No ranking information here yet!",
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
@@ -206,7 +207,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "Customer ID"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",
@@ -277,7 +279,7 @@
     "SEE_LESS": "See less",
     "REWARDS_LEFT": " Rewards Left",
     "READ_MORE": "Read More",
-    "YOU_HAVE": "You have points",
+    "YOU_HAVE": "Your total points as of",
     "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
@@ -340,7 +342,8 @@
     "EXPIRY": "Expires on: {{date}}",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
@@ -374,8 +377,8 @@
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
     "VIEW_REWARD": "View reward",
-    "OUT_OF_TRIES_TITLE": "No more tries",
-    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_TITLE": "",
+    "OUT_OF_TRIES_TEXT": "You have reached the maximum number of tries today",
     "OUT_OF_TRIES_CTA": "Close"
   },
   "STAMP_CAMPAIGN": {
@@ -388,6 +391,7 @@
     "STAMP_CARD_UPDATED": "Stamp card updated",
     "CARD_COMPLETED": "Stamp card completed by your team-mate!",
     "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "POINTS_POPUP_TEXT": "You have gained points!",
     "REWARD_POPUP_TITLE": "Congratulations!",
     "REWARD_POPUP_TEXT": "Here is a reward for you.",
     "REWARD_POPUP_BUTTON_TEXT": "View Reward",
@@ -412,7 +416,16 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
-    "INVALID_INVITE_CODE": "Invalid invite code"
+    "INVALID_INVITE_CODE": "Invalid invite code",
+    "TEAM_FULL": "This team is already full",
+    "RESERVATION_EXPIRED": "Your game session has expired, please try again",
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
+    "COULD_NOT_ENROL": "Unable to enrol into campaign",
+    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
+    "OUT_OF_TRIES_TITLE": "",
+    "OUT_OF_TRIES_TEXT": "You have reached the maximum number of tries today",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "QUEST_CAMPAIGN": {
     "CTA_NEXT_TXT": "START",

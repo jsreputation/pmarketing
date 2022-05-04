@@ -1,0 +1,44 @@
+@import '../../../theme/variables.scss';
+
+.search-page-container {
+  background: $white;
+  padding: 0 10px;
+  margin-top: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: $desktop-width) {
+    max-height: 300px;
+    padding: 20px;
+    height: unset;
+    border-radius: 5px;
+  }
+
+  .pill-section {
+    h5 {
+      color: $dark-grey;
+      font-size: 14px;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .content {
+      text-align: left;
+      white-space: normal;
+      user-select: none;
+      cursor: pointer;
+
+      span {
+        background-color: $light-blue;
+        font-size: 14px;
+        color: $near-black;
+        line-height: 19px;
+        padding: 7px 10px;
+        border-radius: 8px;
+        margin: 4px;
+        display: inline-block;
+      }
+    }
+  }
+}

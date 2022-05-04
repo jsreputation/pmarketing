@@ -23,7 +23,7 @@
         </div>
         <div class="detail-column">
           <div class="rank-name">
-            {{podium?.displayProperties?.rankName}}
+            {{podium?.displayProperties?.rankName}} {{this.prizesTxt}}:
           </div>
           <div class="reward-list">
             <div class="list-item" *ngFor="let outcome of podium.outcomes">
@@ -31,7 +31,7 @@
                 {{outcome.name}}
               </span>
               <ng-template #rewardLink>
-                <a class="reward-link" [routerLink]="['/reward-detail',outcome.id]">{{outcome.name}} </a>
+                <a class="reward-link" [routerLink]="['/reward-detail',outcome.id]" [queryParams] = "{ previewReward: true }">{{outcome.name}} </a>
               </ng-template>
             </div>
           </div>

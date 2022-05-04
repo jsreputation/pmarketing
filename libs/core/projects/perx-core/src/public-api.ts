@@ -27,8 +27,13 @@ export { MacaronService } from './lib/macaron/macaron.service';
 export {
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  IMerchantInvoice
 } from './lib/merchant-admin/models/merchants-admin.model';
+export {
+  ITag,
+  IMerchant
+} from './lib/merchants/models/merchants.model'
 export { MerchantsModule } from './lib/merchants/merchants.module';
 export { IMerchantsService } from './lib/merchants/imerchants.service';
 
@@ -46,7 +51,7 @@ export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, VoucherState, StatusLabelMapping, IVoucherLocation } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, VoucherState, StatusLabelMapping, IVoucherLocation, IMerchantLocation } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
@@ -85,7 +90,8 @@ export {
   CampaignOutcomeType,
   IOperatingHours,
   IBadgeOutcome,
-  TeamsProperties
+  TeamsProperties,
+  ICampaignRule
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -192,10 +198,11 @@ export {
   IPurchaseTransactionHistory,
   TransactionDetailType,
   IJoinMethod,
-  IGameTransactionHistory,
-  IStampTransactionHistory,
+  ICampaignTransactionHistory,
   IExchangerate,
-  IPointTransfer
+  IPointTransfer,
+  ILeaderBoardTransactionHistory,
+  IRuleTransactionHistory
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
@@ -213,7 +220,11 @@ export {
   IPrice,
   IRewardState,
   ILoyaltyTierInfo,
-  Sort
+  Sort,
+  ISearchHistory,
+  ISearchSuggestion,
+  ITrending,
+  ICatalogItem
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
@@ -225,6 +236,7 @@ export { RewardsLargeListComponent } from './lib/rewards/rewards-large-list/rewa
  * Utils
  */
 export { UtilsModule } from './lib/utils/utils.module';
+export { PipeUtilsModule } from './lib/utils/pipe-utils.module';
 export {
   PopupComponent,
   IPopupConfig,
@@ -276,7 +288,6 @@ export { LocationModule } from './lib/location/location.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
 export { LocationsMapComponent } from './lib/location/locations-map/locations-map.component';
-export { IMerchant } from './lib/merchants/models/merchants.model';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
 export { filterDuplicateLocations } from './lib/location/filter-duplicate-locations';
@@ -360,6 +371,15 @@ export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome, IMilestoneIssuedOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
+ * InstantOutcomeTransaction
+ */
+export { IInstantOutcomeTransactionService } from './lib/instant-outcome-transaction/instant-outcome-transaction.service';
+export {
+  IInstantOutcomeTransaction, IInstantOutcome,
+  InstantOutcomeCampaignPrizeType, InstantOutcomeTransactionState
+} from './lib/instant-outcome-transaction/models/instant-outcome-transaction.model';
+export { InstantOutcomeTransactionServiceModule } from './lib/instant-outcome-transaction/instant-outcome-transaction-service.module';
+/**
  * Rank / Leaderboard
  */
 export { RankModule } from './lib/rank/rank.module';
@@ -384,6 +404,7 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
  */
 export { PosModule } from './lib/pos/pos.module';
 export { PosService } from './lib/pos/pos.service';
+export { IPosLoyaltyTransaction } from './lib/pos/models/pos.model';
 
 /**
  * Transactions
@@ -417,3 +438,12 @@ export {
 } from './lib/prize-set-outcome/models/prize-set-outcome.model';
 export { IPrizeSetOutcomeService } from './lib/prize-set-outcome/prize-set-outcome.service';
 export { PrizeSetOutcomeModule } from './lib/prize-set-outcome/prize-set-outcome.module';
+
+/**
+ * Platform Enrolment
+ */
+export { PlatformEnrolmentServiceModule } from './lib/platform-enrolment/platform-enrolment.service.module';
+export { PlatformEnrolmentService } from './lib/platform-enrolment/platform-enrolment.service';
+export {
+  IPlatformEnrolment
+} from './lib/platform-enrolment/platform-enrolment.model';

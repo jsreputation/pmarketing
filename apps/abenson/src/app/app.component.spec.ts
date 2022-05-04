@@ -10,7 +10,7 @@ import {
   ConfigService,
   FeedReaderService,
   ICampaignService,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   InstantOutcomeService,
   IQuestService,
   NotificationService,
@@ -79,6 +79,7 @@ describe('AppComponent', () => {
   let profileService: ProfileService;
   let questService: IQuestService;
   let teamsService: TeamsService;
+  let instantOutcomeTransactionService: IInstantOutcomeTransactionService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -110,6 +111,7 @@ describe('AppComponent', () => {
         { provide: SettingsService, useValue: {} },
         { provide: IQuestService, useValue: {} },
         { provide: TeamsService, useValue: {} },
+        { provide: IInstantOutcomeTransactionService, useValue: {} },
       ],
     }).compileComponents();
   }));
@@ -161,6 +163,9 @@ describe('AppComponent', () => {
     );
     teamsService = TestBed.get<TeamsService>(
       TeamsService as Type<TeamsService>
+    );
+    instantOutcomeTransactionService = TestBed.get<IInstantOutcomeTransactionService>(
+      IInstantOutcomeTransactionService as Type<IInstantOutcomeTransactionService>
     );
 
     app.ngOnInit();
@@ -219,7 +224,9 @@ describe('AppComponent', () => {
         tokenService,
         datePipe,
         questService,
-        teamsService
+        teamsService,
+        instantOutcomeTransactionService,
+        ntfs
   )
     );
     expect(app.showToolbar).toBeTruthy();

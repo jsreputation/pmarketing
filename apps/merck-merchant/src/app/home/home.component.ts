@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onSalesScan(): void {
-    this.router.navigate(['/qrscanner/order']);
+    this.router.navigate(['/identify-user/order']);
   }
 
   public onRedemption(): void {
@@ -34,6 +34,10 @@ export class HomeComponent implements OnInit {
 
   public onTransactionHistory(): void {
     this.router.navigate(['/transaction-history']);
+  }
+
+  public onUserSignUp(): void {
+    this.router.navigate(['/user-signup']);
   }
 
 }

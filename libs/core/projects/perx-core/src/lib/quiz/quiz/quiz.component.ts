@@ -7,7 +7,7 @@ import {
   Output,
   QueryList,
   SimpleChanges,
-  ViewChildren
+  ViewChildren,
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -17,14 +17,14 @@ import { QuizQuestionComponent } from '../question/question.component';
 @Component({
   selector: 'perx-core-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
+  styleUrls: ['./quiz.component.scss'],
 })
 export class QuizComponent implements OnChanges, OnDestroy {
   @Input('data')
   public data$: Observable<IQuiz>;
 
   @Input()
-  public customTitleColor: ('black' | 'white');
+  public customTitleColor: 'black' | 'white';
 
   @Input()
   public allowPicZoom: boolean = true;
@@ -44,7 +44,8 @@ export class QuizComponent implements OnChanges, OnDestroy {
   @Output()
   public done: EventEmitter<ITracker<IQAnswer>> = new EventEmitter();
 
-  @ViewChildren('questionsList') public questionComponents: QueryList<QuizQuestionComponent>;
+  @ViewChildren('questionsList')
+  public questionComponents: QueryList<QuizQuestionComponent>;
 
   private answersTracker: ITracker<IQAnswer> = {};
 
@@ -54,14 +55,12 @@ export class QuizComponent implements OnChanges, OnDestroy {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.data$ && this.data$) {
-      this.data$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(data => {
-          this.data = data;
-          if (this.data) {
-            this.totalLength.emit(this.data.questions.length);
-          }
-        });
+      this.data$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
+        this.data = data;
+        if (this.data) {
+          this.totalLength.emit(this.data.questions.length);
+        }
+      });
     }
   }
 
@@ -71,8 +70,9 @@ export class QuizComponent implements OnChanges, OnDestroy {
     // console.log('validation', this.questionComponents.map(qc => qc.questionValidation()));
 
     const questionComponentsArr = this.questionComponents.toArray();
-    const done: boolean = (this.questionComponents.length - 1 === this.questionPointer) &&
-            questionComponentsArr[this.questionPointer].questionValidation();
+    const done: boolean =
+      this.questionComponents.length - 1 === this.questionPointer &&
+      questionComponentsArr[this.questionPointer].questionValidation();
     // console.log('done?', done);
     if (done) {
       this.done.emit(this.answersTracker);

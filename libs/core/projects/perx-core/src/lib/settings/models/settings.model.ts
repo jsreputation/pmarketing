@@ -47,6 +47,7 @@ export interface IFlags {
   showPopupCampaign?: boolean;
   showPrizeSetOutcome?: boolean;
   showProgressBarCampaignsOnHomePage?: boolean;
+  showInstantRewardCampaignsOnHomePage?: boolean;
   showQrPageSubtitle?: boolean;
   showQuestCampaignsOnHomePage?: boolean;
   showQuizOnHomePage?: boolean;
@@ -64,6 +65,11 @@ export interface IFlags {
   showVoucherBookingFromRewardsPage?: boolean;
   showBadgesButton?: boolean;
   showOutcomesOnCampaignLandingPage?: boolean;
+  /*Game disable CTA on complete popup and post navigation*/
+  disablePostGameNav?: boolean;
+  chromeless?: boolean;
+  showAdditionalDetailsOnVoucherQR?: boolean;
+  appendRewardName?: boolean;
 }
 
 export interface IRssFeeds {

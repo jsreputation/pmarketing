@@ -7,7 +7,7 @@ import {
   ICampaignService,
   IConfig,
   IFlags,
-  IGameService,
+  IGameService, IInstantOutcomeTransactionService,
   ILoyalty,
   InstantOutcomeService,
   IQuestService,
@@ -18,7 +18,8 @@ import {
   SettingsService,
   TeamsService,
   ThemesService,
-  TokenStorage
+  TokenStorage,
+  NotificationService,
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -58,7 +59,9 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
 
     private loyaltyService: LoyaltyService,
     questService: IQuestService,
-    teamsService: TeamsService
+    teamsService: TeamsService,
+    instantOutcomeTransactionService: IInstantOutcomeTransactionService,
+    notificationService: NotificationService,
   ) {
     super(
       rewardsService,
@@ -79,7 +82,9 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       tokenService,
       datePipe,
       questService,
-      teamsService
+      teamsService,
+      instantOutcomeTransactionService,
+      notificationService,
     );
   }
 

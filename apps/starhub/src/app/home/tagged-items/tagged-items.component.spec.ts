@@ -6,7 +6,8 @@ import {
   IGameService,
   ConfigService,
   RewardsService,
-  StampService
+  StampService,
+  SettingsService
 } from '@perxtech/core';
 
 import { of } from 'rxjs';
@@ -40,6 +41,10 @@ describe('TaggedItemsComponent', () => {
     getCards: () => of()
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
       apiHost: '',
@@ -66,7 +71,8 @@ describe('TaggedItemsComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: StampService, useValue: stampServiceStub }
+        { provide: StampService, useValue: stampServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
     .compileComponents();

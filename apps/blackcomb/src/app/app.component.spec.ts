@@ -3,7 +3,8 @@ import {
   ConfigService,
   ICampaignService,
   ThemesService,
-  TokenStorage
+  TokenStorage,
+  SettingsService
 } from '@perxtech/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -62,6 +63,12 @@ describe('AppComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: ThemesService, useValue: themesServiceStub },
+        {
+          provide: SettingsService,
+          useValue: {
+            getRemoteFlagsSettings: () => of()
+          }
+        }
 
       ]
     }).compileComponents();

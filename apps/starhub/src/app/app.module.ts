@@ -39,17 +39,22 @@ import {
   FeedItemPopupComponent,
   GameServiceModule as PerxGameServiceModule,
   IConfig,
+  InstantOutcomeTransactionServiceModule,
   LanguageService,
   LocationModule,
   LoyaltyModule,
   MerchantsModule,
+  PipeUtilsModule,
+  PrizeSetOutcomeModule as PerxPrizeSetOutcomeModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
   PuzzlesModule,
+  QuestModule as PerxQuestModule,
   RewardPopupComponent,
   RewardsModule,
   SettingsModule,
   StampModule,
+  TeamsServiceModule as PerxTeamsServiceModule,
   TokenStorage,
   UtilsModule,
   VouchersModule
@@ -172,6 +177,7 @@ export const appInit =
     MatBottomSheetModule,
     MatDividerModule,
     MatSnackBarModule,
+    PipeUtilsModule,
     UtilsModule,
     BrowserAnimationsModule,
     ProfileModule,
@@ -188,6 +194,7 @@ export const appInit =
     PerxGameServiceModule.forRoot(),
     PuzzlesModule,
     StampModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     QRCodeModule,
     NgxBarcode6Module,
@@ -202,7 +209,10 @@ export const appInit =
         deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
-    })
+    }),
+    PerxTeamsServiceModule.forRoot(),
+    PerxPrizeSetOutcomeModule,
+    PerxQuestModule.forRoot()
   ],
   entryComponents: [
     CategorySelectComponent,

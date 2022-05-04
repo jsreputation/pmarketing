@@ -1,0 +1,67 @@
+<div class="nearby-page">
+<div class="desktop-filter-container">
+  <div class="desktop-filter">
+     <bdo-desktop-filter isNearbyFilter="true"></bdo-desktop-filter>
+ </div>
+</div>
+<div class="nearby-deals-wrapper">
+  <div class="filter-wrapper">
+    <div class="tag-group">
+      <span class="selected tag tag--nearby"> Nearby</span>
+    </div>
+    <div class="group-filter">
+      <button mat-button class="filter" (click)="filter()">
+        <img src="assets/images/icon-filter.svg" />
+        <span>Filters</span>
+      </button>
+    </div>
+  </div>
+  <h4 class="header">Check out exciting promos near you!</h4>
+  <div class="content-wrapper">
+    <mat-tab-group animationDuration="0ms" [disablePagination]="true" mat-stretch-tabs class="nearby-result-tab" (selectedIndexChange)="tabChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img [src]="locationIcon" />
+          <span class="label-tab">Map</span>
+        </ng-template>
+        <div class="content-wrapper map-content">
+          <bdo-map *ngIf="currentPosition" [rewards]="rewards" [currentPosition]="currentPosition"></bdo-map>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img [src]="catalogueIcon" />
+          <span class="label-tab">Catalogue</span>
+        </ng-template>
+        <ul class="tab-content" id="catalogue">
+          <ng-container *ngIf="rewardsItemModel?.length; else noResult">
+            <bdo-large-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)">
+            </bdo-large-list-item>
+          </ng-container>
+          <ng-template #noResult>
+            <div class="no-result">
+              <bdo-no-result></bdo-no-result>
+            </div>
+          </ng-template>
+        </ul>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img [src]="listIcon" />
+          <span class="label-tab">List</span>
+        </ng-template>
+        <ul class="tab-content">
+          <ng-container *ngIf="rewardsItemModel?.length; else noResult">
+            <bdo-list-item *ngFor="let item of rewardsItemModel" [reward]="item" (click)="selectedItem(item)"></bdo-list-item>
+          </ng-container>
+          <ng-template #noResult>
+            <div class="no-result">
+              <bdo-no-result></bdo-no-result> 
+            </div>
+          </ng-template>
+        </ul>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+</div>

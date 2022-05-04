@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject, } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import {
   catchError,
   filter,
@@ -12,7 +12,7 @@ import {
   take,
   takeLast,
   takeUntil,
-  tap,
+  tap
 } from 'rxjs/operators';
 
 import {
@@ -29,8 +29,12 @@ import {
   IFlags,
   IGame,
   IGameService,
+  IInstantOutcomeTransaction,
+  IInstantOutcomeTransactionService,
   ILoyalty,
   InstantOutcomeService,
+  InstantOutcomeTransactionState,
+  IPopupConfig,
   IPrice,
   IProfile,
   IQuestService,
@@ -39,6 +43,7 @@ import {
   IRssFeedsData,
   ITabConfigExtended,
   ITheme,
+  NotificationService,
   ProfileService,
   RewardPopupComponent,
   RewardsService,
@@ -53,8 +58,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-
-// import { campaigns as mockCampaigns } from '../mock/campaigns.mock';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -74,6 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public stampCampaigns$: Observable<ICampaign[]>;
   public questCampaigns$: Observable<ICampaign[]>;
   public progressCampaigns$: Observable<ICampaign[]>;
+  public instantCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -119,40 +123,36 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
     protected questService: IQuestService,
-    protected teamsService: TeamsService
-  ) { }
+    protected teamsService: TeamsService,
+    protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
+    protected notificationService: NotificationService,
+  ) {}
 
   public ngOnInit(): void {
-    this.configService
-      .readAppConfig<void>()
-      .pipe(
-        tap((config: IConfig<void>) => {
-          if (config.homeAsProgressPage) {
-            this.router.navigate(['/legacy-progress-campaigns']);
-          } else {
-            this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-              if (isAuth && !this.configService.readAppStarted()) {
-                this.configService.setAppStarted();
-                if (config.showPopupCampaign) {
-                  this.fetchPopupCampaigns();
-                }
-              }
-            });
+    forkJoin([
+      this.configService
+        .readAppConfig<void>(),
+      this.settingsService.getRemoteFlagsSettings(),
+    ]).subscribe(([config, flags]) => {
+      if (config.homeAsProgressPage) {
+        this.router.navigate(['/legacy-progress-campaigns']);
+      } else {
+        this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+          if (isAuth && !this.configService.readAppStarted()) {
+            this.configService.setAppStarted();
+            if (config.showPopupCampaign || flags.showPopupCampaign) {
+              this.fetchPopupCampaigns();
+            }
           }
-          this.appConfig = config;
-        }),
-        switchMap(() => this.settingsService.getRemoteFlagsSettings())
-      )
-      .subscribe(
-        (flags: IFlags) => {
-          // todo: create a function to wrap all the rest of the init calls
-          this.appRemoteFlags = flags;
-          this.initCampaign();
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+        });
+      }
+      this.appConfig = config;
+      // todo: create a function to wrap all the rest of the init calls
+      this.appRemoteFlags = flags;
+      this.initCampaign();
+    }, (error) => {
+      console.error(error);
+    });
     this.profileService
       .getCustomProperties()
       .pipe(
@@ -261,6 +261,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (campaign.type === CampaignType.instant) {
+      this.router.navigate([` campaign-welcome/${campaign.id}` ]);
+      return;
+    }
+
     if (campaign.type === 'quest') {
       this.router.navigate([`quest/${campaign.id}`]);
       return;
@@ -313,6 +318,52 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // requires public access for extended implementation
   public fetchPopupCampaigns(): void {
+    this.instantOutcomeTransactionService
+      .getInstantOutcomeTransactions()
+      .pipe(catchError(() => of([])))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((instantOutcomeTransactions: IInstantOutcomeTransaction[]) => {
+        const instantOutcomeTransactionsHaveOutcomes: IInstantOutcomeTransaction[] = instantOutcomeTransactions.filter(
+          (iot) => iot.state === InstantOutcomeTransactionState.issued
+        );
+        const firstComeFirstServeTransaction:
+          | IInstantOutcomeTransaction
+          | undefined = instantOutcomeTransactionsHaveOutcomes.length
+          ? instantOutcomeTransactionsHaveOutcomes[0]
+          : undefined;
+        if (firstComeFirstServeTransaction) {
+          this.campaignService.getCampaign(firstComeFirstServeTransaction.campaignId)
+            .subscribe(campaignRes => {
+              const popupImageURL = campaignRes.displayProperties?.claimPrize?.image?.value.imageUrl || 'assets/png_icon_prize.svg';
+              const enrollPopUpConf: IPopupConfig = {
+                title: campaignRes.displayProperties?.claimPrize?.headline || 'Congrats! You earned a prize!',
+                text: campaignRes.displayProperties?.claimPrize?.subHeadline || 'Claim now before they run out!',
+                buttonTxt: campaignRes.displayProperties?.claimPrize?.buttonText || 'CLAIM PRIZE',
+                imageUrl: popupImageURL,
+                titleBelowImage: true,
+                afterClosedCallBack: {
+                  dialogClosed: (): void => {},
+                  onOkFn: (): void => {
+                    this.instantOutcomeTransactionService
+                      .claimPrize(firstComeFirstServeTransaction.id)
+                      .subscribe((res) => {
+                        if (res) {
+                          this.router.navigate([`/instant-reward-outcomes/${firstComeFirstServeTransaction.id}`]);
+                        } else {
+                          console.log('no instantOutcomeTransaction: ', res);
+                        }
+                      }, error => {
+                        console.log('Error when claim prize: ', error);
+                      });
+                  },
+                },
+              };
+              this.notificationService.addPopup(enrollPopUpConf);
+            });
+        }
+
+      });
+
     this.campaignService
       .getCampaigns({ type: CampaignType.give_reward })
       .pipe(catchError(() => of([])))
@@ -448,6 +499,17 @@ export class HomeComponent implements OnInit, OnDestroy {
           takeLast(1)
         );
       // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
+    }
+
+    if (this.appConfig.showInstantRewardCampaignsOnHomePage || this.appRemoteFlags?.showInstantRewardCampaignsOnHomePage) {
+      this.instantCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.instant })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
     }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(

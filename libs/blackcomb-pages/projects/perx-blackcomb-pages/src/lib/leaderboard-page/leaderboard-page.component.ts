@@ -41,7 +41,13 @@ export class LeaderboardPageComponent {
       const IdN = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
       this.leaderboard$ = this.rankService.getLeaderBoard(IdN);
       this.leaderboard$.pipe(
-        concatMap((leaderboard) => this.rankService.getLeaderBoardRanks(leaderboard.id))
+        concatMap((leaderboard) => {
+          const rankCount = leaderboard?.podiums?.length;
+          const topUsersCount = leaderboard?.podiums[rankCount - 1]?.positionEnd;
+          return (topUsersCount && leaderboard?.usersToShow && topUsersCount > leaderboard.usersToShow) ?
+            this.rankService.getLeaderBoardRanks(leaderboard.id, topUsersCount) :
+            this.rankService.getLeaderBoardRanks(leaderboard.id);
+        })
       ).subscribe((ranksArr) => {
         if (ranksArr) {
           this.leaderboardRanks = ranksArr as UserRanking[];
@@ -77,7 +83,17 @@ export class LeaderboardPageComponent {
         })
       ).subscribe((miniRank: UserRanking | undefined) => {
         if (miniRank) {
-          miniRank.rank = miniRank.rank ? miniRank.rank : this.undefinedRankText;
+          if (miniRank.rank && this.leaderBoardSettings?.podiums?.length > 0) {
+            for (const podium of this.leaderBoardSettings.podiums) {
+              if (miniRank.rank >= podium.positionStart && miniRank.rank <= podium.positionEnd) {
+                miniRank.rank = podium.displayProperties?.rankName ?
+                                `${miniRank.rank} - ${podium.displayProperties.rankName}` : miniRank.rank;
+                break;
+              }
+            }
+          } else {
+            miniRank.rank = miniRank.rank ? miniRank.rank : this.undefinedRankText;
+          }
           this.userRankData = miniRank;
         }
       });

@@ -12,3 +12,20 @@
     text-align: center;
   }
 }
+
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -1rem;
+    right: -1rem;
+    width: 4rem;
+    height: 4rem;
+
+    .mat-icon {
+      color: #606060 !important;
+    }
+  }
+}

@@ -1,5 +1,22 @@
 @import "../../../../custom-theme";
 
+.close-btn-container {
+  position: relative;
+
+  .close-btn {
+    position: absolute;
+    z-index: 2;
+    top: -1.3rem;
+    right: -1.3rem;
+    width: 4rem;
+    height: 4rem;
+
+    .mat-icon {
+      color: #606060;
+    }
+  }
+}
+
 .title-wrapper {
   display: flex;
   justify-content: space-between;

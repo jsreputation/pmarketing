@@ -1,10 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick
-} from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from '../../shared/shared.module';
@@ -56,6 +50,13 @@ describe('ChangeCityComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should leave profileService', fakeAsync(() => {
+    component.cityChangeForm.setValue({ newCity: null });
+    component.onSubmit();
+    tick(50);
+    expect(spyOnProfile).not.toHaveBeenCalled();
+  }));
+
   it('should submit data', fakeAsync(() => {
     const newCity = 'Paris';
     const spyLocation = jest.spyOn(location, 'back');
@@ -79,10 +80,4 @@ describe('ChangeCityComponent', () => {
     expect(spyLog).toHaveBeenCalled();
   }));
 
-  it('should leave profileSerive', fakeAsync(() => {
-    component.cityChangeForm.setValue({ newCity: null });
-    component.onSubmit();
-    tick(50);
-    expect(spyOnProfile).not.toHaveBeenCalled();
-  }));
 });

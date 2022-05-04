@@ -1,3 +1,10 @@
+<div class="close-btn-container" *ngIf="showButton">
+  <button mat-icon-button
+          class="close-btn"
+          (click)="onClose()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <div class="content">
 	<div mat-dialog-title>{{title}}</div>
 	<mat-dialog-content *ngIf="description">

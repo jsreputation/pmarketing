@@ -1,0 +1,53 @@
+<ng-container *ngIf="campaign">
+<div class="thumbnail">
+    <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
+        [attr.alt]="campaign?.name" />
+</div>
+<div class="treat-container" [formGroup]="enrollForm">
+    <h4>
+        ENROLL
+    </h4>
+    <h2>{{campaign.name}}</h2>
+    <a class="navigate-promotion" routerLink="/treat-welcome/{{campaign.id}}">
+        <mat-icon>keyboard_arrow_left</mat-icon> Go to Promotion Details
+    </a>
+    <div class="reminder sun-editor-editable" [innerHTML]="campaign.displayProperties?.enrolmentPage?.body"></div>
+    <div class="note">Please enter the Promo ID sent to your registered email address or mobile number via BDO Deals.</div>
+    <div class="promoID">
+        <div class="title">
+            Promo ID
+        </div>
+        <input type="text" placeholder="e.g. MMSP000001" formControlName="promoId"
+        [className]="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].errors ? 'input-promo error': 'input-promo'">
+        <mat-error *ngIf="enrollForm.controls['promoId'].touched && enrollForm.controls['promoId'].hasError('required')">
+            Promo ID is <strong>required</strong>
+          </mat-error>
+        <mat-error
+            *ngIf="enrollForm.controls['promoId'].hasError('apiError')">
+            {{enrollForm.controls['promoId'].errors.apiError}}
+        </mat-error>
+    </div>
+    <div class="confirm-term">
+        <mat-checkbox class="checkbox" formControlName="tnc"></mat-checkbox>
+        <div class="tnc-container">
+            <div class="confirm-term-content">
+                I hereby agree to be bound by the BDO Credit Card Promo Terms and Conditions.
+                I further agree to maintain my BDO Credit Card account current and in good standing.
+                I also acknowledge that the promo cannot be used in conjunction with any other existing offer.
+            </div>
+            <mat-error *ngIf="enrollForm.controls['tnc'].touched && enrollForm.controls['tnc'].hasError('required')">
+                Agreement is <strong>required</strong>
+            </mat-error>
+        </div>
+    </div>
+    <div class="captcha-container">
+<!--        <re-captcha [siteKey]="captchaKey" (resolved)="captchaResolved($event)" formControlName="captchaReactive"></re-captcha>-->
+        <re-captcha [siteKey]="captchaKey" (resolved)="captchaResolved($event)" formControlName="captchaReactive"></re-captcha>
+    </div>
+    <div class="enroll">
+        <button mat-stroked-button color="primary" class="enroll-button"
+                [disabled]="!enrollForm.valid"
+                (click)="enroll()">Submit</button>
+    </div>
+</div>
+</ng-container>

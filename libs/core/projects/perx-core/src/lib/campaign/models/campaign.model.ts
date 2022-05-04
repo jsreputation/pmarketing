@@ -1,6 +1,8 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
+import { ICategoryTags } from "@perxtech/core";
+import { ITag } from '../../merchants/models/merchants.model';
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
@@ -11,17 +13,48 @@ export interface CampaignDisplayProperties {
   questDetails?: QuestProperties;
   progressDetails?: ProgressProperties;
   teamsDetails?: TeamsProperties;
+  claimPrize?: ClaimPrizeProperties;
+  enrolmentPage?: EnrolmentProperties;
+  buttonBgColour?: string;
+  buttonTextColour?: string;
+  fontColor?: string;
 }
-
+export interface AdditionalSection{
+  headerText: String,
+  bodyText: String,
+}
 export interface CampaignLandingPage {
   body?: { text: string };
   media?: { youtube?: string; bannerImage?: string};
   heading?: { text: string };
+  description?: { text: string };
   buttonText?: { text: string };
   buttonText2?: { text: string };
   subHeading?: { text: string };
   backgroundUrl?: string;
   tnc?: { text: string };
+  additionalSections?: AdditionalSection[];
+  subHeadline?:string;
+}
+export interface ICampaignRule {
+  id:number,
+  name:string,
+  state:string,
+}
+export interface ClaimPrizeProperties {
+  buttonText: string;
+  headline: string;
+  image?: {
+    value: {
+      filename: string;
+      imageUrl: string;
+    }
+  };
+  subHeadline: string;
+}
+
+export interface EnrolmentProperties {
+  body?: string;
 }
 
 export interface QuestProperties {
@@ -83,7 +116,9 @@ export enum CampaignType {
   survey = 'survey',
   invite = 'invite',
   quest = 'quest',
-  progress = 'progress'
+  progress = 'progress',
+  instant = 'instant_outcome',
+  rulegroup = 'rule_group'
 }
 
 export enum CampaignState {
@@ -127,6 +162,11 @@ export interface ICampaign {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   teamSize?: number;
+  categoryTags?:ICategoryTags[];
+  tags?: ITag[];
+  score?: number;
+  miscImages?: { [key: string]: string };
+  enrollableUntil?: Date | null;
 }
 
 export enum CommChannel {
@@ -194,8 +234,17 @@ export interface IBadgeOutcome {
 
 export interface IOperatingHours {
   id: number;
-  // is UTC DateTime from BE, but we'll only use the time portion
-  closesAt: Date;
-  opensAt: Date;
+  closesAt: string;
+  opensAt: string;
   days: number[]; // expects 0 - 6, Sunday - Saturday
+  formattedOffset: string;
+}
+
+export interface IBDOCampaignEnrolment {
+  id: number;
+  campaignId: number;
+  campaignName: string;
+  enrolledAt: Date;
+  enrolmentReference: string;
+  userAccountId: number;
 }

@@ -1,4 +1,5 @@
-<div class="content-container" *ngIf="theme | async as th">
+<div class="content-container" *ngIf="theme | async as th"
+    [ngStyle]="{backgroundImage: 'url(' + th?.properties['--login_page_bg_image'] + ')'}">
     <div class="login-image">
         <div *ngIf="th?.properties['--landing_page_logo'];else nav_logo">
             <img class="logo" [attr.src]="th?.properties['--landing_page_logo']"
@@ -8,7 +9,7 @@
             <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
         </ng-template>
     </div>
-    <div *ngIf="appConfig" class="login-form">
+    <mat-card *ngIf="appConfig" class="login-form mat-elevation-z3">
         <h1>{{'LOGIN_PAGE.TITLE' | translate}}</h1>
         <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
             {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link" [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' |
@@ -38,33 +39,27 @@
                     </mat-form-field>
                 </ng-template>
                 <ng-template #elseBlock>
-                    <div class="mobile-group">
-                        <div class="country-code">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Country Code</mat-label>
-                                <mat-select formControlName="countryCode">
-                                    <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
-                                        <span>{{country.name}} </span>
-                                        <span>+{{country.code}}</span>
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
-                                    {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="mobile-number">
-                            <mat-form-field appearance="fill">
-                                <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
-                                <input autocomplete="tel-local" matInput
-                                    [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
-                                    required [value]="">
-                                <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
-                                    {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
+                    <mat-form-field appearance="fill" class="full-width__input">
+                        <mat-label>Country code</mat-label>
+                        <mat-select formControlName="countryCode">
+                            <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
+                                <span>{{country.name}} </span>
+                                <span>+{{country.code}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
+                            {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="full-width__input">
+                        <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
+                        <input autocomplete="tel-local" matInput
+                            [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
+                            required [value]="">
+                        <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
+                            {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field appearance="fill" class="full-width__input">
                         <mat-label>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
                         <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate"
@@ -107,5 +102,5 @@
                 </div>
             </button>
         </form>
-    </div>
+    </mat-card>
 </div>

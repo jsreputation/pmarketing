@@ -1,0 +1,29 @@
+<div class="container">         
+    <div class="apply-voucher-cont">
+        <ng-container *ngIf="voucher; else applyVoucherBlock">
+            <div class="voucher-bg">
+                <img src="assets/voucher-bg.png"/>
+                <div class="voucher-title">{{voucher?.reward?.name}}</div>
+            </div>     
+            <button mat-stroked-button class="full-width__button remove-btn" (click)="removeVoucher(voucher.id)">{{"ORDER_RESERVE_PAGE.REMOVE_VOUCHER"|translate}}</button>
+        </ng-container>
+        <ng-template #applyVoucherBlock>
+            <button mat-stroked-button class="full-width__button apply-btn" (click)="scanVoucher()">{{"ORDER_RESERVE_PAGE.APPLY_VOUCHER"|translate}}</button>
+        </ng-template>
+        <hr/>
+        <h1>{{"ORDER_RESERVE_PAGE.PAY_BY_COINS"|translate}}</h1>
+        <mat-form-field appearance="fill">
+            <mat-icon matSuffix *ngIf="loyaltyPoints" (click)="revertPoints()">close</mat-icon>
+            <mat-label>{{"ORDER_RESERVE_PAGE.COINS_PAID"|translate}}</mat-label>
+            <input matInput type="number" [(ngModel)]="loyaltyPoints" (ngModelChange)="onPointInputChange()" class="full-width__input" >
+        </mat-form-field>
+        <div *ngIf="loyaltyInputError" class="mat-error">
+            {{loyaltyInputError}}
+        </div>
+        <div class="btn-bottom-fixed">
+            <button mat-raised-button class="full-width__button mat-primary" (click)="onContinue()">{{"ORDER_RESERVE_PAGE.CONTINUE"|translate}}</button>
+            <button mat-stroked-button (click)="onBack()" class="full-width__button btn-transparent">{{"ORDER_RESERVE_PAGE.BACK"|translate}}</button>
+        </div>
+    </div>       
+  </div>
+  

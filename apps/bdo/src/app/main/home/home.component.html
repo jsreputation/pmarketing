@@ -1,0 +1,68 @@
+<div class="homepage">
+  <mat-card class="card no-padding">
+    <h2 class="header">DEALS BASED ON YOUR CARD</h2>
+    <bdo-primary-catalog></bdo-primary-catalog>
+  </mat-card>
+  <mat-card class="card">
+    <h2 class="header">FEATURED DEALS</h2>
+    <bdo-carousel-items [isFeatured]="true" [deals]="featuredDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+  </mat-card>
+  <mat-card class="card secondary-catalog">
+    <h2 class="header">DEALS YOU CAN ENJOY</h2>
+    <p>Promotions that BDO has in store for you!</p>
+    <bdo-secondary-catalog></bdo-secondary-catalog>
+  </mat-card>
+  <mat-card class="card">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--nearby selected">Nearby</span>
+        </div>
+        <span class="action" (click)="navigateToNearByDeals()">
+          View All
+        </span>
+      </div>
+      <p class="description">Find deals that are just right around the corner</p>
+    </div>
+    <div *ngIf="!currentPosition" class="message-wrapper">
+      <img src="assets/images/icon-n-location.svg" alt="">
+      <p class="message">Enable location to view deals near you</p>
+    </div>
+    <bdo-carousel-items *ngIf="nearByDeals.length;" [deals]="nearByDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+    <div *ngIf="currentPosition && !nearByDeals.length;" class="no-result-wrapper">
+      <p class="message">There are no deals near you</p>
+    </div>
+  </mat-card>
+  <mat-card class="card">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--new selected">What's new</span>
+        </div>
+        <span class="action" (click)="navigateToCatalog(null, catalogConfiguration.bdo.tags[0])">
+          View All
+        </span>
+      </div>
+      <p class="description">Learn more about our newest deals for you!</p>
+    </div>
+    <bdo-carousel-items *ngIf="whatsNewDeals.length; else noResultMessage" [deals]="whatsNewDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+  </mat-card>
+  <mat-card class="card">
+    <div class="tagged-header-wrapper">
+      <div class="filter-wrapper">
+        <div class="filter-value">
+          <span class="filter-tag filter-tag--popular selected">Popular</span>
+        </div>
+        <span class="action" (click)="navigateToCatalog(null, catalogConfiguration.bdo.tags[2])">
+          View All
+        </span>
+      </div>
+      <p class="description">Avail of these promos that are popular with others</p>
+    </div>
+    <bdo-carousel-items *ngIf="popularDeals.length; else noResultMessage" [deals]="popularDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+  </mat-card>
+</div>
+
+<ng-template #noResultMessage>
+  <p class="no-item">No result</p>
+</ng-template>

@@ -160,6 +160,9 @@ perx-core--feed-item-popup {
       border-radius: 4px;
       color: $deep-electric-green;
     }
+    .header {
+      min-height: 20.7rem !important;
+    }
   }
 }
 perx-core-popup {
@@ -178,5 +181,16 @@ mat-tab-group {
     .mat-tab-label-container {
       z-index: unset; // https://bugs.webkit.org/s1how_bug.cgi?id=160953
     }
+  }
+}
+
+perx-blackcomb-pages-shake,
+perx-blackcomb-pages-tap,
+perx-blackcomb-pages-scratch,
+perx-blackcomb-pages-spin {
+  button:disabled,
+  button.disabled {
+    background-color: $light-grey!important;
+    color: $medium-grey!important;
   }
 }

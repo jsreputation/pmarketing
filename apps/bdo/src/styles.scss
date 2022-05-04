@@ -1,0 +1,371 @@
+/* You can add global styles to this file, and also import other style files */
+@import './theme/theme.scss';
+@import './theme/fonts.scss';
+@import './theme/variables.scss';
+@import '~suneditor/dist/css/suneditor.min.css';
+@import 'suneditor-overrides';
+
+:root {
+  --font: Roboto;
+  --logo: '';
+  --title: '';
+  --accent: #96289a;
+  --primary: #147dd3;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
+  --header_color: #147dd3;
+  --background: #fafafa;
+  --font_color: #333;
+  --new_font_color: #2e2e2e;
+  --disabled_text_color: #aaaaaa;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font);
+  font-style: normal;
+  background-color: #fafafa;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font, 'Nunito', sans-serif);
+  background-color: var(--background);
+  color: var(--new_font_color);
+}
+
+.content-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+body {
+  background: $light-grey;
+  // color: $dark-grey;
+}
+
+input::placeholder {
+  font-family: var(--font, 'Nunito', sans-serif);
+}
+
+.mat-button-disabled {
+  background-color: $grey-white !important;
+}
+
+.bg-transparent {
+  background: transparent;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.search-result-tab,
+.nearby-deals-wrapper {
+  .mat-tab-label {
+    height: 46px !important;
+    opacity: 1 !important;
+    font-weight: 100;
+  }
+
+  .mat-tab-label-active {
+    color: $medium-blue;
+    border-bottom: 4px solid $medium-orange !important;
+    opacity: 1;
+    font-weight: bold;
+  }
+}
+
+.search-popup {
+  .mat-expansion-panel-body {
+    padding: 0;
+    background: $white;
+  }
+}
+
+.filter-wrapper,
+.treat-welcome,
+.filter-form {
+  .categories-wrapper {
+    .travel-entertaiment
+      .mat-expansion-panel-header:not([class*='mat-expanded']) {
+      border-bottom: none;
+    }
+  }
+
+  .categories-wrapper,
+  .tags-wrapper,
+  .location-wrapper {
+    .mat-expansion-panel-header {
+      .mat-expansion-indicator::after {
+        border-color: $medium-blue !important;
+        border-width: 0 3px 3px 0 !important;
+        vertical-align: super !important;
+        padding: 5px;
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 !important;
+    }
+  }
+
+  .tags-wrapper {
+    .mat-expansion-panel-body {
+      line-height: 40px;
+      padding: 16px 0 !important;
+    }
+
+    .mat-chip-list-wrapper {
+      margin: 12px 0;
+    }
+  }
+
+  .location-wrapper {
+    .inline-checkbox-group {
+      border-bottom: none !important;
+    }
+
+    .location-checkbox-wrapper {
+      .checkbox-item {
+        .mat-expansion-panel-header {
+          border-bottom: none !important;
+        }
+      }
+    }
+  }
+}
+
+.inline-checkbox-group {
+  .checkbox-group-wrapper {
+    .mat-expansion-panel-header {
+      border-top: 0;
+    }
+  }
+}
+
+.checkbox-group-wrapper {
+  .mat-expansion-panel-header {
+    border-top: 1px solid $grey-white;
+  }
+
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none !important;
+  }
+}
+
+.filter-form {
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .tags-wrapper {
+    .mat-expansion-panel-body {
+      padding: 10px;
+    }
+  }
+}
+
+.catalog-page {
+  .mat-form-field-infix {
+    padding: 0;
+    border: none;
+  }
+
+  .mat-select-value,
+  .mat-select-arrow {
+    color: $medium-blue;
+    font-size: 14px;
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.nearby-card-wrapper {
+  .tagged-item {
+    padding-bottom: 0 !important;
+
+    .item {
+      img {
+        height: 100px !important;
+      }
+
+      background: #fff;
+
+      .container {
+        .title {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          height: 39px;
+        }
+      }
+    }
+  }
+}
+
+.filter-dialog-container {
+  height: calc(100vh - 100px);
+  margin-top: 106px !important;
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
+.tag {
+  border-radius: 15px;
+  padding: 5px 12px;
+}
+
+.filter-tag {
+  border-radius: 12px;
+  padding: 5px 10px;
+  min-height: 25px;
+}
+
+.mat-chip.mat-standard-chip.filter-tag,
+.filter-tag,
+.tag {
+  font-size: 12px;
+  background-color: $white;
+  text-transform: uppercase;
+  border: 1px solid $grey;
+  margin: 5px;
+  font-weight: bold;
+
+  &.selected {
+    background-color: $grey;
+    color: $white;
+  }
+
+  &--popular {
+    border: 1px solid $pink;
+    color: $pink;
+
+    &.selected {
+      background-color: $pink;
+      color: $white;
+    }
+  }
+
+  &--new {
+    border: 1px solid $teal;
+    color: $teal;
+
+    &.selected {
+      background-color: $teal;
+      color: $white;
+    }
+  }
+
+  &--nearby {
+    border: 1px solid $purple;
+    color: $purple;
+
+    &.selected {
+      background-color: $purple;
+      color: $white;
+    }
+  }
+
+  &--featured {
+    border: 1px solid $medium-orange;
+    color: $medium-orange;
+
+    &.selected {
+      background-color: $medium-orange;
+      color: $white;
+    }
+  }
+}
+
+.tags-chip {
+  line-height: 40px;
+
+  .mat-chip-list-wrapper {
+    padding: 10px;
+  }
+}
+
+.nearby-deals-wrapper {
+  .mat-tab-body-wrapper {
+    height: calc(100vh - 270px);
+  }
+}
+
+.treat-welcome-page {
+  .treat-welcome-content {
+    .mat-expansion-panel-header {
+      padding: 0 12px !important;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 0 0 10px 0 !important;
+    }
+
+    .mat-expansion-indicator {
+      &::after {
+        border-color: $medium-blue !important;
+        border-width: 0 3px 3px 0 !important;
+        vertical-align: super !important;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+.deal-landing {
+  .card {
+    .container {
+      .description p img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}
+
+bdo-carousel-items {
+  .carousel-cell {
+    cursor: pointer;
+  }
+}
+
+bdo-search-navbar {
+  .search-wrapper {
+    .search-icon {
+      cursor: pointer;
+    }
+  }
+}
+
+a {
+  font-size: 12px !important;
+  color: $grey !important;
+  text-decoration: underline !important;
+
+  &:active {
+    color: $grey !important;
+    text-decoration: underline !important;
+  }
+
+  &:hover {
+    color: $near-black !important;
+    text-decoration: underline !important;
+  }
+
+  &:visited {
+    color: $purple-visited !important;
+    text-decoration: underline !important;
+  }
+}

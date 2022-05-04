@@ -1,33 +1,11 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  Router,
-  NavigationEnd,
-  Event, ActivatedRoute
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit, } from '@angular/core';
+import { ActivatedRoute, Event, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
-import {
-  filter,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
-import {
-  ThemesService,
-  ITheme,
-  Config,
-  ConfigService,
-  IConfig,
-  SettingsService,
-  IFlags,
-  FlagLocalStorageService
-} from '@perxtech/core';
+import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
 import { HomeComponent } from '../home/home.component';
@@ -46,6 +24,7 @@ import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
 import { LeaderboardsComponent } from '../leaderboard/leaderboards.component';
 import { BadgeLandingComponent } from '../badges/badge-landing/badge-landing.component';
+import { combineLatest } from 'rxjs';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -82,8 +61,7 @@ export class LayoutComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
-    private settingsService: SettingsService,
-    private flagLocalStorageService: FlagLocalStorageService
+    private settingsService: SettingsService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -101,7 +79,7 @@ export class LayoutComponent implements OnInit {
     this.configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => this.appConfig = config),
       switchMap(() => this.themesService.getThemeSetting()),
-      map(theme => {
+      map((theme: ITheme) => {
         this.theme = theme;
         const title = (theme.properties ? theme.properties['--title'] : undefined) || '';
         if (title.length > 0) {
@@ -123,22 +101,20 @@ export class LayoutComponent implements OnInit {
         this.initBackArrow(url);
       });
     this.initBackArrow(this.router.url);
-    this.route.queryParams.subscribe((params) => {
+    combineLatest([
+      this.route.queryParams,
+      this.settingsService.getRemoteFlagsSettings()
+    ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
-      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
-
-      if (chromelessFlag) {
-        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      } else if (params && params.flags === '') {
-        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
-      }
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
+      this.showHeader = !chromelessFlag;
     });
   }
 
   public onActivate(ref: any): void {
-
-    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
-    this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
+    if (ref instanceof SignIn2Component) {
+      this.showHeader = false;
+    }
 
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||

@@ -14,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   ConfigService,
-  RewardsService
+  RewardsService,
+  SettingsService,
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
@@ -35,10 +36,12 @@ import { GhostCardComponent } from '../ghosts/card-ghost.component';
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
+
   const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of(rewards),
     getCatalog: () => of(catalogs[0])
   };
+
   const activatedRouteStub = {
     snapshot: {
       queryParamMap: {
@@ -56,6 +59,10 @@ describe('CategoryComponent', () => {
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
+  };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
   };
 
   beforeEach(async(() => {
@@ -80,7 +87,8 @@ describe('CategoryComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
         { provide: MatBottomSheet, useValue: matBottomSheetStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {

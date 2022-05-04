@@ -4,7 +4,7 @@ import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ConfigService, LocationsService } from '@perxtech/core';
+import { ConfigService, LocationsService, SettingsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
@@ -30,6 +30,10 @@ describe('RewardDetailComponent', () => {
     readAppConfig: () => of()
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent],
@@ -41,7 +45,8 @@ describe('RewardDetailComponent', () => {
       providers: [
         { provide: Location, useValue: locationStub },
         { provide: LocationsService, useValue: locationsServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

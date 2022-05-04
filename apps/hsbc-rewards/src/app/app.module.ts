@@ -14,7 +14,7 @@ import {
   ThemesService,
   IConfig,
   TokenStorage,
-  LanguageService, ProfileServiceModule,
+  LanguageService, ProfileServiceModule, InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,6 +61,7 @@ export const setLanguage = (
     ProfileServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     LocationModule,
+    InstantOutcomeTransactionServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

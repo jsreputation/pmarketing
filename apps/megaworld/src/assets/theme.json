@@ -1,0 +1,18 @@
+{
+    "name": "Light",
+    "properties": {
+      "--font": "Roboto",
+      "--logo": "assets/header_logo.png",
+      "--title": "Commonwealth Bank",
+      "--accent": "#FFCC00",
+      "--primary": "#FFFFFF",
+      "--button_text_color": "#000000",
+      "--button_background_color": "#FFCC00",
+      "--header_color": "#FFFFFF",
+      "--background": "#F4F4F4",
+      "--font_color": "#231f20",
+      "--login_background_colour": "#666666",
+      "--surface_colour": "#ffffff",
+      "--popup_background_colour": "#ffffff"
+    }
+}

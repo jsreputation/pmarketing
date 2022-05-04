@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { IGameOutcome, Voucher } from '@perxtech/core';
+import { IGameOutcome, IPrizeSetOutcome, Voucher } from '@perxtech/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameOutcomeService {
-  private vouchers: Voucher[];
+  private vouchers: Voucher[] = [];
   private outcome: IGameOutcome;
+  private prizeSetOutcome: IPrizeSetOutcome | undefined;
 
   public getVouchersRewarded(): Voucher[] {
     return this.vouchers;
@@ -26,5 +27,17 @@ export class GameOutcomeService {
 
   public setOutcome(outcome: IGameOutcome): void {
     this.outcome = outcome;
+  }
+
+  public getPrizeSetOutcome(): IPrizeSetOutcome | undefined {
+    return this.prizeSetOutcome || undefined;
+  }
+
+  public setPrizeSetOutcome(prizeSetOutcome: IPrizeSetOutcome) {
+    this.prizeSetOutcome = prizeSetOutcome;
+  }
+
+  public clearPrizeSetOutcome(): void {
+    this.prizeSetOutcome = undefined;
   }
 }

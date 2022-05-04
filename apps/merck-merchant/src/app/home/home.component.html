@@ -1,28 +1,19 @@
-<app-header showBackButton="false"></app-header>
+<app-header [showBackButton]="false"></app-header>
 
 <div class="container">
   <div class="app-main">
     <div class="button-group">
-      <button
-        mat-flat-button
-        class="full-width__button btn-blue"
-        (click)="onSalesScan()"
-      >
+      <button mat-flat-button class="full-width__button btn-blue" (click)="onSalesScan()">
         {{"HOME.SALES_SCAN"|translate}}
       </button>
-      <button
-        mat-flat-button
-        class="full-width__button btn-hollow-white"
-        (click)="onRedemption()"
-      >
+      <button mat-flat-button class="full-width__button btn-hollow-white" (click)="onRedemption()">
         {{"HOME.REDEMPTION"|translate}}
       </button>
-      <button
-        mat-flat-button
-        class="full-width__button btn-hollow-white"
-        (click)="onTransactionHistory()"
-      >
+      <button mat-flat-button class="full-width__button btn-hollow-white" (click)="onTransactionHistory()">
         {{"HOME.TRANSACTION_HISTORY"|translate}}
+      </button>
+      <button mat-flat-button class="full-width__button btn-hollow-white" (click)="onUserSignUp()">
+        {{"HOME.USER_SIGN_UP"|translate}}
       </button>
       <div class="sales-contact">
         <app-sales-contact></app-sales-contact>
@@ -31,12 +22,8 @@
   </div>
   <div class="logout">
     <div>
-      <button
-        mat-flat-button
-        class="full-width__button btn-transparent"
-        (click)="onLogOut()"
-      >
-      {{"HOME.LOGOUT"|translate}}
+      <button mat-stroked-button color="primary" class="full-width__button btn-transparent" (click)="onLogOut()">
+        {{"HOME.LOGOUT"|translate}}
       </button>
     </div>
   </div>

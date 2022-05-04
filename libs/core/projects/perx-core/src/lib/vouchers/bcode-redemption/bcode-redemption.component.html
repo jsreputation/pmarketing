@@ -8,13 +8,14 @@
       <div class="reward-subtitle" *ngIf="voucher.reward.subtitle">
         {{voucher.reward.subtitle}}
       </div>
+      <div class="voucher-id">ID: {{voucher.id}}</div>
       <div *ngIf="!showAfterInstruction">
         <div class="bcode-container" *ngIf="voucher?.code">
           <span class="bcode">{{voucher.code}}</span>
           <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
         </div>
       </div>
-      <div class="instruction" [innerHtml]="(voucher?.reward?.redemptionText || instructions) | safeHtml"></div>
+      <div class="instruction" *ngIf="voucher?.code" [innerHtml]="(voucher?.reward?.redemptionText || instructions) | safeHtml"></div>
       <div *ngIf="showAfterInstruction">
         <div class="bcode" *ngIf="voucher?.code">{{voucher.code}}</div>
       </div>

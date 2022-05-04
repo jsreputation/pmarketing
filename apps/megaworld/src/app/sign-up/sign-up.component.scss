@@ -1,0 +1,90 @@
+@import "../../mixins";
+
+.content-container {
+  padding: 4rem 0;
+  height: auto!important;
+  @include loginContentContainer;
+  @include multiLineFormFieldError;
+
+  ::ng-deep {
+    &[appearance="standard"],
+    &[appearance="legacy"] {
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.75em 0.75em 0 0.75em !important;
+        background-color: rgba(33, 33, 33, 0.03)!important;
+      }
+
+      .mat-form-field-flex > div {
+        padding-bottom: 0.75em;
+        top: -0.5em;
+
+        span.prefix-spacer {
+          width: 0.3em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .uppercase-first-letter {
+    display: block;
+    text-transform: lowercase;
+  }
+
+  .uppercase-first-letter::first-letter{
+    text-transform: uppercase;
+  }
+}
+
+.sign-up {
+  @include loginCard;
+
+  .red-text {
+    color: red;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      //color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--button_background_color);
+    &:disabled {
+      opacity: 0.45;
+    }
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+
+  .subtitle {
+    @include form-subtitle;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}
+
+.login-image {
+  .logo {
+    width: 100%;
+    max-width: 30rem;
+    max-height: 10rem;
+    height: 100%;
+    object-fit: contain;
+  }
+}

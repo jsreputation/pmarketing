@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators, } from '@angular/forms';
 
 import { AuthenticationService, IProfile, ITheme, NotificationService, ThemesService } from '@perxtech/core';
@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit, PageAppearence {
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
   public theme: ITheme;
+  public currentSelectedLanguage: string = 'en';
 
   public get name(): AbstractControl | null {
     return this.signupForm.get('name');
@@ -49,16 +50,41 @@ export class SignupComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private translate: TranslateService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {
     this.initForm();
     this.getAppToken();
   }
 
   public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
     this.themesService.getThemeSetting().subscribe((theme) => {
       this.theme = theme;
     });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      const phoneParam: string = params.phone;
+      let countryCode, mobileNo;
+      if (phoneParam) {
+        if (phoneParam.startsWith('852')) {
+          countryCode = '852';
+          mobileNo = phoneParam.substring(3);
+        } else if (phoneParam.startsWith('853')) {
+          countryCode = '853';
+          mobileNo = phoneParam.substring(3);
+        } else if (phoneParam.startsWith('86')) {
+          countryCode = '86';
+          mobileNo = phoneParam.substring(2);
+        } else if (phoneParam.startsWith('65')) {
+          countryCode = '65';
+          mobileNo = phoneParam.substring(2);
+        }
+        this.signupForm.controls.countryCode.setValue(countryCode);
+        this.signupForm.controls.mobileNo.setValue(mobileNo);
+      }
+      });
   }
 
   private getAppToken(): void {
@@ -163,5 +189,10 @@ export class SignupComponent implements OnInit, PageAppearence {
 
   public goTermAndCondition(): void {
     this.router.navigateByUrl('/c/tnc');
+  }
+
+  public switchLanguage(): void {
+    this.translate.use(this.currentSelectedLanguage);
+    this.cd.detectChanges();
   }
 }

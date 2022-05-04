@@ -1,6 +1,6 @@
 <div *ngIf="!showAllSnappingSaturdayItems && (rewardsSnapping$ | async) as rewardsSnapping" class="main-container">
-  <h1 class="hide-for-new-ux" *ngIf="rewardsSnapping.length">Snapping Saturday</h1>
-  <h2 class="hide-for-old-ux" *ngIf="rewardsSnapping.length">Snapping Saturday</h2>
+  <h1 class="hide-for-new-ux" *ngIf="rewardsSnapping.length">Snap Treats</h1>
+  <h2 class="hide-for-old-ux" *ngIf="rewardsSnapping.length">Snap Treats</h2>
   <div [@fadeIn]="rewardsSnapping.length" *ngIf="rewardsSnapping.length > 0" infiniteScroll [infiniteScrollDistance]="3"
     [infiniteScrollThrottle]="500" [horizontal]="true" (scrolled)="onRewardsSnappingScroll()" [alwaysCallback]="true"
     [scrollWindow]="false" class="cards">
@@ -18,6 +18,7 @@
           <div class="fine hide-for-old-ux">{{rewardSnapping.merchantName}}</div>
           <h1 class="hide-for-new-ux">{{rewardSnapping.name}}</h1>
           <h2 class="hide-for-new-ux">{{rewardSnapping.merchantName}}</h2>
+          <p class="operating-hours fine" *ngIf="showOperatingHours && rewardSnapping.operatingHours">{{getOperatingHours(rewardSnapping.operatingHours)}}</p>
         </div>
         <div class="icon">
           <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">
@@ -49,6 +50,7 @@
           <div class="fine hide-for-old-ux">{{rewardFeatured.merchantName}}</div>
           <h1 class="hide-for-new-ux">{{rewardFeatured.name}}</h1>
           <h2 class="hide-for-new-ux">{{rewardFeatured.merchantName}}</h2>
+          <p class="operating-hours fine" *ngIf="showOperatingHours && rewardFeatured.operatingHours">{{getOperatingHours(rewardFeatured.operatingHours)}}</p>
         </div>
         <div class="icon">
           <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">

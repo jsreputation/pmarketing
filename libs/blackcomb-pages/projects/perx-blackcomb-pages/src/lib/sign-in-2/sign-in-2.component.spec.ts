@@ -14,6 +14,7 @@ import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Observable, of } from 'rxjs';
 import * as uuid from 'uuid';
 import { SignIn2Component } from './sign-in-2.component';
+import { MatCardModule } from '@angular/material/card';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -74,6 +75,7 @@ describe('SignIn2Component', () => {
         MatFormFieldModule,
         MatInputModule,
         MatSelectModule,
+        MatCardModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatProgressSpinnerModule,

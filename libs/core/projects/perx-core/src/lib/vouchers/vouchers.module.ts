@@ -31,6 +31,7 @@ import {
   PlatformModule
 } from '@angular/cdk/platform';
 import { UrlRedemptionComponent } from './url-redemption/url-redemption.component';
+import { PipeUtilsModule } from '../utils/pipe-utils.module';
 
 export function vouchersServiceFactory(
   http: HttpClient,
@@ -68,7 +69,8 @@ const components = [
     MaterialModule,
     UtilsModule,
     TranslateModule.forChild(),
-    PlatformModule
+    PlatformModule,
+    PipeUtilsModule
   ],
   exports: [
     ...components

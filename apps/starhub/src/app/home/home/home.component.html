@@ -21,7 +21,7 @@
                   profile.customProperties.membership ||
                   profile.customProperties.sub_membership_type">
               <ng-container *ngIf="hubClubDisplay.length > 0">
-               {{hubClubDisplay}} <span class="accessory-icon">
+                {{hubClubDisplay}} <span class="accessory-icon">
                   <mat-icon>keyboard_arrow_right</mat-icon>
                 </span>
               </ng-container>
@@ -34,6 +34,32 @@
           </a>
         </div>
       </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="starsCR && starsLoyalty" class="stars-loyalty">
+      <mat-accordion class=''>
+        <mat-expansion-panel #expansionPanel (opened)="onPanelExpansion()" (closed)="onPanelCollapse()">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <app-stars class="stars-row" [pointsBalance]="starsLoyalty?.pointsBalance"
+              [membershipTierName]="starsLoyalty?.membershipTierName" [nextTierPointsDiff]="starsLoyalty?.nextTierPointsDiff"
+              [expiringPoints]="starsLoyalty?.expiringPoints[0]">
+            </app-stars>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div>
+            <p>Snap up exclusive Saturday treats!</p>
+            <p>Taking part is easy, you’ll get 1 star for each action:</p>
+            <ul>
+              <li>Spin the wheel every Saturday</li>
+              <li>Save a lifestyle rewards deal</li>
+              <li>Play a monthly game at “Play and win” daily</li>
+            </ul>
+            <p>Each month, depending on the total number of stars you’ve collected,
+            redeem exclusive treats on Saturday. It’s first come first served so hurry and start collecting your stars now!</p>
+          </div>
+        </mat-expansion-panel>
+        <button mat-flat-button [routerLink]="[ '/leaderboards']" class="leaderboard" *ngIf="showLeaderboardLinkOnHomePage">Star League</button>
+      </mat-accordion>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
       <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"

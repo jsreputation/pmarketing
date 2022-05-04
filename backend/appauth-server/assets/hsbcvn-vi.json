@@ -108,7 +108,7 @@
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "Bảng xếp hạng",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "NO_LEADER_BOARDS": "No leaderboards here yet!",
     "NO_RANK_INFO": "No ranking information here yet!",
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
@@ -125,7 +125,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Lấy bài kiểm tra",
@@ -164,6 +165,7 @@
     "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu"
   },
   "REDEMPTION": {
+    "HOW_TO_REDEEM_TITLE": "How to Redeem",
     "TITLE": "Nhập mã PIN",
     "DESCRIPTION": "Vui lòng xuất trình màn hình này cho nhân viên thu ngân để nhập mã PIN và đổi phần thưởng của bạn.",
     "WRONG_PIN": "Mã PIN không chính xác",
@@ -258,7 +260,7 @@
     "POINT_EXPIRE": "{điểm} điểm sẽ hết hạn vào {date}",
     "ACCOUNT_EXPIRE": "Hết hạn tài khoản",
     "POINT_TO": "Trỏ tới {nextTierName}",
-    "GAME_TRIES_LEFT": "tries left",
+    "GAME_TRIES_LEFT": "Lượt quay còn lại",
     "ALL": "Tất cả",
     "HUNG_FOOK_TONG": "",
     "BIG_BIG_SHOP": "",
@@ -279,7 +281,8 @@
     "EXPIRY": "Hết hạn vào: {{date}}",
     "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Điều khoản & Điều kiện"
   },
   "REWARD": {
     "GET_VOUCHER": "Nhận Quà Tặng",
@@ -355,7 +358,14 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
-    "INVALID_INVITE_CODE": "Invalid invite code"
+    "INVALID_INVITE_CODE": "Invalid invite code",
+    "TEAM_FULL": "This team is already full",
+    "RESERVATION_EXPIRED": "Your game session has expired, please try again",
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
+    "COULD_NOT_ENROL": "Unable to enrol into campaign",
+    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
+    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
   },
   "MACARON": {
     "BALANCE": "{{amount}} left",

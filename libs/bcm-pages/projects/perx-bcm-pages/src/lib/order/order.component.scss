@@ -1,0 +1,67 @@
+.container {
+
+  .customer-info {
+    text-align: center;
+    padding: 1.5rem;
+
+    p {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 900;
+    }
+
+    small {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.container .read-only {
+  ::ng-deep {
+    .mat-form-field-flex {
+      color: rgba(0, 0, 0, 0.38)!important;
+      background-color: rgba(0, 0, 0, 0.12)!important;
+    }
+  }
+}
+
+.date-container {
+  display: flex;
+  justify-content: center;
+  .date {
+    width: 65%;
+    padding-right: .8rem;
+  }
+  .time {
+    width: 35%;
+  }
+}
+
+.icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: var(--primary);
+  font-size: 1.4rem;
+  margin-bottom: 2.5rem;
+  img {
+    width: 7rem;
+    height: 7rem;
+    margin-bottom: .8rem;
+  }
+}
+
+.btn-container {
+  position: absolute;
+  right: 0;
+  bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 0 2.5rem;
+  box-sizing: border-box;
+  .mat-stroked-button {
+    margin-top: 1.5rem;
+  }
+}

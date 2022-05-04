@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
 import { Observable, Subject, ReplaySubject, AsyncSubject } from 'rxjs';
-import { IReward, ICatalog, IPrice } from './models/reward.model';
+import { IReward, ICatalog, IPrice, ICategoryTags, ISearchSuggestion } from './models/reward.model';
 import { Config } from '../config/config';
 import { map, tap, distinctUntilChanged, take } from 'rxjs/operators';
 
@@ -20,6 +20,7 @@ import {
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../perx-core.models';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { IV4Trending } from './v4-rewards.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class WhistlerRewardsService implements RewardsService {
   constructor(private http: HttpClient, private config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
+
 
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
     switch (rt) {
@@ -229,6 +231,11 @@ export class WhistlerRewardsService implements RewardsService {
     throw new Error('Method not implemented.');
   }
 
+  // @ts-ignore
+  public getRewardsById(ids: number[], pageSize?: number, locale?: string): Observable<IReward[]> {
+      throw new Error('Method not implemented.');
+    }
+
   public getAllCatalogs(): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
   }
@@ -246,12 +253,17 @@ export class WhistlerRewardsService implements RewardsService {
   public getCatalog(id: number): Observable<ICatalog> {
     throw new Error('Method not implemented.');
   }
-
   // @ts-ignore
-  public nearMe(rad: number, lat: number, lng: number): Observable<IReward[]> {
-    throw new Error('Method not implemented.');
+  public getCatalogItems(id: number, page: number, pageSize: number, locale?: string, categoryIds?: number[] | null,
+  // @ts-ignore
+                         tags?: string[] | null, sort?: Sort, sortBy?: string | null): Observable<ICatalogItem[]> {
+      throw new Error('Method not implemented.');
   }
 
+  // @ts-ignore
+  public nearMe(rad: number, lat: number, lng: number,page?: number, pageSize?: number, tags?: string[] | string, categories?: string[] | string): Observable<IReward[]> {
+    throw new Error('Method not implemented.');
+  }
    // @ts-ignore
    public getAllFavoriteRewards(): Observable<IReward[]> {
     throw new Error('Method not implemented.');
@@ -264,6 +276,36 @@ export class WhistlerRewardsService implements RewardsService {
 
   // @ts-ignore
   public unfavoriteReward(rewardId: number): Observable<IReward> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getAllCategories(): Observable<ICategoryTags[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getTrending(): Observable<IV4Trending[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  //@ts-ignore
+  public getRewardsRelated(rewardId: number, pageSize?: number): Observable<IReward[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getSearchHistory(): Observable<IV4SearchHistory[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getSearchSuggestion(query: string): Observable<ISearchSuggestion[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public searchRewards(text: string, page: number, pageSize: number, locale?: string): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
 }

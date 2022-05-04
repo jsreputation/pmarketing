@@ -1,9 +1,23 @@
-<h1 *ngIf="title" mat-dialog-title>{{title}}</h1>
-<div *ngIf="imageUrl" class="img-wrapper">
-	<img [src]="imageUrl"/>
-</div>
-<mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
-<div *ngIf="showButton" class="button-group">
-	<button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close (click)="buttonPressed2()" tabindex="-1">{{buttonTxt2}}</button>
-	<button [ngClass]="ctaButtonClass" mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed(buttonTxt)" tabindex="-1">{{buttonTxt}}</button>
+<div [ngClass]="popupClass" class="popup-container">
+  <div class="close-btn-container" *ngIf="showButton && !hideCloseButton">
+    <button mat-icon-button
+            class="close-btn"
+            (click)="onClose()" tabindex="-1">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="title-wrapper">
+    <h1 *ngIf="title && !titleBelowImage" mat-dialog-title>{{title}}</h1>
+  </div>
+  <div *ngIf="imageUrl" class="img-wrapper">
+    <img [src]="imageUrl"/>
+  </div>
+  <div *ngIf="title && titleBelowImage" class="title-wrapper">
+    <h1 mat-dialog-title>{{title}}</h1>
+  </div>
+  <mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
+  <div *ngIf="showButton" class="button-group">
+    <button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close (click)="buttonPressed2()" tabindex="-1">{{buttonTxt2}}</button>
+    <button [ngClass]="ctaButtonClass" mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed(buttonTxt)" tabindex="-1">{{buttonTxt}}</button>
+  </div>
 </div>

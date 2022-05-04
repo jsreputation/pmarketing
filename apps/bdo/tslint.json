@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "directive-selector": [true, "attribute", "perxtech", "camelCase"],
+    "component-selector": [true, "element", "perxtech", "kebab-case"]
+  }
+}

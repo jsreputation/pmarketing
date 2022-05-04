@@ -11,7 +11,7 @@ import {
   ConfigService,
   GameModule,
   GameServiceModule,
-  IConfig,
+  IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
   LoyaltyModule,
@@ -25,7 +25,7 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule,
+  VouchersModule
 } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -162,7 +162,8 @@ export const setLanguage = (
     }),
     WalletHistoryModule,
     QuestModule.forRoot(),
-    BadgeServiceModule.forRoot()
+    BadgeServiceModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
   ],
   providers: [
     {

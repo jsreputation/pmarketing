@@ -10,8 +10,10 @@ import {
   SettingsService,
   IFlags,
   TransactionDetailType,
-  IGameTransactionHistory,
-  IStampTransactionHistory
+  ICampaignTransactionHistory,
+  ILeaderBoardTransactionHistory,
+  IRuleTransactionHistory,
+  IPurchaseTransactionHistory,
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
 import { map } from 'rxjs/operators';
@@ -83,7 +85,8 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.storeName ? properties.storeName : '';
+            const data = oc(tr).transactionDetails.data() as IPurchaseTransactionHistory;
+            text = properties.storeName ? properties.storeName : (data?.transactionRef ? data.transactionRef : '');
           }
           return of(text);
         };
@@ -92,13 +95,25 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           const properties = oc(tr).transactionDetails.data.properties();
           const transactionType = oc(tr).transactionDetails.type();
           if (properties) {
-            text = properties.productName ? properties.productName : '';
-          } else if (transactionType === TransactionDetailType.game) {
-            const campaignData = (oc(tr).transactionDetails.data() as IGameTransactionHistory);
-            text = campaignData.gameName ? campaignData.gameName : '';
-          } else if (transactionType === TransactionDetailType.stamp) {
-            const campaignData = (oc(tr).transactionDetails.data() as IStampTransactionHistory);
-            text = campaignData.stampCampaignName ? campaignData.stampCampaignName : '';
+            const data = oc(tr).transactionDetails.data() as IPurchaseTransactionHistory;
+            text = properties.productName ? properties.productName :
+            (data?.price ? `${data?.currency ? data.currency : '$' }${data.price} spent` : '');
+          } else if (transactionType === TransactionDetailType.stamp ||
+             transactionType === TransactionDetailType.game ||
+             transactionType === TransactionDetailType.quest ||
+             transactionType === TransactionDetailType.progressCampaign ||
+             transactionType === TransactionDetailType.instantOutcomeCampaign) {
+            const campaignData = (oc(tr).transactionDetails.data() as ICampaignTransactionHistory);
+            text = campaignData.campaignName ? campaignData.campaignName : '';
+          } else if (transactionType === TransactionDetailType.leaderboard) {
+            const leaderboardData = (oc(tr).transactionDetails.data() as ILeaderBoardTransactionHistory);
+            text = leaderboardData.leaderboardName ? leaderboardData.leaderboardName : '';
+          } else if (transactionType === TransactionDetailType.rule) {
+            const ruleData = (oc(tr).transactionDetails.data() as IRuleTransactionHistory);
+            text = ruleData.ruleName ? ruleData.ruleName : '';
+          } else if (transactionType === TransactionDetailType.reward) {
+            const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
+            text = rewardData.rewardName ? rewardData.rewardName : '';
           }
           return of(text);
         };

@@ -1,0 +1,4 @@
+
+APIHOST=https://api.perxtech.io
+IS_WHISTLER=false
+PRODUCTION=true

@@ -5,7 +5,7 @@ import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material/icon';
-import { SettingsService } from '@perxtech/core';
+import { PipeUtilsModule, SettingsService } from '@perxtech/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -39,6 +39,7 @@ describe('RewardComponent', () => {
       declarations: [RewardComponent],
       imports: [
         UtilsModule,
+        PipeUtilsModule,
         MatIconModule
       ],
       providers: [

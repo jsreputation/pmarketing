@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="creditcards-enclosed-filled-fullcolor" transform="translate(19.008 -792.069)">
+    <g id="enclosure-ctablue" transform="translate(-19.008 792.069)">
+      <circle id="enclosure-darkmonochrome" cx="32" cy="32" r="32" fill="#0072d8"/>
+    </g>
+    <g id="icon-cp-creditcard" transform="translate(-8.008 804.069)">
+      <g id="Group_88">
+        <rect id="Rectangle_15" width="42" height="42" fill="none"/>
+      </g>
+      <g id="Group_89" transform="translate(4.474 9.353)">
+        <path id="Path_7304" data-name="Path 7304" d="M34.905,13.7H11.369A4.949,4.949,0,0,0,6.4,18.669v3.037H39.806V18.669A4.848,4.848,0,0,0,34.905,13.7Z" transform="translate(-6.4 -13.7)" fill="#fff"/>
+        <path id="Path_7305" data-name="Path 7305" d="M11.469,41.8H35.005a4.949,4.949,0,0,0,4.969-4.969v-7.69H6.5v7.69A4.949,4.949,0,0,0,11.469,41.8Z" transform="translate(-6.431 -18.476)" fill="#fff"/>
+      </g>
+      <line id="Line_1995" data-name="Line 1995" x2="9" transform="translate(9.382 26.022)" fill="none" stroke="#fdb913" stroke-linecap="round" stroke-width="5"/>
+    </g>
+  </g>
+</svg>

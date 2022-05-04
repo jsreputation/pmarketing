@@ -29,8 +29,10 @@ import {
   ICampaignService,
   IConfig,
   ConfigService,
-  FlagLocalStorageService
+  FlagLocalStorageService,
+  TokenStorage
 } from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
 
 import * as uuid from 'uuid';
 
@@ -62,7 +64,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private notificationService: NotificationService,
     @Inject(PLATFORM_ID) private platformId: object,
-    private flagLocalStorageService: FlagLocalStorageService
+    private flagLocalStorageService: FlagLocalStorageService,
+    private tokenStorage: TokenStorage,
+    private translate: TranslateService
   ) {
     this.preAuth = this.config && this.config.preAuth ? this.config.preAuth : false;
   }
@@ -76,6 +80,12 @@ export class LoadingComponent implements OnInit, OnDestroy {
     (window as any).campaignId = this.campaignId;
     const paramArr: string[] = params.flags && params.flags.split(',');
     const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+    const langCode: string | null = params.lang;
+    if (langCode) {
+      this.tokenStorage.setAppInfoProperty(langCode, 'lang');
+      this.translate.use(langCode);
+    }
+
 
     if (chromelessFlag) {
       this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');

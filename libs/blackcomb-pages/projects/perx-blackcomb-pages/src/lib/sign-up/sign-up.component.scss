@@ -2,6 +2,7 @@
 
 .content-container {
   padding: 4rem 0;
+  height: auto!important;
   @include loginContentContainer;
   @include multiLineFormFieldError;
 
@@ -24,7 +25,16 @@
         }
       }
     }
-  }  
+  }
+
+  .uppercase-first-letter {
+    display: block;
+    text-transform: lowercase;
+  }
+
+  .uppercase-first-letter::first-letter{
+    text-transform: uppercase;
+  }
 }
 
 .sign-up {
@@ -56,28 +66,6 @@
     .full-width__input {
       width: 100%;
       margin-top: 0;
-    }
-
-    .mobile-group {
-      display: flex;
-      flex-direction: row;
-
-      .country-code {
-        width: 10rem;
-        margin-right: 1rem;
-
-        .mat-form-field {
-          width: 100%;
-        }
-      }
-
-      .mobile-number {
-        width: 100%;
-
-        .mat-form-field {
-          width: 100%;
-        }
-      }
     }
   }
 

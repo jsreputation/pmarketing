@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mc-root',
@@ -68,15 +69,15 @@ export class AppComponent implements OnInit {
       this.store.setAppInfoProperty(change.lang, 'merck-customer');
       this.translateService.getTranslation(change.lang);
     });
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<ITheme>().pipe(
+      tap((config: IConfig<ITheme>) => {
         this.preAuth = config.preAuth as boolean;
         if (config.appVersion) {
           (window as any).PERX_APP_VERSION = config.appVersion;
         }
-      }
-    );
-    this.themesService.getThemeSetting().subscribe((theme) => {
+      }),
+      switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+    ).subscribe((theme) => {
       this.theme = theme;
     });
     if (!this.preAuth) {
@@ -103,7 +104,7 @@ export class AppComponent implements OnInit {
         pageTitle: ''
       };
     }
-    this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
+    this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_backward' : '';
   }
 
   public onLeftActionClick(): void {

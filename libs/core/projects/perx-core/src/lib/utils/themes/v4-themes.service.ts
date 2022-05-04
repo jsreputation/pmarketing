@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
-import { map, catchError, shareReplay } from 'rxjs/operators';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { ThemesService } from './themes.service';
-import { ITheme, IThemeV4ApiProperties, ThemeJsonApiItem, ThemeJsonApiItemPayLoad } from './themes.model';
-import { LIGHT } from './themes.model';
+import { ITheme, IThemeV4ApiProperties, LIGHT, ThemeJsonApiItem, ThemeJsonApiItemPayLoad } from './themes.model';
 import { IConfig } from '../../config/models/config.model';
 import { ConfigService } from '../../config/config.service';
 import { TokenStorage } from '../storage/token-storage.service';
@@ -46,7 +45,8 @@ export class V4ThemesService extends ThemesService {
       responseFallback = this.http.get<ITheme>(`${config.baseHref}assets/theme.json`);
     }
 
-    const appToken = this.tokenStorage.getAppInfoProperty('appAccessToken') as string;
+    const appToken = (this.tokenStorage.getAppInfoProperty('appAccessToken') ||
+                      this.tokenStorage.getAppInfoProperty('userAccessToken')) as string;
     const contentHeader: HttpHeaders = new HttpHeaders({ Authorization: `Bearer ${appToken}` });
     const response = this.httpBypass.get<ThemeJsonApiItemPayLoad<IThemeV4ApiProperties>>(
       this.themeSettingEndpoint,
@@ -86,9 +86,10 @@ export class V4ThemesService extends ThemesService {
         '--header_color': settingValues.header_color,
         '--background': settingValues.app_bg_color,
         '--login_background_colour': settingValues.login_page_bg_color,
-        '--font_color': '#231f20',
+        '--font_color': settingValues.font_color || '#231f20',
         '--surface_colour': '#ffffff',
-        '--popup_background_colour': '#ffffff'
+        '--popup_background_colour': '#ffffff',
+        '--login_page_bg_image': settingValues?.login_page_bg_image ? settingValues?.login_page_bg_image : ''
       }
     };
   }

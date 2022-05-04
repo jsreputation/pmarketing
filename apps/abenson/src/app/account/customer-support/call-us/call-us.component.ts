@@ -7,12 +7,15 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./call-us.component.scss']
 })
 export class CallUsComponent {
+  public showButton: boolean = true;
 
   constructor(
     private dialogRef: MatDialogRef<CallUsComponent>,
-  ) {}
+  ) {
+  }
 
   public back(): void {
     this.dialogRef.close(false);
   }
+
 }

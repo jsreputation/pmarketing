@@ -104,12 +104,19 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
-    "INVALID_INVITE_CODE": "Invalid invite code"
+    "INVALID_INVITE_CODE": "Invalid invite code",
+    "TEAM_FULL": "This team is already full",
+    "RESERVATION_EXPIRED": "Your game session has expired, please try again",
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
+    "COULD_NOT_ENROL": "Unable to enrol into campaign",
+    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
+    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "LEADERBOARD",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "NO_LEADER_BOARDS": "No leaderboards here yet!",
     "NO_RANK_INFO": "No ranking information here yet!",
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
@@ -126,7 +133,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",

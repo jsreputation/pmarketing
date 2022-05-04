@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { IRewardConfirmComponentParam } from '../reward-detail/reward-detail.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reward-confirm',
@@ -17,5 +17,4 @@ export class RewardConfirmComponent {
   public closeDialog(result: boolean): void {
     this.dialogRef.close(result);
   }
-
 }

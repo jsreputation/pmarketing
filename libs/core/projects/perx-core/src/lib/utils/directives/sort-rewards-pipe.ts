@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {IReward} from '../../rewards/models/reward.model';
+import { IReward } from '../../rewards/models/reward.model';
 
 export enum SortingMode {
   latest = 'Latest',
@@ -18,11 +18,12 @@ export class SortRewardsPipe implements PipeTransform {
   public transform(sortableItems: Observable<IReward[]>, mode?: SortingMode): Observable<IReward[]> {
     return sortableItems.pipe(
       map(sortItems => {
+        // without specifying the compare function by default it will infer from id, which is not intended
         if (mode === SortingMode.az) {
-          return sortItems.sort();
+          return sortItems.sort((a, b) => a.name < b.name ? -1 : 1);
         }
         if (mode === SortingMode.za) {
-          return sortItems.sort().reverse();
+          return sortItems.sort((a, b) => a.name > b.name ? -1 : 1);
         }
         return sortItems.sort((a, b) => {
           if (mode === SortingMode.latest) {

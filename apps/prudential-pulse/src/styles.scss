@@ -1,0 +1,602 @@
+/* You can add global styles to this file, and also import other style files */
+// @import ~@angular/material/theming;
+@import './custom-theme.scss';
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+:root {
+  --font: Roboto;
+  --logo: '';
+  --title: '';
+  --accent: #96289a;
+  --primary: #147dd3;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
+  --header_color: #147dd3;
+  --background: #fafafa;
+  --font_color: #333;
+  --disabled_text_color: #aaaaaa;
+  --main-red: #ed1b2e;
+  --ribbon-redeemed: #fff;
+  --ribbon-issued: #ed1b2e;
+  --ribbon-redeemed-expired: #b4c0cc;
+  --light_grey: #5c6e80;
+  --dark_grey: #283542;
+  --tab-red: #DA3738;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font);
+  font-style: normal;
+  background-color: #fafafa;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--font_color);
+}
+
+.mat-dialog-container {
+  background-color: var(--popup_background_colour) !important;
+  padding: 16px !important;
+}
+
+button {
+  background-color: var(--button_background_color);
+  color: var(--button_text_color);
+}
+
+button:disabled {
+  background-color: var(--disabled_text_color) !important;
+  color: white !important;
+}
+
+button.mat-primary {
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
+}
+
+.mat-accent {
+  color: var(--accent) !important;
+}
+
+button.mat-accent {
+  background-color: var(--accent) !important;
+  color: var(--button_text_color) !important;
+}
+
+button.mat-default {
+  background-color: var(--background) !important;
+  color: var(--font_color) !important;
+}
+
+button.mat-stroked-button {
+  background-color: white !important;
+  color: var(--accent) !important;
+}
+
+.mat-toolbar {
+  background-color: var(--header_color) !important;
+}
+
+.actions-container {
+  background-color: transparent;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 6rem;
+  padding: 1rem 1.2rem;
+  box-sizing: border-box;
+  text-align: center;
+
+  button {
+    width: 100%;
+    margin: auto;
+    height: 100%;
+    padding: 0;
+    text-transform: uppercase;
+  }
+}
+
+.backArrow {
+  color: var(--accent);
+}
+
+.toolbar {
+  padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
+}
+
+.logoWrapper {
+  height: 100%;
+
+  .logo {
+    height: 100%;
+  }
+}
+
+mat-tab-group {
+  mat-tab-header {
+    .mat-tab-label-container {
+      z-index: unset; // https://bugs.webkit.org/s1how_bug.cgi?id=160953
+    }
+  }
+}
+
+mat-progress-bar .mat-progress-bar-fill::after {
+  background-color: var(--primary);
+}
+
+.custom-popup-class {
+  h1,
+  .mat-dialog-content {
+    text-align: left !important;
+  }
+}
+
+.rewards-collection {
+  .title {
+    font-weight: bold !important
+  }
+
+  .mat-tab-header {
+    margin: 0 1.6rem;
+  }
+
+  .card-collection-container,
+  .drag-scroll-content {
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+    }
+  }
+
+  perx-core-rewards-list-tabbed {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: var(--main-red) !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: var(--main-red) !important;
+          opacity: 1;
+        }
+      }
+
+      .reward-preview-details {
+        .description {
+          color: #666666 !important;
+        }
+      }
+    }
+
+    perx-core-rewards-list {
+      .mat-card {
+        .reward-preview-details {
+            padding-right: 0.8rem !important;
+        }
+      }
+    }
+  }
+
+  perx-core-rewards-collection {
+    .card-collection-container {
+      mat-card {
+        width: calc(192px - 32px) !important;
+        max-width: calc(192px - 32px) !important;
+        min-width: calc(192px - 32px) !important;
+
+        .mat-card-image {
+          height: 84px !important;
+        }
+      }
+    }
+  }
+}
+
+.campaign-list {
+  .campaigns {
+    .title {
+      font-weight: 700 !important
+    }
+
+    mat-card {
+      .img-wrapper {
+        height: 144px !important;
+      }
+    }
+  }
+}
+
+.catalogs {
+  .title {
+    font-weight: bold !important
+  }
+
+  mat-card {
+    .mat-card-image {
+      height: 128px !important;
+    }
+  }
+
+  .main-container {
+    .cards {
+      &::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
+      }
+    }
+  }
+}
+
+.game-container {
+  perx-blackcomb-home {
+    .home-qr-button {
+      border-radius: 14px;
+      padding: 8px 20px 8px 21px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+    perx-blackcomb-games-collection,
+    perx-blackcomb-pages-campaigns-collection {
+      .flex-for-button {
+        button {
+          border-radius: 24px;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-campaign-landing-page,
+  perx-blackcomb-quiz,
+  perx-blackcomb-pages-quiz-results,
+  perx-blackcomb-pages-progress-campaign {
+    .bottom-nav-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-blackcomb-redeem {
+    .button-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-blackcomb-reward-details,
+  perx-blackcomb-voucher-detail {
+    .actions-container {
+      button {
+        border-radius: 24px;
+      }
+    }
+  }
+
+  perx-blackcomb-pages-game,
+  perx-blackcomb-stamp-card {
+    .game-footer {
+      button {
+        border-radius: 24px !important;
+      }
+    }
+  }
+
+  perx-blackcomb-pages-quest {
+    .bottom-toolbar button {
+      border-radius: 24px !important;
+    }
+  }
+
+  perx-blackcomb-survey {
+    perx-core-survey {
+      .survey-container {
+        formly-field-stepper {
+          mat-progress-bar {
+            .mat-progress-bar-buffer {
+              background-color: #ffcdd2 !important;
+            }
+
+            .mat-progress-bar-fill {
+              &::after {
+                background-color: var(--main-red) !important;
+              }
+            }
+          }
+
+          mat-radio-button {
+            &.mat-radio-checked {
+              .mat-radio-outer-circle {
+                border-color: var(--main-red) !important;
+              }
+              .mat-radio-inner-circle {
+                background-color: var(--main-red) !important;
+              }
+            }
+          }
+
+          mat-checkbox {
+            &.mat-checkbox-checked {
+              .mat-checkbox-background {
+                background-color: var(--main-red) !important;
+              }
+
+              &:not(.mat-checkbox-disabled) .mat-ripple-element,
+              &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+                background: var(--main-red) !important;
+              }
+
+              .mat-checkbox-background,
+              .mat-checkbox-frame {
+                border-color: #ed1b2e;
+              }
+            }
+
+            .mat-checkbox-inner-container {
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+            }
+
+            .mat-checkbox-background,
+            .mat-checkbox-frame {
+              border-radius: 100% !important;
+              border-color: rgba(0, 0, 0, 0.54);
+            }
+
+            .mat-checkbox-background {
+              svg {
+                width: 85%;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        .button-flex-wrapper {
+          button {
+            border-radius: 24px;
+          }
+        }
+        .choice-content.selected {
+          border: none !important;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-quiz {
+    .quiz-main-container {
+      .quiz-page {
+        mat-progress-bar {
+          .mat-progress-bar-buffer {
+            background-color: #ffcdd2 !important;
+          }
+
+          .mat-progress-bar-fill {
+            &::after {
+              background-color: var(--main-red) !important;
+            }
+          }
+        }
+
+        mat-radio-button {
+          &.mat-radio-checked {
+            .mat-radio-outer-circle {
+              border-color: var(--main-red) !important;
+            }
+            .mat-radio-inner-circle {
+              background-color: var(--main-red) !important;
+            }
+          }
+        }
+
+        mat-checkbox {
+          &.mat-checkbox-checked {
+            .mat-checkbox-background {
+              background-color: var(--main-red) !important;
+            }
+
+            &:not(.mat-checkbox-disabled) .mat-ripple-element,
+            &:active:not(.mat-checkbox-disabled) .mat-ripple-element {
+              background: var(--main-red) !important;
+            }
+
+            .mat-checkbox-background,
+            .mat-checkbox-frame {
+              border-color: #ed1b2e;
+              background: #ed1b2e;
+            }
+          }
+
+          .mat-checkbox-inner-container {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+          }
+
+          .mat-checkbox-background,
+          .mat-checkbox-frame {
+            border-radius: 100% !important;
+            border-color: rgba(0, 0, 0, 0.54);
+          }
+
+          .mat-checkbox-background {
+            svg {
+              width: 85%;
+              margin: auto;
+            }
+          }
+        }
+        .choice-content.selected {
+          border: none !important;
+        }
+      }
+    }
+  }
+
+  perx-blackcomb-pages-history {
+    .card-list-container {
+      mat-card {
+        .voucher-content {
+          .ribbon {
+            &.redeemed,
+            &.expired {
+              background-color: var(--ribbon-redeemed-expired);
+              color: var(--button_text_color);
+            }
+
+            &.issued {
+              background-color: var(--ribbon-issued);
+              color: var(--button_text_color);
+            }
+          }
+        }
+      }
+    }
+
+    .tab-group__content {
+        > h1:first-child {
+        padding-top: 2rem;
+        font-weight: bold !important;
+      }
+    }
+  }
+
+  perx-blackcomb-pages-progress-campaign,
+  badge-landing,
+  perx-blackcomb-pages-leaderboard-page {
+    .mat-tab-group {
+      .mat-ink-bar {
+        background-color: var(--main-red) !important;
+      }
+
+      .mat-tab-labels {
+        .mat-tab-label-active {
+          color: var(--main-red) !important;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+perx-blackcomb-pages-campaigns-collection,
+perx-blackcomb-games-collection {
+  .see-button {
+    background-color: transparent !important;
+    color: #8ea0b2 !important;
+    .mat-button-ripple {
+      display: none !important;
+    }
+  }
+  .see-less:after {
+    content: '\e5ce';
+  }
+  .see-more:after {
+    content: '\e5cf';
+  }
+  .see-less:after,
+  .see-more:after {
+    font-family: 'Material Icons';
+    font-size: 16px;
+    vertical-align: bottom;
+  }
+}
+
+perx-blackcomb-pages-account {
+  .mat-nav-list {
+    .mat-list-item{
+      font-size: 14px !important;
+    }
+  }
+}
+
+mat-dialog-container {
+  border-radius: 12px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+
+  perx-core-popup {
+    .popup-container {
+      margin: 16px;
+    }
+
+    .title-wrapper {
+      .mat-dialog-title {
+        font-weight: 500 !important;
+        font-size: 2rem !important;
+        line-height: 1.8rem !important;
+        color: var(--dark_grey) !important;
+
+        margin: 0 0 8px !important;
+      }
+    }
+
+    mat-dialog-content {
+      font-weight: normal !important;
+      font-size: 1.6rem !important;
+      line-height: 2.1rem !important;
+      color: var(--dark_grey) !important;
+    }
+
+    .button-group {
+      button {
+        border-radius: 2.4rem !important;
+      }
+    }
+  }
+
+  perx-core-badge-detail-popup {
+    button {
+      border-radius: 2.4rem !important;
+    }
+  }
+}
+
+.cdk-overlay-pane {
+  @media (min-width: 360px) and (max-width: 375px) {
+    width: calc(100% - 80px);
+    max-width: 100vw !important;
+    min-width: calc(100% - 80px) !important;
+  }
+}
+
+.mat-card {
+  border-radius: 12px !important;
+}
+
+.loading-spin {
+  .mat-progress-spinner circle {
+    stroke: var(--main-red);
+  }
+}
+
+perx-blackcomb-pages-leaderboards {
+  .leaderboard-list-container {
+    > h1:first-child {
+        font-weight: bold !important;
+    }
+  }
+}
+
+perx-blackcomb-pages-wallet {
+  .tab-group__content {
+    h1 {
+      font-weight: bold !important;
+    }
+  }
+}
+
+drag-scroll .drag-scroll-content {
+  white-space: unset !important;
+}

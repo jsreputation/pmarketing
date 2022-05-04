@@ -1,0 +1,23 @@
+<svg id="grocery-enclosed-filled-fullcolor" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect id="Rectangle_17952" data-name="Rectangle 17952" width="64" height="64" rx="32" fill="#0072d8"/>
+  <g id="Group_12528" data-name="Group 12528" transform="translate(9.366 12.488)">
+    <g id="Group_15900" data-name="Group 15900" transform="translate(12.149 5.686)">
+      <rect id="Rectangle_20875" data-name="Rectangle 20875" width="8.086" height="10.034" rx="4" fill="#fdb913"/>
+    </g>
+    <g id="Group_15901" data-name="Group 15901" transform="translate(22.752 7.558)">
+      <rect id="Rectangle_20876" data-name="Rectangle 20876" width="9.89" height="9.806" rx="3.163" fill="#fdb913"/>
+    </g>
+    <path id="Path_6667" data-name="Path 6667" d="M750.371,2391.056h28.642l-4.168,13.41h-21.33Z" transform="translate(-741.296 -2378.107)" fill="#fff"/>
+    <rect id="Rectangle_20273" data-name="Rectangle 20273" width="43.707" height="43.707" transform="translate(0)" fill="none"/>
+    <g id="Group_15903" data-name="Group 15903" transform="translate(3.894 7.955)">
+      <path id="Path_6668" data-name="Path 6668" d="M774.475,2402.918l2.971-10.9H751.464l1.944,10.9Z" transform="translate(-745.082 -2385.967)" fill="#fff"/>
+      <path id="Path_6669" data-name="Path 6669" d="M751.158,2387.508a1.213,1.213,0,0,0-1.215-1H746.91a1.21,1.21,0,0,0-1.253,1.166h0a1.211,1.211,0,0,0,1.165,1.255h2.111l.214,1.2h2.464Z" transform="translate(-745.656 -2386.512)" fill="#fff"/>
+    </g>
+    <g id="Group_15904" data-name="Group 15904" transform="translate(7.385 11.581)">
+      <path id="Path_6670" data-name="Path 6670" d="M751.464,2392.022l1.944,10.9h21.068l2.971-10.9Z" transform="translate(-748.573 -2389.593)" fill="none"/>
+      <path id="Path_6671" data-name="Path 6671" d="M776.832,2404.665l3.633-13.318a1.213,1.213,0,0,0-.847-1.489h0a1.216,1.216,0,0,0-.321-.044h-28v0h-2.464l2.376,13.318.459,2.427h23.993A1.213,1.213,0,0,0,776.832,2404.665Zm-23.164-1.529-1.944-10.9h25.983l-2.971,10.9Z" transform="translate(-748.833 -2389.811)" fill="#fff"/>
+    </g>
+    <circle id="Ellipse_1978" data-name="Ellipse 1978" cx="3.435" cy="3.435" r="3.435" transform="translate(24.881 30.203)" fill="#fff"/>
+    <circle id="Ellipse_1979" data-name="Ellipse 1979" cx="3.435" cy="3.435" r="3.435" transform="translate(13.16 30.203)" fill="#fff"/>
+  </g>
+</svg>

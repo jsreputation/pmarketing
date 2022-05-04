@@ -1,0 +1,51 @@
+<app-header [showBackButton]="true"></app-header>
+<div class="main-container">
+    <mat-tab-group mat-stretch-tabs class="tabs" (selectedTabChange)="onTabChange($event)">
+        <mat-tab [label]="qrCodeTxt">
+         <perx-bcm-pages-qrscanner [enableScan]="enableScan"></perx-bcm-pages-qrscanner>
+        </mat-tab>
+        <mat-tab [label]="mobileNumberTxt">
+            <div>
+                <form
+                [formGroup]="identifyUserForm"
+                (ngSubmit)="onSubmit()">
+                <mat-form-field class="full-width__input">
+                    <mat-select formControlName="countryCode">
+                        <mat-option default value="852">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_HONGKONG' | translate}}</ng-container>(+852)
+                        </mat-option>
+                        <mat-option value="853">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_MACAU' | translate}}</ng-container> (+853)
+                        </mat-option>
+                        <mat-option value="86">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_CHINA' | translate}}</ng-container> (+86)
+                        </mat-option>
+                        <mat-option value="65">
+                            <ng-container>{{'IDENTIFY_USER.COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="full-width__input">
+                    <mat-label>{{"IDENTIFY_USER.MOBILE_NUMBER"|translate}}</mat-label>
+                    <input
+                    matInput
+                    formControlName="mobileNumber"
+                    required>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
+                        {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
+                        Please enter a valid number 
+                    </mat-error>
+                </mat-form-field>
+                <button
+                    mat-raised-button
+                    [disabled]="!identifyUserForm.valid"
+                    class="full-width__button mat-primary">
+                    {{ "IDENTIFY_USER.CONFIRM" | translate }}
+                </button>
+                </form>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>

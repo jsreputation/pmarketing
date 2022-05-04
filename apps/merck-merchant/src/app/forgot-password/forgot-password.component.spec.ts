@@ -1,16 +1,7 @@
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,9 +11,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { IMerchantAdminService } from '@perxtech/core';
+import { IMerchantAdminService, ThemesService } from '@perxtech/core';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
+import { MatCardModule } from '@angular/material/card';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -30,6 +22,10 @@ describe('ForgotPasswordComponent', () => {
 
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     forgotPassword: () => of(),
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -45,11 +41,13 @@ describe('ForgotPasswordComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatRippleModule,
+        MatCardModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot()
       ],
       providers: [
         { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();
