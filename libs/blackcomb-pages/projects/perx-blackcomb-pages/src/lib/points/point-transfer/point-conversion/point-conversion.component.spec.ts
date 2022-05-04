@@ -87,7 +87,7 @@ describe('PointConversionComponent', () => {
     expect(loyaltyServiceCall).toHaveBeenCalled();
     fixture.detectChanges();
 
-    const arrowSelectButton = fixture.debugElement.query(By.css('.mat-select-arrow-wrapper')).nativeElement;
+    const arrowSelectButton = fixture.debugElement.query(By.css('.source-dropdown .mat-select-arrow-wrapper')).nativeElement;
     arrowSelectButton.click();
     fixture.detectChanges();
 
@@ -102,6 +102,43 @@ describe('PointConversionComponent', () => {
 
     const destintionLoyaltyPgmList = fixture.debugElement.queryAll(By.css('.mat-option-text'));
     expect(destintionLoyaltyPgmList.length).toBeTruthy();
+  });
+
+  it('should enable the submit button when all field valid', () => {
+    spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
+    spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const fromArrowButton = fixture.debugElement.query(By.css('.source-dropdown .mat-select-arrow-wrapper')).nativeElement;
+    fromArrowButton.click();
+    fixture.detectChanges();
+
+    const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+    listLoyaltyOption[1].nativeElement.click();
+    fixture.detectChanges();
+
+
+    const toArrowFieldButton = fixture.debugElement.query(By.css('.destination-dropdown .mat-select-arrow-wrapper'));
+    toArrowFieldButton.nativeElement.click();
+    fixture.detectChanges();
+
+    component.onDestinationChanged({
+      isUserInput: false,
+      source: { value: component.destintionLoyaltyProgramList[0].value }
+    } as MatOptionSelectionChange);
+
+    const inputPointTransfer = fixture.debugElement.query(By.css('.point-transfer-value')).nativeElement;
+    const keyUpEvent = new KeyboardEvent('keyup', {
+      bubbles : true, cancelable : true, shiftKey : false
+    });
+    inputPointTransfer.value = 10;
+    inputPointTransfer.dispatchEvent(keyUpEvent);
+    fixture.detectChanges();
+
+    const buttonSubmit = fixture.debugElement.query(By.css('.submit-btn')).nativeElement;
+    expect(buttonSubmit.disabled).toBeFalsy();
   });
 
 });
