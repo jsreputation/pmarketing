@@ -20,6 +20,7 @@ import {
   SettingsService,
   IFlags,
   BadgeService, ICustomProperties, NotificationService,
+  FlagLocalStorageService
 } from '@perxtech/core';
 import { AccountComponent as BCPAccountComponent} from '@perxtech/blackcomb-pages';
 import { HttpClient } from '@angular/common/http';
@@ -55,7 +56,8 @@ export class AccountComponent extends BCPAccountComponent implements OnInit {
      settingsService: SettingsService,
      badgeService: BadgeService,
      private http: HttpClient,
-     private notificationService: NotificationService
+     private notificationService: NotificationService,
+     protected flagLocalStorageService: FlagLocalStorageService
   ) {
     super(
       config,
@@ -67,7 +69,8 @@ export class AccountComponent extends BCPAccountComponent implements OnInit {
       authenticationService,
       themesService,
       settingsService,
-      badgeService
+      badgeService,
+      flagLocalStorageService
     );
     this.preAuth = config.preAuth || false;
   }
