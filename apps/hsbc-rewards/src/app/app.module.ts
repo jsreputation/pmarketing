@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
-  RewardsModule,
+  RewardsServiceModule,
   ProfileModule,
   LoyaltyModule,
   LocationModule,
@@ -56,7 +56,7 @@ export const setLanguage = (
     HttpClientModule,
     AuthenticationModule,
     MerchantsModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     ProfileModule,
     ProfileServiceModule.forRoot(),
     LoyaltyModule.forRoot(),

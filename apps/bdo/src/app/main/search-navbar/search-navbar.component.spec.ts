@@ -1,4 +1,4 @@
-import { ConfigModule, RewardsModule, RewardsService } from '@perxtech/core';
+import { ConfigModule, RewardsModule, RewardsService, RewardsServiceModule } from '@perxtech/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -29,7 +29,7 @@ describe('SearchNavbarComponent', () => {
         MatExpansionModule,
         RewardsModule,
         ConfigModule.forRoot({}),
-        RewardsModule.forRoot()
+        RewardsServiceModule.forRoot()
       ],
       providers: [
         { provide: RewardsService, useValue: rewardServiceStub },

@@ -212,6 +212,7 @@ export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transact
  * Rewards
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
+export { RewardsServiceModule } from './lib/rewards/rewards.service.module';
 export { RewardsService } from './lib/rewards/rewards.service';
 export {
   IReward,

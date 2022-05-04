@@ -10,7 +10,7 @@ import { SearchNavbarComponent } from './search-navbar/search-navbar.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NoResultComponent } from './result/no-result/no-result.component';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfigModule, RewardsService, RewardsModule } from '@perxtech/core';
+import { ConfigModule, RewardsService, RewardsModule, RewardsServiceModule } from '@perxtech/core';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -47,7 +47,7 @@ describe('MainComponent', () => {
         MatIconModule,
         MatIconModule,
         ConfigModule.forRoot({}),
-        RewardsModule.forRoot()
+        RewardsServiceModule.forRoot()
       ],
       providers: [
         {

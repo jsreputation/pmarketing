@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {
   VouchersModule,
   RewardsModule,
+  RewardsServiceModule,
   MerchantsModule,
   PerxCoreModule,
   AuthenticationModule,
@@ -83,7 +84,8 @@ export const setLanguage = (
     SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
-    RewardsModule.forRoot(),
+    RewardsModule,
+    RewardsServiceModule.forRoot(),
     VouchersModule,
     InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),

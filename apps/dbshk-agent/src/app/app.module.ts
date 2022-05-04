@@ -58,7 +58,7 @@ import {
   OutcomeModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
-  RewardsModule,
+  RewardsServiceModule,
   LanguageService,
   TokenStorage,
   ConfigService,
@@ -170,7 +170,7 @@ export const setLanguage = (
     MatSnackBarModule,
     PerxTransactionsServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

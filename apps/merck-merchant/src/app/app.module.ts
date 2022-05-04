@@ -25,7 +25,7 @@ import {
   MerchantsModule,
   ProfileModule,
   ProfileServiceModule,
-  RewardsModule,
+  RewardsServiceModule,
   ThemesService,
   TokenStorage,
   VouchersModule
@@ -123,7 +123,7 @@ export const appInit =
     AuthenticationModule,
     ZXingScannerModule,
     MatSnackBarModule,
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     InstantOutcomeTransactionServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     MerchantAdminModule,

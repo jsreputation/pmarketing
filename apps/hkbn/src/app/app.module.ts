@@ -27,7 +27,7 @@ import {
   AuthenticationService,
   LoyaltyModule,
   ProfileModule,
-  RewardsModule,
+  RewardsServiceModule,
   UtilsModule,
   VouchersModule,
   MerchantsModule,
@@ -98,7 +98,7 @@ const PROVIDERS = [
     ProfileServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     VouchersModule,
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     MerchantsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

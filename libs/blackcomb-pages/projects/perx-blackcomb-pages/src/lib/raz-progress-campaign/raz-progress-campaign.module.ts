@@ -5,6 +5,7 @@ import {
   ProgressBarModule,
   ProgressInfoPipe,
   RewardsModule,
+  RewardsServiceModule,
   TransactionsServiceModule,
   UtilsModule
 } from '@perxtech/core';
@@ -28,7 +29,8 @@ import { MatCardModule } from '@angular/material/card';
     TransactionsServiceModule.forRoot(),
     UtilsModule,
     PipeUtilsModule,
-    RewardsModule.forChild()
+    RewardsModule,
+    RewardsServiceModule.forChild()
   ]
 })
 export class RazProgressCampaignModule { }

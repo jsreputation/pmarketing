@@ -45,7 +45,8 @@ import {
   ProfileServiceModule as PerxProfileServiceModule,
   ProgressCampaignServiceModule as PerxProgressCampaignServiceModule,
   QuestModule as PerxQuestModule,
-  RewardsModule,
+
+  RewardsServiceModule,
   SettingsModule,
   SettingsService,
   StampModule as PerxStampModule,
@@ -155,7 +156,7 @@ export const setLanguage = (
     MatButtonModule,
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
