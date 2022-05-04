@@ -1,0 +1,58 @@
+@import "../../../../theme/variables";
+
+.wrapper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 85%;
+  grid-gap: 7px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  // height: 150px;
+  padding-inline-start: 0 !important;
+  padding-bottom: 5px;
+  padding-right: 20px;
+
+  .item {
+    scroll-snap-align: center;
+    height: 165px;
+    list-style-type: none;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+
+    .image {
+      height: 116px;
+      margin-bottom: 8px;
+      border-radius: 16px;
+    }
+
+    .title {
+      line-height: 24px;
+      color: $near-black;
+      letter-spacing: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    grid-auto-columns: minmax(300px, 0.3fr);
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .wrapper {
+    grid-auto-columns: minmax(300px, 0.3fr);
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  .wrapper {
+    grid-auto-columns: minmax(300px, 0.3fr);
+  }
+}

@@ -1,17 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  NgZone,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   IAnswerResult,
   IPoints,
   IQAnswer,
   IQuiz,
+  IQuizResultOutcome,
   ISwipePayload,
   ITracker,
   NotificationService,
@@ -22,27 +15,12 @@ import {
   SwipeConfiguration,
   SwipeListType
 } from '@perxtech/core';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router
-} from '@angular/router';
-import {
-  BehaviorSubject,
-  iif,
-  Observable,
-  of,
-  Subject,
-  throwError
-} from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  switchMap,
-  takeUntil,
-  tap
-} from 'rxjs/operators';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BehaviorSubject, iif, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { ErrorMessageService } from '../utils/error-message/error-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-quiz',
@@ -77,6 +55,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   };
   private submitErrorTxt: string = 'Error Submitting Answer';
   public disableNextButton: boolean = true;
+  public rewardAcquired: boolean = false;
+  public title: string;
+  public text: string;
 
   constructor(
     private router: Router,
@@ -84,7 +65,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     private quizService: QuizService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translateService: TranslateService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -101,10 +84,21 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       catchError((err: Error) => {
         console.error(err.name, err.message);
-        this.notificationService.addPopup({
-          title: 'Quiz is not Available',
-          buttonTxt: 'Back'
-        });
+        if(err.message && err.message.match(/No available game for this campaign/i)) {
+          this.translateService.get('ERRORS.OUT_OF_TRIES').subscribe(
+            (outOfTriesMessage: string) => {
+              this.notificationService.addPopup({
+                text: outOfTriesMessage,
+                buttonTxt: 'Back'
+              });
+            }
+          );
+        } else {
+          this.notificationService.addPopup({
+            title: 'Quiz is not Available',
+            buttonTxt: 'Back'
+          });
+        }
         this.router.navigate(['/home']);
         return throwError(err);
       }),
@@ -199,7 +193,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        () => this.redirectUrlAndPopUp(),
+        (quizOutcome) => {
+          this.rewardAcquired = quizOutcome?.rewardAcquired;
+          this.redirectUrlAndPopUp();
+        },
         (err) => {
           console.error(err);
           this.notificationService.addSnack(this.submitErrorTxt);
@@ -250,7 +247,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushAnswer(questionPointer: number): Observable<void> {
+  private pushAnswer(questionPointer: number): Observable<IQuizResultOutcome> {
     if (!this.moveId) {
       return throwError('Cannot push answer without move id');
     }
@@ -273,8 +270,8 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap(
         () => iif(
           () => this.complete,
-            this.quizService.postFinalQuizAnswer(this.moveId as number),
-            of({}) // let the observable complete
+          this.quizService.postFinalQuizAnswer(this.moveId as number),
+          of() // let the observable complete
         )
       ),
       catchError(err => {
@@ -287,8 +284,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           time
         };
         return throwError(err);
-      }),
-      map(() => (void 0))
+      })
     );
   }
 
@@ -302,11 +298,22 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.quizService.getMove(quizId)
       .subscribe(
         (move) => this.moveId = move.moveId,
-        (_) => {
-          this.notificationService.addPopup({
-            title: 'Quiz is not Available',
-            buttonTxt: 'Back'
-          });
+        (err: { errorState: string } | HttpErrorResponse) => {
+          if (err instanceof HttpErrorResponse) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((message) => {
+                this.notificationService.addPopup({
+                  text: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              });
+          } else {
+            this.notificationService.addPopup({
+              title: 'Quiz is not Available',
+              buttonTxt: 'Back'
+            });
+          }
           this.router.navigate(['/home']);
         }
       );
@@ -329,7 +336,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz });
+    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz, rewardAcquired: this.rewardAcquired });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

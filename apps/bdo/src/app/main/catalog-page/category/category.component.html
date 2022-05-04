@@ -1,0 +1,46 @@
+<div class="category" *ngIf="category">
+    <div class="title">
+        <div class="title-content">
+            <h3 *ngIf="!isTag">{{categoryHeaders[0].displayName}}</h3>
+            <ng-container *ngIf="isTag">
+                <span *ngFor="let tagHeader of categoryHeaders" class="selected tag tag--{{tagHeader.className}}">{{tagHeader.displayName}}</span>
+            </ng-container>
+        </div>
+        <div class="filter">
+            <button mat-button class="filter" (click)="filter()" *ngIf="filterService.currentValue">
+                <img src="assets/images/icon-n-filter.svg" alt="">
+                <span>
+                    Filters
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="looking-for">
+        <h4>What are you looking for?</h4>
+        <div class="icon-category">
+            <div class="action" *ngFor="let item of category.children; let i = index" (click)="selectSubcategory(item)">
+                <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category">
+                <label class="category-name">{{ item.name }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="card-type" *ngIf="selectedSubcategory && selectedSubcategory?.children?.length">
+        <h4>{{ category?.key === 'bdo-rewards' ? 'Perks and Privileges' : 'Card Types' }}</h4>       
+        <div class="card-type-content">
+            <div class="card-type-content-action" *ngFor="let item of selectedSubcategory.children; let i = index"
+                (click)="selectSubcategoryChildren(item)">
+                    <ng-container *ngIf="category?.key === 'bdo-rewards'; else nonRewardCategories">
+                        <div class="reward-type-container" [ngClass]="item.selected ? 'selected' : ''" >
+                            <span class="reward-type-name">{{item.name}}</span>  
+                        </div>           
+                    </ng-container>
+                    <ng-template #nonRewardCategories>
+                        <div class="card-type-container" [ngClass]="item.selected ? 'selected' : ''" >
+                            <img [src]="item.selected ? item.imageLinkSelected : item.imageLink" alt="" class="img-category"/>
+                        </div>
+                    </ng-template>
+<!--                <span class="card-type-name">{{item.name}}</span>-->
+            </div>
+        </div>
+    </div>
+</div>

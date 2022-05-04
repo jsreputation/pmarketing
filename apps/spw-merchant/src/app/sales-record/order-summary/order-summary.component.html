@@ -1,0 +1,44 @@
+<div class="main-container" *ngIf="invoice">
+    <div class="header-details">
+        <h3>{{"ORDER_SUMMARY.SALES_RECORD_TITLE"|translate}}</h3>
+        <h1>{{"ORDER_SUMMARY.SALES_RECORD_SUBTITLE"|translate}}</h1>
+        <div class="invoice-barcode" *ngIf="invoice?.transactionId">
+            <p class="sales-id">{{"ORDER_SUMMARY.SALES_RECORD_ID"|translate}} {{invoice.transactionId}}</p>
+            <ngx-barcode6
+            [bc-value]="invoice.transactionId"
+            [bc-font-size]="13" [bc-height]="70" [bc-width]="4"
+            ></ngx-barcode6>
+        </div>
+    </div>
+    <div class="summary-details">
+        <div *ngIf="user" class="customer-info">
+            <h2>{{"ORDER_SUMMARY.SUMMARY"|translate}}</h2>
+            <h3>{{"ORDER_SUMMARY.CUSTOMER"|translate}}</h3>
+            <div class="user-details">
+                <p>{{ user.firstName}} {{ user.lastName}}</p>
+                <small>Customer ID: {{ user.identifier }}</small>
+                <small *ngIf="user.customProperties?.phone">{{"ORDER_SUMMARY.MOBILE_NUMBER"|translate}}: {{ user.customProperties.phone }}</small>
+            </div>
+        </div>
+        <hr/>
+        <ng-container *ngIf="!isPreActivatedUser">
+            <ng-container *ngIf="invoice.voucherId">
+                <h3>{{"ORDER_SUMMARY.VOUCHER_APPLIED"|translate}}</h3>
+                <div class="voucher-bg">
+                    <img src="../../assets/voucher-bg.png"/>
+                    <div class="voucher-title">
+                        {{invoice.voucherName}}
+                    </div>
+                </div>
+            </ng-container>
+            <h3>{{"ORDER_SUMMARY.POINTS_PAID"|translate}}</h3>
+            <small>{{invoice.pointsPaid ? invoice.pointsPaid : '0'}}</small>
+        <hr/>
+        </ng-container>
+        <h3>{{"ORDER_SUMMARY.AMOUNT"|translate}}</h3>
+        <small>{{invoice.collectedAmount}}</small>
+        <h3>{{"ORDER_SUMMARY.RECEIPT"|translate}}</h3>
+        <small>{{invoice.identifier}}</small>
+        <button mat-raised-button (click)="onClose()" class="full-width__button mat-primary">Close</button>
+    </div>
+</div>

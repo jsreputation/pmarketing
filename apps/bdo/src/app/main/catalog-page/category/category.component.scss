@@ -1,0 +1,123 @@
+@import "../../../../theme/variables";
+
+.category {
+    margin-top: 10px;
+    .title {
+        background-color: $white;
+        padding: 16px 16px 0 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+            color: $medium-blue;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .filter {
+            display: flex;
+            align-items: center;
+            color: $medium-blue;
+            @media screen and (min-width: $desktop-width) {
+                display: none !important;
+            }
+        }
+    }
+    .looking-for {
+        background-color: $white;
+        padding: 16px 16px 0 16px;
+        h4 {
+            margin-top: 0;
+        }
+        .icon-category {
+            display: flex;
+            width: 100%;
+            overflow-x: auto;
+            .action {
+                .category-name {
+                    display: inline-block;
+                    word-wrap: break-word;
+                    text-align: center;
+                    cursor: pointer;
+                    margin-top: 10px;
+                    width: 90%;
+                }
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                color: $medium-blue;
+                font-weight: bold;
+                width: 92px;
+                min-width: 92px;
+                overflow-x: auto;
+                margin-bottom: 30px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .card-type {
+        margin-top: 10px;
+        background-color: $white;
+        padding: 16px 16px 0 16px;
+        h4 {
+            margin-top: 0;
+        }
+        &-content {
+            display: flex;
+            overflow-x: auto;
+            width: 100%;
+            margin-top: 15px;
+            &-action {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                color: $medium-blue;
+                font-weight: bold;
+                // width: 50px;
+                // min-width: 50px;
+                margin: 0 10px 30px 0;
+            }
+        }
+
+        .card-type-container {
+            width: 50px;
+            height: 50px;
+            background-color: #E5F5FF;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &.selected {
+                background-color: $medium-blue !important;
+            }
+        }
+
+        .reward-type-container {
+            background-color: #E5F5FF;
+            border-radius: 8px;
+            padding: 15px 8px;
+            cursor: pointer;
+            &.selected {
+                background-color: $medium-blue !important;
+                color: white !important;
+            }
+            .reward-type-name {
+                font-size: 14px;
+                font-weight: normal !important;
+                white-space: nowrap;
+            }
+        }
+
+        //.card-type-content {
+        //    .card-type-content-action {
+        //        .card-type-name {
+        //            text-align: center;
+        //            font-size: 11px;
+        //            margin-top: 10px;
+        //            width: 100%;
+        //        }
+        //    }
+        //}
+    }
+}

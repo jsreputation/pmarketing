@@ -129,36 +129,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.configService
-      .readAppConfig<void>()
-      .pipe(
-        tap((config: IConfig<void>) => {
-          if (config.homeAsProgressPage) {
-            this.router.navigate(['/legacy-progress-campaigns']);
-          } else {
-            this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-              if (isAuth && !this.configService.readAppStarted()) {
-                this.configService.setAppStarted();
-                if (config.showPopupCampaign) {
-                  this.fetchPopupCampaigns();
-                }
-              }
-            });
+    forkJoin([
+      this.configService
+        .readAppConfig<void>(),
+      this.settingsService.getRemoteFlagsSettings(),
+    ]).subscribe(([config, flags]) => {
+      if (config.homeAsProgressPage) {
+        this.router.navigate(['/legacy-progress-campaigns']);
+      } else {
+        this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+          if (isAuth && !this.configService.readAppStarted()) {
+            this.configService.setAppStarted();
+            if (config.showPopupCampaign || flags.showPopupCampaign) {
+              this.fetchPopupCampaigns();
+            }
           }
-          this.appConfig = config;
-        }),
-        switchMap(() => this.settingsService.getRemoteFlagsSettings())
-      )
-      .subscribe(
-        (flags: IFlags) => {
-          // todo: create a function to wrap all the rest of the init calls
-          this.appRemoteFlags = flags;
-          this.initCampaign();
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+        });
+      }
+      this.appConfig = config;
+      // todo: create a function to wrap all the rest of the init calls
+      this.appRemoteFlags = flags;
+      this.initCampaign();
+    }, (error) => {
+      console.error(error);
+    });
     this.profileService
       .getCustomProperties()
       .pipe(
@@ -268,7 +262,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     if (campaign.type === CampaignType.instant) {
-      this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+      this.router.navigate([` campaign-welcome/${campaign.id}` ]);
       return;
     }
 
@@ -347,10 +341,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                 buttonTxt: campaignRes.displayProperties?.claimPrize?.buttonText || 'CLAIM PRIZE',
                 imageUrl: popupImageURL,
                 titleBelowImage: true,
-                hideCloseButton: true,
-                popupClass: 'custom-popup-class',
                 afterClosedCallBack: {
-                  dialogClosed: (): void => {
+                  dialogClosed: (): void => {},
+                  onOkFn: (): void => {
                     this.instantOutcomeTransactionService
                       .claimPrize(firstComeFirstServeTransaction.id)
                       .subscribe((res) => {

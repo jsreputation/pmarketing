@@ -4,7 +4,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.FROM' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onSourceChanged($event)">
+                    <mat-select (selectionChange)="onSourceChanged($event)" class="source-dropdown">
                         <mat-option *ngFor="let loyaltyProgram of loyaltyProgramList" [value]="loyaltyProgram.value">
                             {{loyaltyProgram.text}}
                         </mat-option>
@@ -14,7 +14,7 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.TO' | translate}}</mat-label>
-                    <mat-select (selectionChange)="onDestinationChanged($event)"
+                    <mat-select (selectionChange)="onDestinationChanged($event)" class="destination-dropdown"
                         [disabled]="!destintionLoyaltyProgramList?.length">
                         <mat-option *ngFor="let loyaltyProgram of destintionLoyaltyProgramList"
                             [value]="loyaltyProgram.value">
@@ -35,6 +35,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>{{'POINTS_TRANSFER.POINTS_TO_TRANSFER' | translate}}</mat-label>
                     <input [disabled]="!currentExchangeRate" matInput type="number" min="1"
+                           class='point-transfer-value'
                         (keyup)="onPointValueChanged($event.target)" (change)="onPointValueChanged($event.target)">
                 </mat-form-field>
             </div>
@@ -53,7 +54,7 @@
     <div class="bottom-sheet">
         <div>
             <button (click)="showTransferConfirmation()" [disabled]="!exchangeCalculationMessage" mat-raised-button
-                color="primary">
+                color="primary" class="submit-btn">
                 {{'POINTS_TRANSFER.TRANSFER_POINTS_CTA' | translate}}
             </button>
         </div>

@@ -1,0 +1,143 @@
+@import './../../../theme/variables.scss';
+
+.homepage {
+  .header {
+    margin: 12px 0;
+    color: $main-blue-text;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  .card {
+    font-family: 'Nunito', sans-serif;
+    margin-top: 10px;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 5px 20px;
+
+    .tag {
+      margin-left: 20px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    .tagged-header-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-top: 12px;
+
+      .filter-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .filter-value {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .filter-tag {
+            padding: 0 15px;
+            border-radius: 16px;
+            font-size: 12px;
+            line-height: 30px;
+            margin: 3px;
+            height: 30px;
+          }
+        }
+
+        .action {
+          color: $medium-blue;
+          font-size: 14px;
+          font-weight: bold;
+          min-width: 55px;
+          cursor: pointer;
+        }
+      }
+
+      .description {
+        color: $near-black;
+        font-size: 14px;
+        line-height: 20px;
+        padding: 0 5px;
+      }
+    }
+
+    .no-item {
+      font-size: 12px;
+      margin: auto;
+      color: $grey;
+      text-align: center;
+    }
+
+    .message-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      height: 215px;
+      background: $medium-light-gray;
+      border-radius: 12px;
+
+      .message {
+        color: $medium-blue;
+        font-size: 16px;
+        padding: 1rem;
+      }
+    }
+
+    .no-result-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      height: 215px;
+      background: $light-grey;
+      border-radius: 8px;
+
+      .message {
+        color: $grey;
+        font-size: 14px;
+        padding: 1rem;
+      }
+    }
+    
+    &.secondary-catalog{
+      padding: 5px 16px 16px !important;
+    }
+  }
+
+  .card-without-margin {
+    margin-top: 0!important;
+  }
+
+  .near-by-title {
+    font-size: 14px;
+    color: $dark-grey;
+    letter-spacing: 0;
+    padding: 0 16px;
+  }
+
+  .nearby {
+    display: flex;
+    justify-content: space-between;
+
+    .navigate-nearby {
+      font-size: 14px;
+      margin: 2.5px 0;
+      color: $medium-blue;
+      margin-right: 20px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }
+}

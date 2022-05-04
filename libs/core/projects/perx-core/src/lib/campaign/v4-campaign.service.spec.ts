@@ -44,7 +44,7 @@ describe('V4CampaignService', () => {
       imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceMock },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     });
     // httpClient = TestBed.get(HttpClient);

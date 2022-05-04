@@ -1,3 +1,4 @@
+APIHOST=https://api.perxtech.io
 PREAUTH=true
 UX_CR=true
 HUBCLUB_CR=true
@@ -5,3 +6,4 @@ SHOW_ALL_SNAPPING_SATURDAY_ITEMS=true
 PRODUCTION=true
 MOBILE_ID_CR=true
 SHOW_POPUP_HOMEPAGE=true
+STARS_CR=true

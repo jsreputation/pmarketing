@@ -1,0 +1,38 @@
+<div class="deal-landing">
+  <mat-card class="card no-padding detail">
+    <div class="thumbnail">
+      <img [src]="dealDetail?.rewardBanner" />
+    </div>
+    <div class="container">
+      <h2 class="title">{{dealDetail?.name}}</h2>
+      <p *ngIf="dealDetail?.tags">
+        <ng-container *ngFor="let tag of dealDetail?.tags">
+          <span class="selected tag tag--{{tag.name}}" *ngIf="existsInFilters(tag)">{{tag.name}}</span>
+        </ng-container>
+      </p>
+      <p>
+        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigateLocationPage()"/>
+        <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="shareDeal()"/>
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="showLocation" (click)="navigatePhonePage()"/>
+      </p>
+      <div class="description sun-editor-editable" [innerHTML]="dealDetail?.description | safeHtml"></div>
+      <div class="description sun-editor-editable" [innerHTML]="dealDetail?.termsAndConditions | safeHtml"></div>
+    </div>
+    <div class="btn-cta-deals"  *ngIf="dealDetail?.customFields?.dealsButtonLink && dealDetail?.customFields?.dealsButtonName">
+      <div class="btn-cta-container">
+        <a [href]="dealDetail?.customFields?.dealsButtonLink | safeUrl" class="btn-cta-deals-link" target="_blank">
+          <button mat-stroked-button color="primary" class="btn-cta-deals_action">
+            {{dealDetail?.customFields?.dealsButtonName}}
+          </button>
+        </a>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="card similar-deal">
+    <div class="similar-deals-heading">
+      <h2 class="header">SIMILAR DEALS</h2>
+      <div class="action" (click)="viewAll()">View All</div>
+    </div>
+    <bdo-carousel-items [deals]="similarDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+  </mat-card>
+</div>

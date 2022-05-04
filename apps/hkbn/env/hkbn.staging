@@ -1,2 +1,3 @@
-DEFAULT_LANG=zh 
+APIHOST=https://api.perxtech.io
+DEFAULT_LANG=zh
 PRODUCTION=true

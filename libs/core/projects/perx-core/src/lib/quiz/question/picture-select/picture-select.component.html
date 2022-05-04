@@ -34,7 +34,7 @@
              class="image" [src]="choice?.answer?.en?.image?.value?.image_url"
              [alt]="choice?.answer?.en?.text">
         <ng-template #textLabel>
-          {{ choice?.answer?.en?.text }}
+          <span>{{ choice?.answer?.en?.text }}</span>
         </ng-template>
       </mat-radio-button>
       <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url">

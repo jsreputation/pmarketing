@@ -6,7 +6,6 @@
   display: flex;
   .left-block {
     text-align: right;
-    margin-left: 1.3rem;
     .icon-wrapper {
       .icon {
         width: 2.4rem;
@@ -31,6 +30,7 @@
       font-size: 1.2rem;
       font-weight: 400;
       line-height: 2.2rem;
+      height: 2.2rem;
       margin-top: 0.9rem;
     }
     .next-tier {

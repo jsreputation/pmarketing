@@ -16,7 +16,7 @@
         (@slideLeft.done)=alignComplete($event)>
         <ng-container *ngIf="listType === lt.LISTWITHIMAGE">
           <img matListAvatar src="{{item.img}}" alt="{{item.title}}">
-          <div class="mat-list-text ngstd-details">
+          <div class="mat-list-text ngstd-details" >
             <h3 matLine class="title"> {{item.title}}</h3>
             <p matLine *ngIf="item.description">
               <span>{{item.description}}</span>
@@ -34,7 +34,7 @@
           <mat-list-item class="title"> {{item.title}} </mat-list-item>
         </ng-container>
         <ng-container *ngIf="listType === lt.MULTILINE">
-          <div class="mat-list-text ngstd-details">
+          <div class="mat-list-text ngstd-details" >
             <h3 matLine class="title"> {{item.title}} </h3>
             <p matLine>
               <span> {{item.description}} </span>

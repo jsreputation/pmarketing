@@ -1,0 +1,71 @@
+@import '../../../../theme/variables.scss';
+
+.search-result-tab {
+  .label-tab {
+    margin-left: 4px;
+    color: $medium-blue;
+  }
+
+  .ghost-card {
+    padding-top: 10px;
+  }
+
+  .search-result-wrapper {
+    padding-inline-start: 0 !important;
+    margin: 0;
+    min-height: calc(100vh - 195px);
+
+    bdo-large-list-item {
+      ::ng-deep {
+        .item {
+          cursor: pointer;
+          max-width: 100%;
+
+          @media screen and (max-width: $desktop-width) {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+
+    bdo-list-item {
+      ::ng-deep {
+        li {
+          .title {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    @media screen and (min-width: $desktop-width) {
+      &#catalogue {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media screen and (max-width: $tablet-width) {
+      &#catalogue {
+        display: grid;
+        grid-template-columns: unset;
+      }
+    }
+
+    @media screen and (min-width: $tablet-width) {
+      &#catalogue {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    &.no-result {
+      display: block !important;
+    }
+  }
+
+  .no-result {
+    text-align: center;
+    color: $light-black;
+  }
+}

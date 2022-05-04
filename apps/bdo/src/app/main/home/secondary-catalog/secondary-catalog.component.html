@@ -1,0 +1,22 @@
+<div class="secondary-catalog">
+  <ul class="catalog-list-container">
+    <li class="credit" [style.background-image]="'url(assets/images/img-creditcard-desktop-1.svg)'" (click)="navigateToCatalog(dealsCategory.credit)">
+      <span>Credit Card</span>
+    </li>
+    <li class="debit" [style.background-image]="'url(assets/images/img-debitcard-mobile-1.svg)'" (click)="navigateToCatalog(dealsCategory.debit)">
+      <span>Debit Card</span>
+    </li>
+    <li
+      class="reward" id="bdo-rewards-catalog"
+      (click)="navigateToCatalog(dealsCategory.rewards)"
+    >
+      <span>BDO Rewards</span>
+    </li>
+    <li
+      class="online" id="bdo-online-exclusives"
+      (click)="navigateToCatalog(dealsCategory.online)"
+    >
+      <span>Online Exclusives</span>
+    </li>
+  </ul>
+</div>

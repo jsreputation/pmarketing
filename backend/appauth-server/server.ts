@@ -9,12 +9,12 @@ import compression from 'compression';
 
 import { preauth } from './ctrl/preauth';
 import { login, users } from './ctrl/cognito';
-import { v4Token } from './ctrl/v4-token';
+import { v4Token, v4ExchangeToken } from './ctrl/v4-token';
 import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
-import { merchantForgotPassword } from './ctrl/merchantAdmin';
+import { merchantAcceptInvitation, merchantForgotPassword, merchantInvitedSetPassword } from './ctrl/merchantAdmin';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './utils/autoGenerateTenantToken';
 
@@ -23,6 +23,8 @@ import { getCredential } from './utils/autoGenerateTenantToken';
 const app = express();
 // Sentry.init({ dsn: 'https://394598311c2749ea9114efb557297005@sentry.io/1857840' });
 // app.use(Sentry.Handlers.requestHandler());
+import { expressCspHeader, NONE, SELF, INLINE } from 'express-csp-header';
+
 app.use(compression());
 const cors = require('cors');
 app.use(cors());
@@ -37,6 +39,36 @@ const BASE_HREF = process.env.BASE_HREF || '/';
 const IS_WHISTLER: boolean = !!(process.env.IS_WHISTLER && process.env.IS_WHISTLER === 'true');
 const getTokens = IS_WHISTLER ? getCredential : getCredentials;
 app.options('*', cors());
+app.use('/assets', express.static('assets'));
+
+// verified for BC sites, but unverified against custom microsites, specify feature flag when sure
+if (process.env.PRODUCTION && process.env.CSP_ON) {
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com', 'www.google-analytics.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net'],
+      'trusted-types': ['google-maps-api#html', 'goog#html', 'angular']
+    }
+  }));
+} else if (process.env.CSP_ON){
+  app.use(expressCspHeader({
+    directives: {
+      'default-src': [SELF, 'api.perxtech.io', 'api.perxtech.net', 'sentry.io', 'maps.googleapis.com', 'www.google-analytics.com', 'localhost:4000'],
+      'img-src': ['data:', '*'],
+      'child-src': ['none'],
+      'script-src': [SELF, INLINE, 'sentry.io', '*.googletagmanager.com', 'maps.googleapis.com', 'www.google-analytics.com'],
+      'object-src': [NONE],
+      'font-src': [SELF, 'fonts.gstatic.com', 'fonts.googleapis.com'],
+      'style-src': [SELF, INLINE, 'fonts.googleapis.com', 'api.perxtech.io', 'api.perxtech.net', 'localhost:4000'],
+      'trusted-types': ['google-maps-api#html', 'goog#html', 'angular', 'angular#unsafe-jit']
+    }
+  }));
+}
 
 app.get('/preauth', preauth(getTokens));
 
@@ -50,9 +82,13 @@ app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
 
+app.post(`${BASE_HREF}v4/oauth/exchange_token`, v4ExchangeToken(getTokens));
+
 // temporary intercept until v4 backend migrates away from using client secrets.
 // the way this query performs the API call is the v4 way forward and will be moved to the core service.
 app.post(`${BASE_HREF}v4/merchant_admin/forgot_password`, merchantForgotPassword(getTokens));
+app.get(`${BASE_HREF}v4/merchant_admin/merchant_user_account_invitations/accept`, merchantAcceptInvitation(getTokens));
+app.put(`${BASE_HREF}v4/merchant_admin/merchant_user_account_invitations`, merchantInvitedSetPassword(getTokens));
 
 app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
@@ -62,6 +98,7 @@ if (process.env.PRODUCTION) {
   console.log('production mode ON', appPath);
   app.set('view engine', 'html');
   app.set('views', appPath);
+
   // Serve static files from /../../perx-microsite
   app.use(BASE_HREF, express.static(appPath));
   app.get('*.*', express.static(appPath, { maxAge: '1y' }));
@@ -71,7 +108,7 @@ if (process.env.PRODUCTION) {
     res.sendFile(join(appPath, 'index.html'), { req });
   });
 }
-app.use('/assets', express.static('assets'));
+
 // app.use(Sentry.Handlers.errorHandler());
 if (IS_WHISTLER) {
   getTokens('').then(() => console.log('Init token list table.'));

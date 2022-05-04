@@ -1,0 +1,43 @@
+<div class="treat-welcome-page" *ngIf="campaign">
+<div class="thumbnail">
+    <img [src]="campaign?.campaignBannerUrl? campaign.campaignBannerUrl : defaultImageUrl"
+        [attr.alt]="campaign?.name" />
+</div>
+<div class="treat-welcome-content">
+    <p class="title">{{campaign?.name}}</p>
+    <div class="tag-group">
+        <ng-container *ngFor="let tag of campaign.tags">
+            <span class="selected tag" [ngClass]="'tag--' + tag.name" *ngIf="existsInFilters(tag)">
+                {{tag.name}}
+            </span>
+        </ng-container>
+    </div>
+    <p>
+        <img src="assets/images/icon-n-location.svg" alt="" class="treat-icon" *ngIf="isShowLocationsAndPhone" (click)="navigateLocationPage()">
+        <img src="assets/images/icon-ua-share.svg" alt="" class="treat-icon" (click)="sharePromo()">
+        <img src="assets/images/icon-ua-contact.svg" alt="" class="treat-icon" *ngIf="isShowLocationsAndPhone" (click)="navigatePhonePage()">
+    </p>
+    <div class="description sun-editor-editable" *ngIf="campaign?.description !== null" [innerHTML]="campaign?.description | safeHtml"></div>
+   <div class="btn-enroll-treat">
+        <div class="btn-enroll-container">
+            <button mat-stroked-button color="primary" class="btn-enroll-treat_action" (click)="navigateEnrollPage()">Enroll
+                Now</button>
+        </div>
+    </div>
+    <div class="sections" *ngIf="campaign?.displayProperties?.landingPage">
+        <div *ngFor="let item of campaign.displayProperties.landingPage?.additionalSections; let idx = index">
+            <mat-accordion class="location-wrapper">
+                <mat-expansion-panel class="panel"
+                    [class.panel--no-border]="idx === campaign.displayProperties.landingPage.additionalSections?.length - 1">
+                    <mat-expansion-panel-header class="header">
+                        {{item.headerText}}
+                    </mat-expansion-panel-header>
+                    <ng-template matExpansionPanelContent>
+                      <div class="sun-editor-editable" [innerHTML]="item.bodyText | safeHtml"></div>
+                    </ng-template>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+</div>

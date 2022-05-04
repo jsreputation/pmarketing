@@ -10,7 +10,7 @@ interface ResetData {
 }
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'perx-bcm-pages-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
@@ -45,8 +45,8 @@ export class ResetPasswordComponent implements OnInit {
 
   private initForm(): void {
     this.resetPasswordForm = this.fb.group({
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
+      password: ['', [ Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      confirmPassword: ['', [ Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     });
   }
 

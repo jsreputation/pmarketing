@@ -67,7 +67,11 @@
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
       [disabled]="disableNextButton"
-      mat-flat-button>
+      mat-flat-button
+      [ngStyle]="{
+        'background-color' : quiz?.ctaButtonBGColor ? quiz?.ctaButtonBGColor: '',
+        'color' : quiz?.ctaButtonTextColor ? quiz?.ctaButtonTextColor: ''
+      }">
       Next
     </button>
     <button
@@ -75,7 +79,11 @@
       *ngIf="this.questionPointer === this.totalLength-1"
       (click)="submit()"
       [disabled]="!complete"
-      mat-flat-button translate>
+      mat-flat-button translate
+      [ngStyle]="{
+        'background-color' : quiz?.ctaButtonBGColor ? quiz?.ctaButtonBGColor: '',
+        'color' : quiz?.ctaButtonTextColor ? quiz?.ctaButtonTextColor: ''
+      }">
       Submit
     </button>
   </mat-toolbar>

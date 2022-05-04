@@ -19,8 +19,9 @@ import {
   LoyaltyModule,
   OutcomeModule,
   PopupComponent,
+  QuestModule as PerxQuestModule,
   UtilsModule,
-  StampModule
+  StampModule,
 } from '@perxtech/core';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -38,6 +39,7 @@ import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
 import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campaigns.component';
 import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
 import { StarsComponent } from './stars/stars.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,7 @@ import { StarsComponent } from './stars/stars.component';
     NoRenewaleInNamePipe,
     QuizSurveyCampaignsComponent,
     TaggedItemsComponent,
-    StarsComponent
+    StarsComponent,
   ],
   imports: [
     ConfigModule.forChild(),
@@ -75,15 +77,12 @@ import { StarsComponent } from './stars/stars.component';
     PerxGameServiceModule.forChild(),
     StampModule,
     OutcomeModule,
-    GhostsModule
+    GhostsModule,
+    MatExpansionModule,
+    PerxQuestModule.forChild(),
   ],
   bootstrap: [],
-  providers: [
-    NoRenewaleInNamePipe,
-  ],
-  entryComponents: [
-    PopupComponent
-  ]
+  providers: [NoRenewaleInNamePipe],
+  entryComponents: [PopupComponent],
 })
-export class HomeModule {
-}
+export class HomeModule {}

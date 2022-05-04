@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="main-navbar">
+  <div class="main-navbar-content">
+    <div class="logo">
+      <img src="assets/images/logo-bdodeals.svg" alt="BDO deals logo" routerLink=""/>
+    </div>
+    <div class="vertical-flex">
+      <div class="vertical-spacer"></div>
+      <div class="search-wrapper" *ngIf="!isLocationLanding">
+        <bdo-search-navbar></bdo-search-navbar>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>
+
+<div [ngClass]="{'main-content': !isLocationLanding, 'main-content-exclude-search-navbar': isLocationLanding, 'nearby-page': isNearbyPage}">
+  <router-outlet></router-outlet>
+</div>

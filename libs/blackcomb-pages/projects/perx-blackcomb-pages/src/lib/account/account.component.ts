@@ -44,16 +44,15 @@ export class AccountComponent implements OnInit {
 
   constructor(
     public config: Config,
-    private profileService: ProfileService,
-    private loyaltyService: LoyaltyService,
-    private configService: ConfigService,
-    private translate: TranslateService,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private themesService: ThemesService,
-    private settingsService: SettingsService,
-    private badgeService: BadgeService,
-    private flagLocalStorageService: FlagLocalStorageService
+    protected profileService: ProfileService,
+    protected loyaltyService: LoyaltyService,
+    protected configService: ConfigService,
+    protected translate: TranslateService,
+    protected router: Router,
+    protected authenticationService: AuthenticationService,
+    protected themesService: ThemesService,
+    protected settingsService: SettingsService,
+    protected badgeService: BadgeService,
   ) {
   }
 
@@ -98,7 +97,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  private getAchievedBadgeCount(): void {
+  protected getAchievedBadgeCount(): void {
     this.acquiredBadges = this.badgeService.getAchievedBadgeCount();
   }
 }

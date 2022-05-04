@@ -189,7 +189,7 @@
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "排行榜",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "NO_LEADER_BOARDS": "No leaderboards here yet!",
     "NO_RANK_INFO": "No ranking information here yet!",
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
@@ -206,7 +206,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "幸運抽獎信息",
@@ -268,7 +269,8 @@
     "READ_MORE": "查看更多",
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
-    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
+    "YOU_HAVE": "Your total points as of"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -315,7 +317,8 @@
     "EXPIRY": "將於{{date}}過期",
     "NO_VOUCHERS": "No vouchers here yet!",
     "URL_REDEEM": "REDEMPTION LINK",
-    "INSTRUCTIONS": "READ INSTRUCTIONS"
+    "INSTRUCTIONS": "READ INSTRUCTIONS",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   },
   "REWARD": {
     "GET_VOUCHER": "獲得優惠券",
@@ -338,6 +341,7 @@
     "STAMP_CARD_UPDATED": "Stamp card updated",
     "CARD_COMPLETED": "Stamp card completed by your team-mate!",
     "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "POINTS_POPUP_TEXT": "You have gained points!",
     "REWARD_POPUP_TITLE": "Congratulations!",
     "REWARD_POPUP_TEXT": "Here is a reward for you.",
     "REWARD_POPUP_BUTTON_TEXT": "View Reward",
@@ -362,7 +366,14 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
-    "INVALID_INVITE_CODE": "Invalid invite code"
+    "INVALID_INVITE_CODE": "Invalid invite code",
+    "TEAM_FULL": "This team is already full",
+    "RESERVATION_EXPIRED": "Your game session has expired, please try again",
+    "STATE_TRANSITION_FAILED": "Your game session has expired, please try again",
+    "USER_NOT_ELIGIBLE": "You don't meet the requirements for enrolling",
+    "COULD_NOT_ENROL": "Unable to enrol into campaign",
+    "CAPTCHA_INVALID": "CAPTCHA verification failed. Please try again",
+    "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
   },
   "SURVEY": {
     "SUCCESS_TITLE": "",

@@ -1,0 +1,117 @@
+@import '../../../theme/variables.scss';
+.nearby-deals-wrapper {
+  .filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 20px;
+
+    .tag-group {
+      .tag {
+        position: relative;
+        top: 13px; //todo: remove magic number and style the container properly
+        margin: 5px;
+      }
+    }
+
+    .group-filter {
+      display: flex;
+      @media screen and (min-width: $desktop-width) {
+        display: none;
+      }
+      align-items: center;
+
+      span {
+        color: $medium-blue;
+        margin-left: 4px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .header {
+    color: $main-blue-text;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 20px;
+    letter-spacing: 0;
+    margin: 0;
+    @media screen and (min-width: $desktop-width) {
+      margin: 16px 0 0 0;
+    }
+  }
+
+  .content-wrapper {
+    padding-inline-start: 0 !important;
+    margin: 0;
+    height: calc(100vh - 218px);
+    overflow: auto;
+    .nearby-result-tab {
+      .label-tab {
+        margin-left: 4px;
+        color: $medium-blue;
+      }
+    }
+
+    .tab-content {
+      padding-inline-start: 0 !important;
+      margin: 0;
+      width: 100% !important;
+
+      @media screen and (min-width: $desktop-width) {
+        &#catalogue{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    }
+
+    .no-result {
+      @media screen and (min-width: $desktop-width) {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+     }
+     ::ng-deep bdo-no-result .search-not-result-wrapper {
+        min-height: auto !important;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-width) {
+  .nearby-deals-wrapper {
+    .content-wrapper {
+      .tab-content {
+        margin: auto;
+        width: $desktop-width;
+      }
+    }
+  }
+}
+
+.nearby-page {
+  @media screen and (min-width: $desktop-width) {
+    display: flex;
+  }
+}
+
+.desktop-filter-container {
+  display: none;
+  @media screen and (min-width: $desktop-width) {
+    display: block !important;
+    flex: 0 0 280px;
+    width: 280px;
+  }
+}
+.nearby-deals-wrapper {
+ @media screen and (min-width: $desktop-width) {
+    flex: 1 1 auto;
+    width: 75%;
+  }
+}
+
+.desktop-filter {
+  margin: 2.5rem 2rem 1rem 1rem;
+}

@@ -127,7 +127,13 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       // we use select countryCode object ^ using the response from countryList$
       const stepPhoneFormCountryCode: string = this.phoneStepForm.value.countryCode;
       const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
-      const phone: string = `${stepPhoneFormCountryCode}${stepPhoneFormPhoneNumber}`.trim();
+      // converting to Number will strip leading 0s
+      let sanitizedId = '';
+      const numberedId = Number(stepPhoneFormPhoneNumber);
+      if (! isNaN(numberedId)) {
+        sanitizedId = numberedId.toString();
+      }
+      const phone: string = `${stepPhoneFormCountryCode}${sanitizedId}`.trim();
       this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
       this.usersPhone = this.identifier.slice(-2);
 

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="icon-location-filled" transform="translate(0 0)">
+    <g id="Group_11130" data-name="Group 11130">
+      <g id="icon-n-location">
+        <g id="Group_4202" data-name="Group 4202">
+          <rect id="Rectangle_493" data-name="Rectangle 493" width="20" height="20" transform="translate(0 0)" fill="none"/>
+        </g>
+        <g id="Group_4204" data-name="Group 4204">
+          <path id="Path_1051" data-name="Path 1051" d="M15.068,18.041H5.015a.5.5,0,0,1,0-1h10.05a.5.5,0,0,1,0,1Z" fill="#0072d8"/>
+        </g>
+        <g id="Group_11156" data-name="Group 11156">
+          <path id="Path_3174" data-name="Path 3174" d="M10.04,2.047A5.526,5.526,0,0,0,4.514,7.573a6.589,6.589,0,0,0,.841,2.946A16.424,16.424,0,0,0,7.137,13.2,26.073,26.073,0,0,0,9.7,15.966a.5.5,0,0,0,.338.13.482.482,0,0,0,.314-.114,20.881,20.881,0,0,0,2.582-2.611A14.515,14.515,0,0,0,14.728,10.7a7.026,7.026,0,0,0,.839-3.13A5.526,5.526,0,0,0,10.04,2.047Zm1.838,7.342a2.587,2.587,0,1,1,.757-1.829A2.569,2.569,0,0,1,11.878,9.389Z" fill="#0072d8"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

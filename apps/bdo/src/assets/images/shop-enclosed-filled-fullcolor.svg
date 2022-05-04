@@ -1,0 +1,19 @@
+<svg id="pay_bills-enclosed-filled-fullcolor" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="enclosure-ctablue">
+    <circle id="enclosure-darkmonochrome" cx="32" cy="32" r="32" fill="#0072d8"/>
+  </g>
+  <g id="icon-d-gift" transform="translate(10.115 8.743)">
+    <path id="Path_3407" data-name="Path 3407" d="M0,0H43.77V43.77H0Z" transform="translate(0)" fill="none"/>
+    <g id="Group_11017" data-name="Group 11017" transform="translate(7.556 5.481)">
+      <path id="Path_3126" data-name="Path 3126" d="M589.3,75.253h22.029l2.16,22.857L587,97.255Z" transform="translate(-586.164 -66.242)" fill="#fff"/>
+      <g id="Group_10965" data-name="Group 10965" transform="translate(0 8.692)">
+        <g id="Group_10963" data-name="Group 10963">
+          <path id="Path_3117" data-name="Path 3117" d="M587.041,99h26.615a1.025,1.025,0,0,0,1.018-1.136L612.2,75.788a1.025,1.025,0,0,0-1.014-.908H592.737a1.025,1.025,0,0,0,0,2.047h17.535l2.243,20.029H588.161l1.918-20.649a1.021,1.021,0,1,0-2.033-.188l-2.02,21.766A1.014,1.014,0,0,0,587.041,99Z" transform="translate(-586.021 -74.88)" fill="#fff"/>
+        </g>
+      </g>
+      <g id="Group_10964" data-name="Group 10964" transform="translate(6.711)">
+        <path id="Path_3118" data-name="Path 3118" d="M594.883,79.553a1.025,1.025,0,0,0,1.026-1.025h0V72.2a5.454,5.454,0,1,1,10.907,0v6.324a1.026,1.026,0,0,0,2.051,0h0V72.2a7.5,7.5,0,0,0-14.992,0v6.324a1.025,1.025,0,0,0,1.008,1.025Z" transform="translate(-593.875 -64.708)" fill="#fdb913"/>
+      </g>
+    </g>
+  </g>
+</svg>

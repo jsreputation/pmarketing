@@ -57,6 +57,8 @@ export interface IMerchantPurchaseTransactionHistory {
   price?: number;
   currency?: string;
   pointsIssued: number;
+  merchantName?: string;
+  description?: string;
 }
 
 export interface IMerchantRewardTransactionHistory {
@@ -65,6 +67,7 @@ export interface IMerchantRewardTransactionHistory {
   userAccount: string;
   customerName: string;
   rewardName: string;
+  redemptionDate?: Date;
 }
 
 export interface IMerchantCustomProperties {
@@ -88,4 +91,22 @@ export interface IResetPasswordData {
   clientId: string;
   resetPasswordToken: string;
   password: string;
+}
+
+export interface IMerchantInvoice {
+  id: number;
+  collectedAmount?: number;
+  identifier?: string;
+  description: string;
+  voucherId?: number | null;
+  voucherName?: string;
+  pointId?: number | null;
+  pointsPaid?: number;
+  transactionId?: number| null;
+}
+
+export enum MerchantTransactionItemType {
+  reward = 'Reward::Transaction',
+  point = 'StoredValue::Transaction',
+  transaction = 'Transaction'
 }

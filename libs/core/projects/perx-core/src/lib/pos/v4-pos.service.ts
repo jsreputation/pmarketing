@@ -20,7 +20,7 @@ import {
 } from 'rxjs';
 import { IConfig } from '../config/models/config.model';
 
-interface IV4PosLoyaltyTransactionResponse {
+export interface IV4PosLoyaltyTransactionResponse {
   data: IV4PosLoyaltyTransaction;
 }
 

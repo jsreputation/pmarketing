@@ -1,0 +1,13 @@
+<ul class="tagged-item" #taggetContainer>
+  <li class="item" *ngFor="let deal of deals" (click)="selectedItem(deal)">
+    <img [src]="deal.thumbnail ? deal.thumbnail:urlImageDefault" />
+    <div class="container">
+      <h4 class="title">{{deal.name}}</h4>
+      <p class="description" *ngIf="deal?.description" [innerHTML]="deal.description"></p>
+      <span class="position" *ngIf="deal?.position">
+        <img class="icon-location" src="assets/images/icon-location.svg"/>
+        {{deal.position | meterToKilometer}} km
+      </span>
+    </div>
+  </li>
+</ul>

@@ -6,20 +6,21 @@ import {
   LoyaltyService,
   ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
-  IGameTransactionHistory,
+  ICampaignTransactionHistory,
   TransactionDetailType,
   // IPurchaseTransactionHistory,
   TransactionPipe,
   ILoyalty,
   TransactionsService,
   ITransaction,
+  IRuleTransactionHistory,
+  ILeaderBoardTransactionHistory
   // ILoyaltyTransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
 import {
   map,
 } from 'rxjs/operators';
-
 // import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
@@ -99,9 +100,19 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
             // if there is a reward in this transaction it means that it has a associated voucher
             const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
             text = rewardData.rewardName ? rewardData.rewardName : '';
-          } else if (transactionType === TransactionDetailType.game) {
-            const gameData = (oc(tr).transactionDetails.data() as IGameTransactionHistory);
-            text = gameData.gameName ? gameData.gameName : '';
+          } else if (transactionType === TransactionDetailType.game ||
+            transactionType === TransactionDetailType.stamp ||
+            transactionType === TransactionDetailType.quest ||
+            transactionType === TransactionDetailType.progressCampaign ||
+            transactionType === TransactionDetailType.instantOutcomeCampaign) {
+            const campaignData = (oc(tr).transactionDetails.data() as ICampaignTransactionHistory);
+            text = campaignData.campaignName ? campaignData.campaignName : '';
+          } else if (transactionType === TransactionDetailType.leaderboard) {
+            const leaderboardData = (oc(tr).transactionDetails.data() as ILeaderBoardTransactionHistory);
+            text = leaderboardData.leaderboardName ? leaderboardData.leaderboardName : '';
+          } else if (transactionType === TransactionDetailType.rule) {
+            const ruleData = (oc(tr).transactionDetails.data() as IRuleTransactionHistory);
+            text = ruleData.ruleName ? ruleData.ruleName : '';
           }
           return of(text);
         };

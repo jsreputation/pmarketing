@@ -38,6 +38,9 @@ export interface IMerchantLocation {
   country: string;
   name: string;
   postalCode: string;
+  latitude?: string;
+  longitude?: string;
+  phoneNumber?: string;
 }
 
 export interface IGetVoucherParams {
@@ -55,4 +58,5 @@ export interface IVoucherLocation {
   name: string;
   latitude: string | null;
   longitude: string | null;
+  phoneNumber?: string | null;
 }

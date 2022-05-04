@@ -7,11 +7,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
 import {
+  BadgeService,
   ICampaignService,
   IInstantOutcomeTransactionService,
-  LoyaltyService,
+  LoyaltyService, NotificationService,
   RewardsService,
-  UtilsModule,
+  UtilsModule
 } from '@perxtech/core';
 import { InstantRewardOutcomeComponent } from './instant-reward-outcome.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -21,8 +22,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
+const notificationServiceStub: Partial<NotificationService> = {};
 const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalty: () => of(),
+};
+const badgeServiceStub: Partial<BadgeService> = {
+  getBadge: () => of(),
 };
 const rewardServiceStub: Partial<RewardsService> = {
   getReward: () => of(),
@@ -72,6 +77,14 @@ describe('PrizeSetOutcomeComponent', () => {
         {
           provide: IInstantOutcomeTransactionService,
           useValue: instantOutcomeTransactionServiceStub,
+        },
+        {
+          provide: BadgeService,
+          useValue: badgeServiceStub,
+        },
+        {
+          provide: NotificationService,
+          useValue: notificationServiceStub,
         },
       ],
     }).compileComponents();

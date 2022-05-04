@@ -1,0 +1,18 @@
+@import "../../../../theme/variables";
+
+.sort {
+  background-color: $white;
+  padding: 16px;
+
+  .title {
+    height: 20px;
+    display: flex;
+    align-content: flex-start;
+
+    .sort-label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  }
+}

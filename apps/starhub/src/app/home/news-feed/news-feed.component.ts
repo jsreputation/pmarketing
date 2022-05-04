@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
@@ -9,7 +15,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   RssFeedsPages,
-  ConfigService
+  ConfigService,
 } from '@perxtech/core';
 
 import { AnalyticsService, PageType } from '../../analytics.service';
@@ -19,7 +25,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-news-feed',
   templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.scss']
+  styleUrls: ['./news-feed.component.scss'],
 })
 export class NewsFeedComponent implements OnInit {
   public items: FeedItem[];
@@ -28,6 +34,9 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
   public showButton: boolean = true;
   public ghostFeed?: any[] = new Array(1);
+
+  @ViewChild('itemsContainer') public itemsContainer: ElementRef;
+  public activeNumber: number = 0;
 
   private initNewsFeedItems(): void {
     this.configService
@@ -66,7 +75,7 @@ export class NewsFeedComponent implements OnInit {
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
     private configService: ConfigService
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.itemSize = window.innerWidth;
@@ -74,19 +83,15 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public feedScrolled(event: Event): void {
-    // since the feed is full width we can assume each block of scrolling full width is one unit.
+    let scrollTimer: any = null;
     const unitsScrolledPast =
       (event.target as Element).scrollLeft / window.innerWidth;
-    this.updateScrollIndex(Math.round(unitsScrolledPast)); // round to nearest integer
-  }
+    const activeNumber = Math.round(unitsScrolledPast);
 
-  public updateScrollIndex(index: number): void {
-    this.newsBeforeScroll = Array(index >= 0 ? index : 0);
-    if (this.items && this.items.length > 0 && index >= 0) {
-      this.newsAfterScroll = Array(this.items.length - index - 1);
-    } else {
-      this.newsAfterScroll = [];
-    }
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      this.activeNumber = activeNumber;
+    }, 250);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -97,19 +102,42 @@ export class NewsFeedComponent implements OnInit {
   public readMore(item: FeedItem): void {
     this.analytics.addEvent({
       pageType: PageType.overlay,
-      pageName: 'The All New Starhub Rewards'
+      pageName: 'The All New Starhub Rewards',
     });
     this.dialog.open(FeedItemPopupComponent, {
       panelClass: 'app-full-bleed-dialog',
       data: { ...item, ...(this.showButton ? {} : { hideButton: true }) },
       height: '85vh',
       minWidth: '35.5rem',
-      maxWidth: '94vw'
+      maxWidth: '94vw',
     });
   }
 
   public getFirstLine(text: string): string {
     const lines = text.match(/[^\r\n]+/g) || [];
     return lines && lines.length > 0 ? lines[0] : '';
+  }
+
+  public onCircleClick(isActive: boolean, index: number): void {
+    const elem = this.itemsContainer.nativeElement;
+    if (!isActive) {
+      if (index === 0) {
+        elem.scrollLeft = 0;
+      } else if (index === 1) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth)
+          : (elem.scrollLeft -= elem.offsetWidth * this.activeNumber);
+      } else if (index === 2) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth * 2)
+          : (elem.scrollLeft -= elem.offsetWidth * 2);
+      } else if (index === 3) {
+        index > this.activeNumber
+          ? (elem.scrollLeft += elem.offsetWidth * 3)
+          : (elem.scrollLeft -= elem.offsetWidth * 3);
+      } else {
+        elem.scrollLeft = 0;
+      }
+    }
   }
 }

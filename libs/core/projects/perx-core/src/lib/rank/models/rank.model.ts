@@ -33,6 +33,7 @@ export type LeaderBoard = {
   ],
   aboutBanner?: string;
   listBanner?: string;
+  usersToShow?: number;
 };
 
 export type UserRanking = {
@@ -45,6 +46,8 @@ export type UserRanking = {
 export type Podium = {
   id: number;
   outcomes: LeaderboardOutcome[];
+  positionStart: number
+  positionEnd: number;
   displayProperties: {
     rankName: string;
     rankIcon: {
@@ -59,4 +62,10 @@ export interface LeaderboardOutcome extends IReward {
   pointsCount?: number;
   modularizableId: number;
   modularizableType: string;
+  outcome?: LeaderboardOutcomeDetail;
+}
+
+export interface LeaderboardOutcomeDetail {
+  name: string;
+  type: string;
 }

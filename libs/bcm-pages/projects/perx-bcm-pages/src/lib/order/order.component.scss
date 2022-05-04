@@ -1,36 +1,4 @@
 .container {
-  ::ng-deep {
-    &[appearance="standard"],
-    &[appearance="legacy"] {
-
-      .mat-form-field-flex {
-        border-radius: 0 !important;
-        padding: 0.55em 0.75em 0.75em 0.75em !important;
-        background-color: #F8F8FC !important;
-        box-sizing: border-box;
-      }
-      .mat-form-field-underline {
-        background-color: #E9E9ED !important;
-      }
-
-      .mat-form-field-flex > div {
-        padding-bottom: 1em;
-        top: 0.5em;
-
-        span.prefix-spacer {
-          width: 0.3em;
-          display: inline-block;
-        }
-      }
-      .mat-form-field-infix {
-        border-width: 0 !important;
-      }
-      .mat-form-field-suffix {
-        padding-bottom: 0!important;
-      }
-      
-    }
-  }
 
   .customer-info {
     text-align: center;
@@ -91,9 +59,9 @@
   bottom: 2rem;
   width: 100%;
   text-align: center;
-  padding: 0 1rem;
+  padding: 0 2.5rem;
   box-sizing: border-box;
-  button:disabled {
-    opacity: 0.45;
+  .mat-stroked-button {
+    margin-top: 1.5rem;
   }
 }

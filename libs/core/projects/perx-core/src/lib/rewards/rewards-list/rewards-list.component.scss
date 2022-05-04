@@ -8,9 +8,9 @@
   justify-content: center;
 
   .reward-img__wrapper {
-    flex: 0 0 10.5rem;
-    height: 10.5rem;
-    width: 10.5rem;
+    flex: 0 0 10.4rem;
+    height: 10.4rem;
+    width: 10.4rem;
     display: flex;
     justify-content: center;
     overflow: hidden;
@@ -18,7 +18,7 @@
 
     img {
       margin: auto;
-      height: 10.5rem;
+      height: 10.4rem;
     }
 
     .no-image {
@@ -26,7 +26,7 @@
     }
 
     svg {
-      height: 10.5rem;
+      height: 10.4rem;
       background: #4E4E4E;
     }
   }
@@ -45,8 +45,8 @@
     }
 
     h1 {
-      font-size: 1.6rem;
-      line-height: 2rem;
+      font-size: 1.4rem;
+      line-height: 1.6rem;
       padding: 0;
       font-weight: 500;
       margin: 4px 0;
@@ -103,7 +103,8 @@
 }
 
 .card-list-container {
-  padding: 0 0.2rem;
+  padding: 0;
+  margin: 1.6rem 0;
 }
 
 .card-list-container.loading {
@@ -140,7 +141,7 @@
 }
 
 mat-card {
-  margin: 1.2rem 0;
+  margin: 1.2rem 1.6rem;
   display: flex;
   padding: 0;
   flex: 0 0 10.5rem;

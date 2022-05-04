@@ -13,7 +13,6 @@ source ./scripts/set_env_vars.sh $1
 # Build
 docker build -t perxtech/microsite-apps-ng:$1 . \
   --build-arg app=${APP} \
-  --build-arg apihost=${APIHOST} \
   --build-arg basehref=${BASE_HREF} \
   --build-arg preauth=${PREAUTH} \
   --build-arg iswhistler=${IS_WHISTLER} \

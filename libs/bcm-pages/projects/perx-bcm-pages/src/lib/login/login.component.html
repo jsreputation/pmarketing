@@ -2,23 +2,23 @@
   <div class="main-heading">{{"LOGIN_PAGE.WELCOME"|translate}}!</div>
 
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="standard" class="full-width__input">
+    <mat-form-field appearance="fill" class="full-width__input">
       <mat-label>{{"LOGIN_PAGE.EMAIL_ADDRESS"|translate}}</mat-label>
-      <input matInput placeholder='{{"LOGIN_PAGE.EMAIL_ADDRESS"|translate}}' formControlName="email" required>
+      <input matInput formControlName="email" required>
       <mat-error *ngIf="email && email.hasError('required')">
         {{"LOGIN_PAGE.EMAIL_ADDRESS_IS"|translate}} <strong>required</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="standard" class="full-width__input">
+    <mat-form-field appearance="fill" class="full-width__input">
       <mat-label>{{"LOGIN_PAGE.PASSWORD"|translate}}</mat-label>
-      <input type="password" matInput placeholder='{{"LOGIN_PAGE.PASSWORD"|translate}}' formControlName="password" required>
+      <input type="password" matInput formControlName="password" required>
       <mat-error *ngIf="password && password.hasError('required')">
         {{"LOGIN_PAGE.PASSWORD_IS"|translate}} <strong>required</strong>
       </mat-error>
     </mat-form-field>
 
     <div class="forgot-text" (click)="onForgotPassword()">{{"LOGIN_PAGE.FORGOT_PASSWORD"|translate}}?</div>
-    <button mat-flat-button type="submit" class="full-width__button mat-primary">{{"LOGIN_PAGE.LOGIN"|translate}}</button>
+    <button mat-flat-button type="submit" [disabled]="!loginForm.valid" class="full-width__button mat-primary">{{"LOGIN_PAGE.LOGIN"|translate}}</button>
   </form>
 </div>

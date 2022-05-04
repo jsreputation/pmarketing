@@ -1,0 +1,20 @@
+@import '../../../../theme/variables.scss';
+
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nearby-card-wrapper {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    bottom: 20px;
+    left: 0;
+  }
+}

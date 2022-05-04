@@ -17,13 +17,19 @@
           <pinch-zoom *ngIf="step.templateOptions?.bannerImage">
             <img class="question-image" [src]="step.templateOptions?.bannerImage" alt="question-img">
           </pinch-zoom>
-          <span class="margin-top-1">
+          <span class="margin-top-1" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{(index + 1) + '. ' + step.templateOptions.label}}
           </span>
-          <span class="required-star">
+          <span class="required-star" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{step.templateOptions.required ? '*': ''}}
           </span>
-          <div class="description">
+          <div class="description" [ngStyle]="{
+            'color' : step.templateOptions?.fontColor ? step.templateOptions?.fontColor: ''
+          }">
             {{ step.templateOptions.description }}
           </div>
         </div>
@@ -31,17 +37,27 @@
           <formly-field [field]="step"></formly-field>
         </div>
         <div class="button-flex-wrapper">
-          <button matStepperPrevious *ngIf="index !== 0" mat-flat-button color="primary" class="back-btn" type="button">
+          <button matStepperPrevious *ngIf="index !== 0" mat-flat-button color="primary" class="back-btn" type="button"
+            [ngStyle]="{
+              'background-color' : step.templateOptions?.ctaButtonBGColor ? step.templateOptions?.ctaButtonBGColor: '',
+              'color' : step.templateOptions?.ctaButtonTextColor ? step.templateOptions?.ctaButtonTextColor: ''
+            }">
             <mat-icon>keyboard_arrow_left</mat-icon>
           </button>
 
           <button matStepperNext *ngIf="!last" class="next-btn" type="button" mat-flat-button color="primary"
-            [disabled]="!isValid(step)">
+            [disabled]="!isValid(step)" [ngStyle]="{
+              'background-color' : step.templateOptions?.ctaButtonBGColor ? step.templateOptions?.ctaButtonBGColor: '',
+              'color' : step.templateOptions?.ctaButtonTextColor ? step.templateOptions?.ctaButtonTextColor: ''
+            }">
             Next
           </button>
 
           <button *ngIf="last" class="submit-btn" mat-flat-button color="primary" [disabled]="!form.valid"
-            type="submit">
+            type="submit" [ngStyle]="{
+              'background-color' : step.templateOptions?.ctaButtonBGColor ? step.templateOptions?.ctaButtonBGColor: '',
+              'color' : step.templateOptions?.ctaButtonTextColor ? step.templateOptions?.ctaButtonTextColor: ''
+            }">
             Submit
           </button>
         </div>

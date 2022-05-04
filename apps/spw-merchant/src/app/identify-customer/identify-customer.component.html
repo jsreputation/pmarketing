@@ -1,0 +1,34 @@
+<div class="main-container">
+    <mat-tab-group mat-stretch-tabs class="tabs" (selectedTabChange)="onTabChange($event)">
+        <mat-tab [label]="qrCodeTxt">
+         <perx-bcm-pages-qrscanner [enableScan]="enableScan"></perx-bcm-pages-qrscanner>
+        </mat-tab>
+        <mat-tab [label]="mobileNumberTxt">
+            <div>
+                <form
+                [formGroup]="identifyUserForm"
+                (ngSubmit)="onSubmit()">
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>{{"IDENTIFY_USER.MOBILE_NUMBER"|translate}}</mat-label>
+                    <input
+                    matInput
+                    formControlName="mobileNumber"
+                    required>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
+                        {{ "IDENTIFY_USER.MOBILE_NUMBER_IS" | translate }} <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
+                        Please enter a valid number 
+                    </mat-error>
+                </mat-form-field>
+                <button
+                    mat-raised-button
+                    [disabled]="!identifyUserForm.valid"
+                    class="full-width__button mat-primary">
+                    {{ "IDENTIFY_USER.CONFIRM" | translate }}
+                </button>
+                </form>
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+</div>

@@ -68,6 +68,9 @@ export interface IQuiz {
   remainingNumberOfTries?: number;
   displayProperties?: IWCampaignDisplayProperties;
   timeConfig: ITimeConfig;
+  ctaButtonBGColor?: string | undefined;
+  ctaButtonTextColor?: string | undefined;
+  fontColor?: string | undefined;
 }
 
 export interface ITimeConfig {

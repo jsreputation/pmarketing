@@ -13,109 +13,8 @@ import { PointConversionConfirmationComponent } from '../point-conversion-confir
 import { PointConversionComponent } from './point-conversion.component';
 import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
-
-const mockLoyalty = [
-  {
-    id: 270,
-    name: 'test tier reset',
-    description: 'dasadads',
-    beginDate: '2021-07-01T04:21:53.112Z',
-    endDate: null,
-    membershipTierName: 'Gold',
-    membershipIdentifier: '34096277531-1622715521',
-    pointsBalance: 26,
-    currencyBalance: null,
-    pointsToCurrencyRate: null,
-    currency: null,
-    nextTierPoints: 10,
-    nextTierPointsDiff: 10,
-    nextTierName: 'Green',
-    tierPoints: 0,
-    highestTier: 'Gold',
-    expiringPoints: [
-      {
-        expireDate: null,
-        points: null
-      }
-    ],
-    membershipExpiry: null,
-    tiers: [
-      {
-        id: 346,
-        name: 'Base Tier',
-        attained: false,
-        pointsRequirement: 0,
-        pointsDifference: 0,
-        images: []
-      },
-      {
-        id: 347,
-        name: 'Green',
-        attained: false,
-        pointsRequirement: 10,
-        pointsDifference: 10,
-        images: []
-      },
-      {
-        id: 348,
-        name: 'Gold',
-        attained: true,
-        pointsRequirement: 20,
-        pointsDifference: 20,
-        images: []
-      }
-    ],
-    membershipState: 'active',
-    images: {}
-  },
-  {
-    id: 203,
-    name: 'VIP Loyalty program',
-    description: 'Subscription based loyalty program',
-    beginDate: '2021-05-12T07:45:58.473Z',
-    endDate: null,
-    membershipTierName: 'Base Tier',
-    membershipIdentifier: '8701102578116934',
-    pointsBalance: 0,
-    currencyBalance: null,
-    pointsToCurrencyRate: null,
-    currency: null,
-    nextTierPoints: 10,
-    nextTierPointsDiff: 10,
-    nextTierName: 'Silver Tier',
-    tierPoints: 0,
-    highestTier: 'Silver Tier',
-    expiringPoints: [
-      {
-        expireDate: null,
-        points: null
-      }
-    ],
-    membershipExpiry: null,
-    tiers: [
-      {
-        id: 278,
-        name: 'Base Tier',
-        attained: true,
-        pointsRequirement: 0,
-        pointsDifference: 0,
-        images: []
-      },
-      {
-        id: 279,
-        name: 'Silver Tier',
-        attained: false,
-        pointsRequirement: 10,
-        pointsDifference: 10,
-        images: []
-      }
-    ],
-    membershipState: 'active',
-    images: {
-      thumbnailUrl: 'https://cdn.perxtech.io/stored_value/campaign/images/203/alfred-quartey-exaigxml9wm-unsplash-7e968506-8acb-4199-83d0-26d4ffe0b4d5.jpg'
-    }
-  },
-];
+import { mockExchangeRate, mockLoyalty } from './mockData/point.mock-data';
+import { MatOptionSelectionChange } from '@angular/material/core';
 
 describe('PointConversionComponent', () => {
   let component: PointConversionComponent;
@@ -159,10 +58,11 @@ describe('PointConversionComponent', () => {
   }));
 
   beforeEach(() => {
+    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
     fixture = TestBed.createComponent(PointConversionComponent);
     component = fixture.componentInstance;
-    loyaltyService = TestBed.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -179,4 +79,66 @@ describe('PointConversionComponent', () => {
     const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
     expect(listLoyaltyOption.length).toEqual(mockLoyalty.length);
   });
+
+  it('To field should list all available loyalty programs with supported exchange rate', () => {
+    const loyaltyServiceCall =  spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
+    const exchangeratesCall = spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
+    component.ngOnInit();
+    expect(loyaltyServiceCall).toHaveBeenCalled();
+    fixture.detectChanges();
+
+    const arrowSelectButton = fixture.debugElement.query(By.css('.source-dropdown .mat-select-arrow-wrapper')).nativeElement;
+    arrowSelectButton.click();
+    fixture.detectChanges();
+
+    const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+    listLoyaltyOption[1].nativeElement.click();
+    expect(exchangeratesCall).toHaveBeenCalled();
+    fixture.detectChanges();
+
+    const toArrowButton = fixture.debugElement.query(By.css('.destination-dropdown .mat-select-arrow-wrapper')).nativeElement;
+    toArrowButton.click();
+    fixture.detectChanges();
+
+    const destintionLoyaltyPgmList = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+    expect(destintionLoyaltyPgmList.length).toBeTruthy();
+  });
+
+  it('should enable the submit button when all field valid', () => {
+    spyOn(loyaltyService, 'getLoyalties').and.returnValue(of(mockLoyalty));
+    spyOn(loyaltyService, 'getLoyaltyExchangerates').and.returnValue(of(mockExchangeRate));
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    const fromArrowButton = fixture.debugElement.query(By.css('.source-dropdown .mat-select-arrow-wrapper')).nativeElement;
+    fromArrowButton.click();
+    fixture.detectChanges();
+
+    const listLoyaltyOption = fixture.debugElement.queryAll(By.css('.mat-option-text'));
+    listLoyaltyOption[1].nativeElement.click();
+    fixture.detectChanges();
+
+
+    const toArrowFieldButton = fixture.debugElement.query(By.css('.destination-dropdown .mat-select-arrow-wrapper'));
+    toArrowFieldButton.nativeElement.click();
+    fixture.detectChanges();
+
+    component.onDestinationChanged({
+      isUserInput: false,
+      source: { value: component.destintionLoyaltyProgramList[0].value }
+    } as MatOptionSelectionChange);
+
+    const inputPointTransfer = fixture.debugElement.query(By.css('.point-transfer-value')).nativeElement;
+    const keyUpEvent = new KeyboardEvent('keyup', {
+      bubbles : true, cancelable : true, shiftKey : false
+    });
+    inputPointTransfer.value = 10;
+    inputPointTransfer.dispatchEvent(keyUpEvent);
+    fixture.detectChanges();
+
+    const buttonSubmit = fixture.debugElement.query(By.css('.submit-btn')).nativeElement;
+    expect(buttonSubmit.disabled).toBeFalsy();
+  });
+
 });

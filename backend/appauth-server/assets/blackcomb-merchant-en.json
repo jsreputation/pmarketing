@@ -15,7 +15,10 @@
         "REDEMPTION": "Redemption",
         "TRANSACTION_HISTORY": "Transaction History",
         "LOGOUT": "Log Out",
-        "WELCOME_MSG": "What are we doing today?"
+        "WELCOME_MSG": "What are we doing today?",
+        "GREETING_MORNING": "Good morning",
+        "GREETING_AFTERNOON": "Good afternoon",
+        "GREETING_EVENING": "Good evening"
     },
     "TRANSACTION_HISTORY": {
         "POINT_EARNED": "{points} Points earned",
@@ -26,16 +29,19 @@
     "REDEEM": {
         "CANCEL": "Cancel",
         "PROCEED": "Proceed",
-        "CLOSE": "Close"
+        "CLOSE": "Close",
+        "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
     },
     "POPUP_CONTENT": {
         "TRANSACTION_COMPLETED": "Transaction completed"
     },
     "ERRORS": {
         "NOT_ENOUGH_POINTS": "User does not have enough points balance",
-        "GENERIC": "Sorry, something went wrong"
+        "GENERIC": "Sorry, something went wrong",
+        "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
     },
     "FORGET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
         "EMAIL_ADDRESS": "Email Address",
         "EMAIL_ADDRESS_IS": "Email Address is",
         "NEXT": "Next"

@@ -41,7 +41,7 @@
         </div>
       </div>
       <div *ngIf="quiz.mode !== mode.basic" class="quiz-no-card">
-        <h1>{{quiz.title}}</h1>
+        <h1>{{quiz.title?.text}}</h1>
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
         <perx-core-quiz
           [hideIndex]="true"

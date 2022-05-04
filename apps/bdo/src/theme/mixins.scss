@@ -1,0 +1,7 @@
+@mixin ellipse-lines($lines) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines !important;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

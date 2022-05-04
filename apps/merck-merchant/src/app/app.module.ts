@@ -55,6 +55,9 @@ import { TransactionHistoryPipe } from './transaction-history/transaction-histor
 import { switchMap, tap } from 'rxjs/operators';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatCardModule } from '@angular/material/card';
+import { UserSignupComponent } from './user-signup/user-signup.component';
+import { IdentifyCustomerComponent } from './identify-customer/identify-customer.component';
+import { MerchantQrscannerModule } from '@perxtech/bcm-pages';
 
 export const appInit =
   (
@@ -93,7 +96,9 @@ export const appInit =
     RegisterComponent,
     TransactionHistoryComponent,
     TransactionPipe,
-    TransactionHistoryPipe
+    TransactionHistoryPipe,
+    UserSignupComponent,
+    IdentifyCustomerComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -126,6 +131,7 @@ export const appInit =
     VouchersModule,
     HttpClientModule,
     InfiniteScrollModule,
+    MerchantQrscannerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

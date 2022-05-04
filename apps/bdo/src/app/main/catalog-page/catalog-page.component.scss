@@ -1,0 +1,38 @@
+@import "../../../theme/variables";
+
+.catalog-page {
+  font-size: 14px;
+  @media screen and (min-width: $desktop-width) {
+    display: flex;
+  }
+
+  .every-day {
+    margin: 10px 0;
+  }
+
+  .category {
+    margin-bottom: 10px;
+  }
+
+  .filter-result {
+    background: $white;
+  }
+  .desktop-filter-container {
+    display: none;
+    @media screen and (min-width: $desktop-width) {
+      display: block !important;
+      flex: 0 0 280px;
+      width: 280px;
+    }
+  }
+  .results-container {
+   @media screen and (min-width: $desktop-width) {
+      flex: 1 1 auto;
+      width: 75%;
+    }
+  }
+
+  .desktop-filter {
+    margin: 1rem;
+  }
+}

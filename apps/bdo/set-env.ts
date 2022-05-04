@@ -93,7 +93,7 @@ const envConfigFile = `export const environment = {
 
 
 const appConfigFile = `{
-  "app": "${process.env.APP ? process.env.APP : 'blackcomb'}",
+  "app": "${process.env.APP ? process.env.APP : 'bdo'}",
   "appVersion": "${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}",
   "apiHost": "${
     process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
@@ -220,6 +220,12 @@ const appConfigFile = `{
     process.env.ENABLE_POINT_TRANSFER ? process.env.ENABLE_POINT_TRANSFER : false
   },
   "custom": {
+    "pi": "${
+      process.env.ANON_ID ? process.env.ANON_ID : ''
+    }",
+    "showSearchHistory": ${
+      process.env.SHOW_SEARCH_HISTORY ? process.env.SHOW_SEARCH_HISTORY : false
+    },
     "stampsType": "${
       process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'
     }",
@@ -241,7 +247,10 @@ const appConfigFile = `{
     ],
     "showSurveyFirstOnHomePageCampaignList": "${
       process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST ? process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST : false
-    }"
+    }",
+    "showOrderedCatalogItems":  ${
+      process.env.SHOW_ORDERED_CATALOG_ITEMS ? process.env.SHOW_ORDERED_CATALOG_ITEMS : false
+    }
   },
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false

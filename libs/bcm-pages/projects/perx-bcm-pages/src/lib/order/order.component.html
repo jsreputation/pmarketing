@@ -12,21 +12,21 @@
       <form class="order-form" [formGroup]="orderForm" (ngSubmit)="onCompleteTransaction()">
         <div class="date-container">
           <div class="date">
-            <mat-form-field appearance="standard" class="full-width__input read-only">
+            <mat-form-field appearance="fill" class="full-width__input read-only">
               <mat-label>{{"ORDER_PAGE.TRANSACTION_DATE"|translate}}</mat-label>
               <input matInput placeholder='{{"ORDER_PAGE.TRANSACTION_DATE"|translate}}' [readonly]="true" formControlName="transactionDate">
               <mat-icon matSuffix>calendar_today</mat-icon>
             </mat-form-field> 
           </div>
           <div class="time">
-            <mat-form-field appearance="standard" class="full-width__input read-only">
+            <mat-form-field appearance="fill" class="full-width__input read-only">
               <mat-label>{{"ORDER_PAGE.TIME"|translate}}</mat-label>
               <input matInput placeholder='{{"ORDER_PAGE.TIME"|translate}}' [readonly]="true" formControlName="transactionTime">
               <mat-icon matSuffix>schedule</mat-icon>
             </mat-form-field> 
           </div>
         </div>
-          <mat-form-field appearance="standard" class="full-width__input" [ngClass]="{'read-only' : isSummaryActivated}">
+          <mat-form-field appearance="fill" class="full-width__input" [ngClass]="{'read-only' : isSummaryActivated}">
             <mat-label>{{"ORDER_PAGE.DESCRIPTION"|translate}}</mat-label>
             <input matInput placeholder='{{"ORDER_PAGE.DESCRIPTION"|translate}}' [readonly]="isSummaryActivated"
             formControlName="description" required>
@@ -34,7 +34,7 @@
               {{"ORDER_PAGE.DESCRIPTION_IS"|translate}} <strong>required</strong>
             </mat-error>
           </mat-form-field>        
-          <mat-form-field appearance="standard" class="full-width__input" [ngClass]="{'read-only' : isSummaryActivated}">
+          <mat-form-field appearance="fill" class="full-width__input" [ngClass]="{'read-only' : isSummaryActivated}">
             <mat-label>{{"ORDER_PAGE.AMOUNT"|translate}}</mat-label>
             <input matInput placeholder='{{"ORDER_PAGE.AMOUNT"|translate}}' [readonly]="isSummaryActivated" formControlName="amountPaid" required>
             <mat-error *ngIf="amountPaid && amountPaid.hasError('required')">
@@ -44,11 +44,11 @@
           <div class="btn-container">
             <ng-container *ngIf="!isSummaryActivated; else summaryBlock">
               <button mat-raised-button [disabled]="!payload || !orderForm.valid" (click)="toggleSummary()" class="full-width__button mat-primary">{{"ORDER_PAGE.REVIEW"|translate}}</button>
-              <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">{{"ORDER_PAGE.CANCEL"|translate}}</button>
+              <button mat-stroked-button (click)="onCancel()" class="full-width__button btn-transparent">{{"ORDER_PAGE.CANCEL"|translate}}</button>
             </ng-container>
             <ng-template #summaryBlock>
               <button mat-raised-button [disabled]="!payload && isSummaryActivated" type="submit" class="full-width__button mat-primary">{{"ORDER_PAGE.SUBMIT"|translate}}</button>
-              <button mat-flat-button (click)="toggleSummary()" class="full-width__button btn-transparent">{{"ORDER_PAGE.BACK"|translate}}</button>
+              <button mat-stroked-button (click)="toggleSummary()" class="full-width__button btn-transparent">{{"ORDER_PAGE.BACK"|translate}}</button>
             </ng-template>
           </div>
       </form>          

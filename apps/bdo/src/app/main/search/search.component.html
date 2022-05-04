@@ -1,0 +1,19 @@
+<div class="search-page-container">
+  <div class="pill-section" *ngIf="showHistory">
+    <h5>Recently Searched</h5>
+    <div class="content">
+        <span *ngFor="let historyItem of searchHistories" (click)="onClick(historyItem)">
+          {{historyItem}}
+        </span>
+    </div>
+  </div>
+  <div class="pill-section">
+    <h5>Trending</h5>
+    <div class="content">
+        <span *ngFor="let item of trendingList" (click)="onClick(item)">
+          {{item}}
+        </span>
+    </div>
+  </div>
+</div>
+

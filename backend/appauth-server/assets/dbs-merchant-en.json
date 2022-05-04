@@ -1,0 +1,107 @@
+{
+    "LOGIN_PAGE": {
+        "WELCOME": "Welcome",
+        "NAME": "Name",
+        "NAME_IS": "Name is",
+        "EMAIL_ADDRESS": "Email address",
+        "EMAIL_ADDRESS_IS": "Email address is",
+        "PASSWORD": "Password",
+        "PASSWORD_IS": "Password is",
+        "FORGOT_PASSWORD": "Forgot password",
+        "LOGIN": "Login"
+    },
+    "HOME": {
+        "SALES_SCAN": "Sales Scan",
+        "REDEMPTION": "Redemption",
+        "TRANSACTION_HISTORY": "Transaction History",
+        "LOGOUT": "Log Out",
+        "WELCOME_MSG": "What are we doing today?",
+        "GREETING_MORNING": "Good morning",
+        "GREETING_AFTERNOON": "Good afternoon",
+        "GREETING_EVENING": "Good evening"
+    },
+    "TRANSACTION_HISTORY": {
+        "POINT_EARNED": "{points} Points earned",
+        "POINT_SPENT": "{points} Points spent",
+        "SALES_TXT": "Sales",
+        "REDEMPTION_TXT": "Redemptions"
+    },
+    "REDEEM": {
+        "CANCEL": "Cancel",
+        "PROCEED": "Proceed",
+        "CLOSE": "Close",
+        "SCANNER_TXT": "CAPTURE QR CODE WITHIN THE FRAME ABOVE"
+    },
+    "POPUP_CONTENT": {
+        "TRANSACTION_COMPLETED": "Transaction completed"
+    },
+    "ERRORS": {
+        "NOT_ENOUGH_POINTS": "User does not have enough points balance",
+        "GENERIC": "Sorry, something went wrong",
+        "OUT_OF_TRIES": "Sorry! You've reached the attempt limit for today."
+    },
+    "FORGET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
+        "EMAIL_ADDRESS": "Email Address",
+        "EMAIL_ADDRESS_IS": "Email Address is",
+        "NEXT": "Next"
+    },
+    "RESET_PW_PAGE": {
+        "RESET_PASSWORD": "Reset your password",
+        "PASSWORD": "Password",
+        "NEW_PASSWORD": "New password",
+        "CONFIRM_PASSWORD": "Confirm new password",
+        "SUBMIT_BUTTON": "Update password"
+    },
+    "RECORD_TYPE_PAGE": {
+        "SALES_RECORD": "Create Sales Record",
+        "SALES_RECORD_TITLE": "Select a Record to create:",
+        "CANCEL": "Cancel",
+        "PROFILE": "Profile detected",
+        "MOBILE_NUMBER": "Mobile Number"
+    },
+    "ORDER_RESERVE_PAGE": {    
+        "BACK": "Back",
+        "CONTINUE": "Continue",
+        "APPLY_VOUCHER": "Apply Voucher",
+        "REMOVE_VOUCHER": "Remove Voucher",      
+        "PAY_BY_COINS": "Pay by Coins",
+        "COINS_PAID": "Coins paid",       
+        "SCAN_BARCODE": "SCAN VOUCHER BARCODE",
+        "INSUFFICIENT_COIN_MSG": "Customer’s coin balance is insufficient",
+        "VOUCHER_REDEEM_SUCCESS_MSG": "Voucher has been applied"
+    },
+    "CREATE_ORDER_PAGE": {
+        "CREATE_RECORD": "Create Record",
+        "BACK": "Back",
+        "VOUCHER_APPLIED": "Voucher applied",
+        "POINTS_PAID": "Coins paid",
+        "INSTRUCTIONS": "Instructions",
+        "INSTRUCTION_1": "Input the voucher you applied or coins paid on your POS to calculate the net amount after discount.",
+        "INSTRUCTION_2": "Enter the net amount and receipt ID from your POS system below",
+        "RECEIPT": "Receipt ID",
+        "AMOUNT": "Net Amount",
+        "AMOUNT_IS": "Amount is",
+        "INPUT_ERR_MSG": "This field is required"
+    },
+    "ORDER_SUMMARY": {
+        "SALES_RECORD_TITLE": "Sales Record created!",
+        "SALES_RECORD_SUBTITLE": "Submit record to your POS by scanning the code below:",
+        "SALES_RECORD_ID": "Sales Record ID:",
+        "SUMMARY": "Summary",
+        "CUSTOMER": "Customer",
+        "MOBILE_NUMBER": "Mobile Number",
+        "VOUCHER_APPLIED": "Voucher applied",
+        "POINTS_PAID": "Coins paid",
+        "RECEIPT": "Receipt ID",
+        "AMOUNT": "Amount after discount"
+    },
+    "IDENTIFY_USER": {
+        "BY_QR_SCAN": "By QR Scan",
+        "BY_MOBILE_NUMBER": "By Mobile Number",
+        "MOBILE_NUMBER": "Enter customer mobile number",
+        "MOBILE_NUMBER_IS": "Mobile number is",
+        "CONFIRM": "Confirm"
+    },
+    "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+}

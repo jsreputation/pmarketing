@@ -1,0 +1,22 @@
+
+<div class="main-container">
+  <div class="header-section">
+    <h1>{{greeting}}</h1>
+    <h2>{{"HOME.WELCOME_MSG"|translate}}</h2>
+  </div>
+  <div class="main-section">
+    <div class="icon-group">
+      <a class="icon-item" (click)="onRedemption()">
+        <div class="icon-container">
+          <img src="../../assets/redemption.png"/>      
+          <span>{{"HOME.REDEMPTION"|translate}}</span>
+          </div>
+      </a>
+    </div>
+  </div>
+  <div class="logout">
+      <button mat-stroked-button (click)="onLogOut()">
+        {{"HOME.LOGOUT"|translate}}
+      </button>
+  </div>
+</div>

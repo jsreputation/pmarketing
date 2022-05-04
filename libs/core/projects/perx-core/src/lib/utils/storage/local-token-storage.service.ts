@@ -19,7 +19,7 @@ export class LocalTokenStorage extends TokenStorage {
   constructor(config: Config | null) {
     super();
     if (config && config.storageType) {
-      this.storageType = config.storageType;
+      this.storageType = config.storageType === 'session' ? TokenType.local : TokenType.session;
     }
   }
   public getAppInfo(): Observable<IAppInfo> {

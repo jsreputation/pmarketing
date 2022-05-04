@@ -1,4 +1,4 @@
-<div [ngClass]="popupClass">
+<div [ngClass]="popupClass" class="popup-container">
   <div class="close-btn-container" *ngIf="showButton && !hideCloseButton">
     <button mat-icon-button
             class="close-btn"
@@ -6,8 +6,8 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div *ngIf="title && !titleBelowImage" class="title-wrapper">
-    <h1 mat-dialog-title>{{title}}</h1>
+  <div class="title-wrapper">
+    <h1 *ngIf="title && !titleBelowImage" mat-dialog-title>{{title}}</h1>
   </div>
   <div *ngIf="imageUrl" class="img-wrapper">
     <img [src]="imageUrl"/>

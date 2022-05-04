@@ -13,7 +13,15 @@ import {
   WEngagementType,
 } from '@perxtech/whistler';
 
-import { CampaignState, CampaignType, ICampaign, ICampaignOutcome, IReferral } from './models/campaign.model';
+import {
+  CampaignState,
+  CampaignType,
+  IBDOCampaignEnrolment,
+  ICampaign,
+  ICampaignOutcome,
+  ICampaignRule,
+  IReferral
+} from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 
 import { Config } from '../config/config';
@@ -163,5 +171,20 @@ export class WhistlerCampaignService implements ICampaignService {
   public enrolIntoCampaign(campaignId: number): Observable<boolean> {
     throw new Error('Method not implemented.');
   };
-
+  // @ts-ignore
+  public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>{
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public bdoCampaignEnrol(id: number, promoID: string, captchaToken: string): Observable<IBDOCampaignEnrolment> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public searchCampaigns(text: string, page?: number, pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
 }

@@ -1,5 +1,6 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { ILoyalty } from '../../loyalty/models/loyalty.model';
+import { IBadge } from '../../badges/models/badge.model';
 
 export interface IInstantOutcomeTransaction {
   id: number;
@@ -20,12 +21,14 @@ export interface IInstantOutcome {
   state: InstantOutcomeState;
   rewardDetails?: IReward;
   loyaltyDetails?: ILoyalty;
+  badgeDetails?: IBadge;
   pointsCount?: number;
 }
 
 export enum InstantOutcomeCampaignPrizeType {
   reward = 'Reward::Campaign',
-  points = 'StoredValue::Campaign'
+  points = 'StoredValue::Campaign',
+  badge = 'Badge'
 }
 
 export enum InstantOutcomeActualOutcomeType {

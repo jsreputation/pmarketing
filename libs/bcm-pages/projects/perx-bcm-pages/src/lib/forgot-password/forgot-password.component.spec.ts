@@ -21,6 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { IMerchantAdminService } from '@perxtech/core';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
+import { Router } from '@angular/router';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -28,6 +29,10 @@ describe('ForgotPasswordComponent', () => {
 
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     forgotPassword: () => of(),
+  };
+
+  const routerStub = {
+    navigate: () => ({})
   };
 
   beforeEach(async(() => {
@@ -47,6 +52,7 @@ describe('ForgotPasswordComponent', () => {
       ],
       providers: [
         { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
+        { provide: Router, useValue: routerStub },
       ]
     })
       .compileComponents();

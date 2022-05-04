@@ -1,0 +1,51 @@
+.main-container {
+  .main-section {
+    padding: 3rem 0;
+  }
+
+  .header-section {
+    h1 {
+      font-size: 2.6rem;
+      margin-bottom: .8rem;
+    }
+    h2 {
+      font-size: 1.6rem;
+      color: #6A6A73;
+      margin: 0;
+    }
+  }
+
+  .icon-group {
+    display: flex;
+    justify-content: center;
+  }
+
+  .icon-item {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .icon-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: var(--primary);
+    font-size: 1.4rem;
+    img {
+      margin-bottom: .8rem;
+    }
+  }
+
+  .logout {
+    position: absolute;
+    right: 0;
+    bottom: 2rem;
+    width: 100%;
+    text-align: center;
+    padding: 0 2.5rem;
+    box-sizing: border-box;
+    button {
+      width: 100%;
+    }   
+  }
+}

@@ -1,10 +1,7 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { AuthServiceFactory, FormsServiceFactory } from './authentication.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {
-  HttpBackend,
-  HttpClient
-} from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
@@ -72,10 +69,10 @@ describe('AuthenticationModule', () => {
     expect(service instanceof V4FormsService).toBeTruthy();
   }));
 
-  it('should create tokenService', () => {
-    let service = TokenStorageServiceFactory({ storageType: TokenType.local });
+  it('should create tokenService', inject([HttpClient], (http: HttpClient) => {
+    let service = TokenStorageServiceFactory(http, { storageType: TokenType.local });
     expect(service instanceof LocalTokenStorage).toBeTruthy();
-    service = TokenStorageServiceFactory({});
+    service = TokenStorageServiceFactory(http, {});
     expect(service instanceof LocalTokenStorage).toBeTruthy();
-  });
+  }));
 });

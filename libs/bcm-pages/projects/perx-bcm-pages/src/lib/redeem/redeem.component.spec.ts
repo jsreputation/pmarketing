@@ -1,9 +1,7 @@
 import {
   async,
   ComponentFixture,
-  fakeAsync,
   TestBed,
-  tick
 } from '@angular/core/testing';
 
 import { RedeemComponent } from './redeem.component';
@@ -74,6 +72,34 @@ describe('RedeemComponent', () => {
     loyalty: []
   };
 
+  const redeemedVoucher: Voucher = {
+    id: 1,
+    reward: {
+      id: 1,
+      name: '',
+      description: '',
+      subtitle: '',
+      validFrom: new Date(),
+      validTo: new Date(),
+      sellingFrom: new Date(),
+      rewardThumbnail: '',
+      rewardBanner: '',
+      merchantImg: '',
+      rewardPrice: [],
+      merchantId: 1,
+      merchantName: '',
+      merchantWebsite: '',
+      termsAndConditions: '',
+      howToRedeem: '',
+      categoryTags: [],
+      inventory: undefined,
+      loyalty: []
+    },
+    state: VoucherState.redeemed,
+    redemptionType: RedemptionType.none,
+    expiry: null,
+  };
+
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(reward),
     // getRewardPricesOptions: () => of()
@@ -120,16 +146,6 @@ describe('RedeemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get reward on init', fakeAsync(() => {
-    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
-    const authSpy = spyOn(rewardsService, 'getReward').and.returnValue(of(reward));
-
-    component.ngOnInit();
-    tick();
-    fixture.detectChanges();
-    expect(authSpy).toHaveBeenCalled();
-    expect(component.reward).toBe(reward);
-  }));
 
   it('should navigate to home onClose click', () => {
     const router: Router = fixture.debugElement.injector.get(Router);
@@ -155,34 +171,6 @@ describe('RedeemComponent', () => {
     //   points: 10,
     // };
 
-    const redeemedVoucher: Voucher = {
-      id: 1,
-      reward: {
-        id: 1,
-        name: '',
-        description: '',
-        subtitle: '',
-        validFrom: new Date(),
-        validTo: new Date(),
-        sellingFrom: new Date(),
-        rewardThumbnail: '',
-        rewardBanner: '',
-        merchantImg: '',
-        rewardPrice: [],
-        merchantId: 1,
-        merchantName: '',
-        merchantWebsite: '',
-        termsAndConditions: '',
-        howToRedeem: '',
-        categoryTags: [],
-        inventory: undefined,
-        loyalty: []
-      },
-      state: VoucherState.redeemed,
-      redemptionType: RedemptionType.none,
-      expiry: null,
-    };
-
     const merchantAdminServiceRedeemVoucherSpy = spyOn(merchantAdminService, 'redeemVoucher').and.returnValue(
       of(redeemedVoucher)
     );
@@ -195,9 +183,10 @@ describe('RedeemComponent', () => {
   });
 
   it('should get reward price', () => {
-    component.reward = reward;
+    component.voucherReserved = redeemedVoucher;
+    component.voucherReserved.reward = reward;
     // const price = component.getPrice();
-    expect(component.reward).toBe(reward);
+    expect(component.voucherReserved.reward).toBe(reward);
     // expect(price).toBe(0);
   });
 

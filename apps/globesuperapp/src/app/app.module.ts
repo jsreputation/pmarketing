@@ -53,7 +53,8 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule
+  VouchersModule,
+  InstantOutcomeTransactionServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -162,7 +163,8 @@ export const setLanguage = (
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ForgotPasswordModule,
     PerxQuestModule.forRoot(),
-    BadgeServiceModule.forRoot()
+    BadgeServiceModule.forRoot(),
+    InstantOutcomeTransactionServiceModule.forRoot(),
   ],
   bootstrap: [AppComponent],
   providers: [

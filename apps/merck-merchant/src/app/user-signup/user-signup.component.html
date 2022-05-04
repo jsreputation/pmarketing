@@ -1,0 +1,49 @@
+<app-header [showBackButton]="true"></app-header>
+<div class="container">
+  <mat-card class="content mat-elevation-z3">
+    <div class="main-heading">{{ 'USER_SIGN_UP_PAGE.USER_SIGN_UP' | translate}}</div>
+    <form
+      [formGroup]="userSignUpForm"
+      (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width__input">
+				<mat-select formControlName="countryCode">
+					<mat-option default value="852">
+						<ng-container>{{'USER_SIGN_UP_PAGE.COUNTRY_HONGKONG' | translate}}</ng-container>(+852)
+					</mat-option>
+					<mat-option value="853">
+						<ng-container>{{'USER_SIGN_UP_PAGE.COUNTRY_MACAU' | translate}}</ng-container> (+853)
+					</mat-option>
+					<mat-option value="86">
+						<ng-container>{{'USER_SIGN_UP_PAGE.COUNTRY_CHINA' | translate}}</ng-container> (+86)
+					</mat-option>
+					<mat-option value="65">
+						<ng-container>{{'USER_SIGN_UP_PAGE.COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+      <mat-form-field
+        color="primary"
+        class="full-width__input">
+        <mat-label translate>{{ 'USER_SIGN_UP_PAGE.MOBILE_NO' | translate}}</mat-label>
+        <input
+          matInput
+          placeholder='{{"USER_SIGN_UP_PAGE.MOBILE_NO"|translate}}'
+          formControlName="mobileNumber"
+          required>
+        <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
+          {{ 'USER_SIGN_UP_PAGE.MOBILE_NO_IS' | translate}}
+        </mat-error>
+        <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
+					{{ 'USER_SIGN_UP_PAGE.MOBILE_NO_INVALID' | translate}}
+				</mat-error>
+      </mat-form-field>
+      <button
+        [disabled]="!userSignUpForm.valid"
+        mat-flat-button
+        type="submit"
+        class="full-width__button btn-blue">
+        {{ 'USER_SIGN_UP_PAGE.SUBMIT_BUTTON' | translate}}
+      </button>
+    </form>
+  </mat-card>
+</div>

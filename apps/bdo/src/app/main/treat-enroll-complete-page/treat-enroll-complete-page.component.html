@@ -1,0 +1,53 @@
+<div class="treat-enroll-success-page">
+    <div class="enroll-success">
+        <div class="icon-success">
+            <img src="assets/images/success.svg" alt="">
+        </div>
+        <div class="enrolled">
+            You are now enrolled in the promo.
+        </div>
+        <div class="promo">
+            Promo:
+        </div>
+        <div class="promo-content">
+            <p>{{promo?.campaignName}}</p>
+
+        </div>
+        <div class="number">
+            <div class="number-title">
+                <p>Your reference number is</p>
+
+            </div>
+            <div class="number-content">
+                <p> {{promo?.promoId}}</p>
+            </div>
+        </div>
+        <div class="note">
+           <p>Please keep a screenshot of this acknowledgement for future reference</p>
+        </div>
+        <div class="share-container">
+            <div class="share" (click)="sharePromo()">
+                <img src=" assets/images/share.svg" alt="" class="share-icon">
+                Share
+            </div>
+            <div class="spacer"></div>
+            <div class="copy" (click)="copy(promo?.promoId)">
+                <mat-icon class="material-icons">content_copy</mat-icon>
+                Copy Reference Number
+            </div>
+        </div>
+        <div class="note">
+            <p>{{promo.tnc}}</p>
+        </div>
+    </div>
+
+    <div class="similar-deal" *ngIf="similarDeals && similarDeals.length > 0">
+        <div class="similar-deals-heading">
+            <h2 class="header">SIMILAR DEALS</h2>
+            <div class="action" (click)="viewAll()">View All</div>
+          </div>
+        <div class="similar-deal-content">
+            <bdo-carousel-items [deals]="similarDeals" (eventItemClick)="navigateTo($event)"></bdo-carousel-items>
+        </div>
+    </div>
+</div>

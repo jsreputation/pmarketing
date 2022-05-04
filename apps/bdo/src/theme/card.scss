@@ -1,0 +1,48 @@
+@import "./variables";
+
+mat-card {
+  max-width: 28rem;
+
+  .mat-card-image {
+    margin-bottom: 0;
+    object-fit: fill;
+    object-position: center;
+  }
+}
+
+.mat-card {
+  flex: 0 0 0;
+  flex-grow: 1;
+  flex-basis: 75%;
+  margin: 0 0.5rem 1rem 0.5rem;
+  color: $dark-grey;
+
+  .mat-card-image {
+    height: 15rem;
+    object-fit: cover;
+  }
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 1.4rem 0 1.9rem 0;
+
+  div {
+    h1 {
+      margin: 0;
+    }
+    h2 {
+      text-overflow: ellipsis;
+      margin: 0.2rem 0 0 0;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+}

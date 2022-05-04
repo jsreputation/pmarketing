@@ -1,0 +1,6 @@
+<ul class="wrapper">
+  <li class="item" *ngFor="let featuredDeal of deals" (click)="itemClick(featuredDeal)">
+    <img class="image" [src]="featuredDeal.featuredImg ? featuredDeal.featuredImg : urlImageDefault">
+    <span class="title">{{featuredDeal.name}}</span>
+  </li>
+</ul>

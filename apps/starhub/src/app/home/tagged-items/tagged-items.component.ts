@@ -182,7 +182,7 @@ export class TaggedItemsComponent implements OnInit {
     let stampCampaigns: ICampaign[] = [];
     this.campaignsPageId++;
     this.campaignService
-      .getCampaigns({ page: this.campaignsPageId, tagged_with: this.tagName, size: campaignPageSize})
+      .getCampaigns({ page: this.campaignsPageId, tags: [this.tagName], size: campaignPageSize})
       .pipe(
         tap((campaigns) => {
            if (campaigns.length < campaignPageSize) {

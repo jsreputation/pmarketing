@@ -190,7 +190,7 @@
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "LEADERBOARD",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "NO_LEADER_BOARDS": "No leaderboards here yet!",
     "NO_RANK_INFO": "No ranking information here yet!",
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
@@ -207,7 +207,8 @@
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
-    "NO_RANK": "NA"
+    "NO_RANK": "NA",
+    "NICKNAME": "NICKNAME"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",
@@ -386,6 +387,7 @@
     "STAMP_CARD_UPDATED": "Stamp card updated",
     "CARD_COMPLETED": "Stamp card completed by your team-mate!",
     "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "POINTS_POPUP_TEXT": "You have gained points!",
     "REWARD_POPUP_TITLE": "Congratulations!",
     "REWARD_POPUP_TEXT": "Here is a reward for you.",
     "REWARD_POPUP_BUTTON_TEXT": "View Reward",

@@ -47,6 +47,9 @@
     "components-demo": {
       "tags": []
     },
+    "hangseng": {
+      "tags": []
+    },
     "hkbn": {
       "tags": []
     },
@@ -57,6 +60,9 @@
       "tags": []
     },
     "hsbchk": {
+      "tags": []
+    },
+    "megaworld": {
       "tags": []
     },
     "merck-customer": {
@@ -93,6 +99,15 @@
       "tags": []
     },
     "bdo": {
+      "tags": []
+    },
+    "spw-merchant": {
+      "tags": []
+    },
+    "prudential-pulse": {
+      "tags": []
+    },
+    "dbs-merchant": {
       "tags": []
     }
   }

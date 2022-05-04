@@ -1925,6 +1925,122 @@
         }
       }
     },
+    "prudential-pulse": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/prudential-pulse",
+      "sourceRoot": "apps/prudential-pulse/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/prudential-pulse",
+            "index": "apps/prudential-pulse/src/index.html",
+            "main": "apps/prudential-pulse/src/main.ts",
+            "polyfills": "apps/prudential-pulse/src/polyfills.ts",
+            "tsConfig": "apps/prudential-pulse/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/prudential-pulse/src/favicon.ico",
+              "apps/prudential-pulse/src/assets",
+              "apps/prudential-pulse/src/static",
+              "apps/prudential-pulse/src/manifest.webmanifest",
+              "apps/prudential-pulse/src/robots.txt"
+            ],
+            "styles": [
+              "apps/prudential-pulse/src/styles.scss",
+              "apps/blackcomb/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/prudential-pulse/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/prudential-pulse/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "prudential-pulse:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "prudential-pulse:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "prudential-pulse:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/prudential-pulse/e2e/protractor.conf.js",
+            "devServerTarget": "prudential-pulse:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "prudential-pulse:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/prudential-pulse/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/prudential-pulse"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/prudential-pulse/src/**/*.d.ts",
+              "apps/prudential-pulse/src/main.ts",
+              "apps/prudential-pulse/src/polyfills.ts",
+              "apps/prudential-pulse/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
     "all-it": {
       "projectType": "application",
       "schematics": {
@@ -2286,6 +2402,222 @@
         }
       }
     },
+    "spw-merchant": {
+      "projectType": "application",
+      "root": "apps/spw-merchant",
+      "sourceRoot": "apps/spw-merchant/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/spw-merchant",
+            "index": "apps/spw-merchant/src/index.html",
+            "main": "apps/spw-merchant/src/main.ts",
+            "polyfills": "apps/spw-merchant/src/polyfills.ts",
+            "tsConfig": "apps/spw-merchant/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/spw-merchant/src/favicon.ico",
+              "apps/spw-merchant/src/assets",
+              "apps/spw-merchant/src/manifest.webmanifest",
+              "apps/spw-merchant/src/robots.txt"
+            ],
+            "styles": ["apps/spw-merchant/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/spw-merchant/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/spw-merchant/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "spw-merchant:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "spw-merchant:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "spw-merchant:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/spw-merchant/src/**/*.d.ts",
+              "apps/spw-merchant/src/main.ts",
+              "apps/spw-merchant/src/polyfills.ts",
+              "apps/spw-merchant/src/**/*.spec.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/spw-merchant"],
+          "options": {
+            "jestConfig": "apps/spw-merchant/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/spw-merchant/e2e/protractor.conf.js",
+            "devServerTarget": "spw-merchant:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "spw-merchant:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "dbs-merchant": {
+      "projectType": "application",
+      "root": "apps/dbs-merchant",
+      "sourceRoot": "apps/dbs-merchant/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/dbs-merchant",
+            "index": "apps/dbs-merchant/src/index.html",
+            "main": "apps/dbs-merchant/src/main.ts",
+            "polyfills": "apps/dbs-merchant/src/polyfills.ts",
+            "tsConfig": "apps/dbs-merchant/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/dbs-merchant/src/favicon.ico",
+              "apps/dbs-merchant/src/assets",
+              "apps/dbs-merchant/src/manifest.webmanifest",
+              "apps/dbs-merchant/src/robots.txt"
+            ],
+            "styles": ["apps/dbs-merchant/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/dbs-merchant/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/dbs-merchant/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "dbs-merchant:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "dbs-merchant:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "dbs-merchant:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/dbs-merchant/src/**/*.d.ts",
+              "apps/dbs-merchant/src/main.ts",
+              "apps/dbs-merchant/src/polyfills.ts",
+              "apps/dbs-merchant/src/**/*.spec.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/dbs-merchant"],
+          "options": {
+            "jestConfig": "apps/dbs-merchant/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/dbs-merchant/e2e/protractor.conf.js",
+            "devServerTarget": "dbs-merchant:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "dbs-merchant:serve:production"
+            }
+          }
+        }
+      }
+    },
     "whistler": {
       "projectType": "library",
       "root": "libs/whistler",
@@ -2412,6 +2744,7 @@
     "bcm-pages": {
       "root": "libs/bcm-pages",
       "sourceRoot": "libs/bcm-pages/projects/perx-bcm-pages/src",
+      "prefix": "perx-bcm-pages",
       "projectType": "library",
       "architect": {
         "lint": {
@@ -2438,13 +2771,13 @@
       "projectType": "application",
       "root": "apps/bdo",
       "sourceRoot": "apps/bdo/src",
-      "prefix": "perxtech",
+      "prefix": "bdo",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/bdo",
+            "outputPath": "dist/bdo",
             "index": "apps/bdo/src/index.html",
             "main": "apps/bdo/src/main.ts",
             "polyfills": "apps/bdo/src/polyfills.ts",
@@ -2467,13 +2800,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "200kb",
+                  "maximumError": "1mb"
                 }
               ]
             }
@@ -2524,6 +2857,238 @@
             "production": {
               "devServerTarget": "bdo:serve:production"
             }
+          }
+        }
+      }
+    },
+    "megaworld": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/megaworld",
+      "sourceRoot": "apps/megaworld/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/megaworld",
+            "index": "apps/megaworld/src/index.html",
+            "main": "apps/megaworld/src/main.ts",
+            "polyfills": "apps/megaworld/src/polyfills.ts",
+            "tsConfig": "apps/megaworld/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/megaworld/src/favicon.ico",
+              "apps/megaworld/src/assets",
+              "apps/megaworld/src/static",
+              "apps/megaworld/src/manifest.webmanifest",
+              "apps/megaworld/src/robots.txt"
+            ],
+            "styles": [
+              "apps/megaworld/src/styles.scss",
+              "apps/megaworld/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/megaworld/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/megaworld/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "megaworld:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "megaworld:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "megaworld:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/megaworld/e2e/protractor.conf.js",
+            "devServerTarget": "megaworld:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "megaworld:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/megaworld/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/megaworld"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/megaworld/src/**/*.d.ts",
+              "apps/megaworld/src/main.ts",
+              "apps/megaworld/src/polyfills.ts",
+              "apps/megaworld/src/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
+    "hangseng": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hangseng",
+      "sourceRoot": "apps/hangseng/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hangseng",
+            "index": "apps/hangseng/src/index.html",
+            "main": "apps/hangseng/src/main.ts",
+            "polyfills": "apps/hangseng/src/polyfills.ts",
+            "tsConfig": "apps/hangseng/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/hangseng/src/favicon.ico",
+              "apps/hangseng/src/assets",
+              "apps/hangseng/src/static",
+              "apps/hangseng/src/manifest.webmanifest",
+              "apps/hangseng/src/robots.txt"
+            ],
+            "styles": [
+              "apps/hangseng/src/styles.scss",
+              "apps/hangseng/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "ngswConfigPath": "apps/hangseng/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "serviceWorker": true,
+              "vendorChunk": false,
+              "index": {
+                "input": "apps/hangseng/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hangseng:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hangseng:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hangseng:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hangseng/e2e/protractor.conf.js",
+            "devServerTarget": "hangseng:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hangseng:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hangseng/jest.config.json",
+            "passWithNoTests": true,
+            "codeCoverage": true
+          },
+          "outputs": ["coverage/apps/hangseng"]
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/hangseng/src/**/*.d.ts",
+              "apps/hangseng/src/main.ts",
+              "apps/hangseng/src/polyfills.ts",
+              "apps/hangseng/src/**/*.spec.ts"
+            ]
           }
         }
       }

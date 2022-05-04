@@ -5,7 +5,7 @@ import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
+  selector: 'perx-bcm-pages-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -63,10 +63,6 @@ export class LoginComponent implements OnInit {
           if (err.status === 0) {
             this.notificationService.addSnack('We could not reach the server');
           } else if (err.status === 401) {
-            [this.loginForm.controls.name, this.loginForm.controls.email, this.loginForm.controls.password]
-              .forEach(c => c.setErrors({
-                invalid: true,
-              }));
             this.notificationService.addSnack('Invalid credentials');
           }
         }

@@ -1,0 +1,31 @@
+<div class="home-footer-wrapper">
+  <div class="banner-cont">
+  <div class="banner" *ngIf="isShowCarousel" (scroll)="onScroll()" #itemsContainer>
+    <div class="items-cont" *ngFor="let banner of banners">
+      <div class="item">
+        <div class="content-group">
+          <div class="content-details">
+            <div class="content-text">
+             <h3 class="header">{{banner?.header}}</h3>
+              <p class="content" [innerHTML]="banner?.description"></p>
+              <a class="btn" [href]="banner.link" target="_blank">{{banner?.buttonName}}</a>
+            </div>
+            <div class="content-img">
+              <img [src]="banner.image"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <div *ngFor="let banner of banners;let ind = index;" [ngClass]="{'circle--active': (ind === activeNumber)}"
+        class="circle" (click)="onCircleClick(ind === activeNumber)"></div>
+    </div>
+  </div>
+  </div>
+  <div class="footer">
+    <p>
+      BDO Unibank is regulated by the Bangko Sentral ng Pilipinas with contact number (+632) 8708-7087 and with email address <a href="mailto:consumeraffairs@bsp.gov.ph">consumeraffairs@bsp.gov.ph</a>, and webchat at <a href="https://www.bsp.gov.ph/">www.bsp.gov.ph</a>. For concerns, please visit any BDO branch nearest you, or contact us thru our 24x7 hotline (+632) 8631-8000 or email us via <a href="mailto:callcenter@bdo.com.ph">callcenter@bdo.com.ph</a>. Deposits are insured by PDIC up to P500,000 per depositor. The BDO, BDO Unibank and other BDO-related trademarks are owned by BDO Unibank, Inc. BDO Unibank, Inc. © 2012. All Rights Reserved
+    </p>
+  </div>
+</div>

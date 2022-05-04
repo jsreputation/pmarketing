@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { InstantOutcomeTransactionServiceModule, UtilsModule } from '@perxtech/core';
+import { BadgeServiceModule, InstantOutcomeTransactionServiceModule, UtilsModule } from '@perxtech/core';
 import { InstantRewardOutcomeComponent } from './instant-reward-outcome.component';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,6 +20,7 @@ import { MatListModule } from '@angular/material/list';
     MatToolbarModule,
     MatProgressBarModule,
     InstantOutcomeTransactionServiceModule.forChild(),
+    BadgeServiceModule.forChild(),
     UtilsModule,
     MatListModule,
     TranslateModule.forChild()

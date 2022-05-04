@@ -3,11 +3,12 @@
     <div class="scanner">
       <em></em>
       <zxing-scanner
+        *ngIf="enableScan"
+        [formats]="allowedFormats"
         (scanSuccess)="scanSuccessHandler($event)"
       ></zxing-scanner>
     </div>
-    <p class="instruction">CAPTURE QR CODE WITHIN <br/>
-      THE FRAME ABOVE</p>
+    <p class="instruction">{{"REDEEM.SCANNER_TXT"|translate}}</p>
   </div>
-  <button mat-flat-button (click)="onCancel()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
+  <button mat-stroked-button (click)="onCancel()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
 </div>

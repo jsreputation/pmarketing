@@ -10,11 +10,11 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import {  CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
-import { IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
+import { IV4AdditionalSection, IV4CampaignOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -93,6 +93,8 @@ export interface StampCampaignDisplayProperties {
     button_text2?: { en: { text: string } };
     tnc?: { en: { text: string } };
     sub_heading?: string;
+    additional_sections?: IV4AdditionalSection [];
+    sub_headline?:string;
   };
   button_text?: string;
   cols?: number;

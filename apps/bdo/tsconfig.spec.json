@@ -8,6 +8,6 @@
     "allowJs": true,
     "typeRoots": ["../../node_modules/@types", "./node_modules/@types"]
   },
-  "files": ["src/test-setup.ts"],
+  "files": ["src/test-setup.ts", "src/polyfills.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

@@ -108,9 +108,15 @@ export class V4AuthenticationService
     if (this.preauth && this.retries < this.maxRetries) {
       this.retries++;
       this.autoLogin().subscribe(
-        () => console.log('finished refresh token'),
         () => {
+          console.log('finished refresh token');
+          this.retries = 0;
+          location.reload();
+        },
+        () => {
+          this.retries = 0;
           this.logout();
+          console.error('refresh could not recover');
           this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
         }
       );
@@ -188,7 +194,7 @@ export class V4AuthenticationService
   }
 
   public autoLogin(): Observable<void> {
-    const user = (window as any).primaryIdentifier;
+    const user = (window as any).primaryIdentifier || this.tokenStorage.getAppInfoProperty('identifier') || '';
     return this.authenticateUserWithPI(user).pipe(
       tap((res: IWLoginResponse) => {
         const userBearer = res && res.bearer_token;
@@ -229,6 +235,27 @@ export class V4AuthenticationService
           this.saveAppAccessToken(resp.access_token);
         })
       );
+  }
+
+  public getExchangeToken(jwtToken: string): Observable<void> {
+    const exchangeTokenRequest = {
+      jwt_token: jwtToken,
+    };
+
+    return this.http.post<IWLoginResponse>(
+      `${this.userAuthEndPoint}/exchange_token`,
+      exchangeTokenRequest
+    ).pipe(
+      tap((resp) => {
+        const userBearer = resp && resp.bearer_token;
+        if (!userBearer) {
+          throw new Error('Get exchange token failed!');
+        }
+        this.saveUserAccessToken(userBearer);
+      }),
+      map(() => void 0),
+      catchError((err) => throwError(err))
+    );
   }
 
   public setInterruptedUrl(url: string): void {

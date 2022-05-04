@@ -1,0 +1,43 @@
+@import '../../../../../theme/variables.scss';
+
+.checkbox-group-wrapper {
+  .mat-expansion-panel-header {
+    padding: 0 5px 0 0;
+    border-radius: 0;
+    height: 35px;
+  }
+
+  .mat-checkbox-inner-container {
+    padding-left: 20px;
+  }
+
+  ul {
+    margin: 0 16px;
+    padding-inline-start: 0;
+    list-style: none;
+
+    li {
+      margin: 10px 0 10px 20px;
+    }
+  }
+
+  .title {
+    color: $near-black;
+  }
+}
+
+::ng-deep .custom-checkbox {
+  .mat-checkbox.parent-checkbox {
+    .mat-checkbox-background, .mat-checkbox-frame {
+        border-radius: 70% !important;
+        border-color: $medium-blue !important;
+      }
+
+      .mat-checkbox-background {
+        margin: 0.4rem !important;
+        svg {
+          display: none !important;
+        }
+      }
+  }
+}

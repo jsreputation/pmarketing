@@ -1,0 +1,7 @@
+<a matRipple [routerLink]="routerLink" routerLinkActive="active" #rla="routerLinkActive" [ngClass]="ngClass">
+    <div class="nav-item">
+        <img [src]="rla.isActive ? activeImg: defaultImg" *ngIf="!icon" />
+        <mat-icon aria-hidden="false" [class]="iconClass" *ngIf="icon">{{icon}}</mat-icon>
+        <span translate>{{label}}</span>
+    </div>
+</a>

@@ -11,6 +11,7 @@ import { ConfigModule } from '../config/config.module';
 // import { IMerchant } from '../merchants/models/merchants.model';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { ITag } from './models/merchants.model';
 
 interface IV4Merchant {
   id: number;
@@ -20,11 +21,6 @@ interface IV4Merchant {
   tags?: ITag[];
   images?: IImage[];
   outlets?: IV4Outlet[];
-}
-
-interface ITag {
-  id: number;
-  name: string;
 }
 
 interface IImage {

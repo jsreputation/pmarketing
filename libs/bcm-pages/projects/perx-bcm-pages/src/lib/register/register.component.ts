@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-register',
+  selector: 'perx-bcm-pages-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
@@ -16,7 +16,6 @@ export class RegisterComponent implements OnInit {
   public isMerchantNameLoading: boolean;
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
-  private clientId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,14 +34,12 @@ export class RegisterComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       const param = location.search;
       const notSaveToken: string | null = new URLSearchParams(param).get('invitation_token');
-      const notSaveClientId: string | null = new URLSearchParams(param).get('client_id');
-      if (!notSaveToken || !notSaveClientId) {
+      if (!notSaveToken) {
         return;
       }
       this.invitationToken = notSaveToken;
-      this.clientId = notSaveClientId;
       this.configService.readAppConfig().pipe(
-        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken, this.clientId))
+        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken))
       ).subscribe(
         (profile: IMerchantProfile) => {
           this.merchantProfile = profile;
@@ -67,12 +64,12 @@ export class RegisterComponent implements OnInit {
     this.loginForm = this.fb.group({
       password: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(20)
       ]],
       confirmPassword: ['', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
         Validators.maxLength(20)
       ]],
     });
@@ -91,16 +88,18 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, this.clientId, password).subscribe(
+    this.merchantAdminService.setupNewMerchantsPassword(this.invitationToken, password).subscribe(
       () => {
         this.notificationService.addSnack('Your password has been saved. Please login');
-        // this.notificationService.addSnack(message);
         this.router.navigateByUrl('/login');
       },
-      () => {
+      (err) => {
         // service returns success unless http failure
-        this.notificationService.addSnack('Something went wrong');
-        this.router.navigateByUrl('/login');
+        let message = 'Something went wrong';
+        if (err.error) {
+          message = err.error.message;
+        }
+        this.notificationService.addSnack(message);
       }
     );
   }

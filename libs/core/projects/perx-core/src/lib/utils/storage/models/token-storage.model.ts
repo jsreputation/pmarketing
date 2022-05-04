@@ -1,3 +1,4 @@
 export enum TokenType {
-  local = 'local'
+  local = 'local',
+  session = 'session'
 }

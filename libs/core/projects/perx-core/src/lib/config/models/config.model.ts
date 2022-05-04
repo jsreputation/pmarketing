@@ -45,6 +45,7 @@ export interface IConfig<T> {
   showQuestCampaignsOnHomePage?: boolean;
   showProgressBarCampaignsOnHomePage?: boolean;
   showInstantRewardCampaignsOnHomePage?: boolean;
+  showOrderedCatalogItems?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
@@ -89,4 +90,6 @@ export interface IConfig<T> {
 
   /*Prize set Outcome*/
   showPrizeSetOutcome?: boolean;
+
+  jwtTokenAuth?: boolean;
 }

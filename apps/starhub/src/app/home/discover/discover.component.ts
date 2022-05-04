@@ -2,7 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
 import {
-  IReward, ICatalog, SettingsService, IFlags, ICampaign, CampaignType, ITaggedItem, ConfigService, IConfig, GameType, ICampaignItem
+  CampaignType,
+  ConfigService,
+  GameType,
+  ICampaign,
+  ICampaignItem,
+  ICatalog,
+  IConfig,
+  IFlags,
+  IReward,
+  ITaggedItem,
+  SettingsService
 } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../../analytics.service';
 import { IStarhubConfig } from '../home/home.component';
@@ -59,6 +69,9 @@ export class DiscoverComponent implements OnInit {
       case GameType.quiz: {
         this.sqCampaignSelected((<number> campaignItem.itemId));
         break;
+      }
+      case CampaignType.quest: {
+        this.router.navigate([`/quest/${campaignItem.itemId}`]);
       }
     }
   }
