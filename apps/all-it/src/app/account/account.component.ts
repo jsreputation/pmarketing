@@ -55,9 +55,9 @@ export class AccountComponent extends BCPAccountComponent implements OnInit {
      themesService: ThemesService,
      settingsService: SettingsService,
      badgeService: BadgeService,
+     flagLocalStorageService: FlagLocalStorageService,
      private http: HttpClient,
      private notificationService: NotificationService,
-     protected flagLocalStorageService: FlagLocalStorageService
   ) {
     super(
       config,
