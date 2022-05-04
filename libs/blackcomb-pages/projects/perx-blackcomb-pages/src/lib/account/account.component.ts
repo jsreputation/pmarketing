@@ -53,6 +53,7 @@ export class AccountComponent implements OnInit {
     protected themesService: ThemesService,
     protected settingsService: SettingsService,
     protected badgeService: BadgeService,
+    protected flagLocalStorageService: FlagLocalStorageService
   ) {
   }
 
