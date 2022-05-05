@@ -15,19 +15,12 @@
       [nbShakes]="config.nbTaps">
     </perx-core-shake-tree>
   </div>
-  <div class="game-footer">
-    <button
-      class="btn-grad"
-      mat-flat-button
-      (click)="onClick()"
-      [disabled]="showOperatingHours && !game.isOperating"
-      [ngStyle]="buttonStyle">
-      {{ game.texts.button }}
-      <mat-icon outline="true" class="material-icons-outlined lock-icon">lock</mat-icon>
-    </button>
-    <button class="enrol" mat-flat-button (click)="onClick()"
-      [disabled]="showOperatingHours && !game.isOperating" [ngStyle]="buttonStyle">
-      <span>Enrol</span>
-    </button>
-  </div>
+</div>
+<div class="game-footer">
+  <mat-icon outline="true" class="material-icons-outlined lock-open-icon">lock_open</mat-icon>
+  <h2>{{'GAME_PAGE.ENROL_TEXT' | translate}}</h2>
+  <button class="enrol" mat-flat-button (click)="onClick()" [disabled]="showOperatingHours && !game.isOperating"
+    [ngStyle]="buttonStyle">
+    <span>Enrol</span>
+  </button>
 </div>

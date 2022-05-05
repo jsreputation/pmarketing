@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { PlinkoComponent } from './plinko/plinko.component';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
+    TranslateModule.forChild(),
   ],
 })
 export class GameModule { }
