@@ -80,6 +80,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     (window as any).campaignId = this.campaignId;
     const paramArr: string[] = params.flags && params.flags.split(',');
     const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+    const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
     const langCode: string | null = params.lang;
     if (langCode) {
       this.tokenStorage.setAppInfoProperty(langCode, 'lang');
@@ -89,11 +90,18 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
     if (chromelessFlag) {
       this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-    } else if (params && params.flags === '') {
+    } else if ('flags' in params) {
       this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
     }
 
-    if (this.preAuth && isPlatformBrowser(this.platformId)) {
+    if (preAuthFlag) {
+      this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
+    } else if ('flags' in params) {
+      this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
+    }
+
+    const preAuthMode = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('preAuth'));
+    if ((this.preAuth || preAuthMode) && isPlatformBrowser(this.platformId)) {
       /*
       * The logic is:
       * 1. check PI, then will call autoLogin

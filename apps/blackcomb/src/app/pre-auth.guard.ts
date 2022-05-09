@@ -1,7 +1,8 @@
 import {
   Config,
   ConfigService,
-  IConfig
+  IConfig,
+  FlagLocalStorageService
 } from '@perxtech/core';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
@@ -17,7 +18,8 @@ export interface IPreRedirectConfig {
 })
 
 export class PreAuthGuard implements CanActivate {
-  constructor(private router: Router, private config: Config, private configService: ConfigService) {
+  constructor(private router: Router, private config: Config, private configService: ConfigService,
+              private flagLocalStorageService: FlagLocalStorageService) {
   }
 
   public canActivate(): Observable<boolean> {
@@ -27,7 +29,9 @@ export class PreAuthGuard implements CanActivate {
           this.router.navigateByUrl(`${config.custom.redirectBeforeLogin}`);
           return false;
         }
-        if (this.config.preAuth) {
+
+        const preAuthMode = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('preAuth'));
+        if (this.config.preAuth || preAuthMode) {
           this.router.navigateByUrl('/loading');
           return false;
         }

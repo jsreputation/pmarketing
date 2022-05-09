@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
-import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService } from '@perxtech/core';
+import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService, FlagLocalStorageService } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
 import { HomeComponent } from '../home/home.component';
@@ -61,7 +61,8 @@ export class LayoutComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private flagLocalStorageService: FlagLocalStorageService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -106,7 +107,20 @@ export class LayoutComponent implements OnInit {
       this.settingsService.getRemoteFlagsSettings()
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
+      const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
       const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
+
+      if (chromelessFlag) {
+        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      } else if ('flags' in params) {
+        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      }
+      if (preAuthFlag) {
+        this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
+      } else if ('flags' in params) {
+        this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
+      }
+
       this.showHeader = !chromelessFlag;
     });
   }
