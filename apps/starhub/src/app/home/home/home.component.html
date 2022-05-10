@@ -1,5 +1,5 @@
-<div class="app">
-  <mat-toolbar>
+<div class="app" (scroll)="onScroll($event)">
+  <mat-toolbar id="homeToolbar">
     <mat-toolbar-row class="top-row">
       <a class="badge" href="https://www.starhub.com/personal/rewards/membership.html" target="_blank">
         <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
@@ -61,14 +61,14 @@
         <button mat-flat-button [routerLink]="[ '/leaderboards']" class="leaderboard" *ngIf="showLeaderboardLinkOnHomePage">Star League</button>
       </mat-accordion>
     </mat-toolbar-row>
-    <mat-toolbar-row mat-tab-nav-bar>
+    <mat-toolbar-row mat-tab-nav-bar id="homeTabbar">
       <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"
         [active]="disco.isActive">Discover</a>
       <a mat-tab-link routerLink="vouchers" routerLinkActive #vouch="routerLinkActive" [active]="vouch.isActive">My
         Rewards</a>
     </mat-toolbar-row>
   </mat-toolbar>
-  <div class="content" (scroll)="onScrollCall()" #contentScrolled>
+  <div class="content" id="contentScrolled" #contentScrolled>
     <router-outlet></router-outlet>
   </div>
 </div>
