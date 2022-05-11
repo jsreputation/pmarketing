@@ -12,8 +12,8 @@
       <div *ngIf="auxInfo?.pinCode">
             <div class="url-title">{{'REDEMPTION.PIN_CODE' | translate}}</div>
             <div class="url-container">
-                <span class="url-txt">{{auxInfo.pinCode}}</span>
-                <mat-icon class="copy-icon" (click)="copy(auxInfo.pinCode)">content_copy</mat-icon>
+                <span class="url-txt">{{auxInfo?.pinCode}}</span>
+                <mat-icon class="copy-icon" (click)="copy(auxInfo?.pinCode)">content_copy</mat-icon>
             </div>
         </div>
     </div>
