@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NotificationService } from '../../utils/notification/notification.service';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { VoucherCustomFields } from '../models/voucher.model';
 
 @Component({
   selector: 'perx-core-url-redemption',
@@ -15,6 +16,9 @@ export class UrlRedemptionComponent implements OnInit {
 
   @Input()
   public url: string;
+
+  @Input()
+  public auxInfo?: VoucherCustomFields;
 
   private copyToClipboardTxt: string;
   private clipboardErrorTxt: string;

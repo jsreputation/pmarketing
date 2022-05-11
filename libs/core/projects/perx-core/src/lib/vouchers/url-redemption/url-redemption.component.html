@@ -9,6 +9,13 @@
                 <mat-icon class="copy-icon" (click)="copy(url)">content_copy</mat-icon>
             </div>
         </div>
+      <div *ngIf="auxInfo?.pinCode">
+            <div class="url-title">{{'REDEMPTION.PIN_CODE' | translate}}</div>
+            <div class="url-container">
+                <span class="url-txt">{{auxInfo?.pinCode}}</span>
+                <mat-icon class="copy-icon" (click)="copy(auxInfo?.pinCode)">content_copy</mat-icon>
+            </div>
+        </div>
     </div>
     <div class="actions-container mat-elevation-z2">
         <a [href]="url | safeUrl" target="_blank">

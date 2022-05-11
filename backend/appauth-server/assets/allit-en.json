@@ -286,7 +286,8 @@
     "URL_CTA_TXT": "REDEMPTION LINK",
     "BACK_TO_REWARD": "RETURN TO REWARD DETAILS",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
-    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
+    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard",
+    "PIN_CODE": "Pin Code:"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",
