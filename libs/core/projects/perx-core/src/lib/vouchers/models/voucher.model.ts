@@ -13,6 +13,10 @@ export type StatusLabelMapping = {
   [key in VoucherState]: string;
 };
 
+export interface VoucherCustomFields {
+  pinCode: string;
+}
+
 /*
  * Model from Whistler data model
  * https://docs.google.com/document/d/10TNUw5nC5D2MGSRFi_2XshMKIzjdV1OA2L6Da4YGb3E/edit#heading=h.j9hbbl4bn5pj
@@ -28,6 +32,7 @@ export interface IVoucher {
   accessoryImage?: string | null;
   merchantLocation?: IMerchantLocation | null;
   vaildFrom?: Date | null;
+  customFields?: VoucherCustomFields;
 }
 
 export interface IMerchantLocation {

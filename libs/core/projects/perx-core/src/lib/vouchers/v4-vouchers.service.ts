@@ -3,25 +3,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { oc } from 'ts-optchain';
 import { interval, Observable, of } from 'rxjs';
-import {
-  filter,
-  flatMap,
-  map,
-  mergeAll,
-  mergeMap,
-  scan,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { filter, flatMap, map, mergeAll, mergeMap, scan, switchMap, tap, } from 'rxjs/operators';
 
 import { IVoucherService } from './ivoucher.service';
-import {
-  IGetVoucherParams,
-  IRedeemOptions,
-  IVoucher,
-  IVoucherLocation,
-  VoucherState,
-} from './models/voucher.model';
+import { IGetVoucherParams, IRedeemOptions, IVoucher, IVoucherLocation, VoucherState, } from './models/voucher.model';
 import { IRewardParams } from '../rewards/models/reward.model';
 import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { RedemptionType } from '../perx-core.models';
@@ -66,7 +51,9 @@ export interface IV4VoucherResponse {
 }
 
 export interface IV4Voucher {
-  custom_fields: any;
+  custom_fields: {
+    pin_code: string;
+  };
   given_by: any;
   given_date: any;
   given_to: any;
@@ -185,6 +172,9 @@ export class V4VouchersService implements IVoucherService {
           }
         : null,
       vaildFrom: v.valid_from !== null ? new Date(v.valid_from) : null,
+      customFields: {
+        pinCode: v.custom_fields.pin_code
+      }
     };
   }
 
