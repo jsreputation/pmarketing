@@ -14,7 +14,7 @@ export type StatusLabelMapping = {
 };
 
 export interface VoucherCustomFields {
-  pinCode: string;
+  pinCode?: string;
 }
 
 /*

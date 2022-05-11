@@ -51,8 +51,8 @@ export interface IV4VoucherResponse {
 }
 
 export interface IV4Voucher {
-  custom_fields: {
-    pin_code: string;
+  custom_fields?: {
+    pin_code?: string;
   };
   given_by: any;
   given_date: any;
@@ -173,7 +173,7 @@ export class V4VouchersService implements IVoucherService {
         : null,
       vaildFrom: v.valid_from !== null ? new Date(v.valid_from) : null,
       customFields: {
-        pinCode: v.custom_fields.pin_code
+        pinCode: v.custom_fields?.pin_code
       }
     };
   }
@@ -325,7 +325,7 @@ export class V4VouchersService implements IVoucherService {
     let firstPageVouchers: number[] = [];
     let newIssued: IVoucher[] = [];
     return interval(intervalPeriod).pipe(
-      map((val) => {
+      map((val: number) => {
         current = val;
         return this.getAllFromPage(1, undefined, locale);
       }),
@@ -337,12 +337,12 @@ export class V4VouchersService implements IVoucherService {
       ),
       map((vouchers: IVoucher[]) =>
         vouchers.filter(
-          (v) => v.reward && v.reward.id === rewardId && v.state === 'issued'
+          (v: IVoucher) => v.reward && v.reward.id === rewardId && v.state === 'issued'
         )
       ),
       filter((vouchers: IVoucher[]) => {
         if (current === 0) {
-          firstPageVouchers = [...vouchers.map((v) => v.id)];
+          firstPageVouchers = [...vouchers.map((v: IVoucher) => v.id)];
           return false;
         }
 
@@ -351,7 +351,7 @@ export class V4VouchersService implements IVoucherService {
           return false;
         }
 
-        newIssued = vouchers.filter((v) => !firstPageVouchers.includes(v.id));
+        newIssued = vouchers.filter((v: IVoucher) => !firstPageVouchers.includes(v.id));
         if (newIssued && newIssued.length <= 0) {
           return false;
         }
