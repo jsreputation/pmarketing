@@ -47,6 +47,7 @@ describe('UrlRedemptionComponent', () => {
 
   it('url value should be equal to vouhcer.code', () => {
     component.url = 'voucher.code';
+    component.auxInfo = { pinCode: '' };
     fixture.detectChanges();
     const url = fixture.nativeElement.querySelector('.url-txt');
     expect(url.textContent.trim()).toEqual('voucher.code');
