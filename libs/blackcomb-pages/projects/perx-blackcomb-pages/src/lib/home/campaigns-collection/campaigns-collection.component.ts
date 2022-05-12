@@ -38,6 +38,9 @@ export class CampaignsCollectionComponent implements OnInit {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
+  @Output()
+  public seeMoreClick: EventEmitter<any> = new EventEmitter<any>();
+
   public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
   public campaigns: ICampaign[];
@@ -49,6 +52,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
   public showOperatingHours: boolean = false;
   public buttonStyle: { [key: string]: string } = {};
+  public GameType: any = GameType;
 
   constructor(
     private translate: TranslateService,
@@ -66,7 +70,7 @@ export class CampaignsCollectionComponent implements OnInit {
       this.rewardsLeft = text;
     });
 
-    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
       this.buttonStyle['background-color'] = theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
       this.buttonStyle.color = theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
     });
@@ -120,33 +124,33 @@ export class CampaignsCollectionComponent implements OnInit {
           })
         ]))
       ).subscribe(
-      (res: (IQuiz | IGame[])[]) => {
-        if (this.gameType === GameType.quiz) {
-          this.quizzes = res as IQuiz[];
-          this.quizzes.forEach((quiz: IQuiz) => {
-            if (quiz.campaignId && !this.isCampaignDisabled[quiz.campaignId]) {
-              this.isCampaignDisabled[quiz.campaignId] =
-                this.isCampaignComplete(quiz.campaignId) ||
-                this.isQuizRewardsEmpty(quiz.campaignId);
-            }
-          });
-          // } else {
-          // todo: test games input when games get refactored in.
-          // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
-          // this.games = (res as IGame[][])[0];
-          // this.games.forEach((game: IGame) => {
-          //   if (game.campaignId && !this.isCampaignDisabled[game.campaignId]) {
-          //     this.isCampaignDisabled[game.campaignId] = this.isCampaignComplete(game.campaignId);
-          //   }
-          // });
-          // }
+        (res: (IQuiz | IGame[])[]) => {
+          if (this.gameType === GameType.quiz) {
+            this.quizzes = res as IQuiz[];
+            this.quizzes.forEach((quiz: IQuiz) => {
+              if (quiz.campaignId && !this.isCampaignDisabled[quiz.campaignId]) {
+                this.isCampaignDisabled[quiz.campaignId] =
+                  this.isCampaignComplete(quiz.campaignId) ||
+                  this.isQuizRewardsEmpty(quiz.campaignId);
+              }
+            });
+            // } else {
+            // todo: test games input when games get refactored in.
+            // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
+            // this.games = (res as IGame[][])[0];
+            // this.games.forEach((game: IGame) => {
+            //   if (game.campaignId && !this.isCampaignDisabled[game.campaignId]) {
+            //     this.isCampaignDisabled[game.campaignId] = this.isCampaignComplete(game.campaignId);
+            //   }
+            // });
+            // }
+          }
+          this.gamesLoaded = true;
+        },
+        () => {
+          this.gamesLoaded = true;
         }
-        this.gamesLoaded = true;
-      },
-      () => {
-        this.gamesLoaded = true;
-      }
-    );
+      );
   }
 
   public selectCampaign(campaign: ICampaign): void {
@@ -191,7 +195,7 @@ export class CampaignsCollectionComponent implements OnInit {
 
   public getOperatingHours(operatingHours: IOperatingHours): string {
 
-    const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+    const daysMapArr = [false, false, false, false, false, false, false]; // index 0 is sunday
 
     for (const dayIndex in operatingHours.days) {
       if (dayIndex) { // guard-for-in
@@ -203,8 +207,13 @@ export class CampaignsCollectionComponent implements OnInit {
     return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
+  public onSeeMoreClicked(ev?: any): void {
+    this.showAllCampaigns = !this.showAllCampaigns;
+    this.seeMoreClick.emit(ev);
+  }
+
   private dayOfWeekAsString(dayIndex: number): string {
-    return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayIndex];
   }
 
   // works but can't wrap sat and sun
@@ -219,7 +228,7 @@ export class CampaignsCollectionComponent implements OnInit {
         } else if (dayRange.length === 0) { // first item in current range.
           dayRange = `${this.dayOfWeekAsString(i)}`;
         }
-      } else if (dayRange.length > 0 && ! daysMapArr[i]) { // first part of range already identified
+      } else if (dayRange.length > 0 && !daysMapArr[i]) { // first part of range already identified
         if (this.dayOfWeekAsString(i - 1) !== dayRange) {
           dayRange = `${dayRange} - ${this.dayOfWeekAsString(i - 1)}`;
         }
