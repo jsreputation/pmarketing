@@ -11,6 +11,22 @@
       [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="campaign-list">
+    <!-- progress bar campaigns-->
+    <div class="campaigns"
+      *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
+      <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
+      <hangseng-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+
+    <!-- Stamp card campaigns-->
+    <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
+      <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
+      <hangseng-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+
+    <!-- Game campaigns-->
     <div class="campaigns">
       <!-- progress bar campaigns-->
       <div *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">=
@@ -46,5 +62,41 @@
         </perx-blackcomb-pages-campaigns-collection>
       </div>
     </div>
+
+    <!-- Quiz campaigns -->
+    <div class="campaigns" *ngIf="appConfig.showQuizOnHomePage">
+      <div *ngIf="(quizCampaigns$ | async)?.length > 0" class="title" translate>HOME.QUIZ</div>
+      <hangseng-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
+        [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
+        (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+
+    <!-- Survey campaigns -->
+    <div class="campaigns" [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
+      *ngIf="appConfig.showSurveyOnHomePage">
+      <div *ngIf="(surveyCampaigns$ | async)?.length > 0" class="title" translate>HOME.SURVEYS</div>
+      <hangseng-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
+        (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+
+    <!-- Quest campaigns-->
+    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
+      <div class="title" *ngIf="(questCampaigns$ | async)?.length > 0" translate>HOME.QUEST_CAMPAIGNS</div>
+      <hangseng-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+  </div>
+  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
+    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
+    <perx-blackcomb-pages-catalogs [catalogs]="catalogs$" [catalogsEnded]="catalogsEnded"
+      (tapped)="catalogSelected($event)" (loadCatalogs)="loadCatalogs($event)"></perx-blackcomb-pages-catalogs>
+  </div>
+  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage && hideRewardsTitle">
+    <div class="title" translate>HOME.REWARDS</div>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)"
+      (tabChanged)="tabChanged($event)">
+    </perx-core-rewards-list-tabbed>
   </div>
 </div>
