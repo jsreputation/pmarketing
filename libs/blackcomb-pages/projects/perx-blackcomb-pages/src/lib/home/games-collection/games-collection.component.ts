@@ -1,5 +1,5 @@
 import { listAnimation } from './games-collection.animation';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   ConfigService,
@@ -22,6 +22,9 @@ import { switchMap, tap } from 'rxjs/operators';
 export class GamesCollectionComponent implements OnInit {
   @Input('games')
   public games$: Observable<IGame[]>;
+  @Output()
+  public selected: EventEmitter<IGame> = new EventEmitter<IGame>();
+
   public defaultNbGames: number = 2;
   public showAllGames: boolean = false;
   public buttonStyle: { [key: string]: string } = {};
@@ -64,6 +67,10 @@ export class GamesCollectionComponent implements OnInit {
     const days: string = this.dayArrToIntuitiveStringDayRange(daysMapArr);
     const hours: string = `${operatingHours.opensAt?.substr(0, 5)} - ${operatingHours.closesAt?.substr(0, 5)}`;
     return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
+  }
+
+  public selectGameCampaign(game: IGame): void {
+    this.selected.emit(game);
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
