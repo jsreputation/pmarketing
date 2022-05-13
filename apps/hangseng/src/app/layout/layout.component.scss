@@ -61,16 +61,31 @@
     align-items: center;
 
     &.active {
-      color: var(--button_text_color);
-
       .nav-item {
-        position: absolute;
-        top: -30px;
+        position: relative;
+        height: 50px;
 
-        height: 60px;
-        width: 60px;
+        span {
+          position: absolute;
+          bottom: 0;
+          color: var(--accent);
+        }
+
+        mat-icon {
+          color: #fff;
+        }
+      }
+
+      .nav-item-img {
+        position: absolute;
+        top: -22px;
+
+        height: 56px;
+        width: 56px;
         border-radius: 100%;
         background: var(--accent);
+        display: flex;
+        align-items: center;
         justify-content: center;
       }
     }
