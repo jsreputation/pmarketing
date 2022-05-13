@@ -22,7 +22,7 @@ export class FooterComponent implements OnInit {
     {
       id: 2,
       header: 'Apply for a BDO Credit Card',
-      description: 'Already a card holder? Refer your friends now and get rewarded!',
+      description: 'Already a cardholder? Get another BDO Credit Card for more perks and privileges.',
       buttonName: 'Apply Now',
       image: 'assets/images/img-creditcard@2x.png',
       link: 'https://www.bdo.com.ph/personal/credit-cards/right-card-for-you'
