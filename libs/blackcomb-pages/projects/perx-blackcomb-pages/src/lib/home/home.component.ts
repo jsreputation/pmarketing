@@ -92,7 +92,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  public quizCampaigns$: Observable<ICampaign[]>;
+  public quizCampaigns$: BehaviorSubject<ICampaign[]> = new BehaviorSubject<ICampaign[]>([]);
+  private quizCampaigns: ICampaign[] = [];
   public gameType: typeof GameType = GameType;
 
   public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<
@@ -103,6 +104,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   public surveyCampaigns$: Observable<ICampaign[]>;
   public favDisabled: boolean = false;
   public hideRewardsTitle: boolean = false;
+
+  public quizCampaignsPage: number = 1;
+  public quizCampaignsTotalPage: number = 0;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -126,7 +130,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected teamsService: TeamsService,
     protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
     protected notificationService: NotificationService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     forkJoin([
@@ -251,18 +255,18 @@ export class HomeComponent implements OnInit, OnDestroy {
       campaign.teamSize! > 0) {
       this.teamsService.getTeam(campaign.id).subscribe(
         () => {
-          this.router.navigate([ `teams/pending/${campaign.id}` ]);
+          this.router.navigate([`teams/pending/${campaign.id}`]);
         },
         () => {
           // expecting a error 500 in console
-          this.router.navigate([ `campaign-welcome/${campaign.id}` ]);
+          this.router.navigate([`campaign-welcome/${campaign.id}`]);
         }
       );
       return;
     }
 
     if (campaign.type === CampaignType.instant) {
-      this.router.navigate([` campaign-welcome/${campaign.id}` ]);
+      this.router.navigate([` campaign-welcome/${campaign.id}`]);
       return;
     }
 
@@ -329,8 +333,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         const firstComeFirstServeTransaction:
           | IInstantOutcomeTransaction
           | undefined = instantOutcomeTransactionsHaveOutcomes.length
-          ? instantOutcomeTransactionsHaveOutcomes[0]
-          : undefined;
+            ? instantOutcomeTransactionsHaveOutcomes[0]
+            : undefined;
         if (firstComeFirstServeTransaction) {
           this.campaignService.getCampaign(firstComeFirstServeTransaction.campaignId)
             .subscribe(campaignRes => {
@@ -342,7 +346,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                 imageUrl: popupImageURL,
                 titleBelowImage: true,
                 afterClosedCallBack: {
-                  dialogClosed: (): void => {},
+                  dialogClosed: (): void => { },
                   onOkFn: (): void => {
                     this.instantOutcomeTransactionService
                       .claimPrize(firstComeFirstServeTransaction.id)
@@ -480,14 +484,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     if (this.appConfig.showQuizOnHomePage) {
-      this.quizCampaigns$ = this.campaignService
-        .getCampaigns({ gameType: GameType.quiz })
+      this.campaignService
+        .getCampaigns({ gameType: GameType.quiz, page: this.quizCampaignsPage, size: this.pageSize })
         .pipe(
           switchMap((campaigns: ICampaign[]) =>
             of(campaigns).pipe(catchError((err) => of(err)))
           ),
           takeLast(1)
-        );
+        ).subscribe((campaigns: ICampaign[]) => {
+          this.quizCampaigns = [...campaigns];
+          this.quizCampaigns$.next(campaigns);
+        });
     }
     if (this.appConfig.showProgressBarCampaignsOnHomePage || this.appRemoteFlags?.showProgressBarCampaignsOnHomePage) {
       this.progressCampaigns$ = this.campaignService
@@ -690,5 +697,23 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.favDisabled = false;
         }, 500))
       ).subscribe();
+  }
+
+  public paginateQuizCampaign(): void {
+    this.quizCampaignsPage = this.quizCampaignsPage === 1 ? 2 : 1;
+    this.campaignService
+      .getCampaigns({ gameType: GameType.quiz, page: this.quizCampaignsPage, size: this.pageSize })
+      .pipe(
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      ).subscribe((campaigns: ICampaign[]) => {
+        const campaignArr: any[] = [...this.quizCampaignsPage === 2 ? this.quizCampaigns : []];
+        campaigns?.forEach((campaign: ICampaign) => {
+          campaignArr.push(campaign);
+        });
+        this.quizCampaigns$.next([...campaignArr]);
+      });
   }
 }

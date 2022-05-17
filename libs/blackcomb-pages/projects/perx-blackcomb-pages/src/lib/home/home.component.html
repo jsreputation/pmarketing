@@ -57,7 +57,7 @@
       <div *ngIf="(quizCampaigns$ | async)?.length > 0" class="title" translate>HOME.QUIZ</div>
       <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
         [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
-        (selected)="goToCampaignPage($event)">
+        (selected)="goToCampaignPage($event)" (seeMoreClick)="paginateQuizCampaign()">
       </perx-blackcomb-pages-campaigns-collection>
     </div>
     <!-- Survey campaigns -->
