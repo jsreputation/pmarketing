@@ -2,7 +2,6 @@ import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
-import { LegacyRouteGuard } from '../progress-campaign-home/legacy-route.guard';
 
 const routes: Routes = [
   {
