@@ -1,35 +1,36 @@
 <div *ngIf="campaigns && gamesLoaded" [@listAnimation]="!showAllCampaigns || campaigns.length">
-  <mat-card
-    *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
-  ? campaigns : (campaigns | slice:0:defaultNbCampaigns))"
-    matRipple
-    [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[campaign.id] ? 'campaigns-card disabled' : 'campaigns-card'"
-    (click)="selectCampaign(campaign)">
-    <div class="img-wrapper">
-      <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
-    </div>
-    <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
-      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <span class="reward-subtitle ellipsis-2-line" [innerHtml]="campaign.description | striphtml | safeHtml"></span>
-<!--      <span class="reward-subtitle ellipsis-1-line" *ngIf="campaign.operatingHours && showOperatingHours">-->
-<!--        {{getOperatingHours(campaign.operatingHours)}}-->
-<!--      </span>-->
-    </mat-card-content>
-    <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
-<!--      campaign name will be filled with reward name instead when api ready-->
-      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">
-        <p class="reward-subtitle ellipsis-2-line" *ngIf="rwdBvrSbj > 0"><span class="bold-points">{{rwdBvrSbj}}</span>{{"HOME.REWARDS_LEFT" | translate}}</p>
-      </ng-container>
-    </mat-card-content>
-  </mat-card>
+  <div class="campaign-collection-card" *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
+      ? campaigns : (campaigns | slice:0:defaultNbCampaigns))">
+    <img class="new-tag" src="./assets/new-tag.svg">
+    <mat-card matRipple
+      [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[campaign.id] ? 'campaigns-card disabled' : 'campaigns-card'"
+      (click)="selectCampaign(campaign)">
+      <div class="img-wrapper">
+        <img class="puzzle-img card-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
+      </div>
+      <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
+        <p class="main-reward-title ellipsis-2-line">{{campaign.name}}</p>
+        <span class="reward-subtitle ellipsis-2-line" [innerHtml]="campaign.description | striphtml | safeHtml"></span>
+      </mat-card-content>
+      <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
+        <!--  campaign name will be filled with reward name instead when api ready-->
+        <p class="main-reward-title ellipsis-2-line">{{campaign.name}}</p>
+        <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">
+          <p class="reward-subtitle ellipsis-2-line" *ngIf="rwdBvrSbj > 0"><span
+              class="bold-points">{{rwdBvrSbj}}</span>{{"HOME.REWARDS_LEFT" | translate}}</p>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-content class="campaign-collection-card-footer">
+        <p>Ends on 23/02/2023</p>
+        <mat-chip-list aria-label="Fish selection"><mat-chip>Enrollment required</mat-chip></mat-chip-list>
+
+
+      </mat-card-content>
+    </mat-card>
+  </div>
   <div class="flex-for-button">
-    <button
-      *ngIf="!(campaigns.length <= defaultNbCampaigns)"
-      mat-flat-button [ngStyle]="buttonStyle"
-      class="see-button"
-      [ngClass]="showAllCampaigns ? 'see-less' : 'see-more'"
-      (click)="showAllCampaigns = !showAllCampaigns">
+    <button *ngIf="!(campaigns.length <= defaultNbCampaigns)" mat-flat-button [ngStyle]="buttonStyle" class="see-button"
+      [ngClass]="showAllCampaigns ? 'see-less' : 'see-more'" (click)="showAllCampaigns = !showAllCampaigns">
       {{ (showAllCampaigns ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}
     </button>
   </div>
