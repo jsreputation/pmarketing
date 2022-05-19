@@ -50,14 +50,14 @@
     <!-- Game campaigns-->
     <div class="campaigns">
       <div *ngIf="showGames" class="title" translate>HOME.GAMES</div>
-      <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
+      <perx-blackcomb-games-collection [games]="games$" (selected)="goToCampaignGamePage($event)"></perx-blackcomb-games-collection>
     </div>
     <!-- Quiz campaigns -->
     <div class="campaigns" *ngIf="appConfig.showQuizOnHomePage">
       <div *ngIf="(quizCampaigns$ | async)?.length > 0" class="title" translate>HOME.QUIZ</div>
       <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
         [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
-        (selected)="goToCampaignPage($event)" (seeMoreClick)="paginateQuizCampaign()">
+        (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>
     </div>
     <!-- Survey campaigns -->
