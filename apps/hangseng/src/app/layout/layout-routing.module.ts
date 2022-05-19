@@ -86,16 +86,6 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: "leaderboards",
-        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: "leaderboards/:id",
-        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
         path: "legacy-progress-campaign/:id",
         loadChildren: () => import('../legacy-progress-campaign/legacy-progress-campaign.module').then((mod) => mod.LegacyProgressCampaignModule),
         canActivate: [ProtectedGuard]
@@ -113,11 +103,6 @@ const routes: Routes = [
       {
         path: "lucky-draw",
         loadChildren: () => import('../lucky-draw-details/lucky-draw-details.module').then((mod) => mod.LuckyDrawDetailsModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: "nearme",
-        loadChildren: () => import('../nearme/nearme.module').then((mod) => mod.NearmeModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -142,11 +127,6 @@ const routes: Routes = [
       {
         path: "profile",
         loadChildren: () => import('../profile/profile.module').then((mod) => mod.ProfileModule)
-      },
-      {
-        path: "progress-campaigns",
-        loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then((mod) => mod.ProgressCampaignHomeModule),
-        canActivate: [ProtectedGuard, LegacyRouteGuard]
       },
       {
         path: "progress-campaign/:id",
@@ -177,10 +157,6 @@ const routes: Routes = [
         path: "quiz/:cid",
         loadChildren: () => import('../quiz/quiz.module').then((mod) => mod.QuizModule),
         canActivate: [ProtectedGuard]
-      },
-      {
-        path: "rebates",
-        loadChildren: () => import('../rebates/rebates.module').then((mod) => mod.RebatesModule)
       },
       {
         path: "redeem/:id",
