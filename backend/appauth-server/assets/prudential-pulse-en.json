@@ -182,7 +182,7 @@
     "BACK_TO_REWARD": "RETURN TO REWARD DETAILS",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard",
-    "PIN_CODE": "Pin Code:"
+    "PIN_CODE": "Redemption PIN Code"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",

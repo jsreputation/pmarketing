@@ -61,7 +61,8 @@
     "URL_CTA_TXT": "Link đổi thưởng",
     "BACK_TO_REWARD": "Quay lại Ưu đãi",
     "COPY_TO_CLIPBOARD": "Đã sao chép",
-    "CLIPBOARD_ERROR_TXT": "Không thể truy cập bộ nhớ tạm"
+    "CLIPBOARD_ERROR_TXT": "Không thể truy cập bộ nhớ tạm",
+    "PIN_CODE": "Mã PIN"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",
