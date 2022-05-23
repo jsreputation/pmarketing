@@ -34,6 +34,7 @@ import {
   ProgressCampaignServiceModule as PerxProgressCampaignServiceModule,
   QuestModule as PerxQuestModule,
   RewardsModule,
+  RewardsServiceModule,
   SettingsModule,
   StampModule as PerxStampModule,
   ThemesService,
@@ -128,7 +129,8 @@ registerLocaleData(localeENMY, 'en', localesEnMyExtra);
     BadgeServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     PerxTransactionsServiceModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsModule,
+    RewardsServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

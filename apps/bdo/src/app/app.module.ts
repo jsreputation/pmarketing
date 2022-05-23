@@ -19,7 +19,8 @@ import {
   LocaleIdFactory,
   LoyaltyModule, MerchantsModule, OutcomeModule,
   ProfileModule,
-  ProfileServiceModule as PerxProfileServiceModule, RewardsModule,
+  ProfileServiceModule as PerxProfileServiceModule,
+  RewardsServiceModule,
   ThemesService,
   TokenStorage, VouchersModule
 } from '@perxtech/core';
@@ -75,7 +76,7 @@ export const appInit =
     PerxGameModule,
     PerxSvcCampaignModule.forRoot(),
     PerxSvcGameModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     MerchantsModule.forRoot(), //required for locations module
     VouchersModule,
 

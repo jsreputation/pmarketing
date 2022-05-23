@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RedeemComponent } from './redeem.component';
 import { MatButtonModule } from '@angular/material/button';
-import { RewardsModule, MerchantAdminModule } from '@perxtech/core';
+import { MerchantAdminModule, RewardsServiceModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [RedeemComponent],
@@ -11,7 +11,7 @@ import { RewardsModule, MerchantAdminModule } from '@perxtech/core';
   imports: [
     CommonModule,
     MatButtonModule,
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     MerchantAdminModule,
     TranslateModule.forChild(),
   ]

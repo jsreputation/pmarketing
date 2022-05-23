@@ -23,7 +23,7 @@ import {
   TokenStorage,
   UtilsModule,
   MerchantAdminModule,
-  RewardsModule,
+  RewardsServiceModule,
   LoyaltyModule
 } from '@perxtech/core';
 import { HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -99,7 +99,7 @@ export const appInit =
     FormsModule,
     ReactiveFormsModule,
     MerchantAdminModule,
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     ZXingScannerModule,
     MatDialogModule,
     NgxBarcode6Module,

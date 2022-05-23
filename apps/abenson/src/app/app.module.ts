@@ -20,7 +20,7 @@ import {
   ProfileModule,
   ProfileServiceModule,
   QuestModule,
-  RewardsModule,
+  RewardsServiceModule,
   SettingsModule,
   ThemesService,
   TokenStorage,
@@ -151,7 +151,7 @@ export const setLanguage = (
     HttpClientModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),
-    RewardsModule.forRoot(),
+    RewardsServiceModule.forRoot(),
     NgxBarcode6Module,
     TranslateModule.forRoot({
       loader: {
