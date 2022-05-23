@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmptyResultsComponent } from './empty-results/empty-results.component';
 const modules = [
   MatToolbarModule,
   MatButtonModule,
@@ -23,7 +24,7 @@ const modules = [
   ReactiveFormsModule
 ];
 @NgModule({
-  declarations: [],
+  declarations: [EmptyResultsComponent],
   imports: [
     ...modules
   ],
