@@ -18,3 +18,6 @@ REDIRECT_AFTER_LOGIN=/home
 LOGIN_METHOD=phone
 SHOW_REFERRAL_DETAILS=true
 SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE=true
+CONTACTUSURL=https://cdn.perxtech.net/content/transcycle/contactus.html
+FAQSURL=https://cdn.perxtech.net/content/transcycle/faq.html
+TNCURL=https://cdn.perxtech.net/content/transcycle/tnc.html
