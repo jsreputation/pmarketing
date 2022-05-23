@@ -19,7 +19,7 @@
       <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" #home="routerLinkActive" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
         <div class="nav-item">
           <div class="nav-item-img">
-            <img [src]="home.isActive ? '../../assets/navbar/mission-active.svg' : '../../assets/navbar/mission-inactive.svg'" />
+            <img [src]="home.isActive ? 'assets/navbar/mission-active.svg' : 'assets/navbar/mission-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.HOME</span>
         </div>
@@ -27,7 +27,7 @@
       <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" #rewards="routerLinkActive" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
         <div class="nav-item">
           <div class="nav-item-img">
-            <img [src]="rewards.isActive ? '../../assets/navbar/reward-inactive.svg' : '../../assets/navbar/reward-inactive.svg'" />
+            <img [src]="rewards.isActive ? 'assets/navbar/reward-inactive.svg' : 'assets/navbar/reward-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.REWARDS</span>
         </div>
@@ -43,7 +43,7 @@
       <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" #history="routerLinkActive" *ngIf="appConfig.showHistoryPage">
         <div class="nav-item">
           <div class="nav-item-img">
-              <img [src]="history.isActive ? '../../assets/navbar/reward-history-inactive.svg' : '../../assets/navbar/reward-history-inactive.svg'" />
+              <img [src]="history.isActive ? 'assets/navbar/reward-history-inactive.svg' : 'assets/navbar/reward-history-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.HISTORY</span>
         </div>
@@ -51,7 +51,7 @@
       <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" #setting="routerLinkActive" *ngIf="appConfig.showAccountsPage || appRemoteFlags?.showAccountsPage">
         <div class="nav-item">
           <div class="nav-item-img">
-            <img [src]="setting.isActive ? '../../assets/navbar/setting-active.svg' : '../../assets/navbar/setting-inactive.svg'" />
+            <img [src]="setting.isActive ? 'assets/navbar/setting-active.svg' : 'assets/navbar/setting-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.ACCOUNT</span>
         </div>
