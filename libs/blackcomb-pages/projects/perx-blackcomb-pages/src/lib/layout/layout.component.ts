@@ -5,7 +5,16 @@ import { Title } from '@angular/platform-browser';
 
 import { filter, map, switchMap, tap, } from 'rxjs/operators';
 
-import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService, FlagLocalStorageService } from '@perxtech/core';
+import {
+  Config,
+  ConfigService,
+  FlagLocalStorageService,
+  IConfig,
+  IFlags,
+  ITheme,
+  SettingsService,
+  ThemesService
+} from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
 import { HomeComponent } from '../home/home.component';
@@ -112,7 +121,7 @@ export class LayoutComponent implements OnInit {
 
       if (chromelessFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      } else if ('flags' in params) {
+      } else {
         this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
       if (preAuthFlag) {
