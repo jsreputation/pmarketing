@@ -1,15 +1,8 @@
+<div class="mission-block">
+  <hangseng-home-mission></hangseng-home-mission>
+</div>
 <div class="page" *ngIf="theme && theme.properties && appConfig && appRemoteFlags" infiniteScroll
   [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
-  <div class="mission-block">
-    <hangseng-home-mission></hangseng-home-mission>
-
-    <!-- <perx-core-loyalty-summary [showLoyaltyProgress]="appConfig.showLoyaltyProgress" class="loyalty-item"
-      [subTitleFn]="subTitleFn" [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn" [pointToFn]="pointToFn"
-      [memberFn]="memberFn" [membershipExpiryFn]="membershipExpiryFn"
-      [hideAdditionalLoyaltyInfo]="!appConfig.showExtraLoyaltyOnHomePage">
-    </perx-core-loyalty-summary> -->
-
-  </div>
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
   <div class="campaign-list">
     <!-- progress bar campaigns-->

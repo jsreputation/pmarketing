@@ -18,6 +18,7 @@ import {
   CampaignType,
   IBDOCampaignEnrolment,
   ICampaign,
+  ICampaignCategory,
   ICampaignOutcome,
   ICampaignRule,
   IReferral
@@ -185,6 +186,10 @@ export class WhistlerCampaignService implements ICampaignService {
   }
   // @ts-ignore
   public getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCategories(): Observable<ICampaignCategory[]> {
     throw new Error('Method not implemented.');
   }
 }
