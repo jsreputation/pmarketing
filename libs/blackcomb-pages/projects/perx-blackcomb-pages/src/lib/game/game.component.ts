@@ -569,6 +569,8 @@ export class GameComponent implements OnInit, OnDestroy {
         // navigate to badge list if user has won a badge, since badges are not added to the wallet
         if (this.willWin && this.badge) {
           this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
+        } if (this.points) {
+          this.router.navigate(['/transaction-history']);
         } else {
           this.router.navigate(['/wallet']);
         }
