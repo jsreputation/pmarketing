@@ -9,9 +9,9 @@
   <!--      <div *ngIf="config?.media?.bannerImage">-->
   <!--        <img [src]="config?.media?.bannerImage | safeUrl"/>-->
   <!--      </div>-->
-        <h1 class="title" [style.color]="campaign?.displayProperties.fontColor">{{campaign?.displayProperties.landingPage.heading.text || campaign?.name}}</h1>
+        <h1 class="title" [style.color]="campaign?.displayProperties.fontColor">{{campaign?.displayProperties.landingPage?.heading?.text || campaign?.name}}</h1>
         <ng-container *ngIf="!isTeamsEnabled">
-          <h2 class="subtitle" [style.color]="campaign?.displayProperties.fontColor" [innerHtml]="campaign?.displayProperties.landingPage.subHeadline || campaign?.description | safeHtml"></h2>
+          <h2 class="subtitle" [style.color]="campaign?.displayProperties.fontColor" [innerHtml]="campaign?.displayProperties.landingPage?.subHeadline || campaign?.description | safeHtml"></h2>
         </ng-container>
         <ng-container *ngIf="campaign?.displayProperties.teamsDetails?.landingPage && isTeamsEnabled">
           <div class="rich-text-container"

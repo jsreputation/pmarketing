@@ -317,34 +317,36 @@ export class V4CampaignService implements ICampaignService {
       }
       const lp = (dp as GameProperties).landing_page;
 
-      // @ts-ignore
-      displayProperties.landingPage.backgroundUrl = patchUrl(
-        oc(dp as GameProperties).background_image.value.image_url('')
-      );
+      if (lp) {
+        // @ts-ignore
+        displayProperties.landingPage.backgroundUrl = patchUrl(
+          oc(dp as GameProperties).background_image.value.image_url('')
+        );
 
-      if (lp.headline) {
-        // @ts-ignore
-        displayProperties.landingPage.heading = {
-          text: lp.headline
-        };
-      }
-      if (lp.sub_headline) {
-        // @ts-ignore
-        displayProperties.landingPage.subHeading = {
-          text: lp.sub_headline
-        };
-      }
-      if (lp.body_text) {
-        // @ts-ignore
-        displayProperties.landingPage.body = {
-          text: lp.body_text
-        };
-      }
-      if (lp.image?.value.image_url) {
-        // @ts-ignore
-        displayProperties.landingPage.media = {
-          bannerImage: lp.image?.value.image_url
-        };
+        if (lp.headline) {
+          // @ts-ignore
+          displayProperties.landingPage.heading = {
+            text: lp.headline
+          };
+        }
+        if (lp.sub_headline) {
+          // @ts-ignore
+          displayProperties.landingPage.subHeading = {
+            text: lp.sub_headline
+          };
+        }
+        if (lp.body_text) {
+          // @ts-ignore
+          displayProperties.landingPage.body = {
+            text: lp.body_text
+          };
+        }
+        if (lp.image?.value.image_url) {
+          // @ts-ignore
+          displayProperties.landingPage.media = {
+            bannerImage: lp.image?.value.image_url
+          };
+        }
       }
     }
 
