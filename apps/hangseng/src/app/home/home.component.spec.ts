@@ -32,7 +32,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { CampaignsCollectionComponent, CatalogsComponent, GamesCollectionComponent } from '@perxtech/blackcomb-pages';
+import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
+import { GamesCollectionComponent, CatalogsComponent } from '@perxtech/blackcomb-pages';
 
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of([]),
