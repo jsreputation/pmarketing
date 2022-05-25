@@ -36,7 +36,9 @@ import { QuestDisplayProperties } from '../quest/v4-quest.service';
 import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-campaign.service';
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
-import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
+import {
+  IV4InstantRewardCampaignDisplayProperties
+} from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
 
 interface IV4Image {
@@ -313,10 +315,35 @@ export class V4CampaignService implements ICampaignService {
           landingPage: {},
         };
       }
+      const lp = (dp as GameProperties).landing_page;
+
       // @ts-ignore
       displayProperties.landingPage.backgroundUrl = patchUrl(
         oc(dp as GameProperties).background_image.value.image_url('')
       );
+
+      if (lp.headline) {
+        // @ts-ignore
+        displayProperties.landingPage.heading = {
+          text: lp.headline
+        };
+      }
+      if (lp.sub_headline) {
+        // @ts-ignore
+        displayProperties.landingPage.subHeading = {
+          text: lp.sub_headline
+        };
+      }
+      if (lp.body_text) {
+        // @ts-ignore
+        displayProperties.landingPage.body = {
+          text: lp.body_text
+        };
+      }
+      if (lp.image?.value.image_url) {
+        // @ts-ignore
+        displayProperties.landingPage.media.bannerImage = lp.image?.value.image_url;
+      }
     }
 
     if (dp && (dp as QuestDisplayProperties).quest_success_image) {
