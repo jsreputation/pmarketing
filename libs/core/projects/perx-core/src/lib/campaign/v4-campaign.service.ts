@@ -342,7 +342,9 @@ export class V4CampaignService implements ICampaignService {
       }
       if (lp.image?.value.image_url) {
         // @ts-ignore
-        displayProperties.landingPage.media.bannerImage = lp.image?.value.image_url;
+        displayProperties.landingPage.media = {
+          bannerImage: lp.image?.value.image_url
+        };
       }
     }
 
