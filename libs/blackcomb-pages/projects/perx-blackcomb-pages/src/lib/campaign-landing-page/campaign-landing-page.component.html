@@ -60,7 +60,7 @@
       </div>
       <div class="additional-info-container">
         <div class="rich-text-container" [style.color]="campaign?.displayProperties.fontColor" *ngIf="landingPageConfig?.body && !isTeamsEnabled" [innerHtml]="landingPageConfig?.body?.text | safeHtml"></div>
-        <div *ngIf="campaign?.termsAndConditions && isTeamsEnabled">
+        <div *ngIf="campaign?.termsAndConditions && (isTeamsEnabled || campaign?.type === 'game')">
           <div class="tnc-container">
             <p class="subtitle" [style.color]="campaign?.displayProperties.fontColor">Terms and Conditions</p>
             <div class="rich-text-container" [style.color]="campaign?.displayProperties.fontColor" [innerHtml]="campaign?.termsAndConditions | safeHtml"></div>
