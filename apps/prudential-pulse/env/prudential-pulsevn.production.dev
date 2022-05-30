@@ -19,4 +19,3 @@ SHOW_REFERRAL_DETAILS=true
 SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE=true
 SHOW_PRIZE_SET_OUTCOME=false
 FAQSURL=https://cdn.perxtech.net/content/prudential-pulse/vietnam/faq.html
-PRODUCTION=true
