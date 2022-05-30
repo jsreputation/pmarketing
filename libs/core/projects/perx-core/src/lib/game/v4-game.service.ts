@@ -80,6 +80,7 @@ export interface GameProperties {
     sub_headline: string;
     body_text: string;
     image: Asset;
+    cta_button_text: string;
   }
 }
 

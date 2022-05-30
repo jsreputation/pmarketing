@@ -309,6 +309,7 @@ export class V4CampaignService implements ICampaignService {
         }
       }
     }
+
     if (dp && (dp as GameProperties).background_image) {
       if (displayProperties === undefined) {
         displayProperties = {
@@ -345,6 +346,13 @@ export class V4CampaignService implements ICampaignService {
           // @ts-ignore
           displayProperties.landingPage.media = {
             bannerImage: lp.image?.value.image_url
+          };
+        }
+
+        if (lp.cta_button_text) {
+          // @ts-ignore
+          displayProperties.landingPage?.buttonText = {
+            text: lp.cta_button_text
           };
         }
       }
@@ -584,6 +592,7 @@ export class V4CampaignService implements ICampaignService {
         }
       }
     }
+
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
     if (campaign.campaign_config) {
@@ -609,34 +618,34 @@ export class V4CampaignService implements ICampaignService {
       };
     }
     return {
-      id: campaign.id,
-      name: campaign.name,
-      description: campaign.description,
-      type: campaign.campaign_type,
-      subType: oc(campaign).game_type(),
-      state: campaign.state,
-      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
-      enrolled: campaign.enrolled,
-      termsAndConditions: campaign.terms_and_conditions,
-      referralCodes,
-      refersAttained,
-      rewards,
-      thumbnailUrl,
       campaignBannerUrl,
-      operatingHours,
-      isOperating: campaign.operating_now,
-      teamSize: campaign.team_size,
-      displayProperties,
-      customFields,
       categoryTags: campaign.category_tags,
-      tags: campaign.tags,
-      score: campaign?.score,
+      customFields,
+      description: campaign.description,
+      displayProperties,
+      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       enrollableUntil: campaign.enrollable_until ?  new Date(campaign.enrollable_until) : null,
+      enrolled: campaign.enrolled,
+      id: campaign.id,
+      isOperating: campaign.operating_now,
       miscImages: {
         miscImage1: miscImg1 || '',
         miscImage2: miscImg2 || ''
-      }
+      },
+      name: campaign.name,
+      operatingHours,
+      referralCodes,
+      refersAttained,
+      rewards,
+      score: campaign?.score,
+      state: campaign.state,
+      subType: oc(campaign).game_type(),
+      tags: campaign.tags,
+      teamSize: campaign.team_size,
+      termsAndConditions: campaign.terms_and_conditions,
+      thumbnailUrl,
+      type: campaign.campaign_type,
     };
   }
 
