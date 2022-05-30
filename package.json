@@ -129,6 +129,8 @@
     "build:prudential-pulse:staging": "env-cmd -f apps/prudential-pulse/env/prudential-pulse.staging ts-node --project tsconfig.node.json apps/prudential-pulse/set-env.ts && yarn nx build prudential-pulse -- --prod",
     "start:prudential-pulse:production": "env-cmd -f apps/prudential-pulse/env/prudential-pulse.production.dev ts-node --project tsconfig.node.json apps/prudential-pulse/set-env.ts && yarn nx serve prudential-pulse --",
     "start:prudential-pulse:staging": "env-cmd -f apps/prudential-pulse/env/prudential-pulse.staging.dev ts-node --project tsconfig.node.json apps/prudential-pulse/set-env.ts && yarn nx serve prudential-pulse --",
+    "build:prudential-pulsevn:production": "env-cmd -f apps/prudential-pulse/env/prudential-pulsevn.production ts-node --project tsconfig.node.json apps/prudential-pulse/set-env.ts && yarn nx build prudential-pulse -- --prod",
+    "start:prudential-pulsevn:production": "env-cmd -f apps/prudential-pulse/env/prudential-pulsevn.production.dev ts-node --project tsconfig.node.json apps/prudential-pulse/set-env.ts && yarn nx serve prudential-pulse --",
     "build:dbshk-agent:production": "env-cmd -f apps/dbshk-agent/env/dbshk-agent.production ts-node --project tsconfig.node.json apps/dbshk-agent/set-env.ts && yarn nx build dbshk-agent -- --prod",
     "build:dbshk-agent:staging": "env-cmd -f apps/dbshk-agent/env/dbshk-agent.staging ts-node --project tsconfig.node.json apps/dbshk-agent/set-env.ts && yarn nx build dbshk-agent -- --prod",
     "start:dbshk-agent:production": "env-cmd -f apps/dbshk-agent/env/dbshk-agent.production.dev ts-node --project tsconfig.node.json apps/dbshk-agent/set-env.ts && yarn nx serve dbshk-agent --",
