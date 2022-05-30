@@ -478,7 +478,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Điều kiện và điều khoản sử dụng"
   },
   "POINTS_TRANSFER": {
     "FROM": "From",
