@@ -217,6 +217,15 @@ interface IV4BdoEnrolment {
   enrolment_reference: string;
   user_account_id: number;
 }
+interface IV4GetCategoriesResponse {
+  data: IV4Category[];
+}
+interface IV4Category {
+  id: number;
+  description: string;
+  title: string;
+  usage: string[];
+}
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
 
@@ -927,5 +936,27 @@ export class V4CampaignService implements ICampaignService {
       badgeId: badge.badge_id,
       state: badge.state,
     };
+  }
+
+  public getCategories(): Observable<IV4Category[]> {
+    return this.http
+      .get<IV4GetCategoriesResponse>(`${this.baseUrl}/v4/categories`)
+      .pipe(
+        map((res) => res.data),
+        map((res) =>
+          Object.values(
+            res.reduce(
+              (acc, cur) =>
+                cur.usage.includes('Campaigns')
+                  ? Object.assign(acc, { [cur.id]: cur })
+                  : acc,
+              {}
+            )
+          )
+        ),
+        map((categories: IV4Category[]) =>
+          categories.map((category) => category)
+        )
+      );
   }
 }
