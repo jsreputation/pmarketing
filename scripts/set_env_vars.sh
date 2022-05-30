@@ -163,6 +163,10 @@ blackcomb_merchant_app_base=(
   generic-merchant
 )
 
+pulse_app_base=(
+  prudential-pulsevn
+)
+
 SET_APP_BASE=false
 
 for app in "${blackcomb_merchant_app_base[@]}"; do
@@ -180,6 +184,12 @@ if [[ ${SET_APP_BASE} == false ]]; then
     fi
   done
 fi
+
+for app in "${pulse_app_base[@]}"; do
+  if [[ ${APP} == ${app} ]]; then
+    APP_BASE="prudential-pulse" && SET_APP_BASE=true && break
+  fi
+done
 
 echo APP_BASE is ${APP_BASE}
 echo "APP_BASE=${APP_BASE}" >>"${GITHUB_ENV}"
