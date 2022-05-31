@@ -3,8 +3,6 @@
 .main-puzzle-container {
   @include main-wrap;
 
-  padding-bottom: 180px;
-
   h1 {
     @include game-headline;
 
@@ -24,6 +22,10 @@
 
 .game-wrapper {
   @include game-wrap;
+}
+
+.game-footer {
+  @include game-cta;
 }
 
 .nullBlock {

@@ -15,4 +15,14 @@
       [nbShakes]="config.nbTaps">
     </perx-core-shake-tree>
   </div>
+  <div class="game-footer">
+    <button
+      class="js-play ga_start_game"
+      mat-flat-button
+      (click)="onClick()"
+      [disabled]="showOperatingHours && game.isOperating"
+      [ngStyle]="buttonStyle">
+      {{ game.texts.button }}
+    </button>
+  </div>
 </div>
