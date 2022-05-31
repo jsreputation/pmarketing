@@ -674,7 +674,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(url);
   }
 
-  public onEnrollClick(gameType: GameType): void {
+  public onEnrollClick(): void {
     this.isEnableEnrollment = false;
   }
 

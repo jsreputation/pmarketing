@@ -2,9 +2,6 @@ import { async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick
 
 import { GameComponent } from './game.component';
 import { of, throwError } from 'rxjs';
-import { ShakeComponent } from './shake/shake.component';
-import { TapComponent } from './tap/tap.component';
-import { ScratchComponent } from './scratch/scratch.component';
 import {
   AuthenticationService,
   CampaignState,
@@ -30,13 +27,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
-import { SnakeComponent } from './snake/snake.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { PlinkoComponent } from './plinko/plinko.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { ShakeComponent, SpinComponent, SnakeComponent, PlinkoComponent, TapComponent, ScratchComponent } from '@perxtech/blackcomb-pages';
 
 const game: IGame = {
   id: 1,
