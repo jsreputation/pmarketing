@@ -3,7 +3,6 @@ import { ShakeComponent } from './shake.component';
 import { GameModule, IGame, IGameService, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ShakeComponent', () => {
   let component: ShakeComponent;
@@ -49,8 +48,7 @@ describe('ShakeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ShakeComponent],
       imports: [
-        GameModule,
-        TranslateModule.forRoot(),
+        GameModule
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
