@@ -169,13 +169,12 @@ export class GameComponent implements OnInit, OnDestroy {
       }),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
-        console.log('GAME: ', game)
         if (game) {
           if (!game.texts.button) {
             this.translate
               .get('START_PLAYING')
               .subscribe((text) => {
-                  (game.texts.button = text)
+                  (game.texts.button = text);
               });
           }
           const { displayProperties } = game;
