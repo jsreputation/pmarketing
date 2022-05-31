@@ -1,0 +1,45 @@
+<div *ngIf="gameData$ | async as game" class="h-100">
+  <img class="background" *ngIf="game.backgroundImg" [src]="game.backgroundImg">
+  <div [ngSwitch]="game.type" class="game">
+    <perx-blackcomb-pages-shake
+      *ngSwitchCase="gt.shakeTheTree"
+      [game]="game"
+      (broken)=gameCompleted()
+    ></perx-blackcomb-pages-shake>
+    <perx-blackcomb-pages-tap
+      *ngSwitchCase="gt.pinata"
+      [game]="game"
+      (broken)=gameCompleted()
+    ></perx-blackcomb-pages-tap>
+    <perx-blackcomb-pages-scratch
+      *ngSwitchCase="gt.scratch"
+      [willWin]="willWin"
+      [game]="game"
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
+    ></perx-blackcomb-pages-scratch>
+    <perx-blackcomb-pages-spin
+      *ngSwitchCase="gt.spin"
+      [startSpin]="startGameAnimation"
+      [willWin]="willWin"
+      [game]="game"
+      (loaded)="loadPlay()"
+      (broken)=gameCompletedLoad()
+    ></perx-blackcomb-pages-spin>
+    <perx-blackcomb-pages-snake
+      *ngSwitchCase="gt.snake"
+      [game]="game"
+      (broken)=gameCompleted()>
+    </perx-blackcomb-pages-snake>
+    <perx-blackcomb-pages-plinko
+      *ngSwitchCase="gt.plinko"
+      [willWin]="willWin"
+      [game]="game"
+      [startGame]="startGameAnimation"
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
+    ></perx-blackcomb-pages-plinko>
+  </div>
+  <hangseng-enroll-game-button (onEnroll)="onEnrollClick()" [buttonStyle]="buttonStyle" *ngIf="isEnableEnrollment"></hangseng-enroll-game-button>
+  <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
+</div>
