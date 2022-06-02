@@ -48,7 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressBarModule,
     MatButtonModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
   ],
 })
 export class GameModule { }
