@@ -274,6 +274,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
+  public goToCampaignGamePage(game: IGame): void {
+    if (this.appConfig.showCampaignLandingPage) {
+      this.router.navigate([`campaign-welcome/${game.campaignId}`]);
+    } else {
+      this.router.navigate([`game/${game.id}`]);
+    }
+  }
+
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }

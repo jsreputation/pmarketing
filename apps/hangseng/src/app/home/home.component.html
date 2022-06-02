@@ -30,36 +30,36 @@
     <div class="campaigns">
       <!-- progress bar campaigns-->
       <div *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">=
-        <perx-blackcomb-pages-campaigns-collection [campaigns]="progressCampaigns$"
+        <hangseng-campaigns-collection [campaigns]="progressCampaigns$"
           (selected)="goToCampaignPage($event)">
-        </perx-blackcomb-pages-campaigns-collection>
+        </hangseng-campaigns-collection>
       </div>
       <!-- Stamp card campaigns-->
       <div *ngIf="appConfig.showStampCampaignsOnHomePage">
-        <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
-        </perx-blackcomb-pages-campaigns-collection>
+        <hangseng-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
+        </hangseng-campaigns-collection>
       </div>
       <!-- Game campaigns-->
-      <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
+      <perx-blackcomb-games-collection [games]="games$" (selected)="goToCampaignGamePage($event)"></perx-blackcomb-games-collection>
       <!-- Quiz campaigns -->
       <div *ngIf="appConfig.showQuizOnHomePage">
-        <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
+        <hangseng-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
           [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
           (selected)="goToCampaignPage($event)">
-        </perx-blackcomb-pages-campaigns-collection>
+        </hangseng-campaigns-collection>
       </div>
       <!-- Survey campaigns -->
       <div
         [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
         *ngIf="appConfig.showSurveyOnHomePage">
-        <perx-blackcomb-pages-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
+        <hangseng-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
           (selected)="goToCampaignPage($event)">
-        </perx-blackcomb-pages-campaigns-collection>
+        </hangseng-campaigns-collection>
       </div>
       <!-- Quest campaigns-->
       <div *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
-        <perx-blackcomb-pages-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
-        </perx-blackcomb-pages-campaigns-collection>
+        <hangseng-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
+        </hangseng-campaigns-collection>
       </div>
     </div>
 
