@@ -440,7 +440,8 @@
     "View Reward": "This game is not available for you at the moment.",
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",

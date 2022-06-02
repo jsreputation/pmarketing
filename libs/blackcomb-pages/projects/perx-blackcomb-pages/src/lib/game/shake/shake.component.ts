@@ -17,8 +17,10 @@ export class ShakeComponent implements OnInit {
     this.broken.emit();
   }
 
-  constructor(private themesService: ThemesService,
-              private settingsService: SettingsService) {}
+  constructor(
+    private themesService: ThemesService,
+    private settingsService: SettingsService,
+  ) {}
 
   public headerStyle: { [key: string]: string } = {};
   public subheaderStyle: { [key: string]: string } = {};

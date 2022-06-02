@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
@@ -9,7 +10,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+
 import { EmptyResultsComponent } from './empty-results/empty-results.component';
+import { EnrollGameButtonComponent } from './enroll-game-button/enroll-game-button.component';
+
+
 const modules = [
   MatToolbarModule,
   MatButtonModule,
@@ -21,15 +27,19 @@ const modules = [
   MatInputModule,
   MatProgressSpinnerModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  CommonModule,
+  TranslateModule,
 ];
 @NgModule({
-  declarations: [EmptyResultsComponent],
+  declarations: [EmptyResultsComponent, EnrollGameButtonComponent],
   imports: [
     ...modules
   ],
   exports: [
-    ...modules
+    ...modules,
+    EmptyResultsComponent,
+    EnrollGameButtonComponent
   ]
 })
 export class SharedModule { }

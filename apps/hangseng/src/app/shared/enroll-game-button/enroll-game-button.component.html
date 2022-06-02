@@ -1,0 +1,9 @@
+<div class="game-footer">
+  <!-- <mat-icon outline="true" class="material-icons-outlined lock-open-icon">lock_open</mat-icon> -->
+  <img src="/assets/icons/lock.svg" />
+  <h2>{{'GAME_PAGE.ENROL_TEXT' | translate}}</h2>
+  <button class="enrol" mat-flat-button (click)="onEnroll.emit()" [disabled]="disabled"
+    [ngStyle]="buttonStyle">
+    <span>Enrol</span>
+  </button>
+</div>

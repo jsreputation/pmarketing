@@ -8,11 +8,12 @@ import { filter, map, switchMap, tap, } from 'rxjs/operators';
 import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, ThemesService } from '@perxtech/core';
 
 import {
-  SignIn2Component, HomeComponent, HistoryComponent, AccountComponent, WalletComponent, WalletHistoryComponent,
+  SignIn2Component, HistoryComponent, AccountComponent, WalletComponent, WalletHistoryComponent,
   ProfileComponent, CampaignStampsComponent, LeaderboardPageComponent, FindLocationComponent,
   RebatesWalletComponent, NearmeComponent, RewardsPageComponent, LeaderboardsComponent, BadgeLandingComponent,
 } from '@perxtech/blackcomb-pages';
 import { BACK_ARROW_URLS } from '../app.constants';
+import { HomeComponent } from '../home/home.component';
 
 
 export interface ShowTitleInHeader {
