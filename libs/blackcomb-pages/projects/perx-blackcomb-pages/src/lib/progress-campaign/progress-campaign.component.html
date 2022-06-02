@@ -13,25 +13,7 @@
     <div class="overall-progress-bar-container">
       <div class="overall-progress-bar-container-content">
         <p>Overall Progress:</p>
-        <div class="spinner-wrapper">
-          <div class="spinner-background">
-            <mat-progress-spinner
-              mode="determinate"
-              [strokeWidth]="4"
-              [diameter]="48"
-              [value]="100"></mat-progress-spinner>
-          </div>
-          <div class="spinner-foreground">
-            <mat-progress-spinner
-              mode="determinate"
-              [strokeWidth]="4"
-              [diameter]="48"
-              [value]="campaignProgress"></mat-progress-spinner>
-          </div>
-          <div class="spinner-progress-percentage">
-            {{campaignProgress}}%
-          </div>
-        </div>
+        <perx-blackcomb-pages-progress-bar [campaignProgress]="campaignProgress"></perx-blackcomb-pages-progress-bar>
       </div>
     </div>
     <div class="progress-campaign-content">

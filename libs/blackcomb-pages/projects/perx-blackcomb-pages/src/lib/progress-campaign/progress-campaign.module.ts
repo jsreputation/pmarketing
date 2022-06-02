@@ -12,9 +12,10 @@ import { ProgressCampaignComponent } from './progress-campaign.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
-  declarations: [ ProgressCampaignComponent ],
+  declarations: [ ProgressCampaignComponent, ProgressBarComponent ],
   exports: [ ProgressCampaignComponent ],
   imports: [
     CommonModule,
