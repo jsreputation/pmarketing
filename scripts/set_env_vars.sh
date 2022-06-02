@@ -155,6 +155,7 @@ blackcomb_app_base=(
   scphoenix
   siampiwat
   techfis
+  timesinternet
   zeal
 )
 
