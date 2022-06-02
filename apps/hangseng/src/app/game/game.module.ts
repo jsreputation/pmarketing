@@ -9,8 +9,8 @@ import {
   GameModule as PerxGameModule
 } from '@perxtech/core';
 import { GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
-import { EnrollGameButtonComponent } from './enroll-game-button/enroll-game-button.component';
 import { GameComponent } from './game.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 const routes: Routes = [{
@@ -19,7 +19,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [GameComponent, EnrollGameButtonComponent],
+  declarations: [GameComponent],
   imports: [
     CommonModule,
     MatProgressBarModule,
@@ -28,7 +28,8 @@ const routes: Routes = [{
     BCGameModule,
     RouterModule.forChild(routes),
     TranslateModule,
-    PerxGameModule
+    PerxGameModule,
+    SharedModule
   ]
 })
 export class GameModule { }
