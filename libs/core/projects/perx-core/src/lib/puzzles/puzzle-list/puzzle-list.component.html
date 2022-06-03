@@ -1,9 +1,11 @@
 <div [class]="puzzles ? 'card-list-container' : 'card-list-container loading'">
   <div *ngIf="puzzles; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
-    <mat-card matRipple *ngFor="let puzzle of puzzles | async; let i=index" [matRippleDisabled]="!isActive(puzzle)"
+    <!-- <mat-card matRipple *ngFor="let puzzle of puzzles | async; let i=index" [matRippleDisabled]="!isActive(puzzle)"
       [class.disabled]="!isActive(puzzle)" [tabindex]="isActive(puzzle) ? 0 : -1"
-      (click)="isActive(puzzle) && puzzleSelected(puzzle)">
+      (click)="isActive(puzzle) && puzzleSelected(puzzle)"> -->
+    <mat-card matRipple *ngFor="let puzzle of puzzles | async; let i=index" [tabindex]="isActive(puzzle) ? 0 : -1"
+      (click)="puzzleSelected(puzzle)">
       <div class="puzzle-content">
         <div class="puzzle-img__wrapper">
           <img *ngIf="puzzle.displayProperties.thumbnailImg"

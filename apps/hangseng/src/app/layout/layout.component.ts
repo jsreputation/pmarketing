@@ -14,7 +14,6 @@ import {
 } from '@perxtech/blackcomb-pages';
 import { BACK_ARROW_URLS } from '../app.constants';
 import { HomeComponent } from '../home/home.component';
-import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
 
 
 export interface ShowTitleInHeader {
@@ -113,7 +112,6 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletComponent ||
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent ||
-      ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
       ref instanceof LeaderboardsComponent ||
       ref instanceof FindLocationComponent ||

@@ -1,8 +1,20 @@
+@import "../../theme/variables.scss";
+
 .page {
-  background-color: var(--background);
+  background-color: #ededed;
   min-height: 100%;
   overflow-y: auto;
   height: 100%;
+}
+
+.has-enroll {
+  margin-bottom: 22rem;
+}
+
+.card-container {
+  background-color: #fff;
+  margin-bottom: 8px;
+  padding: 16px;
 }
 
 .stamps-collection {
@@ -10,20 +22,60 @@
   //margin-bottom: 2rem;
   width: 90%;
   word-break: break-word;
-  margin: 0 auto;
+  // margin-bottom: 8px;
 
   h1 {
-    color: #212121;
-    font-size: 2.4rem;
+    color: #333333;
+    font-size: 24px;
+    line-height: 29px;
   }
 
   h3 {
-    color: #212121;
-    font-size: 2rem;
+    color: #333333;
+    font-size: 14px;
+    line-height: 17px;
   }
 
   .subtitle {
     font-size: 1.4rem;
     color: #212121;
+  }
+
+  mat-chip {
+    border-radius: 4px;
+    width: 154px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    color: #666666;
+  }
+}
+
+.stamps-how-it-works {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 40px;
+
+  .mt-24 {
+    margin-top: 24px;
+  }
+
+  .mt-32 {
+    margin-top: 32px;
+  }
+
+  .mat-card-title {
+    font-size: 16px;
+    color: #333333;
+  }
+
+  .mat-card-content {
+    p {
+      font-size: 14px;
+      line-height: 17px;
+      color: #333333;
+    }
   }
 }

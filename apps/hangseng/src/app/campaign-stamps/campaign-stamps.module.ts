@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 import { RouterModule, Routes } from '@angular/router';
 import {
   AuthenticationService,
@@ -17,6 +20,7 @@ import {
 } from '@perxtech/core';
 import { settingsServiceFactory } from 'libs/core/projects/perx-core/src/lib/settings/settings.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SharedModule } from '../shared/shared.module';
 import { CampaignStampsComponent } from './campaign-stamps.component';
 
 const routes: Routes = [{
@@ -30,13 +34,17 @@ const routes: Routes = [{
   ],
   imports: [
     CommonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDividerModule,
     UtilsModule,
     InfiniteScrollModule,
     PuzzlesModule,
     RouterModule,
     StampModule,
-    ConfigModule.forChild(),
     PipeUtilsModule,
+    SharedModule,
+    ConfigModule.forChild(),
     RouterModule.forChild(routes),
   ],
   exports: [
