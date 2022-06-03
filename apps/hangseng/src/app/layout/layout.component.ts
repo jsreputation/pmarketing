@@ -9,11 +9,12 @@ import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, Themes
 
 import {
   SignIn2Component, HistoryComponent, AccountComponent, WalletComponent, WalletHistoryComponent,
-  ProfileComponent, CampaignStampsComponent, LeaderboardPageComponent, FindLocationComponent,
+  ProfileComponent, LeaderboardPageComponent, FindLocationComponent,
   RebatesWalletComponent, NearmeComponent, RewardsPageComponent, LeaderboardsComponent, BadgeLandingComponent,
 } from '@perxtech/blackcomb-pages';
 import { BACK_ARROW_URLS } from '../app.constants';
 import { HomeComponent } from '../home/home.component';
+import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
 
 
 export interface ShowTitleInHeader {
