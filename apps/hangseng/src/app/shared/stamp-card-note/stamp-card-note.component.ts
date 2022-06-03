@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/tslint/config */
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
 @Component({
   selector: 'hangseng-stamp-card-note',
   templateUrl: './stamp-card-note.component.html',
@@ -16,5 +15,5 @@ export class StampCardNoteComponent {
   @Output() onPress: EventEmitter<any> = new EventEmitter<any>();
 
 
-  constructor() {}
+  constructor() { }
 }

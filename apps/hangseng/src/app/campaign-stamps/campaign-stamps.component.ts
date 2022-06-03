@@ -116,4 +116,7 @@ export class CampaignStampsComponent implements OnInit {
     this.enableEnrollment = false;
   }
 
+  public onReadMore(): void {
+    this.router.navigate([`/stamp/${this.campaignId}/read-more`]);
+  }
 }

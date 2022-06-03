@@ -5,5 +5,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/contact-us',
   '/reward-detail',
   '/c',
-  '/favorite-rewards'
+  '/favorite-rewards',
+  '/stamp'
 ];
