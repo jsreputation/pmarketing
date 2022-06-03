@@ -53,6 +53,8 @@ import {
   UtilsModule,
   VouchersModule,
   PlatformEnrolmentServiceModule,
+  PuzzlesModule,
+  PipeUtilsModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -116,7 +118,7 @@ export const setLanguage = (
     const langCode = tokenStorage.getAppInfoProperty('lang') || translateService.getBrowserLang() || 'en';
     configService.readAppConfig().pipe(
       tap(() => {
-      //  translateService.setDefaultLang(langCode);
+        //  translateService.setDefaultLang(langCode);
         document.documentElement.lang = langCode;
       }),
       // for currentLang registering to determine lang ver of url navigation on content.component
@@ -176,6 +178,8 @@ export const setLanguage = (
     MatProgressSpinnerModule,
     PlatformEnrolmentServiceModule.forRoot(),
     InfiniteScrollModule,
+    PuzzlesModule,
+    PipeUtilsModule
   ],
   bootstrap: [AppComponent],
   providers: [

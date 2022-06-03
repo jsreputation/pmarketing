@@ -1,0 +1,41 @@
+<perx-core-leaderboard-cta *ngIf="campaignId" [campaignId]="campaignId"></perx-core-leaderboard-cta>
+<div class="page" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false">
+  <div [ngClass]="{'has-enroll': enableEnrollment}">
+    <div class="card-container">
+      <mat-card class="stamps-collection">
+        <mat-chip>Enrollment required</mat-chip>
+        <h1 *ngIf="title">{{title}}</h1>
+        <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
+        <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
+        <perx-core-puzzle-list [repeatGhostCount]="1" [cards]="stampCards$" [puzzleTextFn]="puzzleTextFn"
+          [titleFn]="titleFn" (selected)="selected($event)">
+        </perx-core-puzzle-list>
+      </mat-card>
+    </div>
+    <div class="card-container">
+      <mat-card class="stamps-how-it-works mat-elevation-z0">
+        <mat-card-subtitle>How to work</mat-card-subtitle>
+        <mat-divider inset></mat-divider>
+        <mat-card-title class="mt-24">Campaign details </mat-card-title>
+        <mat-card-content>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.</p>
+        </mat-card-content>
+        <mat-card-title class="mt-32">Terms & conditions</mat-card-title>
+        <mat-card-content>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.</p>
+        </mat-card-content>
+        <mat-card-title class="mt-32">Remark(s) </mat-card-title>
+        <mat-card-content>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore
+            magna aliqua.</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<hangseng-enroll-game-button *ngIf="enableEnrollment" (onEnroll)="onEnableEnrollment()"></hangseng-enroll-game-button>
