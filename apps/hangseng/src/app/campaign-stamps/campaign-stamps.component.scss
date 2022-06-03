@@ -1,0 +1,29 @@
+.page {
+  background-color: var(--background);
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.stamps-collection {
+  //padding: 0 1.5rem;
+  //margin-bottom: 2rem;
+  width: 90%;
+  word-break: break-word;
+  margin: 0 auto;
+
+  h1 {
+    color: #212121;
+    font-size: 2.4rem;
+  }
+
+  h3 {
+    color: #212121;
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.4rem;
+    color: #212121;
+  }
+}

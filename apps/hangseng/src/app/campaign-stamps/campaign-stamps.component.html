@@ -1,0 +1,11 @@
+<perx-core-leaderboard-cta *ngIf="campaignId" [campaignId]="campaignId"></perx-core-leaderboard-cta>
+<div class="page" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false">
+  <div class="stamps-collection">
+    <h1 *ngIf="title">{{title}}</h1>
+    <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
+    <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
+    <perx-core-puzzle-list [repeatGhostCount]="1" [cards]="stampCards$" [puzzleTextFn]="puzzleTextFn"
+      [titleFn]="titleFn" (selected)="selected($event)">
+    </perx-core-puzzle-list>
+  </div>
+</div>
