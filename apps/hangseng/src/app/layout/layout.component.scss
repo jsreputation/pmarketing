@@ -35,6 +35,10 @@
   margin: 0 auto;
   overflow-y: hidden;
   position: "relative";
+
+  &.has-toolbar {
+    padding-bottom: 44px;
+  }
 }
 
 .navbar {
