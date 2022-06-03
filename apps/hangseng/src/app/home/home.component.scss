@@ -1,14 +1,15 @@
 @import "../../theme/variables.scss";
 
 .mission-block {
-  background-color: var(--accent);
+  background-color: $lime;
   display: flex;
   width: 100%;
   justify-content: space-between;
   margin-bottom: 2.4rem;
   height: auto;
   min-height: 38vh;
-
+  max-width: 41.5rem;
+  padding-top: 6rem;
   position: fixed;
   top: 0;
 }
