@@ -21,7 +21,7 @@ import {
   SurveyModule,
   TeamsServiceModule,
   InstantOutcomeTransactionServiceModule,
-  PipeUtilsModule
+  PipeUtilsModule,
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
@@ -60,7 +60,7 @@ const routes: Routes = [{
     MatCardModule,
     MatRippleModule,
     MatDialogModule,
-    MatChipsModule
+    MatChipsModule,
   ],
   entryComponents: [
     RewardPopupComponent,

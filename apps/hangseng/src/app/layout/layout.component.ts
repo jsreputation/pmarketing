@@ -9,7 +9,7 @@ import { Config, ConfigService, IConfig, IFlags, ITheme, SettingsService, Themes
 
 import {
   SignIn2Component, HistoryComponent, AccountComponent, WalletComponent, WalletHistoryComponent,
-  ProfileComponent, CampaignStampsComponent, LeaderboardPageComponent, FindLocationComponent,
+  ProfileComponent, LeaderboardPageComponent, FindLocationComponent,
   RebatesWalletComponent, NearmeComponent, RewardsPageComponent, LeaderboardsComponent, BadgeLandingComponent,
 } from '@perxtech/blackcomb-pages';
 import { BACK_ARROW_URLS } from '../app.constants';
@@ -112,7 +112,6 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletComponent ||
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent ||
-      ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
       ref instanceof LeaderboardsComponent ||
       ref instanceof FindLocationComponent ||
