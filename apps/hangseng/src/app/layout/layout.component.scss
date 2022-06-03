@@ -1,5 +1,6 @@
 @import "../_mixins";
 @import "../custom-theme";
+@import "../../theme/variables.scss";
 
 :host {
   display: block;
@@ -9,6 +10,7 @@
 
 .toolbar {
   @include toolbar();
+  background-color: $lime !important;
 
   .backArrow {
     @include toolBarArrow();
@@ -32,6 +34,7 @@
   display: block;
   margin: 0 auto;
   overflow-y: hidden;
+  position: "relative";
 }
 
 .navbar {

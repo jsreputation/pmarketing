@@ -25,7 +25,7 @@ import {
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
-import { HomeMissionComponent } from './components/home-mission/home-mission.component';
+import { HomeMissionComponent } from './home-mission/home-mission.component';
 
 const routes: Routes = [{
   path: '',
