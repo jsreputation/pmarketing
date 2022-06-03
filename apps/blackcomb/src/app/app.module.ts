@@ -47,6 +47,7 @@ import {
   QuestModule as PerxQuestModule,
 
   RewardsServiceModule,
+  QuizServiceModule,
   SettingsModule,
   SettingsService,
   StampModule as PerxStampModule,
@@ -157,6 +158,7 @@ export const setLanguage = (
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
     RewardsServiceModule.forRoot(),
+    QuizServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
