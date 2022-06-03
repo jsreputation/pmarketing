@@ -40,7 +40,8 @@ const modules = [
   exports: [
     ...modules,
     EmptyResultsComponent,
-    EnrollGameButtonComponent
+    EnrollGameButtonComponent,
+    StampCardNoteComponent
   ]
 })
 export class SharedModule { }

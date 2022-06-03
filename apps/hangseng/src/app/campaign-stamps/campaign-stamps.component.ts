@@ -31,6 +31,9 @@ export class CampaignStampsComponent implements OnInit {
   public currentPage: number = 0;
   public completed: boolean = false;
 
+  public stampNoteTitle: string = 'Important note';
+  public stampNoteDescription: string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet lorem bibendum.consectetur adipiscing elit. Cras sit amet lorem bibendum.';
+
   // public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
   public titleFn: (index?: number) => Observable<string>;
