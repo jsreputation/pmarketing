@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EmptyResultsComponent } from './empty-results/empty-results.component';
 import { EnrollGameButtonComponent } from './enroll-game-button/enroll-game-button.component';
 import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
+import { CompletedStampsComponent } from './completed-stamps/completed-stamps.component';
 
 
 const modules = [
@@ -33,7 +34,7 @@ const modules = [
   TranslateModule,
 ];
 @NgModule({
-  declarations: [EmptyResultsComponent, EnrollGameButtonComponent, StampCardNoteComponent],
+  declarations: [EmptyResultsComponent, EnrollGameButtonComponent, StampCardNoteComponent, CompletedStampsComponent],
   imports: [
     ...modules
   ],
@@ -41,7 +42,8 @@ const modules = [
     ...modules,
     EmptyResultsComponent,
     EnrollGameButtonComponent,
-    StampCardNoteComponent
+    StampCardNoteComponent,
+    CompletedStampsComponent
   ]
 })
 export class SharedModule { }

@@ -27,6 +27,7 @@ export class CampaignStampsComponent implements OnInit {
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public enableEnrollment: boolean = true;
+  public completedStamps: boolean = false;
 
   public currentPage: number = 0;
   public completed: boolean = false;
@@ -114,6 +115,10 @@ export class CampaignStampsComponent implements OnInit {
 
   public onEnableEnrollment(): void {
     this.enableEnrollment = false;
+
+    if (!this.enableEnrollment) {
+      setTimeout(() => { this.completedStamps = true; }, 1000);
+    }
   }
 
 }
