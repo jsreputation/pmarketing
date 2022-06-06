@@ -10,7 +10,7 @@ describe('CompletedStampsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CompletedStampsComponent ],
-      imports: [ TranslateModule ]
+      imports: [ TranslateModule.forRoot() ]
     })
     .compileComponents();
   });
