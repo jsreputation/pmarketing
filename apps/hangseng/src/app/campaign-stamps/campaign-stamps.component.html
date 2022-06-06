@@ -1,4 +1,4 @@
-<hangseng-stamp-card-note [title]="stampNoteTitle" [description]="stampNoteDescription"></hangseng-stamp-card-note>
+<hangseng-stamp-card-note [title]="stampNoteTitle" [description]="stampNoteDescription" (onPress)="onReadMore()"></hangseng-stamp-card-note>
 <perx-core-leaderboard-cta *ngIf="campaignId" [campaignId]="campaignId"></perx-core-leaderboard-cta>
 <div class="page" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false">
   <div [ngClass]="{'has-enroll': enableEnrollment}">

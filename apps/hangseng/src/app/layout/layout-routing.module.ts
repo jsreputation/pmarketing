@@ -199,6 +199,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: "stamp/:id/read-more",
+        loadChildren: () => import('../campaign-stamps-read-more/campaign-stamps-read-more.module').then((mod) => mod.CampaignStampsReadMoreModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: "survey/:id",
         loadChildren: () => import('../survey/survey.module').then((mod) => mod.SurveyModule),
         canActivate: [ProtectedGuard]
