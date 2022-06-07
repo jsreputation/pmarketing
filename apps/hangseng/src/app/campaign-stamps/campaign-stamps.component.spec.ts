@@ -1,32 +1,68 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignStampsComponent } from './campaign-stamps.component';
-import { ConfigService, PuzzlesModule, StampService, UtilsModule, ICampaignService } from '@perxtech/core';
+import {
+  ConfigService,
+  PuzzlesModule,
+  StampService,
+  UtilsModule,
+  ICampaignService,
+  ConfigModule,
+  ThemesService,
+  ITheme,
+  SettingsService,
+} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  TranslateModule,
+} from '@ngx-translate/core';
+import { SharedModule } from '../shared/shared.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { StampCardModule } from '../stamp/stamp-card/stamp-card.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { HttpClientModule } from '@angular/common/http';
 
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of(),
-  getCurrentCard: () => of()
+  getCurrentCard: () => of(),
 };
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
 };
 const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of({
-    apiHost: '',
-    production: false,
-    preAuth: false,
-    isWhistler: false,
-    baseHref: '',
-  })
+  readAppConfig: () =>
+    of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+    }),
+};
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () =>
+    of({
+      showPrizeSetOutcome: true,
+    }),
 };
 
 describe('CampaignStampsComponent', () => {
   let component: CampaignStampsComponent;
   let fixture: ComponentFixture<CampaignStampsComponent>;
+
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black',
+    },
+  };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,15 +72,23 @@ describe('CampaignStampsComponent', () => {
         RouterTestingModule,
         PuzzlesModule,
         InfiniteScrollModule,
+        SharedModule,
+        MatCardModule,
+        MatChipsModule,
+        MatDividerModule,
+        StampCardModule,
+        HttpClientModule,
+        ConfigModule.forRoot({}),
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: TranslateService, useValue: { get: () => of() }}
-      ]
-    })
-      .compileComponents();
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -26,7 +26,7 @@ import {
 } from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
-import { stamps } from '../mock/stamp.mock';
+import { stamps } from './stamp.mock';
 import { MatDialog } from '@angular/material/dialog';
 
 describe('StampCardComponent', () => {
