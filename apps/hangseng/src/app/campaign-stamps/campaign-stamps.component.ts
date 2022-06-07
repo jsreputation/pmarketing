@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher, ICampaignService, ICampaign, CampaignLandingPage } from '@perxtech/core';
+import {
+  ConfigService,
+  IConfig,
+  IStampCard,
+  StampService,
+  StampState,
+  Voucher,
+  ICampaignService,
+  ICampaign,
+  CampaignLandingPage,
+} from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -13,7 +23,7 @@ interface IStampCardConfig {
 @Component({
   selector: 'hangseng-campaign-stamps',
   templateUrl: './campaign-stamps.component.html',
-  styleUrls: ['./campaign-stamps.component.scss']
+  styleUrls: ['./campaign-stamps.component.scss'],
 })
 export class CampaignStampsComponent implements OnInit {
   private destroy$: Subject<void> = new Subject<void>();
@@ -33,7 +43,8 @@ export class CampaignStampsComponent implements OnInit {
   public completed: boolean = false;
 
   public stampNoteTitle: string = 'Important note';
-  public stampNoteDescription: string = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet lorem bibendum.consectetur adipiscing elit. Cras sit amet lorem bibendum.';
+  public stampNoteDescription: string =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet lorem bibendum.consectetur adipiscing elit. Cras sit amet lorem bibendum.';
 
   // public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
@@ -45,54 +56,70 @@ export class CampaignStampsComponent implements OnInit {
     private stampService: StampService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
-    private translate: TranslateService) {
-  }
+    private translate: TranslateService
+  ) {}
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<IStampCardConfig>().pipe(
-      map((config: IConfig<IStampCardConfig>) => oc(config).custom.stampsType('stamp_card')),
-      take(1)
-    ).subscribe((stampsType: string) => {
-      if (stampsType === 'stamp_card') {
-        this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-          puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ?
-          this.translate.get('STAMP_CAMPAIGN.NEW_STAMPS') : this.translate.get('STAMP_CAMPAIGN.NEW_STAMP');
-        forkJoin(this.translate.get('STAMP_CAMPAIGN.STAMP_CARD'), this.translate.get('STAMP_CAMPAIGN.OF'))
-          .subscribe((translations) => {
-            this.titleFn = (index?: number, totalCount?: number) => of(index !== undefined ?
-              `${translations[0]} ${this.cardIndex(index)} ${translations[1]} ${totalCount}` : '');
+    this.configService
+      .readAppConfig<IStampCardConfig>()
+      .pipe(
+        map((config: IConfig<IStampCardConfig>) =>
+          oc(config).custom.stampsType('stamp_card')
+        ),
+        take(1)
+      )
+      .subscribe((stampsType: string) => {
+        if (stampsType === 'stamp_card') {
+          this.puzzleTextFn = (puzzle: IStampCard) =>
+            !puzzle.stamps ||
+            puzzle.stamps.filter((st) => st.state === StampState.issued)
+              .length > 1
+              ? this.translate.get('STAMP_CAMPAIGN.NEW_STAMPS')
+              : this.translate.get('STAMP_CAMPAIGN.NEW_STAMP');
+          forkJoin(
+            this.translate.get('STAMP_CAMPAIGN.STAMP_CARD'),
+            this.translate.get('STAMP_CAMPAIGN.OF')
+          ).subscribe((translations) => {
+            this.titleFn = (index?: number, totalCount?: number) =>
+              of(
+                index !== undefined
+                  ? `${translations[0]} ${this.cardIndex(index)} ${
+                      translations[1]
+                    } ${totalCount}`
+                  : ''
+              );
           });
-      }
-    });
-
-    this.activeRoute.paramMap.pipe(
-      filter((params: ParamMap) => params.has('id')),
-      map((params: ParamMap) => params.get('id')),
-      switchMap((id: string) => {
-        const campaignId: number = Number.parseInt(id, 10);
-        return forkJoin(
-          this.stampService.getCards(campaignId),
-          this.campaignService.getCampaign(campaignId)
-        );
-      }),
-      switchMap(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
-        if (stampCards.length === 0) {
-          return this.stampService.getCurrentCard(campaign.id).pipe(
-            map((stampCardCurr) => [[stampCardCurr], campaign])
-          );
         }
-        return of([stampCards, campaign]);
-      }),
-      takeUntil(this.destroy$)
-    ).subscribe(
-      ([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+      });
+
+    this.activeRoute.paramMap
+      .pipe(
+        filter((params: ParamMap) => params.has('id')),
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id: string) => {
+          const campaignId: number = Number.parseInt(id, 10);
+          return forkJoin(
+            this.stampService.getCards(campaignId),
+            this.campaignService.getCampaign(campaignId)
+          );
+        }),
+        switchMap(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+          if (stampCards.length === 0) {
+            return this.stampService
+              .getCurrentCard(campaign.id)
+              .pipe(map((stampCardCurr) => [[stampCardCurr], campaign]));
+          }
+          return of([stampCards, campaign]);
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
         this.config = oc(campaign).displayProperties.landingPage();
         this.stampCards$ = of(stampCards);
-      }
-    );
+      });
   }
 
   public selected(puzzle: IStampCard): void {
@@ -117,11 +144,17 @@ export class CampaignStampsComponent implements OnInit {
     this.enableEnrollment = false;
 
     if (!this.enableEnrollment) {
-      setTimeout(() => { this.completedStamps = true; }, 1000);
+      setTimeout(() => {
+        this.completedStamps = true;
+      }, 1000);
     }
   }
 
   public onReadMore(): void {
     this.router.navigate([`/stamp/${this.campaignId}/read-more`]);
+  }
+
+  public onViewRewards(): void {
+    this.router.navigate(['/wallet']);
   }
 }

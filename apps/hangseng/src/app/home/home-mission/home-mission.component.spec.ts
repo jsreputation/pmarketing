@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatChipsModule } from '@angular/material/chips';
 import { ICampaignService } from '@perxtech/core';
 import { of } from 'rxjs';
 
@@ -15,13 +16,14 @@ describe('HomeMissionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HomeMissionComponent],
+      imports: [MatChipsModule],
       providers: [
         {
-          provide: ICampaignService, useValue: campaignServiceStub
-        }
-      ]
-    })
-      .compileComponents();
+          provide: ICampaignService,
+          useValue: campaignServiceStub,
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {
