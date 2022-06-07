@@ -16,22 +16,23 @@ import {
   rankServiceFactory,
   SettingsService,
   StampModule,
-  UtilsModule
+  UtilsModule,
 } from '@perxtech/core';
 import { settingsServiceFactory } from 'libs/core/projects/perx-core/src/lib/settings/settings.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from '../shared/shared.module';
 import { CampaignStampsComponent } from './campaign-stamps.component';
+import { StampCardModule } from '../stamp/stamp-card/stamp-card.module';
 
-const routes: Routes = [{
-  path: '',
-  component: CampaignStampsComponent
-}];
+const routes: Routes = [
+  {
+    path: '',
+    component: CampaignStampsComponent,
+  },
+];
 
 @NgModule({
-  declarations: [
-    CampaignStampsComponent
-  ],
+  declarations: [CampaignStampsComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -44,23 +45,28 @@ const routes: Routes = [{
     StampModule,
     PipeUtilsModule,
     SharedModule,
+    StampCardModule,
     ConfigModule.forChild(),
     RouterModule.forChild(routes),
   ],
-  exports: [
-    CampaignStampsComponent
-  ],
+  exports: [CampaignStampsComponent],
   providers: [
     {
       provide: IRankService,
       useFactory: rankServiceFactory,
-      deps: [HttpClient, ConfigService]
+      deps: [HttpClient, ConfigService],
     },
     {
       provide: SettingsService,
       useFactory: settingsServiceFactory,
-      deps: [HttpClient, HttpBackend, Config, ConfigService, AuthenticationService]
-    }
-  ]
+      deps: [
+        HttpClient,
+        HttpBackend,
+        Config,
+        ConfigService,
+        AuthenticationService,
+      ],
+    },
+  ],
 })
-export class CampaignStampsModule { }
+export class CampaignStampsModule {}

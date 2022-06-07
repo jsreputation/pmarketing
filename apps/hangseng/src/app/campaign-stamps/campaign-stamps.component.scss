@@ -1,4 +1,4 @@
-@import "../../theme/variables.scss";
+@import '../../theme/variables.scss';
 
 .page {
   background-color: #ededed;
@@ -18,11 +18,16 @@
 }
 
 .stamps-collection {
-  //padding: 0 1.5rem;
+  padding: 0 !important;
   //margin-bottom: 2rem;
-  width: 90%;
+  // width: 90%;
   word-break: break-word;
   // margin-bottom: 8px;
+
+  .mat-card-content {
+    padding: 16px;
+    margin-bottom: 0;
+  }
 
   h1 {
     color: #333333;

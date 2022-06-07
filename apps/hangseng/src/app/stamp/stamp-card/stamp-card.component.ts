@@ -12,22 +12,29 @@ import {
   StampService,
   StampState,
   ThemesService,
-  IFlags, 
-  SettingsService
+  IFlags,
+  SettingsService,
 } from '@perxtech/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { debounceTime, filter, map, pairwise, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  map,
+  pairwise,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'perx-blackcomb-stamp-card',
+  selector: 'hangseng-stamp-card',
   templateUrl: './stamp-card.component.html',
-  styleUrls: ['./stamp-card.component.scss']
+  styleUrls: ['./stamp-card.component.scss'],
 })
-
 export class StampCardComponent implements OnInit, OnDestroy {
   public buttonStyle: { [key: string]: string } = {};
   public title: string; // = 'Scratch & Win!'
@@ -49,7 +56,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
     if (!card || !card.displayProperties.rewardPositions) {
       throw new Error('card or rewardPositions is required');
     }
-    return card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
+    return card.displayProperties.rewardPositions.map((el: number) => ({
+      rewardPosition: --el,
+    }));
   }
 
   constructor(
@@ -65,13 +74,15 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    this.newStampsLabelFn = () => this.translate.get('GAME_PAGE.STAMPS_LABEL_TXT');
+    this.newStampsLabelFn = () =>
+      this.translate.get('GAME_PAGE.STAMPS_LABEL_TXT');
   }
 
   public ngOnInit(): void {
-
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
-      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome
+        ? flags.showPrizeSetOutcome
+        : false;
     });
 
     this.initTranslate();
@@ -81,8 +92,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
           this.idN = Number.parseInt(id, 10);
-          return forkJoin([this.stampService.getCurrentCard(this.idN),
-          this.themesService.getThemeSetting()]);
+          return forkJoin([
+            this.stampService.getCurrentCard(this.idN),
+            this.themesService.getThemeSetting(),
+          ]);
         }),
         tap(([stampCard, theme]: [IStampCard, ITheme]) => {
           if (stampCard) {
@@ -90,60 +103,92 @@ export class StampCardComponent implements OnInit, OnDestroy {
             this.stamps = stampCard.stamps;
             this.title = stampCard.title || '';
             this.subTitle = stampCard.subTitle;
-            this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl(
+            this.background = oc(
+              stampCard
+            ).displayProperties.backgroundImg.value.imageUrl(
               oc(stampCard).displayProperties.cardImage.value.imageUrl('')
             );
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
-            this.buttonText = stampCard.buttonText ? of(stampCard.buttonText) : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
-            this.buttonStyle['background-color'] = stampCard.displayProperties.buttonBgColour ? stampCard.displayProperties.buttonBgColour :
-              theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
-            this.buttonStyle.color = stampCard.displayProperties.buttonTextColour ? stampCard.displayProperties.buttonTextColour :
-              theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+            this.buttonText = stampCard.buttonText
+              ? of(stampCard.buttonText)
+              : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
+            this.buttonStyle['background-color'] = stampCard.displayProperties
+              .buttonBgColour
+              ? stampCard.displayProperties.buttonBgColour
+              : theme.properties['--button_background_color']
+              ? theme.properties['--button_background_color']
+              : '';
+            this.buttonStyle.color = stampCard.displayProperties
+              .buttonTextColour
+              ? stampCard.displayProperties.buttonTextColour
+              : theme.properties['--button_text_color']
+              ? theme.properties['--button_text_color']
+              : '';
             this.buttonStyle.visibility = 'visible';
           }
         }),
-        switchMap(() => this.stampService.stampsChangedForStampCard(this.idN)
-          .pipe(
-            pairwise()
-          )),
+        switchMap(() =>
+          this.stampService.stampsChangedForStampCard(this.idN).pipe(pairwise())
+        ),
         takeUntil(this.destroy$)
-      ).subscribe(([prevStamps, currStamps]) => {
-      // after skip once we get definitely prev and current
-      if ((currStamps && currStamps.stamps) &&
-        (prevStamps && prevStamps.stamps)) {
-        this.stampCard = currStamps;
+      )
+      .subscribe(
+        ([prevStamps, currStamps]) => {
+          // after skip once we get definitely prev and current
+          if (
+            currStamps &&
+            currStamps.stamps &&
+            prevStamps &&
+            prevStamps.stamps
+          ) {
+            this.stampCard = currStamps;
 
-        const prevNumIssuedState = prevStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
-        const currNumIssuedState = currStamps.stamps.filter((stamp) => stamp.state === StampState.issued);
+            const prevNumIssuedState = prevStamps.stamps.filter(
+              (stamp) => stamp.state === StampState.issued
+            );
+            const currNumIssuedState = currStamps.stamps.filter(
+              (stamp) => stamp.state === StampState.issued
+            );
 
-        if (prevNumIssuedState > currNumIssuedState) {
-         this.translate.get('STAMP_CAMPAIGN.STAMP_CARD_UPDATED').pipe(
-           debounceTime(500)
-         ).subscribe(translation => this.notificationService.addSnack(translation));
-        }
+            if (prevNumIssuedState > currNumIssuedState) {
+              this.translate
+                .get('STAMP_CAMPAIGN.STAMP_CARD_UPDATED')
+                .pipe(debounceTime(500))
+                .subscribe((translation) =>
+                  this.notificationService.addSnack(translation)
+                );
+            }
 
-        if (prevStamps.stamps.length < currStamps.stamps.length) {
-          this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
-            .subscribe(translation => this.notificationService.addSnack(translation));
-        }
-        // user's other team member had finished redeeming the stamp card while user was on the page
-        if (!currStamps.id) {
-          this.translate.get('STAMP_CAMPAIGN.CARD_COMPLETED')
-            .subscribe(translation => this.notificationService.addSnack(translation));
-          // if (currStamps.campaignId) {
-          //   this.stampService.getStamps(currStamps.campaignId).subscribe(
-          //     (stamps: IStamp[]) => {
-          //       const stampWithVoucher = stamps.reverse().find((stamp) => stamp.vouchers && (stamp.vouchers.length > 0));
-          //       if (stampWithVoucher) {
-          //         this.showRewardPopup(stampWithVoucher);
-          //       }
-          //     }
-          //   );
-          // }
-          this.router.navigate([`/stamp/${currStamps?.campaignId}`])
-        }
-      }
-    }, () => this.router.navigate([ '/wallet' ]));
+            if (prevStamps.stamps.length < currStamps.stamps.length) {
+              this.translate
+                .get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
+                .subscribe((translation) =>
+                  this.notificationService.addSnack(translation)
+                );
+            }
+            // user's other team member had finished redeeming the stamp card while user was on the page
+            if (!currStamps.id) {
+              this.translate
+                .get('STAMP_CAMPAIGN.CARD_COMPLETED')
+                .subscribe((translation) =>
+                  this.notificationService.addSnack(translation)
+                );
+              // if (currStamps.campaignId) {
+              //   this.stampService.getStamps(currStamps.campaignId).subscribe(
+              //     (stamps: IStamp[]) => {
+              //       const stampWithVoucher = stamps.reverse().find((stamp) => stamp.vouchers && (stamp.vouchers.length > 0));
+              //       if (stampWithVoucher) {
+              //         this.showRewardPopup(stampWithVoucher);
+              //       }
+              //     }
+              //   );
+              // }
+              this.router.navigate([`/stamp/${currStamps?.campaignId}`]);
+            }
+          }
+        },
+        () => this.router.navigate(['/wallet'])
+      );
   }
 
   public ngOnDestroy(): void {
@@ -157,7 +202,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
     }
 
     // build ordered list of stamps to be stamped
-    const stamps: IStamp[] = this.stampCard.stamps.filter(s => s.state === StampState.issued);
+    const stamps: IStamp[] = this.stampCard.stamps.filter(
+      (s) => s.state === StampState.issued
+    );
     for (const st of stamps) {
       await this.redeemStamp(st.id);
       if (st.id === stamp.id) {
@@ -167,81 +214,91 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   private redeemStamp(stampId: number): Promise<void> {
-    return this.stampService.putStamp(stampId)
+    return this.stampService
+      .putStamp(stampId)
       .toPromise()
-      .then(
-        (stamp: IStamp) => {
-          if (stamp.state === StampState.redeemed) {
-            if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error('card or stamps is required');
-            }
+      .then((stamp: IStamp) => {
+        if (stamp.state === StampState.redeemed) {
+          if (!this.stampCard || !this.stampCard.stamps) {
+            throw new Error('card or stamps is required');
+          }
 
-            // if (!this.cols || !this.rows) {
-            //   throw new Error(`cols or rows is required`);
-            // }
+          // if (!this.cols || !this.rows) {
+          //   throw new Error(`cols or rows is required`);
+          // }
 
-            const redeemedCard = this.stampCard.stamps.map((cardStamp: IStamp) => {
+          const redeemedCard = this.stampCard.stamps.map(
+            (cardStamp: IStamp) => {
               if (cardStamp.id === stampId) {
                 return { ...cardStamp, state: StampState.redeemed };
               }
               return cardStamp;
-            });
-            this.stampCard = { ...this.stampCard, stamps: redeemedCard };
-
-            const redeemedTransactionsCount = this.stampCard.stamps &&
-              this.stampCard.stamps.filter(s => s.state === StampState.redeemed).length;
-
-            if (this.stampCard.displayProperties.displayCampaignAs === 'stamp_card'
-              && redeemedTransactionsCount === (this.stampCard.campaignConfig && this.stampCard.campaignConfig.totalSlots)) {
-
-              this.translate.get('STAMP_CAMPAIGN.THANK_YOU_FOR_PLAYING')
-                .subscribe(translation => this.notificationService.addPopup({
-                  text: translation
-                }));
             }
-            this.showRewardPopup(stamp);
+          );
+          this.stampCard = { ...this.stampCard, stamps: redeemedCard };
 
-          } else {
-            if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error('card or stamps is required');
-            }
+          const redeemedTransactionsCount =
+            this.stampCard.stamps &&
+            this.stampCard.stamps.filter((s) => s.state === StampState.redeemed)
+              .length;
 
-            const issuedLeft = this.stampCard.stamps.filter(s => s.state === StampState.issued);
-            if (issuedLeft.length === 0) {
-              forkJoin([
-                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TITLE'),
-                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TEXT'),
-                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_BUTTON_TEXT')
-              ]).subscribe(translations => {
-                const [title, text, buttonTxt] = translations;
-                // all redeemed but no voucher
-                const data: IRewardPopupConfig = {
-                  title,
-                  text,
-                  disableOverlayClose: true,
-                  afterClosedCallBack: this,
-                  buttonTxt
-                };
-                this.dialog.open(RewardPopupComponent, { data });
-              });
-            }
+          if (
+            this.stampCard.displayProperties.displayCampaignAs ===
+              'stamp_card' &&
+            redeemedTransactionsCount ===
+              (this.stampCard.campaignConfig &&
+                this.stampCard.campaignConfig.totalSlots)
+          ) {
+            this.translate
+              .get('STAMP_CAMPAIGN.THANK_YOU_FOR_PLAYING')
+              .subscribe((translation) =>
+                this.notificationService.addPopup({
+                  text: translation,
+                })
+              );
           }
-        })
-      .catch(
-        () => {
-          forkJoin([
-            this.translate.get('STAMP_CAMPAIGN.ERROR_TITLE'),
-            this.translate.get('STAMP_CAMPAIGN.ERROR_TEXT')
-          ]).subscribe(translations => {
-            const [title, text] = translations;
-            this.notificationService.addPopup({
-              title,
-              text
+          this.showRewardPopup(stamp);
+        } else {
+          if (!this.stampCard || !this.stampCard.stamps) {
+            throw new Error('card or stamps is required');
+          }
+
+          const issuedLeft = this.stampCard.stamps.filter(
+            (s) => s.state === StampState.issued
+          );
+          if (issuedLeft.length === 0) {
+            forkJoin([
+              this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TITLE'),
+              this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TEXT'),
+              this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_BUTTON_TEXT'),
+            ]).subscribe((translations) => {
+              const [title, text, buttonTxt] = translations;
+              // all redeemed but no voucher
+              const data: IRewardPopupConfig = {
+                title,
+                text,
+                disableOverlayClose: true,
+                afterClosedCallBack: this,
+                buttonTxt,
+              };
+              this.dialog.open(RewardPopupComponent, { data });
             });
-            this.router.navigateByUrl('/home');
-          });
+          }
         }
-      );
+      })
+      .catch(() => {
+        forkJoin([
+          this.translate.get('STAMP_CAMPAIGN.ERROR_TITLE'),
+          this.translate.get('STAMP_CAMPAIGN.ERROR_TEXT'),
+        ]).subscribe((translations) => {
+          const [title, text] = translations;
+          this.notificationService.addPopup({
+            title,
+            text,
+          });
+          this.router.navigateByUrl('/home');
+        });
+      });
   }
 
   public dialogClosed(): void {
@@ -253,24 +310,36 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   private showRewardPopup(stamp: IStamp): void {
+    const stampOutcomes = stamp?.outcomes?.filter(
+      (outcome) =>
+        outcome.outcomeType === CampaignOutcomeType.prizeSet ||
+        outcome.state !== 'failed'
+    );
 
-    const stampOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.prizeSet
-      || outcome.state !== 'failed');
+    const badgeOutcomes = stamp?.outcomes?.filter(
+      (outcome) =>
+        outcome.outcomeType === CampaignOutcomeType.badge ||
+        outcome.state !== 'failed'
+    );
 
-    const badgeOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.badge
-      || outcome.state !== 'failed');
+    const pointsOutcomes = stamp?.outcomes?.filter(
+      (outcome) =>
+        outcome.outcomeType === CampaignOutcomeType.points ||
+        outcome.state !== 'failed'
+    );
 
-    const pointsOutcomes = stamp?.outcomes?.filter(outcome => outcome.outcomeType === CampaignOutcomeType.points
-      || outcome.state !== 'failed');
-
-    if ((stamp.vouchers && stamp.vouchers.length > 0) ||
-      (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)) {
-
+    if (
+      (stamp.vouchers && stamp.vouchers.length > 0) ||
+      (this.showPrizeSetOutcome && stampOutcomes && stampOutcomes.length > 0)
+    ) {
       let prizeSetOutcomes: IStampOutcome[];
       let voucherId;
       if (this.showPrizeSetOutcome && stampOutcomes) {
-        prizeSetOutcomes = stampOutcomes?.filter(outcome => outcome.actualOutcomeId && outcome.outcomeType ===
-          CampaignOutcomeType.prizeSet);
+        prizeSetOutcomes = stampOutcomes?.filter(
+          (outcome) =>
+            outcome.actualOutcomeId &&
+            outcome.outcomeType === CampaignOutcomeType.prizeSet
+        );
       }
       if (stamp.vouchers && stamp.vouchers.length > 0) {
         voucherId = stamp.vouchers[0].id;
@@ -281,9 +350,15 @@ export class StampCardComponent implements OnInit, OnDestroy {
         this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
         this.translate.get('STAMP_CAMPAIGN.POINTS_POPUP_TEXT'),
         this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT'),
-        this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
-      ]).subscribe(translations => {
-        const [title, text, pointsOutcomeTxt, buttonTxt, prizeSetBtnTxt] = translations;
+        this.translate.get('PRIZE_SET.OUTCOME_SUCCESS_TITLE'),
+      ]).subscribe((translations) => {
+        const [
+          title,
+          text,
+          pointsOutcomeTxt,
+          buttonTxt,
+          prizeSetBtnTxt,
+        ] = translations;
         const data: IRewardPopupConfig = {
           title,
           text,
@@ -293,10 +368,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
           // url: `/voucher-detail/${voucherId}`,
           afterClosedCallBackRedirect: this,
           showCloseBtn: false,
-          buttonTxt
+          buttonTxt,
         };
 
-        if (this.showPrizeSetOutcome && prizeSetOutcomes && prizeSetOutcomes.length > 0) {
+        if (
+          this.showPrizeSetOutcome &&
+          prizeSetOutcomes &&
+          prizeSetOutcomes.length > 0
+        ) {
           data.url = `/prize-set-outcomes/${prizeSetOutcomes[0].prizeId}?transactionId=${prizeSetOutcomes[0].actualOutcomeId}`;
           data.buttonTxt = prizeSetBtnTxt;
         } else if (voucherId) {
@@ -305,7 +384,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
           data.url = this.showPointsHistory ? '/points/history' : '/home';
           data.text = pointsOutcomeTxt; //todo: there's no public API for stored value transactions
         } else {
-          data.url = badgeOutcomes && badgeOutcomes?.length > 0 ? '/badges?filter=earned' : '/wallet';
+          data.url =
+            badgeOutcomes && badgeOutcomes?.length > 0
+              ? '/badges?filter=earned'
+              : '/wallet';
         }
         this.dialog.open(RewardPopupComponent, { data });
 
