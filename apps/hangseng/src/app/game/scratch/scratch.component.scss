@@ -3,20 +3,25 @@
 
 .main-puzzle-container {
   @include main-wrap;
-  background-color: $white;
+  background-color: #d8d8d8;
+  padding: 0;
 
   h1 {
     @include game-headline;
 
     margin-top: $app-margin;
-    display: flex;
-    justify-content: flex-start;
+    text-align: left;
+    color: $black;
+    letter-spacing: 0;
+    font-size: 24px;
   }
 
   h3 {
     @include game-subheadline;
-    display: flex;
-    justify-content: flex-start;
+
+    text-align: left;
+    letter-spacing: 0;
+    font-size: 14px;
   }
 
   h4 {
@@ -24,6 +29,19 @@
     margin-top: 0.5rem;
     font-size: 1.2rem;
   }
+
+  ::ng-deep {
+    .mat-list-item-content {
+      padding: 0 !important;
+      align-items: flex-start !important;
+    }
+  }
+}
+
+.card-container {
+  background-color: $white;
+  margin-bottom: 8px;
+  padding: 0 2.4rem;
 }
 
 .game-wrapper {
@@ -32,8 +50,72 @@
 
 .game-footer {
   @include game-cta;
+  max-width: unset !important;
+
+  button {
+    margin-bottom: 16px;
+    background-color: $medium-green;
+    color: $white;
+    font-size: 19px;
+    font-weight: 500;
+  }
 }
 
 .nullBlock {
   height: 4.8rem;
+}
+
+.game-mechanic {
+  margin-top: 1px;
+  padding-bottom: 30px;
+
+  .mat-list-icon {
+    margin-right: 16px;
+    padding: 0px;
+  }
+
+  mat-list-item {
+    height: auto;
+
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 0;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+}
+
+.game-how-to {
+  hr {
+    margin-block-start: 0;
+    margin-block-end: 24px;
+
+    height: 1px;
+    border-width: 0;
+    background-color: #d8d8d8;
+  }
+
+  .how-to-work {
+    font-size: 14px;
+    font-weight: 500;
+    color: $brownish-grey
+  }
+
+  .how-to-container {
+    margin-block-end: 32px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
 }
