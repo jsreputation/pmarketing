@@ -5,12 +5,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from '../shared/shared.module';
+import { MatListModule } from '@angular/material/list';
 import {
   GameModule as PerxGameModule
 } from '@perxtech/core';
 import { GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
 import { GameComponent } from './game.component';
-import { SharedModule } from '../shared/shared.module';
+
+import { ScratchComponent } from './scratch/scratch.component';
 
 
 const routes: Routes = [{
@@ -19,7 +22,7 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [GameComponent],
+  declarations: [GameComponent, ScratchComponent],
   imports: [
     CommonModule,
     MatProgressBarModule,
@@ -29,7 +32,8 @@ const routes: Routes = [{
     RouterModule.forChild(routes),
     TranslateModule,
     PerxGameModule,
-    SharedModule
+    SharedModule,
+    MatListModule
   ]
 })
 export class GameModule { }

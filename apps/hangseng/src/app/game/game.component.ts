@@ -30,7 +30,7 @@ import { globalCacheBusterNotifier } from 'ngx-cacheable';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'perx-blackcomb-pages-game',
+  selector: 'hangseng-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
