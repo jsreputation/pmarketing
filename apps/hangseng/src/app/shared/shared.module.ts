@@ -17,7 +17,6 @@ import { EnrollGameButtonComponent } from './enroll-game-button/enroll-game-butt
 import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
 import { CompletedStampsComponent } from './completed-stamps/completed-stamps.component';
 
-
 const modules = [
   MatToolbarModule,
   MatButtonModule,
@@ -34,16 +33,21 @@ const modules = [
   TranslateModule,
 ];
 @NgModule({
-  declarations: [EmptyResultsComponent, EnrollGameButtonComponent, StampCardNoteComponent, CompletedStampsComponent],
-  imports: [
-    ...modules
+  declarations: [
+    EmptyResultsComponent,
+    EnrollGameButtonComponent,
+    StampCardNoteComponent,
+    CompletedStampsComponent,
+    ActionButtonOverlayComponent,
   ],
+  imports: [...modules],
   exports: [
     ...modules,
     EmptyResultsComponent,
     EnrollGameButtonComponent,
     StampCardNoteComponent,
-    CompletedStampsComponent
-  ]
+    CompletedStampsComponent,
+    ActionButtonOverlayComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

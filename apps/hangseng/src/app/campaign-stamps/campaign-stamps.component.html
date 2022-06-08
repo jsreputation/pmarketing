@@ -41,5 +41,11 @@
     </div>
   </div>
 </div>
-<hangseng-enroll-game-button *ngIf="enableEnrollment" (onEnroll)="onEnableEnrollment()"></hangseng-enroll-game-button>
-<hangseng-completed-stamps *ngIf="completedStamps"></hangseng-completed-stamps>
+<hangseng-action-button-overlay *ngIf="enableEnrollment" (onPress)="onEnableEnrollment()"
+  [label]="'GAME_PAGE.ENROL_TEXT' | translate" buttonLabel="Enrol" [imageSrc]="'/assets/icons/lock.svg'">
+</hangseng-action-button-overlay>
+<hangseng-action-button-overlay *ngIf="completedStamps"
+  [label]="'STAMP_CAMPAIGN.STAMPS_COMPLETED' | translate" buttonLabel="View your rewards" [imageSrc]="'/assets/icons/mission-completed.svg'">
+</hangseng-action-button-overlay>
+<!-- <hangseng-enroll-game-button *ngIf="enableEnrollment" (onEnroll)="onEnableEnrollment()"></hangseng-enroll-game-button>
+<hangseng-completed-stamps *ngIf="completedStamps"></hangseng-completed-stamps> -->
