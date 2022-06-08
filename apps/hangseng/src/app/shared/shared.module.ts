@@ -13,10 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { EmptyResultsComponent } from './empty-results/empty-results.component';
-import { EnrollGameButtonComponent } from './enroll-game-button/enroll-game-button.component';
 import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
-import { CompletedStampsComponent } from './completed-stamps/completed-stamps.component';
-
+import { ActionButtonOverlayComponent } from './action-button-overlay/action-button-overlay.component';
 
 const modules = [
   MatToolbarModule,
@@ -34,16 +32,17 @@ const modules = [
   TranslateModule,
 ];
 @NgModule({
-  declarations: [EmptyResultsComponent, EnrollGameButtonComponent, StampCardNoteComponent, CompletedStampsComponent],
-  imports: [
-    ...modules
+  declarations: [
+    EmptyResultsComponent,
+    StampCardNoteComponent,
+    ActionButtonOverlayComponent,
   ],
+  imports: [...modules],
   exports: [
     ...modules,
     EmptyResultsComponent,
-    EnrollGameButtonComponent,
     StampCardNoteComponent,
-    CompletedStampsComponent
-  ]
+    ActionButtonOverlayComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

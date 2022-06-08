@@ -40,6 +40,8 @@
       (broken)=preplayGameCompleted()>
     ></perx-blackcomb-pages-plinko>
   </div>
-  <hangseng-enroll-game-button (onEnroll)="onEnrollClick()" [buttonStyle]="buttonStyle" *ngIf="isEnableEnrollment"></hangseng-enroll-game-button>
+  <hangseng-action-button-overlay *ngIf="isEnableEnrollment" (onPress)="onEnrollClick()"
+  [label]="'GAME_PAGE.ENROL_TEXT' | translate" buttonLabel="Enrol" [imageSrc]="'/assets/icons/lock.svg'">
+</hangseng-action-button-overlay>
   <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
 </div>
