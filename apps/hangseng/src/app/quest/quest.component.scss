@@ -1,0 +1,242 @@
+@import "../../theme/variables.scss";
+@import "../../theme/mixins.scss";
+
+.quest-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.quest-content-container {
+  font-size: 12px;
+  flex-grow: 1;
+  overflow-y: scroll;
+
+  .quest-content {
+    padding: 2rem;
+  }
+
+  svg {
+    width: 100%;
+    height: 22rem;
+    object-fit: cover;
+  }
+
+  svg {
+    background: #E8E8E8;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 600;
+
+    @include ellipse-lines(2);
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: normal;
+    color: $brownish-grey;
+    line-height: 20px;
+    margin: 2rem 0;
+    letter-spacing: 0;
+  }
+
+  .expiry-date {
+    color: rgba(0, 0, 0, 0.38);
+    font-weight: bold;
+    margin-top: 1.2rem;
+  }
+
+  .progress-bar-container {
+    p {
+      color: rgba(0, 0, 0, 0.38);
+    }
+  }
+
+  .images {
+    width: 28px;
+    height: 28px;
+    padding-right: 8px;
+  }
+
+  ::ng-deep {
+    .mat-list-item-content {
+      padding: 0 !important;
+      // border-bottom: 1px solid rgba(33, 33, 33, 0.03);
+    }
+
+    .mat-progress-bar {
+      border-radius: .4rem;
+      height: .6rem !important;
+
+      .mat-progress-bar-fill::after {
+        background-color: #2664ED;
+      }
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #E1E1E1;
+    }
+  }
+
+  // mat-list {
+  //   padding-top: 2px;
+  // }
+
+  mat-list-item {
+    height: auto;
+
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0;
+    padding: 0;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    &:not(:first-child) {
+      margin-top: 16px;
+    }
+  }
+
+  .task-card {
+    display: flex;
+
+    .task-img-section {
+      margin: auto;
+    }
+
+    .task-img-container {
+      position: relative;
+
+      .success-icon {
+        position: absolute;
+        bottom: .4rem;
+        right: -.4rem;
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+    }
+
+    img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      margin-right: 1.6rem;
+      align-self: center;
+    }
+
+    .task-subtitle {
+      color: rgba(0, 0, 0, 0.38);
+      margin-bottom: 0;
+    }
+
+    .task-content {
+      width: 100%;
+      border-bottom: 1px solid rgba(33, 33, 33, 0.03);
+      padding-top: .8rem;
+      padding-bottom: 2rem;
+
+      p {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .reward-container {
+    // margin: 2.5rem 0;
+    display: flex;
+    flex-direction: row;
+
+
+    p {
+      color: rgba(0, 0, 0, 0.38);
+      margin-bottom: 0;
+    }
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+}
+
+.bottom-toolbar {
+  background: white !important;
+
+  button {
+    width: 100%;
+    background: #2664ED !important;
+  }
+}
+
+.mat-tab-group-wrapper {
+  min-height: 60rem;
+
+  ::ng-deep .mat-tab-body-wrapper {
+    margin-top: 2rem;
+  }
+
+  .mission-container {
+    .mat-list-icon {
+      border-radius: unset;
+      margin-right: 16px;
+      padding: 0px;
+    }
+
+    .mission-list-item-labels {
+      display: flex;
+      align-items: center;
+    }
+
+    .mission-list-item-container {
+      display: block;
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .btn-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      // margin-top: 6px;
+
+      button {
+        width: 93px;
+        height: 40px;
+        border-radius: 5px;
+        border-color: $green-dark;
+        border-style: solid;
+        border-width: 1px;
+
+        color: $green-dark;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .tab-images {
+    width: 60px;
+    height: 60px;
+  }
+
+  .desc-text {
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0;
+
+    white-space: pre-wrap;
+
+    @include ellipse-lines(2);
+  }
+
+
+
+}
