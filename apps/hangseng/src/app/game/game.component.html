@@ -11,13 +11,14 @@
       [game]="game"
       (broken)=gameCompleted()
     ></perx-blackcomb-pages-tap>
-    <perx-blackcomb-pages-scratch
+    <!-- <perx-blackcomb-pages-scratch
       *ngSwitchCase="gt.scratch"
       [willWin]="willWin"
       [game]="game"
       (loaded)="loadPreplay()"
       (broken)=preplayGameCompleted()>
-    ></perx-blackcomb-pages-scratch>
+    ></perx-blackcomb-pages-scratch> -->
+    <hangseng-game-scratch></hangseng-game-scratch>
     <perx-blackcomb-pages-spin
       *ngSwitchCase="gt.spin"
       [startSpin]="startGameAnimation"
