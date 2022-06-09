@@ -1,5 +1,5 @@
-@import "../../mixins";
-@import "../../../theme/variables.scss";
+@import '../../mixins';
+@import '../../../theme/variables';
 
 .main-puzzle-container {
   @include main-wrap;
@@ -46,6 +46,8 @@
 
 .game-wrapper {
   @include game-wrap;
+  align-items: center;
+  max-width: unset;
 }
 
 .game-footer {
@@ -106,7 +108,7 @@
   .how-to-work {
     font-size: 14px;
     font-weight: 500;
-    color: $brownish-grey
+    color: $brownish-grey;
   }
 
   .how-to-container {
