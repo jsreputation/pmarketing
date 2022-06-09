@@ -6,16 +6,10 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-}
+  background-color: #d8d8d8;
 
-.quest-content-container {
-  font-size: 12px;
   flex-grow: 1;
   overflow-y: scroll;
-
-  .quest-content {
-    padding: 2rem;
-  }
 
   svg {
     width: 100%;
@@ -25,6 +19,31 @@
 
   svg {
     background: #E8E8E8;
+  }
+}
+
+.header {
+  margin: 24px;
+}
+
+.mission-note {
+  margin: 26px;
+
+  .text {
+    color: $brownish-grey;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19px;
+  }
+}
+
+.quest-content-container {
+  font-size: 12px;
+  background-color: $white;
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
   .title {
@@ -51,8 +70,30 @@
   }
 
   .progress-bar-container {
+    background-color: #f9f9f6;
+    height: 80px;
+    margin-top: -5px;
+    padding: 14px;
+
     p {
+      margin: 0;
+      padding: 19px 1px;
       color: rgba(0, 0, 0, 0.38);
+    }
+
+    ::ng-deep {
+      .mat-progress-bar {
+        border-radius: .4rem;
+        height: .6rem !important;
+
+        .mat-progress-bar-fill::after {
+          background-color: $green-dark;
+        }
+
+        .mat-progress-bar-buffer {
+          background-color: #d8d8d8;
+        }
+      }
     }
   }
 
@@ -65,19 +106,6 @@
   ::ng-deep {
     .mat-list-item-content {
       padding: 0 !important;
-    }
-
-    .mat-progress-bar {
-      border-radius: .4rem;
-      height: .6rem !important;
-
-      .mat-progress-bar-fill::after {
-        background-color: #2664ED;
-      }
-    }
-
-    .mat-progress-bar-buffer {
-      background-color: #E1E1E1;
     }
   }
 
@@ -146,6 +174,7 @@
   .reward-container {
     display: flex;
     flex-direction: row;
+    margin: 16px;
 
 
     p {
@@ -175,10 +204,25 @@
   ::ng-deep {
     .mat-tab-body-wrapper {
       margin-top: 2rem;
+      margin: 24px;
+    }
+
+    .mat-tab-header {
+      margin: 16px;
+    }
+
+    .mat-tab-label {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .mat-tab-label-active {
+      color: $darkish-green;
+      opacity: 1;
     }
 
     .mat-ink-bar {
-      background-color: $medium-green;
+      background-color: $green-dark;
       height: 4px;
       border-radius: 2px;
     }
@@ -215,7 +259,7 @@
         border-style: solid;
         border-width: 1px;
 
-        color: $green-dark;
+        color: $darkish-green;
         font-size: 13px;
         font-weight: 600;
         line-height: 20px;
@@ -226,6 +270,17 @@
   .tab-images {
     width: 60px;
     height: 60px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .content-desc {
+    margin-block-start: -17px;
+    margin-block-end: 32px;
   }
 
   .desc-text {
