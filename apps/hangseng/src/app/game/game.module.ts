@@ -7,22 +7,24 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '../shared/shared.module';
 import { MatListModule } from '@angular/material/list';
+import { GameModule as PerxGameModule } from '@perxtech/core';
 import {
-  GameModule as PerxGameModule
-} from '@perxtech/core';
-import { GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
+  GameModule as BCGameModule,
+} from '@perxtech/blackcomb-pages';
 import { GameComponent } from './game.component';
 
 import { ScratchComponent } from './scratch/scratch.component';
+import { SpinComponent } from './spin/spin.component';
 
-
-const routes: Routes = [{
-  path: '',
-  component: GameComponent
-}];
+const routes: Routes = [
+  {
+    path: '',
+    component: GameComponent,
+  },
+];
 
 @NgModule({
-  declarations: [GameComponent, ScratchComponent],
+  declarations: [GameComponent, ScratchComponent, SpinComponent],
   imports: [
     CommonModule,
     MatProgressBarModule,
@@ -33,7 +35,7 @@ const routes: Routes = [{
     TranslateModule,
     PerxGameModule,
     SharedModule,
-    MatListModule
-  ]
+    MatListModule,
+  ],
 })
-export class GameModule { }
+export class GameModule {}
