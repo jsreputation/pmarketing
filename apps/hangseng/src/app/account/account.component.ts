@@ -22,7 +22,7 @@ import {
   SettingsService,
   IFlags,
   BadgeService,
-  FlagLocalStorageService
+  FlagLocalStorageService,
 } from '@perxtech/core';
 
 @Component({
@@ -54,8 +54,7 @@ export class AccountComponent implements OnInit {
     protected settingsService: SettingsService,
     protected badgeService: BadgeService,
     protected flagLocalStorageService: FlagLocalStorageService
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.theme = this.themesService.getThemeSetting();
@@ -78,7 +77,9 @@ export class AccountComponent implements OnInit {
         .get([membershipTierName, 'HOME.MEMBER'])
         .pipe(map((res) => `${res[membershipTierName]}${res['HOME.MEMBER']}`));
     this.getAchievedBadgeCount();
-    const preAuthMode = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('preAuth'));
+    const preAuthMode = Boolean(
+      this.flagLocalStorageService.getFlagInLocalStorage('preAuth')
+    );
     this.preAuth = this.config.preAuth || preAuthMode || false;
   }
 

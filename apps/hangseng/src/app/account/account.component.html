@@ -54,6 +54,9 @@
           <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
             {{'ACCOUNT_PAGE.' + page.title | translate}}
           </mat-list-item>
+          <mat-list-item routerLink="/program_opt_out">
+            {{'ACCOUNT_PAGE.PROGRAM_OPT_OUT' | translate}}
+          </mat-list-item>
         </mat-nav-list>
       </div>
       <div *ngIf="!preAuth" class="section">

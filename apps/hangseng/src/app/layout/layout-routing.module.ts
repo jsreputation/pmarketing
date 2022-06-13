@@ -226,7 +226,12 @@ const routes: Routes = [
         path: "wallet",
         loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule),
         canActivate: [ProtectedGuard]
-      }
+      },
+      {
+        path: "program_opt_out",
+        loadChildren: () => import('../program-opt-out/program-opt-out.module').then(m => m.ProgramOptOutModule),
+        canActivate: [ProtectedGuard] 
+      },
     ],
   },
 ];
