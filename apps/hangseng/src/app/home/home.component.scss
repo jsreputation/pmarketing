@@ -7,9 +7,6 @@
   margin-bottom: 2.4rem;
   height: auto;
   max-width: 41.5rem;
-  padding-top: 6rem;
-  position: fixed;
-  top: 0;
 
   .img {
     background-image: url("../../assets/background-mission.png");
@@ -33,14 +30,13 @@
   overflow-y: auto;
   height: 100%;
   flex: 1;
-
-  margin-top: 23rem;
 }
 
 .campaign-list {
   display: flex;
   flex-direction: column;
-  padding-bottom: 20rem;
+  padding-bottom: 6rem;
+  
   .campaigns {
     order: 1;
 

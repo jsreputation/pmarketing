@@ -11,7 +11,8 @@
     <!-- ghost stuff-->
     <span></span>
   </mat-toolbar>
-  <div class="game-container" [ngClass]="{'has-toolbar': showToolbar}">
+  <!-- <div class="game-container" [ngClass]="{'has-toolbar': showToolbar}"> -->
+  <div class="game-container">
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
