@@ -1,8 +1,6 @@
 <div class="main-app-container" *ngIf="theme && theme.properties && appConfig && appRemoteFlags">
   <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader && !appConfig.homeAsProgressPage">
-    <mat-icon
-      class="backArrow"
-      (click)="backArrowClick()">
+    <mat-icon class="backArrow" (click)="backArrowClick()">
       {{backArrowIcon}}
     </mat-icon>
     <a class="logoWrapper" [routerLink]="[ '/home' ]">
@@ -16,7 +14,8 @@
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
     <div class="a-container">
-      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" #home="routerLinkActive" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
+      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" #home="routerLinkActive"
+        *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
         <div class="nav-item">
           <div class="nav-item-img">
             <img [src]="home.isActive ? 'assets/navbar/mission-active.svg' : 'assets/navbar/mission-inactive.svg'" />
@@ -24,31 +23,34 @@
           <span translate>NAVIGATION.HOME</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" #rewards="routerLinkActive" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
+      <!-- <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" #rewards="routerLinkActive" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
         <div class="nav-item">
           <div class="nav-item-img">
             <img [src]="rewards.isActive ? 'assets/navbar/reward-inactive.svg' : 'assets/navbar/reward-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.REWARDS</span>
         </div>
-      </a>
-      <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
+      </a> -->
+      <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active" #rewards="routerLinkActive" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
         <div class="nav-item">
           <div class="nav-item-img">
-            <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
+            <img [src]="rewards.isActive ? 'assets/navbar/reward-active.svg' : 'assets/navbar/reward-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.WALLET</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" #history="routerLinkActive" *ngIf="appConfig.showHistoryPage">
+      <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" #history="routerLinkActive"
+        *ngIf="appConfig.showHistoryPage">
         <div class="nav-item">
           <div class="nav-item-img">
-              <img [src]="history.isActive ? 'assets/navbar/reward-history-inactive.svg' : 'assets/navbar/reward-history-inactive.svg'" />
+            <img
+              [src]="history.isActive ? 'assets/navbar/reward-history-active.svg' : 'assets/navbar/reward-history-inactive.svg'" />
           </div>
           <span translate>NAVIGATION.HISTORY</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" #setting="routerLinkActive" *ngIf="appConfig.showAccountsPage || appRemoteFlags?.showAccountsPage">
+      <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" #setting="routerLinkActive"
+        *ngIf="appConfig.showAccountsPage || appRemoteFlags?.showAccountsPage">
         <div class="nav-item">
           <div class="nav-item-img">
             <img [src]="setting.isActive ? 'assets/navbar/setting-active.svg' : 'assets/navbar/setting-inactive.svg'" />
