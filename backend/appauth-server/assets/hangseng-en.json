@@ -118,12 +118,12 @@
   },
   "NAVIGATION": {
     "HOME": "Mission",
-    "REWARDS": "Rewards",
+    "REWARDS": "Wallet",
     "WALLET": "Wallet",
-    "HISTORY": "History",
+    "HISTORY": "Reward History",
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
-    "ACCOUNT": "Account",
+    "ACCOUNT": "Setting",
     "PAY": "Pay",
     "NEARME": "Near Me",
     "STAMPS": "Stamps"
