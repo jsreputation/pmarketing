@@ -11,27 +11,21 @@
       [game]="game"
       (broken)=gameCompleted()
     ></perx-blackcomb-pages-tap>
-    <!-- <perx-blackcomb-pages-scratch
+    <hangseng-game-scratch 
       *ngSwitchCase="gt.scratch"
       [willWin]="willWin"
       [game]="game"
       (loaded)="loadPreplay()"
       (broken)=preplayGameCompleted()>
-    ></perx-blackcomb-pages-scratch> -->
-    <hangseng-game-scratch *ngSwitchCase="gt.scratch"
-      [willWin]="willWin"
-      [game]="game"
-      (loaded)="loadPreplay()"
-      (broken)=preplayGameCompleted()>
     </hangseng-game-scratch>
-    <perx-blackcomb-pages-spin
+    <hangseng-game-spin
       *ngSwitchCase="gt.spin"
       [startSpin]="startGameAnimation"
       [willWin]="willWin"
       [game]="game"
       (loaded)="loadPlay()"
       (broken)=gameCompletedLoad()
-    ></perx-blackcomb-pages-spin>
+    ></hangseng-game-spin>
     <perx-blackcomb-pages-snake
       *ngSwitchCase="gt.snake"
       [game]="game"
