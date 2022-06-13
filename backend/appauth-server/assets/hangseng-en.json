@@ -119,7 +119,7 @@
   "NAVIGATION": {
     "HOME": "Mission",
     "REWARDS": "Wallet",
-    "WALLET": "Wallet",
+    "WALLET": "Reward",
     "HISTORY": "Reward History",
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
@@ -233,7 +233,8 @@
     "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
-    "BADGES": "My Badges"
+    "BADGES": "My Badges",
+    "PROGRAM_OPT_OUT": "Leave Chill Reward programme"
   },
   "PROFILE": {
     "TITLE": "Profile",
