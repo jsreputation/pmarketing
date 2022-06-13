@@ -1,0 +1,196 @@
+<div class="progress-campaign-container" *ngIf="campaign$ | async as campaign">
+  <div class="progress-campaign-content-container">
+    <img [src]="progressConfig?.imageUrl" *ngIf="progressConfig?.imageUrl; else defaultImgTemplate"
+         [alt]="progressConfig?.title">
+    <ng-template #defaultImgTemplate>
+      <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 0H375V200H0V0Z" fill="#E8E8E8"/>
+        <path
+          d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
+          fill="#DADADA"/>
+      </svg>
+    </ng-template>
+    <div class="overall-progress-bar-container">
+      <div class="overall-progress-bar-container-content">
+        <p>Overall Progress:</p>
+        <div class="spinner-wrapper">
+          <div class="spinner-background">
+            <mat-progress-spinner
+              mode="determinate"
+              [strokeWidth]="4"
+              [diameter]="48"
+              [value]="100"></mat-progress-spinner>
+          </div>
+          <div class="spinner-foreground">
+            <mat-progress-spinner
+              mode="determinate"
+              [strokeWidth]="4"
+              [diameter]="48"
+              [value]="campaignProgress"></mat-progress-spinner>
+          </div>
+          <div class="spinner-progress-percentage">
+            {{campaignProgress}}%
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-campaign-content">
+      <div class="header">
+        <p class="title">{{progressConfig?.intro?.title}}</p>
+        <p class="subtitle">{{progressConfig?.intro?.description}}</p>
+        <p class="description">{{progressConfig?.body}}</p>
+      </div>
+      <div class="current-level-container task-card-container" *ngIf="activeMilestone!">
+        <p>Currently Active Level:</p>
+        <div class="task-card">
+          <div class="task-img-section">
+            <div class="task-img-container">
+                <img [src]="activeMilestone?.displayProperties.icon.imageUrl" [alt]="'active milestone'">
+            </div>
+            <div class="active-macaron-container">
+              <span class="macaron">Active</span>
+            </div>
+          </div>
+          <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
+                  <span class="task-subtitle">
+                    {{milestoneCompletedProgressCalculation(activeMilestone)}}
+                    / {{milestoneRequiredProgressCalculation(activeMilestone)}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
+                  </span>
+            <mat-progress-bar mode="determinate"
+                              [value]="milestoneCompletedProgressCalculation(activeMilestone)
+                              /milestoneRequiredProgressCalculation(activeMilestone) * 100"></mat-progress-bar>
+          </div>
+          <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
+                  <span class="task-subtitle">
+                    {{currentUserPoints}}
+                    / {{activeMilestone.pointsRequired}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
+                  </span>
+            <mat-progress-bar mode="determinate"
+                              [value]="currentUserPoints
+                              /activeMilestone.pointsRequired * 100"></mat-progress-bar>
+          </div>
+        </div>
+      </div>
+      <div class="mat-tab-group-wrapper">
+        <mat-tab-group mat-stretch-tabs>
+          <mat-tab [label]="progressConfig?.levelTab?.title">
+            <div class="task-card-container" *ngIf="milestones">
+              <div #milestonesConnectorDiv class="level-connector-line"
+                   [attr.data-spanlevels]="milestones.length"></div>
+              <div class="task-card" *ngFor="let milestone of milestones; let i = index;">
+                <div class="task-img-section">
+                  <div class="task-img-container">
+                    <img class="success-icon" [src]="progressConfig?.successImageUrl"
+                         *ngIf="(milestone.outcomesIssued)">
+                    <img [src]="milestone.displayProperties?.icon.imageUrl" [alt]="'milestone ' + i">
+                  </div>
+                  <div class="active-macaron-container"
+                       *ngIf="milestone.pointsRequired === activeMilestone?.pointsRequired">
+                    <span class="macaron">Active</span>
+                  </div>
+                </div>
+                <div class="task-content" *ngIf="progressBarDisplayMode === 'individual'">
+                  <span class="task-subtitle">
+                    {{milestoneCompletedProgressCalculation(milestone)}}
+                    / {{milestoneRequiredProgressCalculation(milestone)}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
+                  </span>
+                  <mat-progress-bar mode="determinate"
+                                    [value]="milestoneCompletedProgressCalculation(milestone)
+                                    /milestoneRequiredProgressCalculation(milestone) * 100"></mat-progress-bar>
+                  <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
+                    <span class="subtitle">
+                      {{milestone.encouragementText}}
+                    </span>
+                    <mat-nav-list *ngIf="outcomes.length > 0">
+                      <mat-list-item *ngFor="let outcome of outcomes"
+                                     (click)="outcomeClicked(outcome)"
+                                     [disabled]="outcome.type === 'StoredValue::Campaign' || outcome.type === 'Badge'">
+
+                        <div class="outcome-container">
+                          <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
+                          <div [ngSwitch]="outcome.type">
+                            <ng-container *ngSwitchCase="outcomeType.reward">
+                              {{outcome.name}}
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.points">
+                              {{outcome.pointsCount}} points
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.prizeSet">
+                              {{outcome.name}} prize set
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.badge">
+                              Badge - {{outcome.name}}
+                            </ng-container>
+                          </div>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign' || outcome.type === 'PrizeSet'">
+                            navigate_next
+                          </mat-icon>
+                        </div>
+                      </mat-list-item>
+                    </mat-nav-list>
+                  </div>
+                </div>
+                <div class="task-content" *ngIf="progressBarDisplayMode === 'cumulative'">
+                  <span class="task-subtitle">
+                    {{currentUserPoints}}
+                    / {{milestone.pointsRequired}}
+                    {{progressConfig?.levelTab?.pointsAbbreviation ? progressConfig?.levelTab?.pointsAbbreviation : 'CP'}}
+                  </span>
+                  <mat-progress-bar mode="determinate"
+                                    [value]="currentUserPoints
+                                    /milestone.pointsRequired * 100"></mat-progress-bar>
+                  <div class="prize-wrapper" *ngIf="milestone.outcomes as outcomes">
+                    <span class="subtitle" *ngIf="outcomes.length > 0">
+                      {{milestone.encouragementText}}
+                    </span>
+                    <mat-nav-list>
+                      <mat-list-item *ngFor="let outcome of outcomes"
+                                     (click)="outcomeClicked(outcome)"
+                                     [disabled]="outcome.type === 'StoredValue::Campaign' || outcome.type === 'Badge'">
+                        <div class="outcome-container">
+                          <mat-icon matListIcon class="reward-icon">redeem</mat-icon>
+                          <div [ngSwitch]="outcome.type">
+                            <ng-container *ngSwitchCase="outcomeType.reward">
+                              {{outcome.name}}
+                            </ng-container>
+                            <ng-container *ngSwitchCase="outcomeType.points">
+                              {{outcome.pointsCount}} points
+                            </ng-container>
+                          </div>
+                          <mat-icon matListIcon *ngIf="outcome.type === 'Reward::Campaign' || outcome.type === 'PrizeSet'">navigate_next</mat-icon>
+                        </div>
+                      </mat-list-item>
+                    </mat-nav-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab [label]="progressConfig?.howToTab?.title">
+            <div class="participate-container">
+              <div class="tnc">{{progressConfig?.howToTab?.description}}</div>
+              <h4 *ngIf="campaign.termsAndConditions">{{ 'PROGRESS_CAMPAIGN.TNC_HEADER' | translate }}</h4>
+              <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav-container mat-elevation-z2"
+               *ngIf="!campaign.enrolled && !isEnrolled; else viewWalletTemplate">
+    <button color="primary" (click)="startProgress(campaign.id)" mat-flat-button>
+      {{ 'PROGRESS_CAMPAIGN.ENROLL_BTN_TEXT' | translate }}
+    </button>
+  </div>
+  <ng-template #viewWalletTemplate>
+    <div class="bottom-nav-container mat-elevation-z2" *ngIf="currentUserPoints >= milestones.slice(-1)[0].pointsRequired">
+      <button color="primary" [routerLink]="['/wallet']" mat-flat-button>
+        {{ 'PROGRESS_CAMPAIGN.VIEW_WALLET' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</div>
