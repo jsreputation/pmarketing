@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocationsMapComponent } from './locations-map/locations-map.component';
-import { LocationModule as PerxCoreLocationModule, } from '@perxtech/core';
+import { LocationModule as PerxCoreLocationModule, LocationServiceModule as PerxCoreLocationServiceModule } from '@perxtech/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -17,6 +17,7 @@ import { ListComponent } from './list/list.component';
     RouterModule,
     CommonModule,
     PerxCoreLocationModule,
+    PerxCoreLocationServiceModule.forRoot(),
     LocationRoutingModule,
     MatRadioModule,
     MatTabsModule,

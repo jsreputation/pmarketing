@@ -117,13 +117,21 @@ export class LayoutComponent implements OnInit {
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
       const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
-      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
+      let chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
+      console.log(chromelessFlag);
 
+      // const chromelessFound = paramArr.indexOf('chromeless');
+      // if (chromelessFound > 0) {
+      //   this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      // } else {
+      //   this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      // }
       if (chromelessFlag) {
-        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      } else {
-        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', params.chromeless);
       }
+      // else if ('flags' in params) {
+      //   this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      // }
       if (preAuthFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
       } else if ('flags' in params) {
