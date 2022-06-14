@@ -1,8 +1,229 @@
+@import '../../theme/variables.scss';
+@import '../../theme/mixins.scss';
+
 .progress-campaign-container {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #d8d8d8;
+  overflow-y: auto;
+}
+
+.progress-campaign-card-content {
+  background-color: $white;
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .mat-tab-group-wrapper {
+    min-height: 60rem;
+    padding: 0 2rem;
+
+    ::ng-deep {
+      .mat-tab-body-wrapper {
+        margin-top: 2rem;
+      }
+
+      .mat-tab-label-active {
+        color: $darkish-green;
+        opacity: 1;
+      }
+
+      .mat-ink-bar {
+        background-color: $green-dark;
+        height: 4px;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  .task-card-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .level-connector-line {
+      position: absolute;
+      // can't do decimal widths to avoid rendering engine issues from different browsers
+      width: 1px;
+      background-color: rgba(158, 158, 158, 0.7);
+      left: 20px; // shift right half of the level icon
+      top: 20px; // shift down half of the level icon
+      z-index: -1;
+    }
+
+    .task-card {
+      display: flex;
+
+      &.border-bottom {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 14px 0;
+      }
+
+      .task-card-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .task-img-section {
+        margin: 0.5rem 1.8rem auto auto;
+
+        .task-img-container {
+          position: relative;
+
+          img {
+            width: 60px;
+            height: 60px;
+            // border-radius: 50%;
+            align-self: center;
+          }
+
+          .success-icon {
+            position: absolute;
+            bottom: 0.4rem;
+            right: -0.4rem;
+            width: 1.8rem;
+            height: 1.8rem;
+          }
+        }
+
+        .active-macaron-container {
+          display: flex;
+          justify-content: center;
+
+          .macaron {
+            text-align: center;
+            border-radius: 5rem;
+            padding: 0.4rem 0.5rem;
+            font-size: 8px;
+            background-color: #2664ed; // material default blue
+            color: white;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            font-stretch: condensed;
+          }
+        }
+      }
+
+      .task-content {
+        width: 100%;
+        padding-top: 0.8rem;
+        padding-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          font-weight: bold;
+        }
+
+        .prize-wrapper {
+          margin-bottom: 2.5rem;
+          // don't need to grey out disabled mat list item as it won't navigate
+          // and there's no reward associated to show
+          ::ng-deep mat-list-item.mat-list-item-disabled {
+            background-color: unset;
+          }
+
+          .outcome-container {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            mat-icon {
+              flex: 0;
+
+              &.reward-icon {
+                padding-right: 1rem;
+                color: #2664ed;
+              }
+            }
+
+            div {
+              flex: 1;
+              text-align: left;
+              align-self: center;
+            }
+          }
+        }
+
+        .mat-progress-bar {
+          border-radius: 8px;
+          height: 8px !important;
+
+          ::ng-deep {
+            .mat-progress-bar-fill::after {
+              background-color: #34a344;
+            }
+
+            .mat-progress-bar-buffer {
+              background-color: #f2f2f2 !important;
+            }
+          }
+        }
+
+        mat-list-item {
+          font-size: 12px;
+          font-weight: bold;
+
+          a {
+            text-decoration: none;
+            color: black;
+          }
+        }
+      }
+
+      .task-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .task-subtitle {
+          font-size: 14px;
+          color: $black;
+          margin-bottom: 5px;
+          line-height: 16px;
+        }
+
+        button {
+          width: 93px;
+          height: 40px;
+          border-radius: 5px;
+          border-color: $green-dark;
+          border-style: solid;
+          border-width: 1px;
+
+          color: $darkish-green;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+
+  .participate-container {
+    margin: 2rem;
+
+    .tnc {
+      font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 4rem;
+      color: $black;
+      font-weight: 400;
+    }
+    h2,
+    h4 {
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 600;
+      color: $black;
+    }
+  }
 }
 
 .progress-campaign-content-container {
@@ -55,7 +276,8 @@
           position: absolute;
 
           ::ng-deep {
-            .mat-progress-spinner circle, .mat-spinner circle {
+            .mat-progress-spinner circle,
+            .mat-spinner circle {
               stroke: rgba(255, 255, 255, 0.38);
             }
           }
@@ -65,21 +287,89 @@
           position: absolute;
 
           ::ng-deep {
-            .mat-progress-spinner circle, .mat-spinner circle {
+            .mat-progress-spinner circle,
+            .mat-spinner circle {
               stroke: rgba(255, 255, 255, 1);
             }
           }
         }
-
       }
     }
   }
 
   .progress-campaign-content {
     padding: 2rem;
+
+    .title {
+      font-size: 16px;
+    }
+
+    .description {
+      font-weight: normal;
+      line-height: 20px;
+      margin: 2rem 0;
+    }
+
+    .subtitle {
+      color: rgba(0, 0, 0, 0.38);
+      font-weight: bold;
+      margin-top: 1.2rem;
+    }
+
+    .mission-note {
+      color: $brownish-grey;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 19px;
+      margin: 26px 0px;
+    }
+
+    .progress-campaign-lists {
+      display: flex;
+      flex-direction: row;
+
+      mat-list-item {
+        height: auto;
+
+        font-size: 14px;
+        font-weight: normal;
+        letter-spacing: 0;
+        padding: 0;
+
+        .mat-list-item-content {
+          padding: 0 !important;
+        }
+
+        a {
+          text-decoration: none;
+          color: black;
+        }
+
+        &:not(:first-child) {
+          margin-top: 16px;
+        }
+      }
+
+      p {
+        color: rgba(0, 0, 0, 0.38);
+        margin-bottom: 0;
+      }
+
+      a {
+        font-weight: bold;
+      }
+
+      .images {
+        width: 28px;
+        height: 28px;
+        padding-right: 8px;
+        flex: unset;
+      }
+    }
   }
 
-  img, svg {
+  img,
+  svg {
     width: 100%;
     height: 22rem;
     object-fit: cover;
@@ -87,23 +377,7 @@
   }
 
   svg {
-    background: #E8E8E8;
-  }
-
-  .title {
-    font-size: 16px;
-  }
-
-  .description {
-    font-weight: normal;
-    line-height: 20px;
-    margin: 2rem 0;
-  }
-
-  .subtitle {
-    color: rgba(0, 0, 0, 0.38);
-    font-weight: bold;
-    margin-top: 1.2rem;
+    background: #e8e8e8;
   }
 
   ::ng-deep {
@@ -112,16 +386,16 @@
     }
 
     .mat-progress-bar {
-      border-radius: .4rem;
-      height: .6rem !important;
+      border-radius: 0.4rem;
+      height: 0.6rem !important;
 
       .mat-progress-bar-fill::after {
-        background-color: #2664ED;
+        background-color: #34a344;
       }
     }
 
     .mat-progress-bar-buffer {
-      background-color: #E1E1E1;
+      background-color: #f2f2f2;
     }
   }
 
@@ -132,14 +406,6 @@
     a {
       text-decoration: none;
       color: black;
-    }
-  }
-
-  .mat-tab-group-wrapper {
-    min-height: 60rem;
-
-    ::ng-deep .mat-tab-body-wrapper {
-      margin-top: 2rem;
     }
   }
 
@@ -154,127 +420,6 @@
       color: rgba(0, 0, 0, 0.6);
       margin: 0;
       text-transform: uppercase;
-    }
-  }
-
-  .task-card-container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    .level-connector-line {
-      position: absolute;
-      // can't do decimal widths to avoid rendering engine issues from different browsers
-      width: 1px;
-      background-color: rgba(158, 158, 158, 0.7);
-      left: 20px; // shift right half of the level icon
-      top: 20px; // shift down half of the level icon
-      z-index: -1;
-    }
-
-    .task-card {
-      display: flex;
-
-      .task-img-section {
-        margin: 0.5rem 1.8rem auto auto;
-
-        .task-img-container {
-          position: relative;
-
-          img {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
-            align-self: center;
-          }
-
-          .success-icon {
-            position: absolute;
-            bottom: .4rem;
-            right: -.4rem;
-            width: 1.8rem;
-            height: 1.8rem;
-          }
-        }
-
-        .active-macaron-container {
-          display: flex;
-          justify-content: center;
-
-          .macaron {
-            text-align: center;
-            border-radius: 5rem;
-            padding: 0.4rem 0.5rem;
-            font-size: 8px;
-            background-color: #2664ED; // material default blue
-            color: white;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            font-stretch: condensed;
-          }
-        }
-      }
-
-      .task-content {
-        width: 100%;
-        padding-top: .8rem;
-        padding-bottom: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        span {
-          font-weight: bold;
-        }
-
-        .task-subtitle {
-          color: rgba(0, 0, 0, 0.38);
-          margin-bottom: 5px;
-          line-height: 16px;
-        }
-
-        .prize-wrapper {
-          margin-top: 2.5rem;
-
-          // don't need to grey out disabled mat list item as it won't navigate
-          // and there's no reward associated to show
-          ::ng-deep mat-list-item.mat-list-item-disabled {
-            background-color: unset;
-          }
-
-          .outcome-container {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-
-            mat-icon {
-              flex: 0;
-
-              &.reward-icon {
-                padding-right: 1rem;
-                color: #2664ED;
-              }
-            }
-
-            div {
-              flex: 1;
-              text-align: left;
-              align-self: center;
-            }
-          }
-        }
-      }
-    }
-
-  }
-
-  .participate-container {
-    margin: 2rem;
-
-    .tnc {
-      font-size: 12px;
-      line-height: 20px;
-      margin-bottom: 4rem;
     }
   }
 }

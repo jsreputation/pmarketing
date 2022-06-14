@@ -10,7 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProgressCampaignServiceModule, UtilsModule } from '@perxtech/core';
+import { PrizeSetOutcomeModule, ProgressCampaignServiceModule, UtilsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 
 const routes: Routes = [
@@ -31,6 +31,7 @@ const routes: Routes = [
     MatIconModule,
     MatListModule,
     MatTabsModule,
+    PrizeSetOutcomeModule,
     ProgressCampaignServiceModule.forChild(),
     RouterModule.forChild(routes),
   ],
