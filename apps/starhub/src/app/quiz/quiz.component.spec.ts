@@ -5,7 +5,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, ConfigService, ICampaignService, NotificationService, QuizModule, UtilsModule, Config } from '@perxtech/core';
+import { AuthenticationService, ConfigService, ICampaignService, NotificationService, QuizModule, QuizServiceModule, UtilsModule, Config } from '@perxtech/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { QuizComponent } from './quiz.component';
 
@@ -39,6 +39,7 @@ describe('QuizComponent', () => {
       ],
       imports: [
         QuizModule,
+        QuizServiceModule.forRoot(),
         MatToolbarModule,
         MatCardModule,
         MatProgressBarModule,

@@ -44,6 +44,8 @@ import {
 } from '@ngx-translate/core';
 
 import {
+  QuizModule,
+  QuizServiceModule,
   PerxCoreModule,
   AuthenticationModule,
   UtilsModule,
@@ -159,6 +161,8 @@ export const setLanguage = (
     PerxStampModule,
     ProfileModule,
     PerxProfileServiceModule.forRoot(),
+    QuizModule,
+    QuizServiceModule.forRoot(),
     UtilsModule,
     PerxSvcCampaignModule.forRoot(),
     PerxCampaignModule,

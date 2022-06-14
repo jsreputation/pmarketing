@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { QuizResultsComponent } from './quiz-results.component';
-import { QuizModule } from '@perxtech/core';
+import { QuizModule, QuizServiceModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,6 +18,7 @@ const routes: Routes = [{ path: '', component: QuizResultsComponent }];
     TranslateModule.forChild(),
     RouterModule.forChild(routes),
     QuizModule,
+    QuizServiceModule.forChild(),
     MatCardModule,
     MatToolbarModule,
     MatButtonModule

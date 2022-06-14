@@ -49,7 +49,7 @@ const routes: Routes = [{
     CampaignModule,
     CampaignServiceModule.forChild(),
     QuizModule,
-    QuizServiceModule.forRoot(),
+    QuizServiceModule.forChild(),
     OutcomeModule,
     RouterModule.forChild(routes),
     PageComponentsModule,
