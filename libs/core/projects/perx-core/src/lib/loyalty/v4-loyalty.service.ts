@@ -7,17 +7,17 @@ import { oc } from 'ts-optchain';
 
 import { LoyaltyService } from './loyalty.service';
 import {
-  IExchangerate,
   ICampaignTransactionHistory,
+  IExchangerate,
+  ILeaderBoardTransactionHistory,
   ILoyalty,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
   IPointTransfer,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  TransactionDetailType,
-  ILeaderBoardTransactionHistory,
-  IRuleTransactionHistory
+  IRuleTransactionHistory,
+  TransactionDetailType
 } from './models/loyalty.model';
 
 import { IV4Reward } from '../rewards/v4-rewards.service';
@@ -31,7 +31,8 @@ import {
 } from '../transactions/transaction-service/v4-transactions.service';
 import { IV4Campaign, IV4PointsOutcome } from '../campaign/v4-campaign.service';
 import { ITag } from '../merchants/models/merchants.model';
-import { V4LeaderBoard } from '../rank/v4-rank.service'
+import { V4LeaderBoard } from '../rank/v4-rank.service';
+
 const DEFAULT_PAGE_COUNT: number = 10;
 
 interface IV4Image {
@@ -491,7 +492,7 @@ export class V4LoyaltyService extends LoyaltyService {
     }
     return this.getLoyalties()
       .pipe(
-        map((loyalties: ILoyalty[]) => loyalties[0])
+        map((loyalties: ILoyalty[]) => loyalties.filter((loyalty) => loyalty.membershipState === 'active')[0])
       );
   }
 
