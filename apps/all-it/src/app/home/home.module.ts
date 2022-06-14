@@ -17,6 +17,7 @@ import {
   RewardsModule,
   UtilsModule,
   QuizModule,
+  QuizServiceModule,
   SurveyModule,
   TeamsServiceModule as PerxTeamsServiceModule
 } from '@perxtech/core';
@@ -48,6 +49,7 @@ const routes: Routes = [{
     CampaignModule,
     CampaignServiceModule.forChild(),
     QuizModule,
+    QuizServiceModule.forRoot(),
     OutcomeModule,
     RouterModule.forChild(routes),
     PageComponentsModule,
