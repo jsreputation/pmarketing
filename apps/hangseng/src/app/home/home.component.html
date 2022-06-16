@@ -5,14 +5,6 @@
         <hangseng-home-mission [campaignCategoryChips]="campaignCategoryChips"></hangseng-home-mission>
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
-  <div class="rewards-collection"
-    *ngIf="(appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage) && (rewards$ | async)?.length > 0">
-    <div class="title" translate>HOME.FEATURED_REWARDS</div>
-    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [showRewardFavButton]="false"
-      [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
-  </div>
-
   <div class="campaign-list">
     <div class="campaigns">
       <hangseng-campaigns-collection *ngIf="(campaigns$ | async)?.length > 0"
@@ -21,16 +13,5 @@
                                      (selected)="goToCampaignPage($event)">
       </hangseng-campaigns-collection>
     </div>
-  </div>
-  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
-    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
-    <perx-blackcomb-pages-catalogs [catalogs]="catalogs$" [catalogsEnded]="catalogsEnded"
-      (tapped)="catalogSelected($event)" (loadCatalogs)="loadCatalogs($event)"></perx-blackcomb-pages-catalogs>
-  </div>
-  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage && hideRewardsTitle">
-    <div class="title" translate>HOME.REWARDS</div>
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)"
-      (tabChanged)="tabChanged($event)">
-    </perx-core-rewards-list-tabbed>
   </div>
 </div>
