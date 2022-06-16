@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public favDisabled: boolean = false;
   public hideRewardsTitle: boolean = false;
   public campaignCategoryChips: ICampaignCategory[];
+  public selectedCategory: ICampaignCategory;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -140,6 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }, (error) => {
       console.error(error);
     });
+
     this.profileService
       .getCustomProperties()
       .pipe(
@@ -153,12 +155,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe();
+
     this.initTranslate();
+
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
+
     this.getTabbedList();
+
     this.campaignService.getCategories().subscribe((res) => {
       this.campaignCategoryChips = res;
-
       this.campaignCategoryChips.unshift({
         id: 0,
         title: 'All',
@@ -603,5 +608,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.favDisabled = false;
         }, 500))
       ).subscribe();
+  }
+
+  public filterCampaign(category: ICampaignCategory): void {
+    this.selectedCategory = category;
   }
 }

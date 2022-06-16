@@ -2,7 +2,8 @@
   [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
   <div class="mission-block">
     <div class="img">
-        <hangseng-home-mission [campaignCategoryChips]="campaignCategoryChips"></hangseng-home-mission>
+      <hangseng-home-mission [selected]="selectedCategory" [campaignCategoryChips]="campaignCategoryChips"
+        (eventItemClick)="filterCampaign($event)"></hangseng-home-mission>
     </div>
   </div>
   <div class="campaign-list">
