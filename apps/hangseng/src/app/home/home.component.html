@@ -2,7 +2,7 @@
   [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
   <div class="mission-block">
     <div class="img">
-        <hangseng-home-mission></hangseng-home-mission>
+        <hangseng-home-mission [campaignCategoryChips]="campaignCategoryChips"></hangseng-home-mission>
     </div>
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
@@ -18,7 +18,8 @@
     <div class="campaigns"
       *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
       <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
-      <hangseng-campaigns-collection [campaigns]="progressCampaigns$" (selected)="goToCampaignPage($event)">
+      <hangseng-campaigns-collection [campaigns]="progressCampaigns$" [campaignCategories]="campaignCategoryChips"
+                                     (selected)="goToCampaignPage($event)">
       </hangseng-campaigns-collection>
     </div>
 

@@ -23,6 +23,7 @@ import {
   FeedReaderService,
   GameType,
   ICampaign,
+  ICampaignCategory,
   ICampaignService,
   ICatalog,
   IConfig,
@@ -103,6 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public surveyCampaigns$: Observable<ICampaign[]>;
   public favDisabled: boolean = false;
   public hideRewardsTitle: boolean = false;
+  public campaignCategoryChips: ICampaignCategory[];
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -169,6 +171,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.initTranslate();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
+    this.campaignService.getCategories().subscribe((res) => {
+      this.campaignCategoryChips = res;
+    });
 
     this.themesService.getThemeSetting().subscribe(
       theme => {

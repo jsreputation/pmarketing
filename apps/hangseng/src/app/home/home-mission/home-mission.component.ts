@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ICampaignService, ICampaignCategory } from '@perxtech/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ICampaignCategory } from '@perxtech/core';
 
 @Component({
   selector: 'hangseng-home-mission',
@@ -7,13 +7,12 @@ import { ICampaignService, ICampaignCategory } from '@perxtech/core';
   styleUrls: ['./home-mission.component.scss']
 })
 export class HomeMissionComponent implements OnInit {
+  @Input()
   public campaignCategoryChips: ICampaignCategory[] = [];
 
-  constructor(private campaignService: ICampaignService) { }
+
+  constructor() { }
 
   public ngOnInit(): void {
-    this.campaignService.getCategories().subscribe((res) => {
-      this.campaignCategoryChips = res;
-    });
   }
 }
