@@ -110,7 +110,8 @@ describe('HomeComponent', () => {
 
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([]),
-    applyReferral: () => of()
+    applyReferral: () => of(),
+    getCategories: () => of([])
   };
 
   const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
