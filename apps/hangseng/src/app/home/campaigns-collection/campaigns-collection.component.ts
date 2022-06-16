@@ -3,21 +3,24 @@ import { BehaviorSubject, combineLatest, iif, Observable, of, zip, } from 'rxjs'
 import {
   GameType,
   ICampaign,
+  ICampaignCategory,
   ICampaignService,
   IFlags,
   IGame,
   IGameService,
   IOperatingHours,
   IQuiz,
+  ITheme,
   QuizService,
   SettingsService,
   SurveyService,
   ThemesService,
-  ITheme,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { catchError, map, switchMap, tap, withLatestFrom, } from 'rxjs/operators';
-import { listAnimation } from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/home/games-collection/games-collection.animation';
+import {
+  listAnimation
+} from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/home/games-collection/games-collection.animation';
 
 @Component({
   selector: 'hangseng-campaigns-collection',
@@ -34,6 +37,8 @@ export class CampaignsCollectionComponent implements OnInit {
   public withRewardsCounter: boolean = false;
   @Input()
   public gameType: GameType;
+  @Input()
+  public campaignCategories: ICampaignCategory[] = [];
 
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
@@ -49,6 +54,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
   public showOperatingHours: boolean = false;
   public buttonStyle: { [key: string]: string } = {};
+  public newCategoryText: string = 'new';
 
   constructor(
     private translate: TranslateService,
@@ -62,6 +68,9 @@ export class CampaignsCollectionComponent implements OnInit {
 
 
   public ngOnInit(): void {
+    console.log(this.campaignCategories);
+    this.newCategoryText = this.campaignCategories.length > 0 ? this.campaignCategories.find( category => category.description == 'new')[0].title : 'new';
+
     this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
       this.rewardsLeft = text;
     });
