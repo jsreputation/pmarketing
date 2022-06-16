@@ -158,6 +158,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getTabbedList();
     this.campaignService.getCategories().subscribe((res) => {
       this.campaignCategoryChips = res;
+
+      this.campaignCategoryChips.unshift({
+        id: 0,
+        title: 'All',
+        description: 'All',
+        usage: [],
+      });
     });
 
     this.themesService.getThemeSetting().subscribe(
