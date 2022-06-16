@@ -3,7 +3,7 @@
     <mat-icon class="backArrow" (click)="backArrowClick()">
       {{backArrowIcon}}
     </mat-icon>
-    <a class="logoWrapper" [routerLink]="[ '/home' ]">
+    <a class="logoWrapper" [routerLink]="[ '/home' ]" *ngIf="theme.properties['--logo']">
       <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     </a>
     <!-- ghost stuff-->
