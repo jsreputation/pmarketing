@@ -75,10 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
-  public stampCampaigns$: Observable<ICampaign[]>;
-  public questCampaigns$: Observable<ICampaign[]>;
-  public progressCampaigns$: Observable<ICampaign[]>;
-  public instantCampaigns$: Observable<ICampaign[]>;
+  public campaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -454,76 +451,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     }
 
-    if (this.appConfig.showStampCampaignsOnHomePage) {
-      this.stampCampaigns$ = this.campaignService
-        .getCampaigns({ type: CampaignType.stamp })
-        .pipe(
-          tap(
-            (campaigns: ICampaign[]) =>
-              (this.showCampaigns = campaigns.length > 0)
-          ),
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-      // this.stampCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.stamp));
-    }
-
-    if (this.appConfig.showSurveyOnHomePage) {
-      this.surveyCampaigns$ = this.campaignService
-        .getCampaigns({ gameType: GameType.survey })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-    }
-
-    if (this.appConfig.showQuestCampaignsOnHomePage) {
-      this.questCampaigns$ = this.campaignService
-        .getCampaigns({ type: CampaignType.quest })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-    }
-
-    if (this.appConfig.showQuizOnHomePage) {
-      this.quizCampaigns$ = this.campaignService
-        .getCampaigns({ gameType: GameType.quiz })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-    }
-    if (this.appConfig.showProgressBarCampaignsOnHomePage || this.appRemoteFlags?.showProgressBarCampaignsOnHomePage) {
-      this.progressCampaigns$ = this.campaignService
-        .getCampaigns({ type: CampaignType.progress })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-      // this.progressCampaigns$ = of(mockCampaigns.filter(campaign => campaign.type === CampaignType.progress));
-    }
-
-    if (this.appConfig.showInstantRewardCampaignsOnHomePage || this.appRemoteFlags?.showInstantRewardCampaignsOnHomePage) {
-      this.instantCampaigns$ = this.campaignService
-        .getCampaigns({ type: CampaignType.instant })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-    }
+    this.campaigns$ = this.campaignService
+      .getCampaigns()
+      .pipe(
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>

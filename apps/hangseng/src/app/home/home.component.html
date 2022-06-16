@@ -15,80 +15,11 @@
 
   <div class="campaign-list">
     <!-- progress bar campaigns-->
-    <div class="campaigns"
-      *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">
-      <div *ngIf="(progressCampaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
-      <hangseng-campaigns-collection [campaigns]="progressCampaigns$" [campaignCategories]="campaignCategoryChips"
-                                     (selected)="goToCampaignPage($event)">
-      </hangseng-campaigns-collection>
-    </div>
-
-    <!-- Stamp card campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
-      <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
-      <hangseng-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
-      </hangseng-campaigns-collection>
-    </div>
-
-    <!-- Game campaigns-->
     <div class="campaigns">
-      <!-- progress bar campaigns-->
-      <div *ngIf="appConfig.showProgressBarCampaignsOnHomePage || appRemoteFlags?.showProgressBarCampaignsOnHomePage">=
-        <hangseng-campaigns-collection [campaigns]="progressCampaigns$"
-          (selected)="goToCampaignPage($event)">
-        </hangseng-campaigns-collection>
-      </div>
-      <!-- Stamp card campaigns-->
-      <div *ngIf="appConfig.showStampCampaignsOnHomePage">
-        <hangseng-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
-        </hangseng-campaigns-collection>
-      </div>
-      <!-- Game campaigns-->
-      <perx-blackcomb-games-collection [games]="games$" (selected)="goToCampaignGamePage($event)"></perx-blackcomb-games-collection>
-      <!-- Quiz campaigns -->
-      <div *ngIf="appConfig.showQuizOnHomePage">
-        <hangseng-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
-          [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
-          (selected)="goToCampaignPage($event)">
-        </hangseng-campaigns-collection>
-      </div>
-      <!-- Survey campaigns -->
-      <div
-        [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
-        *ngIf="appConfig.showSurveyOnHomePage">
-        <hangseng-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
-          (selected)="goToCampaignPage($event)">
-        </hangseng-campaigns-collection>
-      </div>
-      <!-- Quest campaigns-->
-      <div *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
-        <hangseng-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
-        </hangseng-campaigns-collection>
-      </div>
-    </div>
-
-    <!-- Quiz campaigns -->
-    <div class="campaigns" *ngIf="appConfig.showQuizOnHomePage">
-      <div *ngIf="(quizCampaigns$ | async)?.length > 0" class="title" translate>HOME.QUIZ</div>
-      <hangseng-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
-        [gameType]="gameType.quiz" [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
-        (selected)="goToCampaignPage($event)">
-      </hangseng-campaigns-collection>
-    </div>
-
-    <!-- Survey campaigns -->
-    <div class="campaigns" [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
-      *ngIf="appConfig.showSurveyOnHomePage">
-      <div *ngIf="(surveyCampaigns$ | async)?.length > 0" class="title" translate>HOME.SURVEYS</div>
-      <hangseng-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
-        (selected)="goToCampaignPage($event)">
-      </hangseng-campaigns-collection>
-    </div>
-
-    <!-- Quest campaigns-->
-    <div class="campaigns" *ngIf="appConfig.showQuestCampaignsOnHomePage && appRemoteFlags.showQuest">
-      <div class="title" *ngIf="(questCampaigns$ | async)?.length > 0" translate>HOME.QUEST_CAMPAIGNS</div>
-      <hangseng-campaigns-collection [campaigns]="questCampaigns$" (selected)="goToCampaignPage($event)">
+      <div *ngIf="(campaigns$ | async)?.length > 0" class="title" translate>HOME.PROGRESS_BAR_CAMPAIGNS</div>
+      <hangseng-campaigns-collection [campaigns]="campaigns$" [campaignCategories]="campaignCategoryChips"
+                                     [defaultNbCampaigns]="3"
+                                     (selected)="goToCampaignPage($event)">
       </hangseng-campaigns-collection>
     </div>
   </div>
