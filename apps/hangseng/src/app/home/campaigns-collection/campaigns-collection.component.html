@@ -1,7 +1,10 @@
 <div *ngIf="campaigns && gamesLoaded" [@listAnimation]="!showAllCampaigns || campaigns.length">
   <div class="campaign-collection-card" *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
       ? campaigns : (campaigns | slice:0:defaultNbCampaigns))">
-    <img class="new-tag" src="./assets/new-tag.svg">
+    <div class="new-tag">
+      <span class="new-tag-text">{{newCategoryText}}</span>
+      <img src="./assets/new-tag.svg">
+    </div>
     <mat-card matRipple
       [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[campaign.id] ? 'campaigns-card disabled' : 'campaigns-card'"
       (click)="selectCampaign(campaign)">
