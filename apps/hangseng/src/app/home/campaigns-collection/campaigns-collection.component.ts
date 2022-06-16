@@ -69,7 +69,7 @@ export class CampaignsCollectionComponent implements OnInit {
 
   public ngOnInit(): void {
     console.log(this.campaignCategories);
-    this.newCategoryText = this.campaignCategories.length > 0 ? this.campaignCategories.find( category => category.description == 'new')[0].title : 'new';
+    this.newCategoryText = this.campaignCategories.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() == 'new')[0].title : 'New';
 
     this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
       this.rewardsLeft = text;
