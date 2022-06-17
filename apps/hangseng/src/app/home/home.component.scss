@@ -37,4 +37,17 @@
       order: 0;
     }
   }
+
+  .empty-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    span {
+      line-height: 22px;
+      font-size: 18px;
+    }
+  }
 }
