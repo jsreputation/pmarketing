@@ -19,13 +19,13 @@ export interface CampaignDisplayProperties {
   buttonTextColour?: string;
   fontColor?: string;
 }
-export interface AdditionalSection{
+export interface AdditionalSection {
   headerText: String,
   bodyText: String,
 }
 export interface CampaignLandingPage {
   body?: { text: string };
-  media?: { youtube?: string; bannerImage?: string};
+  media?: { youtube?: string; bannerImage?: string };
   heading?: { text: string };
   description?: { text: string };
   buttonText?: { text: string };
@@ -34,12 +34,12 @@ export interface CampaignLandingPage {
   backgroundUrl?: string;
   tnc?: { text: string };
   additionalSections?: AdditionalSection[];
-  subHeadline?:string;
+  subHeadline?: string;
 }
 export interface ICampaignRule {
-  id:number,
-  name:string,
-  state:string,
+  id: number,
+  name: string,
+  state: string,
 }
 export interface ClaimPrizeProperties {
   buttonText: string;
@@ -162,7 +162,7 @@ export interface ICampaign {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   teamSize?: number;
-  categoryTags?:ICategoryTags[];
+  categoryTags?: ICategoryTags[];
   tags?: ITag[];
   score?: number;
   miscImages?: { [key: string]: string };
@@ -254,4 +254,17 @@ export interface ICampaignCategory {
   description: string;
   title: string;
   usage: string[];
+}
+
+export interface ICampaignMeta {
+  count: number;
+  orderBy: string;
+  page: number;
+  sortBy: string;
+  totalPages: number;
+}
+
+export interface IRawCampaigns {
+  data: ICampaign[];
+  meta: ICampaignMeta;
 }

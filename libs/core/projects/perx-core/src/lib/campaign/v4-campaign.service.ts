@@ -10,9 +10,11 @@ import {
   IBadgeOutcome,
   IBDOCampaignEnrolment,
   ICampaign,
+  ICampaignMeta,
   ICampaignOutcome,
   ICampaignRule,
   IPointsOutcome,
+  IRawCampaigns,
   IReferral,
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
@@ -108,11 +110,17 @@ type CountObject = {
   count: number;
 };
 
+export interface IV4CampaignMeta {
+  count: number;
+  order_by: string;
+  page: number;
+  sort_by: string;
+  total_pages: number;
+}
+
 export interface IV4CampaignResponse {
   data: IV4Campaign;
-  meta: {
-    count: number;
-  };
+  meta: IV4CampaignMeta;
 }
 export interface IV4CampaignRuleResponse {
   data: IV4CampaignRule[];
@@ -122,9 +130,7 @@ export interface IV4CampaignRuleResponse {
 }
 interface IV4CampaignsResponse {
   data: IV4Campaign[];
-  meta: {
-    count: number;
-  };
+  meta: IV4CampaignMeta;
 }
 
 export interface IV4CampaignOutcomeResponse {
@@ -634,7 +640,7 @@ export class V4CampaignService implements ICampaignService {
       description: campaign.description,
       displayProperties,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
-      enrollableUntil: campaign.enrollable_until ?  new Date(campaign.enrollable_until) : null,
+      enrollableUntil: campaign.enrollable_until ? new Date(campaign.enrollable_until) : null,
       enrolled: campaign.enrolled,
       id: campaign.id,
       isOperating: campaign.operating_now,
@@ -655,6 +661,16 @@ export class V4CampaignService implements ICampaignService {
       termsAndConditions: campaign.terms_and_conditions,
       thumbnailUrl,
       type: campaign.campaign_type,
+    };
+  }
+
+  public static v4CampaignMetaToMeta(meta: IV4CampaignMeta): ICampaignMeta {
+    return {
+      count: meta.count,
+      orderBy: meta.order_by,
+      page: meta.page,
+      sortBy: meta.sort_by,
+      totalPages: meta.total_pages
     };
   }
 
@@ -682,7 +698,7 @@ export class V4CampaignService implements ICampaignService {
             }
           } else if (key === 'sortBy') {
             params = params.set('sort_by', filterOptions.sortBy || '');
-          }  else if (key === 'tags') {
+          } else if (key === 'tags') {
             if (filterOptions.tags) {
               params = params.set('tags', filterOptions.tags.join('|') || '');
             }
@@ -696,16 +712,61 @@ export class V4CampaignService implements ICampaignService {
       .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
       .pipe(
         map((resp) => resp.data),
-        map((campaigns: IV4Campaign[]) =>
-          campaigns.map((campaign) =>
-            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
-          )
+        map((campaigns: IV4Campaign[]) => campaigns.map((campaign) =>
+          V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
+        )
         )
       );
   }
+
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 50,
+    maxAge: 300000, // 5 minutes
+  })
+  public getCampaignsWithMeta(
+    filterOptions?: ICampaignFilterOptions
+  ): Observable<IRawCampaigns> {
+    let params = new HttpParams();
+    if (filterOptions) {
+      Object.keys(filterOptions).forEach((key) => {
+        if (filterOptions.hasOwnProperty(key)) {
+          if (key === 'type') {
+            params = params.set('campaign_type', filterOptions[key] || '');
+          } else if (key === 'gameType') {
+            if (filterOptions.gameType !== GameType.unknown) {
+              params = params.set('game_type', filterOptions.gameType || '');
+            }
+          } else if (key === 'categoryIds') {
+            if (filterOptions.categoryIds) {
+              params = params.set('category_ids', filterOptions.categoryIds.join('|') || '');
+            }
+          } else if (key === 'sortBy') {
+            params = params.set('sort_by', filterOptions.sortBy || '');
+          } else if (key === 'tags') {
+            if (filterOptions.tags) {
+              params = params.set('tags', filterOptions.tags.join('|') || '');
+            }
+          } else {
+            params = params.set(key, filterOptions[key]);
+          }
+        }
+      });
+    }
+
+    return this.http
+      .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
+      .pipe(
+        map((res) => ({
+          data: res.data.map((campaign) => V4CampaignService.v4CampaignToCampaign(campaign, this.lang)),
+          meta: V4CampaignService.v4CampaignMetaToMeta(res.meta)
+        }))
+      );
+  }
+
   public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]> {
     return this.http
-      .get<IV4CampaignRuleResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/rules`,)
+      .get<IV4CampaignRuleResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/rules`)
       .pipe(
         map((resp) => resp.data),
         map((campaigns: ICampaignRule[]) =>
@@ -753,22 +814,22 @@ export class V4CampaignService implements ICampaignService {
     ids: number[],
     pageSize?: number,
     locale: string = 'en'): Observable<ICampaign[]> {
-      const headers = new HttpHeaders()
+    const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept-Language', locale);
-      const campaignIds = ids.join('|');
-      let params = new HttpParams();
-      if (pageSize) {
-        params = params.set('size', pageSize.toString());
-      }
-      return this.http
-        .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns/?ids=${campaignIds}`, {
-          headers,
-          params
-        })
-        .pipe(
-          map((res) => res.data),
-          map((campaigns: IV4Campaign[]) =>
+    const campaignIds = ids.join('|');
+    let params = new HttpParams();
+    if (pageSize) {
+      params = params.set('size', pageSize.toString());
+    }
+    return this.http
+      .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns/?ids=${campaignIds}`, {
+        headers,
+        params
+      })
+      .pipe(
+        map((res) => res.data),
+        map((campaigns: IV4Campaign[]) =>
           campaigns.map((campaign) =>
             V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
           )
@@ -846,21 +907,21 @@ export class V4CampaignService implements ICampaignService {
           promo_id: promoID,
           recaptcha_token: captchaToken
         }).pipe(
-        map((response: IV4BdoEnrolmentResponse) => response.data),
-        map((enrolment: IV4BdoEnrolment) => {
-          return {
-            id: enrolment.id,
-            campaignId: enrolment.campaign_id,
-            campaignName: enrolment.campaign_name,
-            enrolledAt: enrolment.enrolled_at,
-            enrolmentReference: enrolment.enrolment_reference,
-            userAccountId: enrolment.user_account_id,
-          };
-        }),
-        catchError((error: HttpErrorResponse) =>
-          throwError(error)
-        )
-      );
+          map((response: IV4BdoEnrolmentResponse) => response.data),
+          map((enrolment: IV4BdoEnrolment) => {
+            return {
+              id: enrolment.id,
+              campaignId: enrolment.campaign_id,
+              campaignName: enrolment.campaign_name,
+              enrolledAt: enrolment.enrolled_at,
+              enrolmentReference: enrolment.enrolment_reference,
+              userAccountId: enrolment.user_account_id,
+            };
+          }),
+          catchError((error: HttpErrorResponse) =>
+            throwError(error)
+          )
+        );
   }
 
   public searchCampaigns(text: string, page?: number, pageSize?: number, locale = 'en'): Observable<ICampaign[]> {

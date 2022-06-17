@@ -6,6 +6,7 @@ import {
   ICampaignCategory,
   ICampaignOutcome,
   ICampaignRule,
+  IRawCampaigns,
   IReferral
 } from './models/campaign.model';
 import { GameType } from '../game/game.model';
@@ -23,6 +24,7 @@ export interface ICampaignFilterOptions {
 
 export abstract class ICampaignService {
   public abstract getCampaigns(options?: ICampaignFilterOptions): Observable<ICampaign[]>;
+  public abstract getCampaignsWithMeta(options?: ICampaignFilterOptions): Observable<IRawCampaigns>;
   public abstract getCampaign(id: number, lang?: string): Observable<ICampaign>;
   public abstract getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }>;
   public abstract applyReferral(referralCode: string): Observable<IReferral>; // response WIP

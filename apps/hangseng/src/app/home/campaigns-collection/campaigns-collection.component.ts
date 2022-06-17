@@ -67,7 +67,11 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
   ) { }
 
   public ngOnChanges(): void {
-    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() === 'new')?.title : 'New';
+    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find(category => category.description.toLowerCase() === 'new')?.title : 'New';
+
+    if (this.campaigns$) {
+      this.initCampaigns();
+    }
   }
 
   public ngOnInit(): void {
@@ -75,77 +79,14 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
       this.rewardsLeft = text;
     });
 
-    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
       this.buttonStyle['background-color'] = theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
       this.buttonStyle.color = theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
     });
 
     if (this.campaigns$) {
-      this.campaignsWithRewards$ = this.campaigns$.pipe(
-        switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
-          )),
-        tap(rewardsArr => {
-          rewardsArr.forEach((reward) => {
-            this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
-            this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
-          });
-        }),
-        withLatestFrom(this.campaigns$),
-        map(
-          ([rewardsArr, campaigns]) => {
-            const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
-              ...acc, [curr.campaignId]: curr.count
-            }), {});
-            return campaigns.map(campaign => ({ ...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id] }));
-          }
-        ));
+      this.initCampaigns();
     }
-    this.settingsService.getRemoteFlagsSettings()
-      .pipe(
-        tap((flags: IFlags) => {
-          this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
-        }),
-        switchMap(() => iif(
-          () => this.withRewardsCounter,
-          this.campaignsWithRewards$,
-          this.campaigns$
-        )),
-        tap((campaigns) => this.campaigns = campaigns),
-        // for each campaign, fetch associated games to figure out completion
-        switchMap((campaigns) => combineLatest([
-          ...campaigns.map((campaign: ICampaign) => {
-            if (this.gameType === GameType.quiz) {
-              return this.quizService.getQuizFromCampaign(campaign.id).pipe(
-                catchError((() => of([])))
-              );
-            }
-            if (this.gameType === GameType.survey) {
-              return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
-                catchError((() => of([])))
-              );
-            }
-            return this.gamesService.getGamesFromCampaign(campaign);
-          })
-        ]))
-      ).subscribe(
-      (res: (IQuiz | IGame[])[]) => {
-        if (this.gameType === GameType.quiz) {
-          this.quizzes = res as IQuiz[];
-          this.quizzes.forEach((quiz: IQuiz) => {
-            if (quiz.campaignId && !this.isCampaignDisabled[quiz.campaignId]) {
-              this.isCampaignDisabled[quiz.campaignId] =
-                this.isCampaignComplete(quiz.campaignId) ||
-                this.isQuizRewardsEmpty(quiz.campaignId);
-            }
-          });
-        }
-        this.gamesLoaded = true;
-      },
-      () => {
-        this.gamesLoaded = true;
-      }
-    );
   }
 
   public selectCampaign(campaign: ICampaign): void {
@@ -190,7 +131,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
 
   public getOperatingHours(operatingHours: IOperatingHours): string {
 
-    const daysMapArr = [ false, false, false, false, false, false, false ]; // index 0 is sunday
+    const daysMapArr = [false, false, false, false, false, false, false]; // index 0 is sunday
 
     for (const dayIndex in operatingHours.days) {
       if (dayIndex) { // guard-for-in
@@ -203,7 +144,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
-    return [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][dayIndex];
+    return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayIndex];
   }
 
   // works but can't wrap sat and sun
@@ -218,7 +159,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
         } else if (dayRange.length === 0) { // first item in current range.
           dayRange = `${this.dayOfWeekAsString(i)}`;
         }
-      } else if (dayRange.length > 0 && ! daysMapArr[i]) { // first part of range already identified
+      } else if (dayRange.length > 0 && !daysMapArr[i]) { // first part of range already identified
         if (this.dayOfWeekAsString(i - 1) !== dayRange) {
           dayRange = `${dayRange} - ${this.dayOfWeekAsString(i - 1)}`;
         }
@@ -232,5 +173,74 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
       }
     }
     return multiDayRange;
+  }
+
+  private initCampaigns(): void {
+    this.campaignsWithRewards$ = this.campaigns$.pipe(
+      switchMap(
+        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
+        )),
+      tap(rewardsArr => {
+        rewardsArr.forEach((reward) => {
+          this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
+          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
+        });
+      }),
+      withLatestFrom(this.campaigns$),
+      map(
+        ([rewardsArr, campaigns]) => {
+          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+            ...acc, [curr.campaignId]: curr.count
+          }), {});
+          return campaigns.map(campaign => ({ ...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id] }));
+        }
+      ));
+
+
+    this.settingsService.getRemoteFlagsSettings()
+      .pipe(
+        tap((flags: IFlags) => {
+          this.showOperatingHours = flags.showHappyHourOperatingHours ? flags.showHappyHourOperatingHours : false;
+        }),
+        switchMap(() => iif(
+          () => this.withRewardsCounter,
+          this.campaignsWithRewards$,
+          this.campaigns$
+        )),
+        tap((campaigns) => this.campaigns = campaigns),
+        // for each campaign, fetch associated games to figure out completion
+        switchMap((campaigns) => combineLatest([
+          ...campaigns.map((campaign: ICampaign) => {
+            if (this.gameType === GameType.quiz) {
+              return this.quizService.getQuizFromCampaign(campaign.id).pipe(
+                catchError((() => of([])))
+              );
+            }
+            if (this.gameType === GameType.survey) {
+              return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
+                catchError((() => of([])))
+              );
+            }
+            return this.gamesService.getGamesFromCampaign(campaign);
+          })
+        ]))
+      ).subscribe(
+        (res: (IQuiz | IGame[])[]) => {
+          if (this.gameType === GameType.quiz) {
+            this.quizzes = res as IQuiz[];
+            this.quizzes.forEach((quiz: IQuiz) => {
+              if (quiz.campaignId && !this.isCampaignDisabled[quiz.campaignId]) {
+                this.isCampaignDisabled[quiz.campaignId] =
+                  this.isCampaignComplete(quiz.campaignId) ||
+                  this.isQuizRewardsEmpty(quiz.campaignId);
+              }
+            });
+          }
+          this.gamesLoaded = true;
+        },
+        () => {
+          this.gamesLoaded = true;
+        }
+      );
   }
 }

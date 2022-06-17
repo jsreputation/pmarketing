@@ -50,11 +50,11 @@ import {
   SettingsService,
   TeamsService,
   ThemesService,
-  TokenStorage
+  TokenStorage,
+  IRawCampaigns
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
@@ -65,7 +65,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private pageSize: number = 10;
-  private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig<any>;
@@ -74,6 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public campaigns$: Observable<ICampaign[]>;
+  public campaigns: ICampaign[] = [];
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -93,6 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   public hideRewardsTitle: boolean = false;
   public campaignCategoryChips: ICampaignCategory[];
   public selectedCategory: ICampaignCategory;
+
+  public currentCampaignPage: number = 1;
+  public totalCampaignPage: number;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -145,7 +148,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.appConfig = config;
       // todo: create a function to wrap all the rest of the init calls
       this.appRemoteFlags = flags;
+
       this.initCampaign();
+
     }, (error) => {
       console.error(error);
     });
@@ -296,35 +301,35 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public onScroll(): void {
-    if (!this.staticTab) {
+    const filterOptions: ICampaignFilterOptions = {};
+    if (this.currentCampaignPage === this.totalCampaignPage) {
       return;
     }
-    const stTab = this.staticTab[this.currentTabIndex];
-    if (!stTab || !stTab.rewardsList || stTab.completePagination) {
-      return;
+    this.currentCampaignPage = this.currentCampaignPage ? ++this.currentCampaignPage : 1;
+    filterOptions.page = this.currentCampaignPage;
+    if (this.selectedCategory.title !== 'All') {
+      filterOptions.categoryIds = [String(this.selectedCategory.id)];
     }
-    if (!stTab.rewardsList) {
-      stTab.rewardsList = of([]);
-    }
-    stTab.currentPage = stTab.currentPage ? ++stTab.currentPage : 1;
-    forkJoin(
-      this.rewardsService.getRewards(
-        stTab.currentPage,
-        this.pageSize,
-        undefined,
-        stTab.rewardsType ? [stTab.rewardsType] : undefined
-      ),
-      stTab.rewardsList
-    ).subscribe((val) => {
-      if (val[0].length < this.pageSize) {
-        stTab.completePagination = true;
-      }
-      stTab.rewardsList = of([...val[1], ...val[0]]);
-    });
-  }
 
-  public tabChanged(event: MatTabChangeEvent): void {
-    this.currentTabIndex = event.index;
+    this.campaignService
+      .getCampaignsWithMeta(filterOptions)
+      .pipe(
+        tap((res: IRawCampaigns) => {
+          this.currentCampaignPage = res.meta.page;
+          this.totalCampaignPage = res.meta.totalPages;
+        }),
+        map((res: IRawCampaigns) => res.data),
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1),
+      ).subscribe((item) => {
+        this.campaigns = [
+          ...this.campaigns,
+          ...item
+        ];
+        this.campaigns$ = of(this.campaigns);
+      });
   }
 
   // requires public access for extended implementation
@@ -452,14 +457,23 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     }
 
-    this.campaigns$ = this.campaignService
-      .getCampaigns()
+    this.campaignService
+      .getCampaignsWithMeta()
       .pipe(
+        tap((res: IRawCampaigns) => {
+          this.campaigns = [];
+          this.currentCampaignPage = res.meta.page;
+          this.totalCampaignPage = res.meta.totalPages;
+        }),
+        map((res: IRawCampaigns) => res.data),
         switchMap((campaigns: ICampaign[]) =>
           of(campaigns).pipe(catchError((err) => of(err)))
         ),
-        takeLast(1)
-      );
+        takeLast(1),
+      ).subscribe((item) => {
+        this.campaigns = item;
+        this.campaigns$ = of(this.campaigns);
+      });
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>
@@ -626,13 +640,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       filterOptions.categoryIds = [String(category.id)];
     }
 
-    this.campaigns$ = this.campaignService
-      .getCampaigns(filterOptions)
+    this.campaignService
+      .getCampaignsWithMeta(filterOptions)
       .pipe(
+        tap((res: IRawCampaigns) => {
+          this.currentCampaignPage = res.meta.page;
+          this.totalCampaignPage = res.meta.totalPages;
+        }),
+        map((res: IRawCampaigns) => res.data),
         switchMap((campaigns: ICampaign[]) =>
           of(campaigns).pipe(catchError((err) => of(err)))
         ),
-        takeLast(1)
-      );
+        takeLast(1),
+      ).subscribe((item) => {
+        this.campaigns = item;
+        this.campaigns$ = of(this.campaigns);
+      });
   }
 }
