@@ -27,6 +27,7 @@ import {
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
 import { HomeMissionComponent } from './home-mission/home-mission.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [{
   path: '',
@@ -62,7 +63,8 @@ const routes: Routes = [{
     MatRippleModule,
     MatDialogModule,
     MatChipsModule,
-    QuestModule
+    QuestModule,
+    SharedModule
   ],
   entryComponents: [
     RewardPopupComponent,

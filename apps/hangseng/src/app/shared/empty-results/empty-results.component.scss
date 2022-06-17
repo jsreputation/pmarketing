@@ -1,20 +1,15 @@
-.search-not-result-wrapper {
+.empty-block {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
   min-height: calc(100vh - 110px);
 
-  .image {
+  .img {
     width: 120px;
     height: 120px;
     padding-top: 58px;
     justify-content: center;
-  }
-
-  .message-group {
-    text-align: center;
-    padding: 0 50px;
   }
 
   .message {
@@ -23,5 +18,7 @@
     font-weight: 700;
     color: #333333;
     line-height: 22px;
+    text-align: center;
+    padding: 0 50px;
   }
 }
