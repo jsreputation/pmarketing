@@ -10,7 +10,6 @@ import {
   ICampaignService,
   IGameService,
   InstantOutcomeService,
-  IQuestService,
   IReward,
   LoyaltyModule,
   LoyaltyService,
@@ -33,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
-import { GamesCollectionComponent, CatalogsComponent } from '@perxtech/blackcomb-pages';
+import { GamesCollectionComponent } from '@perxtech/blackcomb-pages';
 
 const instantOutcomeTransactionServiceStub: Partial<IInstantOutcomeTransactionService> = {
   getInstantOutcomeTransactions: () => of([]),
@@ -70,9 +69,6 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
 
 const gameSvcStub: Partial<IGameService> = {
   getActiveGames: () => of([])
-};
-
-const questServiceStub: Partial<IQuestService> = {
 };
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
@@ -124,7 +120,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
+      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,
@@ -155,7 +151,6 @@ describe('HomeComponent', () => {
           useValue: authServiceStub
         },
         { provide: TokenStorage, useValue: tokenStorageStub },
-        { provide: IQuestService, useValue: questServiceStub },
         { provide: TeamsService, useValue: teamsServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
       ]

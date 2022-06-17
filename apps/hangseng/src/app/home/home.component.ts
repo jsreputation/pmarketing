@@ -7,7 +7,6 @@ import {
   finalize,
   map,
   mergeMap,
-  scan,
   switchMap,
   take,
   takeLast,
@@ -25,7 +24,6 @@ import {
   ICampaign,
   ICampaignCategory,
   ICampaignService,
-  ICatalog,
   IConfig,
   IFlags,
   IGame,
@@ -38,7 +36,6 @@ import {
   IPopupConfig,
   IPrice,
   IProfile,
-  IQuestService,
   IReward,
   IRssFeeds,
   IRssFeedsData,
@@ -88,17 +85,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   public memberFn: (membershipTierName: string) => Observable<string>;
   public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public showGames: boolean = false;
-  public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  public quizCampaigns$: Observable<ICampaign[]>;
   public gameType: typeof GameType = GameType;
 
-  public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<
-    ICatalog[]
-  >([]);
-  public catalogs$: Observable<ICatalog[]>;
-  public catalogsEnded: boolean = false;
-  public surveyCampaigns$: Observable<ICampaign[]>;
   public favDisabled: boolean = false;
   public hideRewardsTitle: boolean = false;
   public campaignCategoryChips: ICampaignCategory[];
@@ -121,7 +110,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected currencyPipe: CurrencyPipe,
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
-    protected questService: IQuestService,
     protected teamsService: TeamsService,
     protected instantOutcomeTransactionService: IInstantOutcomeTransactionService,
     protected notificationService: NotificationService,
@@ -182,7 +170,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.initCatalogsScan();
   }
 
   public ngOnDestroy(): void {
@@ -286,12 +273,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
-  }
-
-  public catalogSelected(catalog: ICatalog): void {
-    this.router.navigate(['/catalogs'], {
-      queryParams: { catalog: catalog.id },
-    });
   }
 
   public onScroll(): void {
@@ -474,29 +455,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }),
       catchError(() => of([] as FeedItem[]))
     );
-  }
-
-  // ** catalogs component section **
-  // for paging through and accumulating pages
-  // requires public access for extended implementation
-  public initCatalogsScan(): void {
-    this.catalogs$ = this.catalogsBvrSbjt
-      .asObservable()
-      .pipe(scan((acc, curr) => [...acc, ...(curr ? curr : [])], []));
-  }
-
-  public loadCatalogs(pageNumber: number): void {
-    this.rewardsService
-      .getCatalogs(pageNumber, this.pageSize)
-      .subscribe((catalogs: ICatalog[]) => {
-        if (!catalogs) {
-          return;
-        }
-        this.catalogsBvrSbjt.next(catalogs);
-        if (catalogs.length < this.pageSize) {
-          this.catalogsEnded = true;
-        }
-      });
   }
 
   private initTranslate(): void {
