@@ -2,7 +2,8 @@
   <h1>Mission</h1>
   <p>Earn reward by completing missions to unlock multipliers</p>
   <mat-chip-list>
-    <mat-chip *ngFor="let item of campaignCategoryChips">
+    <mat-chip [selected]="item.id === selected?.id" *ngFor="let item of campaignCategoryChips"
+      (click)="eventItemClick.emit(item)">
       {{item.title}}
     </mat-chip>
   </mat-chip-list>

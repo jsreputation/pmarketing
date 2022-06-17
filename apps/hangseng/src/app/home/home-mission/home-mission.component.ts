@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ICampaignCategory } from '@perxtech/core';
 
 @Component({
@@ -9,7 +9,11 @@ import { ICampaignCategory } from '@perxtech/core';
 export class HomeMissionComponent implements OnInit {
   @Input()
   public campaignCategoryChips: ICampaignCategory[] = [];
+  @Input()
+  selected: ICampaignCategory;
 
+  @Output()
+  eventItemClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
