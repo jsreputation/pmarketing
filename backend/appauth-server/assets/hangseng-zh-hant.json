@@ -285,7 +285,8 @@
     "REWARDS": "獎勵",
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
-    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
+    "EMPTY_LIST": "More mission is coming"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
