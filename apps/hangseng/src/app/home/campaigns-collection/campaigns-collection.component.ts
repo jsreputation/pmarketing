@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, combineLatest, iif, Observable, of, zip, } from 'rxjs';
 import {
   GameType,
@@ -28,7 +28,7 @@ import {
   styleUrls: ['./campaigns-collection.component.scss'],
   animations: [listAnimation]
 })
-export class CampaignsCollectionComponent implements OnInit {
+export class CampaignsCollectionComponent implements OnInit, OnChanges {
   @Input('campaigns')
   public campaigns$: Observable<ICampaign[]>;
   @Input()
@@ -66,10 +66,11 @@ export class CampaignsCollectionComponent implements OnInit {
     private themesService: ThemesService
   ) { }
 
+  public ngOnChanges(): void {
+    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() === 'new')?.title : 'New';
+  }
 
   public ngOnInit(): void {
-    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() === 'new')[0]?.title : 'New';
-
     this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
       this.rewardsLeft = text;
     });
