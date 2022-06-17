@@ -724,7 +724,7 @@ export class V4CampaignService implements ICampaignService {
     maxCacheCount: 50,
     maxAge: 300000, // 5 minutes
   })
-  public getMetaCampaigns(
+  public getCampaignsWithMeta(
     filterOptions?: ICampaignFilterOptions
   ): Observable<IRawCampaigns> {
     let params = new HttpParams();
