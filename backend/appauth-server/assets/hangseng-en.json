@@ -294,7 +294,8 @@
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
-    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards"
+    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards",
+    "EMPTY_LIST": "More mission is coming"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",

@@ -6,12 +6,17 @@
     </div>
   </div>
   <div class="campaign-list">
-    <div class="campaigns">
-      <hangseng-campaigns-collection *ngIf="(campaigns$ | async)?.length > 0"
-                                     [campaigns]="campaigns$" [campaignCategories]="campaignCategoryChips"
+    <div class="campaigns" *ngIf="(campaigns$ | async)?.length > 0; else emptyBlock">
+      <hangseng-campaigns-collection [campaigns]="campaigns$" [campaignCategories]="campaignCategoryChips"
                                      [defaultNbCampaigns]="3"
                                      (selected)="goToCampaignPage($event)">
       </hangseng-campaigns-collection>
     </div>
+    <ng-template #emptyBlock>
+      <div class="empty-block">
+        <img src="assets/empty_state.svg">
+        <span>{{"HOME.EMPTY_LIST" | translate}}</span>
+      </div>
+    </ng-template>
   </div>
 </div>
