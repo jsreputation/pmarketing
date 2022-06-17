@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, EMPTY, forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import {
@@ -23,6 +23,7 @@ import {
   GameType,
   ICampaign,
   ICampaignCategory,
+  ICampaignFilterOptions,
   ICampaignService,
   IConfig,
   IFlags,
@@ -117,6 +118,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    this.selectedCategory = {
+      id: 0,
+      title: 'All',
+      description: 'All',
+      usage: [],
+    };
+
     forkJoin([
       this.configService
         .readAppConfig<void>(),
@@ -612,5 +620,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public filterCampaign(category: ICampaignCategory): void {
     this.selectedCategory = category;
+    const filterOptions: ICampaignFilterOptions = {};
+
+    if (category.title !== 'All') {
+      filterOptions.categoryIds = [String(category.id)];
+    }
+
+    this.campaigns$ = this.campaignService
+      .getCampaigns(filterOptions)
+      .pipe(
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );
   }
 }
