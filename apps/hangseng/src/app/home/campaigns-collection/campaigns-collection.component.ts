@@ -67,7 +67,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
   ) { }
 
   public ngOnChanges(): void {
-    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() === 'new')[0]?.title : 'New';
+    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find( category => category.description.toLowerCase() === 'new')?.title : 'New';
   }
 
   public ngOnInit(): void {
