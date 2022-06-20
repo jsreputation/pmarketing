@@ -380,7 +380,8 @@
     "VIEW_REWARD": "View reward",
     "OUT_OF_TRIES_TITLE": "",
     "OUT_OF_TRIES_TEXT": "You have reached the maximum number of tries today",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
@@ -489,7 +490,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "TEAMS": {
     "CREATE_PAGE": {

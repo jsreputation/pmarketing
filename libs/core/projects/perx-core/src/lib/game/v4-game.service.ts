@@ -9,12 +9,18 @@ import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
-import { ScratchV4ToV4Mapper, ShakeV4ToV4Mapper, SpinV4ToV4Mapper, TapV4ToV4Mapper, PlinkoV4ToV4Mapper } from './v4-game.mapper';
+import {
+  PlinkoV4ToV4Mapper,
+  ScratchV4ToV4Mapper,
+  ShakeV4ToV4Mapper,
+  SpinV4ToV4Mapper,
+  TapV4ToV4Mapper
+} from './v4-game.mapper';
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { V4CampaignService, IV4PointsOutcome, IV4BadgeOutcome } from '../campaign/v4-campaign.service';
-import { V4PrizeSetOutcomeService, IV4PrizeSetOutcome } from '../prize-set-outcome/v4-prize-set-outcome.service';
+import { IV4BadgeOutcome, IV4PointsOutcome, V4CampaignService } from '../campaign/v4-campaign.service';
+import { IV4PrizeSetOutcome, V4PrizeSetOutcomeService } from '../prize-set-outcome/v4-prize-set-outcome.service';
 import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
 
 const enum GameType {
@@ -69,6 +75,13 @@ export interface GameProperties {
   nooutcome?: Outcome;
   outcome?: Outcome;
   background_image?: Asset;
+  landing_page: {
+    headline: string;
+    sub_headline: string;
+    body_text: string;
+    image: Asset;
+    cta_button_text: string;
+  }
 }
 
 export interface TreeDisplayProperties extends GameProperties {

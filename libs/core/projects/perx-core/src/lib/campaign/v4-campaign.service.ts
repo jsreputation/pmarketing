@@ -10,9 +10,11 @@ import {
   IBadgeOutcome,
   IBDOCampaignEnrolment,
   ICampaign,
+  ICampaignMeta,
   ICampaignOutcome,
   ICampaignRule,
   IPointsOutcome,
+  IRawCampaigns,
   IReferral,
 } from './models/campaign.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
@@ -36,7 +38,9 @@ import { QuestDisplayProperties } from '../quest/v4-quest.service';
 import { StampCampaignDisplayProperties } from '../stamp/v4-stamp.service';
 import { IV4ProgressDisplayProperties } from '../progress-campaign/v4-progress-campaign.service';
 import { IV4TeamsDisplayProperties } from '../teams/v4-teams.service';
-import { IV4InstantRewardCampaignDisplayProperties } from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
+import {
+  IV4InstantRewardCampaignDisplayProperties
+} from '../instant-outcome-transaction/v4-instant-outcome-transaction.service';
 import { ITag } from '../merchants/models/merchants.model';
 
 interface IV4Image {
@@ -106,11 +110,17 @@ type CountObject = {
   count: number;
 };
 
+export interface IV4CampaignMeta {
+  count: number;
+  order_by: string;
+  page: number;
+  sort_by: string;
+  total_pages: number;
+}
+
 export interface IV4CampaignResponse {
   data: IV4Campaign;
-  meta: {
-    count: number;
-  };
+  meta: IV4CampaignMeta;
 }
 export interface IV4CampaignRuleResponse {
   data: IV4CampaignRule[];
@@ -120,9 +130,7 @@ export interface IV4CampaignRuleResponse {
 }
 interface IV4CampaignsResponse {
   data: IV4Campaign[];
-  meta: {
-    count: number;
-  };
+  meta: IV4CampaignMeta;
 }
 
 export interface IV4CampaignOutcomeResponse {
@@ -214,6 +222,15 @@ interface IV4BdoEnrolment {
   enrolled_at: Date;
   enrolment_reference: string;
   user_account_id: number;
+}
+interface IV4GetCategoriesResponse {
+  data: IV4Category[];
+}
+interface IV4Category {
+  id: number;
+  description: string;
+  title: string;
+  usage: string[];
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -307,16 +324,53 @@ export class V4CampaignService implements ICampaignService {
         }
       }
     }
+
     if (dp && (dp as GameProperties).background_image) {
       if (displayProperties === undefined) {
         displayProperties = {
           landingPage: {},
         };
       }
-      // @ts-ignore
-      displayProperties.landingPage.backgroundUrl = patchUrl(
-        oc(dp as GameProperties).background_image.value.image_url('')
-      );
+      const lp = (dp as GameProperties).landing_page;
+
+      if (lp) {
+        // @ts-ignore
+        displayProperties.landingPage.backgroundUrl = patchUrl(
+          oc(dp as GameProperties).background_image.value.image_url('')
+        );
+
+        if (lp.headline) {
+          // @ts-ignore
+          displayProperties.landingPage.heading = {
+            text: lp.headline
+          };
+        }
+        if (lp.sub_headline) {
+          // @ts-ignore
+          displayProperties.landingPage.subHeading = {
+            text: lp.sub_headline
+          };
+        }
+        if (lp.body_text) {
+          // @ts-ignore
+          displayProperties.landingPage.body = {
+            text: lp.body_text
+          };
+        }
+        if (lp.image?.value.image_url) {
+          // @ts-ignore
+          displayProperties.landingPage.media = {
+            bannerImage: lp.image?.value.image_url
+          };
+        }
+
+        if (lp.cta_button_text) {
+          // @ts-ignore
+          displayProperties.landingPage?.buttonText = {
+            text: lp.cta_button_text
+          };
+        }
+      }
     }
 
     if (dp && (dp as QuestDisplayProperties).quest_success_image) {
@@ -553,6 +607,7 @@ export class V4CampaignService implements ICampaignService {
         }
       }
     }
+
     let referralCodes, refersAttained;
     referralCodes = [campaign.referral_code];
     if (campaign.campaign_config) {
@@ -578,34 +633,44 @@ export class V4CampaignService implements ICampaignService {
       };
     }
     return {
-      id: campaign.id,
-      name: campaign.name,
-      description: campaign.description,
-      type: campaign.campaign_type,
-      subType: oc(campaign).game_type(),
-      state: campaign.state,
-      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
-      enrolled: campaign.enrolled,
-      termsAndConditions: campaign.terms_and_conditions,
-      referralCodes,
-      refersAttained,
-      rewards,
-      thumbnailUrl,
       campaignBannerUrl,
-      operatingHours,
-      isOperating: campaign.operating_now,
-      teamSize: campaign.team_size,
-      displayProperties,
-      customFields,
       categoryTags: campaign.category_tags,
-      tags: campaign.tags,
-      score: campaign?.score,
-      enrollableUntil: campaign.enrollable_until ?  new Date(campaign.enrollable_until) : null,
+      customFields,
+      description: campaign.description,
+      displayProperties,
+      endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
+      enrollableUntil: campaign.enrollable_until ? new Date(campaign.enrollable_until) : null,
+      enrolled: campaign.enrolled,
+      id: campaign.id,
+      isOperating: campaign.operating_now,
       miscImages: {
         miscImage1: miscImg1 || '',
         miscImage2: miscImg2 || ''
-      }
+      },
+      name: campaign.name,
+      operatingHours,
+      referralCodes,
+      refersAttained,
+      rewards,
+      score: campaign?.score,
+      state: campaign.state,
+      subType: oc(campaign).game_type(),
+      tags: campaign.tags,
+      teamSize: campaign.team_size,
+      termsAndConditions: campaign.terms_and_conditions,
+      thumbnailUrl,
+      type: campaign.campaign_type,
+    };
+  }
+
+  public static v4CampaignMetaToMeta(meta: IV4CampaignMeta): ICampaignMeta {
+    return {
+      count: meta.count,
+      orderBy: meta.order_by,
+      page: meta.page,
+      sortBy: meta.sort_by,
+      totalPages: meta.total_pages
     };
   }
 
@@ -633,7 +698,7 @@ export class V4CampaignService implements ICampaignService {
             }
           } else if (key === 'sortBy') {
             params = params.set('sort_by', filterOptions.sortBy || '');
-          }  else if (key === 'tags') {
+          } else if (key === 'tags') {
             if (filterOptions.tags) {
               params = params.set('tags', filterOptions.tags.join('|') || '');
             }
@@ -647,16 +712,61 @@ export class V4CampaignService implements ICampaignService {
       .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
       .pipe(
         map((resp) => resp.data),
-        map((campaigns: IV4Campaign[]) =>
-          campaigns.map((campaign) =>
-            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
-          )
+        map((campaigns: IV4Campaign[]) => campaigns.map((campaign) =>
+          V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
+        )
         )
       );
   }
+
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 50,
+    maxAge: 300000, // 5 minutes
+  })
+  public getCampaignsWithMeta(
+    filterOptions?: ICampaignFilterOptions
+  ): Observable<IRawCampaigns> {
+    let params = new HttpParams();
+    if (filterOptions) {
+      Object.keys(filterOptions).forEach((key) => {
+        if (filterOptions.hasOwnProperty(key)) {
+          if (key === 'type') {
+            params = params.set('campaign_type', filterOptions[key] || '');
+          } else if (key === 'gameType') {
+            if (filterOptions.gameType !== GameType.unknown) {
+              params = params.set('game_type', filterOptions.gameType || '');
+            }
+          } else if (key === 'categoryIds') {
+            if (filterOptions.categoryIds) {
+              params = params.set('category_ids', filterOptions.categoryIds.join('|') || '');
+            }
+          } else if (key === 'sortBy') {
+            params = params.set('sort_by', filterOptions.sortBy || '');
+          } else if (key === 'tags') {
+            if (filterOptions.tags) {
+              params = params.set('tags', filterOptions.tags.join('|') || '');
+            }
+          } else {
+            params = params.set(key, filterOptions[key]);
+          }
+        }
+      });
+    }
+
+    return this.http
+      .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
+      .pipe(
+        map((res) => ({
+          data: res.data.map((campaign) => V4CampaignService.v4CampaignToCampaign(campaign, this.lang)),
+          meta: V4CampaignService.v4CampaignMetaToMeta(res.meta)
+        }))
+      );
+  }
+
   public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]> {
     return this.http
-      .get<IV4CampaignRuleResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/rules`,)
+      .get<IV4CampaignRuleResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/rules`)
       .pipe(
         map((resp) => resp.data),
         map((campaigns: ICampaignRule[]) =>
@@ -704,22 +814,22 @@ export class V4CampaignService implements ICampaignService {
     ids: number[],
     pageSize?: number,
     locale: string = 'en'): Observable<ICampaign[]> {
-      const headers = new HttpHeaders()
+    const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept-Language', locale);
-      const campaignIds = ids.join('|');
-      let params = new HttpParams();
-      if (pageSize) {
-        params = params.set('size', pageSize.toString());
-      }
-      return this.http
-        .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns/?ids=${campaignIds}`, {
-          headers,
-          params
-        })
-        .pipe(
-          map((res) => res.data),
-          map((campaigns: IV4Campaign[]) =>
+    const campaignIds = ids.join('|');
+    let params = new HttpParams();
+    if (pageSize) {
+      params = params.set('size', pageSize.toString());
+    }
+    return this.http
+      .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns/?ids=${campaignIds}`, {
+        headers,
+        params
+      })
+      .pipe(
+        map((res) => res.data),
+        map((campaigns: IV4Campaign[]) =>
           campaigns.map((campaign) =>
             V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
           )
@@ -797,21 +907,21 @@ export class V4CampaignService implements ICampaignService {
           promo_id: promoID,
           recaptcha_token: captchaToken
         }).pipe(
-        map((response: IV4BdoEnrolmentResponse) => response.data),
-        map((enrolment: IV4BdoEnrolment) => {
-          return {
-            id: enrolment.id,
-            campaignId: enrolment.campaign_id,
-            campaignName: enrolment.campaign_name,
-            enrolledAt: enrolment.enrolled_at,
-            enrolmentReference: enrolment.enrolment_reference,
-            userAccountId: enrolment.user_account_id,
-          };
-        }),
-        catchError((error: HttpErrorResponse) =>
-          throwError(error)
-        )
-      );
+          map((response: IV4BdoEnrolmentResponse) => response.data),
+          map((enrolment: IV4BdoEnrolment) => {
+            return {
+              id: enrolment.id,
+              campaignId: enrolment.campaign_id,
+              campaignName: enrolment.campaign_name,
+              enrolledAt: enrolment.enrolled_at,
+              enrolmentReference: enrolment.enrolment_reference,
+              userAccountId: enrolment.user_account_id,
+            };
+          }),
+          catchError((error: HttpErrorResponse) =>
+            throwError(error)
+          )
+        );
   }
 
   public searchCampaigns(text: string, page?: number, pageSize?: number, locale = 'en'): Observable<ICampaign[]> {
@@ -887,5 +997,27 @@ export class V4CampaignService implements ICampaignService {
       badgeId: badge.badge_id,
       state: badge.state,
     };
+  }
+
+  public getCategories(): Observable<IV4Category[]> {
+    return this.http
+      .get<IV4GetCategoriesResponse>(`${this.baseUrl}/v4/categories`)
+      .pipe(
+        map((res) => res.data),
+        map((res) =>
+          Object.values(
+            res.reduce(
+              (acc, cur) =>
+                cur.usage.includes('Campaigns')
+                  ? Object.assign(acc, { [cur.id]: cur })
+                  : acc,
+              {}
+            )
+          )
+        ),
+        map((categories: IV4Category[]) =>
+          categories.map((category) => category)
+        )
+      );
   }
 }

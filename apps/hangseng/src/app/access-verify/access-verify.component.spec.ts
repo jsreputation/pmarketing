@@ -3,32 +3,32 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AccessVerifyComponent } from './access-verify.component';
 import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { of } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('AccessVerifyComponent', () => {
   let component: AccessVerifyComponent;
   let fixture: ComponentFixture<AccessVerifyComponent>;
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    getExchangeToken: () => of()
+    getExchangeToken: () => of(),
   };
 
   const tokenStorageStub = {
-    clearAppInfoProperty: () => {}
+    clearAppInfoProperty: () => {},
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessVerifyComponent ],
-      imports: [ RouterTestingModule ],
+      declarations: [AccessVerifyComponent],
+      imports: [RouterTestingModule, MatProgressSpinnerModule],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         {
           provide: TokenStorage,
-          useValue: tokenStorageStub
-        }
-      ]
-    })
-    .compileComponents();
+          useValue: tokenStorageStub,
+        },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

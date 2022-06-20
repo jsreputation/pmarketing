@@ -76,9 +76,9 @@ export class GameComponent implements OnInit, OnDestroy {
   };
 
   public outOfTriesPopup: IPopupConfig = {
-    title: 'ERRORS.OUT_OF_TRIES_TITLE',
-    text: 'ERRORS.OUT_OF_TRIES_TEXT',
-    buttonTxt: 'ERRORS.OUT_OF_TRIES_CTA',
+    title: 'GAME_PAGE.OUT_OF_TRIES_TITLE',
+    text: 'GAME_PAGE.OUT_OF_TRIES_TEXT',
+    buttonTxt: 'GAME_PAGE.OUT_OF_TRIES_CTA',
     afterClosedCallBack: this,
     disableOverlayClose: true,
   };
@@ -569,6 +569,8 @@ export class GameComponent implements OnInit, OnDestroy {
         // navigate to badge list if user has won a badge, since badges are not added to the wallet
         if (this.willWin && this.badge) {
           this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
+        } if (this.points) {
+          this.router.navigate(['/transaction-history']);
         } else {
           this.router.navigate(['/wallet']);
         }

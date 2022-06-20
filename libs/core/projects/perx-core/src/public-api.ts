@@ -91,7 +91,9 @@ export {
   IOperatingHours,
   IBadgeOutcome,
   TeamsProperties,
-  ICampaignRule
+  ICampaignRule,
+  ICampaignCategory,
+  IRawCampaigns
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';

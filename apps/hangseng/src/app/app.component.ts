@@ -33,14 +33,12 @@ import {
   SettingsService,
 } from '@perxtech/core';
 import {
-  HomeComponent,
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
   WalletComponent,
   WalletHistoryComponent,
   ProfileComponent,
-  CampaignStampsComponent,
   LeaderboardPageComponent,
   LeaderboardsComponent,
   FindLocationComponent,
@@ -53,6 +51,8 @@ import {
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
 import { combineLatest } from 'rxjs';
+import { HomeComponent } from './home/home.component';
+import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 
 @Component({
   selector: 'app-root',

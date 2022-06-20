@@ -218,7 +218,8 @@
     "CONTACT_US": "聯繫我們",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
-    "BADGES": "My Badges"
+    "BADGES": "My Badges",
+    "PROGRAM_OPT_OUT": "Leave Chill Reward programme"
   },
   "PROFILE": {
     "TITLE": "個人資料",
@@ -284,7 +285,8 @@
     "REWARDS": "獎勵",
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
-    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns"
+    "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
+    "EMPTY_LIST": "More mission is coming"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -456,7 +458,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "POINTS_TRANSFER": {
     "FROM": "From",
