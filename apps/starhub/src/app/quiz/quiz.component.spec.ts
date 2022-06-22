@@ -5,27 +5,37 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, ConfigService, ICampaignService, NotificationService, QuizModule, QuizServiceModule, UtilsModule, Config } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  ICampaignService,
+  NotificationService,
+  QuizModule,
+  QuizServiceModule,
+  UtilsModule,
+  Config,
+} from '@perxtech/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { QuizComponent } from './quiz.component';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
 const translateServiceStub: Partial<TranslateService> = {
-  get: () => new BehaviorSubject('yo')
+  get: () => new BehaviorSubject('yo'),
 };
 const configStub: Config = {};
 const authenticationServiceStub: Partial<AuthenticationService> = {
-  getAnonymous: () => false
+  getAnonymous: () => false,
 };
 const notificationServiceStub: Partial<NotificationService> = {};
 const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of({
-    apiHost: '',
-    production: false,
-    preAuth: false,
-    isWhistler: false,
-    baseHref: ''
-  })
+  readAppConfig: () =>
+    of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+    }),
 };
 
 describe('QuizComponent', () => {
@@ -34,9 +44,7 @@ describe('QuizComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        QuizComponent
-      ],
+      declarations: [QuizComponent],
       imports: [
         QuizModule,
         QuizServiceModule.forRoot(),
@@ -46,7 +54,7 @@ describe('QuizComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         UtilsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
@@ -54,10 +62,9 @@ describe('QuizComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
-      ]
-    })
-      .compileComponents();
+        { provide: NotificationService, useValue: notificationServiceStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
