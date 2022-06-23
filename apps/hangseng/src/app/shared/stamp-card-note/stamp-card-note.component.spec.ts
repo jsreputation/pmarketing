@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PipeUtilsModule } from '@perxtech/core';
 
 import { StampCardNoteComponent } from './stamp-card-note.component';
 
@@ -8,7 +9,10 @@ describe('StampCardNoteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StampCardNoteComponent ]
+      declarations: [ StampCardNoteComponent ],
+      imports: [
+        PipeUtilsModule
+      ]
     })
     .compileComponents();
   });

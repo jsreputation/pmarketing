@@ -407,7 +407,9 @@
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
     "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
-    "STAMPS_COMPLETED": "Congrats!! You've completed all mission"
+    "STAMPS_COMPLETED": "Congrats!! You've completed all mission",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"

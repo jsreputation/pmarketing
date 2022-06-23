@@ -406,7 +406,9 @@
     "NO_REWARD_POPUP_TEXT": "Try again next time",
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
-    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"

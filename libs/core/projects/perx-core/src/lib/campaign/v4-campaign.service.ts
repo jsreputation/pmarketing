@@ -309,7 +309,7 @@ export class V4CampaignService implements ICampaignService {
               }
 
             })
-          },
+          }
         };
         let youtubeUrl = oc(lp).media.youtube() || null;
         if (youtubeUrl) {
@@ -496,6 +496,13 @@ export class V4CampaignService implements ICampaignService {
           codeBlurb: v4TeamsProps.invite_message.code_blurb,
         };
       }
+    }
+
+    if (dp && (dp as any)?.risk_disclaimer) {
+      displayProperties = {
+        ...displayProperties,
+        riskDisclaimer: (dp as any).risk_disclaimer,
+      };
     }
 
     if (dp && (dp as any)?.cta_button_colour) {

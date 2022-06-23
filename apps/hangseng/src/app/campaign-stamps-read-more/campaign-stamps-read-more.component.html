@@ -1,18 +1,2 @@
-<div class="content-container">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse maximus erat sit amet aliquet aliquet. Aenean
-    id
-    sem sed leo bibendum sollicitudin et et nulla. Phasellus eget metus molestie, interdum odio et, placerat turpis. Sed
-    congue volutpat lorem, a accumsan diam rhoncus id. Duis blandit porta nisi. Maecenas in feugiat arcu. Fusce at risus
-    maximus, tincidunt lorem vitae, hendrerit justo. Ut eleifend ligula vel nulla faucibus, porttitor imperdiet magna
-    laoreet. <br><br>
-
-    Praesent in risus libero. Integer aliquet ac nunc id ullamcorper. Cras a lacus elementum nisi consectetur aliquet.
-    Suspendisse sed sapien ex. Quisque vel tortor a risus rhoncus blandit. In nec diam interdum, sagittis nibh ut,
-    porttitor
-    purus. Ut eget ante scelerisque, vulputate lorem faucibus, sollicitudin tellus. Nullam dictum augue at venenatis
-    blandit. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent suscipit
-    nulla
-    et nulla egestas pellentesque. Etiam eleifend augue neque, sit amet euismod nisl auctor id.
-  </p>
+<div class="content-container" [innerHtml]="description | safeHtml" *ngIf="description">
 </div>

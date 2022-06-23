@@ -15,6 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EmptyResultsComponent } from './empty-results/empty-results.component';
 import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
 import { ActionButtonOverlayComponent } from './action-button-overlay/action-button-overlay.component';
+import { PipeUtilsModule } from '@perxtech/core';
 
 const modules = [
   MatToolbarModule,
@@ -30,6 +31,7 @@ const modules = [
   ReactiveFormsModule,
   CommonModule,
   TranslateModule,
+  PipeUtilsModule
 ];
 @NgModule({
   declarations: [
@@ -45,4 +47,4 @@ const modules = [
     ActionButtonOverlayComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

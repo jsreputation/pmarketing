@@ -10,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class StampCardNoteComponent {
   @Input() title: string;
   @Input() description: string;
-  @Input() buttonLabel: string = 'Read more';
+  @Input() buttonLabel: string = '';
 
   @Output() onPress: EventEmitter<any> = new EventEmitter<any>();
 
