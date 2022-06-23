@@ -21,6 +21,7 @@ import { catchError, map, switchMap, tap, withLatestFrom, } from 'rxjs/operators
 import {
   listAnimation
 } from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/home/games-collection/games-collection.animation';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'hangseng-campaigns-collection',
@@ -63,7 +64,8 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     private quizService: QuizService,
     private surveyService: SurveyService,
     private settingsService: SettingsService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
+    private datePipe: DatePipe,
   ) { }
 
   public ngOnChanges(): void {
@@ -143,6 +145,13 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
+  public getEndOrExpiresDate(campaign: ICampaign): string {
+    if (campaign.type === 'stamp') {
+      return campaign.customFields['f/e_expiry_date'];
+    }
+    return this.datePipe.transform(campaign.endsAt, 'dd/MM/yyyy');
+  }
+
   private dayOfWeekAsString(dayIndex: number): string {
     return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayIndex];
   }
@@ -207,7 +216,10 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
           this.campaignsWithRewards$,
           this.campaigns$
         )),
-        tap((campaigns) => this.campaigns = campaigns),
+        tap((campaigns) => {
+          this.campaigns = campaigns;
+          console.log("this.campaigns: ", this.campaigns);
+        }),
         // for each campaign, fetch associated games to figure out completion
         switchMap((campaigns) => combineLatest([
           ...campaigns.map((campaign: ICampaign) => {
