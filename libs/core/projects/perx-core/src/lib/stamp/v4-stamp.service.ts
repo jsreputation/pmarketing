@@ -159,6 +159,7 @@ export interface StampCampaignDisplayProperties {
   reward_positions?: number[];
   button_Bg_colour?: string;
   button_text_colour?: string;
+  risk_disclaimer?: string;
 }
 
 // tslint:disable-next-line:max-line-length

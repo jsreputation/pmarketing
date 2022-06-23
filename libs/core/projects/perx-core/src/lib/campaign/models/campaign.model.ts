@@ -18,6 +18,7 @@ export interface CampaignDisplayProperties {
   buttonBgColour?: string;
   buttonTextColour?: string;
   fontColor?: string;
+  riskDisclaimer?: string;
 }
 export interface AdditionalSection {
   headerText: String,
