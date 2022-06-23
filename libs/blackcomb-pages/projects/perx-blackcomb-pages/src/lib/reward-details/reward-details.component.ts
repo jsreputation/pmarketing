@@ -86,7 +86,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
-      map(loyalties => loyalties[0])
+      // ---------------------------------------------------------------
+      // NOTE: get only the loyalty where membershipState is ACTIVE
+      // ---------------------------------------------------------------
+      map((loyalties: ILoyalty[]) => loyalties.filter((loyalty) => loyalty.membershipState === 'active')[0])
     ).subscribe(
       (loyalty: ILoyalty) => this.loyalty = loyalty
     );
@@ -102,9 +105,11 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
             this.isButtonEnable = false;
           }
 
-          {if (reward.displayProperties) {
-            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
-          }}
+          {
+            if (reward.displayProperties) {
+              this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+            }
+          }
           this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
@@ -172,17 +177,17 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.favDisabled = true;
 
     iif(() => (rewardToggled && (rewardToggled.favorite || false)),
-    this.rewardsService.unfavoriteReward(rewardToggled.id),
-    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
-      tap(
-        reward => {
-          this.reward$ = of(reward);
-        }
-      ),
-      finalize(() => setTimeout(() => {
-        this.favDisabled = false;
-      }, 500))
-    ).subscribe();
+      this.rewardsService.unfavoriteReward(rewardToggled.id),
+      this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+        tap(
+          reward => {
+            this.reward$ = of(reward);
+          }
+        ),
+        finalize(() => setTimeout(() => {
+          this.favDisabled = false;
+        }, 500))
+      ).subscribe();
   }
 
   public ngOnDestroy(): void {
