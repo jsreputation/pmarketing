@@ -53,7 +53,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public showPrizeSetOutcome: boolean = false;
   private prizeSetBtnTxt: string;
   private isBadgeOucome: boolean;
-  private isLPointsOutcome: boolean;
+  private isLoyaltyPointsOutcome: boolean;
   public remoteFlags: IFlags;
 
   public successPopUp: IPopupConfig = {
@@ -242,7 +242,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
                 this.isBadgeOucome = true;
               }
               if (res?.points && res.points.length > 0) {
-                this.isLPointsOutcome = true;
+                this.isLoyaltyPointsOutcome = true;
               }
               this.redirectUrlAndPopUp();
             },
@@ -292,7 +292,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.router.navigate(['/badges'], {
           queryParams: { filter: 'earned' },
         });
-      } else if (this.isLPointsOutcome) {
+      } else if (this.isLoyaltyPointsOutcome) {
         this.router.navigate(['/transaction-history']);
       } else {
         this.router.navigate(['/wallet']);
