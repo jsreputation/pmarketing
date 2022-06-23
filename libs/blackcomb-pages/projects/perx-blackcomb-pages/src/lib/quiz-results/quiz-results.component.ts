@@ -68,16 +68,7 @@ export class QuizResultsComponent implements OnInit {
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
         map(
-          (
-            res:
-              | {
-                  points: IPoints[];
-                  quiz?: IQuiz;
-                  prizeSets?: IPrizeSetOutcome[];
-                  badges?: IBadgeOutcome[];
-                }
-              | string
-          ) => {
+          (res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], badges?: IBadgeOutcome[] } | string) => {
             if (typeof res === 'string') {
               res = JSON.parse(res);
             }
