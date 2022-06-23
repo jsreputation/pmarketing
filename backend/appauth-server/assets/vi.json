@@ -141,9 +141,9 @@
     "SUCCESS_TEXT": "Thank you for answering!",
     "NO_REWARDS_TITLE": "",
     "NO_REWARDS_TEXT": "Thank you for answering!",
-    "NOT_AVAILABLE_TITLE": "Hết lượt chơi!",
-    "NOT_AVAILABLE_CTA": "ĐÓNG",
-    "NOT_AVAILABLE_TXT": "Hãy trở lại khi bạn có thêm lượt chơi nhé!"
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   },
   "POINTS_TRANSFER": {
     "FROM": "From",

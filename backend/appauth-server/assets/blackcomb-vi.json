@@ -141,9 +141,9 @@
     "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
     "NO_OUTCOME_TXT": "",
     "NO_OUTCOME_CTA": "Try another quiz",
-    "NOT_AVAILABLE_TITLE": "Hết lượt chơi!",
-    "NOT_AVAILABLE_CTA": "ĐÓNG",
-    "NOT_AVAILABLE_TXT": "Hãy trở lại khi bạn có thêm lượt chơi nhé!",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This quiz is not available at the moment. Try again later.",
     "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer.",
     "CTA_NEXT_TXT": "Tiếp tục",
     "CTA_SUBMIT_TXT": "Gửi đi",
@@ -461,9 +461,9 @@
     "SUCCESS_TEXT": "Thank you for answering!",
     "NO_REWARDS_TITLE": "",
     "NO_REWARDS_TEXT": "Thank you for answering!",
-    "NOT_AVAILABLE_TITLE": "Hết lượt chơi!",
-    "NOT_AVAILABLE_CTA": "ĐÓNG",
-    "NOT_AVAILABLE_TXT": "Hãy trở lại khi bạn có thêm lượt chơi nhé!"
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This quiz is not available at the moment. Try again later."
   },
   "PRIZE_SET": {
     "HEADING": "Congrats! You won this prize set.",
