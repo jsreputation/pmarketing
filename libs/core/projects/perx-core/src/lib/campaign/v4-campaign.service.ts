@@ -674,6 +674,7 @@ export class V4CampaignService implements ICampaignService {
       description: campaign.description,
       displayProperties,
       distance: campaign.distance,
+      favourite: campaign.favourite,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       enrollableUntil: campaign.enrollable_until ? new Date(campaign.enrollable_until) : null,
       enrolled: campaign.enrolled,
