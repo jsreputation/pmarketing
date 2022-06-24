@@ -9,6 +9,9 @@
       <div *ngIf="useRedeemCount; else availableStamp">
         <span> {{reedemedStampCount}}/{{nbSlots}}{{newStampsLabelFn() | async}}</span>
       </div>
+      <ng-template #availableStamp>
+        <span> {{availableStampCount}}{{newStampsLabelFn() | async}}</span>
+      </ng-template>
     </div>
     <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
       <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
@@ -30,8 +33,3 @@
     </div>
   </div>
 </div>
-
-
-<ng-template #availableStamp>
-  <span> {{availableStampCount}}{{newStampsLabelFn() | async}}</span>
-</ng-template>
