@@ -9,12 +9,13 @@ import {
   Voucher,
   ICampaignService,
   ICampaign,
-  CampaignLandingPage,
+  CampaignLandingPage, NotificationService,
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -34,9 +35,10 @@ export class CampaignStampsComponent implements OnInit {
   public subTitle: string;
   public config: CampaignLandingPage | undefined;
   public filter: string[];
+  public campaign: ICampaign;
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = true;
+  public enableEnrollment: boolean = false;
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
@@ -55,7 +57,8 @@ export class CampaignStampsComponent implements OnInit {
     private stampService: StampService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notificationService: NotificationService
   ) {}
 
   public ngOnInit(): void {
@@ -113,6 +116,8 @@ export class CampaignStampsComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        this.campaign = campaign;
+        this.enableEnrollment = !campaign.enrolled;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
@@ -142,14 +147,22 @@ export class CampaignStampsComponent implements OnInit {
     }
   }
 
-  public onEnableEnrollment(): void {
-    this.enableEnrollment = false;
+  public isEnrolled(): boolean {
+    return !this.enableEnrollment || this.campaign?.enrolled;
+  }
 
-    if (!this.enableEnrollment) {
-      setTimeout(() => {
-        this.completedStamps = true;
-      }, 1000);
-    }
+  public onEnableEnrollment(): void {
+    this.campaignService.enrolIntoCampaign(this.campaignId)
+      .subscribe((isEnrolled: boolean) => {
+        if (isEnrolled) {
+          this.enableEnrollment = false;
+          globalCacheBusterNotifier.next();
+        } else {
+          this.notificationService.addSnack('Campaign enrolment failed');
+        }
+      }, error => {
+        this.notificationService.addSnack(error.error.message);
+      });
   }
 
   public onReadMore(): void {
@@ -159,4 +172,5 @@ export class CampaignStampsComponent implements OnInit {
   public onViewRewards(): void {
     this.router.navigate(['/wallet']);
   }
+
 }

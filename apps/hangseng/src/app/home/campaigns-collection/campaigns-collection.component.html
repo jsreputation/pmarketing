@@ -24,7 +24,7 @@
       </mat-card-content>
       <mat-card-content class="campaign-collection-card-footer">
         <p>Ends on 23/02/2023</p>
-        <mat-chip>Enrollment required</mat-chip>
+        <mat-chip *ngIf="!campaign.enrolled">Enrollment required</mat-chip>
       </mat-card-content>
     </mat-card>
   </div>
