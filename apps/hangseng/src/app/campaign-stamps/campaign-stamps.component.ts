@@ -122,6 +122,8 @@ export class CampaignStampsComponent implements OnInit {
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.campaign = campaign;
         this.enableEnrollment = !campaign.enrolled;
+        // hangseng only should have 1 card and *should* be auto redeemed
+        this.completedStamps = stampCards[0].stamps.filter(stamp => stamp.state === StampState.redeemed).length === stampCards[0].displayProperties.totalSlots;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
