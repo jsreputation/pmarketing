@@ -44,7 +44,7 @@ describe('StampCardComponent', () => {
   };
 
   const stampServiceStub: Partial<StampService> = {
-    getCurrentCard: () => of(),
+    getCards: () => of(),
     // @ts-ignore
     putStamp: () => of(stampCard.stamps[0])
   };
@@ -95,7 +95,7 @@ describe('StampCardComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should stampService getCurrent card and set private errorPopUp and successPopUp IPopupConfig', fakeAsync(() => {
+    it('should stampService getCards card and set private errorPopUp and successPopUp IPopupConfig', fakeAsync(() => {
       const stampCard: IStampCard = {
         id: 1,
         state: StampCardState.active,
@@ -134,13 +134,13 @@ describe('StampCardComponent', () => {
       const stampService: StampService = fixture.debugElement.injector.get<StampService>(
         StampService as Type<StampService>
       );
-      const stampServiceSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
+      const stampServiceSpy = spyOn(stampService, 'getCards').and.returnValue(of(stampCard));
       component.ngOnInit();
       tick();
       expect(stampServiceSpy).toHaveBeenCalled();
     }));
 
-    it('should stampService getCurrent card and private errorPopUp and successPopUp IPopupConfig should be default value', fakeAsync(() => {
+    it('should stampService getCards card and private errorPopUp and successPopUp IPopupConfig should be default value', fakeAsync(() => {
       const stampCard: IStampCard = {
         id: 1,
         state: StampCardState.active,
@@ -169,7 +169,7 @@ describe('StampCardComponent', () => {
       const stampService: StampService = fixture.debugElement.injector.get<StampService>(
         StampService as Type<StampService>
       );
-      const stampServiceSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
+      const stampServiceSpy = spyOn(stampService, 'getCards').and.returnValue(of(stampCard));
       component.ngOnInit();
       tick();
       expect(stampServiceSpy).toHaveBeenCalled();
