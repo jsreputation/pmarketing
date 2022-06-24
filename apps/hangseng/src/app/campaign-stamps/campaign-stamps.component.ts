@@ -38,7 +38,7 @@ export class CampaignStampsComponent implements OnInit {
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = true;
+  private enableEnrollment: boolean = false; // used to trigger hiding of enrolment dialog without refetching campaign status
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
@@ -121,6 +121,7 @@ export class CampaignStampsComponent implements OnInit {
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.campaign = campaign;
+        this.enableEnrollment = !campaign.enrolled;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
