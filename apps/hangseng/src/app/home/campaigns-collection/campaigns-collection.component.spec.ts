@@ -15,6 +15,7 @@ import {
   SurveyService,
   ThemesService
 } from '@perxtech/core';
+import { DatePipe } from '@angular/common';
 
 describe('CampaignsCollectionComponent', () => {
   let component: CampaignsCollectionComponent;
@@ -62,7 +63,8 @@ describe('CampaignsCollectionComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        DatePipe
       ]
     })
       .compileComponents();

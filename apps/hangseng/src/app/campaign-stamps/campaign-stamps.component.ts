@@ -64,7 +64,7 @@ export class CampaignStampsComponent implements OnInit {
     private configService: ConfigService,
     private translate: TranslateService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.configService
@@ -79,8 +79,8 @@ export class CampaignStampsComponent implements OnInit {
         if (stampsType === 'stamp_card') {
           this.puzzleTextFn = (puzzle: IStampCard) =>
             !puzzle.stamps ||
-            puzzle.stamps.filter((st) => st.state === StampState.issued)
-              .length > 1
+              puzzle.stamps.filter((st) => st.state === StampState.issued)
+                .length > 1
               ? this.translate.get('STAMP_CAMPAIGN.NEW_STAMPS')
               : this.translate.get('STAMP_CAMPAIGN.NEW_STAMP');
           forkJoin(
@@ -90,9 +90,8 @@ export class CampaignStampsComponent implements OnInit {
             this.titleFn = (index?: number, totalCount?: number) =>
               of(
                 index !== undefined
-                  ? `${translations[0]} ${this.cardIndex(index)} ${
-                      translations[1]
-                    } ${totalCount}`
+                  ? `${translations[0]} ${this.cardIndex(index)} ${translations[1]
+                  } ${totalCount}`
                   : ''
               );
           });

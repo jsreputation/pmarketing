@@ -23,7 +23,7 @@
         </ng-container>
       </mat-card-content>
       <mat-card-content class="campaign-collection-card-footer">
-        <p>Ends on 23/02/2023</p>
+        <p>{{"HOME.ENDS_ON" | translate}} {{getEndOrExpiresDate(campaign)}}</p>
         <mat-chip *ngIf="!campaign.enrolled">Enrollment required</mat-chip>
       </mat-card-content>
     </mat-card>
