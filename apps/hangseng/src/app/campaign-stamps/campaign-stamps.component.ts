@@ -146,6 +146,10 @@ export class CampaignStampsComponent implements OnInit {
     }
   }
 
+  public isEnrolled(): boolean {
+    return !this.enableEnrollment || this.campaign?.enrolled;
+  }
+
   public onEnableEnrollment(): void {
     this.campaignService.enrolIntoCampaign(this.campaignId)
       .subscribe((isEnrolled: boolean) => {
@@ -167,7 +171,4 @@ export class CampaignStampsComponent implements OnInit {
     this.router.navigate(['/wallet']);
   }
 
-  public isEnrolled(): boolean {
-    return !this.enableEnrollment || this.campaign?.enrolled;
-  }
 }
