@@ -117,28 +117,25 @@ export class LayoutComponent implements OnInit {
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
       const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
-      let chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
-      console.log(chromelessFlag);
-
-      // const chromelessFound = paramArr.indexOf('chromeless');
-      // if (chromelessFound > 0) {
-      //   this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
-      // } else {
-      //   this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
-      // }
-      if (chromelessFlag) {
-        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', params.chromeless);
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+      const remoteChromelessFlag: boolean | undefined = flags.chromeless;
+      const remotePreAuthFlag: boolean | undefined = flags.preAuth;
+      if (chromelessFlag || remoteChromelessFlag) {
+        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      } else {
+        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
-      // else if ('flags' in params) {
-      //   this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
-      // }
-      if (preAuthFlag) {
+      if (preAuthFlag || remotePreAuthFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
-      } else if ('flags' in params) {
+      } else {
         this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
       }
 
-      this.showHeader = !chromelessFlag;
+      if (chromelessFlag || remoteChromelessFlag) {
+        this.showHeader = false;
+      } else {
+        this.showHeader = true;
+      }
     });
   }
 

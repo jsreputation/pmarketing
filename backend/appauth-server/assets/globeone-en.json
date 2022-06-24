@@ -382,7 +382,8 @@
     "VIEW_REWARD": "View reward",
     "OUT_OF_TRIES_TITLE": "No more tries!",
     "OUT_OF_TRIES_TEXT": "Come back again tomorrow!",
-    "OUT_OF_TRIES_CTA": "Got it!"
+    "OUT_OF_TRIES_CTA": "Got it!",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
@@ -486,7 +487,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "TEAMS": {
     "CREATE_PAGE": {

@@ -1,0 +1,7 @@
+<div class="card-note">
+  <h1>{{title}}</h1>
+  <p class="description" [innerHtml]="description | safeHtml"></p>
+  <div class="button-container">
+    <button class="read-more" mat-flat-button (click)="onPress.emit()">{{buttonLabel}}</button>
+  </div>
+</div>

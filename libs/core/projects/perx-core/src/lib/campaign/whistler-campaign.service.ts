@@ -18,8 +18,10 @@ import {
   CampaignType,
   IBDOCampaignEnrolment,
   ICampaign,
+  ICampaignCategory,
   ICampaignOutcome,
   ICampaignRule,
+  IRawCampaigns,
   IReferral
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
@@ -152,11 +154,11 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   public getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }> {
-    return of({count: 1333, campaignId: id});
+    return of({ count: 1333, campaignId: id });
   }
 
   public applyReferral(referralCode: string): Observable<IReferral> {
-    return of({success: referralCode});
+    return of({ success: referralCode });
   }
 
   public clearCampaignCache(): void {
@@ -172,7 +174,7 @@ export class WhistlerCampaignService implements ICampaignService {
     throw new Error('Method not implemented.');
   };
   // @ts-ignore
-  public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]>{
+  public getCampaignsRules(campaignId: number): Observable<ICampaignRule[]> {
     throw new Error('Method not implemented.');
   }
   // @ts-ignore
@@ -185,6 +187,14 @@ export class WhistlerCampaignService implements ICampaignService {
   }
   // @ts-ignore
   public getCampaignsById(ids: number[], pageSize?: number, locale?: string): Observable<ICampaign[]> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCategories(): Observable<ICampaignCategory[]> {
+    throw new Error('Method not implemented.');
+  }
+  // @ts-ignore
+  public getCampaignsWithMeta(options?: ICampaignFilterOptions): Observable<IRawCampaigns> {
     throw new Error('Method not implemented.');
   }
 }

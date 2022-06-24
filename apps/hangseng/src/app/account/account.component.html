@@ -1,0 +1,81 @@
+<!-- tentatively position here until confirmed -->
+<ng-container *ngIf="profile$ | async; else ghostBlock">
+  <div class="page-container" *ngIf="theme | async as th"
+    [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
+    <div *ngIf="appConfig$ | async as aConfig">
+      <div *ngIf="aConfig.showUserInfoOnAccountsPage">
+        <perx-core-profile-summary [profile$]="profile$" [loyalty$]="loyalty$" [memberFn]="memberFn">
+        </perx-core-profile-summary>
+      </div>
+      <div class="section profile">
+        <mat-nav-list>
+          <mat-list-item *ngIf="aConfig.showUserInfoOnAccountsPage" routerLink="/profile">
+            {{'ACCOUNT_PAGE.PROFILE' | translate}}
+          </mat-list-item>
+          <mat-list-item *ngIf="aConfig.showReferralDetails" routerLink="/referral">
+            {{'ACCOUNT_PAGE.REFER_FRIEND' | translate}}
+          </mat-list-item>
+          <mat-list-item *ngIf="remoteFlags?.showRewardFavButton" routerLink="/favorite-rewards">
+            <mat-icon>favorite</mat-icon>&nbsp;&nbsp;{{'ACCOUNT_PAGE.FAVORITE_REWARD' | translate}}
+          </mat-list-item>
+          <ng-container *ngIf="aConfig.app === 'abenson'">
+            <mat-list-item [routerLink]="[ 'change-password' ]">Change PIN code</mat-list-item>
+            <mat-list-item [routerLink]="[ '/profile', 'edit-mobile' ]">Change Mobile Number</mat-list-item>
+            <mat-list-item [routerLink]="[ 'support' ]">Customer Support</mat-list-item>
+          </ng-container>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="remoteFlags?.showBadgesButton" class="section badges">
+        <mat-nav-list>
+          <mat-list-item routerLink="/badges">
+            {{'ACCOUNT_PAGE.BADGES' | translate}}
+            <div class="count">
+              {{acquiredBadges | async}}
+              <mat-icon>chevron_right</mat-icon>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="aConfig?.enablePointTransfer || remoteFlags?.showPointTransfer" class="section">
+        <mat-nav-list>
+          <mat-list-item routerLink="/points/transfer">
+            {{'ACCOUNT_PAGE.TRANSFER_POINTS' | translate}}
+          </mat-list-item>
+          <mat-list-item routerLink="/points/history">
+            {{'ACCOUNT_PAGE.POINTS_TRANSFER_HISTORY' | translate}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+      <div class="section">
+        <mat-nav-list>
+          <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
+            {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
+          </mat-list-item>
+          <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
+            {{'ACCOUNT_PAGE.' + page.title | translate}}
+          </mat-list-item>
+          <mat-list-item routerLink="/program_opt_out">
+            {{'ACCOUNT_PAGE.PROGRAM_OPT_OUT' | translate}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="!preAuth" class="section">
+        <mat-nav-list>
+          <mat-list-item (click)="logout()">{{'ACCOUNT_PAGE.LOGOUT' | translate}}</mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #ghostBlock>
+  <div class="section">
+    <mat-card class="basic-info mat-elevation-z0">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img src="assets/avatar.png" alt="">
+        </div>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</ng-template>

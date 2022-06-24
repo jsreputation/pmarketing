@@ -233,7 +233,8 @@
     "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
-    "BADGES": "My Badges"
+    "BADGES": "My Badges",
+    "PROGRAM_OPT_OUT": "Leave Chill Reward programme"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -293,7 +294,8 @@
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
-    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards"
+    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards",
+    "EMPTY_LIST": "More mission is coming"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
@@ -383,7 +385,8 @@
     "VIEW_REWARD": "View reward",
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
@@ -403,7 +406,9 @@
     "NO_REWARD_POPUP_TEXT": "Try again next time",
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
-    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"
@@ -466,7 +471,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "POINTS_TRANSFER": {
     "FROM": "From",

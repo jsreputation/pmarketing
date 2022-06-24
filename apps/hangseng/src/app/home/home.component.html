@@ -1,0 +1,20 @@
+<div class="page" *ngIf="theme && theme.properties && appConfig && appRemoteFlags" infiniteScroll
+  [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
+  <div class="mission-block">
+    <div class="img">
+      <hangseng-home-mission [selected]="selectedCategory" [campaignCategoryChips]="campaignCategoryChips"
+        (eventItemClick)="filterCampaign($event)"></hangseng-home-mission>
+    </div>
+  </div>
+  <div class="campaign-list">
+    <div class="campaigns" *ngIf="(campaigns$ | async)?.length > 0; else emptyBlock">
+      <hangseng-campaigns-collection [campaigns]="campaigns$" [campaignCategories]="campaignCategoryChips"
+                                     [defaultNbCampaigns]="3"
+                                     (selected)="goToCampaignPage($event)">
+      </hangseng-campaigns-collection>
+    </div>
+    <ng-template #emptyBlock>
+      <hangseng-empty-results></hangseng-empty-results>
+    </ng-template>
+  </div>
+</div>
