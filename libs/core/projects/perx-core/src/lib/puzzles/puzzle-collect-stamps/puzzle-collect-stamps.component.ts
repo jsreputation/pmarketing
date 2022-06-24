@@ -68,6 +68,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Output()
   private availableStampClicked: EventEmitter<IStamp> = new EventEmitter<IStamp>();
 
+  @Input()
+  public useRedeemCount: boolean;
+
   public currentActiveOrientation: number[] | null = null;
   public stampCardImage: string | null = null;
   public availableStampCount: number = 0;
