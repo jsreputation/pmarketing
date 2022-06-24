@@ -144,9 +144,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
   }
 
   public getEndOrExpiresDate(campaign: ICampaign): string {
-    if (campaign.type === 'stamp') {
-      return campaign.customFields['f/e_expiry_date'];
-    }
+    return campaign.customFields['f/e_expiry_date'];
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
