@@ -9,7 +9,7 @@ import {
   Voucher,
   ICampaignService,
   ICampaign,
-  CampaignLandingPage,
+  CampaignLandingPage, NotificationService,
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
@@ -56,7 +56,8 @@ export class CampaignStampsComponent implements OnInit {
     private stampService: StampService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private notificationService: NotificationService
   ) {}
 
   public ngOnInit(): void {
@@ -115,6 +116,7 @@ export class CampaignStampsComponent implements OnInit {
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.campaign = campaign;
+        this.enableEnrollment = !campaign.enrolled;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
@@ -145,13 +147,16 @@ export class CampaignStampsComponent implements OnInit {
   }
 
   public onEnableEnrollment(): void {
-    this.enableEnrollment = false;
-
-    if (!this.enableEnrollment) {
-      setTimeout(() => {
-        this.completedStamps = true;
-      }, 1000);
-    }
+    this.campaignService.enrolIntoCampaign(this.campaignId)
+      .subscribe((isEnrolled: boolean) => {
+        if (isEnrolled) {
+          this.enableEnrollment = false;
+        } else {
+          this.notificationService.addSnack('Campaign enrolment failed');
+        }
+      }, error => {
+        this.notificationService.addSnack(error.error.message);
+      });
   }
 
   public onReadMore(): void {
