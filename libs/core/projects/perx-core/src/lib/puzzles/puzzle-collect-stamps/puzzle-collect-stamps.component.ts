@@ -71,6 +71,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public currentActiveOrientation: number[] | null = null;
   public stampCardImage: string | null = null;
   public availableStampCount: number = 0;
+  public reedemedStampCount: number = 0;
 
   constructor(
     private translate: TranslateService) {
@@ -81,7 +82,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
       this.stamps = [];
     }
     if (!this.newStampsLabelFn) {
-      this.newStampsLabelFn = () => this.translate.get('PUZZLE.NEW_STAMPS');
+      this.newStampsLabelFn = () => this.translate.get('PUZZLE.STAMP_COLLECTED');
     }
     const availableStamps = this.stamps.filter(stamp => stamp.state === StampState.issued);
     this.availableStampCount = availableStamps.length;
@@ -95,6 +96,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     }
     if (changes.stamps && this.stamps) {
       this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
+      this.reedemedStampCount = this.stamps.filter(stamp => stamp.state === StampState.redeemed).length;
     }
   }
 
