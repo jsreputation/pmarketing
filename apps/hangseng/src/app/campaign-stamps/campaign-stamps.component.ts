@@ -15,6 +15,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -155,6 +156,7 @@ export class CampaignStampsComponent implements OnInit {
       .subscribe((isEnrolled: boolean) => {
         if (isEnrolled) {
           this.enableEnrollment = false;
+          globalCacheBusterNotifier.next();
         } else {
           this.notificationService.addSnack('Campaign enrolment failed');
         }
