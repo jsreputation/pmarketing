@@ -9,7 +9,8 @@ import {
   Voucher,
   ICampaignService,
   ICampaign,
-  CampaignLandingPage, NotificationService,
+  CampaignLandingPage,
+  NotificationService
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
@@ -35,10 +36,9 @@ export class CampaignStampsComponent implements OnInit {
   public subTitle: string;
   public config: CampaignLandingPage | undefined;
   public filter: string[];
-  public campaign: ICampaign;
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = false;
+  public enableEnrollment: boolean = true;
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
@@ -50,6 +50,7 @@ export class CampaignStampsComponent implements OnInit {
 
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
   public titleFn: (index?: number) => Observable<string>;
+  public campaign: ICampaign;
 
   constructor(
     private router: Router,
@@ -117,7 +118,6 @@ export class CampaignStampsComponent implements OnInit {
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.campaign = campaign;
-        this.enableEnrollment = !campaign.enrolled;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
@@ -153,16 +153,16 @@ export class CampaignStampsComponent implements OnInit {
 
   public onEnableEnrollment(): void {
     this.campaignService.enrolIntoCampaign(this.campaignId)
-      .subscribe((isEnrolled: boolean) => {
-        if (isEnrolled) {
-          this.enableEnrollment = false;
-          globalCacheBusterNotifier.next();
-        } else {
-          this.notificationService.addSnack('Campaign enrolment failed');
-        }
-      }, error => {
-        this.notificationService.addSnack(error.error.message);
-      });
+    .subscribe((isEnrolled: boolean) => {
+      if (isEnrolled) {
+        this.enableEnrollment = false;
+        globalCacheBusterNotifier.next();
+      } else {
+        this.notificationService.addSnack('Campaign enrolment failed');
+      }
+    }, error => {
+      this.notificationService.addSnack(error.error.message);
+    });
   }
 
   public onReadMore(): void {
@@ -172,5 +172,4 @@ export class CampaignStampsComponent implements OnInit {
   public onViewRewards(): void {
     this.router.navigate(['/wallet']);
   }
-
 }

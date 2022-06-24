@@ -307,7 +307,6 @@ export class V4CampaignService implements ICampaignService {
                 headerText: item.header_text,
                 bodyText: item.body_text
               }
-
             })
           }
         };
@@ -639,11 +638,32 @@ export class V4CampaignService implements ICampaignService {
         formattedOffset: campaign.operating_hour.formatted_offset,
       };
     }
+
+    let mappedCustomFields: any = {};
+    if (customFields) {
+      for (const [key, value] of Object.entries(customFields)) {
+        if (key.indexOf('f/e') !== -1) {
+          mappedCustomFields = {
+            ...mappedCustomFields,
+            feExpiryDate: customFields['f/e_expiry_date'],
+            feAction: customFields[`f/e_action_${lang}`],
+            feData: customFields[`f/e_data_${lang}`],
+            feReward: customFields[`f/e_reward_${lang}`],
+          };
+        } else {
+          mappedCustomFields = {
+            ...mappedCustomFields,
+            [key]: value,
+          };
+        }
+      }
+    }
+
     return {
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       campaignBannerUrl,
       categoryTags: campaign.category_tags,
-      customFields,
+      customFields: mappedCustomFields,
       description: campaign.description,
       displayProperties,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,

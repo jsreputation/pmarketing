@@ -11,6 +11,18 @@
           <h1 *ngIf="title">{{title}}</h1>
           <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
+          <div class="custom-field-container" *ngIf="campaign?.customFields?.feAction">
+            <img src="/assets/icons/missionSubmission4.svg" alt="" />
+            {{campaign.customFields?.feAction}}
+          </div>
+          <div class="custom-field-container" *ngIf="campaign?.customFields?.feReward">
+            <img src="/assets/icons/missionReward1.svg" alt="" />
+            {{campaign.customFields?.feReward}}
+          </div>
+          <div class="custom-field-container" *ngIf="campaign?.customFields?.feExpiryDate">
+            <img src="/assets/icons/mission-end-date.svg" alt="" />
+            <p>{{"STAMP_CAMPAIGNS.ENDS_ON" | translate}} {{campaign?.customFields?.feExpiryDate}}</p>
+          </div>
           <mat-divider *ngIf="title"></mat-divider>
         </mat-card-content>
         <hangseng-stamp-card [isTeamsEnabled]="false"></hangseng-stamp-card>
@@ -18,21 +30,19 @@
     </div>
     <div class="card-container">
       <mat-card class="stamps-how-it-works mat-elevation-z0">
-        <mat-card-subtitle>How to work</mat-card-subtitle>
+        <mat-card-subtitle>{{"STAMP_CAMPAIGNS.HOW_TO_WORK" | translate}}</mat-card-subtitle>
         <mat-divider inset></mat-divider>
-        <mat-card-title class="mt-24">Campaign details </mat-card-title>
+        <mat-card-title class="mt-24">{{"STAMP_CAMPAIGNS.DETAILS" | translate}}</mat-card-title>
         <mat-card-content>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore
             magna aliqua.</p>
         </mat-card-content>
-        <mat-card-title class="mt-32">Terms & conditions</mat-card-title>
+        <mat-card-title class="mt-32">{{"STAMP_CAMPAIGNS.TERMS_AND_CONDITIONS" | translate}}</mat-card-title>
         <mat-card-content>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua.</p>
+          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p>
         </mat-card-content>
-        <mat-card-title class="mt-32">Remark(s) </mat-card-title>
+        <mat-card-title class="mt-32">{{"STAMP_CAMPAIGNS.REMARKS" | translate}}</mat-card-title>
         <mat-card-content>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore
