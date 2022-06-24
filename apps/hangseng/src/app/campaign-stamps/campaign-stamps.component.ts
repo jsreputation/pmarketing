@@ -47,6 +47,10 @@ export class CampaignStampsComponent implements OnInit {
   public stampNoteTitle: string;
   public stampNoteDescription: string;
   public stampNoteButtonLabel: string;
+  public feExpiryDate: string;
+  public feAction: string;
+  public feData: string;
+  public feReward: string;
 
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
   public titleFn: (index?: number) => Observable<string>;
@@ -126,6 +130,11 @@ export class CampaignStampsComponent implements OnInit {
         this.translate.get('STAMP_CAMPAIGN.RISK_DISCLAIMER_TITLE').subscribe(txt => this.stampNoteTitle = txt);
         this.stampNoteDescription = campaign.displayProperties.riskDisclaimer;
         this.translate.get('STAMP_CAMPAIGN.READ_MORE_BUTTON_TEXT').subscribe(txt => this.stampNoteButtonLabel = txt);
+
+        this.feExpiryDate = campaign.customFields['f/e_expiry_date'];
+        this.feAction = campaign.customFields[`f/e_action_${this.translate.currentLang}`];
+        this.feData = campaign.customFields[`f/e_data_${this.translate.currentLang}`];
+        this.feReward = campaign.customFields[`f/e_reward_${this.translate.currentLang}`];
       });
   }
 
