@@ -34,6 +34,7 @@ export class CampaignStampsComponent implements OnInit {
   public subTitle: string;
   public config: CampaignLandingPage | undefined;
   public filter: string[];
+  public campaign: ICampaign;
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public enableEnrollment: boolean = true;
@@ -113,6 +114,7 @@ export class CampaignStampsComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        this.campaign = campaign;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
@@ -158,5 +160,9 @@ export class CampaignStampsComponent implements OnInit {
 
   public onViewRewards(): void {
     this.router.navigate(['/wallet']);
+  }
+
+  public isEnrolled(): boolean {
+    return !this.enableEnrollment || this.campaign?.enrolled;
   }
 }
