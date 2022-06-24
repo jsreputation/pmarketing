@@ -286,7 +286,8 @@
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
-    "EMPTY_LIST": "More mission is coming"
+    "EMPTY_LIST": "More mission is coming",
+    "ENDS_ON": "Ends on"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -528,5 +529,12 @@
   "LOGIN_SESSION_EXPIRED": "登錄時間超時",
   "Contact Us": "聯繫我們",
   "Terms and Conditions": "條款與細則",
-  "TRY_AGAIN": "再试一次"
+  "TRY_AGAIN": "再试一次",
+  "STAMP_CAMPAIGNS": {
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "ENDS_ON": "Ends on",
+    "DETAILS": "Campaign Details",
+    "REMARKS": "Remark(s)",
+    "HOW_TO_WORK": "How to work"
+  }
 }

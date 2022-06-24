@@ -307,7 +307,6 @@ export class V4CampaignService implements ICampaignService {
                 headerText: item.header_text,
                 bodyText: item.body_text
               }
-
             })
           }
         };
@@ -639,6 +638,7 @@ export class V4CampaignService implements ICampaignService {
         formattedOffset: campaign.operating_hour.formatted_offset,
       };
     }
+
     return {
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       campaignBannerUrl,

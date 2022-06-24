@@ -9,7 +9,8 @@ import {
   Voucher,
   ICampaignService,
   ICampaign,
-  CampaignLandingPage, NotificationService,
+  CampaignLandingPage,
+  NotificationService
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
@@ -35,10 +36,9 @@ export class CampaignStampsComponent implements OnInit {
   public subTitle: string;
   public config: CampaignLandingPage | undefined;
   public filter: string[];
-  public campaign: ICampaign;
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = false;
+  public enableEnrollment: boolean = true;
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
@@ -47,9 +47,14 @@ export class CampaignStampsComponent implements OnInit {
   public stampNoteTitle: string;
   public stampNoteDescription: string;
   public stampNoteButtonLabel: string;
+  public feExpiryDate: string;
+  public feAction: string;
+  public feData: string;
+  public feReward: string;
 
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
   public titleFn: (index?: number) => Observable<string>;
+  public campaign: ICampaign;
 
   constructor(
     private router: Router,
@@ -117,7 +122,6 @@ export class CampaignStampsComponent implements OnInit {
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.campaign = campaign;
-        this.enableEnrollment = !campaign.enrolled;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
@@ -126,6 +130,11 @@ export class CampaignStampsComponent implements OnInit {
         this.translate.get('STAMP_CAMPAIGN.RISK_DISCLAIMER_TITLE').subscribe(txt => this.stampNoteTitle = txt);
         this.stampNoteDescription = campaign.displayProperties.riskDisclaimer;
         this.translate.get('STAMP_CAMPAIGN.READ_MORE_BUTTON_TEXT').subscribe(txt => this.stampNoteButtonLabel = txt);
+
+        this.feExpiryDate = campaign.customFields['f/e_expiry_date'];
+        this.feAction = campaign.customFields[`f/e_action_${this.translate.currentLang}`];
+        this.feData = campaign.customFields[`f/e_data_${this.translate.currentLang}`];
+        this.feReward = campaign.customFields[`f/e_reward_${this.translate.currentLang}`];
       });
   }
 
@@ -153,16 +162,16 @@ export class CampaignStampsComponent implements OnInit {
 
   public onEnableEnrollment(): void {
     this.campaignService.enrolIntoCampaign(this.campaignId)
-      .subscribe((isEnrolled: boolean) => {
-        if (isEnrolled) {
-          this.enableEnrollment = false;
-          globalCacheBusterNotifier.next();
-        } else {
-          this.notificationService.addSnack('Campaign enrolment failed');
-        }
-      }, error => {
-        this.notificationService.addSnack(error.error.message);
-      });
+    .subscribe((isEnrolled: boolean) => {
+      if (isEnrolled) {
+        this.enableEnrollment = false;
+        globalCacheBusterNotifier.next();
+      } else {
+        this.notificationService.addSnack('Campaign enrolment failed');
+      }
+    }, error => {
+      this.notificationService.addSnack(error.error.message);
+    });
   }
 
   public onReadMore(): void {
@@ -172,5 +181,4 @@ export class CampaignStampsComponent implements OnInit {
   public onViewRewards(): void {
     this.router.navigate(['/wallet']);
   }
-
 }
