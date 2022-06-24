@@ -190,7 +190,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
             }
           }
         },
-        () => this.router.navigate(['/wallet'])
+        (err) => {
+          console.error(err);
+          this.router.navigate(['/wallet']);
+        }
       );
   }
 
