@@ -104,6 +104,7 @@ export interface IV4Campaign {
   team_size?: number; // used for stamp team campaigns
   score?: number;
   enrollable_until?: string | null;
+  distance?: IV4CampaignDistance;
 }
 
 type CountObject = {
@@ -165,9 +166,9 @@ export interface IV4CampaignOutcomeItem {
   type: CampaignOutcomeType;
 }
 export interface IV4CampaignRule {
-  id: number,
-  name: string,
-  state: string,
+  id: number;
+  name: string;
+  state: string;
 }
 export interface IV4PointsOutcome {
   id: number;
@@ -184,8 +185,8 @@ export interface IV4BadgeOutcome {
 }
 
 export interface IV4AdditionalSection {
-  header_text: String,
-  body_text: String,
+  header_text: string;
+  body_text: string;
 }
 
 interface IV4RuleGroupCampaignDisplayProperties {
@@ -208,7 +209,7 @@ interface IV4GetSearchCampaignsResponse {
       campaign: IV4Campaign,
       score: number
     }[]
-  }
+  };
 }
 
 interface IV4BdoEnrolmentResponse {
@@ -231,6 +232,11 @@ interface IV4Category {
   description: string;
   title: string;
   usage: string[];
+}
+
+export interface IV4CampaignDistance {
+  value?: string;
+  unit_of_measure: string;
 }
 
 const campaignsCacheBuster: Subject<boolean> = new Subject();
@@ -497,10 +503,31 @@ export class V4CampaignService implements ICampaignService {
       }
     }
 
-    if (dp && (dp as any)?.risk_disclaimer) {
+    if (dp && (dp as StampCampaignDisplayProperties)?.risk_disclaimer) {
       displayProperties = {
         ...displayProperties,
-        riskDisclaimer: (dp as any).risk_disclaimer,
+        riskDisclaimer: (dp as StampCampaignDisplayProperties).risk_disclaimer,
+      };
+    }
+
+    if (dp && (dp as StampCampaignDisplayProperties)?.button_Bg_colour) {
+      displayProperties = {
+        ...displayProperties,
+        buttonBgColour: (dp as StampCampaignDisplayProperties).button_Bg_colour,
+      };
+    }
+
+    if (dp && (dp as StampCampaignDisplayProperties)?.button_text) {
+      displayProperties = {
+        ...displayProperties,
+        buttonText: (dp as any).button_text,
+      };
+    }
+
+    if (dp && (dp as StampCampaignDisplayProperties)?.button_text_colour) {
+      displayProperties = {
+        ...displayProperties,
+        buttonTextColour: (dp as any).button_text_colour,
       };
     }
 
@@ -646,6 +673,8 @@ export class V4CampaignService implements ICampaignService {
       customFields,
       description: campaign.description,
       displayProperties,
+      distance: campaign.distance,
+      favourite: campaign.favourite,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       enrollableUntil: campaign.enrollable_until ? new Date(campaign.enrollable_until) : null,
       enrolled: campaign.enrolled,
@@ -915,16 +944,14 @@ export class V4CampaignService implements ICampaignService {
           recaptcha_token: captchaToken
         }).pipe(
           map((response: IV4BdoEnrolmentResponse) => response.data),
-          map((enrolment: IV4BdoEnrolment) => {
-            return {
-              id: enrolment.id,
-              campaignId: enrolment.campaign_id,
-              campaignName: enrolment.campaign_name,
-              enrolledAt: enrolment.enrolled_at,
-              enrolmentReference: enrolment.enrolment_reference,
-              userAccountId: enrolment.user_account_id,
-            };
-          }),
+          map((enrolment: IV4BdoEnrolment) => ({
+            id: enrolment.id,
+            campaignId: enrolment.campaign_id,
+            campaignName: enrolment.campaign_name,
+            enrolledAt: enrolment.enrolled_at,
+            enrolmentReference: enrolment.enrolment_reference,
+            userAccountId: enrolment.user_account_id,
+          })),
           catchError((error: HttpErrorResponse) =>
             throwError(error)
           )
@@ -945,9 +972,7 @@ export class V4CampaignService implements ICampaignService {
       .get<IV4GetSearchCampaignsResponse>(endpoint, { headers, params })
       .pipe(
         map((res: IV4GetSearchCampaignsResponse) =>
-          res.data.campaigns.map((item) => {
-            return { ...item.campaign, score: item.score };
-          })
+          res.data.campaigns.map((item) => ({ ...item.campaign, score: item.score }))
         ),
         map((campaign: IV4Campaign[]) =>
           campaign.map((campaign: IV4Campaign) =>

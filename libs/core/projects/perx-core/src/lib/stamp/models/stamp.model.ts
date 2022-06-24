@@ -94,6 +94,7 @@ export interface IStampCard {
     successPopUp?: IWProperties;
     buttonBgColour?: string;
     buttonTextColour?: string;
+    riskDisclaimer?: string;
   };
   stamps?: IStamp[];
 }

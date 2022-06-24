@@ -10,7 +10,7 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import {  CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import { CampaignOutcomeType, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Asset } from '../quest/v4-quest.service';
@@ -73,7 +73,7 @@ interface IV4StampCard {
     total_slots: number;
     rewards: IV4CampaignOutcome[];
   };
-  display_properties: StampCampaignDisplayProperties
+  display_properties: StampCampaignDisplayProperties;
   stamps?: IV4Stamp[];
 }
 
@@ -87,14 +87,14 @@ export interface StampCampaignDisplayProperties {
       }
     };
     body?: { en: { text: string } };
-    media?: { youtube?: string; banner_image?: Asset;};
+    media?: { youtube?: string; banner_image?: Asset; };
     heading: string;
     button_text?: { en: { text: string } };
     button_text2?: { en: { text: string } };
     tnc?: { en: { text: string } };
     sub_heading?: string;
-    additional_sections?: IV4AdditionalSection [];
-    sub_headline?:string;
+    additional_sections?: IV4AdditionalSection[];
+    sub_headline?: string;
   };
   button_text?: string;
   cols?: number;
@@ -104,7 +104,7 @@ export interface StampCampaignDisplayProperties {
       title: string;
       description: string;
     }
-  }
+  };
   card_image?: {
     value?: {
       image_url?: string;
@@ -258,7 +258,8 @@ export class V4StampService implements StampService {
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url(),
         buttonBgColour: stampCard.display_properties.button_Bg_colour,
-        buttonTextColour: stampCard.display_properties.button_text_colour
+        buttonTextColour: stampCard.display_properties.button_text_colour,
+        riskDisclaimer: stampCard.display_properties.risk_disclaimer,
       },
       stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined,
       buttonText: stampCard.display_properties.button_text

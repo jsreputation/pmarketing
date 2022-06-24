@@ -531,10 +531,7 @@
   "Terms and Conditions": "條款與細則",
   "TRY_AGAIN": "再试一次",
   "STAMP_CAMPAIGNS": {
-    "TERMS_AND_CONDITIONS": "Terms and Conditions",
-    "ENDS_ON": "Ends on",
-    "DETAILS": "Campaign Details",
-    "REMARKS": "Remark(s)",
-    "HOW_TO_WORK": "How to work"
+    "TNC_HEADER": "How to work",
+    "ENDS_ON": "Ends on"
   }
 }
