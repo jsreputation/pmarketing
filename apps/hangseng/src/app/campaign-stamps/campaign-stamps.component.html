@@ -11,17 +11,17 @@
           <h1 *ngIf="title">{{title}}</h1>
           <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
-          <div class="custom-field-container" *ngIf="campaign?.customFields?.feAction">
+          <div class="custom-field-container" *ngIf="feAction">
             <img src="/assets/icons/missionSubmission4.svg" alt="" />
-            {{campaign.customFields?.feAction}}
+            {{feAction}}
           </div>
-          <div class="custom-field-container" *ngIf="campaign?.customFields?.feReward">
+          <div class="custom-field-container" *ngIf="feReward">
             <img src="/assets/icons/missionReward1.svg" alt="" />
-            {{campaign.customFields?.feReward}}
+            {{feReward}}
           </div>
-          <div class="custom-field-container" *ngIf="campaign?.customFields?.feExpiryDate">
+          <div class="custom-field-container" *ngIf="feExpiryDate">
             <img src="/assets/icons/mission-end-date.svg" alt="" />
-            <p>{{"STAMP_CAMPAIGNS.ENDS_ON" | translate}} {{campaign?.customFields?.feExpiryDate}}</p>
+            <p>{{"STAMP_CAMPAIGNS.ENDS_ON" | translate}} {{feExpiryDate}}</p>
           </div>
           <mat-divider *ngIf="title"></mat-divider>
         </mat-card-content>
