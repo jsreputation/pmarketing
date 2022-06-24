@@ -21,7 +21,6 @@ import { catchError, map, switchMap, tap, withLatestFrom, } from 'rxjs/operators
 import {
   listAnimation
 } from 'libs/blackcomb-pages/projects/perx-blackcomb-pages/src/lib/home/games-collection/games-collection.animation';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'hangseng-campaigns-collection',
@@ -65,7 +64,6 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     private surveyService: SurveyService,
     private settingsService: SettingsService,
     private themesService: ThemesService,
-    private datePipe: DatePipe,
   ) { }
 
   public ngOnChanges(): void {
@@ -149,7 +147,6 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     if (campaign.type === 'stamp') {
       return campaign.customFields['f/e_expiry_date'];
     }
-    return this.datePipe.transform(campaign.endsAt, 'dd/MM/yyyy');
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
@@ -218,7 +215,6 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
         )),
         tap((campaigns) => {
           this.campaigns = campaigns;
-          console.log("this.campaigns: ", this.campaigns);
         }),
         // for each campaign, fetch associated games to figure out completion
         switchMap((campaigns) => combineLatest([
