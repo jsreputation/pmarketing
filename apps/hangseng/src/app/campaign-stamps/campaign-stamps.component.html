@@ -13,7 +13,7 @@
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
           <mat-divider *ngIf="title"></mat-divider>
         </mat-card-content>
-        <hangseng-stamp-card></hangseng-stamp-card>
+        <hangseng-stamp-card [isTeamsEnabled]="false"></hangseng-stamp-card>
       </mat-card>
     </div>
     <div class="card-container">

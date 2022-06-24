@@ -15,7 +15,7 @@ import {
   IFlags,
   SettingsService,
 } from '@perxtech/core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   debounceTime,
   filter,
@@ -36,6 +36,9 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./stamp-card.component.scss'],
 })
 export class StampCardComponent implements OnInit, OnDestroy {
+  @Input()
+  public isTeamsEnabled: boolean = false;
+
   public buttonStyle: { [key: string]: string } = {};
   public title: string; // = 'Scratch & Win!'
   public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
@@ -167,7 +170,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 );
             }
             // user's other team member had finished redeeming the stamp card while user was on the page
-            if (!currStamps.id) {
+            if (!currStamps.id && this.isTeamsEnabled) {
               this.translate
                 .get('STAMP_CAMPAIGN.CARD_COMPLETED')
                 .subscribe((translation) =>
