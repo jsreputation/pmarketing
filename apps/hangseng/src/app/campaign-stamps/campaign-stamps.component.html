@@ -26,6 +26,7 @@
           <mat-divider *ngIf="title"></mat-divider>
         </mat-card-content>
         <hangseng-stamp-card [isTeamsEnabled]="false"></hangseng-stamp-card>
+        <div class="aux-data-container " *ngIf="feData">{{feData}}</div>
       </mat-card>
     </div>
     <div class="card-container">
