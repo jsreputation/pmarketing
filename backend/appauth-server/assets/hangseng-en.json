@@ -545,10 +545,7 @@
   "Terms and Conditions": "Terms and Conditions",
   "TRY_AGAIN": "Try again",
   "STAMP_CAMPAIGNS": {
-    "TERMS_AND_CONDITIONS": "Terms and Conditions",
-    "ENDS_ON": "Ends on",
-    "DETAILS": "Campaign Details",
-    "REMARKS": "Remark(s)",
-    "HOW_TO_WORK": "How to work"
+    "TNC_HEADER": "How to work",
+    "ENDS_ON": "Ends on"
   }
 }

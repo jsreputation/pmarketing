@@ -30,23 +30,10 @@
     </div>
     <div class="card-container">
       <mat-card class="stamps-how-it-works mat-elevation-z0">
-        <mat-card-subtitle>{{"STAMP_CAMPAIGNS.HOW_TO_WORK" | translate}}</mat-card-subtitle>
+        <mat-card-subtitle>{{"STAMP_CAMPAIGNS.TNC_HEADER" | translate}}</mat-card-subtitle>
         <mat-divider inset></mat-divider>
-        <mat-card-title class="mt-24">{{"STAMP_CAMPAIGNS.DETAILS" | translate}}</mat-card-title>
         <mat-card-content>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua.</p>
-        </mat-card-content>
-        <mat-card-title class="mt-32">{{"STAMP_CAMPAIGNS.TERMS_AND_CONDITIONS" | translate}}</mat-card-title>
-        <mat-card-content>
-          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p>
-        </mat-card-content>
-        <mat-card-title class="mt-32">{{"STAMP_CAMPAIGNS.REMARKS" | translate}}</mat-card-title>
-        <mat-card-content>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore
-            magna aliqua.</p>
+          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p> 
         </mat-card-content>
       </mat-card>
     </div>
