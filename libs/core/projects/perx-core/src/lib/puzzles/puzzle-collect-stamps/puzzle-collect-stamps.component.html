@@ -6,7 +6,7 @@
     <div class="available-stamp" *ngIf="showStampsCounter">
       <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
       <div *ngIf="!stampCardImage" class="dummy-card" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
-      <span>= {{reedemedStampCount}}/{{nbSlots}}{{newStampsLabelFn() | async}}</span>
+      <span> {{reedemedStampCount}}/{{nbSlots}}{{newStampsLabelFn() | async}}</span>
     </div>
     <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
       <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
