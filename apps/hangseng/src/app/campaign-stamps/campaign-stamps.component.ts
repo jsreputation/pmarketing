@@ -37,7 +37,7 @@ export class CampaignStampsComponent implements OnInit {
   public campaign: ICampaign;
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = true;
+  public enableEnrollment: boolean = false;
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
