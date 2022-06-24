@@ -3,7 +3,7 @@
   <hangseng-stamp-card-note [title]="stampNoteTitle" [description]="stampNoteDescription"
     [buttonLabel]="stampNoteButtonLabel" (onPress)="onReadMore()" *ngIf="stampNoteDescription">
   </hangseng-stamp-card-note>
-  <div [ngClass]="{'has-enroll': !isEnrolled()}">
+  <div [ngClass]="{'has-enroll': !isEnrolled() || completedStamps}">
     <div class="card-container">
       <mat-card class="stamps-collection">
         <mat-card-content>
