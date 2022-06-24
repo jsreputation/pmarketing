@@ -96,7 +96,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
         switchMap((id: string) => {
           this.idN = Number.parseInt(id, 10);
           return forkJoin([
-            this.stampService.getCurrentCard(this.idN),
+            this.stampService.getCards(this.idN).pipe(map(stampCards => stampCards[0])),
             this.themesService.getThemeSetting(),
           ]);
         }),
@@ -131,7 +131,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
           }
         }),
         switchMap(() =>
-          this.stampService.stampsChangedForStampCard(this.idN).pipe(pairwise())
+          //todo: make a polling version to keep the stamp card updated
+          this.stampService.getCards(this.idN).pipe(map(stampCards => stampCards[0])).pipe(pairwise())
         ),
         takeUntil(this.destroy$)
       )
@@ -190,7 +191,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
             }
           }
         },
-        () => this.router.navigate(['/wallet'])
+        (err) => {
+          console.error(err);
+          this.router.navigate(['/wallet']);
+        }
       );
   }
 
