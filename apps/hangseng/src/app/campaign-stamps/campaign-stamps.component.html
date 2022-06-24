@@ -34,7 +34,7 @@
         <mat-card-subtitle>{{"STAMP_CAMPAIGNS.TNC_HEADER" | translate}}</mat-card-subtitle>
         <mat-divider inset></mat-divider>
         <mat-card-content>
-          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p> 
+          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -44,7 +44,7 @@
   [label]="'GAME_PAGE.ENROL_TEXT' | translate" buttonLabel="Enrol" [imageSrc]="'/assets/icons/lock.svg'">
 </hangseng-action-button-overlay>
 <hangseng-action-button-overlay *ngIf="completedStamps" [label]="'STAMP_CAMPAIGN.STAMPS_COMPLETED' | translate"
-  buttonLabel="View your rewards" [imageSrc]="'/assets/icons/mission-completed.svg'">
+  buttonLabel="View your rewards" [imageSrc]="'/assets/icons/mission-completed.svg'" [routerLink]="['/wallet']">
 </hangseng-action-button-overlay>
 <!-- <hangseng-enroll-game-button *ngIf="enableEnrollment" (onEnroll)="onEnableEnrollment()"></hangseng-enroll-game-button>
 <hangseng-completed-stamps *ngIf="completedStamps"></hangseng-completed-stamps> -->
