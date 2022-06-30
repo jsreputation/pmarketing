@@ -1,6 +1,6 @@
 @import "../../../theme/custom-theme";
 @import "../../../theme/mixins";
-
+@import "../../../theme/variables.scss";
 mat-card {
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ mat-card {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0;
-    color: #666666;
+    color: $brownish-grey;
     margin-block-end: 0;
   }
 
@@ -54,7 +54,7 @@ mat-card {
     display: flex;
     justify-content: center;
     padding-top: 6px;
-    color: #666666;
+    color: $brownish-grey;
   }
 }
 
@@ -71,7 +71,7 @@ mat-card {
 
   .remaining-rewards {
     font-size: 1.2rem;
-    color: #ffffff;
+    color: $white-Two;
     background: #000000;
     text-align: end;
     padding-right: 0.8rem;
@@ -96,13 +96,13 @@ mat-card {
       font-size: 16px;
       font-weight: 500;
       line-height: 22px;
-      color: #333333;
+      color: $black;
       margin: 0;
     }
 
     .reward-subtitle {
       padding-top: 7px;
-      color: #666666;
+      color: $brownish-grey;
       font-size: 14px;
       letter-spacing: 0;
 

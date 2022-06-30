@@ -1,4 +1,5 @@
 @import "../custom-theme.scss";
+@import "../theme/variables.scss";
 
 :host {
   display: block;
@@ -43,7 +44,7 @@
 
     a {
       text-decoration: none;
-      color: #666666;
+      color: $brownish-grey;
 
       &.active {
         color: var(--accent);

@@ -10,7 +10,7 @@
 
 .toolbar {
   @include toolbar();
-  background-color: $lime !important;
+  background-color: $keyLime !important;
 
   .backArrow {
     @include toolBarArrow();
@@ -60,7 +60,7 @@
 
   a {
     text-decoration: none;
-    color: #666666;
+    color: $brownish-grey;
     display: flex;
     flex: 1;
     justify-content: center;
