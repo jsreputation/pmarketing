@@ -47,7 +47,8 @@
     <div *ngIf="redemptionType === rt.url" class="code-container">
       <perx-core-url-redemption [instructions]="codeInstructionsText"
       [url]="voucher.code"
-      [auxInfo]="voucher.customFields"></perx-core-url-redemption>
+      [auxInfo]="voucher.customFields"
+      [showCopyButton]="false"></perx-core-url-redemption>
     </div>
     </ng-template>
   </div>
