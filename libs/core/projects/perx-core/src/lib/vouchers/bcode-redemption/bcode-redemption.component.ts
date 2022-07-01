@@ -37,6 +37,9 @@ export class BcodeRedemptionComponent implements OnChanges, OnInit {
   @Input('voucher')
   public voucher$: Observable<IVoucher>;
 
+  @Input()
+  public showCopyButton: boolean = true;
+
   private copyToClipboardTxt: string;
   private clipboardErrorTxt: string;
 
