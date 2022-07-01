@@ -20,6 +20,9 @@ export class UrlRedemptionComponent implements OnInit {
   @Input()
   public auxInfo?: VoucherCustomFields;
 
+  @Input()
+  public showCopyButton: boolean = true;
+
   private copyToClipboardTxt: string;
   private clipboardErrorTxt: string;
 

@@ -6,14 +6,14 @@
             <div class="url-title">{{'REDEMPTION.URL_TITLE' | translate}}</div>
             <div class="url-container">
                 <span class="url-txt">{{url}}</span>
-                <mat-icon class="copy-icon" (click)="copy(url)">content_copy</mat-icon>
+                <mat-icon class="copy-icon" (click)="copy(url)" *ngIf="showCopyButton">content_copy</mat-icon>
             </div>
         </div>
       <div *ngIf="auxInfo?.pinCode">
             <div class="url-title">{{'REDEMPTION.PIN_CODE' | translate}}</div>
             <div class="url-container">
                 <span class="url-txt">{{auxInfo?.pinCode}}</span>
-                <mat-icon class="copy-icon" (click)="copy(auxInfo?.pinCode)">content_copy</mat-icon>
+                <mat-icon class="copy-icon" (click)="copy(auxInfo?.pinCode)" *ngIf="showCopyButton">content_copy</mat-icon>
             </div>
         </div>
     </div>
