@@ -1,4 +1,4 @@
-@import '../../theme/variables.scss';
+@import '../../theme/variables';
 
 .page {
   background-color: $white-Three;
@@ -12,7 +12,7 @@
 }
 
 .card-container {
-  background-color: #fff;
+  background-color: $white-Two;
   margin-bottom: 8px;
   padding: 16px;
 }
@@ -43,7 +43,8 @@
 
   .subtitle {
     font-size: 1.4rem;
-    color: #212121;
+    color: $brownish-grey;
+    color: $brownish-grey;
   }
 
   mat-chip {

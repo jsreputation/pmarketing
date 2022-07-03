@@ -100,7 +100,7 @@
             border-radius: 5rem;
             padding: 0.4rem 0.5rem;
             font-size: 8px;
-            background-color: #2664ed; // material default blue
+            background-color: $medium-blue; // material default blue
             color: white;
             letter-spacing: 0.6px;
             text-transform: uppercase;
@@ -139,7 +139,7 @@
 
               &.reward-icon {
                 padding-right: 1rem;
-                color: #2664ed;
+                color: $medium-blue;
               }
             }
 
@@ -377,7 +377,7 @@
   }
 
   svg {
-    background: #e8e8e8;
+    background: $white-Five;
   }
 
   ::ng-deep {

@@ -72,7 +72,7 @@ mat-card {
   .remaining-rewards {
     font-size: 1.2rem;
     color: $white-Two;
-    background: #000000;
+    background: $black;
     text-align: end;
     padding-right: 0.8rem;
   }
@@ -115,7 +115,7 @@ mat-card {
   .reward {
     display: flex;
     justify-content: space-between;
-    background-color: #e7e7e7;
+    background-color: $white-Three;
 
     .main-reward-title {
       font-weight: 500;
