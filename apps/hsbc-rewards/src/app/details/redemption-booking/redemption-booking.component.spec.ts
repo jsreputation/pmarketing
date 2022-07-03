@@ -8,6 +8,7 @@ import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import {
   RewardsModule,
   LocationModule,
+  LocationServiceModule,
   VouchersModule,
   ILoyalty,
   LoyaltyService,
@@ -70,6 +71,7 @@ describe('RedemptionBookingComponent', () => {
         RewardsModule,
         VouchersModule,
         LocationModule,
+        LocationServiceModule.forRoot(),
         RouterTestingModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
