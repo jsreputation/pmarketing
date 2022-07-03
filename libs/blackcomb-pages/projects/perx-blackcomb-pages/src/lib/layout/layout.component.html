@@ -15,14 +15,14 @@
     <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
   <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
-    <div class="a-container d-flex">
+    <div class="a-container">
       <a matRipple [routerLink]="[ '/rebates' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.rebateDemoFlow">
         <div class="nav-item">
           <mat-icon aria-hidden="false">shopping_basket</mat-icon>
           <span translate>NAVIGATION.PAY</span>
         </div>
       </a>
-      <a matRipple order="1" [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
+      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">home</mat-icon>
           <span translate>NAVIGATION.HOME</span>
