@@ -80,7 +80,6 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.isLeaderboardPage = this.router.url.startsWith('/leaderboard') ? true : false;
-
     this.route.data.subscribe(
       (dataObj) => {
         this.tenant = dataObj.tenant;
@@ -132,6 +131,80 @@ export class LayoutComponent implements OnInit {
 
       this.showHeader = !chromelessFlag;
     });
+
+  //  TODO: should call api to get the menus and their orders
+  //   const menusFromApi = [
+  //     {
+  //       routerLink: '/rebates',
+  //       icon: 'shopping_basket',
+  //       label: 'NAVIGATION.PAY',
+  //       showMenu: this.appRemoteFlags?.rebateDemoFlow,
+  //       order: 1
+  //     },
+  //     {
+  //       routerLink: '/home',
+  //       icon: 'home',
+  //       label: 'NAVIGATION.HOME',
+  //       showMenu: this.appConfig.showHomePage || this.appRemoteFlags?.showHomePage,
+  //       order: 2
+  //     },
+  //     {
+  //       routerLink: '/progress-campaigns',
+  //       icon: 'local_activity',
+  //       label: 'NAVIGATION.STAMPS',
+  //       showMenu: this.appRemoteFlags?.showProgressCampaignsNavButton,
+  //       order: 3
+  //     },
+  //     {
+  //       routerLink: '/rewards',
+  //       icon: 'card_giftcard',
+  //       label: 'NAVIGATION.REWARDS',
+  //       showMenu: this.tenant !== 'all-it' && (this.appConfig.showRewardNavButton || this.appRemoteFlags?.showRewardNavButton),
+  //       order: 4
+  //     },
+  //     {
+  //       routerLink: '/nearme',
+  //       icon: 'location_on',
+  //       label: 'NAVIGATION.NEARME',
+  //       showMenu: this.appConfig.showNearMePage || this.appRemoteFlags?.showNearMePage,
+  //       order: 5
+  //     },
+  //     {
+  //       routerLink: '/wallet',
+  //       icon: 'account_balance_wallet',
+  //       label: 'NAVIGATION.WALLET',
+  //       showMenu: true,
+  //       order: 6
+  //     },
+  //     {
+  //       routerLink: '/history',
+  //       icon: 'list',
+  //       label: 'NAVIGATION.HISTORY',
+  //       showMenu: this.appConfig.showHistoryPage,
+  //       order: 7
+  //     },
+  //     {
+  //       routerLink: '/locations',
+  //       icon: 'location_on',
+  //       label: 'NAVIGATION.DEALS',
+  //       showMenu: this.appRemoteFlags?.merchantMap,
+  //       order: 8
+  //     },
+  //     {
+  //       routerLink: '/leaderboards',
+  //       icon: 'emoji_events',
+  //       label: 'NAVIGATION.LEADER_BOARD',
+  //       showMenu: (this.appRemoteFlags?.showLeaderboard && this.appRemoteFlags?.showLeaderboardLinkOnHomePage) || (this.appConfig.enableLeaderBoard && this.appConfig.showLeaderboardLinkOnHomePage),
+  //       order: 9
+  //     },
+  //     {
+  //       routerLink: '/account',
+  //       icon: 'account_circle',
+  //       label: 'NAVIGATION.ACCOUNT',
+  //       showMenu: this.appConfig.showAccountsPage || this.appRemoteFlags?.showAccountsPage,
+  //       order: 10
+  //     }
+  //   ]
   }
 
   public onActivate(ref: any): void {
