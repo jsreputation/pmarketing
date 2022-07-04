@@ -10,7 +10,6 @@ export class SetMenuOrderDirective implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.order);
     this.el.nativeElement.style.order = this.order;
   }
 }
