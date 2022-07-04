@@ -23,7 +23,6 @@ export class PreAuthGuard implements CanActivate {
   public canActivate(): Observable<boolean> {
     return this.configService.readAppConfig<IPreRedirectConfig>().pipe(
       map((config: IConfig<IPreRedirectConfig>) => {
-        console.log(config);
         if (config.custom.redirectBeforeLogin && config.custom.redirectBeforeLogin !== '/login') {
           this.router.navigateByUrl(`${config.custom.redirectBeforeLogin}`);
           return false;

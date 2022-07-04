@@ -22,7 +22,7 @@
           <span translate>NAVIGATION.PAY</span>
         </div>
       </a>
-      <a matRipple order="2" [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
+      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage || appRemoteFlags?.showHomePage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">home</mat-icon>
           <span translate>NAVIGATION.HOME</span>
@@ -34,7 +34,7 @@
           <span translate>NAVIGATION.STAMPS</span>
         </div>
       </a>
-      <a matRipple order="1" [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
+      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && (appConfig.showRewardNavButton || appRemoteFlags?.showRewardNavButton)">
         <div class="nav-item">
           <mat-icon aria-hidden="false">card_giftcard</mat-icon>
           <span translate>NAVIGATION.REWARDS</span>
