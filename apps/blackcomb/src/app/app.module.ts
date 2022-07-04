@@ -37,6 +37,8 @@ import {
   LanguageInterceptor,
   LanguageService,
   LocaleIdFactory,
+  LocationModule,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule as PerxMerchantsModule,
   OutcomeModule,
@@ -155,6 +157,8 @@ export const setLanguage = (
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
+    LocationModule,
+    LocationServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     RewardsServiceModule.forRoot(),
     TranslateModule.forRoot({

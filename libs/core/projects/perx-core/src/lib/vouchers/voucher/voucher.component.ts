@@ -52,6 +52,9 @@ export class VoucherComponent implements OnChanges, OnInit {
   @Input()
   public tncLabel: Observable<string> = of('Terms and Conditions');
 
+  @Input()
+  public showCopyButton: boolean = true;
+
   public rt: typeof RedemptionType = RedemptionType;
   private copyToClipboardTxt: string;
   private clipboardErrorTxt: string;

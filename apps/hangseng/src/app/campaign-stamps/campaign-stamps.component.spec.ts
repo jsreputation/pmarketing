@@ -10,7 +10,7 @@ import {
   ConfigModule,
   ThemesService,
   ITheme,
-  SettingsService,
+  SettingsService, NotificationService,
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -31,6 +31,7 @@ const stampServiceStub: Partial<StampService> = {
 };
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
+  enrolIntoCampaign: () => of()
 };
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () =>
@@ -41,6 +42,9 @@ const configServiceStub: Partial<ConfigService> = {
       isWhistler: false,
       baseHref: '',
     }),
+};
+const notificationServiceStub: Partial<NotificationService> = {
+  addSnack: () => void 0
 };
 const settingsServiceStub: Partial<SettingsService> = {
   getRemoteFlagsSettings: () =>
@@ -87,6 +91,7 @@ describe('CampaignStampsComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ],
     }).compileComponents();
   }));

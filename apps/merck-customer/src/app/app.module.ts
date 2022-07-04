@@ -27,6 +27,7 @@ import {
   IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LocationModule,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule,
   ProfileModule,
@@ -147,6 +148,7 @@ export const appInit =
     VouchersModule,
     QRCodeModule,
     LocationModule,
+    LocationServiceModule.forRoot(),
     HttpClientModule,
     InfiniteScrollModule,
     TranslateModule.forRoot({

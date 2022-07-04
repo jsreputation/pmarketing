@@ -286,7 +286,8 @@
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
-    "EMPTY_LIST": "More mission is coming"
+    "EMPTY_LIST": "More mission is coming",
+    "ENDS_ON": "Ends on"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -395,7 +396,9 @@
     "NO_REWARD_POPUP_TEXT": "Try again next time",
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
-    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"
@@ -526,5 +529,9 @@
   "LOGIN_SESSION_EXPIRED": "登錄時間超時",
   "Contact Us": "聯繫我們",
   "Terms and Conditions": "條款與細則",
-  "TRY_AGAIN": "再试一次"
+  "TRY_AGAIN": "再试一次",
+  "STAMP_CAMPAIGNS": {
+    "TNC_HEADER": "How to work",
+    "ENDS_ON": "Ends on"
+  }
 }
