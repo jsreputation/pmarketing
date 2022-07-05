@@ -197,7 +197,6 @@ export class V4LocationsService extends LocationsService {
 
 
   public checkInToCampaign(campaignId: number, position: Position): Observable<ICheckInOutcome> {
-    console.log(position);
     return this.http.post<IV4CheckInTransactionOutcomeResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/checkin_transactions`,
       {
