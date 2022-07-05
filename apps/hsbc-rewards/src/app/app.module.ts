@@ -62,8 +62,8 @@ export const setLanguage = (
     ProfileServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     LocationModule,
-    LocationServiceModule.forRoot(),
     InstantOutcomeTransactionServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

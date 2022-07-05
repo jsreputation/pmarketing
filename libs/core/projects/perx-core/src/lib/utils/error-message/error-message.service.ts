@@ -116,6 +116,8 @@ export class ErrorMessageService {
           // Could not enrol campaign
           if (errMessage?.match(/enrol/i)) {
             errorKey = 'ERRORS.COULD_NOT_ENROL';
+          } else if (errMessage?.match(/checkin/i)) {
+            errorKey = 'ERRORS.CHECKIN_FAILED';
           }
           break;
         case 800:

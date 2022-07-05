@@ -420,6 +420,7 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
+    "CHECKIN_FAILED": "Your current location doesn't match with the check-in point.",
     "INVALID_INVITE_CODE": "Invalid invite code",
     "TEAM_FULL": "This team is already full",
     "RESERVATION_EXPIRED": "Your game session has expired, please try again",
@@ -464,6 +465,7 @@
     "TRANSFER_POINTS_CONFIRM_CTA": "COnfirm Points Transfer"
   },
   "PROGRESS_CAMPAIGN": {
+    "CHECK_IN": "Check In",
     "TNC_HEADER": "Terms and Conditions",
     "ENROLL_BTN_TEXT": "Start",
     "VIEW_WALLET": "View Wallet"

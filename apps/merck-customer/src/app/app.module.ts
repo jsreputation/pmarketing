@@ -148,9 +148,9 @@ export const appInit =
     VouchersModule,
     QRCodeModule,
     LocationModule,
-    LocationServiceModule.forRoot(),
     HttpClientModule,
     InfiniteScrollModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -189,7 +189,6 @@ export const appInit =
     PerxProfileServiceModule.forRoot(),
     VouchersModule,
     LocationModule,
-    LocationServiceModule.forRoot(),
     ScrollingModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),
@@ -205,6 +204,7 @@ export const appInit =
     GhostsModule,
     MatProgressSpinnerModule,
     MatListModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

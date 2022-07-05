@@ -7,9 +7,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import {
+  ErrorMessageService,
+  GeoLocationService,
   ICampaignService,
   IPrizeSetOutcomeService,
-  IVoucherService,
+  IVoucherService, LocationsService,
   NotificationService,
   ProgressCampaignService,
   UtilsModule
@@ -35,6 +37,16 @@ const voucherServiceStub: Partial<IVoucherService> = {
 const prizeSetOutcomeServiceStub: Partial<IPrizeSetOutcomeService> = {
   getPrizeSetIssuedOutcomes: () => of(),
 };
+const geoLocationServiceStub: Partial<GeoLocationService> = {
+  positions: () => of()
+};
+const locationsServiceStub: Partial<LocationsService> = {
+  checkInToCampaign: () => of()
+};
+const errorMessageServiceStub: Partial<ErrorMessageService> = {
+  getErrorMessageByErrorCode: () => of(''),
+};
+
 
 describe('ProgressCampaignComponent', () => {
   let component: ProgressCampaignComponent;
@@ -63,6 +75,9 @@ describe('ProgressCampaignComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: LocationsService, useValue: locationsServiceStub },
+        { provide: GeoLocationService, useValue: geoLocationServiceStub },
+        { provide: ErrorMessageService, useValue: errorMessageServiceStub },
         { provide: IPrizeSetOutcomeService, useValue: prizeSetOutcomeServiceStub }
       ]
     })

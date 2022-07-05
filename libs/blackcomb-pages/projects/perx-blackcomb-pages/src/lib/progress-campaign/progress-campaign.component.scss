@@ -258,4 +258,12 @@
       margin-bottom: 1.6rem;
     }
   }
+
+  #position-not-available {
+    color: rgba(223, 56, 86, 1);
+    font-size: 1.4rem;
+    text-align: center;
+    line-height: 24px;
+    padding-bottom: 1.6rem; // equal to existing bottom-nav top padding
+  }
 }

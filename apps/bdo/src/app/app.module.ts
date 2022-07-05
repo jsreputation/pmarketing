@@ -63,10 +63,10 @@ export const appInit =
     // core modules
     AuthenticationModule,
     LocationModule,
-    LocationServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     ProfileModule,
     PerxProfileServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

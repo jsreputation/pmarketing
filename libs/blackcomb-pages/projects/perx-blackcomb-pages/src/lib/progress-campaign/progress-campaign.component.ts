@@ -1,7 +1,8 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
-  CampaignState,
+  CampaignState, ErrorMessageService,
+  GeoLocationService,
   IBadge,
   ICampaign,
   ICampaignOutcome,
@@ -13,6 +14,7 @@ import {
   IPrizeSetOutcomeService,
   IProgressTotal,
   IVoucherService,
+  LocationsService,
   NotificationService,
   PrizeSetIssuedType,
   ProgressCampaignService,
@@ -22,6 +24,7 @@ import {
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
@@ -51,7 +54,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public activeMilestone: IMilestone;
   public currentUserPoints: number;
   public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
-
+  public currentPosition: Position;
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
   @ViewChild('milestonesConnectorDiv') private milestonesConnectorDiv: ElementRef;
@@ -87,6 +90,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private progressCampaignService: ProgressCampaignService,
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
+              private locationsService: LocationsService,
+              private geolocationService: GeoLocationService,
+              private errorMessageService: ErrorMessageService,
               private campaignService: ICampaignService) {
   }
 
@@ -134,6 +140,12 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
         } else {
           console.error('active milestone not found');
         }
+      }
+
+      if (campaign.customFields['checkin'] === 'true') {
+        this.geolocationService.positions().subscribe((position: Position) => {
+          this.currentPosition = position;
+        });
       }
     });
   }
@@ -245,5 +257,35 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
     }
 
     return 0;
+  }
+
+  public checkin(campaignId: number): void {
+    this.locationsService.checkInToCampaign(campaignId, this.currentPosition).subscribe(
+      ()=> {
+        this.notificationService.addPopup(
+          {
+            title: 'Congratulations!',
+            text: 'You have successfully checked-in.',
+            buttonTxt: 'Continue',
+            imageUrl: 'assets/location-success.svg',
+          });
+      },
+      (err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.error) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
+              .subscribe((errorMessage) => {
+                this.notificationService.addPopup(
+                  {
+                  title: 'Sorry!',
+                  text: errorMessage,
+                  buttonTxt: 'Continue',
+                  imageUrl: 'assets/location-fail.svg',
+                });
+              });
+          }
+        }
+      }
+    )
   }
 }

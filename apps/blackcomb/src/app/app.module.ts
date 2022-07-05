@@ -158,9 +158,9 @@ export const setLanguage = (
     MatButtonModule,
     MatSnackBarModule,
     LocationModule,
-    LocationServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     RewardsServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
