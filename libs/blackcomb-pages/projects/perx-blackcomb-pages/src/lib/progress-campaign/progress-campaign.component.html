@@ -179,7 +179,7 @@
     <div id='position-not-available'*ngIf="!currentPosition">
       Turn on location permission from Privacy settings to earn exciting Campaign Prizes!
     </div>
-    <button color="primary" [disabled]="!currentPosition" (click)="checkin(campaign.id)" mat-flat-button>
+    <button [color]="!currentPosition ? null : 'primary'" [disabled]="!currentPosition" (click)="checkin(campaign.id)" mat-flat-button>
       {{ 'PROGRESS_CAMPAIGN.CHECK_IN' | translate }}
     </button>
   </div>
