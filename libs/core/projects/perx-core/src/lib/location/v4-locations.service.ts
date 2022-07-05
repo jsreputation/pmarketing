@@ -196,12 +196,13 @@ export class V4LocationsService extends LocationsService {
   }
 
 
-  public checkInToCampaign(campaignId: number, location: Position): Observable<ICheckInOutcome> {
+  public checkInToCampaign(campaignId: number, position: Position): Observable<ICheckInOutcome> {
+    console.log(position);
     return this.http.post<IV4CheckInTransactionOutcomeResponse>(
       `${this.baseUrl}/v4/campaigns/${campaignId}/checkin_transactions`,
       {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
       }
     ).pipe(
       map( res => res.data),
