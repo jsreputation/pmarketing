@@ -1,6 +1,6 @@
 <div *ngIf="campaigns" [@listAnimation]="campaigns.length">
   <div class="campaign-collection-card" *ngFor="let campaign of campaigns">
-    <div class="new-tag">
+    <div class="new-tag" *ngIf="isCampaignNew(campaign)">
       <span class="new-tag-text">{{newCategoryText}}</span>
       <img src="./assets/new-tag.svg">
     </div>

@@ -67,8 +67,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
   ) { }
 
   public ngOnChanges(): void {
-    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find(category => category.description.toLowerCase() === 'new')?.title : 'New';
-
+    this.newCategoryText = this.campaignCategories?.length > 0 ? this.campaignCategories.find(category => category.title.toLowerCase() === 'new')?.title : 'New';
     if (this.campaigns$) {
       this.initCampaigns();
     }
@@ -145,6 +144,10 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
 
   public getEndOrExpiresDate(campaign: ICampaign): string {
     return campaign.customFields['f/e_expiry_date'];
+  }
+
+  public isCampaignNew(campaign: ICampaign): boolean {
+    return campaign.categoryTags.some(category => category.title.toLowerCase() === 'new');
   }
 
   private dayOfWeekAsString(dayIndex: number): string {
