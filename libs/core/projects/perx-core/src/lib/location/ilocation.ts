@@ -12,3 +12,8 @@ export interface ILocation {
   phone?: string;
   distance?: number;
 }
+
+export interface IPosition {
+  lng: number;
+  lat: number;
+}
