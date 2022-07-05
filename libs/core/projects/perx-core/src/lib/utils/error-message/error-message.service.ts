@@ -88,9 +88,6 @@ export class ErrorMessageService {
           if (errMessage && errMessage.match(/invited/i)) {
             errorKey = 'ERRORS.NOT_INVITED';
           }
-          if (errMessage && errMessage.match(/checkin/i)) {
-            errorKey = 'ERRORS.CHECKIN_FAILED';
-          }
           break;
         case 13:
           if (errMessage && errMessage.match(/reservation expired/i)) {
@@ -119,6 +116,8 @@ export class ErrorMessageService {
           // Could not enrol campaign
           if (errMessage?.match(/enrol/i)) {
             errorKey = 'ERRORS.COULD_NOT_ENROL';
+          } else if (errMessage?.match(/checkin/i)) {
+            errorKey = 'ERRORS.CHECKIN_FAILED';
           }
           break;
         case 800:
