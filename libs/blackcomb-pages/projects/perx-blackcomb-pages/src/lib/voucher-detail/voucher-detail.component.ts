@@ -10,6 +10,7 @@ import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'perx-blackcomb-voucher-detail',
@@ -89,6 +90,7 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   }
 
   public onRedeem(): void {
+    globalCacheBusterNotifier.next();
     this.router.navigate(['redeem', this.voucherId]);
   }
 }
