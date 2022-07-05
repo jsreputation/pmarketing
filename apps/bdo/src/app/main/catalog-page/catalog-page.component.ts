@@ -53,7 +53,6 @@ export class CatalogPageComponent extends SelfDestruct implements OnInit {
     ]).subscribe(([params, categories, catalogs]) => {
       this.catalogId = catalogs?.find((catalog: ICatalog) => catalog.name.toLowerCase() === ORDERED_CATALOG_NAME)?.id;
       const filterData = FILTER_DATA;
-      console.log(filterData);
       filterData.categories = filterData.categories
         .map(item => {
           const categoryWithId = categories.find(c => c.title.toLowerCase() === item.name.toLowerCase() && !c.parent);

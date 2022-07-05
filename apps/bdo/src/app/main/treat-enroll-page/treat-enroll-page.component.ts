@@ -78,8 +78,7 @@ export class TreatEnrollPageComponent implements OnInit {
                   state: {
                     promoId: item.enrolmentReference,
                     campaignId: item.campaignId,
-                    campaignName: this.campaign.displayProperties.landingPage
-                      .heading,
+                    campaignName: this.campaign.displayProperties.landingPage.heading,
                     tnc: this.campaign.customFields?.postEnrolText,
                   },
                 }
