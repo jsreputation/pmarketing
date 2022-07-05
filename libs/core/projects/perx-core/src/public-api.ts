@@ -288,6 +288,7 @@ export { PuzzleListComponent } from './lib/puzzles/puzzle-list/puzzle-list.compo
  * Locations
  */
 export { LocationModule } from './lib/location/location.module';
+export { LocationServiceModule } from './lib/location/location.service.module';
 export { LocationsService } from './lib/location/locations.service';
 export { ILocation } from './lib/location/ilocation';
 export { LocationsMapComponent } from './lib/location/locations-map/locations-map.component';

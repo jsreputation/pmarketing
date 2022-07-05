@@ -10,11 +10,13 @@ import {
   ICampaignService,
   ICampaign,
   CampaignLandingPage,
+  NotificationService
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -36,19 +38,23 @@ export class CampaignStampsComponent implements OnInit {
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
-  public enableEnrollment: boolean = true;
+  private enableEnrollment: boolean = false; // used to trigger hiding of enrolment dialog without refetching campaign status
   public completedStamps: boolean = false;
 
   public currentPage: number = 0;
   public completed: boolean = false;
 
-  public stampNoteTitle: string = 'Important note';
-  public stampNoteDescription: string =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet lorem bibendum.consectetur adipiscing elit. Cras sit amet lorem bibendum.';
+  public stampNoteTitle: string;
+  public stampNoteDescription: string;
+  public stampNoteButtonLabel: string;
+  public feExpiryDate: string;
+  public feAction: string;
+  public feData: string;
+  public feReward: string;
 
-  // public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
   public titleFn: (index?: number) => Observable<string>;
+  public campaign: ICampaign;
 
   constructor(
     private router: Router,
@@ -56,8 +62,9 @@ export class CampaignStampsComponent implements OnInit {
     private stampService: StampService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private notificationService: NotificationService
+  ) { }
 
   public ngOnInit(): void {
     this.configService
@@ -72,8 +79,8 @@ export class CampaignStampsComponent implements OnInit {
         if (stampsType === 'stamp_card') {
           this.puzzleTextFn = (puzzle: IStampCard) =>
             !puzzle.stamps ||
-            puzzle.stamps.filter((st) => st.state === StampState.issued)
-              .length > 1
+              puzzle.stamps.filter((st) => st.state === StampState.issued)
+                .length > 1
               ? this.translate.get('STAMP_CAMPAIGN.NEW_STAMPS')
               : this.translate.get('STAMP_CAMPAIGN.NEW_STAMP');
           forkJoin(
@@ -83,9 +90,8 @@ export class CampaignStampsComponent implements OnInit {
             this.titleFn = (index?: number, totalCount?: number) =>
               of(
                 index !== undefined
-                  ? `${translations[0]} ${this.cardIndex(index)} ${
-                      translations[1]
-                    } ${totalCount}`
+                  ? `${translations[0]} ${this.cardIndex(index)} ${translations[1]
+                  } ${totalCount}`
                   : ''
               );
           });
@@ -114,11 +120,23 @@ export class CampaignStampsComponent implements OnInit {
         takeUntil(this.destroy$)
       )
       .subscribe(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        this.campaign = campaign;
+        this.enableEnrollment = !campaign.enrolled;
+        // hangseng only should have 1 card and *should* be auto redeemed
+        this.completedStamps = stampCards[0].stamps.filter(stamp => stamp.state === StampState.redeemed).length === stampCards[0].displayProperties.totalSlots;
         this.title = campaign.name || 'Stamp cards';
         this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
         this.config = oc(campaign).displayProperties.landingPage();
         this.stampCards$ = of(stampCards);
+        this.translate.get('STAMP_CAMPAIGN.RISK_DISCLAIMER_TITLE').subscribe(txt => this.stampNoteTitle = txt);
+        this.stampNoteDescription = campaign.displayProperties.riskDisclaimer;
+        this.translate.get('STAMP_CAMPAIGN.READ_MORE_BUTTON_TEXT').subscribe(txt => this.stampNoteButtonLabel = txt);
+
+        this.feExpiryDate = campaign.customFields['f/e_expiry_date'];
+        this.feAction = campaign.customFields[`f/e_action_${this.translate.currentLang}`];
+        this.feData = campaign.customFields[`f/e_data_${this.translate.currentLang}`];
+        this.feReward = campaign.customFields[`f/e_reward_${this.translate.currentLang}`];
       });
   }
 
@@ -140,14 +158,22 @@ export class CampaignStampsComponent implements OnInit {
     }
   }
 
-  public onEnableEnrollment(): void {
-    this.enableEnrollment = false;
+  public isEnrolled(): boolean {
+    return !this.enableEnrollment || this.campaign?.enrolled;
+  }
 
-    if (!this.enableEnrollment) {
-      setTimeout(() => {
-        this.completedStamps = true;
-      }, 1000);
-    }
+  public onEnableEnrollment(): void {
+    this.campaignService.enrolIntoCampaign(this.campaignId)
+    .subscribe((isEnrolled: boolean) => {
+      if (isEnrolled) {
+        this.enableEnrollment = false;
+        globalCacheBusterNotifier.next();
+      } else {
+        this.notificationService.addSnack('Campaign enrolment failed');
+      }
+    }, error => {
+      this.notificationService.addSnack(error.error.message);
+    });
   }
 
   public onReadMore(): void {

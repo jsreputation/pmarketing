@@ -116,16 +116,17 @@ export class LayoutComponent implements OnInit {
     ]).subscribe(([params, flags]) => {
       const paramArr: string[] = params.flags && params.flags.split(',');
       const preAuthFlag: boolean = paramArr && paramArr.includes('preAuth');
-      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless') || !!flags.chromeless;
-
-      if (chromelessFlag) {
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+      const remoteChromelessFlag: boolean | undefined = flags.chromeless;
+      const remotePreAuthFlag: boolean | undefined = flags.preAuth;
+      if (chromelessFlag || remoteChromelessFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
       } else {
         this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
-      if (preAuthFlag) {
+      if (preAuthFlag || remotePreAuthFlag) {
         this.flagLocalStorageService.setFlagInLocalStorage('preAuth', 'true');
-      } else if ('flags' in params) {
+      } else {
         this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
       }
       this.showHeader = !chromelessFlag;

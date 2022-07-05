@@ -1,7 +1,7 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
-import { ICategoryTags } from "@perxtech/core";
+import { ICategoryTags } from '@perxtech/core';
 import { ITag } from '../../merchants/models/merchants.model';
 
 export interface CampaignDisplayProperties {
@@ -15,14 +15,18 @@ export interface CampaignDisplayProperties {
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
   enrolmentPage?: EnrolmentProperties;
+  buttonText?: string;
   buttonBgColour?: string;
   buttonTextColour?: string;
   fontColor?: string;
+  riskDisclaimer?: string;
 }
+
 export interface AdditionalSection {
-  headerText: String,
-  bodyText: String,
+  headerText: string;
+  bodyText: string;
 }
+
 export interface CampaignLandingPage {
   body?: { text: string };
   media?: { youtube?: string; bannerImage?: string };
@@ -37,9 +41,9 @@ export interface CampaignLandingPage {
   subHeadline?: string;
 }
 export interface ICampaignRule {
-  id: number,
-  name: string,
-  state: string,
+  id: number;
+  name: string;
+  state: string;
 }
 export interface ClaimPrizeProperties {
   buttonText: string;
@@ -74,15 +78,15 @@ export interface ProgressProperties extends QuestProperties {
   intro?: {
     title: string;
     description: string;
-  }
+  };
   levelTab?: {
     title: string;
     pointsAbbreviation: string;
-  }
+  };
   howToTab?: {
     title: string;
     description: string;
-  }
+  };
 }
 
 export interface TeamsProperties {
@@ -98,14 +102,14 @@ export interface TeamsProperties {
       buttonTextSecondary?: string;
     }
     image?: string;
-  }
+  };
   joinPage?: {
     description: string;
-  }
+  };
   inviteMessage?: {
     description: string;
     codeBlurb: string;
-  }
+  };
 }
 
 export enum CampaignType {
@@ -134,6 +138,11 @@ export interface ProgressBarFields {
   lightStage?: number;
   // for pay and spend include pending and processed
   totalCurrent?: number;
+}
+
+export interface CampaignDistance {
+  value?: string;
+  unitOfMessage?: string;
 }
 
 export interface ICampaign {
@@ -167,6 +176,8 @@ export interface ICampaign {
   score?: number;
   miscImages?: { [key: string]: string };
   enrollableUntil?: Date | null;
+  distance?: CampaignDistance;
+  favourite?: boolean;
 }
 
 export enum CommChannel {

@@ -20,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MeterToKilometerPipe } from './pipe/meter-to-kilometer.pipe';
 import { MerchantLocationPageComponent } from './components/merchant-location-page/merchant-location-page.component';
-import { LocationModule, MerchantsModule } from '@perxtech/core';
+import { LocationModule, LocationServiceModule,  MerchantsModule } from '@perxtech/core';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { CarouselItemsComponent } from './components/carousel-items/carousel-items.component';
 import { DesktopFilterComponent } from './components/filter/desktop-filter/desktop-filter.component';
@@ -55,6 +55,7 @@ import { NoResultComponent } from '../main/result/no-result/no-result.component'
     MatButtonModule,
     RouterModule,
     LocationModule,
+    LocationServiceModule.forChild(),
     MerchantsModule.forChild(), //required for location module
     MatChipsModule,
     IvyCarouselModule,

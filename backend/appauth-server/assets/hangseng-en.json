@@ -295,7 +295,8 @@
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
     "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards",
-    "EMPTY_LIST": "More mission is coming"
+    "EMPTY_LIST": "More mission is coming",
+    "ENDS_ON": "Ends on"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
@@ -371,7 +372,7 @@
     "VIEW_LOCATION": "View location"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": " new stamps",
+    "STAMPS_LABEL_TXT": " stamp collected",
     "GAME_NO_REWARDS_TITLE": "Thanks for playing",
     "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
     "GAME_SUCCESS_TITLE": "Congratulations!",
@@ -407,7 +408,9 @@
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
     "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
-    "STAMPS_COMPLETED": "Congrats!! You've completed all mission"
+    "STAMPS_COMPLETED": "Congrats!! You've completed all mission",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"
@@ -416,7 +419,8 @@
     "PUZZLE": "Puzzle",
     "PLAY_NOW": "Play now!",
     "NEW_PIECES": "New pieces",
-    "NEW_STAMPS": " new stamps"
+    "NEW_STAMPS": " new stamps",
+    "STAMP_COLLECTED": " stamp collected"
   },
   "ERRORS": {
     "GENERIC": "Sorry, something went wrong",
@@ -539,5 +543,9 @@
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
   "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "STAMP_CAMPAIGNS": {
+    "TNC_HEADER": "How to work",
+    "ENDS_ON": "Ends on"
+  }
 }

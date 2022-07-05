@@ -19,6 +19,7 @@ import {
 
 import {
   LocationModule,
+  LocationServiceModule,
   LocationsService,
   IMerchantsService,
   IMerchant,
@@ -70,6 +71,7 @@ describe('FindPharmacyComponent', () => {
       declarations: [FindPharmacyComponent],
       imports: [
         LocationModule,
+        LocationServiceModule.forRoot(),
         MatTabsModule,
         MatDialogModule,
         BrowserAnimationsModule,

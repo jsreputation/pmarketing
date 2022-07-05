@@ -25,7 +25,7 @@
   // margin-bottom: 8px;
 
   .mat-card-content {
-    padding: 16px;
+    padding: 24px 16px 16px;
     margin-bottom: 0;
   }
 
@@ -54,6 +54,27 @@
     justify-content: center;
     padding-top: 6px;
     color: #666666;
+  }
+
+  .custom-field-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 13px;
+
+    img {
+      width: 28px;
+      height: 28px;
+      margin-right: 9px;
+    }
+  }
+  .aux-data-container {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 19px;
+    color: #666666;
+    text-align: center;
+    padding: 7px 40px 40px;
   }
 }
 

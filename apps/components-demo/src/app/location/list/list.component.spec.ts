@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListComponent } from './list.component';
-import { LocationModule } from '@perxtech/core';
+import { LocationModule, LocationServiceModule } from '@perxtech/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 describe('ListComponent', () => {
@@ -13,6 +13,7 @@ describe('ListComponent', () => {
       declarations: [ListComponent],
       imports: [
         LocationModule,
+        LocationServiceModule.forRoot(),
         MatSlideToggleModule
       ]
     })

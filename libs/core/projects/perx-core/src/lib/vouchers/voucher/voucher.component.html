@@ -50,14 +50,14 @@
         </div>
         <div class="url-container" *ngIf="voucher.code">
             <span class="url-txt">{{voucher.code}}</span>
-            <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
+            <mat-icon class="copy-icon" (click)="copy(voucher.code)" *ngIf="showCopyButton">content_copy</mat-icon>
         </div>
         <div class="section-heading" *ngIf="voucher.customFields.pinCode">
           {{'REDEMPTION.PIN_CODE' | translate}}
         </div>
         <div class="url-container" *ngIf="voucher.customFields.pinCode">
             <span class="url-txt">{{voucher.customFields.pinCode}}</span>
-            <mat-icon class="copy-icon" (click)="copy(voucher.customFields.pinCode)">content_copy</mat-icon>
+            <mat-icon class="copy-icon" (click)="copy(voucher.customFields.pinCode)" *ngIf="showCopyButton">content_copy</mat-icon>
         </div>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.howToRedeem">

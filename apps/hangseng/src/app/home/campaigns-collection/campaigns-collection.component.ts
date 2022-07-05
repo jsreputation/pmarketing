@@ -63,7 +63,7 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     private quizService: QuizService,
     private surveyService: SurveyService,
     private settingsService: SettingsService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
   ) { }
 
   public ngOnChanges(): void {
@@ -143,6 +143,10 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
     return `Campaign available during: ${days}, ${hours} ${operatingHours.formattedOffset}`;
   }
 
+  public getEndOrExpiresDate(campaign: ICampaign): string {
+    return campaign.customFields['f/e_expiry_date'];
+  }
+
   private dayOfWeekAsString(dayIndex: number): string {
     return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayIndex];
   }
@@ -207,7 +211,9 @@ export class CampaignsCollectionComponent implements OnInit, OnChanges {
           this.campaignsWithRewards$,
           this.campaigns$
         )),
-        tap((campaigns) => this.campaigns = campaigns),
+        tap((campaigns) => {
+          this.campaigns = campaigns;
+        }),
         // for each campaign, fetch associated games to figure out completion
         switchMap((campaigns) => combineLatest([
           ...campaigns.map((campaign: ICampaign) => {
