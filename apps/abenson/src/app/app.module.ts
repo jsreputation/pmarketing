@@ -14,6 +14,7 @@ import {
   IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule,
   PerxCoreModule,
@@ -153,6 +154,7 @@ export const setLanguage = (
     CampaignServiceModule.forRoot(),
     RewardsServiceModule.forRoot(),
     NgxBarcode6Module,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

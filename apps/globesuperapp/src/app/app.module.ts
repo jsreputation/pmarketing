@@ -54,7 +54,7 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
-  InstantOutcomeTransactionServiceModule
+  InstantOutcomeTransactionServiceModule, LocationServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -153,6 +153,7 @@ export const setLanguage = (
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
     RewardsServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
