@@ -267,7 +267,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
             title: 'Congratulations!',
             text: 'You have successfully checked-in.',
             buttonTxt: 'Continue',
-            imageUrl: 'assets/img/location-success.svg',
+            imageUrl: 'assets/location-success.svg',
           });
       },
       (err) => {
@@ -280,7 +280,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
                   title: 'Sorry!',
                   text: errorMessage,
                   buttonTxt: 'Continue',
-                  imageUrl: 'assets/img/location-fail.svg',
+                  imageUrl: 'assets/location-fail.svg',
                 });
               });
           }
