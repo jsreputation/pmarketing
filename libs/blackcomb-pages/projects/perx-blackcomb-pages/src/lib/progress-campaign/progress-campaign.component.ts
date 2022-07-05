@@ -54,7 +54,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public activeMilestone: IMilestone;
   public currentUserPoints: number;
   public progressBarDisplayMode: ProgressBarDisplayMode = ProgressBarDisplayMode.individual;
-
+  public currentPosition: Position;
   public progressConfig: ProgressProperties | undefined;
   private destroy$: Subject<void> = new Subject();
   @ViewChild('milestonesConnectorDiv') private milestonesConnectorDiv: ElementRef;
@@ -140,6 +140,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
         } else {
           console.error('active milestone not found');
         }
+      }
+
+      // check the feature flag first to avoid unecessary permissions prompts on non-checkin progress campaigns
+      // geolocation request will hang the UI
+      if (campaign.customFields['checkin'] === 'true' && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.currentPosition = position;
+        });
       }
     });
   }
