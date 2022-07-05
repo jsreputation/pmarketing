@@ -755,6 +755,11 @@ export class V4CampaignService implements ICampaignService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 50,
+    maxAge: 300000, // 5 minutes
+  })
   public getCampaignsWithMeta(
     filterOptions?: ICampaignFilterOptions
   ): Observable<IRawCampaigns> {

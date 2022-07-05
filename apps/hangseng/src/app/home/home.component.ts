@@ -57,6 +57,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'hangseng-home',
@@ -639,6 +640,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (category.title !== 'All') {
       filterOptions.categoryIds = [String(category.id)];
     }
+
+    globalCacheBusterNotifier.next();
 
     this.campaignService
       .getCampaignsWithMeta(filterOptions)
