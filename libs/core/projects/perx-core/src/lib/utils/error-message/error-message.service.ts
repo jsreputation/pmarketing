@@ -88,6 +88,9 @@ export class ErrorMessageService {
           if (errMessage && errMessage.match(/invited/i)) {
             errorKey = 'ERRORS.NOT_INVITED';
           }
+          if (errMessage && errMessage.match(/checkin/i)) {
+            errorKey = 'ERRORS.CHECKIN_FAILED';
+          }
           break;
         case 13:
           if (errMessage && errMessage.match(/reservation expired/i)) {
