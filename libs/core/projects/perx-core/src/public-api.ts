@@ -290,7 +290,7 @@ export { PuzzleListComponent } from './lib/puzzles/puzzle-list/puzzle-list.compo
 export { LocationModule } from './lib/location/location.module';
 export { LocationServiceModule } from './lib/location/location.service.module';
 export { LocationsService } from './lib/location/locations.service';
-export { ILocation, IPosition } from './lib/location/ilocation';
+export { ILocation, IPosition, ICheckInOutcome } from './lib/location/ilocation';
 export { LocationsMapComponent } from './lib/location/locations-map/locations-map.component';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';
