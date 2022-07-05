@@ -518,6 +518,7 @@
     "CONTACT_TXT": "contact support for any questions"
   },
   "PROGRESS_CAMPAIGN": {
+    "CHECK_IN": "Check In",
     "TNC_HEADER": "Terms and Conditions",
     "ENROLL_BTN_TEXT": "Start",
     "VIEW_WALLET": "View Wallet"
