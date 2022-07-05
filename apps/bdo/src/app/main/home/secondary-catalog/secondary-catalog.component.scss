@@ -50,12 +50,12 @@
         }
       }
 
-      &#bdo-online-exclusives {
-        background-image: url("/assets/images/img-onlineexclusives-mobile-1.svg");
+      &#bdo-online-and-travel {
+        background-image: url("/assets/images/img-online-and-travel-mobile.svg");
         background-size: contain;
       
         @media screen and (min-width: $desktop-width) {
-          background-image: url("/assets/images/img-onlineexclusives-desktop.png");
+          background-image: url("/assets/images/img-online-and-travel-desktop.svg");
           background-size: contain;
         }
       }
