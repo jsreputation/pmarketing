@@ -253,9 +253,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
     return 0;
   }
 
-  public checkin(campaign: ICampaign): void {
+  public checkin(campaignId: number): void {
     this.geolocationsService.positions().pipe(
-      switchMap((position: Position) => this.locationsService.checkInToCampaign(campaign.id, position)
+      switchMap((position: Position) => this.locationsService.checkInToCampaign(campaignId, position)
       )
     ).subscribe(
       ()=> {
