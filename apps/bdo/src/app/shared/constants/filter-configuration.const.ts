@@ -15,6 +15,8 @@ export const FILTER_DATA: IFilterModel = {
         { name: 'Pay Bills',type:'pay-bills' },
         { name: 'Health & Wellness',type:'health-wellness' },
         { name: 'Travel & Entertainment',type:'travel-entertaiment'},
+        { name: 'Online', type:'online'},
+        { name: 'Travel', type:'travel'},
         { name: 'Explore',type:'explore'}
       ],
     },

@@ -222,6 +222,18 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLinkSelected:"assets/images/entertainment-enclosed-filled-fullcolor.svg"
       },
       {
+        key: 'online',
+        name: 'Online',
+        imageLink:"assets/images/explore-default.svg",
+        imageLinkSelected:"assets/images/explore-selected.svg"
+      },
+      {
+        key: 'travel',
+        name: 'Travel',
+        imageLink:"assets/images/explore-default.svg",
+        imageLinkSelected:"assets/images/explore-selected.svg"
+      },
+      {
         key:"explore",
         name:"Explore",
         imageLink:"assets/images/explore-default.svg",

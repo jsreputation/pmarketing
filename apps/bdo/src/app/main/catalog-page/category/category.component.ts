@@ -60,6 +60,7 @@ export class CategoryComponent implements OnInit {
               })
             ) : []
         };
+        console.log(this.category);
         if (!this.category.name) {
           const selectedTags = filterValue.tags.filter((tag) => tag.selected);
           this.isTag = selectedTags.length > 0 && selectedTags.length < filterValue.tags.length;
