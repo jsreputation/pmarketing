@@ -142,10 +142,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
         }
       }
 
-      // check the feature flag first to avoid unecessary permissions prompts on non-checkin progress campaigns
-      // geolocation request will hang the UI
-      if (campaign.customFields['checkin'] === 'true' && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
+      if (campaign.customFields['checkin'] === 'true') {
+        this.geolocationsService.positions().subscribe((position: Position) => {
           this.currentPosition = position;
         });
       }
@@ -262,10 +260,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   }
 
   public checkin(campaignId: number): void {
-    this.geolocationsService.positions().pipe(
-      switchMap((position: Position) => this.locationsService.checkInToCampaign(campaignId, position)
-      )
-    ).subscribe(
+    this.locationsService.checkInToCampaign(campaignId, this.currentPosition).subscribe(
       ()=> {
         this.notificationService.addPopup(
           {
