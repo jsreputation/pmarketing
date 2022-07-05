@@ -1,6 +1,6 @@
 @import "../_mixins";
 @import "../custom-theme";
-@import "../../theme/variables.scss";
+@import "../../theme/variables";
 
 :host {
   display: block;
@@ -10,7 +10,7 @@
 
 .toolbar {
   @include toolbar();
-  background-color: $lime !important;
+  background-color: $keyLime !important;
 
   .backArrow {
     @include toolBarArrow();
@@ -34,7 +34,7 @@
   display: block;
   margin: 0 auto;
   overflow-y: hidden;
-  position: "relative";
+  position: relative;
 
   &.has-toolbar {
     padding-bottom: 44px;
@@ -60,7 +60,7 @@
 
   a {
     text-decoration: none;
-    color: #666666;
+    color: $brownish-grey;
     display: flex;
     flex: 1;
     justify-content: center;
@@ -79,7 +79,7 @@
         }
 
         mat-icon {
-          color: #fff;
+          color: $white-Two
         }
       }
 

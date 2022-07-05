@@ -1,6 +1,8 @@
+@import '../../theme/variables';
+
 .main {
   height: 100%;
-  background-color: #f6f7f9;
+  background-color: $white-Two;
   display: flex;
   align-items: center;
   flex-direction: row;

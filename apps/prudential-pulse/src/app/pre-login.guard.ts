@@ -14,7 +14,6 @@ export class PreLoginGuard implements CanActivate {
   }
 
   public canActivate(route: ActivatedRouteSnapshot): boolean {
-
     if (route.queryParams.lang) {
       this.tokenStorage.setAppInfoProperty(route.queryParams.lang, 'lang');
       this.translate.use(route.queryParams.lang);

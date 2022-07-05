@@ -1,7 +1,7 @@
-@import '../../theme/variables.scss';
+@import '../../theme/variables';
 
 .page {
-  background-color: #ededed;
+  background-color: $white-Three;
   min-height: 100%;
   overflow-y: auto;
   height: 100%;
@@ -12,7 +12,7 @@
 }
 
 .card-container {
-  background-color: #fff;
+  background-color: $white-Two;
   margin-bottom: 8px;
   padding: 16px;
 }
@@ -30,20 +30,21 @@
   }
 
   h1 {
-    color: #333333;
+    color: $black;
     font-size: 24px;
     line-height: 29px;
   }
 
   h3 {
-    color: #333333;
+    color: $black;
     font-size: 14px;
     line-height: 17px;
   }
 
   .subtitle {
     font-size: 1.4rem;
-    color: #212121;
+    color: $brownish-grey;
+    color: $brownish-grey;
   }
 
   mat-chip {
@@ -53,7 +54,7 @@
     display: flex;
     justify-content: center;
     padding-top: 6px;
-    color: #666666;
+    color: $brownish-grey;
   }
 
   .custom-field-container{
@@ -72,7 +73,7 @@
     font-family: 'Open Sans';
     font-size: 14px;
     line-height: 19px;
-    color: #666666;
+    color: $brownish-grey;
     text-align: center;
     padding: 7px 40px 40px;
   }
@@ -95,13 +96,13 @@
   .mat-card-subtitle {
     font-size: 14px;
     line-height: 17px;
-    color: #666666;
+    color: $brownish-grey;
     font-weight: 500;
   }
 
   .mat-card-title {
     font-size: 16px;
-    color: #333333;
+    color: $black;
     font-weight: 500;
   }
 
@@ -109,7 +110,7 @@
     p {
       font-size: 14px;
       line-height: 17px;
-      color: #333333;
+      color: $black;
     }
   }
 }

@@ -6,12 +6,12 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #d8d8d8;
+  background-color: $white-Five;
   overflow-y: auto;
 }
 
 .progress-campaign-card-content {
-  background-color: $white;
+  background-color: $white-Two;
   margin-bottom: 8px;
 
   &:last-child {
@@ -28,12 +28,12 @@
       }
 
       .mat-tab-label-active {
-        color: $darkish-green;
+        color: $darkishGreen;
         opacity: 1;
       }
 
       .mat-ink-bar {
-        background-color: $green-dark;
+        background-color: $mediumGreen;
         height: 4px;
         border-radius: 2px;
       }
@@ -59,7 +59,7 @@
       display: flex;
 
       &.border-bottom {
-        border-bottom: 1px solid #e5e5e5;
+        border-bottom: 1px solid $very-light-pink;
         padding: 14px 0;
       }
 
@@ -100,7 +100,7 @@
             border-radius: 5rem;
             padding: 0.4rem 0.5rem;
             font-size: 8px;
-            background-color: #2664ed; // material default blue
+            background-color: $medium-blue; // material default blue
             color: white;
             letter-spacing: 0.6px;
             text-transform: uppercase;
@@ -139,7 +139,7 @@
 
               &.reward-icon {
                 padding-right: 1rem;
-                color: #2664ed;
+                color: $medium-blue;
               }
             }
 
@@ -157,11 +157,11 @@
 
           ::ng-deep {
             .mat-progress-bar-fill::after {
-              background-color: #34a344;
+              background-color: $mediumGreen;
             }
 
             .mat-progress-bar-buffer {
-              background-color: #f2f2f2 !important;
+              background-color: $white-Four !important;
             }
           }
         }
@@ -193,11 +193,11 @@
           width: 93px;
           height: 40px;
           border-radius: 5px;
-          border-color: $green-dark;
+          border-color: $mediumGreen;
           border-style: solid;
           border-width: 1px;
 
-          color: $darkish-green;
+          color: $darkishGreen;
           font-size: 13px;
           font-weight: 600;
           line-height: 20px;
@@ -377,7 +377,7 @@
   }
 
   svg {
-    background: #e8e8e8;
+    background: $white-Five;
   }
 
   ::ng-deep {
@@ -390,12 +390,12 @@
       height: 0.6rem !important;
 
       .mat-progress-bar-fill::after {
-        background-color: #34a344;
+        background-color: $mediumGreen;
       }
     }
 
     .mat-progress-bar-buffer {
-      background-color: #f2f2f2;
+      background-color: $white-Four;
     }
   }
 

@@ -3,7 +3,7 @@
 
 .main-puzzle-container {
   @include main-wrap;
-  background-color: #d8d8d8;
+  background-color: $white-Five;
   padding: 0;
 
   h1 {
@@ -80,8 +80,8 @@
 
   button {
     margin-bottom: 16px;
-    background-color: $medium-green;
-    color: $white;
+    background-color: $kellyGreen;
+    color: $white-Two;
     font-size: 19px;
     font-weight: 500;
   }
@@ -101,7 +101,7 @@
 }
 
 .card-container {
-  background-color: $white;
+  background-color: $white-Two;
   margin-bottom: 8px;
   padding: 0 2.4rem;
 
@@ -112,7 +112,7 @@
 
       height: 1px;
       border-width: 0;
-      background-color: #d8d8d8;
+      background-color: $white-Five;
     }
 
     .how-to-work {
