@@ -91,7 +91,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
               private locationsService: LocationsService,
-              private geolocationsService: GeoLocationService,
+              private geolocationService: GeoLocationService,
               private errorMessageService: ErrorMessageService,
               private campaignService: ICampaignService) {
   }
@@ -143,7 +143,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       }
 
       if (campaign.customFields['checkin'] === 'true') {
-        this.geolocationsService.positions().subscribe((position: Position) => {
+        this.geolocationService.positions().subscribe((position: Position) => {
           this.currentPosition = position;
         });
       }
