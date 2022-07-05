@@ -1,7 +1,8 @@
 import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   CampaignOutcomeType,
-  CampaignState,
+  CampaignState, ErrorMessageService,
+  GeoLocationService,
   IBadge,
   ICampaign,
   ICampaignOutcome,
@@ -13,6 +14,7 @@ import {
   IPrizeSetOutcomeService,
   IProgressTotal,
   IVoucherService,
+  LocationsService,
   NotificationService,
   PrizeSetIssuedType,
   ProgressCampaignService,
@@ -22,6 +24,7 @@ import {
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
@@ -87,6 +90,9 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private progressCampaignService: ProgressCampaignService,
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
+              private locationsService: LocationsService,
+              private geolocationsService: GeoLocationService,
+              private errorMessageService: ErrorMessageService,
               private campaignService: ICampaignService) {
   }
 
@@ -245,5 +251,38 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
     }
 
     return 0;
+  }
+
+  public checkin(campaign: ICampaign): void {
+    this.geolocationsService.positions().pipe(
+      switchMap((position: Position) => this.locationsService.checkInToCampaign(campaign.id, position)
+      )
+    ).subscribe(
+      ()=> {
+        this.notificationService.addPopup(
+          {
+            title: 'Congratulations!',
+            text: 'You have successfully checked-in.',
+            buttonTxt: 'Continue',
+            imageUrl: '',
+          });
+      },
+      (err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.error) {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message, err.status)
+              .subscribe((errorMessage) => {
+                this.notificationService.addPopup(
+                  {
+                  title: 'Sorry!',
+                  text: errorMessage,
+                  buttonTxt: 'Continue',
+                  imageUrl: '',
+                });
+              });
+          }
+        }
+      }
+    )
   }
 }
