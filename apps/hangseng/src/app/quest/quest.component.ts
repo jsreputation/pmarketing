@@ -48,7 +48,6 @@ export class QuestComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService) { }
 
   public ngOnInit(): void {
-    console.log('AAAAA')
     this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
       map((params: ParamMap) => params.get('id')),
@@ -64,9 +63,7 @@ export class QuestComponent implements OnInit, OnDestroy {
       ),
       switchMap(([campaign, outcomes, tasks, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
         this.taskTotalLen = tasks.length;
-        console.log('Tasks: ', tasks)
         if (quests && quests.length > 0) {
-          console.log('Quest: ', quests);
           this.questState = quests[0].state ? quests[0].state : '';
           return this.questService.getQuestProgress(quests[0].id).pipe(
             map((quest) => [campaign, outcomes, tasks, quest])
