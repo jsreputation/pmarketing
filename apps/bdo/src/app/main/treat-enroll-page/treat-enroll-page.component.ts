@@ -79,7 +79,7 @@ export class TreatEnrollPageComponent implements OnInit {
                     promoId: item.enrolmentReference,
                     campaignId: item.campaignId,
                     campaignName: this.campaign.displayProperties.landingPage
-                      .heading,
+                      .heading.text,
                     tnc: this.campaign.customFields?.postEnrolText,
                   },
                 }
