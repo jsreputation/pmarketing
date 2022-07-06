@@ -17,28 +17,26 @@
     </div>
     <div class="header">
       <p class="title">{{questConfig?.title}}</p>
-      <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna
-        aliqua.</p>
+      <p class="description">{{questConfig?.description}}</p>
     </div>
     <div class="reward-container">
       <mat-list>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feAction">
           <img mat-list-icon class="images" src="../../assets/icons/mission.svg">
-          <span>Complete the mission for the reward</span>
+          {{feAction}}
         </mat-list-item>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feReward">
           <img mat-list-icon class="images" src="../../assets/icons/mission-reward.svg">
-          <span>Get lucky draw chance</span>
+          {{feReward}}
         </mat-list-item>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feExpiryDate">
           <img mat-list-icon class="images" src="../../assets/icons/mission-end-date.svg">
-          <span>Ends on 23/03/2023</span>
+          {{feExpiryDate}}
         </mat-list-item>
       </mat-list>
     </div>
-    <div class="mission-note">
-      <p class="description">Mission records may take time to update</p>
+    <div class="mission-note" *ngIf="feData">
+      <p class="description">{{feData}}</p>
     </div>
   </div>
   <div class="quest-content-container">
