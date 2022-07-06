@@ -25,6 +25,7 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
@@ -262,12 +263,14 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public checkin(campaignId: number): void {
     this.locationsService.checkInToCampaign(campaignId, this.currentPosition).subscribe(
       ()=> {
+        globalCacheBusterNotifier.next();
         this.notificationService.addPopup(
           {
             title: 'Congratulations!',
             text: 'You have successfully checked-in.',
             buttonTxt: 'Continue',
             imageUrl: 'assets/location-success.svg',
+            afterClosedCallBack: this
           });
       },
       (err) => {
@@ -281,11 +284,22 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
                   text: errorMessage,
                   buttonTxt: 'Continue',
                   imageUrl: 'assets/location-fail.svg',
+                  afterClosedCallBack: this
                 });
               });
           }
         }
       }
     )
+  }
+
+  public dialogClosed(): void {
+    this.campaign$.pipe(
+      switchMap((campaign: ICampaign) => this.progressCampaignService.getCampaignTotalProgress(campaign.id))
+    ).subscribe(
+      (currentUserProgress)=>{
+        this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints;
+      }
+    );
   }
 }
