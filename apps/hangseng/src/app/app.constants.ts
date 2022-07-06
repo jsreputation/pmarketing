@@ -6,5 +6,7 @@ export const BACK_ARROW_URLS: string[] = [
   '/reward-detail',
   '/c',
   '/favorite-rewards',
-  '/stamp'
+  '/stamp',
+  '/game',
+  '/quest'
 ];
