@@ -270,6 +270,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
             text: 'You have successfully checked-in.',
             buttonTxt: 'Continue',
             imageUrl: 'assets/location-success.svg',
+            afterClosedCallBack: this
           });
       },
       (err) => {
@@ -283,11 +284,15 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
                   text: errorMessage,
                   buttonTxt: 'Continue',
                   imageUrl: 'assets/location-fail.svg',
+                  afterClosedCallBack: this
                 });
               });
           }
         }
       }
     )
+  }
+
+  public dialogClosed(): void {
   }
 }
