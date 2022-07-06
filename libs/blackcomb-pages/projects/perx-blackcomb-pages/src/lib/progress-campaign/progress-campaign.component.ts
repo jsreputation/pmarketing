@@ -294,5 +294,12 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   }
 
   public dialogClosed(): void {
+    this.campaign$.pipe(
+      switchMap((campaign: ICampaign) => this.progressCampaignService.getCampaignTotalProgress(campaign.id))
+    ).subscribe(
+      (currentUserProgress)=>{
+        this.currentUserPoints = currentUserProgress.userTotalAccumulatedCampaignPoints;
+      }
+    );
   }
 }
