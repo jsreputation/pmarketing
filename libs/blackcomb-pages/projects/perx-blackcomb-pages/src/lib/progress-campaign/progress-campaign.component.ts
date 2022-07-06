@@ -25,6 +25,7 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
@@ -262,6 +263,7 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public checkin(campaignId: number): void {
     this.locationsService.checkInToCampaign(campaignId, this.currentPosition).subscribe(
       ()=> {
+        globalCacheBusterNotifier.next();
         this.notificationService.addPopup(
           {
             title: 'Congratulations!',
