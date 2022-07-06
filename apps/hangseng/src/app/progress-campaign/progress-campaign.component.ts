@@ -22,6 +22,7 @@ import {
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 enum ProgressBarDisplayMode {
   cumulative = 'cumulative',
@@ -42,6 +43,10 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
   public lineDrawned: boolean = false;
   public campaignProgress: number = 0;
   public completedTaskIds: (number | undefined)[] = [];
+  public feAction: string;
+  public feReward: string;
+  public feExpiryDate: string;
+  public feData: string;
   public state: typeof CampaignState = CampaignState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
@@ -87,7 +92,8 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
               private progressCampaignService: ProgressCampaignService,
               private prizeSetService: IPrizeSetOutcomeService,
               private voucherService: IVoucherService,
-              private campaignService: ICampaignService) {
+              private campaignService: ICampaignService,
+              private translate: TranslateService) {
   }
 
   public ngOnInit(): void {
@@ -112,6 +118,11 @@ export class ProgressCampaignComponent implements OnInit, OnDestroy, AfterViewCh
       this.milestones = milestones;
       this.campaign$ = of(campaign);
       this.progressConfig = campaign.displayProperties?.progressDetails;
+
+      this.feAction = campaign.customFields[`f/e_action_${this.translate.currentLang}`];
+      this.feReward = campaign.customFields[`f/e_reward_${this.translate.currentLang}`];
+      this.feExpiryDate = campaign.customFields['f/e_expiry_date'];
+      this.feData = campaign.customFields[`f/e_data_${this.translate.currentLang}`];
 
       const [ finalMilestone ] = milestones.slice(-1);
       if (!! finalMilestone) {
