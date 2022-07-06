@@ -129,7 +129,12 @@ export class LayoutComponent implements OnInit {
       } else {
         this.flagLocalStorageService.resetFlagInLocalStorage('preAuth');
       }
-      this.showHeader = !chromelessFlag;
+
+      if (chromelessFlag || remoteChromelessFlag) {
+        this.showHeader = false;
+      } else {
+        this.showHeader = true;
+      }
     });
   }
 
