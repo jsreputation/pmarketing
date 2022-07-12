@@ -62,7 +62,7 @@ export class TreatEnrollPageComponent implements OnInit {
   }
 
   enroll() {
-    if (!this.enrollForm.valid) {
+    if (this.enrollForm.valid) {
       this.campaignService
         .bdoCampaignEnrol(
           this.campaign.id,
@@ -71,7 +71,6 @@ export class TreatEnrollPageComponent implements OnInit {
         )
         .subscribe(
           (item) => {
-            console.log(item, this.campaign);
             if (item) {
               this.route.navigate(
                 [`treat-enroll/${this.campaign.id}/complete`],
@@ -79,7 +78,8 @@ export class TreatEnrollPageComponent implements OnInit {
                   state: {
                     promoId: item.enrolmentReference,
                     campaignId: item.campaignId,
-                    campaignName: this.campaign.displayProperties.landingPage.heading,
+                    campaignName: this.campaign.displayProperties.landingPage
+                      .heading,
                     tnc: this.campaign.customFields?.postEnrolText,
                   },
                 }
