@@ -29,7 +29,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-  CampaignServiceModule, ProfileServiceModule, InstantOutcomeTransactionServiceModule
+  CampaignServiceModule, ProfileServiceModule, InstantOutcomeTransactionServiceModule, LocationServiceModule
 
   // ICampaignService,
   // ConfigService
@@ -132,6 +132,7 @@ export const setLanguage = (
     HttpClientModule,
     MatDialogModule,
     ContentModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

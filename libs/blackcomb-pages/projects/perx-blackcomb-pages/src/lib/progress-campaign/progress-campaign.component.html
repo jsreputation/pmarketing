@@ -13,25 +13,7 @@
     <div class="overall-progress-bar-container">
       <div class="overall-progress-bar-container-content">
         <p>Overall Progress:</p>
-        <div class="spinner-wrapper">
-          <div class="spinner-background">
-            <mat-progress-spinner
-              mode="determinate"
-              [strokeWidth]="4"
-              [diameter]="48"
-              [value]="100"></mat-progress-spinner>
-          </div>
-          <div class="spinner-foreground">
-            <mat-progress-spinner
-              mode="determinate"
-              [strokeWidth]="4"
-              [diameter]="48"
-              [value]="campaignProgress"></mat-progress-spinner>
-          </div>
-          <div class="spinner-progress-percentage">
-            {{campaignProgress}}%
-          </div>
-        </div>
+        <perx-blackcomb-pages-circular-progress-bar [campaignProgress]="campaignProgress"></perx-blackcomb-pages-circular-progress-bar>
       </div>
     </div>
     <div class="progress-campaign-content">
@@ -193,4 +175,12 @@
       </button>
     </div>
   </ng-template>
+  <div class="bottom-nav-container mat-elevation-z2" *ngIf="campaign.customFields['checkin'] === 'true'">
+    <div id='position-not-available' *ngIf="!currentPosition">
+      Turn on location permission from Privacy settings to earn exciting Campaign Prizes!
+    </div>
+    <button [color]="!currentPosition ? null : 'primary'" [disabled]="!currentPosition" (click)="checkin(campaign.id)" mat-flat-button>
+      {{ 'PROGRESS_CAMPAIGN.CHECK_IN' | translate }}
+    </button>
+  </div>
 </div>

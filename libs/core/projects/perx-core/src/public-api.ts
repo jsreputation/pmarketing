@@ -91,7 +91,9 @@ export {
   IOperatingHours,
   IBadgeOutcome,
   TeamsProperties,
-  ICampaignRule
+  ICampaignRule,
+  ICampaignCategory,
+  IRawCampaigns
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent, IRewardPopupConfig } from './lib/campaign/reward-popup/reward-popup.component';
@@ -286,8 +288,9 @@ export { PuzzleListComponent } from './lib/puzzles/puzzle-list/puzzle-list.compo
  * Locations
  */
 export { LocationModule } from './lib/location/location.module';
+export { LocationServiceModule } from './lib/location/location.service.module';
 export { LocationsService } from './lib/location/locations.service';
-export { ILocation } from './lib/location/ilocation';
+export { ILocation, IPosition, ICheckInOutcome } from './lib/location/ilocation';
 export { LocationsMapComponent } from './lib/location/locations-map/locations-map.component';
 export { sortByDistance } from './lib/location/sort-by-distance';
 export { GeoLocationService } from './lib/location/geolocation.service';

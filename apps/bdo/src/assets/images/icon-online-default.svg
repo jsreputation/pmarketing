@@ -1,0 +1,16 @@
+<svg id="explore-default" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect id="enclosed-lightmonochrome" width="64" height="64" rx="32" fill="#e5f5ff"/>
+  <g id="icon-ud-mobile" transform="translate(9 9)">
+    <g id="Group_12248" data-name="Group 12248">
+      <path id="Path_3461" data-name="Path 3461" d="M0,0H14.328V6.787H0Z" transform="translate(16.59 31.672)" fill="#fdb913"/>
+      <rect id="Rectangle_487" data-name="Rectangle 487" width="46" height="46" fill="none"/>
+      <path id="Path_3094" data-name="Path 3094" d="M33.667,5.97H19.961a4.475,4.475,0,0,0-4.405,4.188,4.44,4.44,0,0,0-.019.461V38.566a4.478,4.478,0,0,0,4.419,4.525H33.662a4.478,4.478,0,0,0,4.424-4.525V10.495A4.478,4.478,0,0,0,33.667,5.97ZM30.093,37.2h-6.77a1.131,1.131,0,1,1,0-2.262h6.77a1.131,1.131,0,0,1,0,2.262Z" transform="translate(-3.82 -1.468)" fill="#fff"/>
+    </g>
+    <g id="Group_4179" data-name="Group 4179" transform="translate(11.717 4.626)">
+      <g id="Group_4178" data-name="Group 4178" transform="translate(0)">
+        <path id="Path_1032" data-name="Path 1032" d="M136.125-3250H122.419a4.478,4.478,0,0,1-4.419-4.525v-27.946a4.478,4.478,0,0,1,4.419-4.524h13.706a4.478,4.478,0,0,1,4.419,4.524v2.368a1.142,1.142,0,0,1-1.128,1.155,1.142,1.142,0,0,1-1.128-1.155v-2.368a2.19,2.19,0,0,0-2.162-2.214H122.419a2.191,2.191,0,0,0-2.162,2.214v27.946a2.191,2.191,0,0,0,2.162,2.214h13.706a2.191,2.191,0,0,0,2.162-2.214v-19.8a1.142,1.142,0,0,1,1.128-1.155,1.142,1.142,0,0,1,1.128,1.155v19.8A4.478,4.478,0,0,1,136.125-3250Z" transform="translate(-118 3287)" fill="#0072d8"/>
+      </g>
+    </g>
+    <rect id="Rectangle_487-2" data-name="Rectangle 487" width="46" height="46" fill="none"/>
+  </g>
+</svg>

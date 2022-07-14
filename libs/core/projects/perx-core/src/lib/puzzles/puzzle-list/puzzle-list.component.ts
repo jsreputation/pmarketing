@@ -55,7 +55,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       // set empty function with index for unit tests
       this.titleFn = (index: number) => of(`${this.indexToLetter(index)}`);
       this.translate.get('PUZZLE.PUZZLE')
-      .subscribe((translation) => this.titleFn = (index: number) => of(`${translation} #${this.indexToLetter(index)}`));
+        .subscribe((translation) => this.titleFn = (index: number) => of(`${translation} #${this.indexToLetter(index)}`));
     }
 
     if (!this.puzzleTextFn) {
@@ -100,6 +100,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.campaignId) {
       this.puzzles = null;
       this.cards = null;
+      console.log("this.campaignId: ", this.campaignId)
       if (this.campaignId !== null) {
         this.puzzles = this.stampService.getCards(this.campaignId);
         this.puzzles
@@ -108,6 +109,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
           )
           .subscribe(
             (res: IStampCard[]) => {
+              console.log("IStampCard: ", res);
               this.cards = res;
               this.initTotal(res);
               // assume all is completed

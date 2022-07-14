@@ -1,0 +1,150 @@
+@import "../../../theme/custom-theme";
+@import "../../../theme/mixins";
+@import "../../../theme/variables.scss";
+mat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  min-width: 343px;
+}
+
+.campaign-collection-card {
+  position: relative;
+
+  .new-tag {
+    position: absolute;
+    width: 71px;
+    top: -20px;
+    right: 12px;
+    z-index: 1;
+
+    .new-tag-text {
+      position: absolute;
+      width: 71px;
+      top: 10px;
+      transform: rotateZ(18deg);
+      color: rgb(229,0,0);
+      text-align: center;
+      font-family: 'Open Sans';
+      font-weight: 600;
+      font-size: 12px;
+    }
+  }
+}
+
+.campaign-collection-card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: $brownish-grey;
+    margin-block-end: 0;
+  }
+
+  mat-chip {
+    border-radius: 4px;
+    width: 154px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    color: $brownish-grey;
+  }
+}
+
+.campaigns-card {
+  margin: 32px 16px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &.disabled {
+    filter: grayscale(50%) opacity(0.4);
+  }
+
+  .remaining-rewards {
+    font-size: 1.2rem;
+    color: $white-Two;
+    background: $black;
+    text-align: end;
+    padding-right: 0.8rem;
+  }
+
+  .img-wrapper {
+    width: 100%;
+    height: 20rem;
+
+    .card-img {
+      bottom: 15rem;
+      height: 194px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-content {
+    padding: 12px;
+
+    .main-reward-title {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 22px;
+      color: $black;
+      margin: 0;
+    }
+
+    .reward-subtitle {
+      padding-top: 7px;
+      color: $brownish-grey;
+      font-size: 14px;
+      letter-spacing: 0;
+
+      ::ng-deep p {
+        margin: 0;
+      }
+    }
+  }
+
+  .reward {
+    display: flex;
+    justify-content: space-between;
+    background-color: $white-Three;
+
+    .main-reward-title {
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+
+    .reward-subtitle {
+      .bold-points {
+        font-weight: 500;
+        font-size: 2.3rem;
+        color: var(--primary);
+      }
+    }
+  }
+}
+
+.flex-for-button {
+  display: flex;
+}
+
+.see-button {
+  margin: 0.8rem 1.6rem;
+  flex-grow: 1;
+}
+
+.ellipsis-1-line {
+  @include ellipse-lines(1);
+}
+
+.ellipsis-2-line {
+  @include ellipse-lines(2);
+}

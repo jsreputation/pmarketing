@@ -117,13 +117,13 @@
     "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
   "NAVIGATION": {
-    "HOME": "Home",
-    "REWARDS": "Rewards",
-    "WALLET": "Wallet",
-    "HISTORY": "History",
+    "HOME": "Mission",
+    "REWARDS": "Wallet",
+    "WALLET": "Reward",
+    "HISTORY": "Reward History",
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
-    "ACCOUNT": "Account",
+    "ACCOUNT": "Setting",
     "PAY": "Pay",
     "NEARME": "Near Me",
     "STAMPS": "Stamps"
@@ -233,7 +233,8 @@
     "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TRANSFER_POINTS": "Transfer Points",
     "POINTS_TRANSFER_HISTORY": "Points Transfer History",
-    "BADGES": "My Badges"
+    "BADGES": "My Badges",
+    "PROGRAM_OPT_OUT": "Leave Chill Reward programme"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -293,7 +294,9 @@
     "QUEST_CAMPAIGNS": "Quests",
     "SURVEYS": "Surveys",
     "PROGRESS_BAR_CAMPAIGNS": "Progress Campaigns",
-    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards"
+    "INSTANT_REWARD_CAMPAIGNS": "Instant Rewards",
+    "EMPTY_LIST": "More mission is coming",
+    "ENDS_ON": "Ends on"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
@@ -369,7 +372,7 @@
     "VIEW_LOCATION": "View location"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": " new stamps",
+    "STAMPS_LABEL_TXT": " stamp collected",
     "GAME_NO_REWARDS_TITLE": "Thanks for playing",
     "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
     "GAME_SUCCESS_TITLE": "Congratulations!",
@@ -383,7 +386,8 @@
     "VIEW_REWARD": "View reward",
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
@@ -403,7 +407,10 @@
     "NO_REWARD_POPUP_TEXT": "Try again next time",
     "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
     "ERROR_TITLE": "Something went wrong with our server",
-    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience.",
+    "STAMPS_COMPLETED": "Congrats!! You've completed all mission",
+    "RISK_DISCLAIMER_TITLE": "Important Note", 
+    "READ_MORE_BUTTON_TEXT": "Read more"
   },
   "FAVOURITES_PAGE": {
     "TITLE": "Favourite Rewards"
@@ -412,7 +419,8 @@
     "PUZZLE": "Puzzle",
     "PLAY_NOW": "Play now!",
     "NEW_PIECES": "New pieces",
-    "NEW_STAMPS": " new stamps"
+    "NEW_STAMPS": " new stamps",
+    "STAMP_COLLECTED": " stamp collected"
   },
   "ERRORS": {
     "GENERIC": "Sorry, something went wrong",
@@ -420,6 +428,7 @@
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
     "NOT_ENOUGH_POINTS": "Not enough points balance",
     "NOT_INVITED": "The user was not invited.",
+    "CHECKIN_FAILED": "Your current location doesn't match with the check-in point.",
     "INVALID_INVITE_CODE": "Invalid invite code",
     "TEAM_FULL": "This team is already full",
     "RESERVATION_EXPIRED": "Your game session has expired, please try again",
@@ -433,7 +442,7 @@
     "CTA_NEXT_TXT": "START",
     "VIEW_WALLET": "VIEW WALLET",
     "QUEST_COMPLETED": "QUEST COMPLETED:",
-    "PROGRESS": "YOUR PROGRESS:",
+    "PROGRESS": "Overall Progress:",
     "EARNED_PRIZES": "YOUR EARNED PRIZES:",
     "PRIZES": "PRIZES:",
     "TNC": "Terms and Conditions"
@@ -467,7 +476,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "POINTS_TRANSFER": {
     "FROM": "From",
@@ -488,6 +498,7 @@
     "TRANSFER_POINTS_CONFIRM_CTA":"COnfirm Points Transfer"
   },
   "PROGRESS_CAMPAIGN": {
+    "CHECK_IN": "Check In",
     "TNC_HEADER": "Terms and Conditions",
     "ENROLL_BTN_TEXT": "Start",
     "VIEW_WALLET": "View Wallet"
@@ -534,5 +545,9 @@
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
   "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "STAMP_CAMPAIGNS": {
+    "TNC_HEADER": "How to work",
+    "ENDS_ON": "Ends on"
+  }
 }

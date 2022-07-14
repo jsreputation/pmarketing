@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { EmptyResultsComponent } from './empty-results.component';
 
@@ -8,9 +9,10 @@ describe('EmptyResultsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EmptyResultsComponent ]
+      declarations: [EmptyResultsComponent],
+      imports: [TranslateModule.forRoot()]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

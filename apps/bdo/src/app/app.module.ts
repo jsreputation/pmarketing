@@ -17,6 +17,8 @@ import {
   LanguageInterceptor,
   LanguageService,
   LocaleIdFactory,
+  LocationModule,
+  LocationServiceModule,
   LoyaltyModule, MerchantsModule, OutcomeModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
@@ -60,9 +62,11 @@ export const appInit =
 
     // core modules
     AuthenticationModule,
+    LocationModule,
     LoyaltyModule.forRoot(),
     ProfileModule,
     PerxProfileServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

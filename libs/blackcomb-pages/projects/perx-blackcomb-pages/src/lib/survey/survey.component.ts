@@ -10,12 +10,19 @@ import {
   NotificationService,
   RewardPopupComponent,
   SurveyService,
-  IFlags, 
-  SettingsService
+  IFlags,
+  SettingsService,
 } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EMPTY, Observable, Subject } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  catchError,
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,7 +35,7 @@ interface IAnswer {
 @Component({
   selector: 'perx-blackcomb-survey',
   templateUrl: './survey.component.html',
-  styleUrls: ['./survey.component.scss']
+  styleUrls: ['./survey.component.scss'],
 })
 export class SurveyComponent implements OnInit, OnDestroy {
   @Input('data')
@@ -46,78 +53,78 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public showPrizeSetOutcome: boolean = false;
   private prizeSetBtnTxt: string;
   private isBadgeOucome: boolean;
+  private isLoyaltyPointsOutcome: boolean;
   public remoteFlags: IFlags;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY.SUCCESS_TITLE',
     text: 'SURVEY.SUCCESS_TEXT',
     imageUrl: 'assets/congrats_image.png',
-    buttonTxt: 'CLOSE'
+    buttonTxt: 'CLOSE',
   };
 
   public noRewardsPopUp: IPopupConfig = {
     title: 'SURVEY.NO_REWARDS_TITLE',
     text: 'SURVEY.NO_REWARDS_TEXT',
     imageUrl: '',
-    buttonTxt: 'BACK_TO_WALLET'
+    buttonTxt: 'BACK_TO_WALLET',
   };
 
   private notAvailablePopUp: IPopupConfig = {
     title: 'SURVEY.NOT_AVAILABLE_TITLE',
     text: 'SURVEY.NOT_AVAILABLE_TXT',
-    buttonTxt: 'SURVEY.NOT_AVAILABLE_CTA'
+    buttonTxt: 'SURVEY.NOT_AVAILABLE_CTA',
   };
 
   private initTranslate(): void {
     if (this.successPopUp.title) {
       this.translate
         .get(this.successPopUp.title)
-        .subscribe(text => (this.successPopUp.title = text));
+        .subscribe((text) => (this.successPopUp.title = text));
     }
     if (this.successPopUp.text) {
       this.translate
         .get(this.successPopUp.text)
-        .subscribe(text => (this.successPopUp.text = text));
+        .subscribe((text) => (this.successPopUp.text = text));
     }
     if (this.successPopUp.buttonTxt) {
       this.translate
         .get(this.successPopUp.buttonTxt)
-        .subscribe(text => (this.successPopUp.buttonTxt = text));
+        .subscribe((text) => (this.successPopUp.buttonTxt = text));
     }
     if (this.noRewardsPopUp.title) {
       this.translate
         .get(this.noRewardsPopUp.title)
-        .subscribe(text => (this.noRewardsPopUp.title = text));
+        .subscribe((text) => (this.noRewardsPopUp.title = text));
     }
     if (this.noRewardsPopUp.text) {
       this.translate
         .get(this.noRewardsPopUp.text)
-        .subscribe(text => (this.noRewardsPopUp.text = text));
+        .subscribe((text) => (this.noRewardsPopUp.text = text));
     }
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate
         .get(this.noRewardsPopUp.buttonTxt)
-        .subscribe(text => (this.noRewardsPopUp.buttonTxt = text));
+        .subscribe((text) => (this.noRewardsPopUp.buttonTxt = text));
     }
     if (this.notAvailablePopUp.title) {
       this.translate
         .get(this.notAvailablePopUp.title)
-        .subscribe(text => (this.notAvailablePopUp.title = text));
+        .subscribe((text) => (this.notAvailablePopUp.title = text));
     }
     if (this.notAvailablePopUp.text) {
       this.translate
         .get(this.notAvailablePopUp.text)
-        .subscribe(text => (this.notAvailablePopUp.text = text));
+        .subscribe((text) => (this.notAvailablePopUp.text = text));
     }
     if (this.notAvailablePopUp.buttonTxt) {
       this.translate
         .get(this.notAvailablePopUp.buttonTxt)
-        .subscribe(text => (this.notAvailablePopUp.buttonTxt = text));
+        .subscribe((text) => (this.notAvailablePopUp.buttonTxt = text));
     }
     this.translate
       .get('PRIZE_SET.OUTCOME_SUCCESS_TITLE')
       .subscribe((text) => (this.prizeSetBtnTxt = text));
-
   }
 
   constructor(
@@ -129,13 +136,15 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private dialog: MatDialog,
     private settingsService: SettingsService
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.initTranslate();
-  
-     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
-      this.showPrizeSetOutcome = flags.showPrizeSetOutcome ? flags.showPrizeSetOutcome : false;
+
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showPrizeSetOutcome = flags.showPrizeSetOutcome
+        ? flags.showPrizeSetOutcome
+        : false;
     });
 
     this.isAnonymousUser = this.auth.getAnonymous();
@@ -156,41 +165,39 @@ export class SurveyComponent implements OnInit, OnDestroy {
     );
     this.moveId$ = this.data$.pipe(
       switchMap((survey: ISurvey) => this.surveyService.getMoveId(survey.id)),
-      tap((moveId: number) => this.moveId = moveId)
+      tap((moveId: number) => (this.moveId = moveId))
     );
-    this.data$.subscribe(
-      (survey: ISurvey) => {
-        if (survey) {
-          this.survey = survey;
-          const { displayProperties } = this.survey;
-          if (
-            displayProperties &&
-            displayProperties.informationCollectionSetting
-          ) {
-            this.informationCollectionSetting =
-              displayProperties.informationCollectionSetting;
-          }
-          const successOutcome = survey.results.outcome;
-          const noOutcome = survey.results.noOutcome;
-          if (noOutcome) {
-            this.noRewardsPopUp.title = noOutcome.title;
-            this.noRewardsPopUp.text = noOutcome.subTitle;
-            this.noRewardsPopUp.imageUrl =
-              noOutcome.image || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt =
-              noOutcome.button || this.noRewardsPopUp.buttonTxt;
-          }
-          if (successOutcome) {
-            this.successPopUp.title = successOutcome.title;
-            this.successPopUp.text = successOutcome.subTitle;
-            this.successPopUp.imageUrl =
-              successOutcome.image || this.successPopUp.imageUrl;
-            this.successPopUp.buttonTxt =
-              successOutcome.button || this.successPopUp.buttonTxt;
-          }
+    this.data$.subscribe((survey: ISurvey) => {
+      if (survey) {
+        this.survey = survey;
+        const { displayProperties } = this.survey;
+        if (
+          displayProperties &&
+          displayProperties.informationCollectionSetting
+        ) {
+          this.informationCollectionSetting =
+            displayProperties.informationCollectionSetting;
+        }
+        const successOutcome = survey.results.outcome;
+        const noOutcome = survey.results.noOutcome;
+        if (noOutcome) {
+          this.noRewardsPopUp.title = noOutcome.title;
+          this.noRewardsPopUp.text = noOutcome.subTitle;
+          this.noRewardsPopUp.imageUrl =
+            noOutcome.image || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt =
+            noOutcome.button || this.noRewardsPopUp.buttonTxt;
+        }
+        if (successOutcome) {
+          this.successPopUp.title = successOutcome.title;
+          this.successPopUp.text = successOutcome.subTitle;
+          this.successPopUp.imageUrl =
+            successOutcome.image || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt =
+            successOutcome.button || this.successPopUp.buttonTxt;
         }
       }
-    );
+    });
   }
 
   public ngOnDestroy(): void {
@@ -199,8 +206,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(finalAnswer: IAnswer): void {
-    const surveyId =
-      (this.survey && this.survey.id) || null;
+    const surveyId = (this.survey && this.survey.id) || null;
     const isCollectDataRequired = !!(
       this.informationCollectionSetting === 'pi_required' ||
       this.informationCollectionSetting === 'signup_required'
@@ -214,37 +220,43 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.surveyService
         .postSurveyAnswer(finalAnswer, this.moveId)
         .pipe(
-          tap((res: { hasOutcomes: boolean, answers: IAnswer[] }) => { this.answers = res.answers; }),
+          tap((res: { hasOutcomes: boolean; answers: IAnswer[] }) => {
+            this.answers = res.answers;
+          }),
           catchError((err: HttpErrorResponse) => {
             this.popupData = this.noRewardsPopUp;
             throw err;
-          })).subscribe(() => {
-            // MEG-12: check API if reward acquired
-            this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
-              (res: ISurveyResultOutcome) => {
-                this.popupData = res.rewardAcquired
-                  ? this.successPopUp
-                  : this.noRewardsPopUp;
-                if (res && res.prizeSets && res.prizeSets.length > 0) {
-                  this.prizeSetOutcome = res.prizeSets[0];
-                }
-                if (res?.badges && res.badges.length > 0) {
-                  this.isBadgeOucome = true;
-                }
-                this.redirectUrlAndPopUp();
-              },
-              () => {
-                this.popupData = this.noRewardsPopUp;
-                this.redirectUrlAndPopUp();
+          })
+        )
+        .subscribe(() => {
+          // MEG-12: check API if reward acquired
+          this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
+            (res: ISurveyResultOutcome) => {
+              this.popupData = res.rewardAcquired
+                ? this.successPopUp
+                : this.noRewardsPopUp;
+              if (res && res.prizeSets && res.prizeSets.length > 0) {
+                this.prizeSetOutcome = res.prizeSets[0];
               }
-            );
-          });
+              if (res?.badges && res.badges.length > 0) {
+                this.isBadgeOucome = true;
+              }
+              if (res?.points && res.points.length > 0) {
+                this.isLoyaltyPointsOutcome = true;
+              }
+              this.redirectUrlAndPopUp();
+            },
+            () => {
+              this.popupData = this.noRewardsPopUp;
+              this.redirectUrlAndPopUp();
+            }
+          );
+        });
     }
   }
 
   private redirectUrlAndPopUp(): void {
-    const surveyId =
-      (this.survey && this.survey.id) || null;
+    const surveyId = (this.survey && this.survey.id) || null;
     const campaignId = this.route.snapshot.params.id
       ? Number.parseInt(this.route.snapshot.params.id, 10)
       : null;
@@ -254,7 +266,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       surveyId,
       collectInfo: true,
       campaignId,
-      answers: this.answers
+      answers: this.answers,
     };
 
     if (
@@ -277,7 +289,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.dialog.open(RewardPopupComponent, { data });
     } else {
       if (this.isBadgeOucome) {
-        this.router.navigate(['/badges'], { queryParams: { filter: 'earned' } });
+        this.router.navigate(['/badges'], {
+          queryParams: { filter: 'earned' },
+        });
+      } else if (this.isLoyaltyPointsOutcome) {
+        this.router.navigate(['/transaction-history']);
       } else {
         this.router.navigate(['/wallet']);
       }

@@ -26,9 +26,9 @@
     "NO_OUTCOME_SCORE": "",
     "NO_OUTCOME_TXT": "Bạn chưa nhận được phần thưởng nào",
     "NO_OUTCOME_CTA": "Thử quiz khác",
-    "NOT_AVAILABLE_TITLE": "Rất tiếc!",
-    "NOT_AVAILABLE_CTA": "Đóng",
-    "NOT_AVAILABLE_TXT": "Quiz không tồn tại. Vui lòng thử lại sau",
+    "NOT_AVAILABLE_TITLE": "Hết lượt chơi!",
+    "NOT_AVAILABLE_CTA": "ĐÓNG",
+    "NOT_AVAILABLE_TXT": "Hãy trở lại khi bạn có thêm lượt chơi nhé!",
     "SUBMIT_ERROR_TXT": "Đã có lỗi xảy ra khi bạn gửi câu trả lời"
   },
   "WALLET": {
@@ -232,9 +232,9 @@
     "SUCCESS_TEXT": "Cảm ơn bạn đã tham gia khảo sát",
     "NO_REWARDS_TITLE": "",
     "NO_REWARDS_TEXT": "Cảm ơn bạn đã tham gia khảo sát",
-    "NOT_AVAILABLE_TITLE": "Rất tiếc!",
-    "NOT_AVAILABLE_CTA": "Đóng",
-    "NOT_AVAILABLE_TXT": "Bảng khảo sát không tồn tại. Vui lòng thử lại sau."
+    "NOT_AVAILABLE_TITLE": "Hết lượt chơi!",
+    "NOT_AVAILABLE_CTA": "ĐÓNG",
+    "NOT_AVAILABLE_TXT": "Hãy trở lại khi bạn có thêm lượt chơi nhé!"
   },
   "PRIZE_SET": {
     "HEADING": "Chúc mừng bạn đã nhận thưởng.",
@@ -249,9 +249,11 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Tham gia ngay để nhận một trong các giải thưởng sau:",
-    "LOYALTY_POINTS": "điểm tích lũy"
+    "LOYALTY_POINTS": "điểm tích lũy",
+    "TNC_HEADER": "Điều kiện & Điều khoản"
   },
   "PROGRESS_CAMPAIGN": {
+    "CHECK_IN": "Check In",
     "TNC_HEADER": "Điều kiện và điều khoản sử dụng",
     "ENROLL_BTN_TEXT": "Bắt đầu",
     "VIEW_WALLET": "Xem ví"

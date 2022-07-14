@@ -143,6 +143,7 @@ export const setLanguage = (
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
     RewardsModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

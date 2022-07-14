@@ -27,6 +27,7 @@ import {
   IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LocationModule,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule,
   ProfileModule,
@@ -149,6 +150,7 @@ export const appInit =
     LocationModule,
     HttpClientModule,
     InfiniteScrollModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

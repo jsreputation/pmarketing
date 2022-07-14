@@ -1,0 +1,17 @@
+<svg id="explore-default" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <g id="installment-enclosed-filled-fullcolor" transform="translate(0 0.5)">
+    <g id="Group_11156" data-name="Group 11156" transform="translate(0 -0.5)">
+      <rect id="Rectangle_18007" data-name="Rectangle 18007" width="64" height="64" rx="32" fill="#0072d8"/>
+    </g>
+  </g>
+  <g id="icon-ud-mobile" transform="translate(9 9)">
+    <g id="Group_4856" data-name="Group 4856" transform="translate(19.546 15.554)">
+      <rect id="Rectangle_487" data-name="Rectangle 487" width="2.202" height="2.202" transform="translate(0 0)" fill="none"/>
+    </g>
+    <g id="Group_9391" data-name="Group 9391" transform="translate(0 0)">
+      <circle id="Ellipse_2023" data-name="Ellipse 2023" cx="2.683" cy="2.683" r="2.683" transform="translate(19.933 32.967)" fill="#fdb913"/>
+      <rect id="Rectangle_487-2" data-name="Rectangle 487" width="46" height="46" fill="none"/>
+      <path id="Path_3381" data-name="Path 3381" d="M146.656,50.582h-13.5A4.541,4.541,0,0,0,128.8,55.16V82.676a4.41,4.41,0,0,0,4.352,4.456h13.5a4.41,4.41,0,0,0,4.358-4.456V55.038A4.41,4.41,0,0,0,146.656,50.582Zm-4.711,30.953a2.041,2.041,0,0,1-2.041,2.041h0a2.041,2.041,0,0,1-2.041-2.041h0a2.041,2.041,0,0,1,2.041-2.041h0a2.041,2.041,0,0,1,2.041,2.041Zm4.947-6.69a2.041,2.041,0,0,1-2.041,2.041h-9.894a2.041,2.041,0,0,1-2.041-2.041V57.075a2.041,2.041,0,0,1,2.041-2.041h9.894a2.041,2.041,0,0,1,2.041,2.041Z" transform="translate(-117.009 -45.992)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

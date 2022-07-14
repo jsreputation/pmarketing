@@ -13,7 +13,7 @@ import {
   share
 } from 'rxjs/operators';
 
-import { ILocation } from './ilocation';
+import { ICheckInOutcome, ILocation } from './ilocation';
 import { LocationsService } from './locations.service';
 
 import { IMerchantsService } from '../merchants/imerchants.service';
@@ -35,6 +35,18 @@ export interface IV4MerchantLocationResponse {
     page: number;
     size: number;
   }
+}
+
+interface IV4CheckInTransactionOutcomeResponse {
+  data: IV4CheckInTransactionOutcome;
+}
+
+interface IV4CheckInTransactionOutcome {
+  id: number;
+  campaign_id: number;
+  latitude: string;
+  longitude: string;
+  state: string;
 }
 
 @Injectable({
@@ -181,5 +193,28 @@ export class V4LocationsService extends LocationsService {
       scan((acc: string[], curr: string[]) => acc.concat(...curr), []),
       map((tags: string[]) => [...new Set(tags)])
     );
+  }
+
+
+  public checkInToCampaign(campaignId: number, position: Position): Observable<ICheckInOutcome> {
+    return this.http.post<IV4CheckInTransactionOutcomeResponse>(
+      `${this.baseUrl}/v4/campaigns/${campaignId}/checkin_transactions`,
+      {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }
+    ).pipe(
+      map( res => res.data),
+      map( (checkinOutcome: IV4CheckInTransactionOutcome) => {
+        return V4LocationsService.v4CheckInTransactionOutcomeToCheckInOutcome(checkinOutcome)
+      })
+    )
+  }
+
+  private static v4CheckInTransactionOutcomeToCheckInOutcome(checkin: IV4CheckInTransactionOutcome): ICheckInOutcome {
+    return {
+      campaignId: checkin.campaign_id,
+      state: checkin.state
+    }
   }
 }

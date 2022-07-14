@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
@@ -9,7 +10,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+
 import { EmptyResultsComponent } from './empty-results/empty-results.component';
+import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
+import { ActionButtonOverlayComponent } from './action-button-overlay/action-button-overlay.component';
+import { PipeUtilsModule } from '@perxtech/core';
+
 const modules = [
   MatToolbarModule,
   MatButtonModule,
@@ -21,15 +28,23 @@ const modules = [
   MatInputModule,
   MatProgressSpinnerModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  CommonModule,
+  TranslateModule,
+  PipeUtilsModule
 ];
 @NgModule({
-  declarations: [EmptyResultsComponent],
-  imports: [
-    ...modules
+  declarations: [
+    EmptyResultsComponent,
+    StampCardNoteComponent,
+    ActionButtonOverlayComponent,
   ],
+  imports: [...modules],
   exports: [
-    ...modules
-  ]
+    ...modules,
+    EmptyResultsComponent,
+    StampCardNoteComponent,
+    ActionButtonOverlayComponent,
+  ],
 })
 export class SharedModule { }

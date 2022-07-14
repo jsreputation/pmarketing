@@ -124,6 +124,18 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         imageLinkSelected:"assets/images/entertainment-enclosed-filled-fullcolor.svg"
       },
       {
+        key: 'online',
+        name: 'Online',
+        imageLink:"assets/images/icon-online-default.svg",
+        imageLinkSelected:"assets/images/icon-online-selected.svg"
+      },
+      {
+        key: 'travel',
+        name: 'Travel',
+        imageLink:"assets/images/icon-travel-default.svg",
+        imageLinkSelected:"assets/images/icon-travel-selected.svg"
+      },
+      {
         key:"explore",
         name:"Explore",
         imageLink:"assets/images/explore-default.svg",
@@ -220,6 +232,18 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
         name:"Travel & Entertaiment",
         imageLink:"assets/images/entertainment-enclosed-outline-fullcolor.svg",
         imageLinkSelected:"assets/images/entertainment-enclosed-filled-fullcolor.svg"
+      },
+      {
+        key: 'online',
+        name: 'Online',
+        imageLink:"assets/images/icon-online-default.svg",
+        imageLinkSelected:"assets/images/icon-online-selected.svg"
+      },
+      {
+        key: 'travel',
+        name: 'Travel',
+        imageLink:"assets/images/icon-travel-default.svg",
+        imageLinkSelected:"assets/images/icon-travel-selected.svg"
       },
       {
         key:"explore",

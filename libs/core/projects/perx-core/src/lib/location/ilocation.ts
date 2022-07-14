@@ -12,3 +12,13 @@ export interface ILocation {
   phone?: string;
   distance?: number;
 }
+
+export interface ICheckInOutcome {
+  campaignId: number;
+  state: string;
+}
+
+export interface IPosition {
+  lng: number;
+  lat: number;
+}

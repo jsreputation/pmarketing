@@ -42,6 +42,7 @@ import {
   InstantOutcomeTransactionServiceModule,
   LanguageService,
   LocationModule,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule,
   PipeUtilsModule,
@@ -207,6 +208,7 @@ export const appInit =
     GhostsModule,
     MatProgressSpinnerModule,
     MatListModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

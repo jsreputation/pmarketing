@@ -1,0 +1,31 @@
+<div *ngIf="campaigns" [@listAnimation]="campaigns.length">
+  <div class="campaign-collection-card" *ngFor="let campaign of campaigns">
+    <div class="new-tag" *ngIf="isCampaignNew(campaign)">
+      <span class="new-tag-text">{{newCategoryText}}</span>
+      <img src="./assets/new-tag.svg">
+    </div>
+    <mat-card matRipple
+      [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[campaign.id] ? 'campaigns-card disabled' : 'campaigns-card'"
+      (click)="selectCampaign(campaign)">
+      <div class="img-wrapper">
+        <img class="puzzle-img card-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
+      </div>
+      <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
+        <p class="main-reward-title ellipsis-2-line">{{campaign.name}}</p>
+        <span class="reward-subtitle ellipsis-2-line" [innerHtml]="campaign.description | striphtml | safeHtml"></span>
+      </mat-card-content>
+      <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
+        <!--  campaign name will be filled with reward name instead when api ready-->
+        <p class="main-reward-title ellipsis-2-line">{{campaign.name}}</p>
+        <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">
+          <p class="reward-subtitle ellipsis-2-line" *ngIf="rwdBvrSbj > 0"><span
+              class="bold-points">{{rwdBvrSbj}}</span>{{"HOME.REWARDS_LEFT" | translate}}</p>
+        </ng-container>
+      </mat-card-content>
+      <mat-card-content class="campaign-collection-card-footer">
+        <p>{{"HOME.ENDS_ON" | translate}} {{getEndOrExpiresDate(campaign)}}</p>
+        <mat-chip *ngIf="!campaign.enrolled">Enrollment required</mat-chip>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

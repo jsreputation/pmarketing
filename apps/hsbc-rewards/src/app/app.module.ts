@@ -7,6 +7,7 @@ import {
   ProfileModule,
   LoyaltyModule,
   LocationModule,
+  LocationServiceModule,
   ConfigModule,
   MerchantsModule,
   ConfigService,
@@ -62,6 +63,7 @@ export const setLanguage = (
     LoyaltyModule.forRoot(),
     LocationModule,
     InstantOutcomeTransactionServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

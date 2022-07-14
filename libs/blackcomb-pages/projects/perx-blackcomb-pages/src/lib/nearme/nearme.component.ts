@@ -4,7 +4,7 @@ import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChi
 
 import {
   GeoLocationService,
-  IFlags,
+  IFlags, IPosition,
   IPrice,
   IReward,
   ITabConfigExtended,
@@ -29,7 +29,6 @@ export interface ICategories {
   isSelected: boolean;
 }
 
-export interface IPosition { lng: number; lat: number }
 
 @Component({
   selector: 'perx-blackcomb-pages-nearme',
@@ -81,7 +80,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.categories.push(category);
       });
     });
-    
+
     this.getFavoriteRewardList();
 
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {

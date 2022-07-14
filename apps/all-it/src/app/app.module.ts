@@ -25,6 +25,7 @@ import {
   IConfig, InstantOutcomeTransactionServiceModule,
   LanguageInterceptor,
   LanguageService,
+  LocationServiceModule,
   LoyaltyModule,
   MerchantsModule as PerxMerchantsModule,
   OutcomeModule,
@@ -135,6 +136,7 @@ registerLocaleData(localeENMY, 'en', localesEnMyExtra);
     RewardsServiceModule.forRoot(),
     QuizModule,
     QuizServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

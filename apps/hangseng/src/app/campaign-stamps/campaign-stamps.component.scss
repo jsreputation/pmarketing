@@ -1,0 +1,116 @@
+@import '../../theme/variables';
+
+.page {
+  background-color: $white-Three;
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.has-enroll {
+  margin-bottom: 22rem;
+}
+
+.card-container {
+  background-color: $white-Two;
+  margin-bottom: 8px;
+  padding: 16px;
+}
+
+.stamps-collection {
+  padding: 0 !important;
+  //margin-bottom: 2rem;
+  // width: 90%;
+  word-break: break-word;
+  // margin-bottom: 8px;
+
+  .mat-card-content {
+    padding: 24px 16px 16px;
+    margin-bottom: 0;
+  }
+
+  h1 {
+    color: $black;
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  h3 {
+    color: $black;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .subtitle {
+    font-size: 1.4rem;
+    color: $brownish-grey;
+    color: $brownish-grey;
+  }
+
+  mat-chip {
+    border-radius: 4px;
+    width: 154px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    color: $brownish-grey;
+  }
+
+  .custom-field-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 13px;
+
+    img {
+      width: 28px;
+      height: 28px;
+      margin-right: 9px;
+    }
+  }
+  .aux-data-container {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 19px;
+    color: $brownish-grey;
+    text-align: center;
+    padding: 7px 40px 40px;
+  }
+}
+
+.stamps-how-it-works {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 40px;
+
+  .mt-24 {
+    margin-top: 24px;
+  }
+
+  .mt-32 {
+    margin-top: 32px;
+  }
+
+  .mat-card-subtitle {
+    font-size: 14px;
+    line-height: 17px;
+    color: $brownish-grey;
+    font-weight: 500;
+  }
+
+  .mat-card-title {
+    font-size: 16px;
+    color: $black;
+    font-weight: 500;
+  }
+
+  .mat-card-content {
+    p {
+      font-size: 14px;
+      line-height: 17px;
+      color: $black;
+    }
+  }
+}

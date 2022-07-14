@@ -65,7 +65,7 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule, InstantOutcomeTransactionServiceModule
+  LoyaltyModule, InstantOutcomeTransactionServiceModule, LocationServiceModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -166,6 +166,7 @@ export const appInit = (
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
     RewardsServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

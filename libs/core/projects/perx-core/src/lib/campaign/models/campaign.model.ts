@@ -1,7 +1,7 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { OutcomeType } from '../../outcome/models/outcome.model';
 import { IWProperties, WInformationCollectionSettingType } from '@perxtech/whistler';
-import { ICategoryTags } from "@perxtech/core";
+import { ICategoryTags } from '@perxtech/core';
 import { ITag } from '../../merchants/models/merchants.model';
 
 export interface CampaignDisplayProperties {
@@ -15,17 +15,21 @@ export interface CampaignDisplayProperties {
   teamsDetails?: TeamsProperties;
   claimPrize?: ClaimPrizeProperties;
   enrolmentPage?: EnrolmentProperties;
+  buttonText?: string;
   buttonBgColour?: string;
   buttonTextColour?: string;
   fontColor?: string;
+  riskDisclaimer?: string;
 }
-export interface AdditionalSection{
-  headerText: String,
-  bodyText: String,
+
+export interface AdditionalSection {
+  headerText: string;
+  bodyText: string;
 }
+
 export interface CampaignLandingPage {
   body?: { text: string };
-  media?: { youtube?: string; bannerImage?: string};
+  media?: { youtube?: string; bannerImage?: string };
   heading?: { text: string };
   description?: { text: string };
   buttonText?: { text: string };
@@ -34,12 +38,12 @@ export interface CampaignLandingPage {
   backgroundUrl?: string;
   tnc?: { text: string };
   additionalSections?: AdditionalSection[];
-  subHeadline?:string;
+  subHeadline?: string;
 }
 export interface ICampaignRule {
-  id:number,
-  name:string,
-  state:string,
+  id: number;
+  name: string;
+  state: string;
 }
 export interface ClaimPrizeProperties {
   buttonText: string;
@@ -74,15 +78,15 @@ export interface ProgressProperties extends QuestProperties {
   intro?: {
     title: string;
     description: string;
-  }
+  };
   levelTab?: {
     title: string;
     pointsAbbreviation: string;
-  }
+  };
   howToTab?: {
     title: string;
     description: string;
-  }
+  };
 }
 
 export interface TeamsProperties {
@@ -98,14 +102,14 @@ export interface TeamsProperties {
       buttonTextSecondary?: string;
     }
     image?: string;
-  }
+  };
   joinPage?: {
     description: string;
-  }
+  };
   inviteMessage?: {
     description: string;
     codeBlurb: string;
-  }
+  };
 }
 
 export enum CampaignType {
@@ -136,6 +140,11 @@ export interface ProgressBarFields {
   totalCurrent?: number;
 }
 
+export interface CampaignDistance {
+  value?: string;
+  unitOfMessage?: string;
+}
+
 export interface ICampaign {
   id: number;
   name: string;
@@ -162,11 +171,13 @@ export interface ICampaign {
   operatingHours?: IOperatingHours;
   isOperating?: boolean;
   teamSize?: number;
-  categoryTags?:ICategoryTags[];
+  categoryTags?: ICategoryTags[];
   tags?: ITag[];
   score?: number;
   miscImages?: { [key: string]: string };
   enrollableUntil?: Date | null;
+  distance?: CampaignDistance;
+  favourite?: boolean;
 }
 
 export enum CommChannel {
@@ -247,4 +258,24 @@ export interface IBDOCampaignEnrolment {
   enrolledAt: Date;
   enrolmentReference: string;
   userAccountId: number;
+}
+
+export interface ICampaignCategory {
+  id: number;
+  description: string;
+  title: string;
+  usage: string[];
+}
+
+export interface ICampaignMeta {
+  count: number;
+  orderBy: string;
+  page: number;
+  sortBy: string;
+  totalPages: number;
+}
+
+export interface IRawCampaigns {
+  data: ICampaign[];
+  meta: ICampaignMeta;
 }

@@ -38,7 +38,7 @@ import {
   TokenStorage,
   LanguageService,
   ProfileServiceModule,
-  LanguageInterceptor, InstantOutcomeTransactionServiceModule
+  LanguageInterceptor, InstantOutcomeTransactionServiceModule, LocationServiceModule
 } from '@perxtech/core';
 
 import { environment } from '../environments/environment';
@@ -119,6 +119,7 @@ const PROVIDERS = [
     SnackbarModule,
     InfiniteScrollModule,
     InstantOutcomeTransactionServiceModule.forRoot(),
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

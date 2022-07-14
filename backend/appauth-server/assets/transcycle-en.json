@@ -385,7 +385,8 @@
     "VIEW_REWARD": "View reward",
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
@@ -475,6 +476,7 @@
     "TRANSFER_POINTS_CONFIRM_CTA": "COnfirm Points Transfer"
   },
   "PROGRESS_CAMPAIGN": {
+    "CHECK_IN": "Check In",
     "TNC_HEADER": "Terms and Conditions",
     "ENROLL_BTN_TEXT": "Start",
     "VIEW_WALLET": "View Wallet"
@@ -498,7 +500,8 @@
   },
   "CAMPAIGN_LANDING": {
     "OUTCOMES_HEADING": "Play and stand to win ONE of the following:",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "TNC_HEADER": "Terms and Conditions"
   },
   "TEAMS": {
     "CREATE_PAGE": {

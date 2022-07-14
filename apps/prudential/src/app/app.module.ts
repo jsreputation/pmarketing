@@ -21,7 +21,11 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-  CampaignServiceModule, ProfileServiceModule, SettingsModule, InstantOutcomeTransactionServiceModule
+  CampaignServiceModule,
+  ProfileServiceModule,
+  SettingsModule,
+  InstantOutcomeTransactionServiceModule,
+  LocationServiceModule
 } from '@perxtech/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -109,6 +113,7 @@ export const setLanguage = (
     FormsModule,
     UtilsModule,
     HttpClientModule,
+    LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

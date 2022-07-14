@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ILocation } from './ilocation';
+import { ICheckInOutcome, ILocation } from './ilocation';
 
 import { IMerchant } from '../merchants/models/merchants.model';
 import { IMerchantLocation } from '../vouchers/models/voucher.model';
@@ -20,5 +20,7 @@ export abstract class LocationsService {
   public abstract getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]>;
 
   public abstract getMerchantLocationsFromCampaign(campaignId: number, page?: number, pageSize?: number): Observable<IMerchantLocation[]>;
+
+  public abstract checkInToCampaign(campaignId: number, position: Position): Observable<ICheckInOutcome>;
 
 }
