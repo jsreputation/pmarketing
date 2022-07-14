@@ -19,7 +19,7 @@ import {
   TeamsServiceModule,
   InstantOutcomeTransactionServiceModule,
   PipeUtilsModule
-} from "@perxtech/core";
+} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
 import { PageComponentsModule } from '../page-components/page-components.module';
