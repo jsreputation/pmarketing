@@ -153,7 +153,7 @@
           </mat-tab>
           <mat-tab [label]="progressConfig?.howToTab?.title">
             <div class="participate-container">
-              <div class="tnc">{{progressConfig?.howToTab?.description}}</div>
+              <div class="tnc" [innerHtml]="progressConfig?.howToTab?.description"></div>
               <h4 *ngIf="campaign.termsAndConditions">{{ 'PROGRESS_CAMPAIGN.TNC_HEADER' | translate }}</h4>
               <div class="tnc" [innerHtml]="campaign.termsAndConditions"></div>
             </div>
