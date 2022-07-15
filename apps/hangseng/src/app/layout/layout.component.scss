@@ -11,6 +11,7 @@
 .toolbar {
   @include toolbar();
   background-color: $keyLime !important;
+  z-index: 0 !important;
 
   .backArrow {
     @include toolBarArrow();
