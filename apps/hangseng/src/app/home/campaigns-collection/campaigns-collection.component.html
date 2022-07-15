@@ -24,7 +24,7 @@
       </mat-card-content>
       <mat-card-content class="campaign-collection-card-footer">
         <p>{{"HOME.ENDS_ON" | translate}} {{getEndOrExpiresDate(campaign)}}</p>
-        <mat-chip *ngIf="!campaign.enrolled">Enrollment required</mat-chip>
+        <mat-chip disableRipple *ngIf="!campaign.enrolled">Enrollment required</mat-chip>
       </mat-card-content>
     </mat-card>
   </div>
