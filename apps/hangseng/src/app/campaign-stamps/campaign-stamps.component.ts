@@ -44,7 +44,6 @@ export class CampaignStampsComponent implements OnInit {
   public currentPage: number = 0;
   public completed: boolean = false;
 
-  public stampNoteTitle: string;
   public stampNoteDescription: string;
   public stampNoteButtonLabel: string;
   public feExpiryDate: string;
@@ -129,7 +128,6 @@ export class CampaignStampsComponent implements OnInit {
         this.subTitle = campaign.description || '';
         this.config = oc(campaign).displayProperties.landingPage();
         this.stampCards$ = of(stampCards);
-        this.translate.get('STAMP_CAMPAIGN.RISK_DISCLAIMER_TITLE').subscribe(txt => this.stampNoteTitle = txt);
         this.stampNoteDescription = campaign.displayProperties.riskDisclaimer;
         this.translate.get('STAMP_CAMPAIGN.READ_MORE_BUTTON_TEXT').subscribe(txt => this.stampNoteButtonLabel = txt);
 
