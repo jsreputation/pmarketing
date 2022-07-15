@@ -4,7 +4,7 @@
       <span class="new-tag-text">{{newCategoryText}}</span>
       <img src="./assets/new-tag.svg">
     </div>
-    <mat-card matRipple
+    <mat-card
       [ngClass]="isCampaignDisabled.length > 0 && isCampaignDisabled[campaign.id] ? 'campaigns-card disabled' : 'campaigns-card'"
       (click)="selectCampaign(campaign)">
       <div class="img-wrapper">
