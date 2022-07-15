@@ -55,6 +55,9 @@ mat-card {
     justify-content: center;
     padding-top: 6px;
     color: $brownish-grey;
+    &::after {
+      content: none;
+    }
   }
 }
 
