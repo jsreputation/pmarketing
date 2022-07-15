@@ -49,12 +49,16 @@
 
   mat-chip {
     border-radius: 4px;
-    width: 154px;
-    height: 23px;
+    max-width: 162px;
+    // height: 23px;
     display: flex;
     justify-content: center;
-    padding-top: 6px;
+    align-items: center;
     color: $brownish-grey;
+    background-color: $white-Three;
+    padding: 4px 12px;
+    font-weight: 500;
+    font-size: 14px;
   }
 
   .custom-field-container{

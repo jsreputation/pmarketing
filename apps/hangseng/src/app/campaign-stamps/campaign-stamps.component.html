@@ -7,7 +7,7 @@
     <div class="card-container">
       <mat-card class="stamps-collection">
         <mat-card-content>
-          <mat-chip *ngIf="!isEnrolled()">Enrollment required</mat-chip>
+          <mat-chip *ngIf="!isEnrolled()" [disableRipple]="true">Enrollment required</mat-chip>
           <h1 *ngIf="title">{{title}}</h1>
           <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
