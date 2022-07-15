@@ -1,6 +1,6 @@
 <perx-core-leaderboard-cta *ngIf="campaignId" [campaignId]="campaignId"></perx-core-leaderboard-cta>
 <div class="page" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false">
-  <hangseng-stamp-card-note [title]="stampNoteTitle" [description]="stampNoteDescription"
+  <hangseng-stamp-card-note [description]="stampNoteDescription"
     [buttonLabel]="stampNoteButtonLabel" (onPress)="onReadMore()" *ngIf="stampNoteDescription">
   </hangseng-stamp-card-note>
   <div [ngClass]="{'has-enroll': !isEnrolled() || completedStamps}">

@@ -8,7 +8,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./stamp-card-note.component.scss']
 })
 export class StampCardNoteComponent {
-  @Input() title: string;
   @Input() description: string;
   @Input() buttonLabel: string = '';
 
