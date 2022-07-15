@@ -113,8 +113,6 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
             if (voucher.reward.howToRedeem) {
               this.codeInstructionsText = voucher.reward.howToRedeem;
-            } else if (voucher.redemptionType === this.rt.url) {
-              this.codeInstructionsText = '';
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
