@@ -31,7 +31,9 @@
 
   h1 {
     color: $black;
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
+    font-weight: 500;
     line-height: 29px;
   }
 
@@ -42,9 +44,24 @@
   }
 
   .subtitle {
-    font-size: 1.4rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    list-style: 19px;
     color: $brownish-grey;
-    color: $brownish-grey;
+
+    ::ng-deep {
+      p {
+        margin-block-start: 0;
+        margin-block-end: 0;
+      }
+    }
+  }
+
+  .subtitle-spacer {
+    height: 16px;
+    background: transparent;
+    margin-block-start: 0;
+    margin-block-end: 0;
   }
 
   mat-chip {
@@ -61,7 +78,7 @@
     font-size: 14px;
   }
 
-  .custom-field-container{
+  .custom-field-container {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -73,6 +90,7 @@
       margin-right: 9px;
     }
   }
+
   .aux-data-container {
     font-family: 'Open Sans';
     font-size: 14px;
@@ -112,8 +130,9 @@
 
   .mat-card-content {
     p {
+      font-family: 'Open Sans', sans-serif;
       font-size: 14px;
-      line-height: 17px;
+      line-height: 19px;
       color: $black;
     }
   }

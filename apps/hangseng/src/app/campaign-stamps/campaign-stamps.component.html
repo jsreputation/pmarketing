@@ -10,6 +10,7 @@
           <mat-chip *ngIf="!isEnrolled()" [disableRipple]="true">Enrollment required</mat-chip>
           <h1 *ngIf="title">{{title}}</h1>
           <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
+          <div class="subtitle-spacer" *ngIf="!subTitle"></div>
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
           <div class="custom-field-container" *ngIf="feAction">
             <img src="/assets/icons/missionSubmission4.svg" alt="" />
