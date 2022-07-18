@@ -58,8 +58,8 @@ export const FILTER_DATA: IFilterModel = {
       ],
     },
     {
-      name: 'Online Exclusives',
-      type: 'online-exclusives',
+      name: 'Online and Travel',
+      type: 'online-and-travel',
       children: [
       ],
     }

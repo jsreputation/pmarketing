@@ -254,8 +254,8 @@ export const CATEGORY_CONFIGURATIONS: ItemModel[] = [
     ]
   },
   {
-    key:"online-exclusives",
-    name:"Online Exclusives",
+    key:"online-and-travel",
+    name:"Online and Travel",
     children:[
     ]
   },
