@@ -80,7 +80,6 @@ export class LayoutComponent implements OnInit {
 
   public ngOnInit(): void {
     this.isLeaderboardPage = this.router.url.startsWith('/leaderboard') ? true : false;
-
     this.route.data.subscribe(
       (dataObj) => {
         this.tenant = dataObj.tenant;
