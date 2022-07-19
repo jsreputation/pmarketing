@@ -44,7 +44,7 @@ import {
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
   ProgressCampaignServiceModule as PerxProgressCampaignServiceModule,
-  QuestModule as PerxQuestModule,
+  QuestModule as PerxQuestModule, QuizServiceModule,
   RewardsServiceModule,
   SettingsModule,
   StampModule as PerxStampModule,
@@ -167,6 +167,7 @@ export const setLanguage = (
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ForgotPasswordModule,
     PerxQuestModule.forRoot(),
+    QuizServiceModule.forRoot(),
     BadgeServiceModule.forRoot()
   ],
   bootstrap: [AppComponent],
