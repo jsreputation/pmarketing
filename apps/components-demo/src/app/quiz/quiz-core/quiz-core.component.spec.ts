@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { QuizModule } from '@perxtech/core';
+import { QuizModule, QuizServiceModule } from '@perxtech/core';
 import { QuizCoreComponent } from './quiz-core.component';
 
 describe('QuizCoreComponent', () => {
@@ -10,7 +10,7 @@ describe('QuizCoreComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [QuizCoreComponent],
-      imports: [QuizModule, NoopAnimationsModule]
+      imports: [QuizModule, QuizServiceModule.forRoot(), NoopAnimationsModule]
     })
       .compileComponents();
   }));
