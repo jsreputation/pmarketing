@@ -49,7 +49,7 @@
     "TITLE": "Nhập mã PIN",
     "DESCRIPTION": "Đưa mã này cho thu ngân và nhập mã PIN để đổi thưởng",
     "WRONG_PIN": "Sai mã PIN",
-    "CODE_INSTRUCTION_TXT": "Vui lòng nhập mã này khi đổi thưởng tại cửa hàng",
+    "CODE_INSTRUCTION_TXT": "Vui lòng sao chép/ghi nhớ mã số để sử dụng ưu đãi",
     "SUCCESSFUL_REDEMPTION_TITLE": "Bạn đã đổi thưởng thành công!",
     "SUCCESSFUL_REDEMPTION_TXT": "Bạn đã đổi {{reward}}",
     "UNKNOWN_ERROR_TXT": "Có lỗi xảy ra, vui lòng thử lại ",
