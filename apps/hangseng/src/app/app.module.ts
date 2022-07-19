@@ -54,7 +54,7 @@ import {
   VouchersModule,
   PlatformEnrolmentServiceModule,
   PuzzlesModule,
-  PipeUtilsModule, LocationServiceModule,
+  PipeUtilsModule, LocationServiceModule, QuizModule, QuizServiceModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -163,6 +163,8 @@ export const setLanguage = (
     MatButtonModule,
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
+    QuizModule,
+    QuizServiceModule.forRoot(),
     RewardsServiceModule.forRoot(),
     LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
