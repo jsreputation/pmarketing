@@ -7,15 +7,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Router,
-  NavigationEnd,
-  Event,
   ActivatedRoute,
+  RoutesRecognized,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
 import {
   filter,
-  map,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -67,6 +65,7 @@ export class AppComponent implements OnInit {
   public translationLoaded: boolean = false;
   public navigateToLoading: boolean = false;
   public jwtTokenAuth: boolean;
+  public appConfig: IConfig<any>;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -95,9 +94,11 @@ export class AppComponent implements OnInit {
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
       tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
     ).subscribe();
+
     this.config.readAppConfig<ITheme>()
       .pipe(
         tap((config: IConfig<ITheme>) => {
+          this.appConfig = config;
           if (config.appVersion) {
             (window as any).PERX_APP_VERSION = config.appVersion;
           }
@@ -134,12 +135,13 @@ export class AppComponent implements OnInit {
         (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
         (err) => console.error(err)
       );
+
     this.notificationService.$snack
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             if (this.jwtTokenAuth) {
-              this.router.navigate(['/access-verify'],  { state: { refreshTokenFlow : true }});
+              this.router.navigate(['/access-verify'], { state: { refreshTokenFlow: true } });
             } else {
               this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
               this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
@@ -151,12 +153,18 @@ export class AppComponent implements OnInit {
         (err) => console.error(err)
       );
 
-    this.router.events
-      .pipe(
-        filter((event: Event) => event instanceof NavigationEnd),
-        map((event: NavigationEnd) => event.urlAfterRedirects)
-      )
-      .subscribe(url => this.initBackArrow(url));
+
+    this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
+      .subscribe((e: RoutesRecognized) => {
+        if (e.urlAfterRedirects) {
+          this.initBackArrow(e.urlAfterRedirects);
+        }
+
+        if (e.url === '/') { // redirect to redirectAfterLogin config when url is empty on first load
+          this.redirectAfterLogin();
+        }
+      });
+
     this.initBackArrow(this.router.url);
   }
 
@@ -188,6 +196,14 @@ export class AppComponent implements OnInit {
   public backArrowClick(): void {
     if (this.backArrowIcon !== '') {
       this.location.back();
+    }
+  }
+
+  private redirectAfterLogin(): void {
+    if (this.appConfig.custom && this.appConfig.custom.redirectAfterLogin !== '/login') {
+      this.router.navigateByUrl(`${this.appConfig.custom.redirectAfterLogin}`);
+    } else {
+      this.router.navigate(['/home']);
     }
   }
 
