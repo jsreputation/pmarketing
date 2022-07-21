@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
-import { UtilsModule } from '@perxtech/core';
+import { PipeUtilsModule, UtilsModule } from '@perxtech/core';
 import { QuestComponent } from './quest.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -35,7 +35,8 @@ const routes: Routes = [
     RouterModule,
     MatListModule,
     RouterModule.forChild(routes),
-    MatTabsModule
+    MatTabsModule,
+    PipeUtilsModule
   ],
   providers: []
 })
