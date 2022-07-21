@@ -151,7 +151,6 @@ export class StampCardComponent implements OnInit, OnDestroy {
             prevStamps.stamps
           ) {
             this.stampCard = currStamps;
-            console.log(this.stampCard);
 
             const prevNumIssuedState = prevStamps.stamps.filter(
               (stamp) => stamp.state === StampState.issued
