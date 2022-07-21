@@ -20,6 +20,7 @@
 .page {
   background-color: $white-Two;
   min-height: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
   display: flex;
