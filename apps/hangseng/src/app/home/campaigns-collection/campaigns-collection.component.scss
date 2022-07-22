@@ -56,6 +56,10 @@ mat-card {
     padding-top: 6px;
     color: $brownish-grey;
     background-color: $white-Three;
+
+    &::after {
+      content: none;
+    }
   }
 }
 
