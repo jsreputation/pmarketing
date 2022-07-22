@@ -7,21 +7,22 @@
     <div class="card-container">
       <mat-card class="stamps-collection">
         <mat-card-content>
-          <mat-chip *ngIf="!isEnrolled()">Enrollment required</mat-chip>
+          <mat-chip *ngIf="!isEnrolled()" [disableRipple]="true">Enrollment required</mat-chip>
           <h1 *ngIf="title">{{title}}</h1>
           <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
+          <div class="subtitle-spacer" *ngIf="!subTitle"></div>
           <div *ngIf="config?.body" [innerHtml]="config?.body.text | safeHtml"></div>
           <div class="custom-field-container" *ngIf="feAction">
             <img src="/assets/icons/missionSubmission4.svg" alt="" />
-            {{feAction}}
+            <p class="field-text">{{feAction}}</p>
           </div>
           <div class="custom-field-container" *ngIf="feReward">
             <img src="/assets/icons/missionReward1.svg" alt="" />
-            {{feReward}}
+            <p class="field-text">{{feReward}}</p>
           </div>
           <div class="custom-field-container" *ngIf="feExpiryDate">
             <img src="/assets/icons/mission-end-date.svg" alt="" />
-            <p>{{"STAMP_CAMPAIGNS.ENDS_ON" | translate}} {{feExpiryDate}}</p>
+            <p class="field-text">{{"STAMP_CAMPAIGNS.ENDS_ON" | translate}} {{feExpiryDate}}</p>
           </div>
           <mat-divider *ngIf="title"></mat-divider>
         </mat-card-content>
