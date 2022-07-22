@@ -15,6 +15,8 @@ export class NativeBridgeService {
       if (typeof webkit !== 'undefined' && webkit !== null) {
         // @ts-ignore
         webkit.messageHandlers.callNativeAppWKCore.postMessage(payload);
+      } else {
+        console.log('not mobile webkit');
       }
     } catch (err) {
       console.error('Cannot reach Webkit interface');
@@ -24,6 +26,8 @@ export class NativeBridgeService {
       if (typeof Android !== 'undefined' && Android !== null) {
         // @ts-ignore
         Android.callNativeApp(payload);
+      } else {
+        console.log('not mobile android');
       }
     } catch (err) {
       console.error('Cannot reach Android interface');
