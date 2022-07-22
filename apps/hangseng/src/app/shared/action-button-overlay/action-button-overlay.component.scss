@@ -37,4 +37,12 @@
     font-weight: 500;
     font-size: 19px;
   }
+
+  &.compact {
+    min-height: unset;
+
+    .enrol {
+      margin: 0px;
+    }
+  }
 }
