@@ -1,7 +1,7 @@
 APP=timesinternet
 SHOW_HOME_PAGE=true
 SHOW_ACCOUNTS_PAGE=false
-PREAUTH=false
+PREAUTH=true
 APIHOST=https://api.perxtech.net
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true

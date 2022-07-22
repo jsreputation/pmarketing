@@ -40,8 +40,8 @@ export const FILTER_DATA: IFilterModel = {
       name: 'BDO Rewards',
       type:'bdo-rewards',
       children: [
-        { name: 'Sapphire',type:'sapphire' },
         { name: 'Emerald',type:'emerald' },
+        { name: 'Sapphire',type:'sapphire' },
         { name: 'Diamond',type:'diamond' }
       ],
     },
@@ -58,8 +58,8 @@ export const FILTER_DATA: IFilterModel = {
       ],
     },
     {
-      name: 'Online Exclusives',
-      type: 'online-exclusives',
+      name: 'Online and Travel',
+      type: 'online-and-travel',
       children: [
       ],
     }

@@ -10,6 +10,7 @@
 
   flex-grow: 1;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   svg {
     width: 100%;
@@ -95,6 +96,13 @@
         }
       }
     }
+  }
+
+  .mat-card-subtitle {
+    font-size: 14px;
+    line-height: 17px;
+    color: $brownish-grey;
+    font-weight: 500;
   }
 
   .images {
@@ -185,6 +193,19 @@
     a {
       font-weight: bold;
     }
+
+    .custom-field-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 13px;
+
+      img {
+        width: 28px;
+        height: 28px;
+        margin-right: 9px;
+      }
+    }
   }
 
 }
@@ -194,7 +215,7 @@
 
   button {
     width: 100%;
-    background: $medium-blue !important;
+    background: $medium-blue  !important;
   }
 }
 

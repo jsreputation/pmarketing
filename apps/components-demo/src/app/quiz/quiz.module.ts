@@ -3,7 +3,7 @@ import { EventEmitter, NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { QuizModule as CoreQuizModule, QuizService } from '@perxtech/core';
+import { QuizModule as CoreQuizModule, QuizServiceModule as CoreQuizServiceModule, QuizService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { quiz } from './mock';
 import { QuizCoreComponent } from './quiz-core/quiz-core.component';
@@ -27,6 +27,7 @@ const mockTranslateService: Partial<TranslateService> = {
     CommonModule,
     QuizRoutingModule,
     CoreQuizModule,
+    CoreQuizServiceModule.forRoot(),
     MatTabsModule,
     PerxBlackcombPagesModule,
   ],

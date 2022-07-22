@@ -169,7 +169,7 @@
     "TITLE": "Input PIN",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
-    "CODE_INSTRUCTION_TXT": "Please input this code when redeeming your reward at the Merchant",
+    "CODE_INSTRUCTION_TXT": "Please be reminded to note down the promo code and proceed to use at check-out",
     "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
     "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later",

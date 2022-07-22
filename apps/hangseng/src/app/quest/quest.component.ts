@@ -15,6 +15,7 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { EMPTY, forkJoin, Observable, of, Subject } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { oc } from 'ts-optchain';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'hangseng-quest',
@@ -35,20 +36,27 @@ export class QuestComponent implements OnInit, OnDestroy {
   public completedTaskIds: (number | undefined)[] = [];
   public isEnrolled: boolean = false;
   public questState: string = '';
+  public feAction: string;
+  public feReward: string;
+  public feExpiryDate: string;
+  public feData: string;
+
   public state: typeof QuestState = QuestState;
   public outcomeType: typeof CampaignOutcomeType = CampaignOutcomeType;
 
   public questConfig: QuestProperties | undefined;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(protected questService: IQuestService,
+  constructor(
+    protected questService: IQuestService,
     protected route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
-    private campaignService: ICampaignService) { }
+    private campaignService: ICampaignService,
+    private translate: TranslateService
+  ) { }
 
   public ngOnInit(): void {
-    console.log('AAAAA')
     this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('id')),
       map((params: ParamMap) => params.get('id')),
@@ -64,9 +72,7 @@ export class QuestComponent implements OnInit, OnDestroy {
       ),
       switchMap(([campaign, outcomes, tasks, quests]: [ICampaign, ICampaignOutcome[], IQuestTask[], IQuest[]]) => {
         this.taskTotalLen = tasks.length;
-        console.log('Tasks: ', tasks)
         if (quests && quests.length > 0) {
-          console.log('Quest: ', quests);
           this.questState = quests[0].state ? quests[0].state : '';
           return this.questService.getQuestProgress(quests[0].id).pipe(
             map((quest) => [campaign, outcomes, tasks, quest])
@@ -81,6 +87,11 @@ export class QuestComponent implements OnInit, OnDestroy {
       this.campaign$ = of(campaign);
       this.tasks$ = of(tasks);
       this.campaignOutcome$ = of(outcomes);
+
+      this.feAction = campaign.customFields[`f/e_action_${this.translate.currentLang}`];
+      this.feReward = campaign.customFields[`f/e_reward_${this.translate.currentLang}`];
+      this.feExpiryDate = campaign.customFields['f/e_expiry_date'];
+      this.feData = campaign.customFields[`f/e_data_${this.translate.currentLang}`];
     });
   }
 

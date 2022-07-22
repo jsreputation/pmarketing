@@ -17,88 +17,37 @@
     </div>
     <div class="header">
       <p class="title">{{questConfig?.title}}</p>
-      <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna
-        aliqua.</p>
+      <p class="description">{{questConfig?.description}}</p>
     </div>
     <div class="reward-container">
       <mat-list>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feAction">
           <img mat-list-icon class="images" src="../../assets/icons/mission.svg">
-          <span>Complete the mission for the reward</span>
+          {{feAction}}
         </mat-list-item>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feReward">
           <img mat-list-icon class="images" src="../../assets/icons/mission-reward.svg">
-          <span>Get lucky draw chance</span>
+          {{feReward}}
         </mat-list-item>
-        <mat-list-item class="mat-elevation-z0">
+        <mat-list-item class="mat-elevation-z0" *ngIf="feExpiryDate">
           <img mat-list-icon class="images" src="../../assets/icons/mission-end-date.svg">
-          <span>Ends on 23/03/2023</span>
+          {{feExpiryDate}}
         </mat-list-item>
       </mat-list>
     </div>
-    <div class="mission-note">
-      <p class="description">Mission records may take time to update</p>
+    <div class="mission-note" *ngIf="feData">
+      <p class="description">{{feData}}</p>
     </div>
   </div>
   <div class="quest-content-container">
-    <div class="mat-tab-group-wrapper">
-      <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="Missions">
-          <div class="mission-container">
-            <mat-list>
-              <mat-list-item>
-                <div class="mission-list-item-container">
-                  <div class="mission-list-item-labels">
-                    <img mat-list-icon class="tab-images" src="../../assets/icons/mission-success.svg">
-                    <div mat-line class="desc-text">Subscribe a SimplyFund with amount over HKD 1,000</div>
-                  </div>
-                  <div class="btn-container"><button mat-raised-button>Act now</button></div>
-                </div>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-              <mat-list-item>
-                <div class="mission-list-item-container">
-                  <div class="mission-list-item-labels">
-                    <img mat-list-icon class="tab-images" src="../../assets/icons/mission.svg">
-                    <div mat-line class="desc-text">Completed 1st US stock trade</div>
-                  </div>
-                  <div class="btn-container"><button mat-raised-button>Act now</button></div>
-                </div>
-                <mat-divider></mat-divider>
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </mat-tab>
-        <mat-tab label="How to work">
-          <div class="mission-container">
-            <div class="content-desc">
-              <h1 class="title">Campaign details</h1>
-              <h3 class="description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore
-                magna aliqua.
-              </h3>
-            </div>
-            <div class="content-desc">
-              <h1 class="title">Terms & conditions</h1>
-              <h3 class="description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore
-                magna aliqua.
-              </h3>
-            </div>
-            <div class="content-desc">
-              <h1 class="title">Remark(s)</h1>
-              <h3 class="description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore
-                magna aliqua.
-              </h3>
-            </div>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+    <div class="card-container">
+      <mat-card class="mat-elevation-z0">
+        <mat-card-subtitle>{{"STAMP_CAMPAIGNS.TNC_HEADER" | translate}}</mat-card-subtitle>
+        <mat-divider inset></mat-divider>
+        <mat-card-content>
+          <p [innerHTML]="campaign?.termsAndConditions | safeHtml"></p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

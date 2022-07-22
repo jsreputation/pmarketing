@@ -31,7 +31,9 @@
 
   h1 {
     color: $black;
+    font-family: 'Roboto', sans-serif;
     font-size: 24px;
+    font-weight: 500;
     line-height: 29px;
   }
 
@@ -42,38 +44,67 @@
   }
 
   .subtitle {
-    font-size: 1.4rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    list-style: 19px;
     color: $brownish-grey;
-    color: $brownish-grey;
+
+    ::ng-deep {
+      p {
+        margin-block-start: 0;
+        margin-block-end: 0;
+      }
+    }
+  }
+
+  .subtitle-spacer {
+    height: 16px;
+    background: transparent;
+    margin-block-start: 0;
+    margin-block-end: 0;
   }
 
   mat-chip {
     border-radius: 4px;
-    width: 154px;
-    height: 23px;
+    max-width: 162px;
+    // height: 23px;
     display: flex;
     justify-content: center;
-    padding-top: 6px;
+    align-items: center;
     color: $brownish-grey;
+    background-color: $white-Three;
+    padding: 4px 12px;
+    font-weight: 500;
+    font-size: 14px;
+    
     &::after {
       content: none;
     }
   }
 
-  .custom-field-container{
+  .custom-field-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 13px;
+    margin-bottom: 12px;
 
     img {
       width: 28px;
       height: 28px;
       margin-right: 9px;
     }
+
+    .field-text {
+      font-family: 'Open Sans', sans-serif !important;
+      font-size: 16px;
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
   }
+
   .aux-data-container {
-    font-family: 'Open Sans';
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
     font-size: 14px;
     line-height: 19px;
     color: $brownish-grey;
@@ -111,8 +142,9 @@
 
   .mat-card-content {
     p {
+      font-family: 'Open Sans', sans-serif;
       font-size: 14px;
-      line-height: 17px;
+      line-height: 19px;
       color: $black;
     }
   }

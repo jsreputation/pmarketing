@@ -25,7 +25,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { forkJoin, iif, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 import { MatDialog } from '@angular/material/dialog';
@@ -95,8 +95,13 @@ export class StampCardComponent implements OnInit, OnDestroy {
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
           this.idN = Number.parseInt(id, 10);
+          // only will return issued cards (which are also active)
+          return this.stampService.getCards(this.idN).pipe(map(stampCards => stampCards[0]));
+        }),
+        switchMap((stampCard: IStampCard) => {
           return forkJoin([
-            this.stampService.getCards(this.idN).pipe(map(stampCards => stampCards[0])),
+            // load inactive placeholder card if issued not available (not yet enrolled state or no stamp issued yet state)
+            iif(() => !!stampCard, of(stampCard), this.stampService.getCurrentCard(this.idN)),
             this.themesService.getThemeSetting(),
           ]);
         }),

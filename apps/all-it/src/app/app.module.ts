@@ -34,6 +34,8 @@ import {
   ProfileServiceModule,
   ProgressCampaignServiceModule as PerxProgressCampaignServiceModule,
   QuestModule as PerxQuestModule,
+  QuizModule,
+  QuizServiceModule,
   RewardsModule,
   RewardsServiceModule,
   SettingsModule,
@@ -132,6 +134,8 @@ registerLocaleData(localeENMY, 'en', localesEnMyExtra);
     PerxTransactionsServiceModule.forRoot(),
     RewardsModule,
     RewardsServiceModule.forRoot(),
+    QuizModule,
+    QuizServiceModule.forRoot(),
     LocationServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

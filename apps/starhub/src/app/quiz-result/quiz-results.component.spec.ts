@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ICampaignService, QuizModule, SecondsToStringPipe } from '@perxtech/core';
+import { ICampaignService, QuizModule, QuizServiceModule, SecondsToStringPipe } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -18,6 +18,7 @@ describe('QuizResultsComponent', () => {
       declarations: [QuizResultsComponent],
       imports: [
         QuizModule,
+        QuizServiceModule.forRoot(),
         MatCardModule,
         MatToolbarModule,
         RouterTestingModule,

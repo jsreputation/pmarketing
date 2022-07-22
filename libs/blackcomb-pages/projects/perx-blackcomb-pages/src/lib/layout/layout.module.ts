@@ -7,10 +7,12 @@ import { LayoutComponent } from './layout.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { SetMenuOrderDirective } from "./menu-order/menu-order.directive";
+
 
 @NgModule({
-  declarations: [LayoutComponent],
-  exports: [LayoutComponent],
+  declarations: [LayoutComponent, SetMenuOrderDirective],
+  exports: [LayoutComponent, SetMenuOrderDirective],
   imports: [
     // LayoutRoutingModule must be listed first to use its '' routing paths
     CommonModule,
