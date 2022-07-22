@@ -1,5 +1,5 @@
-@import "../../theme/variables.scss";
-@import "../../theme/mixins.scss";
+@import '../../theme/variables.scss';
+@import '../../theme/mixins.scss';
 
 .quest-container {
   height: 100%;
@@ -84,8 +84,8 @@
 
     ::ng-deep {
       .mat-progress-bar {
-        border-radius: .4rem;
-        height: .6rem !important;
+        border-radius: 0.4rem;
+        height: 0.6rem !important;
 
         .mat-progress-bar-fill::after {
           background-color: $mediumGreen;
@@ -96,6 +96,12 @@
         }
       }
     }
+  }
+
+  .card-container {
+    font-size: 14px;
+    line-height: 17px;
+    color: $black;
   }
 
   .mat-card-subtitle {
@@ -147,8 +153,8 @@
 
       .success-icon {
         position: absolute;
-        bottom: .4rem;
-        right: -.4rem;
+        bottom: 0.4rem;
+        right: -0.4rem;
         width: 1.8rem;
         height: 1.8rem;
       }
@@ -170,8 +176,8 @@
     .task-content {
       width: 100%;
       border-bottom: 1px solid rgba(33, 33, 33, 0.03);
-      padding-top: .8rem;
-      padding-bottom: 2rem;
+      padding-top: 0.8rem;
+      padding-bottom: 16px;
 
       p {
         font-weight: bold;
@@ -183,7 +189,6 @@
     display: flex;
     flex-direction: row;
     margin: 16px;
-
 
     p {
       color: rgba(0, 0, 0, 0.38);
@@ -207,7 +212,6 @@
       }
     }
   }
-
 }
 
 .bottom-toolbar {
@@ -215,7 +219,7 @@
 
   button {
     width: 100%;
-    background: $medium-blue  !important;
+    background: $medium-blue !important;
   }
 }
 
@@ -229,7 +233,8 @@
     }
 
     .mat-tab-header {
-      margin: 16px;
+      margin-left: 16px;
+      margin-right: 16px;
     }
 
     .mat-tab-label {

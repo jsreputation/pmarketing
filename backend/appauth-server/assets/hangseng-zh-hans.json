@@ -546,6 +546,7 @@
   "TRY_AGAIN": "Try again",
   "STAMP_CAMPAIGNS": {
     "TNC_HEADER": "How to work",
+    "MISSION_HEADER": "Mission",
     "ENDS_ON": "Ends on"
   }
 }
