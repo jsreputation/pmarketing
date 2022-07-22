@@ -1,6 +1,6 @@
 <div [class]="compactMode ? 'game-footer compact' : 'game-footer'">
-    <img [src]="imageSrc" />
-    <h2 >{{label}}</h2>
+    <img *ngIf="imageSrc" [src]="imageSrc" />
+    <h2 *ngIf="label">{{label}}</h2>
     <button class="enrol" mat-flat-button (click)="onPress.emit()" [disabled]="disabled" [ngStyle]="buttonStyle">
         <span>{{buttonLabel}}</span>
     </button>
