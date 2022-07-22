@@ -545,6 +545,13 @@ export class V4CampaignService implements ICampaignService {
       };
     }
 
+    if (dp && (dp as any)?.button_external_link) {
+      displayProperties = {
+        ...displayProperties,
+        buttonExternalLink: (dp as any).button_external_link,
+      };
+    }
+
     if (dp && (dp as any)?.font_colour) {
       displayProperties = {
         ...displayProperties,
