@@ -17,6 +17,7 @@ import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
+import { NativeBridgeService } from '../shared/native-bridge/native-bridge.service';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -62,7 +63,8 @@ export class CampaignStampsComponent implements OnInit {
     private campaignService: ICampaignService,
     private configService: ConfigService,
     private translate: TranslateService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private nativeBridgeService: NativeBridgeService
   ) { }
 
   public ngOnInit(): void {
@@ -180,5 +182,9 @@ export class CampaignStampsComponent implements OnInit {
 
   public onViewRewards(): void {
     this.router.navigate(['/wallet']);
+  }
+
+  public onExternalNavigate(): void {
+    this.nativeBridgeService.sendToNative(this.campaign.displayProperties.buttonExternalLink);
   }
 }

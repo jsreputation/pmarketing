@@ -13,6 +13,7 @@ export class ActionButtonOverlayComponent {
   @Input() label: string;
   @Input() imageSrc: string;
   @Input() buttonLabel: string;
+  @Input() compactMode: boolean = false;
 
   @Output() onPress: EventEmitter<any> = new EventEmitter<any>();
 
