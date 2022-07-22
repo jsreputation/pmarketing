@@ -387,7 +387,8 @@
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
     "OUT_OF_TRIES_CTA": "Close",
-    "ENROL_TEXT": "Enrol to activate the game"
+    "ENROL_TEXT": "Enrol to activate the game",
+    "ACT_NOW": "Act Now"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",

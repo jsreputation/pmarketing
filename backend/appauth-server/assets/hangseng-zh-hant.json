@@ -370,13 +370,15 @@
     "GAME_SUCCESS_TEXT_REWARDS": "{{rewards}}份獎勵",
     "GAME_SUCCESS_TEXT_POINT": "1積分",
     "GAME_SUCCESS_TEXT_POINTS": "{{points}}積分",
-    "BACK_TO_WALLET": "回到錢包頁面",
     "GAME_NOT_VALID": "哎呀!",
+    "BACK_TO_WALLET": "回到錢包頁面",
     "GAME_NOT_VALID_TEXT": "您目前無法使用該遊戲.",
     "VIEW_REWARD": "查看奖励",
     "OUT_OF_TRIES_TITLE": "No more tries",
     "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_CTA": "Close",
+    "ENROL_TEXT": "Enrol to activate the game",
+    "ACT_NOW": "Act Now"
   },
   "STAMP_CAMPAIGN": {
     "STAMP_CARD": "Stamp Card",
