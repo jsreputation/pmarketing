@@ -18,6 +18,7 @@ export interface CampaignDisplayProperties {
   buttonText?: string;
   buttonBgColour?: string;
   buttonTextColour?: string;
+  buttonExternalLink?: string;
   fontColor?: string;
   riskDisclaimer?: string;
 }

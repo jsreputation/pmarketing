@@ -16,6 +16,7 @@ import { EmptyResultsComponent } from './empty-results/empty-results.component';
 import { StampCardNoteComponent } from './stamp-card-note/stamp-card-note.component';
 import { ActionButtonOverlayComponent } from './action-button-overlay/action-button-overlay.component';
 import { PipeUtilsModule } from '@perxtech/core';
+import { NativeBridgeService } from './native-bridge/native-bridge.service';
 
 const modules = [
   MatToolbarModule,
@@ -46,5 +47,8 @@ const modules = [
     StampCardNoteComponent,
     ActionButtonOverlayComponent,
   ],
+  providers: [
+    NativeBridgeService
+  ]
 })
 export class SharedModule { }
