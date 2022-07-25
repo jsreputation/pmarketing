@@ -37,17 +37,17 @@
         </div>
         <div class="progress-campaign-lists">
           <mat-list>
-            <mat-list-item class="mat-elevation-z0">
+            <mat-list-item class="mat-elevation-z0" *ngIf="feAction">
               <img mat-list-icon class="images" src="/assets/icons/mission.svg">
-              <span>Complete the mission for the reward</span>
+              {{feAction}}
             </mat-list-item>
-            <mat-list-item class="mat-elevation-z0">
+            <mat-list-item class="mat-elevation-z0" *ngIf="feReward">
               <img mat-list-icon class="images" src="/assets/icons/mission-reward.svg">
-              <span>Get lucky draw chance</span>
+              {{feReward}}
             </mat-list-item>
-            <mat-list-item class="mat-elevation-z0">
+            <mat-list-item class="mat-elevation-z0" *ngIf="feExpiryDate">
               <img mat-list-icon class="images" src="/assets/icons/mission-end-date.svg">
-              <span>{{progressConfig?.intro?.description}}</span>
+              {{feExpiryDate}}
             </mat-list-item>
           </mat-list>
         </div>
@@ -82,7 +82,7 @@
             </div>
           </div>
         </div>
-        <p class="mission-note">Mission records may take time to update</p>
+        <p class="mission-note">{{feData}}</p>
       </div>
     </div>
   </div>
