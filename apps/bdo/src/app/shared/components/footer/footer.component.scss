@@ -3,7 +3,8 @@
 .home-footer-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1; 
+  flex: 1;
+  padding-bottom: 65px;
 
   .banner-cont {
     position: relative;
@@ -148,5 +149,6 @@
   .home-footer-wrapper {
     margin: auto;
     width: $desktop-width;
+    padding-bottom: 90px;
   }
 }
