@@ -8,12 +8,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Router,
   ActivatedRoute,
-  RoutesRecognized,
+  NavigationEnd,
+  Event,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
 import {
   filter,
+  map,
   switchMap,
   tap,
 } from 'rxjs/operators';
@@ -65,7 +67,6 @@ export class AppComponent implements OnInit {
   public translationLoaded: boolean = false;
   public navigateToLoading: boolean = false;
   public jwtTokenAuth: boolean;
-  public appConfig: IConfig<any>;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -98,7 +99,6 @@ export class AppComponent implements OnInit {
     this.config.readAppConfig<ITheme>()
       .pipe(
         tap((config: IConfig<ITheme>) => {
-          this.appConfig = config;
           if (config.appVersion) {
             (window as any).PERX_APP_VERSION = config.appVersion;
           }
@@ -154,16 +154,12 @@ export class AppComponent implements OnInit {
       );
 
 
-    this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
-      .subscribe((e: RoutesRecognized) => {
-        if (e.urlAfterRedirects) {
-          this.initBackArrow(e.urlAfterRedirects);
-        }
-
-        if (e.url === '/') { // redirect to redirectAfterLogin config when url is empty on first load
-          this.redirectAfterLogin();
-        }
-      });
+    this.router.events
+      .pipe(
+        filter((event: Event) => event instanceof NavigationEnd),
+        map((event: NavigationEnd) => event.urlAfterRedirects)
+      )
+      .subscribe(url => this.initBackArrow(url));
 
     this.initBackArrow(this.router.url);
   }
@@ -198,13 +194,4 @@ export class AppComponent implements OnInit {
       this.location.back();
     }
   }
-
-  private redirectAfterLogin(): void {
-    if (this.appConfig.custom && this.appConfig.custom.redirectAfterLogin !== '/login') {
-      this.router.navigateByUrl(`${this.appConfig.custom.redirectAfterLogin}`);
-    } else {
-      this.router.navigate(['/home']);
-    }
-  }
-
 }
