@@ -15,11 +15,11 @@ export interface IQAnswer {
   timeTaken?: number; // in seconds
 }
 
-export interface IPoints {
+export interface IQuizScore {
   questionId: string;
   time?: number;
   question: string;
-  points?: number;
+  score?: number;
 }
 
 export interface IDateRange {
