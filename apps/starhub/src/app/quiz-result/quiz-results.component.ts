@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ICampaign, ICampaignService, IPoints, IPopupConfig, IQuiz, NotificationService } from '@perxtech/core';
+import { ICampaign, ICampaignService, IQuizScore, IPopupConfig, IQuiz, NotificationService } from '@perxtech/core';
 import { CampaignDisplayProperties } from 'libs/core/projects/perx-core/src/lib/campaign/models/campaign.model';
 import { merge, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { oc } from 'ts-optchain';
   styleUrls: ['./quiz-results.component.scss']
 })
 export class QuizResultsComponent implements OnInit {
-  public results: IPoints[] = [];
+  public results: IQuizScore[] = [];
   public timeConsumed: Observable<string>;
 
   public backgroundImgUrl: string = '';
@@ -39,14 +39,14 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: { points: IPoints[], quiz?: IQuiz } | string) => {
+        map((res: { points: IQuizScore[], quiz?: IQuiz } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz, rewardAcquired?: boolean }) => {
+      .subscribe((res: { points: IQuizScore[], quiz?: IQuiz, rewardAcquired?: boolean }) => {
         this.results = res.points;
         this.rewardAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
@@ -102,6 +102,6 @@ export class QuizResultsComponent implements OnInit {
   }
 
   private get correctAnswers(): number {
-    return this.results.reduce((sum, q) => sum + (q.points && q.points > 0 ? 1 : 0), 0);
+    return this.results.reduce((sum, q) => sum + (q.score && q.score > 0 ? 1 : 0), 0);
   }
 }

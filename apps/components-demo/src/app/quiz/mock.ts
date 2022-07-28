@@ -1,4 +1,4 @@
-import { IPoints, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
+import { IQuizScore, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
 
 const choices = [
   { title: 'Pouce', id: '' },
@@ -19,7 +19,7 @@ export const quiz: IQuiz = {
     {
       id: 'jo',
       question: {
-        text : 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?'
+        text: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?'
       },
       description: {
         text: 'Swipe to select correct answer'
@@ -62,51 +62,51 @@ export const quiz: IQuiz = {
   ctaButtonTextColor: '#09411d',
 };
 
-export const results: IPoints[] = [
+export const results: IQuizScore[] = [
   {
     questionId: '22',
     time: 25,
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    points: 0
+    score: 0
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    points: undefined // happens, when there is a backend error
+    score: undefined // happens, when there is a backend error
   },
   {
     questionId: '23',
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    points: 3
+    score: 3
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    points: 2
+    score: 2
   },
   {
     questionId: '22',
     time: 25,
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    points: 0
+    score: 0
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    points: 2
+    score: 2
   },
   {
     questionId: '23',
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    points: 3
+    score: 3
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    points: 2
+    score: 2
   }
 ];
