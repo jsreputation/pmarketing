@@ -7,9 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   Router,
+  ActivatedRoute,
   NavigationEnd,
   Event,
-  ActivatedRoute,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -95,6 +95,7 @@ export class AppComponent implements OnInit {
       // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
       tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
     ).subscribe();
+
     this.config.readAppConfig<ITheme>()
       .pipe(
         tap((config: IConfig<ITheme>) => {
@@ -134,12 +135,13 @@ export class AppComponent implements OnInit {
         (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
         (err) => console.error(err)
       );
+
     this.notificationService.$snack
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             if (this.jwtTokenAuth) {
-              this.router.navigate(['/access-verify'],  { state: { refreshTokenFlow : true }});
+              this.router.navigate(['/access-verify'], { state: { refreshTokenFlow: true } });
             } else {
               this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
               this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
@@ -151,12 +153,14 @@ export class AppComponent implements OnInit {
         (err) => console.error(err)
       );
 
+
     this.router.events
       .pipe(
         filter((event: Event) => event instanceof NavigationEnd),
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
       .subscribe(url => this.initBackArrow(url));
+
     this.initBackArrow(this.router.url);
   }
 
@@ -190,5 +194,4 @@ export class AppComponent implements OnInit {
       this.location.back();
     }
   }
-
 }

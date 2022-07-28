@@ -1,12 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccessVerifyComponent } from './access-verify.component';
-import { AuthenticationService, TokenStorage } from '@perxtech/core';
+import { AuthenticationService, ConfigService, TokenStorage } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('AccessVerifyComponent', () => {
   let component: AccessVerifyComponent;
   let fixture: ComponentFixture<AccessVerifyComponent>;
+
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     getExchangeToken: () => of()
@@ -25,7 +27,8 @@ describe('AccessVerifyComponent', () => {
         {
           provide: TokenStorage,
           useValue: tokenStorageStub
-        }
+        },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
     .compileComponents();
