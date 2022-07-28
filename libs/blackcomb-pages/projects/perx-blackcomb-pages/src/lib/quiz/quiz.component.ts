@@ -332,7 +332,8 @@ export class QuizComponent implements OnInit, OnDestroy {
         quiz: this.quiz,
         rewardAcquired: (payload ? payload.rewardAcquired : false),
         prizeSets: payload?.prizeSets,
-        badges: payload?.badges
+        badges: payload?.badges,
+        points: payload?.points
       });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }

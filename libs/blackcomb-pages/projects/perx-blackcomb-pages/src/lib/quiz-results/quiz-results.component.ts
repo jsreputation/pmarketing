@@ -14,6 +14,7 @@ import {
   IFlags,
   SettingsService,
   IQuizScore,
+  IPointsOutcome,
 } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -38,6 +39,7 @@ export class QuizResultsComponent implements OnInit {
   public rewardsAcquired: boolean = false;
   public prizeSetOutcomes: IPrizeSetOutcome[];
   public badgeOutcomes: IBadgeOutcome[];
+  public pointsOutcomes: IPointsOutcome[];
   public showPrizeSetOutcome: boolean = false;
   public remoteFlags: IFlags;
 
@@ -84,6 +86,7 @@ export class QuizResultsComponent implements OnInit {
           prizeSets?: IPrizeSetOutcome[];
           rewardAcquired: boolean;
           badges: IBadgeOutcome[];
+          points: IPointsOutcome[];
         }) => {
           this.results = res.score;
           this.prizeSetOutcomes = res.prizeSets ? res.prizeSets : [];
@@ -91,6 +94,7 @@ export class QuizResultsComponent implements OnInit {
           this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
           this.quiz = res.quiz;
           this.badgeOutcomes = res.badges ? res.badges : [];
+          this.pointsOutcomes = res.points ? res.points : [];
           this.fetchTitle();
           this.fetchSubTitle();
         }
