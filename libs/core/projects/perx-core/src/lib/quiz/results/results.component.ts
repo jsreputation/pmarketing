@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IPoints } from '../models/quiz.model';
+import { IQuizScore } from '../models/quiz.model';
 import { SecondsToStringPipe } from '../seconds-to-string.pipe';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class ResultsComponent implements OnInit {
   @Input()
-  public results: IPoints[];
+  public results: IQuizScore[];
   @Input()
   public timeConsumed: Observable<string>;
 
