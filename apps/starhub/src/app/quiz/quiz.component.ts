@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   IAnswerResult,
-  IPoints,
+  IQuizScore,
   IQAnswer,
   IQuiz,
   IQuizResultOutcome,
@@ -46,7 +46,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   private coreComponent: QuizCoreComponent;
   private answers: ITracker<IQAnswer> = {};
   private moveId: number | undefined;
-  private points: ITracker<IPoints> = {};
+  private points: ITracker<IQuizScore> = {};
   private timer: number;
   private static swipeConfig: SwipeConfiguration = {
     classname: 'swipe-blackcomb',
@@ -84,7 +84,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       catchError((err: Error) => {
         console.error(err.name, err.message);
-        if(err.message && err.message.match(/No available game for this campaign/i)) {
+        if (err.message && err.message.match(/No available game for this campaign/i)) {
           this.translateService.get('ERRORS.OUT_OF_TRIES').subscribe(
             (outOfTriesMessage: string) => {
               this.notificationService.addPopup({
@@ -263,7 +263,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.points[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question.text,
-          points: res.points,
+          score: res.points,
           time
         };
       }),
@@ -280,7 +280,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.points[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question.text,
-          points: undefined,
+          score: undefined,
           time
         };
         return throwError(err);
