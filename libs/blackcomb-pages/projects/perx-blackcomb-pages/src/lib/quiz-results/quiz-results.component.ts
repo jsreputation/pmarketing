@@ -202,7 +202,7 @@ export class QuizResultsComponent implements OnInit {
               this.router.navigate(['/badges'], {
                 queryParams: { filter: 'earned' },
               });
-            } else if (this.results?.length) {
+            } else if (this.pointsOutcomes?.length) {
               this.router.navigate(['transaction-history']);
             } else {
               this.router.navigate(['/wallet']);
