@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import {
-  IPoints,
   SecondsToStringPipe,
   NotificationService,
   IPopupConfig,
@@ -14,19 +13,22 @@ import {
   IBadgeOutcome,
   IFlags,
   SettingsService,
+  IQuizScore,
+  IPointsOutcome,
 } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'perx-blackcomb-pages-quiz-results',
   templateUrl: './quiz-results.component.html',
   styleUrls: ['./quiz-results.component.scss'],
 })
 export class QuizResultsComponent implements OnInit {
-  public results: IPoints[];
+  public results: IQuizScore[];
   public timeConsumed: Observable<string>;
 
   public backgroundImgUrl: string = '';
@@ -37,6 +39,7 @@ export class QuizResultsComponent implements OnInit {
   public rewardsAcquired: boolean = false;
   public prizeSetOutcomes: IPrizeSetOutcome[];
   public badgeOutcomes: IBadgeOutcome[];
+  public pointsOutcomes: IPointsOutcome[];
   public showPrizeSetOutcome: boolean = false;
   public remoteFlags: IFlags;
 
@@ -68,7 +71,7 @@ export class QuizResultsComponent implements OnInit {
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
         map(
-          (res: { points: IPoints[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], badges?: IBadgeOutcome[] } | string) => {
+          (res: { score: IQuizScore[], quiz?: IQuiz, prizeSets?: IPrizeSetOutcome[], badges?: IBadgeOutcome[] } | string) => {
             if (typeof res === 'string') {
               res = JSON.parse(res);
             }
@@ -78,18 +81,20 @@ export class QuizResultsComponent implements OnInit {
       )
       .subscribe(
         (res: {
-          points: IPoints[];
+          score: IQuizScore[];
           quiz?: IQuiz;
           prizeSets?: IPrizeSetOutcome[];
           rewardAcquired: boolean;
           badges: IBadgeOutcome[];
+          points: IPointsOutcome[];
         }) => {
-          this.results = res.points;
+          this.results = res.score;
           this.prizeSetOutcomes = res.prizeSets ? res.prizeSets : [];
           this.rewardsAcquired = res.rewardAcquired;
           this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
           this.quiz = res.quiz;
           this.badgeOutcomes = res.badges ? res.badges : [];
+          this.pointsOutcomes = res.points ? res.points : [];
           this.fetchTitle();
           this.fetchSubTitle();
         }
@@ -123,7 +128,7 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
+    const points = this.results.reduce((sum, p) => sum + oc(p).score(0), 0);
     let nextRoute: string;
     if (!this.rewardsAcquired) {
       const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
@@ -197,7 +202,7 @@ export class QuizResultsComponent implements OnInit {
               this.router.navigate(['/badges'], {
                 queryParams: { filter: 'earned' },
               });
-            } else if (this.results?.length) {
+            } else if (this.pointsOutcomes?.length) {
               this.router.navigate(['transaction-history']);
             } else {
               this.router.navigate(['/wallet']);
@@ -209,7 +214,7 @@ export class QuizResultsComponent implements OnInit {
 
   private get correctAnswers(): number {
     return this.results.reduce(
-      (sum, q) => sum + (q.points && q.points > 0 ? 1 : 0),
+      (sum, q) => sum + (q.score && q.score > 0 ? 1 : 0),
       0
     );
   }

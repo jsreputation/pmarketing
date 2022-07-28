@@ -319,7 +319,7 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
 export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizServiceModule } from './lib/quiz/quiz.service.module';
 export { QuizService, IAnswerResult, IQQuestion } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode, IQuizResultOutcome } from './lib/quiz/models/quiz.model';
+export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IQuizScore, QuizMode, IQuizResultOutcome } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';

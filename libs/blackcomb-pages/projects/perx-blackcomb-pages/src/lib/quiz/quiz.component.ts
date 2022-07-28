@@ -2,11 +2,11 @@ import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, Vi
 import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
 import {
   IAnswerResult,
-  IPoints,
   IPopupConfig,
   IQAnswer,
   IQuiz,
   IQuizResultOutcome,
+  IQuizScore,
   ISwipePayload,
   ITracker,
   LocaleIdFactory,
@@ -48,7 +48,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   private coreComponent: QuizCoreComponent;
   private answers: ITracker<IQAnswer> = {};
   private moveId: number | undefined;
-  private points: ITracker<IPoints> = {};
+  private score: ITracker<IQuizScore> = {};
   private timer: number;
   private static swipeConfig: SwipeConfiguration = {
     classname: 'swipe-blackcomb',
@@ -261,10 +261,10 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.moveId,
     ).pipe(
       tap((res: IAnswerResult) => {
-        this.points[questionPointer] = {
+        this.score[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question.text,
-          points: res.points,
+          score: res.points,
           time
         };
       }),
@@ -277,10 +277,10 @@ export class QuizComponent implements OnInit, OnDestroy {
       ),
       catchError(err => {
         // save the fact the broken submission for next page
-        this.points[questionPointer] = {
+        this.score[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question.text,
-          points: undefined,
+          score: undefined,
           time
         };
         return throwError(err);
@@ -328,11 +328,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   private redirectUrlAndPopUp(payload?: IQuizResultOutcome): void {
     const resultsStr = JSON.stringify(
       {
-        points: Object.values(this.points),
+        score: Object.values(this.score),
         quiz: this.quiz,
         rewardAcquired: (payload ? payload.rewardAcquired : false),
         prizeSets: payload?.prizeSets,
-        badges: payload?.badges
+        badges: payload?.badges,
+        points: payload?.points
       });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
