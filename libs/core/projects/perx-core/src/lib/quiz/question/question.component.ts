@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
-import { IErrors, IPoints, IQAnswer, QuizQuestionType } from '../models/quiz.model';
+import { IErrors, IQuizScore, IQAnswer, QuizQuestionType } from '../models/quiz.model';
 import { IQQuestion } from '../quiz.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class QuizQuestionComponent {
   public updateAnswers: EventEmitter<IQAnswer> = new EventEmitter<IQAnswer>();
 
   @Output()
-  public updatePoints: EventEmitter<IPoints> = new EventEmitter<IPoints>();
+  public updatePoints: EventEmitter<IQuizScore> = new EventEmitter<IQuizScore>();
 
   public errorState: IErrors = {};
 
@@ -57,7 +57,7 @@ export class QuizQuestionComponent {
     this.point = this.question && this.question.required ?
       (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
     // }
-    this.updatePoints.emit({ questionId: this.question.id, points: this.point, question: this.question.question.text });
+    this.updatePoints.emit({ questionId: this.question.id, score: this.point, question: this.question.question.text });
   }
 
   public questionValidation(stateUpdate?: boolean): boolean {

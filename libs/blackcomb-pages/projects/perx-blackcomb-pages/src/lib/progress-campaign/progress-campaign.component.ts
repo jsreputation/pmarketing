@@ -9,7 +9,7 @@ import {
   ICampaignService,
   IMilestone,
   IMilestoneIssuedOutcome,
-  IPoints,
+  IQuizScore,
   IPrizeSetItem,
   IPrizeSetOutcomeService,
   IProgressTotal,
@@ -32,7 +32,7 @@ enum ProgressBarDisplayMode {
   individual = 'individual'
 }
 
-type IssuedOutcome = (Voucher | IBadge | IPrizeSetItem[] | IPoints);
+type IssuedOutcome = (Voucher | IBadge | IPrizeSetItem[] | IQuizScore);
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
